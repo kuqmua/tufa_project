@@ -3825,22 +3825,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
+                                    // format!(
+                                    //     "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
+                                    //         (
+                                    //             jsonb_build_object(
+                                    //                 'id',
+                                    //                 {},
+                                    //                 'field_0',
+                                    //                 {},
+                                    //                 'field_1',
+                                    //                 {}
+                                    //             )
+                                    //         )
+                                    //     end",
+                                    //     <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'id'")),
+                                    //     <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_0'")),
+                                    //     <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_1'"))
+                                    // )
                                     format!(
                                         "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
-                                            (
-                                                jsonb_build_object(
-                                                    'id',
-                                                    {},
-                                                    'field_0',
-                                                    {},
-                                                    'field_1',
-                                                    {}
-                                                )
-                                            )
+                                            {}
                                         end",
-                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'id'")),
-                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_0'")),
-                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_1'"))
+                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(column_name_and_maybe_field_getter),
                                     )
                                 }
                             },
@@ -3863,25 +3869,31 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
+                                    // format!(
+                                    //     "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
+                                    //         (
+                                    //            select jsonb_agg(jsonb_build_object(
+                                    //                'id',
+                                    //                {},
+                                    //                'field_0',
+                                    //                {},
+                                    //                'field_1',
+                                    //                {}
+                                    //            ))
+                                    //            from
+                                    //            jsonb_array_elements({column_name_and_maybe_field_getter})
+                                    //            as elem
+                                    //         )
+                                    //     end",
+                                    //     <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'id'")),
+                                    //     <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_0'")),
+                                    //     <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_1'"))
+                                    // )
                                     format!(
                                         "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
-                                            (
-                                               select jsonb_agg(jsonb_build_object(
-                                                   'id',
-                                                   {},
-                                                   'field_0',
-                                                   {},
-                                                   'field_1',
-                                                   {}
-                                               ))
-                                               from
-                                               jsonb_array_elements({column_name_and_maybe_field_getter})
-                                               as elem
-                                            )
+                                            {}
                                         end",
-                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'id'")),
-                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_0'")),
-                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_1'"))
+                                        <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(column_name_and_maybe_field_getter),
                                     )
                                 }
                             },
