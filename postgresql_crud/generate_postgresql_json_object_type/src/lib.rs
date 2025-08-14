@@ -3606,8 +3606,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                 });
                 let field_type = &element.ty;
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{field_ident};"));
-                quote::quote! {<#field_type as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(#format_handle_token_stream)}
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                quote::quote! {<#field_type as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!(#format_handle_token_stream))}
             });
             quote::quote!{format!(
                 #format_handle_token_stream,
@@ -3851,22 +3851,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     format!(
                                         "
                                             (
-                                               select jsonb_agg(jsonb_build_object(
-                                                   'id',
-                                                   {},
-                                                   'field_0',
-                                                   {},
-                                                   'field_1',
-                                                   {}
-                                               ))
+                                               select jsonb_agg({})
                                                from
                                                jsonb_array_elements({column_name_and_maybe_field_getter})
                                                as elem
                                             )
                                         ",
-                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'id'")),
-                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_0'")),
-                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_1'"))
+                                        <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem"),
                                     )
                                 }
                             },
