@@ -2183,9 +2183,11 @@ mod example_tests {
                     //     ),
                     //     "try_read_many result different after try_create_many"
                     // );
-                    let primary_key_read_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    //here renaming
+                    let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                     let some_value_primary_key_read_returned_from_create_one = Some(postgresql_crud::Value {
-                        value: primary_key_read_returned_from_create_one.clone(),
+                        //here
+                        value: read_only_ids_returned_from_create_one.primary_key_column.clone(),
                     });
                     assert_eq!(
                         super::ExampleRead {
@@ -2197,7 +2199,7 @@ mod example_tests {
                             super::ExampleReadOneParameters {
                                 payload: super::ExampleReadOnePayload {
                                     //here
-                                    primary_key_column: primary_key_read_returned_from_create_one.primary_key_column.clone(),
+                                    primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
                                     select: select_primary_key.clone(),
                                 },
                             },
