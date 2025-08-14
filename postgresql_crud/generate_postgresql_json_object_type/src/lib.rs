@@ -3608,7 +3608,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 let field_type = &element.ty;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
-                quote::quote! {<#field_type as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!(#format_handle_token_stream))}
+                quote::quote! {<#field_type as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(&format!(#format_handle_token_stream))}
             });
             quote::quote!{format!(
                 #format_handle_token_stream,
@@ -3829,7 +3829,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{format!(
                                 #case_null_format_handle_token_stream,
-                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(#column_name_and_maybe_field_getter_snake_case),
+                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(#column_name_and_maybe_field_getter_snake_case),
                             )},
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -3839,12 +3839,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 );
                                 quote::quote!{format!(
                                     #format_handle_token_stream,
-                                    <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem"),
+                                    <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case("elem"),
                                 )}
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{format!(
                                 #case_null_format_handle_token_stream,
-                                <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(column_name_and_maybe_field_getter),
+                                <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(column_name_and_maybe_field_getter),
                             )},
                         }
                     }
