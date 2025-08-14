@@ -1490,46 +1490,8 @@ pub struct ExampleCreateReadOnlyIds {
     pub primary_key_column: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::ReadOnlyIds,
     pub column_155: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadOnlyIds
 }
-#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum ExampleCreateReadOnlyIdsErrorNamed {
-    CheckBodySize {
-        #[eo_error_occurence]
-        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    // Postgresql {
-    //     #[eo_to_std_string_string]
-    //     postgresql: sqlx::Error,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // SerdeJson {
-    //     #[eo_to_std_string_string]
-    //     serde_json: serde_json::Error,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // HeaderContentTypeApplicationJsonNotFound {
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // CheckCommit {
-    //     #[eo_error_occurence]
-    //     check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // RowAndRollback {
-    //     #[eo_to_std_string_string]
-    //     row: sqlx::Error,
-    //     #[eo_to_std_string_string]
-    //     rollback: sqlx::Error,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-    // QueryPart {
-    //     #[eo_error_occurence]
-    //     error: postgresql_crud::QueryPartErrorNamed,
-    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    // },
-}
 impl ExampleCreateReadOnlyIds {
-    fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow) -> Self {//temp
+    fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow) -> Result<Self, sqlx::Error> {
         let primary_key_column = match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(
             &value,
             "primary_key_column"
@@ -1537,7 +1499,7 @@ impl ExampleCreateReadOnlyIds {
             Ok(value) => value,
             Err(error_0) => {
                 println!("meow1");
-                todo!()
+                return Err(error_0);
             }
         };
         let column_155 = match sqlx::Row::try_get::<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds, &std::primitive::str>(
@@ -1547,11 +1509,10 @@ impl ExampleCreateReadOnlyIds {
             Ok(value) => value,
             Err(error_0) => {
                 println!("meow2 {error_0:#?}");
-                todo!()
+                return Err(error_0);
             }
         };
-        // Ok(Self { primary_key_column, column_155 })
-        Self { primary_key_column, column_155 }
+        Ok(Self { primary_key_column, column_155 })
     }
 }
 /////////////////////
@@ -1900,9 +1861,53 @@ impl Example {
                         //         }
                         //     },
                         // }
-                        let f = ExampleCreateReadOnlyIds::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value);
-                        println!("ok {f:#?}");
-                        f.primary_key_column
+                        match ExampleCreateReadOnlyIds::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value) {
+                            Ok(value) => {
+                                println!("ok {value:#?}");
+                                value.primary_key_column
+                            },
+                            Err(error_0) => match executor.rollback().await {
+                                Ok(_) => {
+                                    let error = ExampleCreateOneErrorNamed::Postgresql {
+                                        postgresql: error_0,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line: 2234,
+                                                column: 120,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                    return response;
+                                }
+                                Err(error_1) => {
+                                    let error = ExampleCreateOneErrorNamed::RowAndRollback {
+                                        row: error_0,
+                                        rollback: error_1,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            file!().to_owned(),
+                                            line!(),
+                                            column!(),
+                                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                line: 2234,
+                                                column: 149,
+                                            }),
+                                        ),
+                                    };
+                                    eprintln!("{error}");
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                    return response;
+                                }
+                            },
+                        }
                     },
                     Err(error_0) => match executor.rollback().await {
                         Ok(_) => {
