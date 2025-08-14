@@ -5555,7 +5555,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &ident_read_only_ids_upper_camel_case,
-                    &quote::quote!{todo!()},
+                    &quote::quote!{#column_snake_case.to_string()},
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens|{

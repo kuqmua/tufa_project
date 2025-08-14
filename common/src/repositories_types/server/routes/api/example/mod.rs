@@ -1618,7 +1618,7 @@ impl Example {
             //here
             // &Example::primary_key(),
             &format!("
-                    primary_key_column,
+                    {},
                     (
                         SELECT 
                         jsonb_agg(jsonb_build_object(
@@ -1635,6 +1635,10 @@ impl Example {
                     )
                     AS column_155
                 ",
+                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("primary_key_column"),
+
+
+
                 <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
                 <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_0'"),
                 <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_1'"),
