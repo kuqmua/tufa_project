@@ -3821,18 +3821,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_read_upper_camel_case,
                 &ident_read_only_ids_upper_camel_case,
                 &{
+                    let case_null_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{}} end")
+                    );
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                    &format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{}} end")
-                                );
-                                quote::quote!{format!(
-                                    #format_handle_token_stream,
-                                    <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(#column_name_and_maybe_field_getter_snake_case),
-                                )}
-                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{format!(
+                                #case_null_format_handle_token_stream,
+                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(#column_name_and_maybe_field_getter_snake_case),
+                            )},
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -3844,15 +3842,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem"),
                                 )}
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                    &format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{}} end")
-                                );
-                                quote::quote!{format!(
-                                    #format_handle_token_stream,
-                                    <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(column_name_and_maybe_field_getter_snake_case),
-                                )}
-                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{format!(
+                                #case_null_format_handle_token_stream,
+                                <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(column_name_and_maybe_field_getter),
+                            )},
                         }
                     }
                 },
