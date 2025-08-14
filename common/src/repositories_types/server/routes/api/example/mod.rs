@@ -1619,7 +1619,7 @@ impl Example {
             // &Example::primary_key(),
             &{
                 let mut acc = std::string::String::new();
-                acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("primary_key_column"));
+                acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("primary_key_column", true));
                 acc.push_str(&{
                     format!("
                             (

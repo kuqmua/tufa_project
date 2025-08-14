@@ -745,6 +745,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
+    let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     quote::quote! {
@@ -778,6 +779,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
             fn #select_only_ids_query_part_snake_case(
                 #column_snake_case: #reference_std_primitive_str_token_stream,
+                #is_primary_key_snake_case: std::primitive::bool
             ) -> #std_string_string_token_stream {
                 #select_only_ids_query_part_token_stream
             }
