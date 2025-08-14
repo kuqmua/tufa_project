@@ -1434,7 +1434,11 @@ pub struct ExampleCreateOneParameters {
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum ExampleCreateOneResponseVariants {
-    Desirable(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey),
+    Desirable(
+        //here
+        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
+        ExampleReadOnlyIds
+    ),
     CheckBodySize {
         check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1756,7 +1760,8 @@ impl Example {
                         match ExampleReadOnlyIds::try_from(value) {
                             Ok(value) => {
                                 println!("ok {value:#?}");
-                                value.primary_key_column
+                                // value.primary_key_column
+                                value
                             },
                             Err(error_0) => match executor.rollback().await {
                                 Ok(_) => {
@@ -1912,7 +1917,13 @@ impl Example {
     pub async fn try_create_one(
         endpoint_location: &std::primitive::str,
         parameters: ExampleCreateOneParameters,
-    ) -> Result<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, ExampleTryCreateOneErrorNamed> {
+    ) -> Result<
+
+        //here
+        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
+        ExampleReadOnlyIds
+        
+        , ExampleTryCreateOneErrorNamed> {
         let payload = {
             let value = ExampleCreate::from(parameters.payload);
             match serde_json::to_string(&value) {
@@ -2185,7 +2196,8 @@ mod example_tests {
                             &url,
                             super::ExampleReadOneParameters {
                                 payload: super::ExampleReadOnePayload {
-                                    primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                                    //here
+                                    primary_key_column: primary_key_read_returned_from_create_one.primary_key_column.clone(),
                                     select: select_primary_key.clone(),
                                 },
                             },

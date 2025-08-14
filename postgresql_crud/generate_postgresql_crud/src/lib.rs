@@ -1236,7 +1236,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote!{
-                #[derive(Debug, serde::Serialize, serde::Deserialize)]
+                #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
                 pub struct #ident_read_only_ids_upper_camel_case {
                     #content_token_stream
                 }

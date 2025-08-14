@@ -61,7 +61,7 @@ pub trait PostgresqlType {
         // + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         ;
     fn normalize(value: Self::Read) -> Self::Read;
-    type ReadOnlyIds: std::fmt::Debug + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    type ReadOnlyIds: std::fmt::Debug + Clone + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(
         column: &std::primitive::str,
         is_primary_key: std::primitive::bool,
@@ -195,7 +195,7 @@ pub trait PostgresqlJsonType {
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type ReadOnlyIds: std::fmt::Debug + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    type ReadOnlyIds: std::fmt::Debug + Clone + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(
         column_name_and_maybe_field_getter: &std::primitive::str,
     ) -> std::string::String;
