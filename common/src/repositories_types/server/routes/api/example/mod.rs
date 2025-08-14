@@ -1590,61 +1590,56 @@ impl Example {
                 }
             },
         };
-        let query_string = {
-            let mut query_string = postgresql_crud::generate_create_one_query_string(
-                &Example::table_name(),
-                "primary_key_column,column_155",
-                match parameters.payload.create_query_part(&mut 0) {
-                    Ok(value) => value,
-                    Err(error_0) => {
-                        let error = ExampleCreateOneErrorNamed::QueryPart {
-                            error: error_0,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 2381,
-                                    column: 254,
-                                }),
-                            ),
-                        };
-                        eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
-                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                        return response;
-                    }
-                },
-                &Example::primary_key(),
-            );
+        let query_string = postgresql_crud::generate_create_one_query_string(
+            &Example::table_name(),
+            "primary_key_column,column_155",
+            match parameters.payload.create_query_part(&mut 0) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::QueryPart {
+                        error: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2381,
+                                column: 254,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
             //here
-            query_string.push_str(
-                &format!("
-                        ,
-                        (
-                            SELECT 
-                            jsonb_agg(jsonb_build_object(
-                                'id',
-                                {},
-                                'field_0',
-                                {},
-                                'field_1',
-                                {}
-                            ))
-                            FROM
-                            jsonb_array_elements(column_155)
-                            AS elem
-                        )
-                        AS column_155
-                    ",
-                    <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
-                    <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_0'"),
-                    <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_1'"),
-                )
-            );
-            query_string
-        };
+            // &Example::primary_key(),
+            &format!("
+                    primary_key_column,
+                    (
+                        SELECT 
+                        jsonb_agg(jsonb_build_object(
+                            'id',
+                            {},
+                            'field_0',
+                            {},
+                            'field_1',
+                            {}
+                        ))
+                        FROM
+                        jsonb_array_elements(column_155)
+                        AS elem
+                    )
+                    AS column_155
+                ",
+                <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
+                <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_0'"),
+                <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_1'"),
+            )
+        );
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
