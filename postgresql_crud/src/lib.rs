@@ -2322,12 +2322,23 @@ pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_p
     format!("{column} = case {acc}else {column} end,")
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
-pub fn generate_update_many_query_string(table: &std::primitive::str, elements: std::string::String, primary_key_field_name: &std::primitive::str, primary_keys: std::string::String) -> std::string::String {
+pub fn generate_update_many_query_string(
+    table: &std::primitive::str,
+    elements: std::string::String,
+    primary_key_field_name: &std::primitive::str,
+    primary_keys: std::string::String
+) -> std::string::String {
     format!("update {table} set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
 }
 //todo additional parameter for columns_to_return instead of primary_key_field_name in "returning {primary_key_field_name}""
-pub fn generate_update_one_query_string(table: &std::primitive::str, columns: std::string::String, primary_key_field_name: &std::primitive::str, primary_key_query_part: std::string::String) -> std::string::String {
-    format!("update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {primary_key_field_name}")
+pub fn generate_update_one_query_string(
+    table: &std::primitive::str,
+    columns: std::string::String,
+    primary_key_field_name: &std::primitive::str,
+    primary_key_query_part: std::string::String,
+    columns_to_return: &std::primitive::str
+) -> std::string::String {
+    format!("update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {columns_to_return}")
 }
 pub fn generate_delete_many_query_string(table: &std::primitive::str, where_string: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
     format!("delete from {table} {where_string} returning {primary_key_field_name}")

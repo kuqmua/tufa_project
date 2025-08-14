@@ -1885,7 +1885,16 @@ impl Example {
                     return response;
                 }
             };
-            postgresql_crud::generate_update_one_query_string(&Example::table_name(), columns, &Example::primary_key(), primary_key_query_part)
+            postgresql_crud::generate_update_one_query_string(
+                &Example::table_name(),
+                columns,
+                &Example::primary_key(),
+                primary_key_query_part,
+                //here
+                &{
+                    "primary_key_column,jsonb_build_object('field_0','null'::jsonb,'field_1','null'::jsonb) as column_154"
+                },
+            )
         };
         println!("{}", query_string);
         let binded_query = {
