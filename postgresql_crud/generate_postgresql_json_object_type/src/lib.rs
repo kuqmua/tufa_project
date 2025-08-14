@@ -3617,7 +3617,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
             maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         ) = {
-            let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+            let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
                 &ident_table_type_declaration_upper_camel_case,
@@ -3817,7 +3817,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
-                &quote::quote!{std::option::Option<()>},
+                &ident_read_only_ids_upper_camel_case,
                 &{
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -3852,7 +3852,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)}
             );
-            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
+            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
                 &ident_table_type_declaration_upper_camel_case,
@@ -3873,6 +3873,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &value_snake_case,
+                &ident_read_only_ids_upper_camel_case,
+                &{
+                    match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{todo!()}
+                            },
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{todo!()}
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{todo!()}
+                            },
+                        }
+                    }
+                },
                 &ident_read_inner_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
@@ -3903,7 +3922,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream = if is_standart_not_null {
-            postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+            postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident_with_id_standart_not_null_upper_camel_case,
                 &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,

@@ -5033,6 +5033,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 }
             };
+            let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+            let ident_read_only_ids_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &ident_read_only_ids_upper_camel_case,
+                &if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                    let CanBePrimaryKey::True = &can_be_primary_key
+                {
+                    quote::quote!{#ident_read_upper_camel_case}
+                }
+                else {
+                    quote::quote!{std::option::Option<()>}
+                }
+            );
+            
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
             let ident_read_inner_token_stream = quote::quote!{
                 pub type #ident_read_inner_upper_camel_case = #ident_inner_type_token_stream;
@@ -5100,7 +5114,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
                     }
                 };
-                postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
+                postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
@@ -5540,6 +5554,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         }
                     },
+                    &ident_read_only_ids_upper_camel_case,
+                    &quote::quote!{todo!()},
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens|{
@@ -6057,6 +6073,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #ident_select_token_stream
                 #ident_where_element_token_stream
                 #ident_read_token_stream
+                #ident_read_only_ids_token_stream
                 #ident_read_inner_token_stream
                 #ident_update_token_stream
                 #impl_postgresql_type_for_ident_token_stream

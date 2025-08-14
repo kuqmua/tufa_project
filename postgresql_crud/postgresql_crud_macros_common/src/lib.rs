@@ -285,7 +285,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
         }
     }
 }
-pub fn generate_postgresql_json_type_token_stream(
+pub fn generate_impl_postgresql_json_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     table_type_declaration_type_token_stream: &dyn quote::ToTokens,
@@ -695,7 +695,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
         }
     }
 }
-pub fn generate_impl_postgresql_type_for_ident_token_stream(
+pub fn generate_impl_postgresql_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_table_type_declaration_upper_camel_case: &dyn quote::ToTokens,
@@ -712,6 +712,8 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_where_element_upper_camel_case: &dyn quote::ToTokens,
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     normalize_token_stream: &dyn quote::ToTokens,
+    read_only_ids_token_stream: &dyn quote::ToTokens,
+    select_only_ids_query_part_token_stream: &dyn quote::ToTokens,
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
@@ -732,6 +734,8 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
     let normalize_snake_case = naming::NormalizeSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
@@ -742,6 +746,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let query_snake_case = naming::QuerySnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
+    let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #ident_table_type_declaration_upper_camel_case;
@@ -761,7 +766,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             type #select_upper_camel_case = #ident_select_upper_camel_case;
             fn #select_query_part_snake_case(
                 #select_query_part_value_underscore: &Self::#select_upper_camel_case,
-                #column_snake_case: &std::primitive::str,
+                #column_snake_case: #reference_std_primitive_str_token_stream,
             ) -> #std_string_string_token_stream {
                 #select_query_part_content_token_stream
             }
@@ -770,6 +775,12 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             fn #normalize_snake_case(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_upper_camel_case {
                 #normalize_token_stream
             }
+            type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
+            fn #select_only_ids_query_part_snake_case(
+                #column_snake_case: #reference_std_primitive_str_token_stream,
+            ) -> #std_string_string_token_stream {
+                #select_only_ids_query_part_token_stream
+            }
             type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;
             fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_upper_camel_case {
                 #into_inner_token_stream
@@ -777,9 +788,9 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             type #update_upper_camel_case = #ident_update_upper_camel_case;
             fn #update_query_part_snake_case(
                 #update_query_part_value_underscore: &Self::#update_upper_camel_case,
-                #update_query_part_jsonb_set_accumulator_underscore: &std::primitive::str,
-                #update_query_part_jsonb_set_target_underscore: &std::primitive::str,
-                #update_query_part_jsonb_set_path_underscore: &std::primitive::str,
+                #update_query_part_jsonb_set_accumulator_underscore: #reference_std_primitive_str_token_stream,
+                #update_query_part_jsonb_set_target_underscore: #reference_std_primitive_str_token_stream,
+                #update_query_part_jsonb_set_path_underscore: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: &mut std::primitive::u64
             ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
                 #update_query_part_content_token_stream

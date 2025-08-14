@@ -1487,8 +1487,46 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 // //here
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub struct ExampleCreateReadOnlyIds {
-    pub primary_key_column: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey,
-    pub column_155: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds
+    pub primary_key_column: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::ReadOnlyIds,
+    pub column_155: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadOnlyIds
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleCreateReadOnlyIdsErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    // Postgresql {
+    //     #[eo_to_std_string_string]
+    //     postgresql: sqlx::Error,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // SerdeJson {
+    //     #[eo_to_std_string_string]
+    //     serde_json: serde_json::Error,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // HeaderContentTypeApplicationJsonNotFound {
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // CheckCommit {
+    //     #[eo_error_occurence]
+    //     check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // RowAndRollback {
+    //     #[eo_to_std_string_string]
+    //     row: sqlx::Error,
+    //     #[eo_to_std_string_string]
+    //     rollback: sqlx::Error,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
+    // QueryPart {
+    //     #[eo_error_occurence]
+    //     error: postgresql_crud::QueryPartErrorNamed,
+    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    // },
 }
 impl ExampleCreateReadOnlyIds {
     fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow) -> Self {//temp

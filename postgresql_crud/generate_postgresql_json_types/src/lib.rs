@@ -1688,7 +1688,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
-                postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident,
                     &ident_origin_upper_camel_case,

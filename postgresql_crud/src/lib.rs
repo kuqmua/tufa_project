@@ -61,6 +61,8 @@ pub trait PostgresqlType {
         // + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         ;
     fn normalize(value: Self::Read) -> Self::Read;
+    type ReadOnlyIds: std::fmt::Debug + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    fn select_only_ids_query_part(column: &std::primitive::str) -> std::string::String;
     type ReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
