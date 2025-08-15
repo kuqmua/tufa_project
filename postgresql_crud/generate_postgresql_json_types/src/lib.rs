@@ -495,6 +495,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let new_snake_case = naming::NewSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let element_upper_camel_case = naming::ElementUpperCamelCase;
+            let increment_snake_case = naming::IncrementSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
@@ -1900,7 +1901,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         query = query.bind(#value_snake_case);
                         query
                     },
-                    &quote::quote!{todo!()}
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable &&
+                    let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        quote::quote!{
+                            match #increment_snake_case.checked_add(1) {
+                                Some(#value_snake_case) => {
+                                    *#increment_snake_case = #value_snake_case;
+                                    Ok(format!("${increment}"))
+                                }
+                                None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                            }
+                        }
+                    }
+                    else {
+                        quote::quote!{Ok(std::string::String::new())}
+                    },
                 )
             };
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {
