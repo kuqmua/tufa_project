@@ -1662,6 +1662,243 @@ mod example_tests {
 }
 
 
+/////////////////
+#[derive(Debug, serde :: Serialize, utoipa :: ToSchema)]
+pub struct ExampleUpdate {
+    primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate,
+    column_154: std::option::Option<postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleUpdateTryNewErrorNamed {
+    NoFieldsProvided {
+        #[eo_to_std_string_string]
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl ExampleUpdate {
+    pub fn try_new(
+        primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate,
+        column_154: std::option::Option<postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
+    ) -> Result<ExampleUpdate, ExampleUpdateTryNewErrorNamed> {
+        if let None = &column_154 {
+            return Err(ExampleUpdateTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self { primary_key_column, column_154 })
+    }
+    fn update_query_part_primary_key(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(&self.primary_key_column, &"", &Example::primary_key(), &"", increment) {
+            Ok(value_snake_case) => Ok(value_snake_case),
+            Err(error_0) => Err(error_0),
+        }
+    }
+    fn update_query_part_column_154(
+        value: &postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"column_154", &"column_154", &"", increment) {
+            Ok(value) => Ok(value),
+            Err(error_0) => Err(error_0),
+        }
+    }
+    fn update_return_columns(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::new();
+        acc.push_str(&"primary_key_column,");
+        acc.push_str(&"
+            jsonb_build_object(
+                'field_0',
+                'null'::jsonb,
+                'field_1',
+                'null'::jsonb
+            )
+            as
+            column_154,");
+        let _ = acc.pop();
+        Ok(acc)
+        // &{
+        //     let mut acc = std::string::String::new();
+        //     acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part(
+        //         "primary_key_column",
+        //         true,
+        //     ));
+        //     acc.push_str(&<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_154", false));
+        //     let _ = acc.pop();
+        //     acc
+        // },
+        // field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+        // field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for ExampleUpdate {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => serde::__private::Ok(__Field::__field0),
+                        1u64 => serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        "column_154" => serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        b"column_154" => serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<ExampleUpdate>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = ExampleUpdate;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "struct ExampleUpdate")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match serde::de::SeqAccess::next_element::<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleUpdate with 2 elements"));
+                        }
+                    };
+                    let __field1 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleUpdate with 2 elements"));
+                        }
+                    };
+                    match ExampleUpdate::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: serde::__private::Option<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate> = serde::__private::None;
+                    let mut __field1: serde::__private::Option<std::option::Option<postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>> = serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if serde::__private::Option::is_some(&__field0) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("primary_key_column"));
+                                }
+                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if serde::__private::Option::is_some(&__field1) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_154"));
+                                }
+                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<
+                                    std::option::Option<postgresql_crud::Value<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
+                                >(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        serde::__private::Some(__field0) => __field0,
+                        serde::__private::None => serde::__private::de::missing_field("primary_key_column")?,
+                    };
+                    let __field1 = match __field1 {
+                        serde::__private::Some(__field1) => __field1,
+                        serde::__private::None => serde::__private::de::missing_field("column_154")?,
+                    };
+                    match ExampleUpdate::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["primary_key_column", "column_154"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "ExampleUpdate",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<ExampleUpdate>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleUpdate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            primary_key_column: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            column_154: Some(postgresql_crud::Value {
+                value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            }),
+        }
+    }
+}
+
+/////////////////
+
 
 #[derive(Debug)]
 pub struct ExampleUpdateOneParameters {
@@ -1863,6 +2100,7 @@ impl Example {
                 let _: Option<char> = acc.pop();
                 acc
             };
+            // println!("columns {columns}");
             let primary_key_query_part = match parameters.payload.update_query_part_primary_key(&mut increment) {
                 Ok(value) => value,
                 Err(error_0) => {
@@ -1885,41 +2123,36 @@ impl Example {
                     return response;
                 }
             };
+            //here
+            let return_columns = match parameters.payload.update_return_columns(&mut increment) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::QueryPart {
+                        error: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 3186,
+                                column: 258,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            };
             postgresql_crud::generate_update_one_query_string(
                 &Example::table_name(),
                 columns,
                 &Example::primary_key(),
                 primary_key_query_part,
                 //here
-                &{
-                    let mut acc = std::string::String::new();
-                    acc.push_str(&"primary_key_column,");
-                    acc.push_str(&"
-                        jsonb_build_object(
-                            'field_0',
-                            'null'::jsonb,
-                            'field_1',
-                            'null'::jsonb
-                        )
-                        as
-                        column_154,");
-                    let _ = acc.pop();
-                    acc
-                },
-                // &{
-                //     let mut acc = std::string::String::new();
-                //     acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part(
-                //         "primary_key_column",
-                //         true,
-                //     ));
-                //     acc.push_str(&<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_154", false));
-                //     let _ = acc.pop();
-                //     acc
-                // },
-
-
-                // field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
-                // field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
+                &return_columns
             )
         };
         println!("{}", query_string);

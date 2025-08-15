@@ -4013,7 +4013,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #ident_read_token_stream
         #ident_read_only_ids_token_stream
         #ident_column_read_permission_token_stream
-        #ident_update_token_stream
+        // #ident_update_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
