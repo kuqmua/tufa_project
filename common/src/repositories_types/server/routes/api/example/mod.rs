@@ -1892,8 +1892,34 @@ impl Example {
                 primary_key_query_part,
                 //here
                 &{
-                    "primary_key_column,jsonb_build_object('field_0','null'::jsonb,'field_1','null'::jsonb) as column_154"
+                    let mut acc = std::string::String::new();
+                    acc.push_str(&"primary_key_column,");
+                    acc.push_str(&"
+                        jsonb_build_object(
+                            'field_0',
+                            'null'::jsonb,
+                            'field_1',
+                            'null'::jsonb
+                        )
+                        as
+                        column_154,");
+                    let _ = acc.pop();
+                    acc
                 },
+                // &{
+                //     let mut acc = std::string::String::new();
+                //     acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part(
+                //         "primary_key_column",
+                //         true,
+                //     ));
+                //     acc.push_str(&<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_154", false));
+                //     let _ = acc.pop();
+                //     acc
+                // },
+
+
+                // field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+                // field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
             )
         };
         println!("{}", query_string);
