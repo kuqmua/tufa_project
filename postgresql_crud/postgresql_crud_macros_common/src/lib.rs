@@ -759,11 +759,11 @@ pub fn generate_impl_postgresql_type_token_stream(
     let column_snake_case = naming::ColumnSnakeCase;
     let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
-    let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
     let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
+    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #ident_table_type_declaration_upper_camel_case;
@@ -795,7 +795,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
             fn #select_only_ids_query_part_snake_case(
                 #column_snake_case: #reference_std_primitive_str_token_stream,
-                #is_primary_key_snake_case: std::primitive::bool
+                #is_primary_key_snake_case: #std_primitive_bool_token_stream
             ) -> #std_string_string_token_stream {
                 #select_only_ids_query_part_token_stream
             }
@@ -821,8 +821,9 @@ pub fn generate_impl_postgresql_type_token_stream(
             }
             fn #select_only_updated_ids_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case,
-                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
-                #increment_snake_case: &mut #std_primitive_u64_token_stream
+                #column_snake_case: #reference_std_primitive_str_token_stream,
+                #increment_snake_case: &mut #std_primitive_u64_token_stream,
+                #is_primary_key_snake_case: #std_primitive_bool_token_stream
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_updated_ids_query_part_token_stream
             }

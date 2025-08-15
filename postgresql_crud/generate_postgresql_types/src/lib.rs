@@ -5555,6 +5555,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &ident_read_only_ids_upper_camel_case,
+                    //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
                     &{
                         let std_string_string_default_token_stream = quote::quote!{std::string::String::default()};
                         if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
@@ -5679,7 +5680,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
-                    &quote::quote!{todo!()}
+                    &{
+                        let ok_std_string_string_default_token_stream = quote::quote!{Ok(std::string::String::default())};
+                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
+                        let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                        let CanBePrimaryKey::True = &can_be_primary_key
+                        {
+                            quote::quote!{
+                                if is_primary_key {
+                                    Ok(format!("{column},"))
+                                }
+                                else {
+                                    #ok_std_string_string_default_token_stream
+                                }
+                            }
+                        }
+                        else {
+                            ok_std_string_string_default_token_stream
+                        }
+                    },
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {
