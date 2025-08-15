@@ -184,6 +184,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let column_snake_case = naming::ColumnSnakeCase;
         let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
         let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
+        let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -3902,7 +3903,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &quote::quote!{#value_snake_case.#update_query_bind_postgresql_type_snake_case(#query_snake_case)},
-                &quote::quote!{todo!()}
+                &quote::quote!{
+                    match <#ident as postgresql_crud::PostgresqlJsonType>::#select_only_updated_ids_query_part_snake_case(&#value_snake_case, &#column_snake_case, #increment_snake_case) {
+                        Ok(#value_snake_case) => Ok(format!("{} as {column},", #value_snake_case)),
+                        Err(error) => Err(error)
+                    }
+                },
             );
             match &trait_gen {
                 TraitGen::PostgresqlTypeAndPostgresqlJsonType => (
