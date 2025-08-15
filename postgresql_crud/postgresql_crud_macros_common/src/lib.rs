@@ -404,6 +404,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             }
             fn #select_only_updated_ids_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case,
+                #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {

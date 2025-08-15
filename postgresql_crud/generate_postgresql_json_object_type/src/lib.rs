@@ -4037,7 +4037,45 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)},
-                &quote::quote!{todo!()}
+                &{
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
+                        let mut acc = get_vec_syn_field(&is_standart_with_id_false).iter().fold(
+                            std::string::String::new(),
+                            |mut acc, element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                acc.push_str(&format!("'{field_ident}',{{}},"));
+                                acc
+                            }
+                        );
+                        let _ = acc.pop();
+                        format!("jsonb_build_object({acc})")
+                    });
+                    let select_only_ids_query_part_calls_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        });
+                        let field_type = &element.ty;
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                        quote::quote! {
+                            match <#field_type as postgresql_crud::PostgresqlJsonType>::#select_only_updated_ids_query_part_snake_case(
+                                #value_snake_case.#field_ident,
+                                &format!(#format_handle_token_stream),
+                                #increment_snake_case
+                            ) {
+                                Ok(#value_snake_case) => #value_snake_case,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            }
+                        }
+                    });
+                    quote::quote!{Ok(format!(
+                        #format_handle_token_stream,
+                        #(#select_only_ids_query_part_calls_token_stream),*
+                    ))}
+                }
             )
         }
         else {

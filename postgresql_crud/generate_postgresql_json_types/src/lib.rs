@@ -1909,14 +1909,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             match #increment_snake_case.checked_add(1) {
                                 Some(#value_snake_case) => {
                                     *#increment_snake_case = #value_snake_case;
-                                    Ok(format!("${increment}"))
+                                    Ok(format!("'{field_ident}',${increment},"))
                                 }
                                 None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                             }
                         }
                     }
                     else {
-                        quote::quote!{Ok(std::string::String::new())}
+                        quote::quote!{Ok(format!("'{field_ident}','null'::jsonb,"))}
                     },
                 )
             };
