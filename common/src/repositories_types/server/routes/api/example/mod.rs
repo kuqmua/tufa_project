@@ -1700,9 +1700,15 @@ impl ExampleUpdate {
             Err(error_0) => Err(error_0),
         }
     }
-    fn update_return_columns(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+    fn select_only_updated_ids_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         let mut acc = std::string::String::new();
-        acc.push_str(&"primary_key_column,");
+        acc.push_str(
+            &"primary_key_column,"
+        );
+        // if let Some(value) = self.column_154 {
+        //     value.value
+        //     // .select_only_updated_ids_query_part(value: &Self::Update, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) ->
+        // }
         acc.push_str(&"
             jsonb_build_object(
                 'field_0',
@@ -2124,7 +2130,7 @@ impl Example {
                 }
             };
             //here
-            let return_columns = match parameters.payload.update_return_columns(&mut increment) {
+            let return_columns = match parameters.payload.select_only_updated_ids_query_part(&mut increment) {
                 Ok(value) => value,
                 Err(error_0) => {
                     let error = ExampleUpdateOneErrorNamed::QueryPart {

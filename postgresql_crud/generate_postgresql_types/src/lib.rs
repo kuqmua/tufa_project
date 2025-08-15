@@ -5679,6 +5679,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
+                    &quote::quote!{todo!()}
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {

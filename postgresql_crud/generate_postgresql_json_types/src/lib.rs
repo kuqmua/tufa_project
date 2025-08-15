@@ -1900,6 +1900,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         query = query.bind(#value_snake_case);
                         query
                     },
+                    &quote::quote!{todo!()}
                 )
             };
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {

@@ -311,6 +311,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     is_update_query_part_jsonb_set_target_used: &IsUpdateQueryPartJsonbSetTargetUsed,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
+    select_only_updated_ids_query_part_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_token_stream = quote::quote! {#import_path ::};
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
@@ -335,14 +336,17 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
+    let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
+    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     let reference_mut_std_primitive_u64_token_stream = {
         let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
         quote::quote! {&mut #std_primitive_u64_token_stream}
     };
-    let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let std_string_string_token_stream = token_patterns::StdStringString;
+    let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+    let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
@@ -351,7 +355,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             fn #create_query_part_snake_case(
                 #is_create_query_part_self_create_used: &Self::#create_upper_camel_case,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
-            ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
+            ) -> Result<#std_string_string_token_stream, #path_token_stream #query_part_error_named_upper_camel_case> {
                 #create_query_part_token_stream
             }
             fn #create_query_bind_snake_case(
@@ -389,7 +393,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
                 #is_update_query_part_jsonb_set_target_used: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-            ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
+            ) -> Result<#std_string_string_token_stream, #path_token_stream #query_part_error_named_upper_camel_case> {
                 #update_query_part_token_stream
             }
             fn #update_query_bind_snake_case(
@@ -397,6 +401,13 @@ pub fn generate_impl_postgresql_json_type_token_stream(
                 #is_update_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #update_query_bind_token_stream
+            }
+            fn #select_only_updated_ids_query_part_snake_case(
+                #value_snake_case: &Self::#update_upper_camel_case,
+                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
+                #increment_snake_case: &mut #std_primitive_u64_token_stream
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
+                #select_only_updated_ids_query_part_token_stream
             }
         }
     }
@@ -723,7 +734,8 @@ pub fn generate_impl_postgresql_type_token_stream(
     update_query_part_jsonb_set_path_underscore: &UpdateQueryPartJsonbSetPathUnderscore,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
-    update_query_bind_content_token_stream: &dyn quote::ToTokens
+    update_query_bind_content_token_stream: &dyn quote::ToTokens,
+    select_only_updated_ids_query_part_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
@@ -746,7 +758,11 @@ pub fn generate_impl_postgresql_type_token_stream(
     let query_snake_case = naming::QuerySnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
+    let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
+    let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
+    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
+    let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
@@ -754,8 +770,8 @@ pub fn generate_impl_postgresql_type_token_stream(
             type #create_upper_camel_case = #ident_create_upper_camel_case;
             fn #create_query_part_snake_case(
                 #create_query_part_value_underscore: &Self::#create_upper_camel_case,
-                #create_query_part_increment_underscore: &mut std::primitive::u64
-            ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
+                #create_query_part_increment_underscore: &mut #std_primitive_u64_token_stream
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #create_query_part_content_token_stream
             }
             fn #create_query_bind_snake_case(
@@ -793,8 +809,8 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #update_query_part_jsonb_set_accumulator_underscore: #reference_std_primitive_str_token_stream,
                 #update_query_part_jsonb_set_target_underscore: #reference_std_primitive_str_token_stream,
                 #update_query_part_jsonb_set_path_underscore: #reference_std_primitive_str_token_stream,
-                #increment_snake_case: &mut std::primitive::u64
-            ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
+                #increment_snake_case: &mut #std_primitive_u64_token_stream
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #update_query_part_content_token_stream
             }
             fn #update_query_bind_snake_case<'a>(
@@ -802,6 +818,13 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #update_query_bind_content_token_stream
+            }
+            fn #select_only_updated_ids_query_part_snake_case(
+                #value_snake_case: &Self::#update_upper_camel_case,
+                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
+                #increment_snake_case: &mut #std_primitive_u64_token_stream
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
+                #select_only_updated_ids_query_part_token_stream
             }
         }
     }

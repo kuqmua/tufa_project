@@ -3863,7 +3863,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)}
+                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)},
+                &quote::quote!{todo!()}
             );
             let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
@@ -3900,7 +3901,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     )
                 },
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_type_snake_case(#query_snake_case)}
+                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_type_snake_case(#query_snake_case)},
+                &quote::quote!{todo!()}
             );
             match &trait_gen {
                 TraitGen::PostgresqlTypeAndPostgresqlJsonType => (
@@ -4028,7 +4030,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)}
+                &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)},
+                &quote::quote!{todo!()}
             )
         }
         else {
