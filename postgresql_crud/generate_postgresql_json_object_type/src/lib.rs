@@ -3911,13 +3911,31 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let none_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("'{field_ident}','null'::jsonb,"));
+                                    quote::quote! {acc.push_str(&format!(#format_handle_token_stream));}
+                                });
                                 quote::quote!{
-                                    format!(
-                                        #case_null_format_handle_token_stream,
-                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(
-                                            #column_name_and_maybe_field_getter_snake_case
-                                        ),
-                                    )
+                                    match &value.0 {
+                                        Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                                            value,
+                                            field_ident,
+                                            column_name_and_maybe_field_getter,
+                                            increment
+                                        ) {
+                                            Ok(value) => Ok(value),
+                                            Err(error) => Err(error)
+                                        },
+                                        None => {
+                                            let mut acc = std::string::String::default();
+                                            #(#none_content_token_stream)*
+                                            let _ = acc.pop();
+                                            Ok(format!("jsonb_build_object({acc})"))
+                                        }
+                                    }
                                 }
                             },
                         },
