@@ -301,37 +301,7 @@ pub struct GithubInfoFromHtml {
 }
 
 impl GithubInfoFromHtml {
-    pub const fn initialize_with_params(
-        avatar_link: Option<String>,
-        author: Option<String>,
-        action: Option<String>,
-        repository: Option<String>,
-        from_what_repository_forked: Option<String>,
-        from: Option<String>,
-        datejs: Option<String>,
-        date: Option<String>,
-        actionto: Option<String>,
-        branch: Option<String>,
-        release_tag: Option<String>,
-        of: Option<String>,
-        bot_tag: Option<String>,
-        who_follow: Option<String>,
-    ) -> Self {
-        Self {
-            avatar_link,
-            author,
-            action,
-            repository,
-            from_what_repository_forked,
-            from,
-            datejs,
-            date,
-            actionto,
-            branch,
-            release_tag,
-            of,
-            bot_tag,
-            who_follow,
-        }
+    pub const fn initialize_with_params(avatar_link: Option<String>, author: Option<String>, action: Option<String>, repository: Option<String>, from_what_repository_forked: Option<String>, from: Option<String>, datejs: Option<String>, date: Option<String>, actionto: Option<String>, branch: Option<String>, release_tag: Option<String>, of: Option<String>, bot_tag: Option<String>, who_follow: Option<String>) -> Self {
+        Self { avatar_link, author, action, repository, from_what_repository_forked, from, datejs, date, actionto, branch, release_tag, of, bot_tag, who_follow }
     }
 }
