@@ -2988,10 +2988,7 @@ impl postgresql_crud::PostgresqlJsonType for AnimalWithIdAsNotNullJsonbObjectWit
                         increment
                     ) {
                         Ok(value) => {
-                            acc.push_str(
-                                &value
-                                // &format!("'field_0',{value},")
-                            );
+                            acc.push_str(&value);
                         },
                         Err(error) => {
                             return Err(error);
@@ -3006,10 +3003,7 @@ impl postgresql_crud::PostgresqlJsonType for AnimalWithIdAsNotNullJsonbObjectWit
                         increment
                     ) {
                         Ok(value) => {
-                            acc.push_str(
-                                &value
-                                // &format!("'field_1',{value},")
-                            );
+                            acc.push_str(&value);
                         },
                         Err(error) => {
                             return Err(error);
