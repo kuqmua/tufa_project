@@ -1,9 +1,11 @@
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input)
+        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let ident_try_from_env_error_named_upper_camel_case = naming::parameter::SelfTryFromEnvErrorNamedUpperCamelCase::from_tokens(&ident);
+    let ident_try_from_env_error_named_upper_camel_case =
+        naming::parameter::SelfTryFromEnvErrorNamedUpperCamelCase::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
         syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),

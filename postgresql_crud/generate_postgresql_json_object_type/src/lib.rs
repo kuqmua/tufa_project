@@ -1,17 +1,31 @@
 //todo generate authorization rights enum for json fields
 #[proc_macro_attribute]
-pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn postgresql_json_object_type_pattern(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
-pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_json_object_type(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
         PostgresqlJsonType,
         PostgresqlTypeAndPostgresqlJsonType,
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlJsonObjectTypePattern {
         Standart,
         Array,
@@ -24,24 +38,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     }
     impl PostgresqlJsonObjectTypeRecord {
         fn all() -> std::vec::Vec<Self> {
-            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
-                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
-                    acc.push(Self {
-                        not_null_or_nullable,
-                        postgresql_json_object_type_pattern,
-                        trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
-                    });
-                }
-                acc
-            })
+            postgresql_crud_macros_common::NotNullOrNullable::into_array()
+                .into_iter()
+                .fold(vec![], |mut acc, not_null_or_nullable| {
+                    for postgresql_json_object_type_pattern in
+                        PostgresqlJsonObjectTypePattern::into_array()
+                    {
+                        acc.push(Self {
+                            not_null_or_nullable,
+                            postgresql_json_object_type_pattern,
+                            trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
+                        });
+                    }
+                    acc
+                })
         }
     }
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlJsonObjectTypeConfig {
         All,
-        Concrete(PostgresqlJsonObjectTypeRecord)
+        Concrete(PostgresqlJsonObjectTypeRecord),
     }
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream.clone()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream.clone())
+        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let postgresql_json_object_type_record_vec = {
         let generate_postgresql_json_object_type_config = serde_json::from_str::<GeneratePostgresqlJsonObjectTypeConfig>(
             &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
@@ -128,7 +147,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
     // );
-
 
     // element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
     //     let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
@@ -833,7 +851,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             match &self.0 {
                                 Some(#value_snake_case) => <
                                     #ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case
-                                    as 
+                                    as
                                     #import_path::PostgresqlJsonType
                                 >::#create_query_part_snake_case(#value_snake_case, #increment_snake_case),
                                 None => match #increment_snake_case.checked_add(1) {
@@ -1169,8 +1187,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
                                 let mut acc = std::string::String::default();
                                 //here diff
-                                let #column_name_and_maybe_field_getter_field_ident_snake_case = 
-                                    column_name_and_maybe_field_getter.to_string();
+                                let #column_name_and_maybe_field_getter_field_ident_snake_case = column_name_and_maybe_field_getter.to_string();
                                 // if is_postgresql_type {
                                 //     column_name_and_maybe_field_getter.to_string()
                                 // } else {
@@ -2933,10 +2950,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                     println!("HERE CAN BE BUG");
-                    if 
                     //todo maybe bug here - maybe need additional parameter
                     // #jsonb_set_accumulator_snake_case.is_empty() &&
-                    #jsonb_set_path_snake_case.is_empty() {
+                    if #jsonb_set_path_snake_case.is_empty() {
                         Ok(#object_acc_snake_case)
                     }
                     else {
@@ -2991,10 +3007,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                     println!("HERE CAN BE BUG");
-                    if 
                     //todo maybe bug here - maybe need additional parameter
                     // #jsonb_set_accumulator_snake_case.is_empty() &&
-                    #jsonb_set_path_snake_case.is_empty() {
+                    if #jsonb_set_path_snake_case.is_empty() {
                         Ok(#object_acc_snake_case)
                     }
                     else {

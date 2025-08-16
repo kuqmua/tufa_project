@@ -1,4 +1,7 @@
-pub fn form_last_arg_lifetime_vec(segments: &syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>, proc_macro_name_ident_stringified: &str) -> Vec<crate::error_occurence::lifetime::Lifetime> {
+pub fn form_last_arg_lifetime_vec(
+    segments: &syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>,
+    proc_macro_name_ident_stringified: &str,
+) -> Vec<crate::error_occurence::lifetime::Lifetime> {
     segments.last().map_or_else(
         || panic!("{proc_macro_name_ident_stringified} type_path.path.segments.last() {}", naming::IS_NONE_STRINGIFIED),
         |path_segment| match &path_segment.arguments {

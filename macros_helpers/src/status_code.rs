@@ -1,4 +1,14 @@
-#[derive(Debug, strum_macros::Display, PartialEq, Eq, Clone, Copy, Hash, naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+#[derive(
+    Debug,
+    strum_macros::Display,
+    PartialEq,
+    Eq,
+    Clone,
+    Copy,
+    Hash,
+    naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified,
+    naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified,
+)]
 pub enum StatusCode {
     Continue100,
     SwitchingProtocols101,
@@ -477,7 +487,14 @@ impl StatusCode {
     }
     pub fn to_proc_macro_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{self}]");
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| {
+                panic!(
+                    "{value} {}",
+                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                )
+            })
     }
 }
 
@@ -674,7 +691,10 @@ impl TryFrom<&std::string::String> for StatusCode {
     }
 }
 
-pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &std::string::String) -> StatusCode {
+pub fn get_only_one(
+    variant: &syn::Variant,
+    proc_macro_name_ident_stringified: &std::string::String,
+) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {

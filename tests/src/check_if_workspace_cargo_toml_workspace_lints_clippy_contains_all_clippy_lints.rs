@@ -17,7 +17,10 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
         | toml::Value::Array(_) => panic!("not ok"),
     };
     let lints_vec_from_file = toml_value_table.keys().collect::<Vec<&String>>();
-    let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/lints.json").unwrap().text().unwrap();
+    let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/lints.json")
+        .unwrap()
+        .text()
+        .unwrap();
     #[derive(Debug, serde::Deserialize)]
     struct Lint {
         id: std::string::String,
@@ -35,12 +38,18 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
             lints_not_in_file.push(element);
         }
     }
-    assert!(lints_not_in_file.is_empty(), "this clippy lints are not in the [workspace.lints.clippy]: {lints_not_in_file:#?}");
+    assert!(
+        lints_not_in_file.is_empty(),
+        "this clippy lints are not in the [workspace.lints.clippy]: {lints_not_in_file:#?}"
+    );
     let mut outdated_lints_in_file = vec![];
     for element in &lints_vec_from_file {
         if !clippy_lints_from_docs.contains(element) {
             outdated_lints_in_file.push(element);
         }
     }
-    assert!(outdated_lints_in_file.is_empty(), "this clippy lints are outdated but still in [workspace.lints.clippy]: {outdated_lints_in_file:#?}");
+    assert!(
+        outdated_lints_in_file.is_empty(),
+        "this clippy lints are outdated but still in [workspace.lints.clippy]: {outdated_lints_in_file:#?}"
+    );
 }

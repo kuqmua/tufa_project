@@ -8962,7 +8962,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             })
 //         }
-        
+
 //     }
 // }
 // impl std::fmt::Display for VecOfCustomStdPrimitiveI16AsNotNullArrayOfNotNullJsonbNumberOrigin {

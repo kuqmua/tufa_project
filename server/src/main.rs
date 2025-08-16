@@ -81,7 +81,7 @@ fn main() {
                             ),
                             components(
                                     schemas(
-                                        common::server::routes::git_info::GitInfo,                          
+                                        common::server::routes::git_info::GitInfo,
 
                                         common::common::utoipa::std::time::StdTimeDuration,
                                         error_occurence_lib::code_occurence::CodeOccurence,

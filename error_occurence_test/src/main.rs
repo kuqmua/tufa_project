@@ -28,9 +28,11 @@ pub enum ErrorNamedOne {
         #[eo_hashmap_key_std_string_string_value_to_std_string_string]
         hashmap_string_string: std::collections::HashMap<std::string::String, DisplayStruct>,
         #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]
-        hashmap_string_serde: std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
+        hashmap_string_serde:
+            std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
         #[eo_hashmap_key_std_string_string_value_error_occurence]
-        hashmap_string_error_occurence: std::collections::HashMap<std::string::String, ErrorUnnamedOne>,
+        hashmap_string_error_occurence:
+            std::collections::HashMap<std::string::String, ErrorUnnamedOne>,
 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -166,14 +168,18 @@ fn main() {
             (
                 std::string::String::from("ksdfgadsfgsdfgdfgey"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
-                    eo_display_with_serialize_deserialize_field: std::string::String::from("vasdfgdgdfglue"),
+                    eo_display_with_serialize_deserialize_field: std::string::String::from(
+                        "vasdfgdgdfglue",
+                    ),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }),
             ),
             (
                 std::string::String::from("kesdfgsdgfdfgy"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
-                    eo_display_with_serialize_deserialize_field: std::string::String::from("valsdfgdsafgdsgue"),
+                    eo_display_with_serialize_deserialize_field: std::string::String::from(
+                        "valsdfgdsafgdsgue",
+                    ),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }),
             ),
@@ -183,13 +189,21 @@ fn main() {
     };
     println!("{error}");
     let e_serialize_deserialize_version = error.into_serialize_deserialize_version();
-    println!("--------------------------------------------------------------------------------------------------");
+    println!(
+        "--------------------------------------------------------------------------------------------------"
+    );
     println!("{e_serialize_deserialize_version}");
-    let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).unwrap();
+    let e_serialize_deserialize_version_json_string =
+        serde_json::to_string(&e_serialize_deserialize_version).unwrap();
     println!("{e_serialize_deserialize_version_json_string}");
-    println!("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize = serde_json::from_str(&e_serialize_deserialize_version_json_string).unwrap();
+    println!(
+        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+    );
+    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize =
+        serde_json::from_str(&e_serialize_deserialize_version_json_string).unwrap();
     println!("{e_serialize_deserialize_version_deserialized}");
-    println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    println!(
+        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    );
 }
 // ///////////
