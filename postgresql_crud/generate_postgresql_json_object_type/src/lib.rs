@@ -3866,6 +3866,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &quote::quote!{#value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case)},
                 &{
+                    let case_null_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{}} end")
+                    );
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -3907,7 +3910,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Ok(format!("jsonb_build_object({acc})"))
                                 }
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{todo!()},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                    format!(
+                                        #case_null_format_handle_token_stream,
+                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(
+                                            #column_name_and_maybe_field_getter_snake_case
+                                        ),
+                                    )
+                                }
+                            },
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{todo!()},

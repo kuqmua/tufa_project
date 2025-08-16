@@ -1486,7 +1486,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         quote::quote!{false}
                     };
                     quote::quote! {
-                        if let Some(value) = &self.column_154 {
+                        if let Some(value) = &self.#field_ident {
                             acc.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_updated_ids_query_part_snake_case(
                                 &value.value,
                                 #field_ident_double_quotes_token_stream,
@@ -3978,7 +3978,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             &#url_snake_case,
                                             super::#ident_update_one_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
-                                                    #primary_key_field_type_as_postgresql_type_update_token_stream::from(#read_only_ids_returned_from_create_one_snake_case.clone()),
+                                                    #primary_key_field_type_as_postgresql_type_update_token_stream::from(#read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone()),
                                                     #update_try_new_parameters_token_stream
                                                 )
                                                 .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"),
@@ -4002,7 +4002,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             &#url_snake_case,
                                             super::#ident_read_one_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                                    #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.clone(),
+                                                    #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
                                                     #select_snake_case: #select_primary_key_field_ident_snake_case,
                                                 },
                                             },
@@ -4130,7 +4130,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
