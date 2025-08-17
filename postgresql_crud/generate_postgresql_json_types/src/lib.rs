@@ -538,6 +538,7 @@ pub fn generate_postgresql_json_types(
             let element_upper_camel_case = naming::ElementUpperCamelCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
+            let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -1982,7 +1983,7 @@ pub fn generate_postgresql_json_types(
                         let into_iter_token_stream = quote::quote!{
                             <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
                                 #ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream
-                            >>::test_cases()
+                            >>::test_cases(&#read_only_ids_snake_case)
                             .into_iter()
                         };
                         let generate_acc_token_stream = |

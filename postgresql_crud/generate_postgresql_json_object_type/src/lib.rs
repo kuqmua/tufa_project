@@ -200,6 +200,7 @@ pub fn generate_postgresql_json_object_type(
         let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
         let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
+        let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
         let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
         let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
         let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
@@ -4283,7 +4284,7 @@ pub fn generate_postgresql_json_object_type(
                                     #element_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
                                         <#element_type as postgresql_crud::PostgresqlJsonType>::ReadInner
                                     >
-                                >::test_cases() {
+                                >::test_cases(&#read_only_ids_snake_case) {
                                     #acc_snake_case.push(#ident_read_inner_upper_camel_case{
                                         #element_field_ident: Some(postgresql_crud::Value { #value_snake_case: #element_field_ident }),
                                         #(#default_token_stream)*
@@ -4303,7 +4304,7 @@ pub fn generate_postgresql_json_object_type(
                         quote::quote!{
                             let mut acc = <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
                                 <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
-                            >>::test_cases().into_iter().map(|element|Some(
+                            >>::test_cases(&#read_only_ids_snake_case).into_iter().map(|element|Some(
                                 element
                             )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
                             acc.push(None);
@@ -4515,7 +4516,7 @@ pub fn generate_postgresql_json_object_type(
                                 #element_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
                                     <#element_type as postgresql_crud::PostgresqlJsonType>::ReadInner
                                 >
-                            >::test_cases() {
+                            >::test_cases(&#read_only_ids_snake_case) {
                                 #acc_snake_case.push(#ident_with_id_read_inner_standart_not_null_upper_camel_case {
                                     #element_field_ident: Some(postgresql_crud::Value { #value_snake_case: #element_field_ident }),
                                     #id_default_field_ident_some_value_token_stream

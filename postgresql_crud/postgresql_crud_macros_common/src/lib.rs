@@ -931,11 +931,15 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let self_upper_camel_case = naming::SelfUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
         impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
-            fn #test_cases_snake_case() -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {
+            fn #test_cases_snake_case(
+                #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_only_ids_upper_camel_case
+            ) -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {
                 #test_cases_content_token_stream
             }
             fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_upper_camel_case {
@@ -965,11 +969,15 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let self_upper_camel_case = naming::SelfUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
         impl #import_path::tests::#postgresql_json_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
-            fn #test_cases_snake_case() -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_inner_upper_camel_case> {
+            fn #test_cases_snake_case(
+                #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_only_ids_upper_camel_case
+            ) -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_inner_upper_camel_case> {
                 #test_cases_content_token_stream
             }
             fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_upper_camel_case {
@@ -1522,10 +1530,11 @@ pub fn generate_standart_nullable_test_vec_token_stream(
     let test_cases_snake_case = naming::TestCasesSnakeCase;
     let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         let mut #acc_snake_case = <#ident_standart_not_null_upper_camel_case as crate::tests::#postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case<
             #read_inner_token_stream
-        >>::#test_cases_snake_case()
+        >>::#test_cases_snake_case(&#read_only_ids_snake_case)
         .into_iter()
         .map(|#element_snake_case|Some(#element_snake_case))
         .collect::<std::vec::Vec<

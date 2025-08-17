@@ -1138,6 +1138,7 @@ pub fn generate_postgresql_types(
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let test_cases_snake_case = naming::TestCasesSnakeCase;
+            let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
             let hour_snake_case = naming::HourSnakeCase;
             let min_snake_case = naming::MinSnakeCase;
@@ -6229,7 +6230,7 @@ pub fn generate_postgresql_types(
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
                                     <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
                                         <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
-                                    >>::#test_cases_snake_case()
+                                    >>::#test_cases_snake_case(&#read_only_ids_snake_case)
                                     .into_iter()
                                     .map(|element|vec![element])
                                     .collect::<std::vec::Vec<
@@ -6239,7 +6240,7 @@ pub fn generate_postgresql_types(
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
                                     let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
                                         <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
-                                    >>::#test_cases_snake_case()
+                                    >>::#test_cases_snake_case(&#read_only_ids_snake_case)
                                     .into_iter()
                                     .map(|element|vec![Some(element)])
                                     .collect::<std::vec::Vec<
@@ -6253,7 +6254,7 @@ pub fn generate_postgresql_types(
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
                                     let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
                                         <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
-                                    >>::#test_cases_snake_case()
+                                    >>::#test_cases_snake_case(&#read_only_ids_snake_case)
                                     .into_iter()
                                     .map(|element|Some(vec![element]))
                                     .collect::<std::vec::Vec<
@@ -6267,7 +6268,7 @@ pub fn generate_postgresql_types(
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
                                     let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
                                         <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
-                                    >>::#test_cases_snake_case()
+                                    >>::#test_cases_snake_case(&#read_only_ids_snake_case)
                                     .into_iter()
                                     .map(|element|Some(vec![Some(element)]))
                                     .collect::<std::vec::Vec<

@@ -1,7 +1,9 @@
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases<T> {
     type Element: crate::PostgresqlType;
-    fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner>; //todo maybe make it an array
+    fn test_cases(
+        read_only_ids: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner>; //todo maybe make it an array
     fn read_new_or_try_new_unwraped_for_test(
         value: T,
     ) -> <Self::Element as crate::PostgresqlType>::Read;
@@ -13,7 +15,9 @@ pub trait PostgresqlTypeTestCases<T> {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases<T> {
     type Element: crate::PostgresqlJsonType;
-    fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::ReadInner>; //todo maybe make it an array
+    fn test_cases(
+        read_only_ids: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::ReadInner>; //todo maybe make it an array
     fn read_new_or_try_new_unwraped_for_test(
         value: T,
     ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
