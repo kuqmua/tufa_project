@@ -4627,9 +4627,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_ident_test_cases_snake_case =
-                        naming::parameter::SelfTestCasesSnakeCase::from_tokens(
-                            &field_ident
-                        );
+                        naming::parameter::SelfTestCasesSnakeCase::from_tokens(&field_ident);
                     let field_type = &element.syn_field.ty;
                     quote::quote! {
                         let #field_ident_test_cases_snake_case = <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::#test_cases_snake_case(

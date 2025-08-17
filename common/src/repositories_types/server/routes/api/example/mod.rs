@@ -5025,8 +5025,9 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<AnimalAsNotNullJsonbObjectR
     for AnimalAsNotNullJsonbObject
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>
-    {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
         let mut acc = vec![];
         for field_0 in <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner>>::test_cases(&read_only_ids.field_0) {
             acc.push(AnimalAsNotNullJsonbObjectReadInner { field_0: Some(postgresql_crud::Value { value: field_0 }), field_1: Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()) }) });
@@ -5074,8 +5075,9 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases<AnimalAsNotNullJsonbObj
     for AnimalAsNotNullJsonbObject
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds)
-    -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
         let mut acc = vec![];
         for field_0 in <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner>>::test_cases(&read_only_ids.field_0) {
             acc.push(AnimalAsNotNullJsonbObjectReadInner { field_0: Some(postgresql_crud::Value { value: field_0 }), field_1: Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()) }) });
@@ -5658,11 +5660,12 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<OptionAnimalAsNullableJsonb
     for OptionAnimalAsNullableJsonbObject
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>
-    {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
         match &read_only_ids.0 {
             Some(value) => <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::ReadInner>>::test_cases(
-                &value 
+                &value
             ).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
             None => vec![None]
         }
@@ -5702,11 +5705,12 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases<OptionAnimalAsNullableJ
     for OptionAnimalAsNullableJsonbObject
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds)
-    -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
         match &read_only_ids.0 {
             Some(value) => <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::ReadInner>>::test_cases(
-                &value 
+                &value
             ).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
             None => vec![None]
         }
@@ -6751,9 +6755,7 @@ impl postgresql_crud::PostgresqlJsonType
                     acc.push_str(&format!(
                         "jsonb_build_object('id','{id}',{})||",
                         {
-                            let 
-                            mut 
-                            acc = std::string::String::new();
+                            let mut acc = std::string::String::new();
                             for element in element.fields.0.to_vec() {
                                 match &element {
                                     AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
@@ -6883,8 +6885,9 @@ impl
     > for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>
-    {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
         // vec![]
         //here
         read_only_ids
@@ -6895,8 +6898,8 @@ impl
                 vec!{
                     crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
                         id: Some(postgresql_crud::Value { value: element.id.clone() }),
-                        field_0: Some(postgresql_crud::Value { 
-                            value: 
+                        field_0: Some(postgresql_crud::Value {
+                            value:
                             <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
                                 <
                                     <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
@@ -6906,7 +6909,7 @@ impl
                             )
                         }),
                         field_1: Some(postgresql_crud::Value {
-                            value: 
+                            value:
                             <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
                                 <
                                     <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
@@ -6962,7 +6965,7 @@ impl
                         let mut acc = vec![];
                         if let Some(value) = element.field_0 {
                             acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
-                                value: 
+                                value:
                                 <
                                     postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
                                     as
@@ -6974,7 +6977,7 @@ impl
                         }
                         if let Some(value) = element.field_1 {
                             acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
-                                value: 
+                                value:
                                 <
                                     postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
                                     as
@@ -7001,8 +7004,9 @@ impl
     > for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
 {
     type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds)
-    -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
+    fn test_cases(
+        read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+    ) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
         //here
         // vec![]
         read_only_ids
@@ -7013,8 +7017,8 @@ impl
                 vec!{
                     crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
                         id: Some(postgresql_crud::Value { value: element.id.clone() }),
-                        field_0: Some(postgresql_crud::Value { 
-                            value: 
+                        field_0: Some(postgresql_crud::Value {
+                            value:
                             <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
                                 <
                                     <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
@@ -7024,7 +7028,7 @@ impl
                             )
                         }),
                         field_1: Some(postgresql_crud::Value {
-                            value: 
+                            value:
                             <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
                                 <
                                     <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
@@ -7080,7 +7084,7 @@ impl
                         let mut acc = vec![];
                         if let Some(value) = element.field_0 {
                             acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
-                                value: 
+                                value:
                                 <
                                     postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
                                     as
@@ -7092,7 +7096,7 @@ impl
                         }
                         if let Some(value) = element.field_1 {
                             acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
-                                value: 
+                                value:
                                 <
                                     postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
                                     as

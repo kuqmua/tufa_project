@@ -1869,10 +1869,10 @@ pub fn generate_where_element_filters(
                     &struct_additional_fields_token_stream,
                 );
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-                &should_add_declaration_of_struct_ident_generic,
-                &ident,
-                &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-            );
+                    &should_add_declaration_of_struct_ident_generic,
+                    &ident,
+                    &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                );
                 let impl_postgresql_type_where_filter_token_stream =
                     generate_impl_postgresql_type_where_filter_token_stream(
                         &FilterType::PostgresqlJsonType,
