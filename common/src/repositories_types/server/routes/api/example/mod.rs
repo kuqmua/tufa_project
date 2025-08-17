@@ -6726,78 +6726,56 @@ impl postgresql_crud::PostgresqlJsonType
         increment: &mut std::primitive::u64,
     ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         //here
-        println!("mEOW {value:#?}");
-        // todo!()
-        // match &value.0 {
-        //     Some(value) => match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, field_ident, column_name_and_maybe_field_getter, increment) {
-        //         Ok(value) => Ok(value),
-        //         Err(error) => Err(error),
-        //     },
-        //     None => {
-        //         let mut acc = std::string::String::default();
-        //         acc.push_str(&format!("'field_0','null'::jsonb,"));
-        //         acc.push_str(&format!("'field_1','null'::jsonb,"));
-        //         let _ = acc.pop();
-        //         Ok(format!("jsonb_build_object({acc})"))
-        //     }
-        // }
-
-        // VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
-        //     #[serde(skip_serializing_if = "Vec::is_empty")]
-        //     create: std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>,
-        //     #[serde(skip_serializing_if = "Vec::is_empty")]
-        //     update: std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>,
-        //     #[serde(skip_serializing_if = "Vec::is_empty")]
-        //     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
-        // }
-        // Ok(format!(
-        //     "(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)",
-        //     {
-        //         let mut acc = std::string::String::new();
-        //         for element in value.update {
-        //             match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
-        //                 &AnimalWithIdAsNotNullJsonbObjectWithIdUpdate::new(postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-        //                     element
-        //                 ]).unwrap()),
-        //                 "elem",
-        //                 column_name_and_maybe_field_getter,
-        //                 increment,
-        //             ) {
-        //                 Ok(value) => {
-        //                     acc.push_str(&format!("{value}||"));
-        //                 },
-        //                 Err(error) => {
-        //                     return Err(error);
-        //                 }
-        //             }
-        //         }
-        //         let _ = acc.pop();
-        //         let _ = acc.pop();
-        //         acc
-        //     }
-        // ))
         Ok(format!(
             "(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)",
             {
                 let mut acc = std::string::String::new();
                 for element in &value.update {
                     let id = element.id.get_inner();
-                    // match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
-                    //     &AnimalWithIdAsNotNullJsonbObjectWithIdUpdate::new(postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                    //         element
-                    //     ]).unwrap()),
-                    //     "elem",
-                    //     column_name_and_maybe_field_getter,
-                    //     increment,
-                    // ) {
-                    //     Ok(value) => {
-                    //         acc.push_str(&format!("{value}||"));
-                    //     },
-                    //     Err(error) => {
-                    //         return Err(error);
-                    //     }
-                    // }
-                    acc.push_str(&format!("jsonb_build_object('id', '{id}', 'field_0', 'null'::jsonb, 'field_1', 'null'::jsonb)||"));
+                    acc.push_str(&format!(
+                        "jsonb_build_object('id','{id}',{})||",
+                        {
+                            let 
+                            mut 
+                            acc = std::string::String::new();
+                            for element in element.fields.0.to_vec() {
+                                match &element {
+                                    AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
+                                        match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                                            &value.value,
+                                            &"field_0",
+                                            &format!("{column_name_and_maybe_field_getter}->'field_0'"),
+                                            increment
+                                        ) {
+                                            Ok(value) => {
+                                                acc.push_str(&value);
+                                            },
+                                            Err(error) => {
+                                                return Err(error);
+                                            }
+                                        }
+                                    },
+                                    AnimalAsNotNullJsonbObjectUpdateElement::Field1(value) => {
+                                        match <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                                            &value.value,
+                                            &"field_1",
+                                            &format!("{column_name_and_maybe_field_getter}->'field_1'"),
+                                            increment
+                                        ) {
+                                            Ok(value) => {
+                                                acc.push_str(&value);
+                                            },
+                                            Err(error) => {
+                                                return Err(error);
+                                            }
+                                        }
+                                    },
+                                }
+                            }
+                            let _ = acc.pop();
+                            acc
+                        }
+                    ));
                 }
                 let _ = acc.pop();
                 let _ = acc.pop();
@@ -7073,10 +7051,8 @@ mod example_tests {
                             }
                         })
                         .collect::<std::vec::Vec<std::vec::Vec<crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner>>>();
-                    //
 
                     for index in 0..column_155_test_cases.len() {
-                        println!("1111");
                         let column_155_some_value_update = match column_155_test_cases.get(index) {
                             Some(value) => Some(postgresql_crud::Value { value: 
                                 <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(value.clone())
@@ -7085,7 +7061,6 @@ mod example_tests {
                                 value: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::into_inner(<<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element())),
                             }),
                         };
-                        println!("2222");
                         // let column_155_some_value_read = match column_155_test_cases.get(index) {
                         //     Some(value) => Some(postgresql_crud::Value {
                         //         value: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::normalize(<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner>>::read_new_or_try_new_unwraped_for_test(value.clone())),
@@ -7098,7 +7073,6 @@ mod example_tests {
                         assert_eq!(
                             read_only_ids_returned_from_create_one.clone(),
                             {
-                                println!("77777");
                                 let f = super::Example::try_update_one(
                                     &url,
                                     super::ExampleUpdateOneParameters {
@@ -7111,12 +7085,10 @@ mod example_tests {
                                     }
                                 )
                                 .await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52");
-                                println!("@@@{f:#?}");
                                 f
                             },
                             "try_update_one result different"
                         );
-                        println!("3333");
                         // assert_eq!(
                         //     super::ExampleRead {
                         //         primary_key_column: match some_value_read_only_ids_returned_from_create_one.clone() {
