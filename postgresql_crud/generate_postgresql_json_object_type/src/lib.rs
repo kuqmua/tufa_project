@@ -185,6 +185,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
+            let element_snake_case = naming::ElementSnakeCase;
+            let read_upper_camel_case = naming::ReadUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -3665,6 +3667,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let cfg_test_token_stream = quote::quote! {#[cfg(test)]};
             let (impl_postgresql_type_test_cases_for_ident_token_stream, impl_postgresql_json_type_test_cases_for_ident_token_stream) = {
                 let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
+                //todo maybe put into function and reuse function call here?
                 let test_cases_content_token_stream = match &element.postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -3731,9 +3734,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element.ty);
+                                quote::quote! {
+                                    #field_ident: Some(postgresql_crud::Value {
+                                        value: #field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream into_inner(
+                                            <#field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        ),
+                                    }),
+                                }
+                            });
                             quote::quote! {
-                                //todo
-                                vec![]
+                                #read_only_ids_snake_case.0.iter().map(|#element_snake_case| {
+                                    vec![<#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner {
+                                        id: Some(postgresql_crud::Value { #value_snake_case: #element_snake_case.id.clone() }),
+                                        #(#content_token_stream),*
+                                    }]
+                                })
+                                .collect()
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -3783,11 +3804,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = get_vec_syn_field(&is_standart_with_id_true).iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let type_as_postgresql_json_type_subtype_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&element.ty, &PostgresqlJsonTypeSubtype::Read);
+                                quote::quote! {
+                                    #field_ident: match element.#field_ident {
+                                        Some(value) => Some(postgresql_crud::Value {
+                                            value: #type_as_postgresql_json_type_subtype_token_stream new(value.value),
+                                        }),
+                                        None => None,
+                                    }
+                                }
+                            });
                             quote::quote! {
-                                // println!("meow");
-                                todo!()
-                                // vec![]
-                                // <Self::Element as postgresql_crud::PostgresqlType>::Read::new(true)
+                                let mut acc = vec![];
+                                for element in value {
+                                    acc.push(<#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Read {
+                                        #(#content_token_stream),*
+                                    });
+                                }
+                                acc
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
