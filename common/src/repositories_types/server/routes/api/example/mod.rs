@@ -6885,7 +6885,40 @@ impl
     type Element = Self;
     fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>
     {
-        vec![]
+        // vec![]
+        //here
+        read_only_ids
+            .0
+            .iter()
+            .map(|element| {
+                println!("KKK{element:#?}");
+                vec!{
+                    crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                        id: Some(postgresql_crud::Value { value: element.id.clone() }),
+                        field_0: Some(postgresql_crud::Value { 
+                            value: 
+                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
+                                <
+                                    <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
+                                    as
+                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            )
+                        }),
+                        field_1: Some(postgresql_crud::Value {
+                            value: 
+                            <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
+                                <
+                                    <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
+                                    as
+                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            )
+                        }),
+                    }
+                }
+            })
+            .collect()
     }
     fn read_new_or_try_new_unwraped_for_test(
         value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner,
@@ -6970,7 +7003,40 @@ impl
     type Element = Self;
     fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds)
     -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
-        vec![]
+        //here
+        // vec![]
+        read_only_ids
+            .0
+            .iter()
+            .map(|element| {
+                println!("KKK{element:#?}");
+                vec!{
+                    crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                        id: Some(postgresql_crud::Value { value: element.id.clone() }),
+                        field_0: Some(postgresql_crud::Value { 
+                            value: 
+                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
+                                <
+                                    <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
+                                    as
+                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            )
+                        }),
+                        field_1: Some(postgresql_crud::Value {
+                            value: 
+                            <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
+                                <
+                                    <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
+                                    as
+                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            )
+                        }),
+                    }
+                }
+            })
+            .collect()
     }
     fn read_new_or_try_new_unwraped_for_test(
         value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner,
@@ -7026,47 +7092,13 @@ mod example_tests {
                     println!("read_only_ids_returned_from_create_one {read_only_ids_returned_from_create_one:#?}");
                     let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: read_only_ids_returned_from_create_one.primary_key_column.clone() });
                     assert_eq!(super::ExampleRead { primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(), column_155: None }, super::Example::try_read_one(&url, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(), select: select_primary_key.clone() } },).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"), "try_read_one result different after try_create_one");
-                    // let column_155_test_cases: Vec<Vec<crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner>>
-                    //  =
-                    //  <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<
-                    //     <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner,
-                    // >>::test_cases();
-
-                    //: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner
-                    //here
-                    let column_155_test_cases = read_only_ids_returned_from_create_one
-                        .column_155
-                        .0
-                        .iter()
-                        .map(|element| {
-                            println!("KKK{element:#?}");
-                            vec!{
-                                crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
-                                    id: Some(postgresql_crud::Value { value: element.id.clone() }),
-                                    field_0: Some(postgresql_crud::Value { 
-                                        value: 
-                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
-                                            <
-                                                <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
-                                                as
-                                                postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                            >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        )
-                                    }),
-                                    field_1: Some(postgresql_crud::Value {
-                                        value: 
-                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(
-                                            <
-                                                <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read
-                                                as
-                                                postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                            >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        )
-                                    }),
-                                }
-                            }
-                        })
-                        .collect::<std::vec::Vec<std::vec::Vec<crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner>>>();
+                    
+                    
+                    
+                    let column_155_test_cases = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<
+                        <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner,
+                    >>::test_cases(&read_only_ids_returned_from_create_one.column_155);
+                    println!("{column_155_test_cases:#?}");
 
                     for index in 0..column_155_test_cases.len() {
                         let column_155_some_value_update = match column_155_test_cases.get(index) {
