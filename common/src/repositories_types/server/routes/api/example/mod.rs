@@ -7042,12 +7042,73 @@ impl
         value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner,
     ) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
         println!("mEOW3");
-        todo!()
+        // todo!()
+        VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::new({
+            let mut acc = vec![];
+            for element in value {
+                acc.push(
+                    AnimalWithIdAsNotNullJsonbObjectWithIdRead {
+                        id: match element.id {
+                            Some(value) => Some(postgresql_crud::Value{ value: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringRead::new(value.value)}),
+                            None => None
+                        },
+                        field_0: match element.field_0 {
+                            Some(value) => Some(postgresql_crud::Value{ value: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumberRead::new(value.value)}),
+                            None => None
+                        },
+                        field_1: match element.field_1 {
+                            Some(value) => Some(postgresql_crud::Value{ value: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumberRead::new(value.value)}),
+                            None => None
+                        },
+                    }
+                );
+            }
+            acc
+        })
     }
     fn update_new_or_try_new_unwraped_for_test(
         value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner,
     ) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
         println!("mEOW4");
-        todo!()
+        // todo!()
+        VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate::try_new(
+            vec![],
+            value.into_iter().map(|element|{
+                AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+                    id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.unwrap().value),//todo Update instead of origin?
+                    fields: AnimalAsNotNullJsonbObjectUpdate::new(postgresql_crud::NotEmptyUniqueEnumVec::try_new({
+                        let mut acc = vec![];
+                        if let Some(value) = element.field_0 {
+                            acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
+                                value: 
+                                <
+                                    postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                                    as
+                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                    >
+                                >::update_new_or_try_new_unwraped_for_test(value.value)
+                            }));
+                        }
+                        if let Some(value) = element.field_1 {
+                            acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
+                                value: 
+                                <
+                                    postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                                    as
+                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                    >
+                                >::update_new_or_try_new_unwraped_for_test(value.value)
+                            }));
+                        }
+                        acc
+                    }).unwrap())
+                }
+            }).collect::<std::vec::Vec<
+                crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement
+            >>(),
+            vec![],
+        ).unwrap()
     }
 }
