@@ -1,13 +1,9 @@
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MedrxivStructForParsing {
     #[serde(rename = "item", default)]
     pub items: Vec<MedrxivStructForParsingItem>,
 }
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct MedrxivStructForParsingItem {
     pub title: Option<String>,
     pub link: Option<String>,

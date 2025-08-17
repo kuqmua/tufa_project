@@ -40,9 +40,7 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
             Ok(Self::EoVecErrorOccurence)
         } else if value == "eo_hashmap_key_std_string_string_value_to_std_string_string" {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringString)
-        } else if value
-            == "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
-        {
+        } else if value == "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize" {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize)
         } else if value == "eo_hashmap_key_std_string_string_value_error_occurence" {
             Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
@@ -74,61 +72,35 @@ impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                 }
             } //other attributes are not for this proc_macro
         }
-        option_attribute.map_or_else(
-            || Err("option attribute is None".to_string()),
-            |value| Ok(value),
-        )
+        option_attribute.map_or_else(|| Err("option attribute is None".to_string()), |value| Ok(value))
     }
 }
-impl crate::attribute_ident_stringified::AttributeIdentStringified
-    for ErrorOccurenceFieldAttribute
-{
+impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
     fn attribute_ident_stringified(&self) -> &str {
         match self {
             Self::EoToStdStringString => "eo_to_std_string_string",
-            Self::EoToStdStringStringSerializeDeserialize => {
-                "eo_to_std_string_string_serialize_deserialize"
-            }
+            Self::EoToStdStringStringSerializeDeserialize => "eo_to_std_string_string_serialize_deserialize",
             Self::EoErrorOccurence => "eo_error_occurence",
             Self::EoVecToStdStringString => "eo_vec_to_std_string_string",
-            Self::EoVecToStdStringStringSerializeDeserialize => {
-                "eo_vec_to_std_string_string_serialize_deserialize"
-            }
+            Self::EoVecToStdStringStringSerializeDeserialize => "eo_vec_to_std_string_string_serialize_deserialize",
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
-            Self::EoHashMapKeyStdStringStringValueToStdStringString => {
-                "eo_hashmap_key_std_string_string_value_to_std_string_string"
-            }
-            Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
-            }
-            Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                "eo_hashmap_key_std_string_string_value_error_occurence"
-            }
+            Self::EoHashMapKeyStdStringStringValueToStdStringString => "eo_hashmap_key_std_string_string_value_to_std_string_string",
+            Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize",
+            Self::EoHashMapKeyStdStringStringValueErrorOccurence => "eo_hashmap_key_std_string_string_value_error_occurence",
         }
     }
 }
 impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 pub fn attribute_view(attribute: &str) -> std::string::String {
     format!("attribute #[{attribute}]")
 }
 
-pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
-    value: &'a syn::Field,
-    std_snake_case: &naming::StdSnakeCase,
-    std_string_string: &token_patterns::StdStringString,
-) -> &'a syn::GenericArgument {
+pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(value: &'a syn::Field, std_snake_case: &naming::StdSnakeCase, std_string_string: &token_patterns::StdStringString) -> &'a syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
         &value.path.segments
     } else {
@@ -136,11 +108,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     };
     assert!(segments.len() == 3, "segments.len() != 3");
     let first_segment = segments.iter().next().expect("no .next()) element");
-    assert!(
-        first_segment.ident == std_snake_case.to_string(),
-        "first_segment.ident != {std_snake_case} {}",
-        first_segment.ident
-    );
+    assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
     match first_segment.arguments {
         syn::PathArguments::None => (),
         syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
@@ -150,11 +118,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
     {
         let collections_snake_case = naming::CollectionsSnakeCase;
-        assert!(
-            second_segment.ident == collections_snake_case.to_string(),
-            "second_segment.ident != {collections_snake_case} {}",
-            second_segment.ident
-        );
+        assert!(second_segment.ident == collections_snake_case.to_string(), "second_segment.ident != {collections_snake_case} {}", second_segment.ident);
     };
     match second_segment.arguments {
         syn::PathArguments::None => (),
@@ -165,15 +129,9 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
     let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
     {
         let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
-        assert!(
-            third_segment.ident == hashmap_upper_camel_case.to_string(),
-            "third_segment.ident != {hashmap_upper_camel_case} {}",
-            third_segment.ident
-        );
+        assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
     };
-    let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) =
-        &third_segment.arguments
-    else {
+    let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments else {
         panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
     };
     assert!(args.len() == 2, "args.len() != 2");
@@ -181,17 +139,11 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(
         let first_argument = args.iter().next().expect("args.iter().next() is None");
         quote::quote! {#first_argument}.to_string()
     };
-    assert!(
-        quote::quote! {#std_string_string}.to_string() == first_argument_stringified,
-        "{} != {first_argument_stringified}",
-        quote::quote! {#std_string_string}
-    );
+    assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "{} != {first_argument_stringified}", quote::quote! {#std_string_string});
     args.iter().nth(1).expect("args.iter().nth(1) is None")
 }
 
-pub fn generate_serialize_deserialize_version_of_named_syn_variant(
-    value: &syn::Variant,
-) -> proc_macro2::TokenStream {
+pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant) -> proc_macro2::TokenStream {
     let element_ident = &value.ident;
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
@@ -245,8 +197,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
                 match first_segment.arguments {
                     syn::PathArguments::None => (),
-                    syn::PathArguments::AngleBracketed(_)
-                    | syn::PathArguments::Parenthesized(_) => panic!("first_segment.arguments != PathArguments::None")
+                    syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => panic!("first_segment.arguments != PathArguments::None"),
                 }
                 let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
                 {
@@ -255,8 +206,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 };
                 match second_segment.arguments {
                     syn::PathArguments::None => (),
-                    syn::PathArguments::AngleBracketed(_)
-                    | syn::PathArguments::Parenthesized(_) => panic!("second_segment.arguments != PathArguments::None")
+                    syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => panic!("second_segment.arguments != PathArguments::None"),
                 }
                 let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
                 {

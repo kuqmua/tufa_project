@@ -3,21 +3,10 @@ fn check_specific_dependency_version_usage() {
     let cargo_toml = "../Cargo.toml";
     let cannot_open_file = "cannot open ";
     let file_error = " file, error: ";
-    let mut buf_reader =
-        std::io::BufReader::new(std::fs::File::open(cargo_toml).unwrap_or_else(|error| {
-            panic!("{cannot_open_file}{cargo_toml}{file_error}\"{error}\"")
-        }));
+    let mut buf_reader = std::io::BufReader::new(std::fs::File::open(cargo_toml).unwrap_or_else(|error| panic!("{cannot_open_file}{cargo_toml}{file_error}\"{error}\"")));
     let mut cargo_toml_workspace_content = std::string::String::new();
-    let _: usize =
-        std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content)
-            .unwrap_or_else(|error| {
-                panic!("cannot read_to_string from {cargo_toml}{file_error}\"{error}\"")
-            });
-    let toml_table_map = cargo_toml_workspace_content
-        .parse::<toml::Table>()
-        .unwrap_or_else(|error| {
-            panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{error}\"")
-        });
+    let _: usize = std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content).unwrap_or_else(|error| panic!("cannot read_to_string from {cargo_toml}{file_error}\"{error}\""));
+    let toml_table_map = cargo_toml_workspace_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{error}\""));
     let toml_table_workspace_members_map_vec = toml_table_map.get("workspace").map_or_else(
         || {
             panic!("no workspace in toml_table_map");
@@ -29,9 +18,7 @@ fn check_specific_dependency_version_usage() {
                         panic!("no members in toml_table_workspace_map");
                     },
                     |toml_table_workspace_map_value| {
-                        if let toml::Value::Array(toml_table_workspace_members_map_vec) =
-                            toml_table_workspace_map_value
-                        {
+                        if let toml::Value::Array(toml_table_workspace_members_map_vec) = toml_table_workspace_map_value {
                             toml_table_workspace_members_map_vec
                                 .iter()
                                 .map(|path_value| {
@@ -68,13 +55,15 @@ fn check_specific_dependency_version_usage() {
                         .iter()
                         .filter_map(|(crate_name, crate_value)| {
                             if let toml::Value::Table(crate_value_map) = crate_value {
-                                crate_value_map.get("version").and_then(|version_value| if let toml::Value::String(version) = version_value {
-                                    for symbol in &forbidden_dependency_logic_symbols {
-                                        assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
+                                crate_value_map.get("version").and_then(|version_value| {
+                                    if let toml::Value::String(version) = version_value {
+                                        for symbol in &forbidden_dependency_logic_symbols {
+                                            assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
+                                        }
+                                        if version.starts_with('=') { None } else { Some(format!("{member} {toml_key} {crate_name} {version}")) }
+                                    } else {
+                                        panic!("{crate_name} version_value is not a toml::Value::String {member}");
                                     }
-                                    if version.starts_with('=') { None } else { Some(format!("{member} {toml_key} {crate_name} {version}")) }
-                                } else {
-                                    panic!("{crate_name} version_value is not a toml::Value::String {member}");
                                 })
                             } else {
                                 panic!("{crate_name} crate_value is not a toml::Value::Table {member}");
@@ -82,7 +71,7 @@ fn check_specific_dependency_version_usage() {
                         })
                         .collect::<Vec<std::string::String>>()
                         .into_iter()
-                        .for_each(|element|{
+                        .for_each(|element| {
                             acc.push(element);
                         });
                 } else {
@@ -93,22 +82,12 @@ fn check_specific_dependency_version_usage() {
         is_logic_executed = true;
         acc
     });
-    assert!(
-        is_logic_executed,
-        "logic is not executed, please check tokenized crate name(input parameter for check_specific_dependency_version_usage!(HERE)"
-    );
+    assert!(is_logic_executed, "logic is not executed, please check tokenized crate name(input parameter for check_specific_dependency_version_usage!(HERE)");
     if !unspecified_dependencies.is_empty() {
-        let mut error_message = std::string::String::from(
-            "must use concrete versions with '=' symbol(like \"=1.2.3\") for: ",
-        );
-        unspecified_dependencies
-            .iter()
-            .enumerate()
-            .for_each(|(index, unspecified_dependency)| {
-                error_message.push_str(&format!("\n{}. {unspecified_dependency}", index + 1));
-            });
-        panic!(
-            "{error_message}\nMORE INFORMATION: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html"
-        );
+        let mut error_message = std::string::String::from("must use concrete versions with '=' symbol(like \"=1.2.3\") for: ");
+        unspecified_dependencies.iter().enumerate().for_each(|(index, unspecified_dependency)| {
+            error_message.push_str(&format!("\n{}. {unspecified_dependency}", index + 1));
+        });
+        panic!("{error_message}\nMORE INFORMATION: https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html");
     }
 }

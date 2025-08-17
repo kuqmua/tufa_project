@@ -28,11 +28,9 @@ pub enum ErrorNamedOne {
         #[eo_hashmap_key_std_string_string_value_to_std_string_string]
         hashmap_string_string: std::collections::HashMap<std::string::String, DisplayStruct>,
         #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]
-        hashmap_string_serde:
-            std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
+        hashmap_string_serde: std::collections::HashMap<std::string::String, SerializeDeserializeStruct>,
         #[eo_hashmap_key_std_string_string_value_error_occurence]
-        hashmap_string_error_occurence:
-            std::collections::HashMap<std::string::String, ErrorUnnamedOne>,
+        hashmap_string_error_occurence: std::collections::HashMap<std::string::String, ErrorUnnamedOne>,
 
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -85,41 +83,14 @@ impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {
 
 fn main() {
     let error = ErrorNamedOne::Variant {
-        eo_display_field: DisplayStruct {
-            display: std::string::String::from("value"),
-            something: true,
-        },
-        eo_serde: SerializeDeserializeStruct {
-            one: std::string::String::from("value"),
-            two: true,
-            three: 42,
-        },
+        eo_display_field: DisplayStruct { display: std::string::String::from("value"), something: true },
+        eo_serde: SerializeDeserializeStruct { one: std::string::String::from("value"), two: true, three: 42 },
         eo_error_occurence_field: ErrorNamedTwo::Variant {
             eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
             code_occurence: error_occurence_lib::code_occurence!(),
         },
-        eo_vec_display_field: vec![
-            DisplayStruct {
-                display: std::string::String::from("08708789"),
-                something: true,
-            },
-            DisplayStruct {
-                display: std::string::String::from("7565757"),
-                something: true,
-            },
-        ],
-        eo_vec_serde: vec![
-            SerializeDeserializeStruct {
-                one: std::string::String::from("value"),
-                two: true,
-                three: 42,
-            },
-            SerializeDeserializeStruct {
-                one: std::string::String::from("97697697"),
-                two: false,
-                three: 422,
-            },
-        ],
+        eo_vec_display_field: vec![DisplayStruct { display: std::string::String::from("08708789"), something: true }, DisplayStruct { display: std::string::String::from("7565757"), something: true }],
+        eo_vec_serde: vec![SerializeDeserializeStruct { one: std::string::String::from("value"), two: true, three: 42 }, SerializeDeserializeStruct { one: std::string::String::from("97697697"), two: false, three: 422 }],
         eo_vec_error_occurence_field: vec![
             ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
                 eo_display_with_serialize_deserialize_field: std::string::String::from("value"),
@@ -131,20 +102,8 @@ fn main() {
             }),
         ],
         hashmap_string_string: std::collections::HashMap::from([
-            (
-                std::string::String::from("kesdfsfdsfsd"),
-                DisplayStruct {
-                    display: std::string::String::from("vasfdsdfsdflue"),
-                    something: true,
-                },
-            ),
-            (
-                std::string::String::from("ksdfsdfsdfsdfey"),
-                DisplayStruct {
-                    display: std::string::String::from("valsfdsfdsfdsue"),
-                    something: true,
-                },
-            ),
+            (std::string::String::from("kesdfsfdsfsd"), DisplayStruct { display: std::string::String::from("vasfdsdfsdflue"), something: true }),
+            (std::string::String::from("ksdfsdfsdfsdfey"), DisplayStruct { display: std::string::String::from("valsfdsfdsfdsue"), something: true }),
         ]),
         hashmap_string_serde: std::collections::HashMap::from([
             (
@@ -155,31 +114,20 @@ fn main() {
                     three: 42,
                 },
             ),
-            (
-                std::string::String::from("ksdfgdsfgsdfgey"),
-                SerializeDeserializeStruct {
-                    one: std::string::String::from("valsdfgdsgdue"),
-                    two: true,
-                    three: 42,
-                },
-            ),
+            (std::string::String::from("ksdfgdsfgsdfgey"), SerializeDeserializeStruct { one: std::string::String::from("valsdfgdsgdue"), two: true, three: 42 }),
         ]),
         hashmap_string_error_occurence: std::collections::HashMap::from([
             (
                 std::string::String::from("ksdfgadsfgsdfgdfgey"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
-                    eo_display_with_serialize_deserialize_field: std::string::String::from(
-                        "vasdfgdgdfglue",
-                    ),
+                    eo_display_with_serialize_deserialize_field: std::string::String::from("vasdfgdgdfglue"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }),
             ),
             (
                 std::string::String::from("kesdfgsdgfdfgy"),
                 ErrorUnnamedOne::Something(ErrorNamedTwo::Variant {
-                    eo_display_with_serialize_deserialize_field: std::string::String::from(
-                        "valsdfgdsafgdsgue",
-                    ),
+                    eo_display_with_serialize_deserialize_field: std::string::String::from("valsdfgdsafgdsgue"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 }),
             ),
@@ -189,21 +137,13 @@ fn main() {
     };
     println!("{error}");
     let e_serialize_deserialize_version = error.into_serialize_deserialize_version();
-    println!(
-        "--------------------------------------------------------------------------------------------------"
-    );
+    println!("--------------------------------------------------------------------------------------------------");
     println!("{e_serialize_deserialize_version}");
-    let e_serialize_deserialize_version_json_string =
-        serde_json::to_string(&e_serialize_deserialize_version).unwrap();
+    let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).unwrap();
     println!("{e_serialize_deserialize_version_json_string}");
-    println!(
-        "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
-    );
-    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize =
-        serde_json::from_str(&e_serialize_deserialize_version_json_string).unwrap();
+    println!("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize = serde_json::from_str(&e_serialize_deserialize_version_json_string).unwrap();
     println!("{e_serialize_deserialize_version_deserialized}");
-    println!(
-        "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    );
+    println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }
 // ///////////

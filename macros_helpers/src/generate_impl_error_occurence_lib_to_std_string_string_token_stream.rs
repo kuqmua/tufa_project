@@ -1,9 +1,4 @@
-pub fn generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-    impl_generics_token_stream: &dyn quote::ToTokens,
-    ident: &dyn quote::ToTokens,
-    ident_generics_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_error_occurence_lib_to_std_string_string_token_stream(impl_generics_token_stream: &dyn quote::ToTokens, ident: &dyn quote::ToTokens, ident_generics_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let error_occurence_lib_snake_case = naming::ErrorOccurenceLibSnakeCase;
     let to_std_string_string_upper_camel_case = naming::ToStdStringStringUpperCamelCase;
     let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;

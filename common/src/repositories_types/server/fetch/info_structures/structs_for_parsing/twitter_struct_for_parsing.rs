@@ -1,14 +1,10 @@
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterStructForParsing {
     #[serde(rename = "item", default)]
     pub items: Vec<TwitterStructForParsingItem>,
     pub image: TwitterStructForParsingImage,
 }
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterStructForParsingImage {
     //title
     //link
@@ -16,9 +12,7 @@ pub struct TwitterStructForParsingImage {
     //height
     pub url: Option<String>,
 }
-#[derive(
-    Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize,
-)]
+#[derive(Default, Debug, Clone, PartialEq, Eq, serde_derive::Serialize, serde_derive::Deserialize)]
 pub struct TwitterStructForParsingItem {
     pub title: Option<String>,
     pub link: Option<String>,

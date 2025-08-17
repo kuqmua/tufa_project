@@ -80,25 +80,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["non", "existing", "primary", "keys"],
     ["non", "existing", "primary", "keys", "and", "rollback"],
     ["commit", "failed"],
-    [
-        "operation",
-        "done",
-        "but",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "failed"
-    ],
+    ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed"],
     ["app", "state"],
     ["column", "select"],
     ["options", "try", "from", "sqlx", "row"],
@@ -106,93 +88,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["primary", "key", "try", "from", "sqlx", "row"],
     ["extraction", "result"],
     ["serde", "json", "to", "string"],
-    [
-        "operation",
-        "done",
-        "but",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "failed",
-        "in",
-        "server"
-    ],
-    [
-        "operation",
-        "done",
-        "but",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "failed",
-        "in",
-        "client"
-    ],
-    [
-        "operation",
-        "done",
-        "but",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "failed",
-        "in",
-        "client",
-        "error",
-        "unnamed"
-    ],
-    [
-        "operation",
-        "done",
-        "but",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "failed",
-        "in",
-        "client",
-        "many"
-    ],
+    ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "server"],
+    ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client"],
+    ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client", "error", "unnamed"],
+    ["operation", "done", "but", "primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "failed", "in", "client", "many"],
     ["no", "payload", "fields"],
     ["no", "payload", "parameters"],
     ["try", "extract", "value"],
@@ -206,23 +105,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["get", "axum", "http", "status", "code"],
     ["body", "bytes"],
     ["into", "response"],
-    [
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "try",
-        "from",
-        "primary",
-        "key",
-        "inner",
-        "type",
-        "with",
-        "serialize",
-        "deserialize",
-        "in",
-        "client"
-    ],
+    ["primary", "key", "inner", "type", "try", "from", "primary", "key", "inner", "type", "with", "serialize", "deserialize", "in", "client"],
     ["check", "commit"],
     ["check", "commit", "error", "named"],
     ["check", "body", "size"],
@@ -251,15 +134,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["common", "additional", "logic"],
     ["not", "unique", "field", "vec"],
     ["rollback", "error"],
-    [
-        "not",
-        "unique",
-        "primary",
-        "key",
-        "with",
-        "serialize",
-        "deserialize"
-    ],
+    ["not", "unique", "primary", "key", "with", "serialize", "deserialize"],
     ["not", "unique"],
     ["no", "payload", "fields", "primary", "key"],
     ["no", "primary", "keys"],
@@ -444,38 +319,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["filter"],
     ["empty", "column", "json", "reader"],
     ["not", "unique", "column", "json", "reader"],
-    [
-        "generate",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "from",
-        "vec"
-    ],
-    [
-        "generate",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "from",
-        "vec",
-        "error",
-        "named"
-    ],
-    [
-        "generate",
-        "postgresql",
-        "json",
-        "type",
-        "to",
-        "read",
-        "error",
-        "named"
-    ],
+    ["generate", "postgresql", "json", "type", "to", "read", "from", "vec"],
+    ["generate", "postgresql", "json", "type", "to", "read", "from", "vec", "error", "named"],
+    ["generate", "postgresql", "json", "type", "to", "read", "error", "named"],
     ["option", "to", "read"],
     ["option", "to", "update"],
     ["id"],
@@ -491,40 +337,20 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["field", "vec"],
     ["object", "acc"],
     ["std", "option", "option", "object", "acc"],
-    [
-        "create", "update", "delete", "check", "fields", "are", "empty"
-    ],
+    ["create", "update", "delete", "check", "fields", "are", "empty"],
     ["not", "unique", "id", "in", "json", "update", "array"],
     ["not", "unique", "id", "in", "json", "delete", "array"],
-    [
-        "not", "unique", "id", "in", "json", "update", "and", "delete", "arrays"
-    ],
+    ["not", "unique", "id", "in", "json", "update", "and", "delete", "arrays"],
     ["fields", "are", "empty"],
     ["wrap", "into", "jsonb", "build", "object"],
     ["generate", "jsonb", "set", "target"],
     ["generate", "jsonb", "set", "path"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "field", "ident"
-    ],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field",
-        "ident"
-    ],
+    ["column", "name", "and", "maybe", "field", "getter", "field", "ident"],
+    ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message", "field", "ident"],
     ["generate", "not", "unique", "field"],
     ["all", "fields", "are", "none"],
     ["self"],
-    [
-        "option",
-        "to",
-        "update",
-        "try",
-        "generate",
-        "postgresql",
-        "json",
-        "type",
-        "error",
-        "named"
-    ],
+    ["option", "to", "update", "try", "generate", "postgresql", "json", "type", "error", "named"],
     ["create", "query", "part"],
     ["create", "query", "bind"],
     ["select", "query", "part"],
@@ -532,9 +358,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["jsonb", "set", "target"],
     ["jsonb", "set", "path"],
     ["column", "name", "and", "maybe", "field", "getter"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "for", "error", "message"
-    ],
+    ["column", "name", "and", "maybe", "field", "getter", "for", "error", "message"],
     ["field", "ident"],
     ["postgresql", "json", "type"],
     ["create", "query", "part", "error", "named"],
@@ -545,18 +369,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["try", "from", "std", "env", "var", "ok"],
     ["table", "name"],
     ["generate", "postgresql", "crud", "primary", "key"],
-    [
-        "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains",
-        "one", "element"
-    ],
-    [
-        "all", "enum", "variants", "array", "default", "but", "option", "is", "always", "some",
-        "and", "vec", "always", "contains", "one", "element"
-    ],
-    [
-        "all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is",
-        "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"
-    ],
+    ["default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains", "one", "element"],
+    ["all", "enum", "variants", "array", "default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains", "one", "element"],
+    ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element"],
     ["generate", "postgresql", "json", "type"],
     ["to", "std", "string", "string"],
     ["error", "occurence", "lib"],
@@ -571,64 +386,17 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "base", "type", "self"],
     ["postgresql", "base", "type", "primary", "key"],
     ["postgresql", "base", "type", "primary", "key", "self"],
-    [
-        "postgresql",
-        "base",
-        "type",
-        "std",
-        "option",
-        "option",
-        "self"
-    ],
+    ["postgresql", "base", "type", "std", "option", "option", "self"],
     ["postgresql", "type", "self", "traits"],
     ["postgresql", "type"],
     ["self", "column"],
     ["postgresql", "json", "type", "object", "self", "select"],
-    [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "option",
-        "option",
-        "object",
-        "self",
-        "select"
-    ],
-    [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "vec",
-        "vec",
-        "object",
-        "with",
-        "id",
-        "self",
-        "select"
-    ],
-    [
-        "postgresql",
-        "json",
-        "type",
-        "std",
-        "option",
-        "option",
-        "std",
-        "vec",
-        "vec",
-        "object",
-        "with",
-        "id",
-        "self",
-        "select"
-    ],
+    ["postgresql", "json", "type", "std", "option", "option", "object", "self", "select"],
+    ["postgresql", "json", "type", "std", "vec", "vec", "object", "with", "id", "self", "select"],
+    ["postgresql", "json", "type", "std", "option", "option", "std", "vec", "vec", "object", "with", "id", "self", "select"],
     ["true"],
     ["false"],
-    [
-        "column", "name", "and", "maybe", "field", "getter", "handle"
-    ],
+    ["column", "name", "and", "maybe", "field", "getter", "handle"],
     ["null"],
     ["update", "query", "part"],
     ["update", "query", "bind"],
@@ -644,9 +412,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["hexadecimal", "notation", "equal"],
     ["equal", "to", "encoded", "string", "representation"],
     ["find", "ranges", "within", "given", "range"],
-    [
-        "find", "ranges", "that", "fully", "contain", "the", "given", "range"
-    ],
+    ["find", "ranges", "that", "fully", "contain", "the", "given", "range"],
     ["is", "null"],
     ["try", "new", "error", "named"],
     ["start", "more", "or", "equal", "to", "end"],
@@ -681,42 +447,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["position", "is", "less", "than", "zero"],
     ["position", "case", "sensitive", "regular", "expression"],
     ["position", "case", "insensitive", "regular", "expression"],
-    [
-        "dimension",
-        "one",
-        "contains",
-        "all",
-        "elements",
-        "of",
-        "array"
-    ],
-    [
-        "dimension",
-        "two",
-        "contains",
-        "all",
-        "elements",
-        "of",
-        "array"
-    ],
-    [
-        "dimension",
-        "three",
-        "contains",
-        "all",
-        "elements",
-        "of",
-        "array"
-    ],
-    [
-        "dimension",
-        "four",
-        "contains",
-        "all",
-        "elements",
-        "of",
-        "array"
-    ],
+    ["dimension", "one", "contains", "all", "elements", "of", "array"],
+    ["dimension", "two", "contains", "all", "elements", "of", "array"],
+    ["dimension", "three", "contains", "all", "elements", "of", "array"],
+    ["dimension", "four", "contains", "all", "elements", "of", "array"],
     ["contained", "in", "array"],
     ["dimension", "one", "overlaps", "with", "array"],
     ["dimension", "two", "overlaps", "with", "array"],
@@ -736,58 +470,16 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "four", "all", "elements", "equal"],
     ["dimension", "one", "contains", "element", "greater", "than"],
     ["dimension", "two", "contains", "element", "greater", "than"],
-    [
-        "dimension",
-        "three",
-        "contains",
-        "element",
-        "greater",
-        "than"
-    ],
-    [
-        "dimension",
-        "four",
-        "contains",
-        "element",
-        "greater",
-        "than"
-    ],
+    ["dimension", "three", "contains", "element", "greater", "than"],
+    ["dimension", "four", "contains", "element", "greater", "than"],
     ["dimension", "one", "all", "elements", "greater", "than"],
     ["dimension", "two", "all", "elements", "greater", "than"],
     ["dimension", "three", "all", "elements", "greater", "than"],
     ["dimension", "four", "all", "elements", "greater", "than"],
-    [
-        "contains",
-        "element",
-        "case",
-        "sensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "contains",
-        "element",
-        "case",
-        "insensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "all",
-        "elements",
-        "case",
-        "sensitive",
-        "regular",
-        "expression"
-    ],
-    [
-        "all",
-        "elements",
-        "case",
-        "insensitive",
-        "regular",
-        "expression"
-    ],
+    ["contains", "element", "case", "sensitive", "regular", "expression"],
+    ["contains", "element", "case", "insensitive", "regular", "expression"],
+    ["all", "elements", "case", "sensitive", "regular", "expression"],
+    ["all", "elements", "case", "insensitive", "regular", "expression"],
     ["contains", "element"],
     ["equal", "second", "dimension"],
     ["from", "calendar", "date"],
@@ -829,70 +521,14 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "two", "regular", "expression"],
     ["dimension", "three", "regular", "expression"],
     ["dimension", "four", "regular", "expression"],
-    [
-        "dimension",
-        "one",
-        "contains",
-        "element",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "two",
-        "contains",
-        "element",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "three",
-        "contains",
-        "element",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "four",
-        "contains",
-        "element",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "one",
-        "all",
-        "elements",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "two",
-        "all",
-        "elements",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "three",
-        "all",
-        "elements",
-        "regular",
-        "expression"
-    ],
-    [
-        "dimension",
-        "four",
-        "all",
-        "elements",
-        "regular",
-        "expression"
-    ],
+    ["dimension", "one", "contains", "element", "regular", "expression"],
+    ["dimension", "two", "contains", "element", "regular", "expression"],
+    ["dimension", "three", "contains", "element", "regular", "expression"],
+    ["dimension", "four", "contains", "element", "regular", "expression"],
+    ["dimension", "one", "all", "elements", "regular", "expression"],
+    ["dimension", "two", "all", "elements", "regular", "expression"],
+    ["dimension", "three", "all", "elements", "regular", "expression"],
+    ["dimension", "four", "all", "elements", "regular", "expression"],
     ["dimension", "one", "equal"],
     ["dimension", "two", "equal"],
     ["dimension", "three", "equal"],
@@ -914,79 +550,20 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "one", "current", "date"],
     ["dimension", "one", "greater", "than", "current", "date"],
     ["dimension", "one", "current", "timestamp"],
-    [
-        "dimension",
-        "one",
-        "greater",
-        "than",
-        "current",
-        "timestamp"
-    ],
+    ["dimension", "one", "greater", "than", "current", "timestamp"],
     ["dimension", "one", "current", "time"],
     ["dimension", "one", "greater", "than", "current", "time"],
     ["dimension", "one", "array", "length", "dimension", "one"],
-    [
-        "dimension",
-        "one",
-        "array",
-        "length",
-        "more",
-        "than",
-        "dimension",
-        "one"
-    ],
-    [
-        "dimension",
-        "one",
-        "equal",
-        "to",
-        "encoded",
-        "string",
-        "representation"
-    ],
-    [
-        "dimension",
-        "one",
-        "find",
-        "ranges",
-        "within",
-        "given",
-        "range"
-    ],
-    [
-        "dimension",
-        "one",
-        "find",
-        "ranges",
-        "that",
-        "fully",
-        "contain",
-        "the",
-        "given",
-        "range"
-    ],
+    ["dimension", "one", "array", "length", "more", "than", "dimension", "one"],
+    ["dimension", "one", "equal", "to", "encoded", "string", "representation"],
+    ["dimension", "one", "find", "ranges", "within", "given", "range"],
+    ["dimension", "one", "find", "ranges", "that", "fully", "contain", "the", "given", "range"],
     ["dimension", "one", "strictly", "to", "left", "of", "range"],
     ["dimension", "one", "strictly", "to", "right", "of", "range"],
     ["dimension", "one", "included", "lower", "bound"],
     ["dimension", "one", "excluded", "upper", "bound"],
-    [
-        "dimension",
-        "one",
-        "greater",
-        "than",
-        "included",
-        "lower",
-        "bound"
-    ],
-    [
-        "dimension",
-        "one",
-        "greater",
-        "than",
-        "excluded",
-        "upper",
-        "bound"
-    ],
+    ["dimension", "one", "greater", "than", "included", "lower", "bound"],
+    ["dimension", "one", "greater", "than", "excluded", "upper", "bound"],
     ["dimension", "one", "overlap", "with", "range"],
     ["dimension", "one", "adjacent", "with", "range"],
     ["dimension", "one", "range", "length"],
@@ -1002,40 +579,20 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["all", "elements", "equal"],
     ["contains", "element", "greater", "than"],
     ["all", "elements", "greater", "than"],
-    [
-        "create",
-        "extension",
-        "if",
-        "not",
-        "exists",
-        "pg",
-        "jsonschema"
-    ],
+    ["create", "extension", "if", "not", "exists", "pg", "jsonschema"],
     ["create", "extension", "if", "not", "exists", "uuid", "ossp"],
     ["prepare", "postgresql"],
-    [
-        "header",
-        "content",
-        "type",
-        "application",
-        "json",
-        "not",
-        "found"
-    ],
+    ["header", "content", "type", "application", "json", "not", "found"],
     ["where", "many"],
     ["no", "fields", "provided"],
     ["additional", "parameters"],
     ["generate", "select", "query", "part"],
     ["update", "query", "part", "primary", "key"],
-    [
-        "generate", "column", "queals", "value", "comma", "update", "one", "query", "part"
-    ],
+    ["generate", "column", "queals", "value", "comma", "update", "one", "query", "part"],
     ["primary", "key", "query", "part"],
     ["columns"],
     ["generate", "when", "column", "id", "then", "value"],
-    [
-        "generate", "when", "column", "id", "then", "value", "update", "many", "query", "part"
-    ],
+    ["generate", "when", "column", "id", "then", "value", "update", "many", "query", "part"],
     ["test", "cases"],
     ["contains", "null", "byte"],
     ["new", "or", "try", "new", "unwraped", "for", "test"],
@@ -1049,16 +606,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["earliest", "supported", "date"],
     ["naive", "date"],
     ["naive", "time"],
-    [
-        "invalid",
-        "hour",
-        "or",
-        "minute",
-        "or",
-        "second",
-        "or",
-        "microsecond"
-    ],
+    ["invalid", "hour", "or", "minute", "or", "second", "or", "microsecond"],
     ["hour"],
     ["min"],
     ["sec"],
@@ -1080,20 +628,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgres", "pool"],
     ["postgres", "pool", "for", "tokio", "spawn", "sync", "move"],
     ["ident", "create", "default"],
-    [
-        "vec", "of", "primary", "keys", "returned", "from", "create", "many"
-    ],
+    ["vec", "of", "primary", "keys", "returned", "from", "create", "many"],
     ["select", "primary", "key"],
-    [
-        "sort", "vec", "of", "ident", "read", "with", "primary", "key", "by", "primary", "key"
-    ],
+    ["sort", "vec", "of", "ident", "read", "with", "primary", "key", "by", "primary", "key"],
     ["generate", "element"],
-    [
-        "some", "value", "primary", "key", "read", "returned", "from", "create", "one"
-    ],
-    [
-        "primary", "key", "read", "returned", "from", "create", "one"
-    ],
+    ["some", "value", "primary", "key", "read", "returned", "from", "create", "one"],
+    ["primary", "key", "read", "returned", "from", "create", "one"],
     ["select", "primary", "key", "field", "ident"],
     ["select", "query", "part", "postgresql", "type"],
     ["select", "query", "part", "postgresql", "json", "type"],
@@ -1104,9 +644,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["read", "only", "ids"],
     ["select", "only", "ids", "query", "part"],
     ["read", "only", "ids", "returned", "from", "create", "one"],
-    [
-        "some", "value", "read", "only", "ids", "returned", "from", "create", "one"
-    ],
+    ["some", "value", "read", "only", "ids", "returned", "from", "create", "one"],
     ["select", "only", "updated", "ids", "query", "part"]
 ]);
 
@@ -1141,98 +679,56 @@ pub trait StdFmtDisplayPlusQuoteToTokens: std::fmt::Display + quote::ToTokens {}
 impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: std::fmt::Display + quote::ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
-    fn swagger_url_path_self_quotes_stringified(
-        &self,
-        table_name_stringified: &str,
-    ) -> std::string::String;
+    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
     T: naming_common::AsRefStrToSnakeCaseStringified,
 {
-    fn swagger_url_path_self_quotes_stringified(
-        &self,
-        table_name_stringified: &str,
-    ) -> std::string::String {
-        generate_quotes::double_quotes_stringified(&format!(
-            "/{}/{}",
-            table_name_stringified,
-            self.case(),
-        ))
+    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
+        generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.case(),))
     }
 }
 
 pub trait SwaggerUrlPathSelfQuotesTokenStream {
-    fn swagger_url_path_self_quotes_token_stream(
-        &self,
-        table_name_stringified: &str,
-    ) -> proc_macro2::TokenStream;
+    fn swagger_url_path_self_quotes_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesTokenStream for T
 where
     T: SwaggerUrlPathSelfQuotesStringified,
 {
-    fn swagger_url_path_self_quotes_token_stream(
-        &self,
-        table_name_stringified: &str,
-    ) -> proc_macro2::TokenStream {
+    fn swagger_url_path_self_quotes_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream {
         let value = self.swagger_url_path_self_quotes_stringified(table_name_stringified);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 
 pub trait UrlHandleSelfSnakeCaseStringified {
-    fn url_handle_self_snake_case_stringified(
-        &self,
-        table_name_stringified: &str,
-    ) -> std::string::String;
+    fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String;
 }
 
 impl<T> UrlHandleSelfSnakeCaseStringified for T
 where
     T: naming_common::AsRefStrToSnakeCaseStringified,
 {
-    fn url_handle_self_snake_case_stringified(
-        &self,
-        table_name_stringified: &str,
-    ) -> std::string::String {
+    fn url_handle_self_snake_case_stringified(&self, table_name_stringified: &str) -> std::string::String {
         format!("\"{{}}/{}/{}\"", table_name_stringified, self.case())
     }
 }
 
 pub trait UrlHandleSelfSnakeCaseTokenStream {
-    fn url_handle_self_snake_case_token_stream(
-        &self,
-        table_name_stringified: &str,
-    ) -> proc_macro2::TokenStream;
+    fn url_handle_self_snake_case_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream;
 }
 
 impl<T> UrlHandleSelfSnakeCaseTokenStream for T
 where
     T: UrlHandleSelfSnakeCaseStringified,
 {
-    fn url_handle_self_snake_case_token_stream(
-        &self,
-        table_name_stringified: &str,
-    ) -> proc_macro2::TokenStream {
+    fn url_handle_self_snake_case_token_stream(&self, table_name_stringified: &str) -> proc_macro2::TokenStream {
         let value = self.url_handle_self_snake_case_stringified(table_name_stringified);
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
 // fn generate_url_handle_token_stream(

@@ -107,8 +107,7 @@ impl quote::ToTokens for DeriveDebug {
 pub struct DeriveDebugThiserrorErrorOccurence;
 impl quote::ToTokens for DeriveDebugThiserrorErrorOccurence {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}
-            .to_tokens(tokens);
+        quote::quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -129,8 +128,7 @@ impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserialize {
 pub struct DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
 impl quote::ToTokens for DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]}
-            .to_tokens(tokens);
+        quote::quote! {#[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -144,8 +142,7 @@ impl quote::ToTokens for DeriveDebugCloneCopy {
 pub struct DeriveDebugThisErrorErrorOccurence;
 impl quote::ToTokens for DeriveDebugThisErrorErrorOccurence {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}
-            .to_tokens(tokens);
+        quote::quote! {#[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]}.to_tokens(tokens);
     }
 }
 
@@ -179,12 +176,9 @@ impl quote::ToTokens for ErrorOccurenceLibCodeOccurenceCodeOccurence {
 }
 #[derive(Debug, Clone, Copy)]
 pub struct CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence;
-impl quote::ToTokens
-    for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence
-{
+impl quote::ToTokens for CodeOccurenceSnakeCaseDoubleDotSpaceErrorOccurenceLibCodeOccurenceCodeOccurence {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}
-            .to_tokens(tokens);
+        quote::quote! {code_occurence: error_occurence_lib::code_occurence::CodeOccurence}.to_tokens(tokens);
     }
 }
 
@@ -322,28 +316,23 @@ fn crate_path_token_stream() -> proc_macro2::TokenStream {
 fn postgresql_crud() -> proc_macro2::TokenStream {
     quote::quote! {postgresql_crud::}
 }
-fn default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case()
--> proc_macro2::TokenStream {
+fn default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case() -> proc_macro2::TokenStream {
     quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
 }
-fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case()
--> proc_macro2::TokenStream {
+fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case() -> proc_macro2::TokenStream {
     quote::quote! {AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
 }
-fn path_default_but_option_is_always_some_and_vec_always_contains_one_element_call()
--> proc_macro2::TokenStream {
+fn path_default_but_option_is_always_some_and_vec_always_contains_one_element_call() -> proc_macro2::TokenStream {
     quote::quote! {::default_but_option_is_always_some_and_vec_always_contains_one_element()}
 }
-fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call()
--> proc_macro2::TokenStream {
+fn path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call() -> proc_macro2::TokenStream {
     quote::quote! {::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()}
 }
 pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
 impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_token_stream = crate_path_token_stream();
-        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
             #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
@@ -355,10 +344,8 @@ pub struct CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 impl quote::ToTokens for CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_token_stream = crate_path_token_stream();
-        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call =
-            path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
+        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call = path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
         quote::quote! {
             #crate_path_token_stream
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
@@ -371,8 +358,7 @@ pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElem
 impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
-        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case =
-            default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
         quote::quote! {
             #postgresql_crud
             #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
@@ -381,14 +367,10 @@ impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysC
     }
 }
 pub struct PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-impl quote::ToTokens
-    for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall
-{
+impl quote::ToTokens for PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element =
-            PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call =
-            path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
+        let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element = PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call = path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
         quote::quote! {
             #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
@@ -397,9 +379,7 @@ impl quote::ToTokens
     }
 }
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-impl quote::ToTokens
-    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-{
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let crate_path_token_stream = crate_path_token_stream();
         let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
@@ -411,12 +391,9 @@ impl quote::ToTokens
     }
 }
 pub struct CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-impl quote::ToTokens
-    for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall
-{
+impl quote::ToTokens for CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element =
-            CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element = CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
         let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
         quote::quote! {
             #crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
@@ -426,9 +403,7 @@ impl quote::ToTokens
     }
 }
 pub struct PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-impl quote::ToTokens
-    for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-{
+impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         let postgresql_crud = postgresql_crud();
         let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
