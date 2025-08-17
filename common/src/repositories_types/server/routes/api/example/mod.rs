@@ -6779,31 +6779,29 @@ impl postgresql_crud::PostgresqlJsonType
         Ok(format!(
             "(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)",
             {
-                // let mut acc = std::string::String::new();
-                // for element in value.update {
-                //     match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
-                //         &AnimalWithIdAsNotNullJsonbObjectWithIdUpdate::new(postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                //             element
-                //         ]).unwrap()),
-                //         "elem",
-                //         column_name_and_maybe_field_getter,
-                //         increment,
-                //     ) {
-                //         Ok(value) => {
-                //             acc.push_str(&format!("{value}||"));
-                //         },
-                //         Err(error) => {
-                //             return Err(error);
-                //         }
-                //     }
-                // }
-                // let _ = acc.pop();
-                // let _ = acc.pop();
-                // acc
-                let id  = value.update[0].id.get_inner();
-                format!("
-                    jsonb_build_object('id', '{id}', 'field_0', 'null'::jsonb, 'field_1', 'null'::jsonb)
-                ")
+                let mut acc = std::string::String::new();
+                for element in &value.update {
+                    let id = element.id.get_inner();
+                    // match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                    //     &AnimalWithIdAsNotNullJsonbObjectWithIdUpdate::new(postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                    //         element
+                    //     ]).unwrap()),
+                    //     "elem",
+                    //     column_name_and_maybe_field_getter,
+                    //     increment,
+                    // ) {
+                    //     Ok(value) => {
+                    //         acc.push_str(&format!("{value}||"));
+                    //     },
+                    //     Err(error) => {
+                    //         return Err(error);
+                    //     }
+                    // }
+                    acc.push_str(&format!("jsonb_build_object('id', '{id}', 'field_0', 'null'::jsonb, 'field_1', 'null'::jsonb)||"));
+                }
+                let _ = acc.pop();
+                let _ = acc.pop();
+                acc
             }
         ))
     }
