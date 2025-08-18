@@ -1237,7 +1237,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        //todo maybe impl try_new + Deserialize ? 
         let impl_try_from_pg_row_for_ident_read_only_ids_token_stream = {
             let primary_key_token_stream = {
                 let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&primary_key_field_type);
