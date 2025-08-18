@@ -3793,6 +3793,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 //update part start
                                 #columns_test_cases_declaration_token_stream
                                 for #index_snake_case in #test_cases_max_len_token_stream {
+                                    let #select_primary_key_field_ident_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).expect("error 5fc78974-50e1-47c8-8cf0-156675513f3f");
+                                    let start = super::#ident::try_read_one(
+                                        &#url_snake_case,
+                                        super::#ident_read_one_parameters_upper_camel_case {
+                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                                #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
+                                                #select_snake_case: #select_primary_key_field_ident_snake_case.clone(),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    .expect("error 770fc785-f87a-42b0-a0c7-d08291f65293");
+                                    println!("START{start:#?}");
                                     #update_try_new_parameters_declaration_token_stream
                                     // #ident_read_fields_declaration_token_stream
                                     // assert_eq!(
@@ -3880,6 +3893,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         },
                                         "try_update_one result different"
                                     );
+                                    let end = super::#ident::try_read_one(
+                                        &#url_snake_case,
+                                        super::#ident_read_one_parameters_upper_camel_case {
+                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                                #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
+                                                #select_snake_case: #select_primary_key_field_ident_snake_case.clone(),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    .expect("error 770fc785-f87a-42b0-a0c7-d08291f65293");
+                                    println!("END{end:#?}");
                                     // assert_eq!(
                                     //     super::#ident_read_upper_camel_case {
                                     //         #primary_key_field_ident: match #some_value_read_only_ids_returned_from_create_one_snake_case.clone() {
