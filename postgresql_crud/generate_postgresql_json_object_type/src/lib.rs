@@ -3915,7 +3915,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote! {
                                     #field_ident: match &element.#field_ident {
                                         Some(#value_snake_case) => Some(postgresql_crud::Value {
-                                            #value_snake_case: #type_as_postgresql_json_type_read_token_stream::new(#value_snake_case.#value_snake_case)
+                                            #value_snake_case: #type_as_postgresql_json_type_read_token_stream::new(#value_snake_case.#value_snake_case.clone())
                                         }),
                                         None => None
                                     }
