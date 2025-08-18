@@ -33,7 +33,7 @@ pub struct Example {
     #[generate_postgresql_crud_primary_key]
     pub primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
+    pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
@@ -3313,3 +3313,136 @@ pub struct Animal {
 //         })
 //     }
 // }
+
+
+#[cfg(test)]
+mod example_tests {
+    #[test]
+    fn test_size_of() {
+        assert_eq!(std::mem::size_of::<super::Example>(), 0);
+    }
+    #[test]
+    fn test_crud() {
+        std::thread::Builder::new()
+            .stack_size(16 * 1024 * 1024)
+            .spawn(|| {
+                tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
+                    static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
+                    let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
+                    let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
+                    let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+                    async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
+                        let query = "drop table if exists example";
+                        println!("{query}");
+                        let _unused = sqlx::query(query).execute(postgres_pool).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
+                    }
+                    drop_table_if_exists(&postgres_pool).await;
+                    let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
+                    let _unused = tokio::spawn(async move {
+                        super::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
+                        let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
+                            postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
+                            config: &config,
+                            project_git_info: &git_info::PROJECT_GIT_INFO,
+                        });
+                        axum::serve(
+                            tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"),
+                            axum::Router::new().merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service(),
+                        )
+                        .await
+                        .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+                    });
+                    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                    let ident_create_default = super::ExampleCreate {
+                        column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                        column_154: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    };
+                    let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                    let sort_vec_of_ident_read_with_primary_key_by_primary_key = |mut value: std::vec::Vec<super::ExampleRead>| -> std::vec::Vec<super::ExampleRead> {
+                        value.sort_by_key(|element| element.primary_key_column.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").value);
+                        value
+                    };
+                    let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: read_only_ids_returned_from_create_one.primary_key_column.clone() });
+                    assert_eq!(
+                        super::ExampleRead {
+                            primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(),
+                            column_0: None,
+                            column_154: None
+                        },
+                        super::Example::try_read_one(
+                            &url,
+                            super::ExampleReadOneParameters {
+                                payload: super::ExampleReadOnePayload {
+                                    primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                                    select: select_primary_key.clone(),
+                                },
+                            },
+                        )
+                        .await
+                        .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                        "try_read_one result different after try_create_one"
+                    );
+                    let column_0_test_cases = match &read_only_ids_returned_from_create_one.column_0 {
+                        Some(value) => <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases(&value),
+                        None => vec![],
+                    };
+                    let column_154_test_cases = match &read_only_ids_returned_from_create_one.column_154 {
+                        Some(value) => <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases(&value),
+                        None => vec![],
+                    };
+                    for index in 0..column_0_test_cases.len().max(column_154_test_cases.len()) {
+                        let column_0_some_value_update = match column_0_test_cases.get(index) {
+                            Some(value) => Some(postgresql_crud::Value {
+                                value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(value.clone()),
+                            }),
+                            None => Some(postgresql_crud::Value {
+                                value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::into_inner(
+                                    <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                )),
+                            }),
+                        };
+                        println!("UPDATE{:#?}", column_0_some_value_update);
+                        let column_154_some_value_update = match column_154_test_cases.get(index) {
+                            Some(value) => Some(postgresql_crud::Value {
+                                value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(value.clone()),
+                            }),
+                            None => Some(postgresql_crud::Value {
+                                value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::into_inner(
+                                    <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                )),
+                            }),
+                        };
+                        println!("UPDATE{:#?}", column_154_some_value_update);
+                        println!("11111{:#?}", read_only_ids_returned_from_create_one);
+                        assert_eq!(
+                            read_only_ids_returned_from_create_one.clone(),
+                            {
+                                let f = super::Example::try_update_one(
+                                    &url,
+                                    super::ExampleUpdateOneParameters {
+                                        payload: {
+                                            let f = super::ExampleUpdate::try_new(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                                            column_0_some_value_update,
+                                            column_154_some_value_update
+                                        ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2");
+                                            println!("&&&&&&&{f:#?}");
+                                            f
+                                        },
+                                    },
+                                )
+                                .await
+                                .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52");
+                                println!("22222{f:#?}");
+                                f
+                            },
+                            "try_update_one result different"
+                        );
+                    }
+                });
+            })
+            .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
+            .join()
+            .expect("error b2f21a5f-d9ce-435c-809f-bd40741c8795");
+    }
+}
