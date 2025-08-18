@@ -6275,7 +6275,11 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<OptionVecOfAnimalWithIdAsNu
         })
     }
     fn update_new_or_try_new_unwraped_for_test(value: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-        todo!()
+        //here
+        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
+            Some(value) => Some(<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(value)),
+            None => None,
+        })
     }
 }
 #[cfg(test)]
