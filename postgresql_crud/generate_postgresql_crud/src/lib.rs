@@ -1196,28 +1196,64 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_read_only_ids_token_stream = {
+        enum WrapIntoOption {
+            True,
+            False
+        }
         let ident_read_only_ids_token_stream = {
-            let content_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&element.syn_field.ty);
+            let generate_field_token_stream = |
+                field_ident: &dyn quote::ToTokens,
+                field_type: &dyn quote::ToTokens,
+                wrap_into_option: &WrapIntoOption
+            |{
+                let field_type_token_stream = {
+                    let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
+                    match &wrap_into_option {
+                        WrapIntoOption::True => quote::quote!{std::option::Option<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream>},
+                        WrapIntoOption::False => element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream,
+                    }
+                };
                 quote::quote! {
-                    pub #field_ident: #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream
+                    pub #field_ident: #field_type_token_stream
                 }
+            };
+            let primary_key_token_stream = generate_field_token_stream(
+                &primary_key_field_ident,
+                &primary_key_field_type,
+                &WrapIntoOption::False
+            );
+            let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                generate_field_token_stream(
+                    &element.field_ident,
+                    &element.syn_field.ty,
+                    &WrapIntoOption::True
+                )
             });
             quote::quote! {
                 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                 pub struct #ident_read_only_ids_upper_camel_case {
+                    #primary_key_token_stream,
                     #content_token_stream
                 }
             }
         };
+        //todo maybe impl try_new + Deserialize ? 
         let impl_try_from_pg_row_for_ident_read_only_ids_token_stream = {
-            let fields_initialization_token_stream = generate_fields_named_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&element.syn_field.ty);
-                quote::quote! {
-                    let #field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
+            let generate_field_token_stream = |
+                field_ident: &dyn quote::ToTokens,
+                field_type: &dyn quote::ToTokens,
+                wrap_into_option: &WrapIntoOption
+            |{
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#field_ident});
+                let field_type_token_stream = {
+                    let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
+                    match &wrap_into_option {
+                        WrapIntoOption::True => quote::quote!{std::option::Option<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream>},
+                        WrapIntoOption::False => element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream,
+                    }
+                };
+                quote::quote!{
+                    let #field_ident = match sqlx::Row::try_get::<#field_type_token_stream, &std::primitive::str>(
                         &#value_snake_case,
                         #field_ident_double_quotes_token_stream
                     ) {
@@ -1227,6 +1263,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     };
                 }
+            };
+            let primary_key_token_stream = generate_field_token_stream(
+                &primary_key_field_ident,
+                &primary_key_field_type,
+                &WrapIntoOption::False
+            );
+            let fields_initialization_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                generate_field_token_stream(
+                    &element.field_ident,
+                    &element.syn_field.ty,
+                    &WrapIntoOption::True
+                )
             });
             let self_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let field_ident = &element.field_ident;
@@ -1236,6 +1284,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 impl std::convert::TryFrom<sqlx::postgres::PgRow> for #ident_read_only_ids_upper_camel_case {
                     type Error = sqlx::Error;
                     fn try_from(#value_snake_case: sqlx::postgres::PgRow) -> Result<Self, Self::Error> {
+                        #primary_key_token_stream
                         #fields_initialization_token_stream
                         Ok(Self { #self_fields_token_stream })
                     }
@@ -1247,6 +1296,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_try_from_pg_row_for_ident_read_only_ids_token_stream
         }
     };
+    // println!("{ident_read_only_ids_token_stream}");
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
     let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().unwrap();
     #[derive(Debug, strum_macros::Display)]
@@ -3505,9 +3555,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident_test_cases_snake_case = naming::parameter::SelfTestCasesSnakeCase::from_tokens(&field_ident);
             let field_type = &element.syn_field.ty;
             quote::quote! {
-                let #field_ident_test_cases_snake_case = <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::#test_cases_snake_case(
-                    &read_only_ids_returned_from_create_one.#field_ident
-                );
+                let #field_ident_test_cases_snake_case = match &#read_only_ids_returned_from_create_one_snake_case.#field_ident {
+                    Some(#value_snake_case) => <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases(&#value_snake_case),
+                    None => vec![]
+                };
             }
         });
         let test_cases_max_len_token_stream = {
