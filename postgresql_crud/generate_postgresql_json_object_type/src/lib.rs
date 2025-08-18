@@ -1052,7 +1052,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                                            "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_select_standart_not_null_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"
+                                            "(case when (jsonb_array_length({{column_name_and_maybe_field_getter}}) = 0) then '[]'::jsonb else (select jsonb_agg(({{animal_with_id_as_not_null_jsonb_object_with_id_select}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}})) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end)"
                                         ));
                                         quote::quote! {
                                             let field_ident = column;
