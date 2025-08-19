@@ -1857,9 +1857,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
                         };
                         let into_iter_token_stream = quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                #ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream
-                            >>::test_cases(&#read_only_ids_snake_case)
+                            <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&#read_only_ids_snake_case)
                             .into_iter()
                         };
                         let generate_acc_token_stream = |map_content_token_stream: &dyn quote::ToTokens, collect_content_token_stream: &dyn quote::ToTokens, acc_pushes_content_token_stream: &dyn quote::ToTokens| {

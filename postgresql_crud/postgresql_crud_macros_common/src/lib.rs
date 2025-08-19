@@ -877,7 +877,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
-        impl #import_path::tests::#postgresql_json_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
+        impl #import_path::tests::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
                 #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_only_ids_upper_camel_case
