@@ -840,7 +840,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
-        impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
+        impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
                 #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_only_ids_upper_camel_case
@@ -1344,9 +1344,7 @@ pub fn generate_standart_nullable_test_vec_token_stream(ident_standart_not_null_
     let acc_snake_case = naming::AccSnakeCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
-        let mut #acc_snake_case = <#ident_standart_not_null_upper_camel_case as crate::tests::#postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case<
-            #read_inner_token_stream
-        >>::#test_cases_snake_case(&#read_only_ids_snake_case)
+        let mut #acc_snake_case = <#ident_standart_not_null_upper_camel_case as crate::tests::#postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case>::#test_cases_snake_case(&#read_only_ids_snake_case)
         .into_iter()
         .map(|#element_snake_case|Some(#element_snake_case))
         .collect::<std::vec::Vec<

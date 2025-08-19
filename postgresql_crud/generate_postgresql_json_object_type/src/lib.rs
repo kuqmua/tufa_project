@@ -3872,9 +3872,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
                                 <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-                                    Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
-                                    >>::read_new_or_try_new_unwraped_for_test(value)),
+                                    Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases>::read_new_or_try_new_unwraped_for_test(value)),
                                     None => None
                                 })
                             }
@@ -3972,9 +3970,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
                                 <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-                                    Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
-                                    >>::update_new_or_try_new_unwraped_for_test(value)),
+                                    Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
                                     None => None
                                 })
                             }
@@ -4021,7 +4017,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
                                 <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match #value_snake_case {
-                                    Some(#value_snake_case) => Some(<#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases<<#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(#value_snake_case)),
+                                    Some(#value_snake_case) => Some(<#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(#value_snake_case)),
                                     None => None,
                                 })
                             }

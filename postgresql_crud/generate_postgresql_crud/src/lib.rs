@@ -3550,7 +3550,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_type = &element.syn_field.ty;
             quote::quote! {
                 let #field_ident_test_cases_snake_case = match &#read_only_ids_returned_from_create_one_snake_case.#field_ident {
-                    Some(#value_snake_case) => <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases(&#value_snake_case),
+                    Some(#value_snake_case) => <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&#value_snake_case),
                     None => vec![]
                 };
             }
@@ -3574,10 +3574,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 let #field_ident_some_value_update_snake_case = match #field_ident_test_cases_snake_case.get(#index_snake_case) {
                     Some(#value_snake_case) => Some(postgresql_crud::Value {
-                        #value_snake_case: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
+                        #value_snake_case: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
                     }),
                     None => Some(postgresql_crud::Value {
-                        #value_snake_case: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(
+                        #value_snake_case: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(
                             <#field_type as postgresql_crud::PostgresqlType>::into_inner(
                                 <
                                     <#field_type as postgresql_crud::PostgresqlType>::Read
@@ -3621,16 +3621,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let #field_ident_some_value_read_snake_case = match #field_ident_test_cases_snake_case.get(#index_snake_case) {
                     Some(#value_snake_case) => Some(postgresql_crud::Value {
                         #value_snake_case: <#field_type as postgresql_crud::PostgresqlType>::normalize(
-                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                <#field_type as postgresql_crud::PostgresqlType>::ReadInner,
-                            >>::read_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
+                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::read_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
                         )
                     }),
                     None => Some(postgresql_crud::Value {
                         #value_snake_case: <#field_type as postgresql_crud::PostgresqlType>::normalize(
-                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                <#field_type as postgresql_crud::PostgresqlType>::ReadInner,
-                            >>::read_new_or_try_new_unwraped_for_test(
+                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::read_new_or_try_new_unwraped_for_test(
                                 <#field_type as postgresql_crud::PostgresqlType>::into_inner(
                                     <
                                         <#field_type as postgresql_crud::PostgresqlType>::Read
