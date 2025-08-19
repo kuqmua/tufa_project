@@ -2052,6 +2052,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
                 let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
                 let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
+                let create_update_delete_are_empty_upper_camel_case = naming::CreateUpdateDeleteAreEmptyUpperCamelCase;
 
                 let ident_update_try_new_error_named_upper_camel_case = &naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_named_token_stream = match &postgresql_json_object_type_pattern {
@@ -2060,6 +2061,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                             pub enum #ident_update_try_new_error_named_upper_camel_case {
+                                #create_update_delete_are_empty_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
                                 #not_unique_id_in_json_update_array_upper_camel_case {
                                     #[eo_to_std_string_string_serialize_deserialize]
                                     error: std::string::String,
@@ -2089,6 +2093,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                             let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False);
                             let custom_serde_error_deserializing_ident_update_stringified = format!("custom serde error deserializing {ident_update_upper_camel_case}");
+                            let check_if_all_empty_token_stream = {
+                                quote::quote! {
+                                    if create.is_empty() && update.is_empty() && delete.is_empty() {
+                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#create_update_delete_are_empty_upper_camel_case {
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        });
+                                    }
+                                }
+                            };
                             let check_not_unique_id_token_stream = {
                                 let check_not_unique_id_in_update_array_token_stream = {
                                     let not_unique_id_in_json_update_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique id in json update array: {{}}"));
@@ -2153,6 +2166,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             quote::quote! {
                                 impl #ident_update_upper_camel_case {
                                     pub fn try_new(#fields_token_stream) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
+                                        #check_if_all_empty_token_stream
                                         #check_not_unique_id_token_stream
                                         Ok(Self {
                                             #create_snake_case,
