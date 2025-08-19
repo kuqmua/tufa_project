@@ -3598,10 +3598,14 @@ mod example_tests {
                                 value: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                                     create: vec![],
                                     update: {
-                                        println!("TTTTTTTT{:#?}", &start.column_155);
+                                        // println!("TTTTTTTT{:#?}", &start.column_155);
                                         match &start.column_155 {
                                             Some(value) => {
-                                                <
+                                                // let k: bool = value.value.clone();
+                                                //VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead
+                                                //VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate
+                                                //Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>
+                                                let f = <
                                                     crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
                                                     as
                                                     postgresql_crud::PostgresqlJsonType
@@ -3626,7 +3630,8 @@ mod example_tests {
                                                             }).unwrap()
                                                         ),
                                                     }
-                                                }).collect()
+                                                }).collect();
+                                                f
                                             },
                                             None => vec![]//must be never called?
                                         }
