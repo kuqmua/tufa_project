@@ -2214,7 +2214,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
-                    &quote::quote!{todo!()}
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        quote::quote!{Some(crate::Value { value })}
+                    } else {
+                        quote::quote!{None}
+                    },
                 )
             };
             let generated = quote::quote! {
