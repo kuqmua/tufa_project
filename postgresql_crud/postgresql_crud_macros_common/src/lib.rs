@@ -827,6 +827,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     test_cases_content_token_stream: &dyn quote::ToTokens,
     read_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
     update_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+    read_only_ids_to_option_value_read_inner_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
@@ -853,6 +854,9 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
             }
+            fn read_only_ids_to_option_value_read_inner(value: <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::ReadOnlyIds) -> std::option::Option<#import_path::Value<<#self_upper_camel_case::#element_upper_camel_case as #import_path::PostgresqlType>::ReadInner>> {
+                #read_only_ids_to_option_value_read_inner_token_stream
+            }
         }
     }
 }
@@ -864,6 +868,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     test_cases_content_token_stream: &dyn quote::ToTokens,
     read_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
     update_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+    read_only_ids_to_option_value_read_inner_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
@@ -889,6 +894,9 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             }
             fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
+            }
+            fn read_only_ids_to_option_value_read_inner(value: <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::ReadOnlyIds) ->  std::option::Option<#import_path::Value<<Self::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::ReadInner>> {
+                #read_only_ids_to_option_value_read_inner_token_stream
             }
         }
     }

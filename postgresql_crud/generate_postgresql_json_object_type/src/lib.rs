@@ -3581,7 +3581,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut acc = std::string::String::default();
                                                 #(#none_content_token_stream)*
                                                 let _ = acc.pop();
-                                                Ok(format!("jsonb_build_object({acc})"))
+                                                Ok(format!("jsonb_build_object({acc}) as {column},"))
                                             }
                                         }
                                     }
@@ -3602,7 +3602,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 &value.value,
                                                 &#field_ident_double_quotes_token_stream,
                                                 // &format!(#format_handle_token_stream),
-                                                &column,
+                                                // &column,
+                                                &"elem",
                                                 increment
                                             ) {
                                                 Ok(value) => {
@@ -3616,7 +3617,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     quote::quote! {
                                         // Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)", {
-                                        Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)", {
+                                        Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb as {column},", {
                                             let mut acc = std::string::String::new();
                                             for element in &value.update {
                                                 let id = element.id.get_inner();
@@ -3641,11 +3642,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote!{
                                         match &value.0 {
                                             Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, field_ident, column_name_and_maybe_field_getter, increment) {
-                                                Ok(value) => Ok(value),
+                                                Ok(value) => Ok(format!("{value} as {column},")),
                                                 Err(error) => Err(error),
                                             },
                                             None => {
-                                                Ok(format!("'[]'::jsonb"))
+                                                Ok(format!("'[]'::jsonb as {column},"))
                                             }
                                         }
                                     }
@@ -3952,12 +3953,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
-                                let field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element.ty);
+                                let field_type = &element.ty;
+                                // let field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element.ty);
                                 quote::quote! {
                                     #field_ident: Some(postgresql_crud::Value {
-                                        value: #field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream into_inner(
-                                            <#field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        )
+                                        value: 
+                                        
+                                            {
+                                                // let mut acc = vec![];
+                                                // for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element.#field_ident.clone()) {
+                                                //     for element in element {
+                                                //         acc.push(element);
+                                                //     }
+                                                // }
+                                                // acc
+                                                panic!("not yet implemented panic 3946ee91-5e00-45fa-9148-edfcf13ac43c")
+                                            }
+                                        // #field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream into_inner(
+                                        //     <#field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                        // )
                                     })
                                 }
                             });
@@ -4168,8 +4182,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 };
                 (
-                    postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(&cfg_test_token_stream, &import_path, &ident_read_inner_upper_camel_case, &ident, &test_cases_content_token_stream, &read_new_or_try_new_unwraped_for_test_token_stream, &update_new_or_try_new_unwraped_for_test_token_stream),
-                    postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(&cfg_test_token_stream, &import_path, &ident_read_inner_upper_camel_case, &ident, &test_cases_content_token_stream, &read_new_or_try_new_unwraped_for_test_token_stream, &update_new_or_try_new_unwraped_for_test_token_stream),
+                    postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+                        &cfg_test_token_stream,
+                        &import_path,
+                        &ident_read_inner_upper_camel_case,
+                        &ident,
+                        &test_cases_content_token_stream,
+                        &read_new_or_try_new_unwraped_for_test_token_stream,
+                        &update_new_or_try_new_unwraped_for_test_token_stream,
+                        &quote::quote!{todo!()}
+                    ),
+                    postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
+                        &cfg_test_token_stream,
+                        &import_path,
+                        &ident_read_inner_upper_camel_case,
+                        &ident,
+                        &test_cases_content_token_stream,
+                        &read_new_or_try_new_unwraped_for_test_token_stream,
+                        &update_new_or_try_new_unwraped_for_test_token_stream,
+                        &quote::quote!{todo!()}
+                    ),
                 )
             };
             //todo this is wrong
@@ -4287,6 +4319,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             )
                         }
                     },
+                    &quote::quote!{todo!()}
                 )
             } else {
                 proc_macro2::TokenStream::new()
