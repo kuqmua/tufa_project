@@ -3434,7 +3434,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote! {
-                                        Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)", {
+                                        Ok(format!("'{field_ident}',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem),", {
                                             let mut acc = std::string::String::new();
                                             for element in &value.update {
                                                 let id = element.id.get_inner();
@@ -3596,12 +3596,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                                         let field_type = &element.ty;
-                                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                                        // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
                                         quote::quote! {
                                             #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case(value) => match <#field_type as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
                                                 &value.value,
                                                 &#field_ident_double_quotes_token_stream,
-                                                &format!(#format_handle_token_stream),
+                                                // &format!(#format_handle_token_stream),
+                                                &column,
                                                 increment
                                             ) {
                                                 Ok(value) => {
@@ -3614,7 +3615,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote! {
-                                        Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)", {
+                                        // Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}) as elem)", {
+                                        Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)", {
                                             let mut acc = std::string::String::new();
                                             for element in &value.update {
                                                 let id = element.id.get_inner();
@@ -4039,7 +4041,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #ident_read_upper_camel_case::new({
                                     let mut acc = vec![];
                                     for element in value {
-                                        acc.push(AnimalWithIdAsNotNullJsonbObjectWithIdRead {
+                                        acc.push(#ident_with_id_read_standart_not_null_upper_camel_case {
                                             #(#content_token_stream),*
                                         });
                                     }

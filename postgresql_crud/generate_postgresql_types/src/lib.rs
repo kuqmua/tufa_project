@@ -1,3 +1,4 @@
+//todo why no bind id read_only_ids? maybe sql injection?
 #[proc_macro]
 pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
