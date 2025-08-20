@@ -3980,23 +3980,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_type = &element.ty;
                                 // let field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element.ty);
                                 quote::quote! {
-                                    #field_ident: Some(postgresql_crud::Value {
-                                        value: 
+                                    #field_ident: 
+                                    <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                        element.#field_ident.clone()
+                                    )
+                                    // Some(postgresql_crud::Value {
+                                    //     value: 
                                         
-                                            {
-                                                // let mut acc = vec![];
-                                                // for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element.#field_ident.clone()) {
-                                                //     for element in element {
-                                                //         acc.push(element);
-                                                //     }
-                                                // }
-                                                // acc
-                                                panic!("not yet implemented panic 3946ee91-5e00-45fa-9148-edfcf13ac43c")
-                                            }
-                                        // #field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream into_inner(
-                                        //     <#field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        // )
-                                    })
+                                    //         {
+                                    //             // let mut acc = vec![];
+                                    //             // for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element.#field_ident.clone()) {
+                                    //             //     for element in element {
+                                    //             //         acc.push(element);
+                                    //             //     }
+                                    //             // }
+                                    //             // acc
+                                    //             panic!("not yet implemented panic 3946ee91-5e00-45fa-9148-edfcf13ac43c")
+                                    //         }
+                                    //     // #field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream into_inner(
+                                    //     //     <#field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                    //     // )
+                                    // })
                                 }
                             });
                             quote::quote! {
