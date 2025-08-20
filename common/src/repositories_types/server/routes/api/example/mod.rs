@@ -3459,22 +3459,37 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases for VecOfAnimalWithIdAsNotN
         println!("@@@@2");
         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate::try_new(
             vec![],
-            value
-                .into_iter()
-                .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
-                    id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.expect("da85521b-9933-473d-9ac0-c96f6fd111de").value),
-                    fields: AnimalAsNotNullJsonbObjectUpdate::new(
-                        postgresql_crud::NotEmptyUniqueEnumVec::try_new({
-                            let mut acc = vec![];
-                            if let Some(value) = element.field_807 {
-                                acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field807(postgresql_crud::Value { value: <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(value.value) }));
-                            }
-                            acc
-                        })
-                        .expect("a86099bb-6072-4d90-8bbf-776af0c52030"),
-                    ),
-                })
-                .collect(),
+            {
+                println!("WWW {value:#?}");
+                let g: Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement> = value
+                    .into_iter()
+                    .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+                        id: {
+                            let f = postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.expect("da85521b-9933-473d-9ac0-c96f6fd111de").value);
+                            f
+                        },
+                        fields: AnimalAsNotNullJsonbObjectUpdate::new(
+                            postgresql_crud::NotEmptyUniqueEnumVec::try_new({
+                                let mut acc = vec![];
+                                println!("BBBBB");
+                                if let Some(value) = element.field_807 {
+                                    acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field807(postgresql_crud::Value {
+                                        value: {
+                                            println!("IIIII {:#?}", value.value);
+                                            <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(value.value)
+                                        }
+                                    }));
+                                }
+                                println!("ACCCCCC {acc:#?}");
+                                acc
+                            })
+                            .expect("a86099bb-6072-4d90-8bbf-776af0c52030"),
+                        ),
+                    })
+                    .collect();
+                println!("LENNNNNNN {}", g.len());
+                g
+            },
             vec![],
         )
         .expect("e52613cf-b6a7-4135-a120-9a8edd6a1cea")
