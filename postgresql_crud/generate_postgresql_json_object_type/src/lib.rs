@@ -3642,7 +3642,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote!{
                                         match &value.0 {
-                                            Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, field_ident, column_name_and_maybe_field_getter, increment) {
+                                            Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, column, column, increment) {
                                                 Ok(value) => Ok(format!("{value} as {column},")),
                                                 Err(error) => Err(error),
                                             },
@@ -4257,7 +4257,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
-                                        todo!()
+                                        Some(postgresql_crud::Value {
+                                            value: match value.0 {
+                                                Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value) {
+                                                    Some(value) => Some(value.value),
+                                                    None => None,
+                                                },
+                                                None => None,
+                                            },
+                                        })
                                     }
                                 }
                             },
