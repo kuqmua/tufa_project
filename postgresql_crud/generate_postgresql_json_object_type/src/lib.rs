@@ -3568,8 +3568,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         match &value.0 {
                                             Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
                                                 value,
-                                                field_ident,
-                                                column_name_and_maybe_field_getter,
+                                                // field_ident,
+                                                column,
+                                                // column_name_and_maybe_field_getter,
+                                                column,
                                                 increment
                                             ) {
                                                 Ok(value) => Ok(value),
