@@ -4229,7 +4229,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_false),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
-                                        todo!()
+                                        Some(postgresql_crud::Value {
+                                            value: match value.0 {
+                                                Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value) {
+                                                    Some(value) => Some(value.value),
+                                                    None => None //none or struct where all fields are none
+                                                },
+                                                None => None //none or struct where all fields are none
+                                            }
+                                        })
                                     }
                                 }
                             },
