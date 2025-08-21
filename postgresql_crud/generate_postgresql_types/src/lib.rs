@@ -5206,7 +5206,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_less_typical_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(&sqlx_types_chrono_naive_date_time_positive_less_typical_token_stream);
                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(&sqlx_types_chrono_naive_date_time_positive_more_typical_token_stream);
                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(&sqlx_types_chrono_naive_date_time_max_token_stream);
-                                    match &postgresql_type {
+                                    let content_token_stream = match &postgresql_type {
                                         PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::std_primitive_i16_test_vec_token_stream(),
                                         PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::std_primitive_i32_test_vec_token_stream(),
                                         PostgresqlType::StdPrimitiveI64AsInt8 => postgresql_crud_macros_common::std_primitive_i64_test_vec_token_stream(),
@@ -5331,57 +5331,141 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_token_stream,
                                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_token_stream,
                                         ),
-                                    }
+                                    };
+                                    quote::quote!{vec![{#content_token_stream}]}
                                 }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_standart_nullable_test_vec_token_stream(&ident_standart_not_null_upper_camel_case, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    // fn generate_standart_nullable_test_vec_token_stream(ident_standart_not_null_upper_camel_case: &dyn quote::ToTokens, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType) -> proc_macro2::TokenStream {
+                                    //     let (postgresql_type_or_postgresql_json_type_upper_camel_case, postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case): (&dyn quote::ToTokens, &dyn quote::ToTokens) = match &postgresql_type_or_postgresql_json_type {
+                                    //         PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => (&naming::PostgresqlTypeUpperCamelCase, &naming::PostgresqlTypeTestCasesUpperCamelCase),
+                                    //         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (&naming::PostgresqlJsonTypeUpperCamelCase, &naming::PostgresqlJsonTypeTestCasesUpperCamelCase),
+                                    //     };
+                                    //     let read_inner_token_stream = quote::quote! {<#ident_standart_not_null_upper_camel_case as crate::#postgresql_type_or_postgresql_json_type_upper_camel_case>::ReadInner};
+                                    //     let test_cases_snake_case = naming::TestCasesSnakeCase;
+                                    //     let element_snake_case = naming::ElementSnakeCase;
+                                    //     let acc_snake_case = naming::AccSnakeCase;
+                                    //     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+                                    //     quote::quote! {
+                                    //         let mut #acc_snake_case = <#ident_standart_not_null_upper_camel_case as crate::tests::#postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case>::#test_cases_snake_case(&#read_only_ids_snake_case)
+                                    //         .into_iter()
+                                    //         .map(|#element_snake_case|Some(#element_snake_case))
+                                    //         .collect::<std::vec::Vec<
+                                    //             std::option::Option<#read_inner_token_stream>
+                                    //         >>();
+                                    //         #acc_snake_case.push(None);
+                                    //         #acc_snake_case
+                                    //     }
+                                    // }
+                                    // let content_token_stream = postgresql_crud_macros_common::generate_standart_nullable_test_vec_token_stream(
+                                    //     &ident_standart_not_null_upper_camel_case,
+                                    //     &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType
+                                    // );
+                                    quote::quote!{
+                                        // vec![{#content_token_stream}]
+                                        let mut acc = vec![];
+                                        for element in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::test_cases(&#read_only_ids_snake_case) {
+                                            for current_element in element {
+                                                acc.push(vec![Some(current_element)]);
+                                            }
+                                        }
+                                        acc.push(vec![None]);
+                                        acc
+                                    }
+                                },
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                    <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
-                                    .into_iter()
-                                    .map(|element|vec![element])
-                                    .collect::<std::vec::Vec<
-                                        std::vec::Vec<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
-                                    >>()
+                                    // vec![
+                                    //     {
+                                    //         <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
+                                    //         .into_iter()
+                                    //         .map(|element|vec![element])
+                                    //         .collect::<std::vec::Vec<
+                                    //             std::vec::Vec<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
+                                    //         >>()
+                                    //     }
+                                    // ]
+                                    let mut acc = vec![];
+                                    for element in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::test_cases(&#read_only_ids_snake_case) {
+                                        acc.push(element);
+                                    }
+                                    vec![acc]
                                 },
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
-                                    .into_iter()
-                                    .map(|element|vec![Some(element)])
-                                    .collect::<std::vec::Vec<
-                                        std::vec::Vec<
-                                            std::option::Option<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
-                                        >
-                                    >>();
-                                    acc.push(vec![None]);
-                                    acc
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    quote::quote! {
+                                        // vec![
+                                        //     {
+                                        //         let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
+                                        //         .into_iter()
+                                        //         .map(|element|vec![Some(element)])
+                                        //         .collect::<std::vec::Vec<
+                                        //             std::vec::Vec<
+                                        //                 std::option::Option<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
+                                        //             >
+                                        //         >>();
+                                        //         acc.push(vec![None]);
+                                        //         acc
+                                        //     }
+                                        // ]
+                                        let mut acc = vec![];
+                                        for element in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::test_cases(&read_only_ids) {
+                                            let mut current_acc = vec![];
+                                            for current_element in element {
+                                                current_acc.push(Some(current_element));
+                                            }
+                                            acc.push(current_acc);
+                                        }
+                                        vec![acc]
+                                    }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
-                                    .into_iter()
-                                    .map(|element|Some(vec![element]))
-                                    .collect::<std::vec::Vec<
-                                        std::option::Option<
-                                            std::vec::Vec<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
-                                        >
-                                    >>();
-                                    acc.push(None);
-                                    acc
+                                    // vec![
+                                    //     {
+                                    //         let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
+                                    //         .into_iter()
+                                    //         .map(|element|Some(vec![element]))
+                                    //         .collect::<std::vec::Vec<
+                                    //             std::option::Option<
+                                    //                 std::vec::Vec<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
+                                    //             >
+                                    //         >>();
+                                    //         acc.push(None);
+                                    //         acc
+                                    //     }
+                                    // ]
+                                    let mut acc = vec![];
+                                    for element in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::test_cases(&read_only_ids) {
+                                        acc.push(Some(element));
+                                    }
+                                    vec![acc]
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
-                                    .into_iter()
-                                    .map(|element|Some(vec![Some(element)]))
-                                    .collect::<std::vec::Vec<
-                                        std::option::Option<
-                                            std::vec::Vec<
-                                                std::option::Option<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
-                                            >
-                                        >
-                                    >>();
-                                    acc.push(None);
-                                    acc.push(Some(vec![None]));
-                                    acc
+                                    // vec![
+                                    //     {
+                                    //         let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case(&#read_only_ids_snake_case)
+                                    //         .into_iter()
+                                    //         .map(|element|Some(vec![Some(element)]))
+                                    //         .collect::<std::vec::Vec<
+                                    //             std::option::Option<
+                                    //                 std::vec::Vec<
+                                    //                     std::option::Option<#ident_standart_not_null_as_postgresql_type_read_inner_token_stream>
+                                    //                 >
+                                    //             >
+                                    //         >>();
+                                    //         acc.push(None);
+                                    //         acc.push(Some(vec![None]));
+                                    //         acc
+                                    //     }
+                                    // ]
+                                    let mut acc = vec![];
+                                    for element in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::test_cases(&read_only_ids) {
+                                        let mut current_acc = vec![];
+                                        for current_element in element {
+                                            current_acc.push(Some(current_element));
+                                        }
+                                        acc.push(Some(current_acc));
+                                    }
+                                    vec![acc]
                                 },
                             },
                         }

@@ -1088,3 +1088,4 @@ generate_postgresql_types::generate_postgresql_types!("All");
 //         // }
 //     ]
 // });
+
