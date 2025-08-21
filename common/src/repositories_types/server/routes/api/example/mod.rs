@@ -198,11 +198,11 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
             // ,
             // {
             //     "not_null_or_nullable": "Nullable",
@@ -210,11 +210,11 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
         // ]
     }
 }]
@@ -1314,75 +1314,5 @@ mod example_tests {
             .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
             .join()
             .expect("error b2f21a5f-d9ce-435c-809f-bd40741c8795");
-    }
-}
-
-
-
-#[cfg(test)]
-impl postgresql_crud::tests::PostgresqlTypeTestCases for AnimalAsNotNullJsonbObject {
-    type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
-        let mut acc = vec![];
-        for element in <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids.field_0) {
-            for current_element in element {
-                acc.push(AnimalAsNotNullJsonbObjectReadInner {
-                    field_0: Some(postgresql_crud::Value { value: current_element }),
-                    field_1: Some(postgresql_crud::Value {
-                        value: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    }),
-                });
-            }
-        }
-        for element in <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids.field_1) {
-            for current_element in element {
-                acc.push(AnimalAsNotNullJsonbObjectReadInner {
-                    field_0: Some(postgresql_crud::Value {
-                        value: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    }),
-                    field_1: Some(postgresql_crud::Value { value: current_element }),
-                });
-            }
-        }
-        vec![acc]
-    }
-    fn read_new_or_try_new_unwraped_for_test(value: AnimalAsNotNullJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Read {
-        <Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(
-            match value.field_0 {
-                Some(value) => Some(postgresql_crud::Value {
-                    value: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value.value),
-                }),
-                None => None,
-            },
-            match value.field_1 {
-                Some(value) => Some(postgresql_crud::Value {
-                    value: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value.value),
-                }),
-                None => None,
-            },
-        )
-        .unwrap()
-    }
-    fn update_new_or_try_new_unwraped_for_test(value: AnimalAsNotNullJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(
-            postgresql_crud::NotEmptyUniqueEnumVec::try_new({
-                let mut acc = vec![];
-                if let Some(value) = value.field_0 {
-                    acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
-                        value: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(value.value),
-                    }));
-                }
-                if let Some(value) = value.field_1 {
-                    acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
-                        value: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(value.value),
-                    }));
-                }
-                acc
-            })
-            .unwrap(),
-        )
-    }
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
-        todo!()
     }
 }
