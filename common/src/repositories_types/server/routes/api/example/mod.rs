@@ -1182,6 +1182,29 @@ mod example_tests {
                         None => vec![],
                     };
                     println!("!!!!! {:#?}", &column_155_test_cases);
+                    // [
+                    //     [
+                    //         AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                    //             id: Some(
+                    //                 Value {
+                    //                     value: 05ce5c34-c5b5-4f04-b094-2d6f3199a5d6,
+                    //                 },
+                    //             ),
+                    //             field_0: Some(
+                    //                 Value {
+                    //                     value: 0,
+                    //                 },
+                    //             ),
+                    //             field_1: Some(
+                    //                 Value {
+                    //                     value: Some(
+                    //                         0,
+                    //                     ),
+                    //                 },
+                    //             ),
+                    //         },
+                    //     ],
+                    // ]
                     for index in 0..column_155_test_cases.len() {
                         let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                             super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1202,7 +1225,12 @@ mod example_tests {
                             super::Example::try_update_one(
                                 &url,
                                 super::ExampleUpdateOneParameters {
-                                    payload: super::ExampleUpdate::try_new(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()), column_155_some_value_update).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"),
+                                    payload: super::ExampleUpdate::try_new(
+                                        <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(
+                                            read_only_ids_returned_from_create_one.primary_key_column.clone()
+                                        ),
+                                        column_155_some_value_update
+                                    ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"),
                                 },
                             )
                             .await
