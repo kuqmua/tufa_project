@@ -1175,64 +1175,6 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
     }
 }
 #[cfg(test)]
-impl postgresql_crud::tests::PostgresqlTypeTestCases for OptionAnimalAsNullableJsonbObject {
-    type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
-        match &read_only_ids.0 {
-            Some(value) => <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-            None => vec![None],
-        }
-    }
-    fn read_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Read {
-        <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-            Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn update_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-            Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
-        todo!()
-    }
-}
-#[cfg(test)]
-impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for OptionAnimalAsNullableJsonbObject {
-    type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
-        match &read_only_ids.0 {
-            Some(value) => <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-            None => vec![None],
-        }
-    }
-    fn read_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-            Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn update_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
-        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-            Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
-        Some(postgresql_crud::Value {
-            value: match value.0 {
-                Some(value) => match <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value) {
-                    Some(value) => Some(value.value),
-                    None => None,
-                },
-                None => None,
-            },
-        })
-    }
-}
-#[cfg(test)]
 impl postgresql_crud::tests::PostgresqlTypeTestCases for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId {
     type Element = Self;
     fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
@@ -1467,64 +1409,6 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for DoggieWithIdAsNotNu
             value: DoggieWithIdAsNotNullJsonbObjectWithIdReadInner {
                 id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.id),
                 field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.field_0),
-            },
-        })
-    }
-}
-#[cfg(test)]
-impl postgresql_crud::tests::PostgresqlTypeTestCases for OptionDoggieAsNullableJsonbObject {
-    type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
-        match &read_only_ids.0 {
-            Some(value) => <DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-            None => vec![None],
-        }
-    }
-    fn read_new_or_try_new_unwraped_for_test(value: OptionDoggieAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Read {
-        <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-            Some(value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn update_new_or_try_new_unwraped_for_test(value: OptionDoggieAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-            Some(value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
-        todo!()
-    }
-}
-#[cfg(test)]
-impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for OptionDoggieAsNullableJsonbObject {
-    type Element = Self;
-    fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
-        match &read_only_ids.0 {
-            Some(value) => <DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value).into_iter().map(|element| Some(element)).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-            None => vec![None],
-        }
-    }
-    fn read_new_or_try_new_unwraped_for_test(value: OptionDoggieAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-            Some(value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn update_new_or_try_new_unwraped_for_test(value: OptionDoggieAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
-        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-            Some(value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
-            None => None,
-        })
-    }
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
-        Some(postgresql_crud::Value {
-            value: match value.0 {
-                Some(value) => match <DoggieAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value) {
-                    Some(value) => Some(value.value),
-                    None => None,
-                },
-                None => None,
             },
         })
     }
