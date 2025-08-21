@@ -1140,8 +1140,20 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one"
                     );
+                    // let column_155_test_cases = match &read_only_ids_returned_from_create_one.column_155 {
+                    //     Some(value) => <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value),
+                    //     None => vec![],
+                    // };
                     let column_155_test_cases = match &read_only_ids_returned_from_create_one.column_155 {
-                        Some(value) => <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value),
+                        Some(value) => {
+                            value
+                            // read_only_ids
+                            .0.iter()
+                            .map(|element|{
+                                <crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(element)
+                            })
+                            .collect()
+                        },
                         None => vec![],
                     };
                     println!("!!!!! {:#?}", &column_155_test_cases);
