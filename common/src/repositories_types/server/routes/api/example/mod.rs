@@ -1144,13 +1144,38 @@ mod example_tests {
                     //     Some(value) => <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value),
                     //     None => vec![],
                     // };
+                    // let column_155_test_cases = match &read_only_ids_returned_from_create_one.column_155 {
+                    //     Some(value) => {
+                    //         value
+                    //         // read_only_ids
+                    //         .0.iter()
+                    //         .map(|element|{
+                    //             <crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(element)
+                    //         })
+                    //         .collect()
+                    //     },
+                    //     None => vec![],
+                    // };
                     let column_155_test_cases = match &read_only_ids_returned_from_create_one.column_155 {
                         Some(value) => {
                             value
                             // read_only_ids
                             .0.iter()
                             .map(|element|{
-                                <crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(element)
+                                // <crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(element)
+                                vec![
+                                    crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                                        id: Some(postgresql_crud::Value {
+                                            value: element.id.clone()
+                                        }),
+                                        field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                            element.field_0.clone()
+                                        ),
+                                        field_1: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                            element.field_1.clone()
+                                        ),
+                                    }
+                                ]
                             })
                             .collect()
                         },
