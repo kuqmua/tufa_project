@@ -1187,41 +1187,45 @@ mod example_tests {
                             .0.iter()
                             .map(|element|{
                                 let mut acc = vec![];
-                                let field_0_test_cases: Vec<i8> = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
+                                let field_0_test_cases: Vec<Vec<i8>> = vec![<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
                                     &element.field_0.clone()
-                                );
+                                )];
                                 for current_element in field_0_test_cases {
-                                    acc.push(vec![
-                                        crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
-                                            id: Some(postgresql_crud::Value {
-                                                value: element.id.clone()
-                                            }),
-                                            field_0: Some(postgresql_crud::Value {
-                                                value: current_element
-                                            }),
-                                            field_1: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                                element.field_1.clone()
-                                            ),
-                                        }
-                                    ]);
+                                    for inner_current_element in current_element {
+                                        acc.push(vec![
+                                            crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                                                id: Some(postgresql_crud::Value {
+                                                    value: element.id.clone()
+                                                }),
+                                                field_0: Some(postgresql_crud::Value {
+                                                    value: inner_current_element
+                                                }),
+                                                field_1: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                                    element.field_1.clone()
+                                                ),
+                                            }
+                                        ]);
+                                    }
                                 }
-                                let field_1_test_cases: Vec<Option<i8>> = <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
+                                let field_1_test_cases: Vec<Vec<Option<i8>>> = vec![<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
                                     &element.field_1.clone()
-                                );
+                                )];
                                 for current_element in field_1_test_cases {
-                                    acc.push(vec![
-                                        crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
-                                            id: Some(postgresql_crud::Value {
-                                                value: element.id.clone()
-                                            }),
-                                            field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                                element.field_0.clone()
-                                            ),
-                                            field_1: Some(postgresql_crud::Value {
-                                                value: current_element
-                                            }),
-                                        }
-                                    ]);
+                                    for inner_current_element in current_element {
+                                        acc.push(vec![
+                                            crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                                                id: Some(postgresql_crud::Value {
+                                                    value: element.id.clone()
+                                                }),
+                                                field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                                    element.field_0.clone()
+                                                ),
+                                                field_1: Some(postgresql_crud::Value {
+                                                    value: inner_current_element
+                                                }),
+                                            }
+                                        ]);
+                                    }
                                 }
                                 acc
                                 // vec![
