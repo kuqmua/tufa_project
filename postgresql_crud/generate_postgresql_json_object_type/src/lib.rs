@@ -3896,8 +3896,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     });
                     let field_type = &element.ty;
                     quote::quote! {
-                        #field_ident: <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.#field_ident)
-
+                        #field_ident: match <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.#field_ident) {
+                            Some(value) => Some(value),
+                            None => Some(postgresql_crud::Value{
+                                value: <#field_type as postgresql_crud::PostgresqlJsonType>::into_inner(
+                                    <
+                                        <#field_type as postgresql_crud::PostgresqlJsonType>::Read
+                                        as
+                                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                )
+                            })
+                        }
                     }
                 });
                 quote::quote!{
@@ -4419,9 +4429,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
                 #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
                 #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
-                // #impl_postgresql_type_test_cases_for_ident_token_stream
-                // #impl_postgresql_json_type_test_cases_for_ident_token_stream
-                // #impl_postgresql_json_type_test_cases_for_ident_with_id_not_null_token_stream
+
+
+                #impl_postgresql_type_test_cases_for_ident_token_stream
+                #impl_postgresql_json_type_test_cases_for_ident_token_stream
+                #impl_postgresql_json_type_test_cases_for_ident_with_id_not_null_token_stream
             };
             // if let (
             //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
