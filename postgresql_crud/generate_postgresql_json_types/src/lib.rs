@@ -2220,7 +2220,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     {
                         quote::quote!{Some(crate::Value { value })}
                     } else {
-                        quote::quote!{None}
+                        quote::quote!{
+                            Some(crate::Value{
+                                value: <#ident as crate::PostgresqlJsonType>::into_inner(
+                                    <
+                                        <#ident as crate::PostgresqlJsonType>::Read
+                                        as
+                                        crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                )
+                            })
+                        }
                     },
                 )
             };
