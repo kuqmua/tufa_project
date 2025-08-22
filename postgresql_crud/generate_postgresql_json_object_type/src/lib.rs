@@ -4041,18 +4041,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //     }
                                 // ]
                                 let mut acc = vec![];
-                                match &read_only_ids.0 {
-                                    Some(value) => {
-                                        for element in <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
-                                            for current_element in element {
-                                                acc.push(Some(current_element));
-                                            }
+                                if let Some(value) = &read_only_ids.0 {
+                                    for element in <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
+                                        for current_element in element {
+                                            acc.push(Some(current_element));
                                         }
-                                    },
-                                    None => {
-                                        acc.push(None);
-                                    },
+                                    }
                                 }
+                                acc.push(None);
                                 vec![acc]
                             }
                         }
@@ -4182,18 +4178,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //     }
                                 // ]
                                 let mut acc = vec![];
-                                match &read_only_ids.0 {
-                                    Some(value) => {
-                                        for element in <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
-                                            for current_element in element {
-                                                acc.push(Some(current_element));
-                                            }
+                                if let Some(value) = &read_only_ids.0 {
+                                    for element in <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
+                                        for current_element in element {
+                                            acc.push(Some(current_element));
                                         }
-                                    },
-                                    None => {
-                                        acc.push(None);
-                                    },
+                                    }
                                 }
+                                acc.push(None);
                                 vec![acc]
                             }
                         }
