@@ -1980,62 +1980,69 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 //         #maybe_push_none_token_stream
                                 //     }
                                 // })
-                                match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        let current_ident = &generate_ident_token_stream(
-                                            &NotNullOrNullable::NotNull,
-                                            &PostgresqlJsonTypePattern::Standart
-                                        );
-                                        quote::quote! {
-                                            let mut acc = vec![];
-                                            for element in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                                acc.push(element);
-                                            }
-                                            vec![acc]
-                                        }
-                                    },
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        let current_ident = &generate_ident_token_stream(
-                                            &NotNullOrNullable::Nullable,
-                                            &PostgresqlJsonTypePattern::Standart
-                                        );
-                                        quote::quote! {
-                                            let mut acc = vec![];
-                                            for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                                acc.push(element0);
-                                            }
-                                            vec![acc]
-                                        }
-                                    },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        let current_ident = &generate_ident_token_stream(
-                                            &NotNullOrNullable::NotNull,
-                                            &PostgresqlJsonTypePattern::Standart
-                                        );
-                                        quote::quote! {
-                                            let mut acc = vec![];
-                                            for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                                acc.push(Some(element0));
-                                            }
-                                            acc.push(None);
-                                            vec![acc]
-                                        }
-                                    },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        let current_ident = &generate_ident_token_stream(
-                                            &NotNullOrNullable::Nullable,
-                                            &PostgresqlJsonTypePattern::Standart
-                                        );
-                                        quote::quote! {
-                                            let mut acc = vec![];
-                                            for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                                acc.push(Some(element0));
-                                            }
-                                            acc.push(None);
-                                            vec![acc]
-                                        }
-                                    },
-                                }
+                                // match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                //         let current_ident = &generate_ident_token_stream(
+                                //             &NotNullOrNullable::NotNull,
+                                //             &PostgresqlJsonTypePattern::Standart
+                                //         );
+                                //         quote::quote! {
+                                //             let mut acc = vec![];
+                                //             for element in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                //                 acc.push(element);
+                                //             }
+                                //             vec![acc]
+                                //         }
+                                //     },
+                                //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                //         let current_ident = &generate_ident_token_stream(
+                                //             &NotNullOrNullable::Nullable,
+                                //             &PostgresqlJsonTypePattern::Standart
+                                //         );
+                                //         quote::quote! {
+                                //             let mut acc = vec![];
+                                //             for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                //                 acc.push(element0);
+                                //             }
+                                //             vec![acc]
+                                //         }
+                                //     },
+                                //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                //         let current_ident = &generate_ident_token_stream(
+                                //             &NotNullOrNullable::NotNull,
+                                //             &PostgresqlJsonTypePattern::Standart
+                                //         );
+                                //         quote::quote! {
+                                //             let mut acc = vec![];
+                                //             for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                //                 acc.push(Some(element0));
+                                //             }
+                                //             acc.push(None);
+                                //             vec![acc]
+                                //         }
+                                //     },
+                                //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                //         let current_ident = &generate_ident_token_stream(
+                                //             &NotNullOrNullable::Nullable,
+                                //             &PostgresqlJsonTypePattern::Standart
+                                //         );
+                                //         quote::quote! {
+                                //             let mut acc = vec![];
+                                //             for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                //                 acc.push(Some(element0));
+                                //             }
+                                //             acc.push(None);
+                                //             vec![acc]
+                                //         }
+                                //     },
+                                // }
+                                generate_acc_content_token_stream(
+                                    &not_null_or_nullable,
+                                    &generate_ident_token_stream(
+                                        &dimension1_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::Standart
+                                    )
+                                )
                             }
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                                 let dimension2_not_null_or_nullable_map = generate_maybe_some_token_stream(&dimension2_not_null_or_nullable, &element_snake_case);
