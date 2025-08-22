@@ -1957,10 +1957,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 //         #maybe_push_none_token_stream
                                 //     }
                                 // })
-                                // quote::quote!{vec![]}
                                 match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            let mut acc = vec![];
+                                            for element0 in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                                acc.push(element0);
+                                            }
+                                            vec![acc]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                                         quote::quote! {vec![]}
