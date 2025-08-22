@@ -1895,6 +1895,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         //         NotNullOrNullable::Nullable => quote::quote!{acc.push(Some(vec![None]));}
                         //     }
                         // };
+                        let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens|{
+                            let (
+                                element_or_some_element_token_stream,
+                                maybe_push_none_token_stream
+                            ) = match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    quote::quote!{element},
+                                    proc_macro2::TokenStream::new()
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    quote::quote!{Some(element)},
+                                    quote::quote!{acc.push(None);}
+                                ),
+                            };
+                            quote::quote! {
+                                let mut acc = vec![];
+                                for element in <#ident_token_stream as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                    acc.push(#element_or_some_element_token_stream);
+                                }
+                                #maybe_push_none_token_stream
+                                vec![acc]
+                            }
+                        };
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 // #inner_type_standart_not_null_token_stream
@@ -1959,10 +1982,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 // })
                                 match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                        let current_ident = &generate_ident_token_stream(
+                                            &NotNullOrNullable::NotNull,
+                                            &PostgresqlJsonTypePattern::Standart
+                                        );
                                         quote::quote! {
                                             let mut acc = vec![];
-                                            for element0 in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                                acc.push(element0);
+                                            for element in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                                acc.push(element);
                                             }
                                             vec![acc]
                                         }
