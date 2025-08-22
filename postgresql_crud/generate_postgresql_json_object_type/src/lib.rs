@@ -3982,7 +3982,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             //     value: <#current_field_type as postgresql_crud::PostgresqlJsonType>::into_inner(<<#current_field_type as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                             // })
                                             #current_field_ident: <#current_field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                                current_element.clone()
+                                                #read_only_ids_snake_case.#current_field_ident.clone()
                                             )
                                         }
                                     }
