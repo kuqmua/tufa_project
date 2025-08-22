@@ -3717,15 +3717,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     println!(#len_message_double_quotes_token_stream, acc.len());
                     for element in acc {
                         assert_eq!(
-                            element.#read_only_ids_snake_case,
-                            super::#ident::try_update_one(
-                                &url,
-                                super::#ident_update_one_parameters_upper_camel_case {
-                                    payload: element.#update_one_parameters_snake_case,
-                                },
-                            )
-                            .await
-                            .expect(#try_update_one_expect_error_message_double_quotes_token_stream),
+                            {
+                                let left = element.#read_only_ids_snake_case;
+                                println!("left {left:#?}");
+                                left
+                            },
+                            {
+                                let right = super::#ident::try_update_one(
+                                    &url,
+                                    super::#ident_update_one_parameters_upper_camel_case {
+                                        payload: {
+                                            let f = element.#update_one_parameters_snake_case;
+                                            println!("UPDATE{f:#?}");
+                                            f
+                                        },
+                                    },
+                                )
+                                .await
+                                .expect(#try_update_one_expect_error_message_double_quotes_token_stream);
+                                println!("right {right:#?}");
+                                right
+                            },
                             #try_update_one_result_different_error_message_double_quotes_token_stream
                         );
                     }
