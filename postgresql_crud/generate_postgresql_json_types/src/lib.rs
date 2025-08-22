@@ -1928,9 +1928,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     // )
                                     quote::quote! {
                                         let mut acc = vec![];
-                                        for element1 in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
-                                            for element2 in element1 {
-                                                acc.push(Some(element2));
+                                        for element0 in <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                            for element1 in element0 {
+                                                acc.push(Some(element1));
                                             }
                                         }
                                         acc.push(None);
@@ -1968,13 +1968,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                 }
                             }
@@ -2017,28 +2023,44 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 // })
                                 match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                 }
                             }
@@ -2120,52 +2142,84 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 // })
                                 match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                 }
                             }
@@ -2328,100 +2382,164 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &dimension4_not_null_or_nullable
                                 ) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                        quote::quote! {vec![]}
+                                        quote::quote! {
+                                            vec![]
+                                        }
                                     },
                                 }
                             }
