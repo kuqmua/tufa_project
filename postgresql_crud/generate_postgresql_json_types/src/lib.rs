@@ -1968,8 +1968,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         }
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                        let current_ident = &generate_ident_token_stream(
+                                            &NotNullOrNullable::Nullable,
+                                            &PostgresqlJsonTypePattern::Standart
+                                        );
                                         quote::quote! {
-                                            vec![]
+                                            let mut acc = vec![];
+                                            for element0 in <#current_ident as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids) {
+                                                acc.push(element0);
+                                            }
+                                            vec![acc]
                                         }
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
