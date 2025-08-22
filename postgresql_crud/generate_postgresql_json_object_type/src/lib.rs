@@ -4056,6 +4056,47 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let field_type = &element.ty;
+                                let fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                    let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let current_field_type = &element.ty;
+                                    if field_ident == current_field_ident {
+                                        quote::quote! {
+                                            #current_field_ident: Some(postgresql_crud::Value {
+                                                value: element2
+                                            })
+                                        }
+                                    } else {
+                                        quote::quote! {
+                                            #current_field_ident: <#current_field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                                element0.#current_field_ident.clone()
+                                            )
+                                        }
+                                    }
+                                });
+                                quote::quote! {
+                                    for element1 in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
+                                        &element0.#field_ident.clone()
+                                    ) {
+                                        for element2 in element1 {
+                                            acc.push(vec![
+                                                #ident_with_id_read_inner_standart_not_null_upper_camel_case {
+                                                    id: Some(postgresql_crud::Value {
+                                                        value: element0.id.clone()
+                                                    }),
+                                                    #(#fields_token_stream),*
+                                                }
+                                            ]);
+                                        }
+                                    }
+                                }
+                            });
                             quote::quote! {
                                 // vec![
                                 //     {
@@ -4065,14 +4106,59 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //         .collect()
                                 //     }
                                 // ]
-                                let mut acc = vec![];
-                                for element1 in &#read_only_ids_snake_case.0 {
-                                    for element2 in <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element1) {
-                                        acc.push(element2);
-                                    }
-
-                                }
-                                vec![acc]
+                                // let mut acc = vec![];
+                                // for element1 in &#read_only_ids_snake_case.0 {
+                                //     for element2 in <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element1) {
+                                //         acc.push(element2);
+                                //     }
+                                // }
+                                // vec![acc]
+                                #read_only_ids_snake_case
+                                .0.iter()
+                                .map(|element0|{
+                                    let mut acc = vec![];
+                                    #(#content_token_stream)*
+                                    // for current_element in <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
+                                    //     &element.field_0.clone()
+                                    // ) {
+                                    //     for inner_current_element in current_element {
+                                    //         acc.push(vec![
+                                    //             crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                                    //                 id: Some(postgresql_crud::Value {
+                                    //                     value: element0.id.clone()
+                                    //                 }),
+                                    //                 field_0: Some(postgresql_crud::Value {
+                                    //                     value: inner_current_element
+                                    //                 }),
+                                    //                 field_1: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                    //                     element0.field_1.clone()
+                                    //                 ),
+                                    //             }
+                                    //         ]);
+                                    //     }
+                                    // }
+                                    // for current_element in <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
+                                    //     &element0.field_1.clone()
+                                    // ) {
+                                    //     for inner_current_element in current_element {
+                                    //         acc.push(vec![
+                                    //             crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
+                                    //                 id: Some(postgresql_crud::Value {
+                                    //                     value: element0.id.clone()
+                                    //                 }),
+                                    //                 field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                    //                     element0.field_0.clone()
+                                    //                 ),
+                                    //                 field_1: Some(postgresql_crud::Value {
+                                    //                     value: inner_current_element
+                                    //                 }),
+                                    //             }
+                                    //         ]);
+                                    //     }
+                                    // }
+                                    acc
+                                })
+                                .collect()
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
