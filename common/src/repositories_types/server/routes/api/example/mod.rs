@@ -204,17 +204,17 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
             {
                 "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Array",
+                "postgresql_json_object_type_pattern": "Standart",
                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             }
+            // ,
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
         // ]
     }
 }]

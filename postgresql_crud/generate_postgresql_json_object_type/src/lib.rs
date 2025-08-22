@@ -3567,13 +3567,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     quote::quote! {
                                         match &value.0 {
-                                            Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                                            Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(
                                                 value,
-                                                // field_ident,
                                                 column,
-                                                // column_name_and_maybe_field_getter,
-                                                column,
-                                                increment
+                                                increment,
+                                                false
                                             ) {
                                                 Ok(value) => Ok(value),
                                                 Err(error) => Err(error)
@@ -3642,7 +3640,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote!{
                                         match &value.0 {
-                                            Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, column, column, increment) {
+                                            Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(value, column, increment, false) {
                                                 Ok(value) => Ok(format!("{value} as {column},")),
                                                 Err(error) => Err(error),
                                             },
