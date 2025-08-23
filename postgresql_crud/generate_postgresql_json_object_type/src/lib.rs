@@ -3512,6 +3512,66 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 //todo reuse
                                                 // Ok(format!("'[]'::jsonb"))
                                                 Ok(format!(#format_handle_token_stream))
+                                                // Ok(format!(
+                                                //     "'{field_ident}',
+                                                //     case
+                                                //     when
+                                                //     jsonb_typeof(
+                                                //       {column_name_and_maybe_field_getter}->'{field_ident}'
+                                                //     ) = 'null'
+                                                //     then 'null'::jsonb
+                                                //     else
+                                                //     (select jsonb_agg(jsonb_build_object('id', elem -> 'id')||{}{}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)::jsonb
+                                                //     end
+                                                //     ",
+                                                //     format!(
+                                                //         "jsonb_build_object({})||",
+                                                //         {
+                                                //             let mut f = match <
+                                                //                 postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                                                //                 as
+                                                //                 postgresql_crud::PostgresqlJsonType
+                                                //             >::select_only_updated_ids_query_part(
+                                                //                     &<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Update as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                //                     "field_0",
+                                                //                     "elem",
+                                                //                     increment
+                                                //                 )
+                                                //             {
+                                                //                 Ok(value) => value,
+                                                //                 Err(error) => {
+                                                //                     return Err(error);
+                                                //                 }
+                                                //             };
+                                                //             let _ = f.pop();
+                                                //             f
+                                                //         }
+                                                //         //
+                                                //     ),
+                                                //     format!(
+                                                //         "jsonb_build_object({})",
+                                                //         {
+                                                //             let mut f = match <
+                                                //                 postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                                                //                 as
+                                                //                 postgresql_crud::PostgresqlJsonType
+                                                //             >::select_only_updated_ids_query_part(
+                                                //                     &<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Update as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                //                     "field_1",
+                                                //                     "elem",
+                                                //                     increment
+                                                //                 )
+                                                //             {
+                                                //                 Ok(value) => value,
+                                                //                 Err(error) => {
+                                                //                     return Err(error);
+                                                //                 }
+                                                //             };
+                                                //             let _ = f.pop();
+                                                //             f
+                                                //         }
+                                                //     ),
+                                                // ))
                                             }
                                         }
                                     }
