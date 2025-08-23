@@ -2300,10 +2300,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     &{
+                        use postgresql_crud_macros_common::NotNullOrNullable;
                         let none_token_stream = quote::quote!{None};
                         match &element.postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => {
-                                match &postgresql_json_type {
+                            PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => match &postgresql_json_type {
                                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => none_token_stream,
                                     PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => none_token_stream,
                                     PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => none_token_stream,
@@ -2316,8 +2317,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => none_token_stream,
                                     PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => none_token_stream,
                                     PostgresqlJsonType::StdStringStringAsJsonbString => none_token_stream,
-                                    PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{todo!()},
-                                }
+                                    PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{value.0},
+                                },
+                                NotNullOrNullable::Nullable => {
+                                    quote::quote!{todo!()}
+                                },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                 quote::quote!{todo!()}
