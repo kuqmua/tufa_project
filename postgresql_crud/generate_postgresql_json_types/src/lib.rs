@@ -1724,30 +1724,65 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let std_option_option_unit_token_stream = quote::quote! {std::option::Option<()>};
+                        let option_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                            quote::quote!{std::option::Option<#ident_token_stream>}
+                        };
                         if let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type {
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => {
                                         inner_type_standart_not_null_token_stream.clone()
                                     },
-                                    NotNullOrNullable::Nullable => {
-                                        quote::quote!{std::option::Option<#inner_type_standart_not_null_token_stream>}
-                                    },
+                                    NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                    //todo
-                                    quote::quote!{#std_option_option_unit_token_stream}
+                                    let token_stream1 = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_type_standart_not_null_token_stream.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                    };
+                                    let token_stream2 = match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream1.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream1),
+                                    };
+                                    quote::quote!{#token_stream2}
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                                    quote::quote!{#std_option_option_unit_token_stream}
+                                    let token_stream1 = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_type_standart_not_null_token_stream.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                    };
+                                    let token_stream2 = match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream1.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream1),
+                                    };
+                                    let token_stream3 = match &dimension2_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream2.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream2),
+                                    };
+                                    quote::quote!{#token_stream3}
                                 }
                                 PostgresqlJsonTypePattern::ArrayDimension3 {
                                     dimension1_not_null_or_nullable,
                                     dimension2_not_null_or_nullable,
                                     dimension3_not_null_or_nullable,
                                 } => {
-                                    //todo
-                                    quote::quote!{#std_option_option_unit_token_stream}
+                                    let token_stream1 = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_type_standart_not_null_token_stream.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                    };
+                                    let token_stream2 = match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream1.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream1),
+                                    };
+                                    let token_stream3 = match &dimension2_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream2.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream2),
+                                    };
+                                    let token_stream4 = match &dimension3_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream3.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream3),
+                                    };
+                                    quote::quote!{#token_stream4}
                                 }
                                 PostgresqlJsonTypePattern::ArrayDimension4 {
                                     dimension1_not_null_or_nullable,
@@ -1755,8 +1790,27 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     dimension3_not_null_or_nullable,
                                     dimension4_not_null_or_nullable,
                                 } => {
-                                    //todo
-                                    quote::quote!{#std_option_option_unit_token_stream}
+                                    let token_stream1 = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_type_standart_not_null_token_stream.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                    };
+                                    let token_stream2 = match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream1.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream1),
+                                    };
+                                    let token_stream3 = match &dimension2_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream2.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream2),
+                                    };
+                                    let token_stream4 = match &dimension3_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream3.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream3),
+                                    };
+                                    let token_stream5 = match &dimension4_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => token_stream4.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&token_stream4),
+                                    };
+                                    quote::quote!{#token_stream5}
                                 }
                             }
                         }
