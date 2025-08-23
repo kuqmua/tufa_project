@@ -5473,7 +5473,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                     &quote::quote!{todo!()},
-                    &quote::quote!{todo!()}
+                    &if let PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql = &postgresql_type {
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote!{
+                                        #ident_read_upper_camel_case(value.clone())
+                                    }
+                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                            },
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
+                                    todo!()
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    quote::quote! {
+                                        todo!()
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                    quote::quote! {
+                                        todo!()
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    quote::quote! {
+                                        todo!()
+                                    }
+                                },
+                            },
+                        }
+                    }
+                    else {
+                        quote::quote!{
+                            None
+                        }
+                    }
                 )
             };
             let generated = quote::quote! {
