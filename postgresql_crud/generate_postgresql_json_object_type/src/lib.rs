@@ -4522,6 +4522,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &test_cases_content_token_stream,
                         &read_new_or_try_new_unwraped_for_test_token_stream,
                         &update_new_or_try_new_unwraped_for_test_token_stream,
+                        &quote::quote!{todo!()},
                         &quote::quote!{todo!()}
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
@@ -4577,7 +4578,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             },
-                        }
+                        },
+                        &quote::quote!{todo!()},
                     ),
                 )
             };
@@ -4657,7 +4659,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             )
                         }
                     },
-                    &generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_true)
+                    &generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_true),
+                    &quote::quote!{todo!()}
                 )
             } else {
                 proc_macro2::TokenStream::new()
