@@ -2299,7 +2299,34 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             })
                         }
                     },
-                    &quote::quote!{todo!()}
+                    &{
+                        match &element.postgresql_json_type_pattern {
+                            PostgresqlJsonTypePattern::Standart => {
+                                quote::quote!{todo!()}
+                            },
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                                quote::quote!{todo!()}
+                            },
+                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
+                                quote::quote!{todo!()}
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension3 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                            } => {
+                                quote::quote!{todo!()}
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension4 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable,
+                            } => {
+                                quote::quote!{todo!()}
+                            }
+                        }
+                    }
                 )
             };
             let generated = quote::quote! {
