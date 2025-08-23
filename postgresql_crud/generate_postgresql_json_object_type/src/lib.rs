@@ -3435,7 +3435,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut acc = std::string::String::default();
                                                 #(#acc_push_content_token_stream)*
                                                 let _ = acc.pop();
-                                                Ok(format!("jsonb_build_object({acc}),"))
+                                                Ok(format!("'{field_ident}',jsonb_build_object({acc}),"))
                                             }
                                         }
                                     }
