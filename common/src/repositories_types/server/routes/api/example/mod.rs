@@ -2717,14 +2717,55 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
                 // Ok(format!("jsonb_build_object({acc}) as {column},"))
                 // Ok(format!("'null'::jsonb as {column},"))
                 //here
-                let mut acc = std::string::String::default();
-                acc.push_str(&format!(
-                    "'field_0','null'::jsonb,",
+                // let mut acc = std::string::String::default();
+                // acc.push_str(&format!(
+                //     "'field_0','null'::jsonb,",
 
-                ));
-                acc.push_str(&format!(
-                    "'field_806',jsonb_build_object('field_0','null'::jsonb,'field_1','null'::jsonb),",
-                ));
+                // ));
+                // acc.push_str(&format!(
+                //     "'field_806',jsonb_build_object('field_0','null'::jsonb,'field_1','null'::jsonb),",
+                // ));
+                // let _ = acc.pop();
+                // Ok(format!("jsonb_build_object({acc}) as {column},"))
+                let mut acc = std::string::String::default();
+                acc.push_str(&match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                    &<
+                        <
+                            postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                            as
+                            postgresql_crud::PostgresqlJsonType
+                        >::Update
+                        as
+                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    "field_0",
+                    &format!("{column}->'field_0'"),
+                    increment,
+                ) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(error);
+                    },
+                });
+                acc.push_str(&match <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                    &<
+                        <
+                            DoggieAsNotNullJsonbObject
+                            as
+                            postgresql_crud::PostgresqlJsonType
+                        >::Update
+                        as
+                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    "field_806",
+                    &format!("{column}->'field_806'"),
+                    increment,
+                ) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(error);
+                    },
+                });
                 let _ = acc.pop();
                 Ok(format!("jsonb_build_object({acc}) as {column},"))
             }
