@@ -1729,11 +1729,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         if let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type {
                             match &element.postgresql_json_type_pattern {
-                                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => {
-                                        inner_type_standart_not_null_token_stream.clone()
-                                    },
-                                    NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                PostgresqlJsonTypePattern::Standart => {
+                                    let token_stream1 = match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_type_standart_not_null_token_stream.clone(),
+                                        NotNullOrNullable::Nullable => option_token_stream(&inner_type_standart_not_null_token_stream),
+                                    };
+                                    quote::quote!{#token_stream1}
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                     let token_stream1 = match &not_null_or_nullable {
