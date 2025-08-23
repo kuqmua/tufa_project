@@ -1721,13 +1721,48 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
-                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
-                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
-                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
-                    {
-                        inner_type_standart_not_null_token_stream.clone()
-                    } else {
-                        quote::quote! {std::option::Option<()>}
+                    &{
+                        use postgresql_crud_macros_common::NotNullOrNullable;
+                        let std_option_option_unit_token_stream = quote::quote! {std::option::Option<()>};
+                        if let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type {
+                            match &element.postgresql_json_type_pattern {
+                                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => {
+                                        inner_type_standart_not_null_token_stream.clone()
+                                    },
+                                    NotNullOrNullable::Nullable => {
+                                        quote::quote!{std::option::Option<#inner_type_standart_not_null_token_stream>}
+                                    },
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                                    //todo
+                                    quote::quote!{#std_option_option_unit_token_stream}
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
+                                    quote::quote!{#std_option_option_unit_token_stream}
+                                }
+                                PostgresqlJsonTypePattern::ArrayDimension3 {
+                                    dimension1_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable,
+                                    dimension3_not_null_or_nullable,
+                                } => {
+                                    //todo
+                                    quote::quote!{#std_option_option_unit_token_stream}
+                                }
+                                PostgresqlJsonTypePattern::ArrayDimension4 {
+                                    dimension1_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable,
+                                    dimension3_not_null_or_nullable,
+                                    dimension4_not_null_or_nullable,
+                                } => {
+                                    //todo
+                                    quote::quote!{#std_option_option_unit_token_stream}
+                                }
+                            }
+                        }
+                        else {
+                            std_option_option_unit_token_stream
+                        }
                     },
                     &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
@@ -2302,48 +2337,44 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let none_token_stream = quote::quote!{None};
-                        match &element.postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => match &postgresql_json_type {
-                                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => none_token_stream,
-                                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => none_token_stream,
-                                    PostgresqlJsonType::StdStringStringAsJsonbString => none_token_stream,
-                                    PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{value.0},
+                        if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
+                            match &element.postgresql_json_type_pattern {
+                                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => quote::quote!{value.0},
+                                    NotNullOrNullable::Nullable => {
+                                        quote::quote!{
+                                            match &value.0 {
+                                                Some(value) => Some(value.0),
+                                                None => None
+                                            }
+                                        }
+                                    },
                                 },
-                                NotNullOrNullable::Nullable => {
+                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                     quote::quote!{todo!()}
                                 },
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                quote::quote!{todo!()}
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                                quote::quote!{todo!()}
+                                PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
+                                    quote::quote!{todo!()}
+                                }
+                                PostgresqlJsonTypePattern::ArrayDimension3 {
+                                    dimension1_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable,
+                                    dimension3_not_null_or_nullable,
+                                } => {
+                                    quote::quote!{todo!()}
+                                }
+                                PostgresqlJsonTypePattern::ArrayDimension4 {
+                                    dimension1_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable,
+                                    dimension3_not_null_or_nullable,
+                                    dimension4_not_null_or_nullable,
+                                } => {
+                                    quote::quote!{todo!()}
+                                }
                             }
-                            PostgresqlJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                            } => {
-                                quote::quote!{todo!()}
-                            }
-                            PostgresqlJsonTypePattern::ArrayDimension4 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                                dimension4_not_null_or_nullable,
-                            } => {
-                                quote::quote!{todo!()}
-                            }
+                        }
+                        else {
+                            none_token_stream
                         }
                     }
                 )
