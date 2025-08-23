@@ -2419,9 +2419,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote::quote!{value.0},
                                     NotNullOrNullable::Nullable => {
+                                        let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
                                         quote::quote!{
                                             match &value.0 {
-                                                Some(value) => Some(value.0),
+                                                Some(value) => Some(
+                                                    <
+                                                        #ident_standart_not_null_upper_camel_case
+                                                        as
+                                                        crate::tests::PostgresqlJsonTypeTestCases
+                                                    >::update_to_read_only_ids(value)
+                                                ),
                                                 None => None
                                             }
                                         }
@@ -2429,7 +2436,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                     let token_stream1 = maybe_match_element_token_stream(&dimension1_not_null_or_nullable);
-                                    maybe_match_into_iter_token_stream(&not_null_or_nullable, &token_stream1)
+                                    // maybe_match_into_iter_token_stream(&not_null_or_nullable, &token_stream1)
+
                                     // match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                                     //         quote::quote!{
@@ -2458,6 +2466,72 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     //         }
                                     //     }
                                     // }
+                                    match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                            let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+                                            quote::quote!{
+                                                value.0.clone().into_iter().map(|element|
+                                                    <
+                                                        #current_ident
+                                                        as
+                                                        crate::tests::PostgresqlJsonTypeTestCases
+                                                    >::update_to_read_only_ids(&element)
+                                                ).collect()
+                                            }
+                                        },
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                            let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlJsonTypePattern::Standart);
+                                            quote::quote!{
+                                                value.0.clone().into_iter().map(|element|
+                                                    <
+                                                        #current_ident
+                                                        as
+                                                        crate::tests::PostgresqlJsonTypeTestCases
+                                                    >::update_to_read_only_ids(&element)
+                                                ).collect()
+                                            }
+                                        },
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                            let current_ident = &generate_ident_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                    dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                }
+                                            );
+                                            quote::quote!{
+                                                match value.0.clone() {
+                                                    Some(value) => Some(
+                                                        <
+                                                            #current_ident
+                                                            as
+                                                            crate::tests::PostgresqlJsonTypeTestCases
+                                                        >::update_to_read_only_ids(&value)
+                                                    ),
+                                                    None => None
+                                                }
+                                            }
+                                        },
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                            let current_ident = &generate_ident_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                    dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                                }
+                                            );
+                                            quote::quote!{
+                                                match value.0.clone() {
+                                                    Some(value) => Some(
+                                                        <
+                                                            #current_ident
+                                                            as
+                                                            crate::tests::PostgresqlJsonTypeTestCases
+                                                        >::update_to_read_only_ids(&value)
+                                                    ),
+                                                    None => None
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                                     quote::quote!{
