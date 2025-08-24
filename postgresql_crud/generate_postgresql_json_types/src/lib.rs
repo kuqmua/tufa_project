@@ -2428,6 +2428,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     >::update_to_read_only_ids(&#content_token_stream)
                                 }
                             };
+                            let generate_iter_or_match_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, content_token_stream: &dyn quote::ToTokens|{
+                                match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                        value.0.clone().into_iter().map(|element|#content_token_stream).collect()
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                        match value.0.clone() {
+                                            Some(value) => Some(#content_token_stream),
+                                            None => None
+                                        }
+                                    },
+                                }
+                            };
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote::quote!{value.0},
@@ -2478,56 +2491,50 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     // }
                                     match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
-                                                &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart),
-                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                                            );
-                                            quote::quote!{
-                                                value.0.clone().into_iter().map(|element|#update_to_read_only_ids_token_stream).collect()
-                                            }
+                                            generate_iter_or_match_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                &generate_update_to_read_only_ids_token_stream(
+                                                    &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart),
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                                                )
+                                            )
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
-                                                &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlJsonTypePattern::Standart),
-                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                                            );
-                                            quote::quote!{
-                                                value.0.clone().into_iter().map(|element|#update_to_read_only_ids_token_stream).collect()
-                                            }
+                                            generate_iter_or_match_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                &generate_update_to_read_only_ids_token_stream(
+                                                    &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlJsonTypePattern::Standart),
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                                                )
+                                            )
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
-                                                &generate_ident_token_stream(
-                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                    &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                                        dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                    }
-                                                ),
-                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                                            );
-                                            quote::quote!{
-                                                match value.0.clone() {
-                                                    Some(value) => Some(#update_to_read_only_ids_token_stream),
-                                                    None => None
-                                                }
-                                            }
+                                            generate_iter_or_match_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                                &generate_update_to_read_only_ids_token_stream(
+                                                    &generate_ident_token_stream(
+                                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                        &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                        }
+                                                    ),
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                                                )
+                                            )
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
-                                                &generate_ident_token_stream(
-                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                    &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                                        dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-                                                    }
-                                                ),
-                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                                            );
-                                            quote::quote!{
-                                                match value.0.clone() {
-                                                    Some(value) => Some(#update_to_read_only_ids_token_stream),
-                                                    None => None
-                                                }
-                                            }
+                                            generate_iter_or_match_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                                &generate_update_to_read_only_ids_token_stream(
+                                                    &generate_ident_token_stream(
+                                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                        &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                                        }
+                                                    ),
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                                                )
+                                            )
                                         }
                                     }
                                 },
