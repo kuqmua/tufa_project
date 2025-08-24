@@ -4572,7 +4572,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
-                                            todo!()
+                                            #ident_read_only_ids_upper_camel_case(match &value.0 {
+                                                Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_to_read_only_ids(&value)),
+                                                None => None
+                                            })
                                         }
                                     }
                                 },
