@@ -1848,6 +1848,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+            let ident_update_element_upper_camel_case = naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident);
             let generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
                 let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -4523,7 +4524,72 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &read_new_or_try_new_unwraped_for_test_token_stream,
                         &update_new_or_try_new_unwraped_for_test_token_stream,
                         &quote::quote!{todo!()},
-                        &quote::quote!{todo!()}
+                        &{
+                            match &element.postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let fields_initialization_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            quote::quote! {
+                                                let mut #field_ident = None;
+                                            }
+                                        });
+                                        let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            let field_type = &element.ty;
+                                            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                            quote::quote! {
+                                                #ident_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => {
+                                                    #field_ident = <
+                                                        #field_type
+                                                        as
+                                                        postgresql_crud::tests::PostgresqlJsonTypeTestCases
+                                                    >::update_to_read_only_ids(&value.value);
+                                                }
+                                            }
+                                        });
+                                        let struct_fields_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            quote::quote! {#field_ident}
+                                        });
+                                        quote::quote! {
+                                            #(#fields_initialization_content_token_stream)*
+                                            for element in value.0.to_vec() {
+                                                match element {
+                                                    #(#match_content_token_stream),*
+                                                }
+                                            }
+                                            #ident_read_only_ids_upper_camel_case {
+                                                #(#struct_fields_content_token_stream),*
+                                            }
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            todo!()
+                                        }
+                                    }
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        quote::quote! {
+                                            todo!()
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            todo!()
+                                        }
+                                    }
+                                },
+                            }
+                        }
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                         &cfg_test_token_stream,

@@ -177,10 +177,10 @@ pub struct Example {
     // pub column_140: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
 
-    // pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,//bug
+    pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,//bug
     // pub column_155: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub column_156: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
-    pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    // pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(
@@ -192,11 +192,11 @@ pub struct Example {
     {
         "Concrete":
         // [
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "NotNull",
+                "postgresql_json_object_type_pattern": "Standart",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
             // ,
             // {
             //     "not_null_or_nullable": "NotNull",
@@ -210,11 +210,11 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            {
-                "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
         // ]
     }
 }]
