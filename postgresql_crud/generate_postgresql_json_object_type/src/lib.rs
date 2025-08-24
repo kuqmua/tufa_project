@@ -3041,6 +3041,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     };
+                    //////////////////////////////
+                    let new_ident_with_id_update_token_stream = {
+                        quote::quote!{
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                            pub struct #ident_with_id_update_standart_not_null_upper_camel_case(
+                                postgresql_crud::UniqueVec<#ident_with_id_update_element_standart_not_null_upper_camel_case>
+                            );
+                        }
+                    };
+                    let new_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_with_id_update_standart_not_null_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &quote::quote! {Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                    );
+                    let new_impl_ident_with_update_standart_not_null_token_stream = {
+                        let new_token_stream = {
+                            quote::quote!{
+                                pub fn new(value: postgresql_crud::UniqueVec<#ident_with_id_update_element_standart_not_null_fields_declaration_token_stream>) -> Self {
+                                    Self(value)
+                                }
+                            }
+                        };
+                        quote::quote!{
+                            impl #ident_with_id_update_standart_not_null_upper_camel_case {
+                                #new_token_stream
+                            }
+                        }
+                    };
+                    let new_token_stream = {
+                        quote::quote!{
+                            impl std::default::Default for #ident_with_id_update_standart_not_null_upper_camel_case {
+                                fn default() -> Self {
+                                    Self(postgresql_crud::UniqueVec::default())
+                                }
+                            }
+                        }
+                    };
                     quote::quote! {
                         #ident_with_id_update_element_standart_not_null_token_stream
                         #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream

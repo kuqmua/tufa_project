@@ -1396,6 +1396,9 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
     pub fn into_vec(self) -> std::vec::Vec<T> {
         self.0
     }
+    pub fn is_empty(&self) -> std::primitive::bool {
+        self.0.is_empty()
+    }
 }
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
