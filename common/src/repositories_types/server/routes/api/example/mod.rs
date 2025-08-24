@@ -177,8 +177,8 @@ pub struct Example {
     // pub column_140: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
 
-    pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,//bug
-    // pub column_155: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,//bug
+    pub column_155: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub column_156: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
     // pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
@@ -1895,7 +1895,7 @@ impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
     //     // }
     //     // println!("HERE CAN BE BUG");
     //     // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
-    //     todo!()
+    //     panic!("FFFFF 4b762e92-8aa2-4b68-b782-28b37939672a")
     // }
     fn update_query_part_postgresql_json_type(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         //here
@@ -1915,7 +1915,7 @@ impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
         // }
         // println!("HERE CAN BE BUG");
         // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
-        todo!()
+        panic!("FFFFF 3d4573e1-e5b3-4656-91ea-f6931fef4a4c")
     }
     fn update_query_bind_postgresql_type(self, 
         //here
@@ -1930,7 +1930,7 @@ impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
         //     }
         // }
         // query
-        todo!()
+        panic!("FFFFF ded10608-5d03-47da-8368-ad98c5bea7cd")
     }
     fn update_query_bind_postgresql_json_type(self, 
         //here
@@ -1945,7 +1945,7 @@ impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
         //     }
         // }
         // query
-        todo!()
+        panic!("FFFFF 342f9753-2de9-485f-9b3c-630c1849417f")
     }
 }
 //here
@@ -2186,7 +2186,7 @@ impl postgresql_crud::PostgresqlJsonType for AnimalWithIdAsNotNullJsonbObjectWit
         // }
         // let _ = acc.pop();
         // Ok(format!("jsonb_build_object({acc})"))
-        todo!()
+        panic!("FFFFF 6a1c4da8-b0ee-4dc9-8bd8-bffedf147f22")
     }
 }
 #[cfg(test)]
@@ -2310,7 +2310,7 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
         //     })
         //     .unwrap(),
         // )
-        todo!()
+        panic!("FFFFF 6165b70d-4230-4260-906e-f8602c254863")
     }
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
         Some(postgresql_crud::Value {
@@ -2343,7 +2343,7 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
         //     }
         // }
         // AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds { field_0 }
-        todo!()
+        panic!("FFFFF 0043b414-e7d2-4502-aca0-682bb5bc81cd")
     }
 }
 #[derive(Debug)]
@@ -3043,7 +3043,7 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         //     }
         // }
         // Ok(Self { create, update, delete })
-        todo!()
+        panic!("FFFFF ab48d5b5-847b-4fbd-985c-f7af331b01dc")
     }
 }
 impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
@@ -3298,7 +3298,7 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         // let maybe_where = if self.delete.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
         // let maybe_jsonb_build_array = if self.create.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
         // Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})"))
-        todo!()
+        panic!("FFFFF c78f6247-cd17-45cf-aa34-8471c8e5af83")
     }
     fn update_query_part_postgresql_json_type(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         //here
@@ -3355,7 +3355,7 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         // let maybe_where = if self.delete.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
         // let maybe_jsonb_build_array = if self.create.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
         // Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})"))
-        todo!()
+        panic!("FFFFF c829deb1-d766-43a0-80e2-441ddd389054")
     }
     fn update_query_bind_postgresql_type(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         //here
@@ -3445,7 +3445,7 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
         //     let _ = acc.pop();
         //     acc
         // }))
-        todo!()
+        panic!("FFFFF b7e47107-eb10-48be-bb37-5645afb3834f")
     }
 }
 impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId {
@@ -3508,7 +3508,7 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
         //     let _ = acc.pop();
         //     acc
         // }))
-        todo!()
+        panic!("FFFFF a5c5f660-3548-4d3f-9edb-98181ff52bf3")
     }
 }
 #[cfg(test)]
@@ -3548,7 +3548,7 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases for VecOfAnimalWithIdAsNotN
         //     }).collect(),
         //     vec![]
         // ).unwrap()
-        todo!()
+        panic!("FFFFF 42b6d3f8-d0c4-4b1d-b9b3-14b38e490081")
     }
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
         todo!()
@@ -3593,7 +3593,7 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for VecOfAnimalWithIdAs
         //     }).collect(),
         //     vec![]
         // ).unwrap()
-        todo!()
+        panic!("FFFFF 94e9cc22-588e-441a-b405-4d81a944d627")
     }
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
         Some(postgresql_crud::Value {
@@ -3606,7 +3606,6 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for VecOfAnimalWithIdAs
         })
     }
     fn update_to_read_only_ids(value: &<Self::Element as postgresql_crud::PostgresqlJsonType>::Update) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds {
-        //
         todo!()
     }
 }
