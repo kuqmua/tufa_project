@@ -2415,20 +2415,30 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }},
                                 }
                             };
+                            let generate_update_to_read_only_ids_token_stream = |ident_token_stream: &dyn quote::ToTokens, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+                                let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &element_snake_case,
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &value_snake_case,
+                                };
+                                quote::quote!{
+                                    <
+                                        #ident_token_stream
+                                        as
+                                        crate::tests::PostgresqlJsonTypeTestCases
+                                    >::update_to_read_only_ids(&#content_token_stream)
+                                }
+                            };
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote::quote!{value.0},
                                     NotNullOrNullable::Nullable => {
-                                        let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+                                        let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
+                                            &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart),
+                                            &postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                                        );
                                         quote::quote!{
                                             match &value.0 {
-                                                Some(value) => Some(
-                                                    <
-                                                        #ident_standart_not_null_upper_camel_case
-                                                        as
-                                                        crate::tests::PostgresqlJsonTypeTestCases
-                                                    >::update_to_read_only_ids(value)
-                                                ),
+                                                Some(value) => Some(#update_to_read_only_ids_token_stream),
                                                 None => None
                                             }
                                         }
@@ -2468,65 +2478,53 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     // }
                                     match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
+                                                &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart),
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                                            );
                                             quote::quote!{
-                                                value.0.clone().into_iter().map(|element|
-                                                    <
-                                                        #current_ident
-                                                        as
-                                                        crate::tests::PostgresqlJsonTypeTestCases
-                                                    >::update_to_read_only_ids(&element)
-                                                ).collect()
+                                                value.0.clone().into_iter().map(|element|#update_to_read_only_ids_token_stream).collect()
                                             }
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            let current_ident = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlJsonTypePattern::Standart);
+                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
+                                                &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlJsonTypePattern::Standart),
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                                            );
                                             quote::quote!{
-                                                value.0.clone().into_iter().map(|element|
-                                                    <
-                                                        #current_ident
-                                                        as
-                                                        crate::tests::PostgresqlJsonTypeTestCases
-                                                    >::update_to_read_only_ids(&element)
-                                                ).collect()
+                                                value.0.clone().into_iter().map(|element|#update_to_read_only_ids_token_stream).collect()
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            let current_ident = &generate_ident_token_stream(
-                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                                    dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                }
+                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
+                                                &generate_ident_token_stream(
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                    &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                        dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                    }
+                                                ),
+                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable
                                             );
                                             quote::quote!{
                                                 match value.0.clone() {
-                                                    Some(value) => Some(
-                                                        <
-                                                            #current_ident
-                                                            as
-                                                            crate::tests::PostgresqlJsonTypeTestCases
-                                                        >::update_to_read_only_ids(&value)
-                                                    ),
+                                                    Some(value) => Some(#update_to_read_only_ids_token_stream),
                                                     None => None
                                                 }
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let current_ident = &generate_ident_token_stream(
-                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                                &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                                    dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-                                                }
+                                            let update_to_read_only_ids_token_stream = generate_update_to_read_only_ids_token_stream(
+                                                &generate_ident_token_stream(
+                                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                    &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                        dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                                    }
+                                                ),
+                                                &postgresql_crud_macros_common::NotNullOrNullable::Nullable
                                             );
                                             quote::quote!{
                                                 match value.0.clone() {
-                                                    Some(value) => Some(
-                                                        <
-                                                            #current_ident
-                                                            as
-                                                            crate::tests::PostgresqlJsonTypeTestCases
-                                                        >::update_to_read_only_ids(&value)
-                                                    ),
+                                                    Some(value) => Some(#update_to_read_only_ids_token_stream),
                                                     None => None
                                                 }
                                             }
