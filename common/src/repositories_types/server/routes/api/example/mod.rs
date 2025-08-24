@@ -1897,56 +1897,59 @@ impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
     //     // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
     //     panic!("FFFFF 4b762e92-8aa2-4b68-b782-28b37939672a")
     // }
-    fn update_query_part_postgresql_json_type(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        //here
-        // let mut std_option_option_object_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
-        // let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
-        // for element in self.0.to_vec() {
-        //     match element {
-        //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &std_option_option_object_acc, &generate_jsonb_set_target("field_0"), "field_0", increment) {
-        //             Ok(value) => {
-        //                 std_option_option_object_acc = value;
-        //             }
-        //             Err(error) => {
-        //                 return Err(error);
-        //             }
-        //         },
-        //     }
-        // }
-        // println!("HERE CAN BE BUG");
-        // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
-        panic!("FFFFF 3d4573e1-e5b3-4656-91ea-f6931fef4a4c")
-    }
-    fn update_query_bind_postgresql_type(self, 
-        //here
-        // mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        //here
-        // for element in self.0.into_vec() {
-        //     match element {
-        //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
-        //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-        //         }
-        //     }
-        // }
-        // query
-        panic!("FFFFF ded10608-5d03-47da-8368-ad98c5bea7cd")
-    }
-    fn update_query_bind_postgresql_json_type(self, 
-        //here
-        // mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        //here
-        // for element in self.0.into_vec() {
-        //     match element {
-        //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
-        //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-        //         }
-        //     }
-        // }
-        // query
-        panic!("FFFFF 342f9753-2de9-485f-9b3c-630c1849417f")
-    }
+    //here - this function not need  coz it was used only once
+    // fn update_query_part_postgresql_json_type(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+    //     //here
+    //     // let mut std_option_option_object_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
+    //     // let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
+    //     // for element in self.0.to_vec() {
+    //     //     match element {
+    //     //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &std_option_option_object_acc, &generate_jsonb_set_target("field_0"), "field_0", increment) {
+    //     //             Ok(value) => {
+    //     //                 std_option_option_object_acc = value;
+    //     //             }
+    //     //             Err(error) => {
+    //     //                 return Err(error);
+    //     //             }
+    //     //         },
+    //     //     }
+    //     // }
+    //     // println!("HERE CAN BE BUG");
+    //     // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
+    //     panic!("FFFFF 3d4573e1-e5b3-4656-91ea-f6931fef4a4c")
+    // }
+    //here - this function not need
+    // fn update_query_bind_postgresql_type(self, 
+    //     //here
+    //     // mut 
+    //     query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    //     //here
+    //     // for element in self.0.into_vec() {
+    //     //     match element {
+    //     //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
+    //     //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+    //     //         }
+    //     //     }
+    //     // }
+    //     // query
+    //     panic!("FFFFF ded10608-5d03-47da-8368-ad98c5bea7cd")
+    // }
+    //here - this function not need  coz it was used only once
+    // fn update_query_bind_postgresql_json_type(self, 
+    //     //here
+    //     // mut 
+    //     query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    //     //here
+    //     // for element in self.0.into_vec() {
+    //     //     match element {
+    //     //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
+    //     //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+    //     //         }
+    //     //     }
+    //     // }
+    //     // query
+    //     panic!("FFFFF 342f9753-2de9-485f-9b3c-630c1849417f")
+    // }
 }
 //here
 impl std::default::Default for AnimalWithIdAsNotNullJsonbObjectWithIdUpdate {
@@ -2156,10 +2159,42 @@ impl postgresql_crud::PostgresqlJsonType for AnimalWithIdAsNotNullJsonbObjectWit
     }
     type Update = AnimalWithIdAsNotNullJsonbObjectWithIdUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        value.update_query_part_postgresql_json_type(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
+        //here
+        // value.update_query_part_postgresql_json_type(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
+
+        // let mut std_option_option_object_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
+        // let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
+        // for element in self.0.to_vec() {
+        //     match element {
+        //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &std_option_option_object_acc, &generate_jsonb_set_target("field_0"), "field_0", increment) {
+        //             Ok(value) => {
+        //                 std_option_option_object_acc = value;
+        //             }
+        //             Err(error) => {
+        //                 return Err(error);
+        //             }
+        //         },
+        //     }
+        // }
+        // println!("HERE CAN BE BUG");
+        // if jsonb_set_path.is_empty() { Ok(std_option_option_object_acc) } else { Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})")) }
+        panic!("FFFFF 0ca0f75b-b7f4-4375-b21e-501e78defd2d")
     }
     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        value.update_query_bind_postgresql_json_type(query)
+        //here
+        // value.update_query_bind_postgresql_json_type(query)
+
+        //here
+        //here
+        // for element in self.0.into_vec() {
+        //     match element {
+        //         AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
+        //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+        //         }
+        //     }
+        // }
+        // query
+        panic!("FFFFF 58f40eea-0fb1-438e-b299-0781a1b2444d")
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         //here
