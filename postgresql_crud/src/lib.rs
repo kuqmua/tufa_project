@@ -45,6 +45,7 @@ pub trait PostgresqlType {
     type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    //todo change all .bind to .try_bind https://docs.rs/sqlx/latest/sqlx/query/struct.Query.html#method.try_bind
     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
     type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     //todo change trait fn select_query_part( to Result String CheckedAdd
@@ -1365,7 +1366,6 @@ impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
     }
 }
 
-
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum UniqueVecTryNewErrorNamed<T> {
     NotUnique {
@@ -1408,9 +1408,7 @@ const _: () = {
     where
         T: _serde::Deserialize<'de>,
     {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -1428,50 +1426,29 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 type Value = UniqueVec<T>;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct UniqueVec",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<
-                        T,
-                    > as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match UniqueVec::try_new(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::vec::Vec<T>,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct UniqueVec with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
                         }
                     };
                     match UniqueVec::try_new(__field0) {
