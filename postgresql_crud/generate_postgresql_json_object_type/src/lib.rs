@@ -4017,13 +4017,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_update_standart_not_null_upper_camel_case,
                     &{
                         quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
-                                #value_snake_case,
-                                #jsonb_set_accumulator_snake_case,
-                                #jsonb_set_target_snake_case,
-                                #jsonb_set_path_snake_case,
-                                #increment_snake_case,
-                            )
+                            todo!()
+                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
+                            //     #value_snake_case,
+                            //     #jsonb_set_accumulator_snake_case,
+                            //     #jsonb_set_target_snake_case,
+                            //     #jsonb_set_path_snake_case,
+                            //     #increment_snake_case,
+                            // )
                         }
                     },
                     &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
@@ -4031,10 +4032,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                     &{
                         quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
-                                #value_snake_case,
-                                #query_snake_case
-                            )
+                            todo!()
+                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
+                            //     #value_snake_case,
+                            //     #query_snake_case
+                            // )
                         }
                     },
                     &{
