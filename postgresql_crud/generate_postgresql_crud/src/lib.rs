@@ -3662,12 +3662,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_update_one_expect_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error d2de0bd6-1b01-4ef2-b074-a60878241b52 {field_ident}"));
             let len_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} length {{}}"));
             let try_update_one_result_different_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("try_update_one result different {field_ident}"));
+            let initialization_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let current_field_ident = &element.field_ident;
+                let current_field_type = &element.syn_field.ty;
+                if field_ident == current_field_ident {
+                    quote::quote! {
+                        let #current_field_ident = <#current_field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(
+                            element1.clone()
+                        );
+                    }
+                } else {
+                    proc_macro2::TokenStream::new()
+                }
+            });
             let fields_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
                 let current_field_type = &element.syn_field.ty;
                 if field_ident == current_field_ident {
                     quote::quote! {
-                        #current_field_ident: #read_only_ids_returned_from_create_one_snake_case.#current_field_ident.clone()
+                        #current_field_ident: Some(<#current_field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                            &#current_field_ident
+                        ))
                     }
                 } else {
                     quote::quote! {
@@ -3675,7 +3690,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             });
-            let try_new_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let some_value_or_none_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
                 let current_field_type = &element.syn_field.ty;
                 if field_ident == current_field_ident {
@@ -3699,16 +3714,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let mut acc = vec![];
                     for element0 in #field_ident_test_cases_snake_case {
                         for element1 in element0 {
+                            #initialization_token_stream
                             acc.push(Wrapper {
-                                #read_only_ids_snake_case: super::#ident_read_only_ids_upper_camel_case {
-                                    #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
+                                read_only_ids: super::#ident_read_only_ids_upper_camel_case {
+                                    primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
                                     #fields_token_stream
                                 },
-                                #update_one_parameters_snake_case: super::ExampleUpdate::try_new(
-                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(
-                                        #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone()
-                                    ),
-                                    #try_new_token_stream
+                                update_one_parameters: super::#ident_update_upper_camel_case::try_new(
+                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                                    #some_value_or_none_token_stream
                                 )
                                 .expect(#update_try_new_error_message_double_quotes_token_stream),
                             });
@@ -4139,7 +4153,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
