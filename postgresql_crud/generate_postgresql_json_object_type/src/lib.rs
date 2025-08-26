@@ -365,6 +365,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_update_element_standart_not_null_upper_camel_case = naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+
+            //todo temp
+            let ident_with_id_update_handle_standart_not_null_upper_camel_case = naming::parameter::SelfUpdateHandleUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+
             let generate_ident_table_type_declaration_or_ident_create_common_token_stream = |postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate| {
                 let ident_table_type_declaration_or_ident_create_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_table_type_declaration_upper_camel_case,
@@ -2473,20 +2477,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #fields_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         }},
                     );
-                    let new_ident_with_id_update_token_stream = {
+                    let ident_with_id_update_handle_token_stream = {
                         quote::quote!{
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub struct #ident_with_id_update_standart_not_null_upper_camel_case(
+                            pub struct #ident_with_id_update_handle_standart_not_null_upper_camel_case(
                                 postgresql_crud::UniqueVec<#ident_with_id_update_element_standart_not_null_upper_camel_case>
                             );
                         }
                     };
-                    let new_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_with_id_update_standart_not_null_upper_camel_case,
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_handle_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_with_id_update_handle_standart_not_null_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &quote::quote! {Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
                     );
-                    let new_impl_ident_with_update_standart_not_null_token_stream = {
+                    let impl_ident_with_update_handle_standart_not_null_token_stream = {
                         let new_token_stream = {
                             quote::quote!{
                                 pub fn new(value: postgresql_crud::UniqueVec<#ident_with_id_update_element_standart_not_null_fields_declaration_token_stream>) -> Self {
@@ -2495,14 +2499,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         };
                         quote::quote!{
-                            impl #ident_with_id_update_standart_not_null_upper_camel_case {
+                            impl #ident_with_id_update_handle_standart_not_null_upper_camel_case {
                                 #new_token_stream
                             }
                         }
                     };
-                    let new_token_stream = {
+                    let impl_default_for_ident_with_id_update_handle_standart_not_null_token_stream = {
                         quote::quote!{
-                            impl std::default::Default for #ident_with_id_update_standart_not_null_upper_camel_case {
+                            impl std::default::Default for #ident_with_id_update_handle_standart_not_null_upper_camel_case {
                                 fn default() -> Self {
                                     Self(postgresql_crud::UniqueVec::default())
                                 }
@@ -2513,6 +2517,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #ident_with_id_update_element_standart_not_null_token_stream
                         #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream
+
+                        #ident_with_id_update_handle_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_handle_standart_not_null_token_stream
+                        #impl_ident_with_update_handle_standart_not_null_token_stream
+                        #impl_default_for_ident_with_id_update_handle_standart_not_null_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
