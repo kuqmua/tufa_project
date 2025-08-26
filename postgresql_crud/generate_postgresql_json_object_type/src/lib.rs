@@ -3113,7 +3113,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }
                                         }
                                         let _ = acc.pop();
-                                        Ok(format!("'{field_ident}',jsonb_build_object({acc}),"))
+                                        Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object({acc})),"))
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -3172,7 +3172,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut acc = std::string::String::default();
                                                 #(#acc_push_content_token_stream)*
                                                 let _ = acc.pop();
-                                                Ok(format!("'{field_ident}',jsonb_build_object({acc}),"))
+                                                Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object({acc})),"))
                                             }
                                         }
                                     }
@@ -3205,7 +3205,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote! {
-                                        Ok(format!("'{field_ident}',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem),", {
+                                        Ok(format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
                                             match <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
                                                &value.update,
                                                 &"",
@@ -3231,6 +3231,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                         let _ = acc.pop();
                                         let _ = acc.pop();
+                                        //todo add jsonb_build_object('value',
                                         format!("(select jsonb_agg(jsonb_build_object('id', elem -> 'id')||{acc}) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}) as elem)::jsonb")
                                     });
                                     quote::quote!{
