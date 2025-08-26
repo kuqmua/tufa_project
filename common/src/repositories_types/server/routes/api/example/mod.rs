@@ -2271,7 +2271,7 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
         }
     }
     fn update_new_or_try_new_unwraped_for_test(value: AnimalWithIdAsNotNullJsonbObjectWithIdReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
-        //here
+        //here - no point to construct it here
         // <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Update::new(
         //     postgresql_crud::NotEmptyUniqueEnumVec::try_new({
         //         let mut acc = vec![];
@@ -2284,18 +2284,7 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
         //     })
         //     .unwrap(),
         // )
-        // panic!("here 7eeb5923-3ab4-4ca2-8016-dc4bb385719b")
-        AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle::new(
-            postgresql_crud::UniqueVec::try_new(
-                vec![
-                    AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
-                        id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(value.id.clone().unwrap().value),
-                        fields: <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(AnimalAsNotNullJsonbObjectReadInner { field_0: value.field_0 }),
-                    }
-                ]
-            )
-            .unwrap(),
-        )
+        panic!("here 7eeb5923-3ab4-4ca2-8016-dc4bb385719b")
     }
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
         Some(postgresql_crud::Value {
@@ -3182,6 +3171,9 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for VecOfAnimalWithIdAs
         //here
         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate::try_new(
             vec![],
+            //
+            // pub type VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner = std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::ReadInner>;
+            //
             AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle::new(
                 postgresql_crud::UniqueVec::try_new(
                     value
