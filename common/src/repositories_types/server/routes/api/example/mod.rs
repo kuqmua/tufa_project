@@ -2284,7 +2284,18 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for AnimalWithIdAsNotNu
         //     })
         //     .unwrap(),
         // )
-        panic!("here 7eeb5923-3ab4-4ca2-8016-dc4bb385719b")
+        // panic!("here 7eeb5923-3ab4-4ca2-8016-dc4bb385719b")
+        AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle::new(
+            postgresql_crud::UniqueVec::try_new(
+                vec![
+                    AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+                        id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(value.id.clone().unwrap().value),
+                        fields: <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(AnimalAsNotNullJsonbObjectReadInner { field_0: value.field_0 }),
+                    }
+                ]
+            )
+            .unwrap(),
+        )
     }
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<postgresql_crud::Value<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner>> {
         Some(postgresql_crud::Value {
