@@ -1873,6 +1873,24 @@ impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwa
 }
 
 
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle(postgresql_crud::UniqueVec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>); //here
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
+    pub fn new(value: postgresql_crud::UniqueVec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>) -> Self {
+        Self(value)
+    }
+}
+impl std::default::Default for AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
+    fn default() -> Self {
+        Self(postgresql_crud::UniqueVec::default())
+    }
+}
+
 
 
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -2922,8 +2940,8 @@ pub type VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner = st
 pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
     #[serde(skip_serializing_if = "Vec::is_empty")]
     create: std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>,
-    #[serde(skip_serializing_if = "Vec::is_empty")]
-    update: std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>,
+    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    update: AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle,//here
     #[serde(skip_serializing_if = "Vec::is_empty")]
     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
 }
@@ -2949,14 +2967,20 @@ pub enum VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewEr
     },
 }
 impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
-    pub fn try_new(create: std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>, update: std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>, delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>) -> Result<Self, VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewErrorNamed> {
-        if create.is_empty() && update.is_empty() && delete.is_empty() {
+    pub fn try_new(
+        create: std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>,
+        update: AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle,//here
+        delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>
+    ) -> Result<Self, VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewErrorNamed> {
+        //here
+        if create.is_empty() && update.0.is_empty() && delete.is_empty() {
             return Err(VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewErrorNamed::CreateUpdateDeleteAreEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         {
             let update_acc = {
                 let mut update_acc = vec![];
-                for element in &update {
+                //here
+                for element in update.0.to_vec() {
                     let id = &element.id;
                     if update_acc.contains(&id) {
                         return Err(VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewErrorNamed::NotUniqueIdInJsonUpdateArray {
@@ -3079,10 +3103,12 @@ impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJs
                         vec![]
                     }
                 };
-                let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __seq)? {
+                let __field1 = match serde::de::SeqAccess::next_element::<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle>(&mut __seq)? {//here
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        vec![]
+                        //here
+                        // vec![]
+                        AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle::default()
                     }
                 };
                 let __field2 = match serde::de::SeqAccess::next_element::<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>>(&mut __seq)? {
@@ -3104,7 +3130,7 @@ impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJs
                 __A: serde::de::MapAccess<'de>,
             {
                 let mut __field0: serde::__private::Option<std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>> = serde::__private::None;
-                let mut __field1: serde::__private::Option<std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>> = serde::__private::None;
+                let mut __field1: serde::__private::Option<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle> = serde::__private::None;//here
                 let mut __field2: serde::__private::Option<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>> = serde::__private::None;
                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
@@ -3118,7 +3144,7 @@ impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJs
                             if serde::__private::Option::is_some(&__field1) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
                             }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __map)?);
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle>(&mut __map)?);//here
                         }
                         __Field::__field2 => {
                             if serde::__private::Option::is_some(&__field2) {
@@ -3140,7 +3166,9 @@ impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJs
                 let __field1 = match __field1 {
                     serde::__private::Some(__field1) => __field1,
                     serde::__private::None => {
-                        vec![]
+                        //here
+                        // vec![]
+                        AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle::default()
                     }
                 };
                 let __field2 = match __field2 {
@@ -3174,7 +3202,11 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             create: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
-            update: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
+            update: 
+            //here
+            // vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()]
+            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+            ,
             delete: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
         }
     }
@@ -3208,11 +3240,13 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
     type Update = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         let update_query_part_acc = {
-            if value.update.is_empty() {
+            //here
+            if value.update.0.is_empty() {
                 std::string::String::from("elem")
             } else {
                 let mut update_query_part_acc = std::string::String::default();
-                for element_handle in &value.update {
+                //here
+                for element_handle in value.update.0.to_vec() {
                     let ident_with_id_handle = {
                         let id_increment = match increment.checked_add(1) {
                             Some(value) => {
@@ -3279,7 +3313,8 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
         ))
     }
     fn update_query_bind(value: Self::Update, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in value.update {
+        //here
+        for element in value.update.0.into_vec() {
             query = element.id.query_bind_as_postgresql_text(query);
             query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::update_query_bind(element.fields, query);
         }
@@ -3294,7 +3329,8 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         Ok(format!("'{field_ident}',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem),", {
             let mut acc = std::string::String::new();
-            for element in &value.update {
+            //here
+            for element in value.update.0.to_vec() {
                 let id = element.id.get_inner();
                 acc.push_str(&format!("jsonb_build_object('id','{id}',{})||", {
                     let mut acc = std::string::String::new();
@@ -3349,11 +3385,12 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
     type Update = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         let update_query_part_acc = {
-            if value.update.is_empty() {
+            //here
+            if value.update.0.is_empty() {
                 std::string::String::from("elem")
             } else {
                 let mut update_query_part_acc = std::string::String::default();
-                for element_handle in &value.update {
+                for element_handle in value.update.0.to_vec() {
                     let ident_with_id_handle = {
                         let id_increment = match increment.checked_add(1) {
                             Some(value) => {
@@ -3420,7 +3457,8 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
         ))
     }
     fn update_query_bind<'a>(value: Self::Update, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        for element in value.update {
+        //here
+        for element in value.update.0.into_vec() {
             query = element.id.query_bind_as_postgresql_text(query);
             query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::update_query_bind(element.fields, query);
         }
@@ -3435,7 +3473,8 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, is_primary_key: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         Ok(format!("(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb as {column},", {
             let mut acc = std::string::String::new();
-            for element in &value.update {
+            //here
+            for element in value.update.0.to_vec() {
                 let id = element.id.get_inner();
                 acc.push_str(&format!("jsonb_build_object('id','{id}',{})||", {
                     let mut acc = std::string::String::new();
@@ -3494,13 +3533,18 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases for VecOfAnimalWithIdAsNotN
     fn update_new_or_try_new_unwraped_for_test(value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate::try_new(
             vec![],
-            value
-                .into_iter()
-                .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
-                    id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
-                    fields: <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(element.clone()),
-                })
-                .collect(),
+            //here
+            AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle(
+                postgresql_crud::UniqueVec::try_new(
+                    value
+                        .into_iter()
+                        .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+                            id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
+                            fields: <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(element.clone()),
+                        })
+                        .collect()
+                ).unwrap()
+            ),
             vec![],
         )
         .unwrap()
@@ -3545,13 +3589,18 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases for VecOfAnimalWithIdAs
     fn update_new_or_try_new_unwraped_for_test(value: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate::try_new(
             vec![],
-            value
-                .into_iter()
-                .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
-                    id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
-                    fields: <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(element.clone()),
-                })
-                .collect(),
+            //here
+            AnimalWithIdAsNotNullJsonbObjectWithIdUpdateHandle(
+                postgresql_crud::UniqueVec::try_new(
+                    value
+                    .into_iter()
+                    .map(|element| AnimalWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+                        id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
+                        fields: <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(element.clone()),
+                    })
+                    .collect()
+                ).unwrap()
+            ),
             vec![],
         )
         .unwrap()
