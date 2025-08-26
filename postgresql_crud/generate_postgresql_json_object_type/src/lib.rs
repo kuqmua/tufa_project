@@ -4099,13 +4099,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             //     value: <#current_field_type as postgresql_crud::PostgresqlJsonType>::into_inner(<<#current_field_type as postgresql_crud::PostgresqlJsonType>::Read as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                             // })
                                             #current_field_ident: <#current_field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                                #read_only_ids_snake_case.#current_field_ident.clone()
+                                                #read_only_ids_snake_case.0.value.#current_field_ident.clone()
                                             )
                                         }
                                     }
                                 });
                                 quote::quote! {
-                                    for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&#read_only_ids_snake_case.#field_ident) {
+                                    for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&#read_only_ids_snake_case.0.value.#field_ident) {
                                         for current_element in element {
                                             acc.push(#ident_read_inner_standart_not_null_upper_camel_case {
                                                 #(#fields_token_stream),*
@@ -4475,7 +4475,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
                                 quote::quote! {
-                                    let mut #field_ident = None;
+                                    let mut #field_ident = postgresql_crud::Value { value: None };
                                 }
                             });
                             let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4507,9 +4507,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#match_content_token_stream),*
                                     }
                                 }
-                                #ident_read_only_ids_upper_camel_case {
-                                    #(#struct_fields_content_token_stream),*
-                                }
+                                #ident_read_only_ids_upper_camel_case(postgresql_crud::Value {
+                                    value: #ident_read_only_ids_handle_upper_camel_case{
+                                        #(#struct_fields_content_token_stream),*
+                                    }
+                                })                                
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
