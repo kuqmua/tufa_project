@@ -1723,7 +1723,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_read_upper_camel_case,
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
-                        let std_option_option_unit_token_stream = quote::quote! {std::option::Option<()>};
+                        let value_std_option_option_unit_token_stream = quote::quote! {crate::Value<std::option::Option<()>>};
                         let option_token_stream = |ident_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {std::option::Option<#ident_token_stream>}
                         };
@@ -1818,7 +1818,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             }
                         } else {
-                            std_option_option_unit_token_stream
+                            value_std_option_option_unit_token_stream
                         }
                     },
                     &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
