@@ -2473,68 +2473,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #fields_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         }},
                     );
-                    let impl_ident_with_id_update_element_standart_not_null_token_stream = {
-                        let update_query_part_postgresql_json_type_token_stream = {
-                            let content_token_stream = quote::quote! {
-                                let id_increment = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        increment.to_string()
-                                    }
-                                    None => {
-                                        return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                    }
-                                };
-                                match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
-                                    &self.fields,
-                                    &jsonb_set_accumulator,
-                                    &jsonb_set_target,
-                                    &jsonb_set_path,
-                                    increment
-                                ) {
-                                    Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
-                                    Err(error) => Err(error)
-                                }
-                            };
-                            quote::quote! {
-                                fn #update_query_part_postgresql_json_type_snake_case(
-                                    &self,
-                                    #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
-                                    #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
-                                    #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
-                                    #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                                ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
-                                    #content_token_stream
-                                }
-                            }
-                        };
-                        let update_query_bind_postgresql_json_type_token_stream = {
-                            let is_query_bind_mutable = postgresql_crud_macros_common::IsQueryBindMutable::True;
-                            let content_token_stream = quote::quote! {
-                                query = self.id.query_bind_as_postgresql_text(query);
-                                query = <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
-                                    self.fields,
-                                    query
-                                );
-                                query
-                            };
-                            quote::quote! {
-                                fn #update_query_bind_postgresql_json_type_snake_case(
-                                    self,
-                                    #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-                                ) -> #query_postgres_arguments_token_stream {
-                                    #content_token_stream
-                                }
-                            }
-                        };
-                        quote::quote! {
-                            impl #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                                #update_query_part_postgresql_json_type_token_stream
-                                #update_query_bind_postgresql_json_type_token_stream
-                            }
-                        }
-                    };
-                    //////////////////////////////
                     let new_ident_with_id_update_token_stream = {
                         quote::quote!{
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -2575,7 +2513,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #ident_with_id_update_element_standart_not_null_token_stream
                         #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream
-                        #impl_ident_with_id_update_element_standart_not_null_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
@@ -2948,7 +2885,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             } else {
                                                 let mut update_query_part_acc = std::string::String::default();
                                                 for element_handle in &value.update {
-                                                    match element_handle.#update_query_part_postgresql_json_type_snake_case(&"", &"elem", &"", increment) {
+                                                    //todo reuse
+                                                    let ident_with_id_handle = {
+                                                        let id_increment = match increment.checked_add(1) {
+                                                            Some(value) => {
+                                                                *increment = value;
+                                                                increment.to_string()
+                                                            }
+                                                            None => {
+                                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                                            }
+                                                        };
+                                                        match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
+                                                            &element_handle.fields,
+                                                            &"",
+                                                            &"elem",
+                                                            &"",
+                                                            increment
+                                                        ) {
+                                                            Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
+                                                            Err(error) => Err(error)
+                                                        }
+                                                    };
+                                                    match ident_with_id_handle {
                                                         Ok(value) => {
                                                             update_query_part_acc.push_str(&value);
                                                         }
@@ -3080,7 +3039,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                     for element in value.#update_snake_case {
-                                        #query_snake_case = element.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case);
+                                        //todo reuse
+                                        query = element.id.query_bind_as_postgresql_text(query);
+                                        query = <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
+                                            element.fields,
+                                            query
+                                        );
                                     }
                                     for element in value.delete {
                                         #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
@@ -3471,7 +3435,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             } else {
                                                 let mut update_query_part_acc = std::string::String::default();
                                                 for element_handle in &value.update {
-                                                    match element_handle.#update_query_part_postgresql_json_type_snake_case(&"", &"elem", &"", increment) {
+                                                    //todo reuse
+                                                    let ident_with_id_handle = {
+                                                        let id_increment = match increment.checked_add(1) {
+                                                            Some(value) => {
+                                                                *increment = value;
+                                                                increment.to_string()
+                                                            }
+                                                            None => {
+                                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                                            }
+                                                        };
+                                                        match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
+                                                            &element_handle.fields,
+                                                            &"",
+                                                            &"elem",
+                                                            &"",
+                                                            increment
+                                                        ) {
+                                                            Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
+                                                            Err(error) => Err(error)
+                                                        }
+                                                    };
+                                                    match ident_with_id_handle {
                                                         Ok(value) => {
                                                             update_query_part_acc.push_str(&value);
                                                         }
@@ -3601,7 +3587,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                     for element in value.#update_snake_case {
-                                        #query_snake_case = element.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case);
+                                        //todo reuse
+                                        query = element.id.query_bind_as_postgresql_text(query);
+                                        query = <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
+                                            element.fields,
+                                            query
+                                        );
                                     }
                                     for element in value.delete {
                                         #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
