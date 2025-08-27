@@ -4301,7 +4301,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //     }
                                 // ]
                                 let mut acc = vec![];
-                                if let Some(value) = &read_only_ids.0 {
+                                if let Some(value) = &read_only_ids.0.value {
                                     for element in <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
                                         for current_element in element {
                                             acc.push(Some(current_element));
@@ -4658,7 +4658,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
                                         Some(postgresql_crud::Value {
-                                            value: match value.0 {
+                                            value: match value.0.value {
                                                 Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value) {
                                                     Some(value) => Some(value.value),
                                                     None => None,
