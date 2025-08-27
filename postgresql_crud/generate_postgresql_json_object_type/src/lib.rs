@@ -1850,6 +1850,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_handle_upper_camel_case = naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase::from_tokens(&ident);
@@ -1926,11 +1927,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let maybe_ident_with_id_read_only_ids_standart_not_null_token_stream = if is_standart_not_null {
-                let ident_with_id_read_only_ids_standart_not_null_token_stream = {
+                let ident_with_id_read_only_ids_handle_standart_not_null_token_stream = {
                     let content_token_stream = generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(&IsStandartWithId::True);
                     quote::quote! {
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case #content_token_stream
+                        pub struct #ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case #content_token_stream
+                    }
+                };
+                let ident_with_id_read_only_ids_standart_not_null_token_stream = {
+                    quote::quote! {
+                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                        pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(pub postgresql_crud::Value<#ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case>);
                     }
                 };
                 let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = {
@@ -1958,6 +1965,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 quote::quote! {
+                    #ident_with_id_read_only_ids_handle_standart_not_null_token_stream
                     #ident_with_id_read_only_ids_standart_not_null_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream
@@ -4013,7 +4021,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     });
                     let field_type = &element.ty;
                     quote::quote! {
-                        #field_ident: match <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.#field_ident) {
+                        #field_ident: match <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.0.value.#field_ident) {
                             Some(value) => Some(value),
                             None => Some(postgresql_crud::Value{
                                 value: <#field_type as postgresql_crud::PostgresqlJsonType>::into_inner(
@@ -4663,14 +4671,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             });
                             let field_type = &element.ty;
                             quote::quote! {
-                                #field_ident: <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.#field_ident.clone())
+                                #field_ident: <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.0.value.#field_ident.clone())
                             }
                         });
                         quote::quote!{
                             vec![
                                 vec![
                                     #ident_with_id_read_inner_standart_not_null_upper_camel_case {
-                                        id: Some(postgresql_crud::Value { value: read_only_ids.id.clone() }),
+                                        id: Some(postgresql_crud::Value { value: read_only_ids.0.value.id.value.clone() }),
                                         #(#content_token_stream),*
                                     }
                                 ]

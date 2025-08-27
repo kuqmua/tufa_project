@@ -648,7 +648,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["select", "only", "updated", "ids", "query", "part"],
     ["create", "update", "delete", "are", "empty"],
     ["update", "one", "parameters"],
-    ["update", "to", "read", "only", "ids"]
+    ["update", "to", "read", "only", "ids"],
+    ["self", "read", "only", "ids", "handle"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
