@@ -4212,7 +4212,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             acc.push(vec![
                                                 #ident_with_id_read_inner_standart_not_null_upper_camel_case {
                                                     id: Some(postgresql_crud::Value {
-                                                        value: element0.0.value.id.value.clone()
+                                                        value: element0.0.value.id.0.value.clone()
                                                     }),
                                                     #(#fields_token_stream),*
                                                 }
@@ -4481,7 +4481,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
                                 quote::quote! {
-                                    let mut #field_ident = postgresql_crud::Value { value: None };
+                                    let mut #field_ident = None;
                                 }
                             });
                             let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4492,11 +4492,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                 quote::quote! {
                                     #ident_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => {
-                                        #field_ident = <
+                                        #field_ident = Some(<
                                             #field_type
                                             as
                                             postgresql_crud::tests::PostgresqlJsonTypeTestCases
-                                        >::update_to_read_only_ids(&value.value);
+                                        >::update_to_read_only_ids(&value.value));
                                     }
                                 }
                             });
@@ -4504,7 +4504,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
-                                quote::quote! {#field_ident}
+                                quote::quote! {#field_ident: #field_ident.expect("expect 106f16f2-ae03-48b3-9239-f4b1b60746d5")}
                             });
                             quote::quote! {
                                 #(#fields_initialization_content_token_stream)*
@@ -4574,10 +4574,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 });
                                 let field_type = &element.ty;
                                 quote::quote! {
-                                    #field_ident: match #field_ident {
-                                        Some(value) => <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_to_read_only_ids(&value),
-                                        None => postgresql_crud::Value { value: None },
-                                    }
+                                    #field_ident: <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_to_read_only_ids(&#field_ident.expect("expect a3ec7cae-94a0-49c1-b5d1-88f7b2a3dd1d"))
                                 }
                             });
                             quote::quote! {
@@ -4696,7 +4693,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             vec![
                                 vec![
                                     #ident_with_id_read_inner_standart_not_null_upper_camel_case {
-                                        id: Some(postgresql_crud::Value { value: read_only_ids.0.value.id.value.clone() }),
+                                        id: Some(postgresql_crud::Value { value: read_only_ids.0.value.id.0.value.clone() }),
                                         #(#content_token_stream),*
                                     }
                                 ]
