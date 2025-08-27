@@ -4977,11 +4977,18 @@ impl postgresql_crud::PostgresqlJsonType for VecOfDoggieWithIdAsNotNullArrayOfNo
         //   )
         // ) as column_156
         //////////
+        // pub struct OptionAnimalAsNullableJsonbObjectReadOnlyIds(postgresql_crud::Value<std::option::Option<AnimalAsNotNullJsonbObjectReadOnlyIds>>);
+        // pub struct AnimalAsNotNullJsonbObjectReadOnlyIds(postgresql_crud::Value<AnimalAsNotNullJsonbObjectReadOnlyIdsHandle>);
+        // pub struct AnimalAsNotNullJsonbObjectReadOnlyIdsHandle {
+        //     field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        //     field_807: <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        // }
+        // pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds(postgresql_crud::Value<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIds>>);
+        // pub struct DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIds(pub postgresql_crud::Value<DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIdsHandle>);
         // pub struct DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIdsHandle {
         //     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         //     field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         // }
-        // pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds(postgresql_crud::Value<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIds>>);
         let f = format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
             match <DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
                 Ok(value) => value,
