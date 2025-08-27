@@ -4007,8 +4007,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let mut acc = std::string::String::new();
                             for element in value.0.to_vec() {
                                 acc.push_str(&format!(
-                                    "jsonb_build_object('id','{}',{})||",
-                                    element.id.get_inner(),
+                                    "jsonb_build_object('id',jsonb_build_object('value','{}'),{})||",
+                                    element.id.get_inner(),//todo sql injection potential!!!! use .bind (or try bind) instead
                                     {
                                         let mut acc = std::string::String::new();
                                         for element in element.fields.0.to_vec() {
@@ -4023,7 +4023,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                             let _ = acc.pop();
                             let _ = acc.pop();
-                            Ok(acc)
+                            Ok(format!("jsonb_build_object('value',{acc})"))
                         }
                     },
                 )
