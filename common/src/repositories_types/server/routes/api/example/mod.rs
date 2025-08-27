@@ -4941,6 +4941,42 @@ impl postgresql_crud::PostgresqlJsonType for VecOfDoggieWithIdAsNotNullArrayOfNo
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        //////////
+        // jsonb_build_object(
+        //   'value', 
+        //   jsonb_build_object(
+        //     'value', 
+        //     jsonb_build_object(
+        //       'field_0', 
+        //       jsonb_build_object('value', 'null' :: jsonb), 
+        //       'field_807', 
+        //       jsonb_build_object(
+        //         'value', 
+        //         (
+        //           select 
+        //             jsonb_agg(
+        //               jsonb_build_object(
+        //                 'value', 
+        //                 jsonb_build_object(
+        //                   'id', 
+        //                   jsonb_build_object(
+        //                     'value', 'c1fa1264-9134-418e-98ae-54c270204666'
+        //                   ), 
+        //                   'field_0', 
+        //                   jsonb_build_object('value', 'null' :: jsonb)
+        //                 )
+        //               )
+        //             ) 
+        //           from 
+        //             jsonb_array_elements(
+        //               column_156 -> 'field_807' -> 'field_807'
+        //             ) as elem
+        //         )
+        //       )
+        //     )
+        //   )
+        // ) as column_156
+        //////////
         // pub struct DoggieWithIdAsNotNullJsonbObjectWithIdReadOnlyIdsHandle {
         //     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         //     field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
