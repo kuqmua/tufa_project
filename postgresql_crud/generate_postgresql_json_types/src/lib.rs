@@ -1841,9 +1841,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                         && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
                     {
-                        quote::quote! {format!("{column_name_and_maybe_field_getter}")}
+                        quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
                     } else {
-                        quote::quote! {"'null'::jsonb".to_string()}
+                        quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
                     },
                     &ident_read_inner_upper_camel_case,
                     &{
