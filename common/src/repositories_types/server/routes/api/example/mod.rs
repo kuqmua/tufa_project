@@ -2101,6 +2101,8 @@ impl postgresql_crud::PostgresqlType for AnimalAsNotNullJsonbObject {
         }
         let _ = acc.pop();
         let f = format!("jsonb_build_object('value',jsonb_build_object({acc})) as {column},");
+
+        println!("ZZZZ2 column {column}");
         println!("@@@2 {f}");
         Ok(f)
     }
@@ -3247,7 +3249,17 @@ impl postgresql_crud::PostgresqlJsonType for DoggieAsNotNullJsonbObject {
         let mut acc = std::string::String::default();
         for element in value.0.to_vec() {
             match &element {
-                DoggieAsNotNullJsonbObjectUpdateElement::Field807(value) => match <VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.value, &"field_807", &format!("{column_name_and_maybe_field_getter}->'field_807'"), increment) {
+                DoggieAsNotNullJsonbObjectUpdateElement::Field807(value) => match <VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                    &value.value,
+                    &"field_807",
+                    &{
+                        // let t = format!("{column_name_and_maybe_field_getter}->'field_807'");
+                        let t = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");//here
+                        println!("^^^^^^^^^^^^^^^ {t}");
+                        t
+                    },
+                    increment
+                ) {
                     Ok(value) => {
                         acc.push_str(&value);
                     }
@@ -3259,6 +3271,9 @@ impl postgresql_crud::PostgresqlJsonType for DoggieAsNotNullJsonbObject {
         }
         let _ = acc.pop();
         let f = format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object({acc})),");
+
+        println!("ZZZZ4 field_ident {field_ident}");
+        println!("ZZZZ4 column_name_and_maybe_field_getter {column_name_and_maybe_field_getter}");
         println!("@@@4 {f}");
         Ok(f)
     }
@@ -4633,6 +4648,9 @@ impl postgresql_crud::PostgresqlJsonType for CatWithIdAsNotNullJsonbObjectWithId
         let _ = acc.pop();
         let _ = acc.pop();
         let f = format!("jsonb_build_object('value',{acc})");
+
+        println!("ZZZZ9 field_ident {field_ident}");
+        println!("ZZZZ9 column_name_and_maybe_field_getter {column_name_and_maybe_field_getter}");
         println!("@@@9 {f}");
         Ok(f)
     }
@@ -5850,9 +5868,13 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
         //     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         //     field_444: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         // }
+
+        println!("ZZZZ12 field_ident {field_ident}");
+        println!("ZZZZ12 column_name_and_maybe_field_getter {column_name_and_maybe_field_getter}");
+        let f = 
+        format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", 
         
-        
-        let f = format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
+        {
             match <CatWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
                 Ok(value) => value,
                 Err(error) => {
