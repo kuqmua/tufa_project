@@ -3796,7 +3796,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
 
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}->'{field_ident}'"));
+                                        // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}->'{field_ident}'"));
+                                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}"));
                                         quote::quote! {
                                             #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => match <
                                                 #field_type
