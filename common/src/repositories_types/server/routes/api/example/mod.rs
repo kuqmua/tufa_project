@@ -2715,7 +2715,13 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
                 let mut acc = std::string::String::default();
                 for element in value.0.to_vec() {
                     match &element {
-                        AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.value, &"field_0", &format!("{column}->'field_0'"), increment) {
+                        AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                            &value.value,
+                            &"field_0",
+                            // &format!("{column}->'field_0'"),
+                            &format!("{column}"),//here
+                            increment
+                        ) {
                             Ok(value) => {
                                 acc.push_str(&value);
                             }
@@ -2723,7 +2729,13 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
                                 return Err(error);
                             }
                         },
-                        AnimalAsNotNullJsonbObjectUpdateElement::Field807(value) => match <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.value, &"field_807", &format!("{column}->'field_807'"), increment) {
+                        AnimalAsNotNullJsonbObjectUpdateElement::Field807(value) => match <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                            &value.value,
+                            &"field_807",
+                            // &format!("{column}->'field_807'"),
+                            &format!("{column}"),//here
+                            increment
+                        ) {
                             Ok(value) => {
                                 acc.push_str(&value);
                             }
