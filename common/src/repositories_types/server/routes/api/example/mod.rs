@@ -1598,10 +1598,16 @@ mod example_tests {
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_primary_key_cloned = select_primary_key.clone();
                                 acc.push(async move {
+                                    //
+                                    let start = chrono::Local::now();
+                                    //
                                     let read_only_ids_returned_from_create_one = super::Example::try_create_one(
                                         &url_cloned,
                                         super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
                                     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                    //
+                                    let middle = chrono::Local::now();
+                                    //
                                     let update = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
                                     assert_eq!(
                                         super::ExampleReadOnlyIds {
@@ -1632,6 +1638,10 @@ mod example_tests {
                                         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154"),
                                         "try_update_one result different column_154"
                                     );
+                                    //
+                                    let end = chrono::Local::now();
+                                    println!("start: {}, middle: {}, end: {}", start.format("%Y-%m-%d %H:%M:%S"), middle.format("%Y-%m-%d %H:%M:%S"), end.format("%Y-%m-%d %H:%M:%S"));
+                                    //
                                 }.boxed());
                             }
                         }
@@ -1771,6 +1781,7 @@ mod example_tests {
                             }
                         }
                     }
+                    println!("UPDATES LEN {}", acc.len());
                     let _unused = futures::future::join_all(acc).await;
 
                     // tokio::join!(
