@@ -4123,32 +4123,47 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let test_cases_content_token_stream = match &element.postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-
+                            let fields_last_initialization_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let field_type = &element.ty;
+                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
+                                quote::quote! {
+                                    let mut #field_ident_last_snake_case = <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
+                                        read_only_ids.0.value.#field_ident.clone()
+                                    );
+                                }
+                            });
                             let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
                                 let field_type = &element.ty;
+                                let field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&field_ident);
+                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
                                 let fields_token_stream = vec_syn_field.iter().map(|element| {
                                     let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     });
                                     let current_field_type = &element.ty;
+                                    let current_field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&current_field_ident);
+                                    let current_field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&current_field_ident);
                                     if field_ident == current_field_ident {
                                         quote::quote! {
-                                            #current_field_ident: Some(postgresql_crud::Value { value: current_element })
+                                            #current_field_ident: #current_field_ident_current_snake_case.clone()
                                         }
                                     } else {
                                         quote::quote! {
-                                            #current_field_ident: <#current_field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                                #read_only_ids_snake_case.0.value.#current_field_ident.clone()
-                                            )
+                                            #current_field_ident: #current_field_ident_last_snake_case.clone()
                                         }
                                     }
                                 });
                                 quote::quote! {
                                     for element in <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&#read_only_ids_snake_case.0.value.#field_ident) {
                                         for current_element in element {
+                                            let #field_ident_current_snake_case = Some(postgresql_crud::Value { value: current_element });
+                                            #field_ident_last_snake_case = #field_ident_current_snake_case.clone();
                                             acc.push(#ident_read_inner_standart_not_null_upper_camel_case {
                                                 #(#fields_token_stream),*
                                             });
@@ -4156,9 +4171,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             });
+                            //just for the linter to not show me error variable not read
+                            let drop_fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
+                                quote::quote! {drop(#field_ident_last_snake_case);}
+                            });
                             quote::quote! {
                                 let mut acc = vec![];
+                                #(#fields_last_initialization_token_stream)*
                                 #(#content_token_stream)*
+                                #(#drop_fields_token_stream)*
                                 vec![acc]
                             }
                         }
