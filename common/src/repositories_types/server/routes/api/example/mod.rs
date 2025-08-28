@@ -1027,9 +1027,9 @@ pub struct Animal {
     // pub field_804: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-    pub field_111: DoggieAsNotNullJsonbObject,
+    // pub field_111: DoggieAsNotNullJsonbObject,
     // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_808: OptionDoggieAsNullableJsonbObject,
+    pub field_808: OptionDoggieAsNullableJsonbObject,
     // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,//bug
 }
 
@@ -1042,11 +1042,11 @@ pub struct Animal {
     {
         "Concrete":
         // [
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Standart",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
             // ,
             // {
             //     "not_null_or_nullable": "NotNull",
@@ -1054,11 +1054,11 @@ pub struct Animal {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Standart",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
             // ,
             // {
             //     "not_null_or_nullable": "Nullable",
