@@ -1227,58 +1227,43 @@ mod example_tests {
                                 .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                 "try_read_one result different after try_create_one"
                             );
-                            let mut acc = vec![];
-                            let column_154_test_cases = match &read_only_ids_returned_from_create_one.column_154 {
-                                Some(value) => <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value),
-                                None => vec![],
-                            };
-                            for element0 in column_154_test_cases {
-                                for element1 in element0 {
-                                    let column_154 = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-                                    acc.push(Wrapper {
-                                        read_only_ids: super::ExampleReadOnlyIds {
-                                            primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
-                                            column_154: Some(<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(&column_154)),
-                                            column_155: None,
-                                            column_156: None,
-                                            column_157: None,
-                                        },
-                                        update_one_parameters: super::ExampleUpdate::try_new(
-                                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
-                                            Some(postgresql_crud::Value {
-                                                value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone()),
-                                            }),
-                                            None,
-                                            None,
-                                            None,
-                                        )
-                                        .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_154"),
-                                    });
-                                }
-                            }
-                            println!("column_154 length {}", acc.len());
-                            for element in acc {
-                                assert_eq!(
-                                    {
-                                        let left = element.read_only_ids;
-                                        left
-                                    },
-                                    {
-                                        let right = super::Example::try_update_one(
-                                            &url,
-                                            super::ExampleUpdateOneParameters {
-                                                payload: {
-                                                    let f = element.update_one_parameters;
-                                                    f
-                                                },
+                            if let Some(value) = &read_only_ids_returned_from_create_one.column_154 {
+                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
+                                    for element1 in element0 {
+                                        assert_eq!(
+                                            super::ExampleReadOnlyIds {
+                                                primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                                                column_154: Some(<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                                                    &<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone())
+                                                )),
+                                                column_155: None,
+                                                column_156: None,
+                                                column_157: None,
                                             },
-                                        )
-                                        .await
-                                        .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154");
-                                        right
-                                    },
-                                    "try_update_one result different column_154"
-                                );
+                                            {
+                                                let right = super::Example::try_update_one(
+                                                    &url,
+                                                    super::ExampleUpdateOneParameters {
+                                                        payload: super::ExampleUpdate::try_new(
+                                                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                                                            Some(postgresql_crud::Value {
+                                                                value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone()),
+                                                            }),
+                                                            None,
+                                                            None,
+                                                            None,
+                                                        )
+                                                        .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_154"),
+                                                    },
+                                                )
+                                                .await
+                                                .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154");
+                                                right
+                                            },
+                                            "try_update_one result different column_154"
+                                        );
+                                    }
+                                }
                             }
                         })(),
                         (async || {
