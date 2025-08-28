@@ -2099,8 +2099,8 @@ impl postgresql_crud::PostgresqlType for AnimalAsNotNullJsonbObject {
                 },
             }
         }
-        let f = format!("jsonb_build_object('value',jsonb_build_object({acc})) as {column},");
         let _ = acc.pop();
+        let f = format!("jsonb_build_object('value',jsonb_build_object({acc})) as {column},");
         println!("@@@2 {f}");
         Ok(f)
     }
@@ -3243,6 +3243,7 @@ impl postgresql_crud::PostgresqlJsonType for DoggieAsNotNullJsonbObject {
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        
         let mut acc = std::string::String::default();
         for element in value.0.to_vec() {
             match &element {
@@ -4609,7 +4610,6 @@ impl postgresql_crud::PostgresqlJsonType for CatWithIdAsNotNullJsonbObjectWithId
         todo!()
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        
         let mut acc = std::string::String::new();
         for element in value.0.to_vec() {
             acc.push_str(&format!("jsonb_build_object('id',jsonb_build_object('value','{}'),{})||", element.id.get_inner(), {
@@ -5800,7 +5800,6 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        //here
         // pub struct AnimalAsNotNullJsonbObjectReadOnlyIds(postgresql_crud::Value<AnimalAsNotNullJsonbObjectReadOnlyIdsHandle>);
         // pub struct AnimalAsNotNullJsonbObjectReadOnlyIdsHandle {
         //     field_111: <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
@@ -5815,7 +5814,7 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
         //     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         //     field_444: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
         // }
-   
+        
         
         let f = format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
             match <CatWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
