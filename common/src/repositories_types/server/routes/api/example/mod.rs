@@ -2245,6 +2245,7 @@ impl postgresql_crud::PostgresqlType for AnimalAsNotNullJsonbObject {
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, is_primary_key: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@2");
         let mut acc = std::string::String::default();
         for element in value.0.to_vec() {
             match &element {
@@ -3637,6 +3638,7 @@ impl postgresql_crud::PostgresqlJsonType for DoggieWithIdAsNotNullJsonbObjectWit
         todo!()
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@6");
         let mut acc = std::string::String::new();
         for element in value.0.to_vec() {
             acc.push_str(&format!("jsonb_build_object('id',jsonb_build_object('value','{}'),{})||", element.id.get_inner(), {
@@ -4046,6 +4048,7 @@ impl postgresql_crud::PostgresqlJsonType for OptionDoggieAsNullableJsonbObject {
         }
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@7");
         match &value.0 {
             Some(value) => {
                 let mut acc = std::string::String::default();
@@ -5354,6 +5357,7 @@ impl postgresql_crud::PostgresqlJsonType for OptionVecOfDoggieWithIdAsNullableAr
         }
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@11");
         match &value.0 {
             Some(value) => Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem))),", {
                 match <DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
@@ -6587,6 +6591,7 @@ impl postgresql_crud::PostgresqlJsonType for CatWithIdAsNotNullJsonbObjectWithId
         todo!()
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@15");
         let mut acc = std::string::String::new();
         for element in value.0.to_vec() {
             acc.push_str(&format!("jsonb_build_object('id',jsonb_build_object('value','{}'),{})||", element.id.get_inner(), {
@@ -7775,6 +7780,7 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("@@@18");
         Ok(format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
             match <CatWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
                 Ok(value) => value,
