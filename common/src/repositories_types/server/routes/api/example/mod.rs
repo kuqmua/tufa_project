@@ -7781,6 +7781,91 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         //here
+
+        // jsonb_build_object(
+        //   'value', 
+        //   jsonb_build_object(
+        //     'field_333', 
+        //     jsonb_build_object(
+        //       'value', 
+        //       jsonb_build_object(
+        //         'value', 
+        //         jsonb_build_object(
+        //           'field_807', 
+        //           jsonb_build_object(
+        //             'value', 
+        //             (
+        //               select 
+        //                 jsonb_agg(
+        //                   jsonb_build_object(
+        //                     'value', 
+        //                     jsonb_build_object(
+        //                       'id', 
+        //                       jsonb_build_object(
+        //                         'value', 'a538f12e-47d9-4bec-b0fd-f78d7c315a32'
+        //                       ), 
+        //                       'field_444', 
+        //                       jsonb_build_object('value', 'null' :: jsonb)
+        //                     )
+        //                   )
+        //                 ) 
+        //               from 
+        //                 jsonb_array_elements(
+        //                   column_154 -> 'field_333' -> 'field_807'
+        //                 ) as elem
+        //             )
+        //           )
+        //         )
+        //       )
+        //     ), 
+        //     'field_777', 
+        //     jsonb_build_object(
+        //       'value', 
+        //       jsonb_build_object(
+        //         'value', 
+        //         (
+        //           select 
+        //             jsonb_agg(
+        //               jsonb_build_object(
+        //                 'value', 
+        //                 jsonb_build_object(
+        //                   'id', 
+        //                   jsonb_build_object(
+        //                     'value', '22ce2acc-4686-4da0-9fe4-d2a51ccdb3e1'
+        //                   ), 
+        //                   'field_807', 
+        //                   jsonb_build_object(
+        //                     'value', 
+        //                     (
+        //                       select 
+        //                         jsonb_agg(
+        //                           jsonb_build_object(
+        //                             'value', 
+        //                             jsonb_build_object(
+        //                               'id', 
+        //                               jsonb_build_object(
+        //                                 'value', '5e8516f1-105a-45a4-9bf4-340a73304446'
+        //                               ), 
+        //                               'field_444', 
+        //                               jsonb_build_object('value', 'null' :: jsonb)
+        //                             )
+        //                           )
+        //                         ) 
+        //                       from 
+        //                         jsonb_array_elements(elem -> 'field_807') as elem
+        //                     )
+        //                   )
+        //                 )
+        //               )
+        //             ) 
+        //           from 
+        //             jsonb_array_elements(column_154 -> 'field_777') as elem
+        //         )
+        //       )
+        //     )
+        //   )
+        // ) as column_154
+
         // pub struct AnimalAsNotNullJsonbObjectReadOnlyIds(postgresql_crud::Value<AnimalAsNotNullJsonbObjectReadOnlyIdsHandle>);
         // pub struct AnimalAsNotNullJsonbObjectReadOnlyIdsHandle {
         //     field_333: <OptionDoggieAsNullableJsonbObject as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
