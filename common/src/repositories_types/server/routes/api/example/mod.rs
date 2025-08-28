@@ -5800,10 +5800,22 @@ impl postgresql_crud::PostgresqlJsonType for VecOfCatWithIdAsNotNullArrayOfNotNu
         query
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        
-        
-        
-        
+        //here
+        // pub struct AnimalAsNotNullJsonbObjectReadOnlyIds(postgresql_crud::Value<AnimalAsNotNullJsonbObjectReadOnlyIdsHandle>);
+        // pub struct AnimalAsNotNullJsonbObjectReadOnlyIdsHandle {
+        //     field_111: <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        // }
+        // pub struct DoggieAsNotNullJsonbObjectReadOnlyIds(postgresql_crud::Value<DoggieAsNotNullJsonbObjectReadOnlyIdsHandle>);
+        // pub struct DoggieAsNotNullJsonbObjectReadOnlyIdsHandle {
+        //     field_807: <VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        // }
+        // pub struct VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds(postgresql_crud::Value<std::vec::Vec<CatWithIdAsNotNullJsonbObjectWithIdReadOnlyIds>>);
+        // pub struct CatWithIdAsNotNullJsonbObjectWithIdReadOnlyIds(pub postgresql_crud::Value<CatWithIdAsNotNullJsonbObjectWithIdReadOnlyIdsHandle>);
+        // pub struct CatWithIdAsNotNullJsonbObjectWithIdReadOnlyIdsHandle {
+        //     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        //     field_444: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadOnlyIds,
+        // }
+   
         
         let f = format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
             match <CatWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
