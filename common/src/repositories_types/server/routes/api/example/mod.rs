@@ -2361,32 +2361,31 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases for AnimalAsNotNullJsonbObj
     type Element = Self;
     fn test_cases(read_only_ids: &<Self::Element as postgresql_crud::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>> {
         let mut acc = vec![];
-        let mut last_field_333 = <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.0.value.field_333.clone());
-        let mut last_field_444 = <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.0.value.field_444.clone());
+        let mut field_333_last = <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.0.value.field_333.clone());
+        let mut field_444_last = <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(read_only_ids.0.value.field_444.clone());
         for element in <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids.0.value.field_333) {
             for current_element in element {
-                let current_field_333 = Some(postgresql_crud::Value { value: current_element });
-                last_field_333 = current_field_333.clone();
+                let field_333_current = Some(postgresql_crud::Value { value: current_element });
+                field_333_last = field_333_current.clone();
                 acc.push(AnimalAsNotNullJsonbObjectReadInner {
-                    field_333: current_field_333.clone(),
-                    field_444: last_field_444.clone(),
+                    field_333: field_333_current.clone(),
+                    field_444: field_444_last.clone(),
                 });
             }
         }
         //here
         for element in <OptionDoggieAsNullableJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&read_only_ids.0.value.field_444) {
             for current_element in element {
-                let current_field_444 = Some(postgresql_crud::Value { value: current_element });
-                last_field_444 = current_field_444.clone();
+                let field_444_current = Some(postgresql_crud::Value { value: current_element });
+                field_444_last = field_444_current.clone();
                 acc.push(AnimalAsNotNullJsonbObjectReadInner {
-                    field_333: last_field_333.clone(),
-                    field_444: current_field_444.clone(),
+                    field_333: field_333_last.clone(),
+                    field_444: field_444_current.clone(),
                 });
             }
         }
-        drop(last_field_333);
-        drop(last_field_444);
-        // println!("useless pprint {last_field_444:#?}");
+        drop(field_333_last);
+        drop(field_444_last);
         let f = vec![acc];
         println!("KKKKKKKKKKK {f:#?}");
         f
