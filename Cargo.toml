@@ -22,7 +22,7 @@ members = [
   "postgresql_crud/postgresql_json_types/generate_postgresql_json_types",
   "postgresql_crud/generate_where_element_filters",
   "postgresql_crud/postgresql_types",
-  "postgresql_crud/generate_postgresql_types",
+  "postgresql_crud/postgresql_types/generate_postgresql_types",
   "postgresql_crud/postgresql_crud_macros_common",
   "generate_quotes",
   "macros_helpers",
