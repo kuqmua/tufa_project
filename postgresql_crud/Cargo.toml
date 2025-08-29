@@ -22,7 +22,7 @@ error_occurence_lib = {path = "../error_occurence_lib"}
 from_str = {path = "../from_str"}
 generate_postgresql_crud = {path = "./generate_postgresql_crud"}
 generate_postgresql_json_object_type = {path = "./generate_postgresql_json_object_type"}
-generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
+generate_postgresql_json_types = {path = "./postgresql_json_types/generate_postgresql_json_types"}
 generate_where_element_filters = {path = "./generate_where_element_filters"}
 generate_postgresql_types = {path = "./generate_postgresql_types"}
 app_state = {path = "../app_state"}
