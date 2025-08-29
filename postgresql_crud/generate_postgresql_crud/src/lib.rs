@@ -275,7 +275,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
+    let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let std_vec_vec_primary_key_field_type_read_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_as_primary_key_upper_camel_case>};
+    let std_vec_vec_ident_read_only_ids_token_stream = quote::quote! {std::vec::Vec::<#ident_read_only_ids_upper_camel_case>};
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field_type);
@@ -1196,7 +1198,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_ident_read_token_stream
         }
     };
-    let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_read_only_ids_token_stream = {
         enum WrapIntoOption {
             True,
@@ -2374,7 +2375,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(&operation, &std_vec_vec_primary_key_field_type_read_token_stream, &type_variants_from_request_response_syn_variants);
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
+                    &operation,
+                    &std_vec_vec_ident_read_only_ids_token_stream,
+                    &type_variants_from_request_response_syn_variants
+                );
             let operation_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
@@ -2408,7 +2413,101 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                     #query_snake_case
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::CreateMany));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    // &generate_create_update_delete_many_fetch_token_stream(
+                    //     &CreateManyOrUpdateManyOrDeleteMany::CreateMany
+                    // )
+                    &{
+                        let create_many_or_update_many_or_delete_many = &CreateManyOrUpdateManyOrDeleteMany::CreateMany;
+                        let current_operation = match &create_many_or_update_many_or_delete_many {
+                            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
+                            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
+                            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
+                        };
+                        generate_fetch_token_stream(
+                            &{
+                                /////
+                                // let generate_sqlx_row_try_get_primary_key_token_stream = |sqlx_row_try_get_type_token_stream: &dyn quote::ToTokens, ok_token_stream: &dyn quote::ToTokens, err_token_stream: &dyn quote::ToTokens|
+                                let drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
+                                    &current_operation,
+                                    file!(),
+                                    line!(),
+                                    column!(),
+                                    file!(),
+                                    line!(),
+                                    column!()
+                                );
+                                quote::quote! {
+                                    // match #sqlx_row::try_get::<
+                                    //     #sqlx_row_try_get_type_token_stream,
+                                    //     #ref_std_primitive_str
+                                    // >(&#value_snake_case, &#ident::#primary_key_snake_case()) {
+                                    //     Ok(#value_snake_case) => #ok_token_stream,
+                                    //     Err(#error_0_token_stream) => {
+                                    //         #err_token_stream
+                                    //     }
+                                    // }
+                                    match #ident_read_only_ids_upper_camel_case::try_from(value) {
+                                        Ok(value) => Some(value),
+                                        Err(error_0) => {
+                                            #drop_rows_match_postgres_transaction_rollback_await_handle_token_stream
+                                            // drop(rows);
+                                            // match executor.rollback().await {
+                                            //     Ok(_) => {
+                                            //         let error = ExampleCreateManyErrorNamed::Postgresql {
+                                            //             postgresql: error_0,
+                                            //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            //                 file!().to_owned(),
+                                            //                 line!(),
+                                            //                 column!(),
+                                            //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            //                     line: 2519,
+                                            //                     column: 196,
+                                            //                 }),
+                                            //             ),
+                                            //         };
+                                            //         eprintln!("{error}");
+                                            //         let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                            //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                            //         return response;
+                                            //     }
+                                            //     Err(error_1) => {
+                                            //         let error = ExampleCreateManyErrorNamed::RowAndRollback {
+                                            //             row: error_0,
+                                            //             rollback: error_1,
+                                            //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                            //                 file!().to_owned(),
+                                            //                 line!(),
+                                            //                 column!(),
+                                            //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            //                     line: 2519,
+                                            //                     column: 225,
+                                            //                 }),
+                                            //             ),
+                                            //         };
+                                            //         eprintln!("{error}");
+                                            //         let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                            //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                            //         return response;
+                                            //     }
+                                            // }
+                                        },
+                                    }
+                                }
+                                /////
+                                // generate_sqlx_row_try_get_primary_key_token_stream(
+                                //     &primary_key_field_type_as_primary_key_upper_camel_case,
+                                //     &quote::quote! {Some(#value_snake_case)},
+                                //     &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                                // )
+                            },
+                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                        )
+                    }
+                );
                 generate_operation_token_stream(&operation, &common_additional_logic_token_stream, &parameters_logic_token_stream, &proc_macro2::TokenStream::new(), &query_string_token_stream, &binded_query_token_stream, &postgresql_logic_token_stream)
             };
             quote::quote! {
@@ -2418,7 +2517,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_primary_key_field_type_read_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case);
+            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_ident_read_only_ids_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case);
             quote::quote! {
                 #try_operation_error_named_token_stream
                 #try_operation_token_stream
@@ -4144,7 +4243,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // }
     let generated = quote::quote! {
         #common_token_stream
-        // #create_many_token_stream
+        #create_many_token_stream
         #create_one_token_stream
         // #read_many_token_stream
         #read_one_token_stream
