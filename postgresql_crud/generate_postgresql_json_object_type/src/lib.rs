@@ -4852,13 +4852,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             )
         })
         .collect::<(std::vec::Vec<proc_macro2::TokenStream>, std::vec::Vec<proc_macro2::TokenStream>)>();
-    let example_token_stream = quote::quote! {
-        pub struct GeneratePostgresqlJsonObjectTypeExample {
-            #(#fields_token_stream)*
-        }
-    };
     if false {
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonObjectTypeExample", &example_token_stream);
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "GeneratePostgresqlJsonObjectTypeExample",
+            &quote::quote! {
+                pub struct GeneratePostgresqlJsonObjectTypeExample {
+                    #(#fields_token_stream)*
+                }
+            }
+        );
     }
     let generated = quote::quote! {#(#postgresql_json_object_type_array)*};
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
