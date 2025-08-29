@@ -466,7 +466,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let element_upper_camel_case = naming::ElementUpperCamelCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-            let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -1916,38 +1915,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream = quote::quote! {
                             <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
                         };
-                        let into_iter_token_stream = quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases>::test_cases(&#read_only_ids_snake_case)
-                            .into_iter()
-                        };
-                        let generate_acc_token_stream = |map_content_token_stream: &dyn quote::ToTokens, collect_content_token_stream: &dyn quote::ToTokens, acc_pushes_content_token_stream: &dyn quote::ToTokens| {
-                            quote::quote! {
-                                let mut acc = #into_iter_token_stream
-                                .map(|element|#map_content_token_stream)
-                                .collect::<std::vec::Vec<#collect_content_token_stream>>();
-                                #acc_pushes_content_token_stream
-                                acc
-                            }
-                        };
-                        let generate_maybe_some_token_stream = |not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => quote::quote! {#content_token_stream},
-                            NotNullOrNullable::Nullable => quote::quote! {Some(#content_token_stream)},
-                        };
-                        let generate_maybe_some_with_vec_token_stream = |not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => quote::quote! {vec![#content_token_stream]},
-                            NotNullOrNullable::Nullable => quote::quote! {Some(vec![#content_token_stream])},
-                        };
                         let generate_maybe_option_token_stream = |not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => quote::quote! {#content_token_stream},
                             NotNullOrNullable::Nullable => quote::quote! {std::option::Option<#content_token_stream>},
-                        };
-                        let generate_maybe_option_with_vec_token_stream = |not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => quote::quote! {std::vec::Vec<#content_token_stream>},
-                            NotNullOrNullable::Nullable => quote::quote! {std::option::Option<std::vec::Vec<#content_token_stream>>},
-                        };
-                        let maybe_push_none_token_stream = match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                            NotNullOrNullable::Nullable => quote::quote! {acc.push(None);},
                         };
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
                             let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_token_stream);
@@ -1998,10 +1968,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                let dimension1_not_null_or_nullable_map = generate_maybe_some_token_stream(&dimension1_not_null_or_nullable, &element_snake_case);
-                                let not_null_or_nullable_map = generate_maybe_some_with_vec_token_stream(&not_null_or_nullable, &dimension1_not_null_or_nullable_map);
-                                let dimension1_not_null_or_nullable_collect = generate_maybe_option_token_stream(&dimension1_not_null_or_nullable, &ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream);
-                                let not_null_or_nullable_collect = generate_maybe_option_with_vec_token_stream(&not_null_or_nullable, &dimension1_not_null_or_nullable_collect);
                                 generate_acc_content_token_stream(&not_null_or_nullable, &generate_ident_token_stream(&dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart))
                             }
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {

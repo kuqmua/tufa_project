@@ -159,7 +159,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
             let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
             let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
-            let select_query_part_postgresql_json_type_snake_case = naming::SelectQueryPartPostgresqlJsonTypeSnakeCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let increments_snake_case = naming::IncrementsSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
@@ -170,7 +169,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let fields_snake_case = naming::FieldsSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-            let update_query_part_postgresql_type_snake_case = naming::UpdateQueryPartPostgresqlTypeSnakeCase;
             let update_query_part_postgresql_json_type_snake_case = naming::UpdateQueryPartPostgresqlJsonTypeSnakeCase;
             let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
             let update_query_bind_postgresql_type_snake_case = naming::UpdateQueryBindPostgresqlTypeSnakeCase;

@@ -858,7 +858,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let microseconds_snake_case = naming::MicrosecondsSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            let test_cases_snake_case = naming::TestCasesSnakeCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
             let hour_snake_case = naming::HourSnakeCase;
@@ -4713,9 +4712,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_inner_type_token_stream,
                     &ident,
                     &{
-                        let ident_standart_not_null_as_postgresql_type_read_inner_token_stream = quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
-                        };
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {

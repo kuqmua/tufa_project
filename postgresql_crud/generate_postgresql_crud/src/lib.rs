@@ -163,12 +163,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let primary_key_snake_case = naming::PrimaryKeySnakeCase;
     let pagination_snake_case = naming::PaginationSnakeCase;
-    let test_cases_snake_case = naming::TestCasesSnakeCase;
     let config_snake_case = naming::ConfigSnakeCase;
     let postgres_pool_snake_case = naming::PostgresPoolSnakeCase;
     let ident_create_default_snake_case = naming::IdentCreateDefaultSnakeCase;
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
-    let vec_of_primary_keys_returned_from_create_many_snake_case = naming::VecOfPrimaryKeysReturnedFromCreateManySnakeCase;
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let generate_element_snake_case = naming::GenerateElementSnakeCase;
     let select_primary_key_field_ident_snake_case = naming::SelectPrimaryKeyFieldIdentSnakeCase;
