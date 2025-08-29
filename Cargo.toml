@@ -17,6 +17,7 @@ members = [
   "postgresql_crud",
   "postgresql_crud/generate_postgresql_crud",
   "postgresql_crud/generate_postgresql_json_object_type",
+  "postgresql_crud/postgresql_json_types",
   "postgresql_crud/generate_postgresql_json_types",
   "postgresql_crud/generate_where_element_filters",
   "postgresql_crud/generate_postgresql_types",
