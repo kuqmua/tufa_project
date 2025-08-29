@@ -27,7 +27,7 @@ pub async fn check_body_size(body: axum::body::Body, limit: std::primitive::usiz
             println!("HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte", value / 1024, value / 1024 / 1024);
         }
         None => {
-            println!("HttpBody::size_hint is None")
+            println!("HttpBody::size_hint is None");
         }
     }
     match axum::body::to_bytes(body, limit).await {

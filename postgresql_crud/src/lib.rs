@@ -1150,7 +1150,7 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
             match increment.checked_add(1) {
                 Some(value) => {
                     *increment = value;
-                    acc.push_str(&format!("${},", value));
+                    acc.push_str(&format!("${value},"));
                 }
                 None => {
                     return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
@@ -1396,12 +1396,12 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
     pub fn into_vec(self) -> std::vec::Vec<T> {
         self.0
     }
-    pub fn is_empty(&self) -> std::primitive::bool {
+    pub const fn is_empty(&self) -> std::primitive::bool {
         self.0.is_empty()
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
@@ -1461,7 +1461,7 @@ const _: () = {
                 __deserializer,
                 "UniqueVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<UniqueVec<T>>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -1491,14 +1491,14 @@ pub struct RegexRegex(regex::Regex); //regex::Regex
 // #[automatically_derived]
 impl ::core::cmp::PartialEq for RegexRegex {
     #[inline]
-    fn eq(&self, other: &RegexRegex) -> bool {
+    fn eq(&self, other: &Self) -> bool {
         self.0.to_string() == other.0.to_string()
     }
 }
 #[doc(hidden)]
-#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+#[expect(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl _serde::Serialize for RegexRegex {
@@ -1511,9 +1511,9 @@ const _: () = {
     }
 };
 #[doc(hidden)]
-#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+#[expect(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for RegexRegex {
@@ -1568,7 +1568,7 @@ const _: () = {
                 __deserializer,
                 "RegexRegex",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<RegexRegex>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -1577,7 +1577,7 @@ const _: () = {
 };
 const _: () = {
     #[automatically_derived]
-    #[allow(unused_braces)]
+    #[expect(unused_braces)]
     impl schemars::JsonSchema for RegexRegex {
         fn schema_name() -> std::string::String {
             "RegexRegex".to_owned()
@@ -1601,7 +1601,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum RegularExpressionCase {
     Sensitive,
     Insensitive,
@@ -1612,7 +1612,7 @@ impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Regul
     }
 }
 impl RegularExpressionCase {
-    pub fn postgreql_syntax(&self) -> &'static std::primitive::str {
+    pub const fn postgreql_syntax(&self) -> &'static std::primitive::str {
         match &self {
             Self::Sensitive => "~",
             Self::Insensitive => "~*",
@@ -1633,11 +1633,11 @@ pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
 impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI32 {
     type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
-        if value >= 0 { Ok(Self(value)) } else { Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero { value: value, code_occurence: error_occurence_lib::code_occurence!() }) }
+        if value >= 0 { Ok(Self(value)) } else { Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero { value, code_occurence: error_occurence_lib::code_occurence!() }) }
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
@@ -1665,7 +1665,7 @@ const _: () = {
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -1683,7 +1683,7 @@ const _: () = {
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -1692,7 +1692,7 @@ const _: () = {
                 __deserializer,
                 "UnsignedPartOfStdPrimitiveI32",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<UnsignedPartOfStdPrimitiveI32>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -1718,7 +1718,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
-    pub fn get(&self) -> std::primitive::i32 {
+    pub const fn get(&self) -> std::primitive::i32 {
         self.0
     }
 }
@@ -1741,11 +1741,11 @@ pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
 impl std::convert::TryFrom<std::primitive::i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
-        if value >= 1 { Ok(Self(value)) } else { Err(Self::Error::NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne { value: value, code_occurence: error_occurence_lib::code_occurence!() }) }
+        if value >= 1 { Ok(Self(value)) } else { Err(Self::Error::NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne { value, code_occurence: error_occurence_lib::code_occurence!() }) }
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfStdPrimitiveI32 {
@@ -1773,7 +1773,7 @@ const _: () = {
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -1791,7 +1791,7 @@ const _: () = {
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -1800,7 +1800,7 @@ const _: () = {
                 __deserializer,
                 "NotZeroUnsignedPartOfStdPrimitiveI32",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<NotZeroUnsignedPartOfStdPrimitiveI32>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -1826,7 +1826,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     }
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {
-    pub fn get(&self) -> std::primitive::i32 {
+    pub const fn get(&self) -> std::primitive::i32 {
         self.0
     }
 }
@@ -1836,7 +1836,7 @@ impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotZe
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, schemars::JsonSchema)]
 pub struct Between<T>
 where
     T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
@@ -1860,7 +1860,7 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T> _serde::Deserialize<'de> for Between<T>
@@ -1871,7 +1871,7 @@ const _: () = {
         where
             __D: _serde::Deserializer<'de>,
         {
-            #[allow(non_camel_case_types)]
+            #[expect(non_camel_case_types)]
             #[doc(hidden)]
             enum __Field {
                 __field0,
@@ -1961,7 +1961,7 @@ const _: () = {
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -2002,19 +2002,19 @@ const _: () = {
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &'static [&'static str] = &["start", "end"];
+            const FIELDS: &'static [&str] = &["start", "end"];
             _serde::Deserializer::deserialize_struct(
                 __deserializer,
                 "Between",
                 FIELDS,
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Between<T>>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -2079,7 +2079,7 @@ enum Variant {
     MinusOne,
 }
 impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: std::primitive::usize> BoundedStdVecVec<T, LENGTH> {
-    pub fn to_inner(&self) -> &std::vec::Vec<T> {
+    pub const fn to_inner(&self) -> &std::vec::Vec<T> {
         &self.0
     }
     pub fn into_inner(self) -> std::vec::Vec<T> {
@@ -2144,7 +2144,7 @@ impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T, const LENGTH: std::primitive::usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
@@ -2181,7 +2181,7 @@ const _: () = {
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -2199,7 +2199,7 @@ const _: () = {
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
-                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                            Err(serde::de::Error::custom(format!("{error:?}")))
                         }
                     }
                 }
@@ -2208,7 +2208,7 @@ const _: () = {
                 __deserializer,
                 "BoundedStdVecVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<BoundedStdVecVec<T, LENGTH>>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )

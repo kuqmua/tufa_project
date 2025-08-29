@@ -1036,7 +1036,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
     let visit_seq_fields_initialization_token_stream = {
         let visit_seq_fields_initialization_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-            let type_token_stream = generate_type_token_stream(&element_ident, &element_type);
+            let type_token_stream = generate_type_token_stream(element_ident, element_type);
             let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"));
             quote::quote! {
                 let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
@@ -1066,7 +1066,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
     });
     let visit_map_fields_initialization_token_stream = {
         let content_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
-            let type_token_stream = generate_type_token_stream(&element_ident, &element_type);
+            let type_token_stream = generate_type_token_stream(element_ident, element_type);
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
             quote::quote! {
                 let mut #field_index_token_stream: serde::__private::Option<#type_token_stream> = serde::__private::None;
@@ -1078,7 +1078,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
         let visit_map_match_variants_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
-            let type_token_stream = generate_type_token_stream(&element_ident, &element_type);
+            let type_token_stream = generate_type_token_stream(element_ident, element_type);
             quote::quote! {
                 __Field::#field_index_token_stream => {
                     if serde::__private::Option::is_some(&#field_index_token_stream) {

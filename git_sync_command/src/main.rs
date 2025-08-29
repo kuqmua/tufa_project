@@ -64,46 +64,46 @@ impl std::fmt::Display for CommandError {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             CommandError::CheckoutDot { path, error } => {
-                write!(formatter, "git checkout . error: {}, path: {}", error, path)
+                write!(formatter, "git checkout . error: {error}, path: {path}")
             }
             CommandError::SubmoduleUpdate { path, error } => {
-                write!(formatter, "git submodule update error: {}, path: {}", error, path)
+                write!(formatter, "git submodule update error: {error}, path: {path}")
             }
             CommandError::CheckoutMain { path, error } => {
-                write!(formatter, "git checkout main error: {}, path: {}", error, path)
+                write!(formatter, "git checkout main error: {error}, path: {path}")
             }
             CommandError::Pull { path, error } => {
-                write!(formatter, "git pull error: {}, path: {}", error, path)
+                write!(formatter, "git pull error: {error}, path: {path}")
             }
             CommandError::CargoBuild { path, error } => {
-                write!(formatter, "cargo build error: {}, path: {}", error, path)
+                write!(formatter, "cargo build error: {error}, path: {path}")
             }
         }
     }
 }
 
 fn commands(canonicalize_pathbuf_as_string: std::string::String, path: std::string::String) -> Result<(), CommandError> {
-    let path = format!("{}/{}", canonicalize_pathbuf_as_string, path);
-    println!("start {}", path);
+    let path = format!("{canonicalize_pathbuf_as_string}/{path}");
+    println!("start {path}");
     if let Err(error) = std::process::Command::new("git").args(["checkout", "."]).current_dir(&path).output() {
         return Err(CommandError::CheckoutDot { path, error: format!("{error}") });
     }
-    println!("git checkout . {}", path);
+    println!("git checkout . {path}");
     if let Err(error) = std::process::Command::new("git").args(["submodule", "update", "--init", "--recursive"]).current_dir(&path).output() {
         return Err(CommandError::SubmoduleUpdate { path, error: format!("{error}") });
     }
-    println!("git submodule update --init --recursive {}", path);
+    println!("git submodule update --init --recursive {path}");
     if let Err(error) = std::process::Command::new("git").args(["pull"]).current_dir(&path).output() {
         return Err(CommandError::Pull { path, error: format!("{error}") });
     }
-    println!("git pull {}", path);
+    println!("git pull {path}");
     if let Err(error) = std::process::Command::new("git").args(["checkout", "main"]).current_dir(&path).output() {
         return Err(CommandError::CheckoutMain { path, error: format!("{error}") });
     }
-    println!("git checkout main {}", path);
+    println!("git checkout main {path}");
     if let Err(error) = std::process::Command::new("cargo").args(["build"]).current_dir(&path).output() {
         return Err(CommandError::CargoBuild { path, error: format!("{error}") });
     }
-    println!("cargo build {}", path);
+    println!("cargo build {path}");
     Ok(())
 }
