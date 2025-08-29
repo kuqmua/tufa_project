@@ -24,6 +24,7 @@ members = [
   "postgresql_crud/where_element_filters/generate_where_element_filters",
   "postgresql_crud/postgresql_types",
   "postgresql_crud/postgresql_types/generate_postgresql_types",
+  "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_macros_common",
   "generate_quotes",
   "macros_helpers",
