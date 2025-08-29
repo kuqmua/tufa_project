@@ -1912,13 +1912,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident,
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
-                        let ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream = quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                        };
-                        let generate_maybe_option_token_stream = |not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => quote::quote! {#content_token_stream},
-                            NotNullOrNullable::Nullable => quote::quote! {std::option::Option<#content_token_stream>},
-                        };
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
                             let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_token_stream);
                             let (element_or_some_element_token_stream, maybe_push_none_token_stream) = match &not_null_or_nullable {

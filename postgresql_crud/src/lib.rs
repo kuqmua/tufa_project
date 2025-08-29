@@ -1401,7 +1401,6 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
@@ -1496,9 +1495,7 @@ impl ::core::cmp::PartialEq for RegexRegex {
     }
 }
 #[doc(hidden)]
-#[expect(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl _serde::Serialize for RegexRegex {
@@ -1511,9 +1508,7 @@ const _: () = {
     }
 };
 #[doc(hidden)]
-#[expect(non_upper_case_globals, unused_attributes, unused_qualifications)]
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for RegexRegex {
@@ -1577,7 +1572,6 @@ const _: () = {
 };
 const _: () = {
     #[automatically_derived]
-    #[expect(unused_braces)]
     impl schemars::JsonSchema for RegexRegex {
         fn schema_name() -> std::string::String {
             "RegexRegex".to_owned()
@@ -1637,7 +1631,6 @@ impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI3
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
@@ -1745,7 +1738,6 @@ impl std::convert::TryFrom<std::primitive::i32> for NotZeroUnsignedPartOfStdPrim
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfStdPrimitiveI32 {
@@ -1860,7 +1852,6 @@ impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> 
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T> _serde::Deserialize<'de> for Between<T>
@@ -2144,7 +2135,6 @@ impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T, const LENGTH: std::primitive::usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
