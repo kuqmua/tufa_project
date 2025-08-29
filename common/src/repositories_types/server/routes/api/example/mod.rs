@@ -1188,6 +1188,16 @@ mod example_tests {
                         value
                     };
 
+                    let common_read_only_ids_returned_from_create_many = super::Example::try_create_many(
+                        &url,
+                        super::ExampleCreateManyParameters {
+                            payload: super::ExampleCreateManyPayload(vec![
+                                ident_create_default.clone(),
+                                ident_create_default.clone()
+                            ])
+                        }
+                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+
                     let common_read_only_ids_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default.clone() }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                     assert_eq!(
                         super::ExampleRead {
@@ -1212,22 +1222,6 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one"
                     );
-
-
-                    let common_read_only_ids_returned_from_create_many = super::Example::try_create_many(
-                        &url,
-                        super::ExampleCreateManyParameters {
-                            payload: super::ExampleCreateManyPayload(
-                                vec![
-                                    ident_create_default.clone(),
-                                    ident_create_default.clone()
-                                ]
-                            )
-                        }
-                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
-
-
-
    
                     let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                     if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
@@ -1288,138 +1282,146 @@ mod example_tests {
                     // if let Some(value) = &common_read_only_ids_returned_from_create_one.column_155 {
                     //     for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
                     //         for element1 in element0 {
-                    //             let url_cloned = url.clone();
-                    //             let ident_create_default_cloned = ident_create_default.clone();
-                    //             let select_primary_key_cloned = select_primary_key.clone();
-                    //             acc.push(async move {
-                    //                 let read_only_ids_returned_from_create_one = super::Example::try_create_one(
-                    //                     &url_cloned,
-                    //                     super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
-                    //                 ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                    //                 let update = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-                    //                 assert_eq!(
-                    //                     super::ExampleReadOnlyIds {
-                    //                         primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
-                    //                         column_154: None,
-                    //                         column_155: Some(<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
-                    //                             &update
-                    //                         )),
-                    //                         column_156: None,
-                    //                         column_157: None,
-                    //                     },
-                    //                     super::Example::try_update_one(
-                    //                         &url_cloned,
-                    //                         super::ExampleUpdateOneParameters {
-                    //                             payload: super::ExampleUpdate::try_new(
-                    //                                 <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
-                    //                                 None,
-                    //                                 Some(postgresql_crud::Value {
-                    //                                     value: update,
-                    //                                 }),
-                    //                                 None,
-                    //                                 None,
-                    //                             )
-                    //                             .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_155"),
-                    //                         },
-                    //                     )
-                    //                     .await
-                    //                     .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_155"),
-                    //                     "try_update_one result different column_155"
-                    //                 );
-                    //             }.boxed());
+                    //             vec_ident_create_default.push(ident_create_default.clone());
+
+                    //             // let url_cloned = url.clone();
+                    //             // let ident_create_default_cloned = ident_create_default.clone();
+                    //             // let select_primary_key_cloned = select_primary_key.clone();
+                    //             // acc.push(async move {
+                    //             //     let read_only_ids_returned_from_create_one = super::Example::try_create_one(
+                    //             //         &url_cloned,
+                    //             //         super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
+                    //             //     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    //             //     let update = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
+                    //             //     assert_eq!(
+                    //             //         super::ExampleReadOnlyIds {
+                    //             //             primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                    //             //             column_154: None,
+                    //             //             column_155: Some(<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                    //             //                 &update
+                    //             //             )),
+                    //             //             column_156: None,
+                    //             //             column_157: None,
+                    //             //         },
+                    //             //         super::Example::try_update_one(
+                    //             //             &url_cloned,
+                    //             //             super::ExampleUpdateOneParameters {
+                    //             //                 payload: super::ExampleUpdate::try_new(
+                    //             //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                    //             //                     None,
+                    //             //                     Some(postgresql_crud::Value {
+                    //             //                         value: update,
+                    //             //                     }),
+                    //             //                     None,
+                    //             //                     None,
+                    //             //                 )
+                    //             //                 .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_155"),
+                    //             //             },
+                    //             //         )
+                    //             //         .await
+                    //             //         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_155"),
+                    //             //         "try_update_one result different column_155"
+                    //             //     );
+                    //             // }.boxed());
                     //         }
                     //     }
                     // }
                     // if let Some(value) = &common_read_only_ids_returned_from_create_one.column_156 {
                     //     for element0 in <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
                     //         for element1 in element0 {
-                    //             let url_cloned = url.clone();
-                    //             let ident_create_default_cloned = ident_create_default.clone();
-                    //             let select_primary_key_cloned = select_primary_key.clone();
-                    //             acc.push(async move {
-                    //                 let read_only_ids_returned_from_create_one = super::Example::try_create_one(
-                    //                     &url_cloned,
-                    //                     super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
-                    //                 ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                    //                 let update = <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-                    //                 assert_eq!(
-                    //                     super::ExampleReadOnlyIds {
-                    //                         primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
-                    //                         column_154: None,
-                    //                         column_155: None,
-                    //                         column_156: Some(<crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
-                    //                             &update
-                    //                         )),
-                    //                         column_157: None,
-                    //                     },
-                    //                     super::Example::try_update_one(
-                    //                         &url_cloned,
-                    //                         super::ExampleUpdateOneParameters {
-                    //                             payload: super::ExampleUpdate::try_new(
-                    //                                 <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
-                    //                                 None,
-                    //                                 None,
-                    //                                 Some(postgresql_crud::Value {
-                    //                                     value: update,
-                    //                                 }),
-                    //                                 None,
-                    //                             )
-                    //                             .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_156"),
-                    //                         },
-                    //                     )
-                    //                     .await
-                    //                     .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_156"),
-                    //                     "try_update_one result different column_156"
-                    //                 );
-                    //             }.boxed());
+                    //             vec_ident_create_default.push(ident_create_default.clone());
+
+
+                    //             // let url_cloned = url.clone();
+                    //             // let ident_create_default_cloned = ident_create_default.clone();
+                    //             // let select_primary_key_cloned = select_primary_key.clone();
+                    //             // acc.push(async move {
+                    //             //     let read_only_ids_returned_from_create_one = super::Example::try_create_one(
+                    //             //         &url_cloned,
+                    //             //         super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
+                    //             //     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    //             //     let update = <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
+                    //             //     assert_eq!(
+                    //             //         super::ExampleReadOnlyIds {
+                    //             //             primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                    //             //             column_154: None,
+                    //             //             column_155: None,
+                    //             //             column_156: Some(<crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                    //             //                 &update
+                    //             //             )),
+                    //             //             column_157: None,
+                    //             //         },
+                    //             //         super::Example::try_update_one(
+                    //             //             &url_cloned,
+                    //             //             super::ExampleUpdateOneParameters {
+                    //             //                 payload: super::ExampleUpdate::try_new(
+                    //             //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                    //             //                     None,
+                    //             //                     None,
+                    //             //                     Some(postgresql_crud::Value {
+                    //             //                         value: update,
+                    //             //                     }),
+                    //             //                     None,
+                    //             //                 )
+                    //             //                 .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_156"),
+                    //             //             },
+                    //             //         )
+                    //             //         .await
+                    //             //         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_156"),
+                    //             //         "try_update_one result different column_156"
+                    //             //     );
+                    //             // }.boxed());
                     //         }
                     //     }
                     // }
                     // if let Some(value) = &common_read_only_ids_returned_from_create_one.column_157 {
                     //     for element0 in <crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
                     //         for element1 in element0 {
-                    //             let url_cloned = url.clone();
-                    //             let ident_create_default_cloned = ident_create_default.clone();
-                    //             let select_primary_key_cloned = select_primary_key.clone();
-                    //             acc.push(async move {
-                    //                 let read_only_ids_returned_from_create_one = super::Example::try_create_one(
-                    //                     &url_cloned,
-                    //                     super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
-                    //                 ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                    //                 let update = <crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-                    //                 assert_eq!(
-                    //                     super::ExampleReadOnlyIds {
-                    //                         primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
-                    //                         column_154: None,
-                    //                         column_155: None,
-                    //                         column_156: None,
-                    //                         column_157: Some(<crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
-                    //                             &update
-                    //                         )),
-                    //                     },
-                    //                     super::Example::try_update_one(
-                    //                         &url_cloned,
-                    //                         super::ExampleUpdateOneParameters {
-                    //                             payload: super::ExampleUpdate::try_new(
-                    //                                 <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
-                    //                                 None,
-                    //                                 None,
-                    //                                 None,
-                    //                                 Some(postgresql_crud::Value {
-                    //                                     value: update,
-                    //                                 }),
-                    //                             )
-                    //                             .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_157"),
-                    //                         },
-                    //                     )
-                    //                     .await
-                    //                     .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_157"),
-                    //                     "try_update_one result different column_157"
-                    //                 );
-                    //             }.boxed());
+                    //             vec_ident_create_default.push(ident_create_default.clone());
+
+                    //             // let url_cloned = url.clone();
+                    //             // let ident_create_default_cloned = ident_create_default.clone();
+                    //             // let select_primary_key_cloned = select_primary_key.clone();
+                    //             // acc.push(async move {
+                    //             //     let read_only_ids_returned_from_create_one = super::Example::try_create_one(
+                    //             //         &url_cloned,
+                    //             //         super::ExampleCreateOneParameters { payload: ident_create_default_cloned }
+                    //             //     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    //             //     let update = <crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
+                    //             //     assert_eq!(
+                    //             //         super::ExampleReadOnlyIds {
+                    //             //             primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                    //             //             column_154: None,
+                    //             //             column_155: None,
+                    //             //             column_156: None,
+                    //             //             column_157: Some(<crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                    //             //                 &update
+                    //             //             )),
+                    //             //         },
+                    //             //         super::Example::try_update_one(
+                    //             //             &url_cloned,
+                    //             //             super::ExampleUpdateOneParameters {
+                    //             //                 payload: super::ExampleUpdate::try_new(
+                    //             //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                    //             //                     None,
+                    //             //                     None,
+                    //             //                     None,
+                    //             //                     Some(postgresql_crud::Value {
+                    //             //                         value: update,
+                    //             //                     }),
+                    //             //                 )
+                    //             //                 .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_157"),
+                    //             //             },
+                    //             //         )
+                    //             //         .await
+                    //             //         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_157"),
+                    //             //         "try_update_one result different column_157"
+                    //             //     );
+                    //             // }.boxed());
                     //         }
                     //     }
                     // }
+
                     println!("UPDATES LEN {}", acc.len());
                     let _unused = futures::future::join_all(acc).await;
                 });
