@@ -1211,10 +1211,9 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one"
                     );
-                    struct Wrapper {
-                        read_only_ids: super::ExampleReadOnlyIds,
-                        update_one_parameters: super::ExampleUpdate,
-                    }
+
+                    
+   
                     let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                     if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
                         for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
