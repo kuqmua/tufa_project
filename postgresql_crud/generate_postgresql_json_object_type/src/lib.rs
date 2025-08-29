@@ -928,11 +928,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let acc_format_handle = {
                                         let acc_snake_case = naming::AccSnakeCase;
                                         format!("{{{acc_snake_case}}}")
-                                        //here diff
                                     };
                                     let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
                                     (acc_format_handle, wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
                                 };
+                                //todo refactor
                                 quote::quote! {
                                     let field_ident = column;
                                     let column_name_and_maybe_field_getter = column;
@@ -940,13 +940,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let is_postgresql_type = true;
 
                                     let mut acc = std::string::String::default();
-                                    //here diff
                                     let #column_name_and_maybe_field_getter_field_ident_snake_case = column_name_and_maybe_field_getter.to_string();
-                                    // if is_postgresql_type {
-                                    //     column_name_and_maybe_field_getter.to_string()
-                                    // } else {
-                                    //     format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
-                                    // };
                                     let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
                                     for element in self #self_field_vec_token_stream {
                                         acc.push_str(&format!(
@@ -959,8 +953,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let _ = acc.pop();
                                     let _ = acc.pop();
                                     #maybe_pagination_start_end_initialization_token_stream
-                                    // format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
-                                    //here diff
                                     if is_postgresql_type {
                                         format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                                     }
@@ -989,19 +981,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream,
                                 };
                                 quote::quote! {
-                                    // #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
-                                    // format!(#format_handle_token_stream, {
-                                    //     let #value_snake_case = match &self.0 {
-                                    //         Some(#value_snake_case) => #value_snake_case,
-                                    //         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
-                                    //     };
-                                    //     #value_snake_case.select_query_part(
-                                    //         field_ident,
-                                    //         &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
-                                    //         column_name_and_maybe_field_getter_for_error_message,
-                                    //         true
-                                    //     )
-                                    // })
                                     format!(
                                         "case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({}) end",
                                         {
@@ -2553,15 +2532,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #maybe_ident_with_id_update_element_standart_not_null_token_stream
                 }
             };
-            // let update_query_part_token_stream = quote::quote!{
-            //     #value_snake_case.#update_query_part_snake_case(
-            //         #jsonb_set_accumulator_snake_case,
-            //         #jsonb_set_target_snake_case,
-            //         #jsonb_set_path_snake_case,
-            //         #increment_snake_case,
-            //     )
-            // };
-            // let update_query_bind_token_stream = quote::quote!{#value_snake_case.#update_query_bind_snake_case(#query_snake_case)};
             let value_into_inner_token_stream = quote::quote! {#value_snake_case.into_inner()};
             let generate_select_only_ids_query_part_token_stream = |is_standart_with_id: &IsStandartWithId| {
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
@@ -2699,19 +2669,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream,
                             };
                             quote::quote! {
-                                // #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
-                                // format!(#format_handle_token_stream, {
-                                //     let #value_snake_case = match &self.0 {
-                                //         Some(#value_snake_case) => #value_snake_case,
-                                //         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
-                                //     };
-                                //     #value_snake_case.select_query_part(
-                                //         field_ident,
-                                //         &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
-                                //         column_name_and_maybe_field_getter_for_error_message,
-                                //         true
-                                //     )
-                                // })
                                 let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
                                 format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))", {
                                     let #value_snake_case = match &#value_snake_case.0 {
@@ -2866,8 +2823,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #(#query_part_variants_token_stream),*
                                             }
                                         }
-                                        //todo maybe bug here - maybe need additional parameter
-                                        // #jsonb_set_accumulator_snake_case.is_empty() &&
                                         if #jsonb_set_path_snake_case.is_empty() {
                                             Ok(#object_acc_snake_case)
                                         }
@@ -3137,42 +3092,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    // let none_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //     });
-                                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("'{field_ident}','null'::jsonb,"));
-                                    //     quote::quote! {acc.push_str(&format!(#format_handle_token_stream));}
-                                    // });
-                                    // let acc_push_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //     });
-                                    //     let field_type = &element.ty;
-                                    //     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{field_ident}'"));
-                                    //     quote::quote! {
-                                    //         acc.push_str(&match <#field_type as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
-                                    //             &<
-                                    //                 <
-                                    //                     #field_type
-                                    //                     as
-                                    //                     postgresql_crud::PostgresqlJsonType
-                                    //                 >::Update
-                                    //                 as
-                                    //                 postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                    //             >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    //             #field_ident_double_quotes_token_stream,
-                                    //             &format!(#format_handle_token_stream),
-                                    //             increment,
-                                    //         ) {
-                                    //             Ok(value) => value,
-                                    //             Err(error) => {
-                                    //                 return Err(error);
-                                    //             },
-                                    //         });
-                                    //     }
-                                    // });
                                     let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -3261,91 +3180,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                                    //     let mut acc = std::string::String::new();
-                                    //     for element in get_vec_syn_field(&is_standart_with_id_false) {
-                                    //         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //             panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //         });
-                                    //         acc.push_str(&format!("jsonb_build_object('{field_ident}', 'null'::jsonb)||"));
-                                    //     }
-                                    //     let _ = acc.pop();
-                                    //     let _ = acc.pop();
-                                    //     //todo add jsonb_build_object('value',
-                                    //     format!("(select jsonb_agg(jsonb_build_object('id', elem -> 'id')||{acc}) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}) as elem)::jsonb")
-                                    // });
                                     quote::quote!{
-                                        // match &value.0 {
-                                        //     Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(value, field_ident, column_name_and_maybe_field_getter, increment) {
-                                        //         Ok(value) => Ok(value),
-                                        //         Err(error) => Err(error),
-                                        //     },
-                                        //     None => {
-                                        //         //todo reuse
-                                        //         // Ok(format!("'[]'::jsonb"))
-                                        //         Ok(format!(#format_handle_token_stream))
-                                        //         // Ok(format!(
-                                        //         //     "'{field_ident}',
-                                        //         //     case
-                                        //         //     when
-                                        //         //     jsonb_typeof(
-                                        //         //       {column_name_and_maybe_field_getter}->'{field_ident}'
-                                        //         //     ) = 'null'
-                                        //         //     then 'null'::jsonb
-                                        //         //     else
-                                        //         //     (select jsonb_agg(jsonb_build_object('id', elem -> 'id')||{}{}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)::jsonb
-                                        //         //     end
-                                        //         //     ",
-                                        //         //     format!(
-                                        //         //         "jsonb_build_object({})||",
-                                        //         //         {
-                                        //         //             let mut f = match <
-                                        //         //                 postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
-                                        //         //                 as
-                                        //         //                 postgresql_crud::PostgresqlJsonType
-                                        //         //             >::select_only_updated_ids_query_part(
-                                        //         //                     &<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Update as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                        //         //                     "field_0",
-                                        //         //                     "elem",
-                                        //         //                     increment
-                                        //         //                 )
-                                        //         //             {
-                                        //         //                 Ok(value) => value,
-                                        //         //                 Err(error) => {
-                                        //         //                     return Err(error);
-                                        //         //                 }
-                                        //         //             };
-                                        //         //             let _ = f.pop();
-                                        //         //             f
-                                        //         //         }
-                                        //         //         //
-                                        //         //     ),
-                                        //         //     format!(
-                                        //         //         "jsonb_build_object({})",
-                                        //         //         {
-                                        //         //             let mut f = match <
-                                        //         //                 postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
-                                        //         //                 as
-                                        //         //                 postgresql_crud::PostgresqlJsonType
-                                        //         //             >::select_only_updated_ids_query_part(
-                                        //         //                     &<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Update as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                        //         //                     "field_1",
-                                        //         //                     "elem",
-                                        //         //                     increment
-                                        //         //                 )
-                                        //         //             {
-                                        //         //                 Ok(value) => value,
-                                        //         //                 Err(error) => {
-                                        //         //                     return Err(error);
-                                        //         //                 }
-                                        //         //             };
-                                        //         //             let _ = f.pop();
-                                        //         //             f
-                                        //         //         }
-                                        //         //     ),
-                                        //         // ))
-                                        //     }
-                                        // }
                                         match &value.0 {
                                             Some(value) => {
                                                 Ok(format!(
@@ -3449,8 +3284,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #(#query_part_variants_token_stream),*
                                             }
                                         }
-                                        //todo maybe bug here - maybe need additional parameter
-                                        // #jsonb_set_accumulator_snake_case.is_empty() &&
                                         if #jsonb_set_path_snake_case.is_empty() {
                                             Ok(#object_acc_snake_case)
                                         }
@@ -3460,9 +3293,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                                        "${{{increment_snake_case}}}" // "jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"
-                                    ));
+                                    let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                                     quote::quote! {
                                         match &value.0 {
                                             Some(#value_snake_case) => <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::update_query_part(
@@ -3677,12 +3508,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     },
                     &{
-                        // quote::quote! {
-                        //     match <#ident as postgresql_crud::PostgresqlJsonType>::#select_only_updated_ids_query_part_snake_case(&#value_snake_case, &#column_snake_case, &#column_snake_case, #increment_snake_case) {
-                        //         Ok(#value_snake_case) => Ok(format!("{} as {column},", #value_snake_case)),
-                        //         Err(error) => Err(error)
-                        //     }
-                        // }
                         //todo maybe reuse
                         let case_null_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("case when jsonb_typeof({{{column_snake_case}}})='null' then 'null'::jsonb else {{}} end"));
                         match &postgresql_json_object_type_pattern {
@@ -3725,68 +3550,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    // let none_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //     });
-                                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("'{field_ident}','null'::jsonb,"));
-                                    //     quote::quote! {acc.push_str(&format!(#format_handle_token_stream));}
-                                    // });
-                                    // quote::quote! {
-                                    //     match &value.0 {
-                                    //         Some(value) => match <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(
-                                    //             value,
-                                    //             column,
-                                    //             increment,
-                                    //             false
-                                    //         ) {
-                                    //             Ok(value) => Ok(value),
-                                    //             Err(error) => Err(error)
-                                    //         },
-                                    //         None => {
-                                    //             let mut acc = std::string::String::default();
-                                    //             #(#none_content_token_stream)*
-                                    //             let _ = acc.pop();
-                                    //             Ok(format!("jsonb_build_object({acc}) as {column},"))
-                                    //         }
-                                    //     }
-                                    // }
-                                    // let none_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //     });
-                                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("'{field_ident}','null'::jsonb,"));
-                                    //     quote::quote! {acc.push_str(&format!(#format_handle_token_stream));}
-                                    // });
-                                    // let acc_push_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //     });
-                                    //     let field_type = &element.ty;
-                                    //     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}->'{field_ident}'"));
-                                    //     quote::quote! {
-                                    //         acc.push_str(&match <#field_type as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
-                                    //             &<
-                                    //                 <
-                                    //                     #field_type
-                                    //                     as
-                                    //                     postgresql_crud::PostgresqlJsonType
-                                    //                 >::Update
-                                    //                 as
-                                    //                 postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                    //             >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    //             #field_ident_double_quotes_token_stream,
-                                    //             &format!(#format_handle_token_stream),
-                                    //             increment,
-                                    //         ) {
-                                    //             Ok(value) => value,
-                                    //             Err(error) => {
-                                    //                 return Err(error);
-                                    //             },
-                                    //         });
-                                    //     }
-                                    // });
                                     let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -3795,7 +3558,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
 
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                        // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}->'{field_ident}'"));
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}"));
                                         quote::quote! {
                                             #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => match <
@@ -3853,31 +3615,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    // let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                                    //     let mut acc = std::string::String::new();
-                                    //     for element in get_vec_syn_field(&is_standart_with_id_false) {
-                                    //         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    //             panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    //         });
-                                    //         acc.push_str(&format!("jsonb_build_object('{field_ident}', 'null'::jsonb)||"));
-                                    //     }
-                                    //     let _ = acc.pop();
-                                    //     let _ = acc.pop();
-                                    //     format!("jsonb_build_object('value',(select jsonb_agg(jsonb_build_object('id', elem -> 'id')||{acc}) from jsonb_array_elements({{{column_snake_case}}}) as elem)::jsonb) as {{{column_snake_case}}},")
-                                    // });
                                     quote::quote!{
-                                        // match &value.0 {
-                                        //     Some(value) => match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(value, column, increment, false) {
-                                        //         Ok(value) => Ok(value),
-                                        //         Err(error) => Err(error),
-                                        //     },
-                                        //     None => {
-                                        //         //todo reuse
-                                        //         // Ok(format!("'[]'::jsonb as {column},"))
-                                        //         Ok(format!(#format_handle_token_stream))
-                                        //     }
-                                        // }
-
                                         match &value.0 {
                                             Some(value) => Ok(format!("jsonb_build_object('value',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb)) as {column},", {
                                                 match <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.update, &"", &"elem", increment) {
@@ -3900,10 +3638,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     TraitGen::PostgresqlJsonType => (impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, proc_macro2::TokenStream::new()),
                 }
             };
-            // println!("{}", quote::quote!{
-            //     #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
-            //     #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
-            // });
             let maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream = if is_standart_not_null {
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
@@ -4004,30 +3738,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_read_inner_standart_not_null_upper_camel_case,
                     &value_into_inner_token_stream,
                     &ident_with_id_update_handle_standart_not_null_upper_camel_case,
-                    &{
-                        quote::quote! {
-                            todo!()
-                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_part(
-                            //     #value_snake_case,
-                            //     #jsonb_set_accumulator_snake_case,
-                            //     #jsonb_set_target_snake_case,
-                            //     #jsonb_set_path_snake_case,
-                            //     #increment_snake_case,
-                            // )
-                        }
-                    },
+                    &quote::quote! {todo!()},
                     &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                     &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                    &{
-                        quote::quote! {
-                            todo!()
-                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::update_query_bind(
-                            //     #value_snake_case,
-                            //     #query_snake_case
-                            // )
-                        }
-                    },
+                    &quote::quote! {todo!()},
                     &{
                         let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -4189,17 +3904,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
-                                // vec![
-                                //     {
-                                //         match &#read_only_ids_snake_case.0 {
-                                //             Some(#value_snake_case) => <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&#value_snake_case)
-                                //                 .into_iter()
-                                //                 .map(|#element_snake_case| Some(#element_snake_case))
-                                //                 .collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-                                //             None => vec![None],
-                                //         }
-                                //     }
-                                // ]
                                 let mut acc = vec![];
                                 if let Some(value) = &read_only_ids.0.value {
                                     for element in <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
@@ -4257,62 +3961,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             });
                             quote::quote! {
-                                // vec![
-                                //     {
-                                //         #read_only_ids_snake_case.0.iter().map(|#element_snake_case| {
-                                //             <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(element)
-                                //         })
-                                //         .collect()
-                                //     }
-                                // ]
-                                // let mut acc = vec![];
-                                // for element1 in &#read_only_ids_snake_case.0 {
-                                //     for element2 in <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&element1) {
-                                //         acc.push(element2);
-                                //     }
-                                // }
-                                // vec![acc]
                                 #read_only_ids_snake_case.0.value.iter().map(|element0|{
                                     let mut acc = vec![];
                                     #(#content_token_stream)*
-                                    // for current_element in <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
-                                    //     &element.field_0.clone()
-                                    // ) {
-                                    //     for inner_current_element in current_element {
-                                    //         acc.push(vec![
-                                    //             crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
-                                    //                 id: Some(postgresql_crud::Value {
-                                    //                     value: element0.id.clone()
-                                    //                 }),
-                                    //                 field_0: Some(postgresql_crud::Value {
-                                    //                     value: inner_current_element
-                                    //                 }),
-                                    //                 field_1: <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                    //                     element0.field_1.clone()
-                                    //                 ),
-                                    //             }
-                                    //         ]);
-                                    //     }
-                                    // }
-                                    // for current_element in <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(
-                                    //     &element0.field_1.clone()
-                                    // ) {
-                                    //     for inner_current_element in current_element {
-                                    //         acc.push(vec![
-                                    //             crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdReadInner {
-                                    //                 id: Some(postgresql_crud::Value {
-                                    //                     value: element0.id.clone()
-                                    //                 }),
-                                    //                 field_0: <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(
-                                    //                     element0.field_0.clone()
-                                    //                 ),
-                                    //                 field_1: Some(postgresql_crud::Value {
-                                    //                     value: inner_current_element
-                                    //                 }),
-                                    //             }
-                                    //         ]);
-                                    //     }
-                                    // }
                                     acc
                                 })
                                 .collect()
@@ -4320,21 +3971,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
-                                // vec![
-                                //     {
-                                //         match &#read_only_ids_snake_case.0 {
-                                //             Some(#value_snake_case) => <
-                                //                 #ident_array_not_null_upper_camel_case
-                                //                 as
-                                //                 postgresql_crud::tests::PostgresqlJsonTypeTestCases
-                                //             >::test_cases(&#value_snake_case)
-                                //             .into_iter()
-                                //             .map(|#element_snake_case| Some(#element_snake_case))
-                                //             .collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>(),
-                                //             None => vec![None],
-                                //         }
-                                //     }
-                                // ]
                                 let mut acc = vec![];
                                 if let Some(value) = &read_only_ids.0.value {
                                     for element in <#ident_array_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::test_cases(&value) {
@@ -4711,7 +4347,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ),
                 )
             };
-            //todo this is wrong
             let impl_postgresql_json_type_test_cases_for_ident_with_id_not_null_token_stream = if is_standart_not_null {
                 let uuid_path_type_token_stream = quote::quote! {postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString};
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
@@ -4761,46 +4396,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     },
-                    &{
-                        //no point to implement it
-                        // let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                        //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                        //     });
-                        //     let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                        //     let field_type = &element.ty;
-                        //     quote::quote! {
-                        //         if let Some(value) = value.#field_ident {
-                        //             acc.push(#ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case(postgresql_crud::Value {
-                        //                 value: <#field_type as postgresql_crud::tests::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(value.value),
-                        //             }));
-                        //         }
-                        //     }
-                        // });
-                        quote::quote!{
-                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Update::new(
-                            //     postgresql_crud::NotEmptyUniqueEnumVec::try_new({
-                            //         let mut acc = vec![];
-                            //         #(#content_token_stream)*
-                            //         acc
-                            //     })
-                            //     .unwrap(),
-                            // )
-                            todo!()
-                        }
-                    },
+                    &quote::quote!{todo!()},
                     &generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_true),
                     &quote::quote!{todo!()}
                 )
             } else {
                 proc_macro2::TokenStream::new()
             };
-            // let f = quote::quote! {
-            //     #impl_postgresql_type_test_cases_for_ident_token_stream
-            //     #impl_postgresql_json_type_test_cases_for_ident_token_stream
-            //     #impl_postgresql_json_type_test_cases_for_ident_with_id_not_null_token_stream
-            // };
-            // println!("{f}");
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_table_type_declaration_token_stream
