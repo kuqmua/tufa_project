@@ -1,6 +1,5 @@
 pub mod postgresql_json_type;
 pub mod postgresql_type;
-pub mod where_element_filters;
 
 pub use futures::TryStreamExt;
 pub use strum_macros::EnumIter;
@@ -34,6 +33,7 @@ pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
 pub use postgresql_json_types::generate_postgresql_json_types;
 pub use postgresql_types::generate_postgresql_types;
 
+pub use where_element_filters::*;
 pub use postgresql_crud_common::*;//todo
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]

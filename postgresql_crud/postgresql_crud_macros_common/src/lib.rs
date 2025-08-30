@@ -66,7 +66,7 @@ pub fn generate_postgresql_type_where_element_token_stream(
                 Some(value) => quote::quote! {<#value>},
                 None => proc_macro2::TokenStream::new(),
             };
-            quote::quote! {#element_upper_camel_case(crate::where_element_filters::#prefix_where_element_self_upper_camel_case #type_token_stream)}
+            quote::quote! {#element_upper_camel_case(where_element_filters::#prefix_where_element_self_upper_camel_case #type_token_stream)}
         });
         quote::quote! {
             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_implement_schemars_json_schema)]

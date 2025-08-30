@@ -1161,28 +1161,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&ident, &postgresql_json_type_subtype_table_type_declaration);
                                     let ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&ident_with_id_standart_not_null_upper_camel_case, &postgresql_json_type_subtype_table_type_declaration);
                                     let equal_token_stream = quote::quote! {
-                                        Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        Equal(#import_path::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let dimension_one_equal_token_stream = quote::quote! {
-                                        DimensionOneEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        DimensionOneEqual(#import_path::PostgresqlJsonTypeWhereElementDimensionOneEqual<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let length_equal_token_stream = quote::quote! {
-                                        LengthEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementLengthEqual),
+                                        LengthEqual(#import_path::PostgresqlJsonTypeWhereElementLengthEqual),
                                     };
                                     let length_more_than_token_stream = quote::quote! {
-                                        LengthMoreThan(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementLengthMoreThan),
+                                        LengthMoreThan(#import_path::PostgresqlJsonTypeWhereElementLengthMoreThan),
                                     };
                                     let in_token_stream = quote::quote! {
-                                        In(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementIn<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        In(#import_path::PostgresqlJsonTypeWhereElementIn<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let dimension_one_in_token_stream = quote::quote! {
-                                        DimensionOneIn(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneIn<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        DimensionOneIn(#import_path::PostgresqlJsonTypeWhereElementDimensionOneIn<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let contains_all_elements_of_array_token_stream = quote::quote! {
-                                        ContainsAllElementsOfArray(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementContainsAllElementsOfArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        ContainsAllElementsOfArray(#import_path::PostgresqlJsonTypeWhereElementContainsAllElementsOfArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let overlaps_with_array_token_stream = quote::quote! {
-                                        OverlapsWithArray(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementOverlapsWithArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                        OverlapsWithArray(#import_path::PostgresqlJsonTypeWhereElementOverlapsWithArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     };
                                     let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());

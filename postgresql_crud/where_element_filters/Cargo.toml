@@ -5,3 +5,8 @@ edition = "2024"
 
 [dependencies]
 generate_where_element_filters = {path = "./generate_where_element_filters"}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+serde = {version = "=1.0", features = ["derive"]}
+schemars = {version = "=0.8.22"}
+error_occurence_lib = {path = "../../error_occurence_lib"}
+postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
