@@ -316,6 +316,9 @@ fn crate_path_token_stream() -> proc_macro2::TokenStream {
 fn postgresql_crud() -> proc_macro2::TokenStream {
     quote::quote! {postgresql_crud::}
 }
+fn postgresql_crud_common() -> proc_macro2::TokenStream {
+    quote::quote! {postgresql_crud_common::}
+}
 fn default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case() -> proc_macro2::TokenStream {
     quote::quote! {DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement}
 }
@@ -421,6 +424,56 @@ impl quote::ToTokens for PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlw
         let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
         quote::quote! {
             #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
+            #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
+        }
+        .to_tokens(tokens);
+    }
+}
+
+pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let postgresql_crud_common = postgresql_crud_common();
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
+        quote::quote! {
+            #postgresql_crud_common
+            #default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+        }
+        .to_tokens(tokens);
+    }
+}
+pub struct PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+impl quote::ToTokens for PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element = PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_call = path_default_but_option_is_always_some_and_vec_always_contains_one_element_call();
+        quote::quote! {
+            #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element
+            #path_default_but_option_is_always_some_and_vec_always_contains_one_element_call
+        }
+        .to_tokens(tokens);
+    }
+}
+
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let postgresql_crud_common = postgresql_crud_common();
+        let all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case();
+        quote::quote! {
+            #postgresql_crud_common
+            #all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+        }
+        .to_tokens(tokens);
+    }
+}
+pub struct PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+impl quote::ToTokens for PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element = PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        let path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call = path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call();
+        quote::quote! {
+            #postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element
             #path_all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_call
         }
         .to_tokens(tokens);

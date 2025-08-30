@@ -2150,7 +2150,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let operation_http_method_snake_case_token_stream = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
-                    &#postgresql_crud_snake_case::CommitSnakeCase.to_string(),//todo remove it
+                    &"commit".to_string(),//todo remove it
                     git_info::PROJECT_GIT_INFO.commit,
                 )
             };
@@ -3620,7 +3620,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let current_field_type = &element.syn_field.ty;
                 if field_ident == current_field_ident {
                     quote::quote! {
-                        #current_field_ident: Some(<#current_field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_to_read_only_ids(
+                        #current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(
                             &update
                         ))
                     }
@@ -3646,7 +3646,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             quote::quote! {
                 if let Some(value) = &#common_read_only_ids_returned_from_create_one_snake_case.#field_ident {
-                    for element0 in <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::test_cases(&value) {
+                    for element0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
                         for element1 in element0 {
                             let url_cloned = url.clone();
                             let ident_create_default_cloned = ident_create_default.clone();
@@ -3658,7 +3658,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_create_one_parameters_upper_camel_case { payload: ident_create_default_cloned }
                                 ).await.expect(#try_create_one_error_message_double_quotes_token_stream);
                                 let middle = chrono::Local::now();
-                                let update = <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
+                                let update = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
                                 assert_eq!(
                                     super::#ident_read_only_ids_upper_camel_case {
                                         #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),

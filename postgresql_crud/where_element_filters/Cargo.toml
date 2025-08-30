@@ -4,3 +4,4 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+generate_where_element_filters = {path = "./generate_where_element_filters"}

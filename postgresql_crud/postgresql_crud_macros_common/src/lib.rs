@@ -45,7 +45,12 @@ impl std::default::Default for NotNullOrNullable {
     }
 }
 
-pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>, prefix: &dyn quote::ToTokens, should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema, is_query_bind_mutable: &IsQueryBindMutable) -> proc_macro2::TokenStream {
+pub fn generate_postgresql_type_where_element_token_stream(
+    variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
+    prefix: &dyn quote::ToTokens,
+    should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
+    is_query_bind_mutable: &IsQueryBindMutable,
+) -> proc_macro2::TokenStream {
     let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -70,7 +75,7 @@ pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::
             }
         }
     };
-    let impl_crate_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream = impl_postgresql_type_where_filter_for_ident_token_stream(
+    let impl_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream = impl_postgresql_type_where_filter_for_ident_token_stream(
         &quote::quote! {<'a>},
         &ident,
         &proc_macro2::TokenStream::new(),
@@ -81,7 +86,7 @@ pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::PostgresqlTypeWhereFilter::query_part(
+                    Self::#element_upper_camel_case(#value_snake_case) => postgresql_crud_common::PostgresqlTypeWhereFilter::query_part(
                         #value_snake_case,
                         #increment_snake_case,
                         #column_snake_case,
@@ -100,7 +105,7 @@ pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::PostgresqlTypeWhereFilter::query_bind(
+                    Self::#element_upper_camel_case(#value_snake_case) => postgresql_crud_common::PostgresqlTypeWhereFilter::query_bind(
                         #value_snake_case,
                         #query_snake_case
                     )
@@ -112,30 +117,30 @@ pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::
                 }
             }
         },
-        &crate::ImportPath::Crate,
+        &crate::ImportPath::PostgresqlCrudCommon,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:#?}")});
-    let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
+    let impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream = crate::generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
-            let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+            let default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             quote::quote! {
-                Self::#element_upper_camel_case(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                Self::#element_upper_camel_case(#default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
             }
         });
         quote::quote! {vec![#(#variants_token_stream),*]}
     });
     quote::quote! {
         #postgresql_type_tokens_where_element_token_stream
-        #impl_crate_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream
+        #impl_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
-        #impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+        #impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
     }
 }
 
-pub fn crate_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
+pub fn postgresql_crud_common_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    quote::quote! {crate::#query_part_error_named_upper_camel_case}
+    quote::quote! {postgresql_crud_common::#query_part_error_named_upper_camel_case}
 }
 
 pub fn generate_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
@@ -430,14 +435,20 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
     }
 }
 
-pub fn generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::Crate, ident, &proc_macro2::TokenStream::new(), content_token_stream)
+pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+        &proc_macro2::TokenStream::new(),
+        &ImportPath::PostgresqlCrudCommon,
+        ident,
+        &proc_macro2::TokenStream::new(),
+        content_token_stream
+    )
 }
 pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, lifetime_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_token_stream, content_token_stream)
 }
-pub fn generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::Crate, ident, content_token_stream)
+pub fn generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::PostgresqlCrudCommon, ident, content_token_stream)
 }
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
@@ -446,12 +457,14 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
 pub enum ImportPath {
     Crate,
     PostgresqlCrud,
+    PostgresqlCrudCommon,
 }
 impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::Crate => quote::quote! {crate},
             Self::PostgresqlCrud => quote::quote! {postgresql_crud},
+            Self::PostgresqlCrudCommon => quote::quote! {postgresql_crud_common},
         }
         .to_tokens(tokens)
     }
@@ -461,18 +474,21 @@ impl ImportPath {
         match &self {
             ImportPath::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
     fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
         match &self {
             ImportPath::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
     pub fn to_path(&self) -> &'static std::primitive::str {
         match &self {
             ImportPath::Crate => "crate",
             ImportPath::PostgresqlCrud => "postgresql_crud",
+            ImportPath::PostgresqlCrudCommon => "postgresql_crud_common",
         }
     }
 }
@@ -842,7 +858,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
-        impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case for #ident {
+        impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
                 #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_only_ids_upper_camel_case
@@ -887,7 +903,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     quote::quote! {
         #cfg_token_stream
-        impl #import_path::tests::#postgresql_json_type_test_cases_upper_camel_case for #ident {
+        impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
                 #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_only_ids_upper_camel_case
@@ -952,13 +968,13 @@ pub fn generate_create_table_column_query_part_token_stream(ident: &dyn quote::T
     }
 }
 
-pub fn crate_query_part_error_named_checked_add_initialization_token_stream() -> proc_macro2::TokenStream {
-    quote::quote! {crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
+pub fn postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream() -> proc_macro2::TokenStream {
+    quote::quote! {postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
 
 pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
-        impl crate::IsStringEmpty for #ident {
+        impl postgresql_crud_common::IsStringEmpty for #ident {
             fn is_string_empty(&self) -> std::primitive::bool {
                 self.0.to_string().is_empty()
             }
