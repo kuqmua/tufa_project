@@ -1,5 +1,7 @@
 pub use generate_postgresql_table::*;
 
+pub trait CombinationOfAppStateLogicTraits: app_state::GetEnableApiGitCommitCheck + app_state::GetMaximumSizeOfHttpBodyInBytes + app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}
+
 pub fn generate_create_many_query_string(table: &std::primitive::str, columns: &std::primitive::str, values: std::string::String, columns_to_return: &std::primitive::str) -> std::string::String {
     format!("insert into {table} ({columns}) values {values} returning {columns_to_return}")
 }

@@ -105,8 +105,6 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
     format!("jsonb_build_object('{field}',{value})||")
 }
 
-pub trait CombinationOfAppStateLogicTraits: app_state::GetEnableApiGitCommitCheck + app_state::GetMaximumSizeOfHttpBodyInBytes + app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}
-
 pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self;
 }

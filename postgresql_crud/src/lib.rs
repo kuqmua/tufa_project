@@ -34,6 +34,7 @@ pub use postgresql_table::generate_update_many_query_string;
 pub use postgresql_table::generate_update_one_query_string;
 pub use postgresql_table::generate_delete_many_query_string;
 pub use postgresql_table::generate_delete_one_query_string;
+pub use postgresql_table::CombinationOfAppStateLogicTraits;
 pub use postgresql_table::GeneratePostgresqlTable;
 
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
