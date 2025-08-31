@@ -190,7 +190,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         }),
     };
-    let value_between_t_token_stream = quote::quote! {value: postgresql_crud_common::Between<T>};
+    let value_between_t_token_stream = quote::quote! {value: crate::Between<T>};
     let pub_value_between_t_token_stream = quote::quote! {pub #value_between_t_token_stream};
     fn generate_query_self_value_query_bind_token_stream() -> proc_macro2::TokenStream {
         quote::quote! {
