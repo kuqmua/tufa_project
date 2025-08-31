@@ -11,11 +11,7 @@ schemars = {version = "=0.8.22"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
-# thiserror = {version = "=1.0.48"}
-# regex = {version = "=1.9.3"}
-# from_str = {path = "../../from_str"}
-# app_state = {path = "../../app_state"}
-# naming = {path = "../../naming"}
+regex = {version = "=1.9.3"}
 
 
 [features]
