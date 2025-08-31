@@ -1041,7 +1041,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                    not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
+                    )
                 },
             };
             enum CanBePrimaryKey {
