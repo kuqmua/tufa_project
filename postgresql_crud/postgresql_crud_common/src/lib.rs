@@ -930,25 +930,6 @@ impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-pub enum RegularExpressionCase {
-    Sensitive,
-    Insensitive,
-}
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegularExpressionCase {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self::Sensitive
-    }
-}
-impl RegularExpressionCase {
-    pub const fn postgreql_syntax(&self) -> &'static std::primitive::str {
-        match &self {
-            Self::Sensitive => "~",
-            Self::Insensitive => "~*",
-        }
-    }
-}
-
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
 pub struct UnsignedPartOfStdPrimitiveI32(std::primitive::i32); //todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]

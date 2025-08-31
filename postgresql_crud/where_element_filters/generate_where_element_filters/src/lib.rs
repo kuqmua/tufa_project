@@ -146,7 +146,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         )
     };
     let regular_expression_case_and_value_declaration_token_stream = quote::quote! {
-        pub regular_expression_case: postgresql_crud_common::RegularExpressionCase,
+        pub regular_expression_case: crate::RegularExpressionCase,
         pub value: crate::RegexRegex
     };
     let regular_expression_case_and_value_default_initialization_token_stream = quote::quote! {
