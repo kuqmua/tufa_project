@@ -23,6 +23,17 @@ pub use postgresql_table::read_many_additional_logic;
 pub use postgresql_table::read_one_additional_logic;
 pub use postgresql_table::update_many_additional_logic;
 pub use postgresql_table::update_one_additional_logic;
+pub use postgresql_table::generate_create_many_query_string;
+pub use postgresql_table::generate_create_one_query_string;
+pub use postgresql_table::generate_read_many_query_string;
+pub use postgresql_table::generate_read_one_query_string;
+pub use postgresql_table::generate_column_queals_value_comma_update_one_query_part;
+pub use postgresql_table::generate_when_column_id_then_value_update_many_query_part;
+pub use postgresql_table::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part;
+pub use postgresql_table::generate_update_many_query_string;
+pub use postgresql_table::generate_update_one_query_string;
+pub use postgresql_table::generate_delete_many_query_string;
+pub use postgresql_table::generate_delete_one_query_string;
 pub use postgresql_table::GeneratePostgresqlTable;
 
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
