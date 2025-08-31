@@ -12,6 +12,7 @@ error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 regex = {version = "=1.9.3"}
+thiserror = {version = "=1.0.48"}
 
 
 [features]
