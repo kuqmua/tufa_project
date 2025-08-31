@@ -2170,32 +2170,6 @@ pub fn generate_delete_one_query_string(table: &std::primitive::str, primary_key
     format!("delete from {table} where {primary_key_field_name} = $1 returning {primary_key_field_name}")
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
-pub enum EncodeFormat {
-    Base64,
-    Hex,
-    Escape,
-}
-impl std::fmt::Display for EncodeFormat {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &self {
-            Self::Base64 => write!(formatter, "base64"),
-            Self::Hex => write!(formatter, "hex"),
-            Self::Escape => write!(formatter, "escape"),
-        }
-    }
-}
-impl std::default::Default for EncodeFormat {
-    fn default() -> Self {
-        Self::Base64
-    }
-}
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self::default()
-    }
-}
-
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
     type Element: crate::PostgresqlType;
