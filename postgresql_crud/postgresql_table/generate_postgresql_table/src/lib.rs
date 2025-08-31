@@ -271,8 +271,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
     let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
-    let std_vec_vec_primary_key_field_type_read_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_as_primary_key_upper_camel_case>};
-    let std_vec_vec_ident_read_only_ids_token_stream = quote::quote! {std::vec::Vec::<#ident_read_only_ids_upper_camel_case>};
+    let std_vec_vec_primary_key_field_type_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+        &primary_key_field_type_as_primary_key_upper_camel_case
+    );
+    let std_vec_vec_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+        &ident_read_only_ids_upper_camel_case
+    );
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(primary_key_field_type);
@@ -1585,7 +1589,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         (quote::quote! {#postgresql_crud_postgresql_type_where_filter_token_stream #query_part_snake_case}, quote::quote! {#postgresql_crud_postgresql_type_where_filter_token_stream #query_bind_snake_case})
     };
 
-    let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_read_upper_camel_case>};
+    let std_vec_vec_struct_options_ident_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+        &ident_read_upper_camel_case
+    );
     let not_unique_field_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniqueFieldUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
@@ -2361,7 +2367,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            generate_parameters_payload_and_default_token_stream(&operation, &quote::quote! {(pub std::vec::Vec<#ident_create_upper_camel_case>);}, &quote::quote! {(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}),
+            generate_parameters_payload_and_default_token_stream(
+                &operation,
+                &{
+                    let std_vec_vec_ident_create_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                        &ident_create_upper_camel_case
+                    );
+                    quote::quote! {(pub #std_vec_vec_ident_create_token_stream);}
+                },
+                &quote::quote! {(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}),
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
@@ -2888,7 +2902,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         );
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, {
             let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
-            let std_vec_vec_ident_update_token_stream = quote::quote! {std::vec::Vec<#ident_update_upper_camel_case>};
+            let std_vec_vec_ident_update_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                &ident_update_upper_camel_case
+            );
             let ident_operation_payload_vec_token_stream = quote::quote! {
                 #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
                 pub struct #ident_operation_payload_upper_camel_case(#std_vec_vec_ident_update_token_stream);
@@ -3548,6 +3564,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let field_ident = &element.field_ident;
             quote::quote! {#field_ident: None}
         });
+        let std_vec_vec_ident_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+            &quote::quote!{super::#ident_read_upper_camel_case}
+        );
+        let std_vec_vec_futures_future_box_future_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+            &quote::quote!{futures::future::BoxFuture<'static, ()>}
+        );
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let column_update_futures_add_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
@@ -3676,7 +3698,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 ])
                                 .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                                let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |mut #value_snake_case: std::vec::Vec<super::#ident_read_upper_camel_case>| -> std::vec::Vec<super::#ident_read_upper_camel_case> {
+                                let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |
+                                    mut #value_snake_case: #std_vec_vec_ident_read_token_stream
+                                | -> #std_vec_vec_ident_read_token_stream {
                                     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
                                     #value_snake_case
                                 };
@@ -3781,7 +3805,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 // #columns_test_cases_declaration_token_stream
                                 // #columns_test_cases_updates_token_stream
 
-                                let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                                let mut acc: #std_vec_vec_futures_future_box_future_token_stream = vec![];
                                 #column_update_futures_add_token_stream
                                 println!("UPDATES LEN {}", acc.len());
                                 let _unused = futures::future::join_all(acc).await;
@@ -3946,7 +3970,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     "try_delete_many result different"
                                 // );
                                 // assert_eq!(
-                                //     std::vec::Vec::<super::#ident_read_upper_camel_case>::default(),
+                                //     #std_vec_vec_ident_read_token_stream::default(),
                                 //     super::#ident::try_read_many(
                                 //         &#url_snake_case,
                                 //         super::#ident_read_many_parameters_upper_camel_case {
