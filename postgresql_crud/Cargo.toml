@@ -10,7 +10,7 @@ strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 postgresql_crud_common = {path = "./postgresql_crud_common", features = ["test-utils"]}
-generate_postgresql_crud = {path = "./generate_postgresql_crud"}
+generate_postgresql_table = {path = "./generate_postgresql_table"}
 postgresql_json_object_type = {path = "./postgresql_json_object_type"}
 postgresql_json_types = {path = "./postgresql_json_types"}
 postgresql_types = {path = "./postgresql_types"}

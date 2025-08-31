@@ -1,6 +1,6 @@
 [package]
 edition = "2024"
-name = "generate_postgresql_crud"
+name = "generate_postgresql_table"
 version = "0.1.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -13,7 +13,6 @@ quote = {version = "=1.0.36"}
 syn = {version = "=2.0.100"}
 # convert_case = {version = "=0.6.0"}
 strum_macros = {version = "=0.24.3"}
-# postgresql_crud_common = {path = "./../postgresql_crud_common"}
 constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}

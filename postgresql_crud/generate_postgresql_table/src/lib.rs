@@ -100,8 +100,8 @@ pub fn common_additional_logic(_attr: proc_macro::TokenStream, item: proc_macro:
     item
 }
 
-#[proc_macro_derive(GeneratePostgresqlCrud, attributes(generate_postgresql_crud_primary_key))]
-pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlTable, attributes(generate_postgresql_table_primary_key))]
+pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
     let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
@@ -220,10 +220,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     for attr in &element.attrs {
                         if attr.path().segments.len() == 1 {
                             let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
-                            let generate_postgresql_crud_primary_key_snake_case_stringified = naming::GeneratePostgresqlCrudPrimaryKeySnakeCase.to_string();
-                            if first_segment_ident == &generate_postgresql_crud_primary_key_snake_case_stringified {
+                            let generate_postgresql_table_primary_key_snake_case_stringified = naming::GeneratePostgresqlTablePrimaryKeySnakeCase.to_string();
+                            if first_segment_ident == &generate_postgresql_table_primary_key_snake_case_stringified {
                                 if option_primary_key_field.is_some() {
-                                    panic!("two or more supported {generate_postgresql_crud_primary_key_snake_case_stringified} attributes!");
+                                    panic!("two or more supported {generate_postgresql_table_primary_key_snake_case_stringified} attributes!");
                                 } else {
                                     option_primary_key_field = Some(SynFieldWrapper { syn_field: element.clone(), field_ident: field_ident.clone() });
                                     is_primary_key = true;
@@ -468,10 +468,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
     let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-    let generate_postgresql_crud_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+    let generate_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case<#content_token_stream>}
     };
-    let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+    let generate_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     };
     let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream =
@@ -590,28 +590,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
             }
         }
-        const fn generate_postgresql_crud_attribute_additional_error_variants(self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_table_attribute_additional_error_variants(self) -> GeneratePostgresqlTableAttribute {
             match self {
-                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
-                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
-                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
-                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
-                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
-                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
-                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
-                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
+                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalErrorVariants,
             }
         }
-        const fn generate_postgresql_crud_attribute_additional_logic(self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_table_attribute_additional_logic(self) -> GeneratePostgresqlTableAttribute {
             match self {
-                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalLogic,
-                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalLogic,
-                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalLogic,
-                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalLogic,
-                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalLogic,
-                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalLogic,
-                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalLogic,
-                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalLogic,
+                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalLogic,
+                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalLogic,
+                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalLogic,
+                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalLogic,
+                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalLogic,
+                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalLogic,
+                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalLogic,
+                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalLogic,
             }
         }
         fn operation_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
@@ -1080,19 +1080,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_read_token_stream = {
         let ident_read_token_stream = {
             let field_option_primary_key_token_stream = {
-                let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&primary_key_field_type));
+                let value_declaration_token_stream = generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&primary_key_field_type));
                 quote::quote! {
                     #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
-                    pub #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+                    pub #primary_key_field_ident: std::option::Option<#value_declaration_token_stream>
                 }
             };
             let fields_options_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
                 let field_vis = &element.syn_field.vis;
                 let field_ident = &element.field_ident;
-                let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty));
+                let value_declaration_token_stream = generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty));
                 quote::quote! {
                     #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
-                    #field_vis #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream>
+                    #field_vis #field_ident: std::option::Option<#value_declaration_token_stream>
                 }
             });
             quote::quote! {
@@ -1106,21 +1106,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let impl_ident_read_token_stream = {
             let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = {
                 let declaration_primary_key_token_stream = {
-                    let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_field_type_as_primary_key_upper_camel_case);
+                    let value_declaration_token_stream = generate_value_declaration_token_stream(&primary_key_field_type_as_primary_key_upper_camel_case);
                     quote::quote! {
-                        let mut #primary_key_field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
+                        let mut #primary_key_field_ident: std::option::Option<#value_declaration_token_stream> = None;
                     }
                 };
                 let declaration_without_primary_key_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty));
+                    let value_declaration_token_stream = generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty));
                     quote::quote! {
-                        let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
+                        let mut #field_ident: std::option::Option<#value_declaration_token_stream> = None;
                     }
                 });
                 let assignment_variant_primary_key_token_stream = {
                     let primary_key_field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
-                    let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&value_snake_case);
+                    let value_initialization_token_stream = generate_value_initialization_token_stream(&value_snake_case);
                     quote::quote! {
                         #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
                             #primary_key_field_type_as_primary_key_upper_camel_case,
@@ -1130,7 +1130,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #primary_key_field_ident_string_double_quotes_token_stream
                         ) {
                             Ok(#value_snake_case) => {
-                                #primary_key_field_ident = Some(#postgresql_crud_value_initialization_token_stream);
+                                #primary_key_field_ident = Some(#value_initialization_token_stream);
                             },
                             Err(#error_0_token_stream) => {
                                 return Err(#error_0_token_stream);
@@ -1144,7 +1144,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident = &element.field_ident;
                         let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                        let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&value_snake_case);
+                        let value_initialization_token_stream = generate_value_initialization_token_stream(&value_snake_case);
                         let element_syn_field_ty_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&element.syn_field.ty);
                         quote::quote! {
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
@@ -1155,7 +1155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #field_ident_string_double_quotes_token_stream
                             ) {
                                 Ok(#value_snake_case) => {
-                                    #field_ident = Some(#postgresql_crud_value_initialization_token_stream);
+                                    #field_ident = Some(#value_initialization_token_stream);
                                 },
                                 Err(#error_0_token_stream) => {
                                     return Err(#error_0_token_stream);
@@ -1292,7 +1292,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
     let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().unwrap();
     #[derive(Debug, strum_macros::Display)]
-    enum GeneratePostgresqlCrudAttribute {
+    enum GeneratePostgresqlTableAttribute {
         CreateManyAdditionalErrorVariants,
         CreateOneAdditionalErrorVariants,
         ReadManyAdditionalErrorVariants,
@@ -1312,7 +1312,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         DeleteOneAdditionalLogic,
         CommonAdditionalLogic,
     }
-    impl GeneratePostgresqlCrudAttribute {
+    impl GeneratePostgresqlTableAttribute {
         fn generate_path_to_attribute(self) -> std::string::String {
             let value = match self {
                 Self::CreateManyAdditionalErrorVariants => naming::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
@@ -1687,12 +1687,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_crud_attribute: GeneratePostgresqlCrudAttribute| -> std::vec::Vec<syn::Variant> {
-        let generate_postgresql_crud_attribute_stringified = generate_postgresql_crud_attribute.to_string();
-        let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_crud_attribute.generate_path_to_attribute());
+    let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute| -> std::vec::Vec<syn::Variant> {
+        let generate_postgresql_table_attribute_stringified = generate_postgresql_table_attribute.to_string();
+        let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_table_attribute.generate_path_to_attribute());
         let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
         let value_ident_stringified = value.ident.to_string();
-        assert!(value_ident_stringified == generate_postgresql_crud_attribute_stringified, "{value_ident_stringified} is not equal to {generate_postgresql_crud_attribute_stringified}");
+        assert!(value_ident_stringified == generate_postgresql_table_attribute_stringified, "{value_ident_stringified} is not equal to {generate_postgresql_table_attribute_stringified}");
         let variants = if let syn::Data::Enum(data_enum) = value.data {
             data_enum.variants
         } else {
@@ -1700,7 +1700,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         variants.into_iter().collect()
     };
-    let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants);
+    let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlTableAttribute::CommonAdditionalErrorVariants);
     let common_route_syn_variants = {
         let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
         let mut value = vec![];
@@ -1721,7 +1721,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
         value
     };
-    let common_additional_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &GeneratePostgresqlCrudAttribute::CommonAdditionalLogic.generate_path_to_attribute());
+    let common_additional_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &GeneratePostgresqlTableAttribute::CommonAdditionalLogic.generate_path_to_attribute());
     let generate_pub_handle_token_stream = |is_pub: bool| {
         if is_pub {
             quote::quote! {pub}
@@ -1976,7 +1976,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         for element in syn_variants {
             type_variants_from_request_response_syn_variants.push((*element).clone());
         }
-        let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.generate_postgresql_crud_attribute_additional_error_variants());
+        let operation_additional_error_variants = generate_additional_error_variants(&syn_derive_input, operation.generate_postgresql_table_attribute_additional_error_variants());
         for element in operation_additional_error_variants {
             type_variants_from_request_response_syn_variants.push(element.clone());
         }
@@ -2038,7 +2038,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let additional_validators_token_stream = {
-                let operation_additional_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &operation.generate_postgresql_crud_attribute_additional_logic().generate_path_to_attribute());
+                let operation_additional_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &operation.generate_postgresql_table_attribute_additional_logic().generate_path_to_attribute());
                 quote::quote! {
                     #common_additional_logic_token_stream
                     #operation_additional_logic_token_stream
@@ -2417,8 +2417,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                         generate_fetch_token_stream(
                             &{
-                                /////
-                                // let generate_sqlx_row_try_get_primary_key_token_stream = |sqlx_row_try_get_type_token_stream: &dyn quote::ToTokens, ok_token_stream: &dyn quote::ToTokens, err_token_stream: &dyn quote::ToTokens|
                                 let drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(
                                     &current_operation,
                                     file!(),
@@ -2429,70 +2427,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     column!()
                                 );
                                 quote::quote! {
-                                    // match #sqlx_row::try_get::<
-                                    //     #sqlx_row_try_get_type_token_stream,
-                                    //     #ref_std_primitive_str
-                                    // >(&#value_snake_case, &#ident::#primary_key_snake_case()) {
-                                    //     Ok(#value_snake_case) => #ok_token_stream,
-                                    //     Err(#error_0_token_stream) => {
-                                    //         #err_token_stream
-                                    //     }
-                                    // }
                                     match #ident_read_only_ids_upper_camel_case::try_from(value) {
                                         Ok(value) => Some(value),
                                         Err(error_0) => {
                                             #drop_rows_match_postgres_transaction_rollback_await_handle_token_stream
-                                            // drop(rows);
-                                            // match executor.rollback().await {
-                                            //     Ok(_) => {
-                                            //         let error = ExampleCreateManyErrorNamed::Postgresql {
-                                            //             postgresql: error_0,
-                                            //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                            //                 file!().to_owned(),
-                                            //                 line!(),
-                                            //                 column!(),
-                                            //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            //                     line: 2519,
-                                            //                     column: 196,
-                                            //                 }),
-                                            //             ),
-                                            //         };
-                                            //         eprintln!("{error}");
-                                            //         let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
-                                            //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                            //         return response;
-                                            //     }
-                                            //     Err(error_1) => {
-                                            //         let error = ExampleCreateManyErrorNamed::RowAndRollback {
-                                            //             row: error_0,
-                                            //             rollback: error_1,
-                                            //             code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                            //                 file!().to_owned(),
-                                            //                 line!(),
-                                            //                 column!(),
-                                            //                 Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            //                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            //                     line: 2519,
-                                            //                     column: 225,
-                                            //                 }),
-                                            //             ),
-                                            //         };
-                                            //         eprintln!("{error}");
-                                            //         let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
-                                            //         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                            //         return response;
-                                            //     }
-                                            // }
                                         },
                                     }
                                 }
-                                /////
-                                // generate_sqlx_row_try_get_primary_key_token_stream(
-                                //     &primary_key_field_type_as_primary_key_upper_camel_case,
-                                //     &quote::quote! {Some(#value_snake_case)},
-                                //     &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                                // )
                             },
                             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                         )
@@ -4064,7 +4005,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlCrud",
+    //     "GeneratePostgresqlTable",
     //     &ident_tests_token_stream,
     // );
     // }
@@ -4081,7 +4022,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlCrud",
+    //     "GeneratePostgresqlTable",
     //     &common_token_stream,
     // );
     // }
@@ -4100,7 +4041,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlCrud",
+    //     "GeneratePostgresqlTable",
     //     &generated,
     // );
     // }
