@@ -624,12 +624,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 },
                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                    not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
+                    )
                 },
                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => &{
                     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type)
+                    );
+                    not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
+                    )
                 },
                 PostgresqlJsonTypePattern::ArrayDimension3 {
                     dimension1_not_null_or_nullable,
@@ -637,9 +643,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     dimension3_not_null_or_nullable,
                 } => &{
                     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type)
+                    );
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type)
+                    );
+                    not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
+                    )
                 },
                 PostgresqlJsonTypePattern::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
@@ -648,10 +660,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     dimension4_not_null_or_nullable,
                 } => &{
                     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension4_type>});
-                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension4_type)
+                    );
+                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type)
+                    );
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type)
+                    );
+                    not_null_or_nullable.maybe_option_wrap(
+                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
+                    )
                 },
             };
             let ident_origin_token_stream = {
