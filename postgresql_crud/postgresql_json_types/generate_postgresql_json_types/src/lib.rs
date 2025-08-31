@@ -467,14 +467,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-            //todo token_patterns add new
-            let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
-                postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-            };
-            //todo token_patterns add new
-            let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
-                postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-            };
+            let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+            let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
             let generate_ident_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
