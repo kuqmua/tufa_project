@@ -6,6 +6,11 @@ edition = "2024"
 [dependencies]
 generate_postgresql_json_object_type = {path = "./generate_postgresql_json_object_type"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
+utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+serde = {version = "=1.0", features = ["derive"]}
+thiserror = {version = "=1.0.48"}
+schemars = {version = "=0.8.22"}
+error_occurence_lib = {path = "../../error_occurence_lib"}
 
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]

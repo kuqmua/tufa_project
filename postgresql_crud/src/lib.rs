@@ -38,6 +38,8 @@ pub use postgresql_table::CombinationOfAppStateLogicTraits;
 pub use postgresql_table::GeneratePostgresqlTable;
 
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
+pub use postgresql_json_object_type::UniqueVecTryNewErrorNamed;
+pub use postgresql_json_object_type::UniqueVec;
 pub use postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
 
 pub use postgresql_types::PostgresqlTypePrimaryKey;
