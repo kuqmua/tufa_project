@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+generate_postgresql_table = {path = "./generate_postgresql_table"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 
 [features]

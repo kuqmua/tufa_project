@@ -13,13 +13,13 @@ quote = {version = "=1.0.36"}
 syn = {version = "=2.0.100"}
 # convert_case = {version = "=0.6.0"}
 strum_macros = {version = "=0.24.3"}
-constants = {path = "../../constants"}
-generate_quotes = {path = "../../generate_quotes"}
-panic_location = {path = "../../panic_location"}
-macros_helpers = {path = "../../macros_helpers"}
-naming = {path = "../../naming"}
-token_patterns = {path = "../../token_patterns"}
-postgresql_crud_macros_common = {path = "../postgresql_crud_macros_common"}
+constants = {path = "../../../constants"}
+generate_quotes = {path = "../../../generate_quotes"}
+panic_location = {path = "../../../panic_location"}
+macros_helpers = {path = "../../../macros_helpers"}
+naming = {path = "../../../naming"}
+token_patterns = {path = "../../../token_patterns"}
+postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
 
 [lints]
 workspace = true
