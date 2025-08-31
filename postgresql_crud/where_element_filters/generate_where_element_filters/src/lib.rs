@@ -767,7 +767,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream = quote::quote! {
-                pub value: postgresql_crud_common::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
             };
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
                 query = query.bind(sqlx::types::Json(self.value));

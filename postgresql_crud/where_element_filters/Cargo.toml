@@ -10,6 +10,13 @@ serde = {version = "=1.0", features = ["derive"]}
 schemars = {version = "=0.8.22"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
+utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+# thiserror = {version = "=1.0.48"}
+# regex = {version = "=1.9.3"}
+# from_str = {path = "../../from_str"}
+# app_state = {path = "../../app_state"}
+# naming = {path = "../../naming"}
+
 
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]
