@@ -1,4 +1,3 @@
-pub mod postgresql_json_type;
 pub mod postgresql_type;
 
 pub use futures::TryStreamExt;
@@ -30,15 +29,16 @@ pub use generate_postgresql_crud::update_one_additional_logic;
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub use postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
-pub use postgresql_json_types::generate_postgresql_json_types;
+
 pub use postgresql_types::generate_postgresql_types;
 
+pub use postgresql_json_types::*;
 pub use where_element_filters::*;
 pub use postgresql_crud_common::*;//todo
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct ObjectWithIdAsNotNullJsonbObjectWithIdUpdateElement<T: postgresql_crud_common::PostgresqlJsonType> {
-    pub id: <crate::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud_common::PostgresqlJsonType>::Update,
+    pub id: <postgresql_json_types::UuidUuidAsNotNullJsonbString as postgresql_crud_common::PostgresqlJsonType>::Update,
     pub fields: <T as postgresql_crud_common::PostgresqlJsonType>::Update,
 }
 impl<T: postgresql_crud_common::PostgresqlJsonType> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectWithIdAsNotNullJsonbObjectWithIdUpdateElement<T> {

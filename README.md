@@ -1,3 +1,7 @@
+### test common
+
+* cargo test --features test-utils  -- --nocapture
+
 ### MOVE IT todo tomorrow and merge with notes
 * fix proc macro submodules, rename them
 * make refactoring for module-like implementation (no external dependencies from different modules)

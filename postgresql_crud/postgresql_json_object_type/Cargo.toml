@@ -5,3 +5,7 @@ edition = "2024"
 
 [dependencies]
 generate_postgresql_json_object_type = {path = "./generate_postgresql_json_object_type"}
+postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
+
+[features]
+test-utils = ["postgresql_crud_common/test-utils"]

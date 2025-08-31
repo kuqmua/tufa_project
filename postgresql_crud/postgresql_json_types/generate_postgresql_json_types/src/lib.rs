@@ -1681,7 +1681,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 pub type #ident_read_inner_upper_camel_case = #ident_origin_impl_new_value_type_token_stream;
             };
             let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
-            let impl_crate_postgresql_json_type_for_ident_token_stream = {
+            let impl_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
@@ -2195,7 +2195,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_read_token_stream
                 #ident_read_only_ids_token_stream
                 #ident_read_inner_token_stream
-                #impl_crate_postgresql_json_type_for_ident_token_stream
+                #impl_postgresql_json_type_for_ident_token_stream
                 #impl_postgresql_json_type_test_cases_for_ident_token_stream
             };
             (

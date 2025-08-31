@@ -211,9 +211,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             } else {
                 panic!("does work only on structs!");
             };
-            let postgresql_json_type_snake_case = naming::PostgresqlJsonTypeSnakeCase;
             let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
-            let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote! {#import_path::#postgresql_json_type_snake_case::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
+            let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote! {#import_path::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
             let id_syn_field = syn::Field {
                 attrs: vec![],
                 vis: syn::Visibility::Public(syn::token::Pub { span: proc_macro2::Span::call_site() }),
@@ -224,7 +223,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     qself: None,
                     path: syn::Path {
                         leading_colon: None,
-                        segments: macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[import_path.to_path(), &postgresql_json_type_snake_case.to_string(), &uuid_uuid_as_not_null_jsonb_string_upper_camel_case.to_string()]),
+                        segments: macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                            &[import_path.to_path(), &uuid_uuid_as_not_null_jsonb_string_upper_camel_case.to_string()]
+                        ),
                     },
                 }),
             };
@@ -3686,7 +3687,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             } else {
                 proc_macro2::TokenStream::new()
             };
-            let cfg_test_token_stream = quote::quote! {#[cfg(test)]};
+            let cfg_feature_test_utils = quote::quote! {#[cfg(feature = "test-utils")]};
             let generate_fields_read_only_ids_to_option_value_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                     IsStandartWithId::True => &ident_with_id_read_inner_standart_not_null_upper_camel_case,
@@ -4005,7 +4006,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             value
                                                 .into_iter()
                                                 .map(|element| #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                                                    id: postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
+                                                    id: postgresql_crud::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
                                                     fields: <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(
                                                         #ident_read_inner_standart_not_null_upper_camel_case {
                                                             #(#fields_token_stream),*
@@ -4142,7 +4143,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #(#for_loop_token_stream)*
                                             #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(postgresql_crud::Value{
                                                 value: #ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case {
-                                                    id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonTypeTestCases>::update_to_read_only_ids(&element.id),
+                                                    id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonTypeTestCases>::update_to_read_only_ids(&element.id),
                                                     #(#fields_token_stream),*
                                                 }
                                             })
@@ -4165,7 +4166,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 (
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
-                        &cfg_test_token_stream,
+                        &cfg_feature_test_utils,
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
@@ -4176,7 +4177,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &update_to_read_only_ids_token_stream
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
-                        &cfg_test_token_stream,
+                        &cfg_feature_test_utils,
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
@@ -4235,7 +4236,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let impl_postgresql_json_type_test_cases_for_ident_with_id_not_null_token_stream = if is_standart_not_null {
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
-                    &cfg_test_token_stream,
+                    &cfg_feature_test_utils,
                     &import_path,
                     &ident_with_id_read_inner_standart_not_null_upper_camel_case,
                     &ident_with_id_standart_not_null_upper_camel_case,
