@@ -1037,7 +1037,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_inner_type_token_stream = match &element.postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => &inner_type_standart_not_null_token_stream,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#inner_type_standart_not_null_token_stream>},
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                        &inner_type_standart_not_null_token_stream
+                    )
                 },
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
@@ -4140,7 +4142,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 {
                     quote::quote! {#ident_read_upper_camel_case}
                 } else {
-                    quote::quote! {std::option::Option<()>}
+                    postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                        &quote::quote!{()}
+                    )
                 },
             );
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
