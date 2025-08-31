@@ -4106,4 +4106,3 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // }
     generated.into()
 }
-///////////
