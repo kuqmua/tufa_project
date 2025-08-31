@@ -257,7 +257,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let generate_pub_dimensions_bounded_vec_token_stream = |vec_length_token_stream: &dyn quote::ToTokens, kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
-        quote::quote! {pub #dimensions_snake_case: postgresql_crud_common::BoundedStdVecVec<crate::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_token_stream>}
+        quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_token_stream>}
     };
     let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote! {value});
     let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream = |ident_token_stream: &dyn quote::ToTokens, field_token_stream: &dyn quote::ToTokens, function_token_stream: &dyn quote::ToTokens| {
