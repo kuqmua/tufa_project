@@ -348,12 +348,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
             fn generate_postgresql_json_type_record_handle_vec(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
                 let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle| {
-                    let mut acc = vec![];
-                    for element in generate_postgresql_json_type_record_handle_vec(current_postgresql_json_type_record_handle) {
-                        acc.push(element);
-                    }
-                    acc.push(postgresql_json_type_record_handle.clone());
-                    acc
+                    generate_postgresql_json_type_record_handle_vec(current_postgresql_json_type_record_handle)
+                    .into_iter()
+                    .chain(std::iter::once(postgresql_json_type_record_handle.clone()))
+                    .collect()
                 };
                 match (&postgresql_json_type_record_handle.not_null_or_nullable, &postgresql_json_type_record_handle.postgresql_json_type_pattern) {
                     (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => vec![postgresql_json_type_record_handle],
