@@ -1077,7 +1077,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             for element in 1..=array_dimension.to_usize() {
                                 let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
                                 arguments_token_stream.push(quote::quote! {
-                                    #dimension_number_pagination_token_stream: crate::PaginationStartsWithZero
+                                    #dimension_number_pagination_token_stream: postgresql_crud_common::PaginationStartsWithZero
                                 });
                             }
                             quote::quote! {{
@@ -1518,7 +1518,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
                     let ident_as_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &element.postgresql_json_type_pattern);
                     quote::quote! {
-                        pub type #ident_where_element_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
+                        pub type #ident_where_element_upper_camel_case = postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter<
                             <#ident_as_token_stream as postgresql_crud_common::PostgresqlJsonType>::WhereElement
                         >;
                     }
