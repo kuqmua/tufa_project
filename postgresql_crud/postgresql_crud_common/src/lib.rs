@@ -22,6 +22,42 @@ pub trait PostgresqlType {
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, is_primary_key: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
 }
 
+pub trait PostgresqlJsonType {
+    type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    //todo change trait fn select_query_part( to Result String CheckedAdd
+    fn select_query_part(
+        value: &Self::Select,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        //todo remove this coz its used properly now
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+        is_postgresql_type: std::primitive::bool,
+    ) -> std::string::String;
+    type WhereElement: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + for<'__> serde::Deserialize<'__>
+        // + schemars::JsonSchema //todo
+        + for<'__> crate::PostgresqlTypeWhereFilter<'__>
+        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    //todo impl get fields from read
+    //todo maybe add sqlx::Decode trait here and sqlx::Type
+    type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
+    type ReadInner;
+    fn into_inner(value: Self::Read) -> Self::ReadInner;
+    type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+}
+
 pub trait PostgresqlTypeWhereFilter<'a> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
@@ -65,53 +101,8 @@ where
     }
 }
 
-pub trait PostgresqlJsonType {
-    type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
-    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    //todo change trait fn select_query_part( to Result String CheckedAdd
-    fn select_query_part(
-        value: &Self::Select,
-        field_ident: &std::primitive::str,
-        column_name_and_maybe_field_getter: &std::primitive::str,
-        //todo remove this coz its used properly now
-        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_postgresql_type: std::primitive::bool,
-    ) -> std::string::String;
-    type WhereElement: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + for<'__> serde::Deserialize<'__>
-        // + schemars::JsonSchema //todo
-        + for<'__> crate::PostgresqlTypeWhereFilter<'__>
-        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    //todo impl get fields from read
-    //todo maybe add sqlx::Decode trait here and sqlx::Type
-    type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
-    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
-    type ReadInner;
-    fn into_inner(value: Self::Read) -> Self::ReadInner;
-    type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
-    fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
-    fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
-}
-
-pub trait GeneratePostgresqlJsonObjectTypeToRead {
-    fn generate_postgresql_json_object_type_to_read_from_vec(value: &[Self], column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
-    where
-        Self: Sized;
-}
-
 pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::primitive::str) -> std::string::String {
     format!("jsonb_build_object('{field}',{value})||")
-}
-pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-    if is_primary_key { "primary key" } else { "" }
 }
 
 pub trait CombinationOfAppStateLogicTraits: app_state::GetEnableApiGitCommitCheck + app_state::GetMaximumSizeOfHttpBodyInBytes + app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}

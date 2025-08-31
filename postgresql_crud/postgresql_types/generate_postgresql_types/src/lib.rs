@@ -3490,7 +3490,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
                             }
                         };
-                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {postgresql_crud_common::maybe_primary_key(is_primary_key)};
+                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                         let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
                         let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
                         let space_additional_parameter = " {}";
