@@ -4109,7 +4109,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,//meeow
                             ),
                             quote::quote! {
-                                impl postgresql_crud_common::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
+                                impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
                                     type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
                                 }
                             },

@@ -1088,3 +1088,7 @@ generate_postgresql_types::generate_postgresql_types!({
         // }
     ]
 });
+
+pub trait PostgresqlTypePrimaryKey {
+    type PrimaryKey;
+}

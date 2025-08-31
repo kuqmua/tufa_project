@@ -39,7 +39,11 @@ pub use postgresql_table::GeneratePostgresqlTable;
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
 pub use postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
 
+pub use postgresql_types::PostgresqlTypePrimaryKey;
 pub use postgresql_types::*;
+
 pub use postgresql_json_types::*;
+
 pub use where_element_filters::*;
+
 pub use postgresql_crud_common::*;//todo
