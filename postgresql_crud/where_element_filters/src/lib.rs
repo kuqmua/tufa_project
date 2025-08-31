@@ -740,3 +740,106 @@ impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Enco
         query
     }
 }
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct PostgresqlTypeNotEmptyUniqueVec<T>(std::vec::Vec<T>);
+impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
+    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+        if value.is_empty() {
+            return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        {
+            let mut acc = vec![];
+            for element in &value {
+                if acc.contains(&element) {
+                    return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                        value: element.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                acc.push(element);
+            }
+        }
+        Ok(Self(value))
+    }
+    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
+        &self.0
+    }
+    pub fn into_vec(self) -> std::vec::Vec<T> {
+        self.0
+    }
+}
+const _: () = {
+    #[expect(clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeNotEmptyUniqueVec<T> {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                marker: _serde::__private::PhantomData<PostgresqlTypeNotEmptyUniqueVec<T>>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+                type Value = PostgresqlTypeNotEmptyUniqueVec<T>;
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "tuple struct PostgresqlTypeNotEmptyUniqueVec")
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    _serde::__private::Ok(PostgresqlTypeNotEmptyUniqueVec(__field0))
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element"));
+                        }
+                    };
+                    match PostgresqlTypeNotEmptyUniqueVec::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "PostgresqlTypeNotEmptyUniqueVec",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<Self>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeNotEmptyUniqueVec<T> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+impl<T> std::default::Default for PostgresqlTypeNotEmptyUniqueVec<T> {
+    fn default() -> Self {
+        Self(std::vec::Vec::default())
+    }
+}
+impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(value: PostgresqlTypeNotEmptyUniqueVec<T>) -> Self {
+        value.0
+    }
+}
