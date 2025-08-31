@@ -83,6 +83,13 @@ impl quote::ToTokens for ThiserrorError {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveChar;
+impl quote::ToTokens for StdPrimitiveChar {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::char}.to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
 pub struct RefStdPrimitiveStr;
 impl quote::ToTokens for RefStdPrimitiveStr {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {

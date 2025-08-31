@@ -441,6 +441,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
             });
+            let std_option_option_std_primitive_char_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                &token_patterns::StdPrimitiveChar
+            );
             quote::quote! {
                 fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> #std_string_string {
                     let mut #value_snake_case = #std_string_string::default();
@@ -450,7 +453,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         });
                         #value_snake_case.push_str(",");
                     }
-                    let _: std::option::Option<char> = #value_snake_case.pop();
+                    let _: #std_option_option_std_primitive_char_token_stream = #value_snake_case.pop();
                     #value_snake_case
                 }
             }
