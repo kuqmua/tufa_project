@@ -45,12 +45,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     }
     impl std::fmt::Display for PostgresqlJsonTypeName {
         fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-            let value: &dyn std::fmt::Display = match &self {
-                Self::Number => &naming::NumberUpperCamelCase,
-                Self::Boolean => &naming::BooleanUpperCamelCase,
-                Self::String => &naming::StringUpperCamelCase,
-            };
-            write!(formatter, "{}{value}", naming::JsonbUpperCamelCase)
+            write!(
+                formatter,
+                "{}",
+                naming::parameter::JsonbSelfUpperCamelCase::from_display(match &self {
+                    Self::Number => &naming::NumberUpperCamelCase,
+                    Self::Boolean => &naming::BooleanUpperCamelCase,
+                    Self::String => &naming::StringUpperCamelCase,
+                })
+            )
         }
     }
     impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeName {
@@ -72,7 +75,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         }
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlJsonType {
         StdPrimitiveI8AsJsonbNumber,
         StdPrimitiveI16AsJsonbNumber,
@@ -90,10 +93,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     }
     impl quote::ToTokens for PostgresqlJsonType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream")).to_tokens(tokens)
+            self.to_string().parse::<proc_macro2::TokenStream>().expect("error eb6cafe0-ad0d-4108-8b0e-c062b155efbb").to_tokens(tokens)
         }
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlJsonTypePattern {
         Standart,
         ArrayDimension1 {
@@ -224,7 +227,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         }
     }
-    #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonTypeRecord {
         postgresql_json_type: PostgresqlJsonType,
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -328,16 +331,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             GeneratePostgresqlJsonTypesConfig::Concrete(value) => value,
         };
         {
-            let mut acc = vec![];
-            for element in &postgresql_json_type_record_vec {
-                if acc.contains(&element) {
-                    panic!("not unique postgersql type provided: {element:#?}");
-                } else {
-                    acc.push(element);
-                }
+            let mut seen = std::collections::HashSet::new();
+            if !postgresql_json_type_record_vec
+                .iter()
+                .all(|element| seen.insert(element))
+            {
+                panic!("not unique postgersql type provided: {postgresql_json_type_record_vec:#?}");
             }
         }
-        
         postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
             #[derive(Clone)]
