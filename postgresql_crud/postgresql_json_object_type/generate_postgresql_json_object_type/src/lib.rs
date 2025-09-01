@@ -2662,6 +2662,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream,
                             };
+                            let ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_array_not_null_upper_camel_case);
                             quote::quote! {
                                 #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
                                 format!(#format_handle_token_stream, {
@@ -2669,7 +2670,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Some(#value_snake_case) => #value_snake_case,
                                         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                     };
-                                    <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_query_part(
+                                    #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::select_query_part(
                                         #value_snake_case,
                                         field_ident,
                                         &column_name_and_maybe_field_getter,
