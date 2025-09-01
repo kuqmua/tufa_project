@@ -201,7 +201,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-            
+            let import_path_default_but_option_is_always_some_call_token_stream = quote::quote!{
+                #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
+            };
             let generate_default_but_option_is_always_some_call_token_stream = |ident_token_stream: &dyn quote::ToTokens, |{
                 quote::quote!{
                     <#ident_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
@@ -1405,19 +1407,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                 let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
                                 quote::quote! {
-                                    Self::#element_ident_upper_camel_case(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())
+                                    Self::#element_ident_upper_camel_case(#import_path_default_but_option_is_always_some_call_token_stream)
                                 }
                             });
                             quote::quote! {
                                 vec![
-                                    Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::DimensionOneEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::LengthEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::LengthMoreThan(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::In(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::DimensionOneIn(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::ContainsAllElementsOfArray(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    Self::OverlapsWithArray(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
+                                    Self::Equal(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::DimensionOneEqual(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::LengthEqual(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::LengthMoreThan(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::In(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::DimensionOneIn(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::ContainsAllElementsOfArray(#import_path_default_but_option_is_always_some_call_token_stream),
+                                    Self::OverlapsWithArray(#import_path_default_but_option_is_always_some_call_token_stream),
                                     #(#element_filters_token_stream),*
                                 ]
                             }
