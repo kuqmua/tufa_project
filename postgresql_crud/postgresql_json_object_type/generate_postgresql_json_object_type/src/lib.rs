@@ -229,13 +229,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }),
             };
-            let vec_syn_field_with_id = {
-                let mut acc = vec![&id_syn_field];
-                for element in &vec_syn_field {
+            let vec_syn_field_with_id = vec_syn_field.iter().fold(
+                vec![&id_syn_field],
+                |mut acc, element| {
                     acc.push(element);
+                    acc
                 }
-                acc
-            };
+            );
             #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
             enum IsStandartWithId {
                 False,
