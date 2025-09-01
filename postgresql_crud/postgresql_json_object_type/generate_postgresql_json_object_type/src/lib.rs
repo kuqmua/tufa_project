@@ -2798,19 +2798,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
                                         };
                                         quote::quote! {
-                                            #ident_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
+                                            #ident_token_stream::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => {
                                                 match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#update_query_part_snake_case(
-                                                    &value.value,
+                                                    &#value_snake_case.#value_snake_case,
                                                     &#object_acc_snake_case,
                                                     &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                                     #field_ident_double_quotes_token_stream,
                                                     #increment_snake_case,
                                                 ) {
-                                                    Ok(value) => {
-                                                        #object_acc_snake_case = value;
+                                                    Ok(#value_snake_case) => {
+                                                        #object_acc_snake_case = #value_snake_case;
                                                     }
-                                                    Err(error) => {
-                                                        return Err(error);
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#error_snake_case);
                                                     }
                                                 }
                                             }
@@ -2820,8 +2820,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         let mut #object_acc_snake_case = format!(#some_format_handle_token_stream);
                                         #generate_jsonb_set_target_token_stream
-                                        for element in value.0.to_vec() {
-                                            match element {
+                                        for #element_snake_case in #value_snake_case.0.to_vec() {
+                                            match #element_snake_case {
                                                 #(#query_part_variants_token_stream),*
                                             }
                                         }
@@ -2838,7 +2838,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case);
                                     quote::quote! {
                                         match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_part(
+                                            Some(#value_snake_case) => #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
                                                 #value_snake_case,
                                                 jsonb_set_accumulator,
                                                 jsonb_set_target,
@@ -2879,7 +2879,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                                 return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                                                             }
                                                         };
-                                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_part(
+                                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
                                                             &element_handle.fields,
                                                             &"",
                                                             &"elem",
@@ -2943,7 +2943,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_array_not_null_upper_camel_case);
                                     quote::quote! {
                                         match &value.0 {
-                                            Some(value) => #ident_array_not_null_as_postgresql_json_type_token_stream::update_query_part(
+                                            Some(value) => #ident_array_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
                                                 #value_snake_case,
                                                 jsonb_set_accumulator,
                                                 jsonb_set_target,
@@ -3285,7 +3285,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case);
                                     quote::quote! {
                                         match &value.0 {
-                                            Some(#value_snake_case) => #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_part(
+                                            Some(#value_snake_case) => #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
                                                 #value_snake_case,
                                                 jsonb_set_accumulator,
                                                 jsonb_set_target,
@@ -3326,7 +3326,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                                 return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                                                             }
                                                         };
-                                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_part(
+                                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
                                                             &element_handle.fields,
                                                             &"",
                                                             &"elem",
@@ -3390,7 +3390,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_array_not_null_as_postgresql_type_token_stream = generate_type_as_postgresql_type_token_stream(&ident_array_not_null_upper_camel_case);
                                     quote::quote! {
                                         match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => #ident_array_not_null_as_postgresql_type_token_stream::update_query_part(
+                                            Some(#value_snake_case) => #ident_array_not_null_as_postgresql_type_token_stream::#update_query_part_snake_case(
                                                 #value_snake_case,
                                                 jsonb_set_accumulator,
                                                 jsonb_set_target,
