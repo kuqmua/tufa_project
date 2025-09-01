@@ -2690,8 +2690,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                                         "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_select_standart_not_null_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"
                                     ));
+                                    let ident_with_id_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
                                     quote::quote! {
-                                        let #ident_with_id_select_standart_not_null_snake_case = <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_query_part(
+                                        let #ident_with_id_select_standart_not_null_snake_case = #ident_with_id_standart_not_null_as_postgresql_json_type_token_stream::select_query_part(
                                             &#value_snake_case.#ident_with_id_select_standart_not_null_snake_case,
                                             field_ident,
                                             &"value",
