@@ -154,6 +154,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let update_snake_case = naming::UpdateSnakeCase;
             let delete_snake_case = naming::DeleteSnakeCase;
             let value_snake_case = naming::ValueSnakeCase;
+            let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
             let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
@@ -318,6 +319,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     self.to_string().parse::<proc_macro2::TokenStream>().unwrap().to_tokens(tokens);
                 }
             }
+            let generate_type_as_postgresql_json_type_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                quote::quote! {<#type_token_stream as #import_path::PostgresqlJsonType>}
+            };
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
             let postgresql_json_type_subtype_select = PostgresqlJsonTypeSubtype::Select;
@@ -326,7 +330,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let postgresql_json_type_subtype_read_inner = PostgresqlJsonTypeSubtype::ReadInner;
             let postgresql_json_type_subtype_update = PostgresqlJsonTypeSubtype::Update;
             let generate_type_as_postgresql_json_type_subtype_token_stream = |type_token_stream: &dyn quote::ToTokens, postgresql_json_type_subtype: &PostgresqlJsonTypeSubtype| {
-                quote::quote! {<#type_token_stream as #import_path::PostgresqlJsonType>::#postgresql_json_type_subtype}
+                let type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&type_token_stream);
+                quote::quote! {# type_as_postgresql_json_type_token_stream::#postgresql_json_type_subtype}
             };
             let generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
                 let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
@@ -1409,12 +1414,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                    let ident_standart_or_ident_with_id_array_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
-                        PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
-                    };
+                    let ident_standart_or_ident_with_id_array_as_postgresql_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
+                            PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
+                        },
+                        &postgresql_json_type_subtype_where_element
+                    );
                     quote::quote! {
-                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_or_ident_with_id_array_upper_camel_case as #import_path::PostgresqlJsonType>::WhereElement>;
+                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<
+                            #ident_standart_or_ident_with_id_array_as_postgresql_json_type_where_element_token_stream
+                        >;
                     }
                 }
             };
@@ -1481,10 +1491,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
                     let field_type = &element.ty;
+                    let field_type_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&field_type);
                     quote::quote! {
                         #field_ident: match self.#field_ident {
-                            Some(value) => Some(#import_path::Value {
-                                value: <#field_type as #import_path::PostgresqlJsonType>::into_inner(value.value)
+                            Some(#value_snake_case) => Some(#import_path::Value {
+                                #value_snake_case: #field_type_type_as_postgresql_json_type_token_stream::into_inner(#value_snake_case.#value_snake_case)
                             }),
                             None => None
                         }
@@ -1539,35 +1550,42 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_into_inner_for_ident_read_token_stream = generate_fn_into_inner_token_stream(
                     &ident_read_upper_camel_case,
                     &ident_read_inner_upper_camel_case,
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(&IsStandartWithId::False),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match self.0 {
-                                    Some(value) => Some(
-                                        <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(value)
-                                    ),
-                                    None => None
-                                }
+                    &{
+                        let generate_into_inner_token_stream = |ident_token_stream: &dyn quote::ToTokens, parameters_token_stream: &dyn quote::ToTokens|{
+                            quote::quote!{#ident_token_stream::into_inner(#parameters_token_stream)}
+                        };
+                        let into_inner_token_stream = generate_into_inner_token_stream(
+                            &generate_type_as_postgresql_json_type_token_stream(&ident_with_id_standart_not_null_upper_camel_case),
+                            &element_snake_case
+                        );
+                        match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(&IsStandartWithId::False),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let into_inner_token_stream = generate_into_inner_token_stream(
+                                        &generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case),
+                                        &value_snake_case
+                                    );
+                                    quote::quote! {
+                                        match self.0 {
+                                            Some(#value_snake_case) => Some(#into_inner_token_stream),
+                                            None => None
+                                        }
+                                    }
+                                },
                             },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                self.0.into_iter().map(|element|{
-                                    <#ident_with_id_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(element)
-                                }).collect()
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                    self.0.into_iter().map(|#element_snake_case|#into_inner_token_stream).collect()
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                     match self.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|{
-                                            <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::into_inner(element)
-                                        }).collect()),
+                                        Some(#value_snake_case) => Some(#value_snake_case.0.into_iter().map(|#element_snake_case|#into_inner_token_stream).collect()),
                                         None => None
                                     }
                                 }
-                            }
-                        },
+                            },
+                        }
                     },
                 );
                 let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
