@@ -448,13 +448,20 @@ pub enum ImportPath {
     PostgresqlCrud,
     PostgresqlCrudCommon,
 }
+impl ImportPath {
+    pub fn snake_case_std_primitive_str(&self) -> &'static std::primitive::str {
+        match &self {
+            ImportPath::Crate => "crate",
+            ImportPath::PostgresqlCrud => "postgresql_crud",
+            ImportPath::PostgresqlCrudCommon => "postgresql_crud_common",
+        }
+    }
+}
 impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::Crate => quote::quote! {crate},
-            Self::PostgresqlCrud => quote::quote! {postgresql_crud},
-            Self::PostgresqlCrudCommon => quote::quote! {postgresql_crud_common},
-        }
+        self.snake_case_std_primitive_str()
+        .parse::<proc_macro2::TokenStream>()
+        .expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59")
         .to_tokens(tokens)
     }
 }
