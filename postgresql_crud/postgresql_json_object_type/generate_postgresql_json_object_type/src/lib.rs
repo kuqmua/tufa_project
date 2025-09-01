@@ -176,7 +176,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
             let column_snake_case = naming::ColumnSnakeCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-            let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
@@ -311,6 +310,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 Select,
                 WhereElement,
                 Read,
+                ReadOnlyIds,
                 ReadInner,
                 Update,
             }
@@ -332,7 +332,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let postgresql_json_type_subtype_update = PostgresqlJsonTypeSubtype::Update;
             let generate_type_as_postgresql_json_type_subtype_token_stream = |type_token_stream: &dyn quote::ToTokens, postgresql_json_type_subtype: &PostgresqlJsonTypeSubtype| {
                 let type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&type_token_stream);
-                quote::quote! {# type_as_postgresql_json_type_token_stream::#postgresql_json_type_subtype}
+                quote::quote! {#type_as_postgresql_json_type_token_stream::#postgresql_json_type_subtype}
             };
             let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_type_as_postgresql_json_type_token_stream(&field.ty);
             let generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:?}")});
@@ -1185,10 +1185,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     };
                                     let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
-                                        let element_type = &element.ty;
+                                        let element_type_as_postgresql_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&element.ty, &PostgresqlJsonTypeSubtype::WhereElement);
                                         quote::quote! {
                                             #element_ident_upper_camel_case(postgresql_crud::PostgresqlTypeWhere<
-                                                <#element_type as postgresql_crud::PostgresqlJsonType>::WhereElement
+                                                #element_type_as_postgresql_json_type_where_element_token_stream
                                             >)
                                         }
                                     });
@@ -1790,8 +1790,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let field_type = &element.ty;
-                    quote::quote! {#field_ident: <#field_type as postgresql_crud::PostgresqlJsonType>::#read_only_ids_upper_camel_case}
+                    let field_type_as_postgresql_json_type_read_only_ids_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &element.ty,
+                        &PostgresqlJsonTypeSubtype::ReadOnlyIds
+                    );
+                    quote::quote! {#field_ident: #field_type_as_postgresql_json_type_read_only_ids_token_stream}
                 });
                 quote::quote! {{#(#content_token_stream),*}}
             };
