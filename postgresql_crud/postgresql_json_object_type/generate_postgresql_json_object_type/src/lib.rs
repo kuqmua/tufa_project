@@ -3574,19 +3574,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote! {
-                                        match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => {
-                                                let mut acc = std::string::String::default();
-                                                for element in #value_snake_case.0.to_vec() {
-                                                    match &element {
-                                                        #(#match_content_token_stream),*
+                                        Ok(format!(
+                                            "jsonb_build_object('value',{}) as {column},",
+                                            match &#value_snake_case.0 {
+                                                Some(#value_snake_case) => {
+                                                    let mut acc = std::string::String::default();
+                                                    for element in #value_snake_case.0.to_vec() {
+                                                        match &element {
+                                                            #(#match_content_token_stream),*
+                                                        }
                                                     }
-                                                }
-                                                let _ = acc.pop();
-                                                Ok(format!("jsonb_build_object('value',jsonb_build_object('value',jsonb_build_object({acc}))) as {column},"))
-                                            },
-                                            None => Ok(format!("jsonb_build_object('value','null'::jsonb) as {column},"))
-                                        }
+                                                    let _ = acc.pop();
+                                                    format!("jsonb_build_object('value',jsonb_build_object({acc}))")
+                                                },
+                                                None => "'null'::jsonb".to_string()
+                                            }
+                                        ))
                                     }
                                 }
                             },
@@ -3612,17 +3615,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let ident_with_id_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
                                     quote::quote!{
-                                        match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => Ok(format!("jsonb_build_object('value',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb)) as {column},", {
-                                                match #ident_with_id_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(&#value_snake_case.update, &"", &"elem", increment) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
-                                                    Err(error) => {
-                                                        return Err(error);
+                                        Ok(format!(
+                                            "jsonb_build_object('value',{}) as {column},",
+                                            match &#value_snake_case.0 {
+                                                Some(#value_snake_case) => format!(
+                                                    "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb)",
+                                                    {
+                                                        match #ident_with_id_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
+                                                            &#value_snake_case.update,
+                                                            &"",
+                                                            &"elem",
+                                                            increment
+                                                        ) {
+                                                            Ok(#value_snake_case) => #value_snake_case,
+                                                            Err(error) => {
+                                                                return Err(error);
+                                                            }
+                                                        }
                                                     }
-                                                }
-                                            })),
-                                            None => Ok(format!("jsonb_build_object('value','null'::jsonb) as {column},")),
-                                        }
+                                                ),
+                                                None => "'null'::jsonb".to_string(),
+                                            }
+                                        ))
                                     }
                                 },
                             },
