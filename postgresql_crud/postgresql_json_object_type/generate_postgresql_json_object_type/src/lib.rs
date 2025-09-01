@@ -327,6 +327,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
                 quote::quote! {<#type_token_stream as #import_path::#postgresql_type_upper_camel_case>}
             };
+            let generate_type_as_postgresql_json_type_test_cases_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
+                quote::quote! {<#type_token_stream as #import_path::#postgresql_json_type_test_cases_upper_camel_case>}
+            };
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
             let postgresql_json_type_subtype_select = PostgresqlJsonTypeSubtype::Select;
@@ -3781,11 +3785,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let field_type = &element.ty;//meow
+                    let field_type = &element.ty;
                     let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&field_type);
                     let field_type_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&field_type, &PostgresqlJsonTypeSubtype::Read);
+                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                     quote::quote! {
-                        #field_ident: match <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_inner(value.0.value.#field_ident) {
+                        #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(value.0.value.#field_ident) {
                             Some(value) => Some(value),
                             None => Some(postgresql_crud::Value{
                                 value: #field_type_as_postgresql_json_type_token_stream::into_inner(
