@@ -347,6 +347,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
                 quote::quote! {<#type_token_stream as #import_path::#postgresql_json_type_test_cases_upper_camel_case>}
             };
+            let generate_type_as_postgresql_type_test_cases_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
+                quote::quote! {<#type_token_stream as #import_path::#postgresql_type_test_cases_upper_camel_case>}
+            };
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
             let postgresql_json_type_subtype_select = PostgresqlJsonTypeSubtype::Select;
@@ -4037,19 +4041,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
-                                let field_type = &element.ty;
-                                //here meow
+                                let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                 quote::quote! {
                                     #field_ident: match &element.#field_ident {
                                         Some(#value_snake_case) => Some(postgresql_crud::Value {
-                                            #value_snake_case: <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case.clone())
+                                            #value_snake_case: #field_type_as_postgresql_json_type_test_cases_token_stream::read_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case.clone())
                                         }),
                                         None => None
                                     }
                                 }
                             });
+                            let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&quote::quote!{Self::Element}, &PostgresqlTypeSubtype::Read);
                             quote::quote! {
-                                <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
+                                #self_element_as_postgresql_type_read_token_stream::new(match value {
                                     Some(value) => Some(
                                         value.into_iter().map(|element|{
                                             #ident_with_id_read_standart_not_null_upper_camel_case {
@@ -4066,26 +4070,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let update_new_or_try_new_unwraped_for_test_token_stream = match &element.postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let self_element_as_postgresql_type_update_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&quote::quote!{Self::Element}, &PostgresqlTypeSubtype::Update);
                             let parameters_token_stream = vec_syn_field.iter().map(|element| {
-                                let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
-                                let element_field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_field_ident);
-                                let element_type = &element.ty;
+                                let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                 quote::quote! {
-                                    if let Some(#value_snake_case) = #value_snake_case.#element_field_ident {
-                                        #acc_snake_case.push(#ident_standart_not_null_update_element_upper_camel_case::#element_field_ident_upper_camel_case(postgresql_crud::Value {
-                                            #value_snake_case: <
-                                                #element_type
-                                                as
-                                                postgresql_crud::PostgresqlJsonTypeTestCases
-                                            >::update_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case),
+                                    if let Some(#value_snake_case) = #value_snake_case.#field_ident {
+                                        #acc_snake_case.push(#ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(postgresql_crud::Value {
+                                            #value_snake_case: #field_type_as_postgresql_json_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case),
                                         }));
                                     }
                                 }
                             });
                             quote::quote! {
-                                <Self::Element as postgresql_crud::PostgresqlType>::Update::new(
+                                #self_element_as_postgresql_type_update_token_stream::new(
                                     postgresql_crud::NotEmptyUniqueEnumVec::try_new({
                                         let mut #acc_snake_case = vec![];
                                         #(#parameters_token_stream)*
@@ -4095,9 +4096,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let self_element_as_postgresql_type_update_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&quote::quote!{Self::Element}, &PostgresqlTypeSubtype::Update);
+                            let ident_standart_not_null_as_postgresql_type_test_cases_token_stream = generate_type_as_postgresql_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
                             quote::quote! {
-                                <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-                                    Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(value)),
+                                #self_element_as_postgresql_type_update_token_stream::new(match #value_snake_case {
+                                    Some(#value_snake_case) => Some(#ident_standart_not_null_as_postgresql_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(#value_snake_case)),
                                     None => None
                                 })
                             }
@@ -4111,6 +4114,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 });
                                 quote::quote! {#field_ident: element.#field_ident}
                             });
+                            let ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
                             quote::quote! {
                                 #ident_update_upper_camel_case::try_new(
                                     vec![],
@@ -4120,7 +4124,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 .into_iter()
                                                 .map(|element| #ident_with_id_update_element_standart_not_null_upper_camel_case {
                                                     id: postgresql_crud::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
-                                                    fields: <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::update_new_or_try_new_unwraped_for_test(
+                                                    fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(
                                                         #ident_read_inner_standart_not_null_upper_camel_case {
                                                             #(#fields_token_stream),*
                                                         }
@@ -4136,9 +4140,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let self_element_as_postgresql_type_update_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&quote::quote!{Self::Element}, &PostgresqlTypeSubtype::Update);
+                            let ident_with_id_array_not_null_as_postgresql_type_test_cases_token_stream = generate_type_as_postgresql_type_test_cases_token_stream(&ident_with_id_array_not_null_upper_camel_case);
                             quote::quote! {
-                                <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match #value_snake_case {
-                                    Some(#value_snake_case) => Some(<#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(#value_snake_case)),
+                                #self_element_as_postgresql_type_update_token_stream::new(match #value_snake_case {
+                                    Some(#value_snake_case) => Some(#ident_with_id_array_not_null_as_postgresql_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(#value_snake_case)),
                                     None => None,
                                 })
                             }
