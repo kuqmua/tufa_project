@@ -762,7 +762,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             }
         }
-        
+
         postgresql_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
             #[derive(Clone)]
@@ -1037,15 +1037,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_inner_type_token_stream = match &element.postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => &inner_type_standart_not_null_token_stream,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                        &inner_type_standart_not_null_token_stream
-                    )
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&inner_type_standart_not_null_token_stream),
                 },
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
-                    not_null_or_nullable.maybe_option_wrap(
-                        postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type)
-                    )
+                    not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
                 },
             };
             enum CanBePrimaryKey {
@@ -3237,101 +3233,81 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_origin_upper_camel_case, &{
                     let content_token_stream = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let pg_range_int_default_initialization_token_stream = quote::quote!{
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let pg_range_int_default_initialization_token_stream = quote::quote! {
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(#core_default_default_default_token_stream),
+                                        end: std::ops::Bound::Excluded(#core_default_default_default_token_stream),
+                                    }
+                                };
+                                let generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
+                                    quote::quote! {
+                                        <#current_ident_token_stream as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                    }
+                                };
+                                let generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
+                                    let current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&current_ident_token_stream);
+                                    quote::quote! {
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Included(#core_default_default_default_token_stream),
-                                            end: std::ops::Bound::Excluded(#core_default_default_default_token_stream),
+                                            #start_snake_case: std::ops::Bound::Included(
+                                                #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
+                                            ),
+                                            #end_snake_case: std::ops::Bound::Excluded(
+                                                #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
+                                            ),
                                         }
-                                    };
-                                    let generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|{
-                                        quote::quote!{
-                                            <#current_ident_token_stream as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        }
-                                    };
-                                    let generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |
-                                        current_ident_token_stream: &dyn quote::ToTokens
-                                    |{
-                                        let current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&current_ident_token_stream);
-                                        quote::quote!{
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(
-                                                    #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
-                                                ),
-                                                #end_snake_case: std::ops::Bound::Excluded(
-                                                    #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
-                                                ),
-                                            }
-                                        }
-                                    };
-                                    let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case);
-                                    let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case);
-                                    let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
-                                        PostgresqlType::StdPrimitiveI16AsInt2
-                                        | PostgresqlType::StdPrimitiveI32AsInt4
-                                        | PostgresqlType::StdPrimitiveI64AsInt8
-                                        | PostgresqlType::StdPrimitiveF32AsFloat4
-                                        | PostgresqlType::StdPrimitiveF64AsFloat8
-                                        | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql
-                                        | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql
-                                        | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#inner_type_standart_not_null_token_stream(#core_default_default_default_token_stream)},
-                                        PostgresqlType::StdPrimitiveBoolAsBool
-                                        | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
-                                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
-                                        PostgresqlType::SqlxTypesTimeTimeAsTime => &generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream(&quote::quote!{0,0,0,0}),
-                                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &{
-                                            let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
-                                            generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
-                                                &double_dots_space_core_default_default_default_token_stream,
-                                                &double_dots_space_core_default_default_default_token_stream,
-                                                &double_dots_space_core_default_default_default_token_stream,
-                                            )
-                                        },
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &generate_sqlx_types_chrono_naive_date_time_new_token_stream(
-                                            &quote::quote!{
-                                                #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
-                                                #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
-                                            }
-                                        ),
-                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(
-                                            &generate_sqlx_types_chrono_naive_date_time_new_token_stream(
-                                                &quote::quote!{
-                                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
-                                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
-                                                }
-                                            )
-                                        ),
-                                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
-                                        | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
-                                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
-                                        },
-                                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &pg_range_int_default_initialization_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-                                            &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case
-                                        ),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-                                            &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case
-                                        ),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-                                            &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case
-                                        ),
-                                    };
-                                    quote::quote! {#initialization_token_stream}
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-                            },
-                            PostgresqlTypePattern::ArrayDimension1 {..} => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{vec![#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                                    }
+                                };
+                                let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case);
+                                let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case);
+                                let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
+                                    PostgresqlType::StdPrimitiveI16AsInt2
+                                    | PostgresqlType::StdPrimitiveI32AsInt4
+                                    | PostgresqlType::StdPrimitiveI64AsInt8
+                                    | PostgresqlType::StdPrimitiveF32AsFloat4
+                                    | PostgresqlType::StdPrimitiveF64AsFloat8
+                                    | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql
+                                    | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql
+                                    | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
+                                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#inner_type_standart_not_null_token_stream(#core_default_default_default_token_stream)},
+                                    PostgresqlType::StdPrimitiveBoolAsBool | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
+                                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
+                                    PostgresqlType::SqlxTypesTimeTimeAsTime => &generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream(&quote::quote! {0,0,0,0}),
+                                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &{
+                                        let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
+                                        generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(&double_dots_space_core_default_default_default_token_stream, &double_dots_space_core_default_default_default_token_stream, &double_dots_space_core_default_default_default_token_stream)
+                                    },
+                                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
+                                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
+                                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote! {
+                                        #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                        #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                    }),
+                                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(&generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote! {
+                                        #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                        #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                    })),
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
+                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
+                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
+                                    },
+                                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &pg_range_int_default_initialization_token_stream,
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_token_stream,
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(&sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case),
+                                };
+                                quote::quote! {#initialization_token_stream}
                             }
-                        };
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {vec![#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                        },
+                    };
                     quote::quote! {Self(#content_token_stream)}
                 });
                 let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle);
@@ -3485,14 +3461,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         let maybe_array_part = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => "".to_string(),
-                            PostgresqlTypePattern::ArrayDimension1 {..} => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>()
+                            PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
                         };
                         let maybe_constraint_part = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => "".to_string(),
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
-                            }
+                            },
                         };
                         let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                         let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
@@ -3630,41 +3606,39 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let pub_struct_ident_select_token_stream = generate_pub_struct_tokens_token_stream(
                     &ident_select_upper_camel_case,
                     &match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => quote::quote! {;},
-                    PostgresqlTypePattern::ArrayDimension1 {..} => {
-                        let mut arguments_token_stream = vec![];
-                        for element in 1..=array_dimensions_number {
-                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
-                            .parse::<proc_macro2::TokenStream>().unwrap();
-                            arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: crate::PaginationStartsWithOne
-                            });
+                        PostgresqlTypePattern::Standart => quote::quote! {;},
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                            let mut arguments_token_stream = vec![];
+                            for element in 1..=array_dimensions_number {
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: crate::PaginationStartsWithOne
+                                });
+                            }
+                            quote::quote! {{
+                                #(#arguments_token_stream),*
+                            }}
                         }
-                        quote::quote! {{
-                            #(#arguments_token_stream),*
-                        }}
-                    }
-                },
+                    },
                     ImplDefault::True,
                 );
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_select_upper_camel_case,
                     &match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
-                    PostgresqlTypePattern::ArrayDimension1 {..} => {
-                        let mut arguments_token_stream = vec![];
-                        for element in 1..=array_dimensions_number {
-                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
-                            .parse::<proc_macro2::TokenStream>().unwrap();
-                            arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                            });
+                        PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                            let mut arguments_token_stream = vec![];
+                            for element in 1..=array_dimensions_number {
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                });
+                            }
+                            quote::quote! {Self {
+                                #(#arguments_token_stream),*
+                            }}
                         }
-                        quote::quote! {Self {
-                            #(#arguments_token_stream),*
-                        }}
-                    }
-                },
+                    },
                 );
                 quote::quote! {
                     #pub_struct_ident_select_token_stream
@@ -3696,10 +3670,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ident: quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
                             };
                             // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
-                            let common_standart_postgresql_type_filters = {
-                                
-                                common_postgresql_type_filters.clone()
-                            };
+                            let common_standart_postgresql_type_filters = { common_postgresql_type_filters.clone() };
                             let common_standart_postgresql_type_number_filters = {
                                 let mut vec = common_standart_postgresql_type_filters.clone();
                                 vec.push(greater_than.clone());
@@ -4110,7 +4081,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                                 &postgresql_crud_macros_common::IsQueryBindMutable::True,
                                 &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
-                                &postgresql_crud_macros_common_import_path_postgresql_crud_common,//meeow
+                                &postgresql_crud_macros_common_import_path_postgresql_crud_common, //meeow
                             ),
                             quote::quote! {
                                 impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
@@ -4142,9 +4113,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 {
                     quote::quote! {#ident_read_upper_camel_case}
                 } else {
-                    postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                        &quote::quote!{()}
-                    )
+                    postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {()})
                 },
             );
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
@@ -4369,16 +4338,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         let sqlx_postgres_types_pg_range_unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&unbounded_upper_camel_case, &excluded_end_token_stream);
                                         let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&included_start_token_stream, &excluded_end_token_stream);
                                         let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&unbounded_upper_camel_case, &unbounded_upper_camel_case);
-                                        let generate_range_match_token_stream = |
-                                            included_included_token_stream: &dyn quote::ToTokens,
-                                            included_excluded_token_stream: &dyn quote::ToTokens,
-                                            included_unbounded_token_stream: &dyn quote::ToTokens,
-                                            excluded_included_token_stream: &dyn quote::ToTokens,
-                                            excluded_excluded_token_stream: &dyn quote::ToTokens,
-                                            excluded_unbounded_token_stream: &dyn quote::ToTokens,
-                                            unbounded_included_token_stream: &dyn quote::ToTokens,
-                                            unbounded_excluded_token_stream: &dyn quote::ToTokens
-                                        | {
+                                        let generate_range_match_token_stream = |included_included_token_stream: &dyn quote::ToTokens,
+                                                                                 included_excluded_token_stream: &dyn quote::ToTokens,
+                                                                                 included_unbounded_token_stream: &dyn quote::ToTokens,
+                                                                                 excluded_included_token_stream: &dyn quote::ToTokens,
+                                                                                 excluded_excluded_token_stream: &dyn quote::ToTokens,
+                                                                                 excluded_unbounded_token_stream: &dyn quote::ToTokens,
+                                                                                 unbounded_included_token_stream: &dyn quote::ToTokens,
+                                                                                 unbounded_excluded_token_stream: &dyn quote::ToTokens| {
                                             quote::quote! {
                                                 #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
                                                     (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
@@ -4721,15 +4688,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let generate_range_test_cases_token_stream = |
-                                        min_token_stream: &dyn quote::ToTokens,
-                                        negative_less_typical_token_stream: &dyn quote::ToTokens,
-                                        negative_more_typical_token_stream: &dyn quote::ToTokens,
-                                        near_zero_token_stream: &dyn quote::ToTokens,
-                                        positive_less_typical_token_stream: &dyn quote::ToTokens,
-                                        positive_more_typical_token_stream: &dyn quote::ToTokens,
-                                        max_token_stream: &dyn quote::ToTokens
-                                    | {
+                                    let generate_range_test_cases_token_stream = |min_token_stream: &dyn quote::ToTokens,
+                                                                                  negative_less_typical_token_stream: &dyn quote::ToTokens,
+                                                                                  negative_more_typical_token_stream: &dyn quote::ToTokens,
+                                                                                  near_zero_token_stream: &dyn quote::ToTokens,
+                                                                                  positive_less_typical_token_stream: &dyn quote::ToTokens,
+                                                                                  positive_more_typical_token_stream: &dyn quote::ToTokens,
+                                                                                  max_token_stream: &dyn quote::ToTokens| {
                                         quote::quote! {
                                             let min = #min_token_stream;
                                             let negative_less_typical = #negative_less_typical_token_stream;
@@ -4998,10 +4963,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_token_stream,
                                         ),
                                     };
-                                    quote::quote!{vec![{#content_token_stream}]}
+                                    quote::quote! {vec![{#content_token_stream}]}
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote!{
+                                    quote::quote! {
                                         let mut acc = vec![];
                                         for element in <#ident_standart_not_null_upper_camel_case as postgresql_crud_common::PostgresqlTypeTestCases>::test_cases(&#read_only_ids_snake_case) {
                                             for current_element in element {
@@ -5011,7 +4976,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         acc.push(vec![None]);
                                         acc
                                     }
-                                },
+                                }
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
@@ -5033,7 +4998,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                         vec![acc]
                                     }
-                                },
+                                }
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
                                     let mut acc = vec![];
                                     for element in <#ident_standart_not_null_upper_camel_case as postgresql_crud_common::PostgresqlTypeTestCases>::test_cases(&read_only_ids) {
@@ -5057,13 +5022,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
-                    &quote::quote!{todo!()},
+                    &quote::quote! {todo!()},
                     &{
-                        let ident_read_value_clone_token_stream = quote::quote!{#ident_read_upper_camel_case(value.clone())};
-                        let none_token_stream = quote::quote!{None};
-                        if
-                            let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
-                            let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                        let ident_read_value_clone_token_stream = quote::quote! {#ident_read_upper_camel_case(value.clone())};
+                        let none_token_stream = quote::quote! {None};
+                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
                         {
                             match &postgresql_type {
                                 PostgresqlType::StdPrimitiveI16AsInt2 => none_token_stream,
@@ -5094,11 +5058,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => none_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_token_stream,
                             }
-                        }
-                        else {
+                        } else {
                             none_token_stream
                         }
-                    }
+                    },
                 )
             };
             let generated = quote::quote! {

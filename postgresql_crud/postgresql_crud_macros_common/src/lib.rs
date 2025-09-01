@@ -45,12 +45,7 @@ impl std::default::Default for NotNullOrNullable {
     }
 }
 
-pub fn generate_postgresql_type_where_element_token_stream(
-    variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
-    prefix: &dyn quote::ToTokens,
-    should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
-    is_query_bind_mutable: &IsQueryBindMutable,
-) -> proc_macro2::TokenStream {
+pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>, prefix: &dyn quote::ToTokens, should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema, is_query_bind_mutable: &IsQueryBindMutable) -> proc_macro2::TokenStream {
     let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -436,13 +431,7 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
 }
 
 pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-        &proc_macro2::TokenStream::new(),
-        &ImportPath::PostgresqlCrudCommon,
-        ident,
-        &proc_macro2::TokenStream::new(),
-        content_token_stream
-    )
+    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrudCommon, ident, &proc_macro2::TokenStream::new(), content_token_stream)
 }
 pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, lifetime_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_token_stream, content_token_stream)

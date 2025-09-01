@@ -176,17 +176,13 @@ pub struct Example {
     // pub column_139: postgresql_crud::OptionVecOfSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTzRange,
     // pub column_140: postgresql_crud::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
-
     pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
     pub column_155: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
     pub column_156: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(
-    Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]//
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)] //
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
     {
@@ -1024,16 +1020,13 @@ pub struct Animal {
     // pub field_803: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbString,
     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
-
     pub field_806: DoggieAsNotNullJsonbObject,
     pub field_808: OptionDoggieAsNullableJsonbObject,
     pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
@@ -1101,10 +1094,7 @@ pub struct Doggie {
     pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"

@@ -349,9 +349,7 @@ const _: () = {
                     let __field0: std::primitive::i32 = <std::primitive::i32 as _serde::Deserialize>::deserialize(__e)?;
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
@@ -367,9 +365,7 @@ const _: () = {
                     };
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -456,9 +452,7 @@ const _: () = {
                     let __field0: std::primitive::i32 = <std::primitive::i32 as _serde::Deserialize>::deserialize(__e)?;
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
@@ -474,9 +468,7 @@ const _: () = {
                     };
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -643,9 +635,7 @@ const _: () = {
                     };
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
@@ -684,9 +674,7 @@ const _: () = {
                     };
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }
@@ -965,9 +953,7 @@ const _: () = {
                     let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
@@ -983,9 +969,7 @@ const _: () = {
                     };
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
-                        Err(error) => {
-                            Err(serde::de::Error::custom(format!("{error:?}")))
-                        }
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
             }

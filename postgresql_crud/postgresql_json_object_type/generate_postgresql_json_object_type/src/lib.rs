@@ -4126,7 +4126,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     value: #ident_read_only_ids_handle_upper_camel_case{
                                         #(#struct_fields_content_token_stream),*
                                     }
-                                })                                
+                                })
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -4397,7 +4397,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 pub struct GeneratePostgresqlJsonObjectTypeExample {
                     #(#fields_token_stream)*
                 }
-            }
+            },
         );
     }
     let generated = quote::quote! {#(#postgresql_json_object_type_array)*};

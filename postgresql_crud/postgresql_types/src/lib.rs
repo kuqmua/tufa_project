@@ -1295,11 +1295,6 @@ impl<'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PaginationSta
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithOne {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(
-            postgresql_crud_common::PaginationBase::new_unchecked(
-                postgresql_crud_common::DEFAULT_PAGINATION_LIMIT,
-                1
-            )
-        )
+        Self(postgresql_crud_common::PaginationBase::new_unchecked(postgresql_crud_common::DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
