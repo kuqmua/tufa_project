@@ -178,6 +178,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
+            let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -3822,7 +3823,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{#field_type_as_postgresql_json_type_token_stream::into_inner(#default_but_option_is_always_some_call_token_stream)}
                     });
                     quote::quote! {
-                        #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(
+                        #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
                             #value_snake_case.0.#value_snake_case.#field_ident
                         ) {
                             Some(#value_snake_case) => Some(#value_snake_case),
@@ -3850,7 +3851,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
                                 let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                 quote::quote! {
-                                    let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(
+                                    let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
                                         read_only_ids.0.value.#field_ident.clone()
                                     );
                                 }
@@ -3941,7 +3942,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     } else {
                                         let current_field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         quote::quote! {
-                                            #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(
+                                            #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
                                                 element0.0.value.#current_field_ident.clone()
                                             )
                                         }
@@ -4317,7 +4318,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         match #value_snake_case.0.#value_snake_case {
-                                            Some(#value_snake_case) => match #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(#value_snake_case) {
+                                            Some(#value_snake_case) => match #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(#value_snake_case) {
                                                 Some(#value_snake_case) => Some(#value_snake_case.#value_snake_case),
                                                 None => None //none or struct where all fields are none
                                             },
@@ -4333,7 +4334,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         #value_snake_case.0.#value_snake_case.into_iter().fold(vec![], |mut acc, element| {
                                             //is it right?
-                                            if let Some(#value_snake_case) = #ident_with_id_standart_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(element) {
+                                            if let Some(#value_snake_case) = #ident_with_id_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(element) {
                                                 acc.push(#value_snake_case.#value_snake_case);
                                             }
                                             acc
@@ -4345,7 +4346,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         match #value_snake_case.0.#value_snake_case {
-                                            Some(#value_snake_case) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(
+                                            Some(#value_snake_case) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
                                                 #value_snake_case
                                             ) {
                                                 Some(#value_snake_case) => Some(#value_snake_case.#value_snake_case),
@@ -4375,7 +4376,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             });
                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                             quote::quote! {
-                                #field_ident: #field_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_inner(read_only_ids.0.#value_snake_case.#field_ident.clone())
+                                #field_ident: #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(read_only_ids.0.#value_snake_case.#field_ident.clone())
                             }
                         });
                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
