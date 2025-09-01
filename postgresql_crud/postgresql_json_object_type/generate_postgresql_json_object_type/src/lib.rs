@@ -166,6 +166,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let field_ident_snake_case = naming::FieldIdentSnakeCase;
             let id_snake_case = naming::IdSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
+            let error_snake_case = naming::ErrorSnakeCase;
             let fields_snake_case = naming::FieldsSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
@@ -1834,6 +1835,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 quote::quote! {{#(#content_token_stream),*}}
             };
+            let generate_impl_sqlx_decode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {
+                    impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
+                        fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+                            match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
+                                Ok(#value_snake_case) => Ok(#value_snake_case.0),
+                                Err(#error_snake_case) => Err(#error_snake_case),
+                            }
+                        }
+                    }
+                }
+            };
+            let generate_impl_sqlx_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {
+                    impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
+                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                            <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+                        }
+                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                            <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                        }
+                    }
+                }
+            };
             let ident_read_only_ids_token_stream = {
                 let maybe_ident_read_only_ids_handle_token_stream = if is_standart_not_null {
                     let content_token_stream = generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(&IsStandartWithId::False);
@@ -1881,30 +1906,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub struct #ident_read_only_ids_upper_camel_case #content_token_stream
                     }
                 };
-                let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Decode<'_, sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
-                            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                                match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                                    Ok(value) => Ok(value.0),
-                                    Err(error) => Err(error),
-                                }
-                            }
-                        }
-                    }
-                };
-                let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Type<sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
-                            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-                            }
-                            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                                <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = generate_impl_sqlx_decode_token_stream(&ident_read_only_ids_upper_camel_case);
+                let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = generate_impl_sqlx_type_token_stream(&ident_read_only_ids_upper_camel_case);
                 quote::quote! {
                     #maybe_ident_read_only_ids_handle_token_stream
                     #ident_read_only_ids_token_stream
@@ -1926,30 +1929,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(pub postgresql_crud::Value<#ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case>);
                     }
                 };
-                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Decode<'_, sqlx::Postgres> for #ident_with_id_read_only_ids_standart_not_null_upper_camel_case {
-                            fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                                match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-                                    Ok(value) => Ok(value.0),
-                                    Err(error) => Err(error),
-                                }
-                            }
-                        }
-                    }
-                };
-                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Type<sqlx::Postgres> for #ident_with_id_read_only_ids_standart_not_null_upper_camel_case {
-                            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-                            }
-                            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                                <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = generate_impl_sqlx_decode_token_stream(&ident_with_id_read_only_ids_standart_not_null_upper_camel_case);
+                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = generate_impl_sqlx_type_token_stream(&ident_with_id_read_only_ids_standart_not_null_upper_camel_case);
                 quote::quote! {
                     #ident_with_id_read_only_ids_handle_standart_not_null_token_stream
                     #ident_with_id_read_only_ids_standart_not_null_token_stream
