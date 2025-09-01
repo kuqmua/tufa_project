@@ -348,21 +348,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     self.to_string().parse::<proc_macro2::TokenStream>().unwrap().to_tokens(tokens);
                 }
             }
+            let generate_type_as_import_path_token_stream = |first_type_token_stream: &dyn quote::ToTokens, second_type_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {<#first_type_token_stream as #import_path::#second_type_token_stream>}
+            };
             let generate_type_as_postgresql_json_type_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-                quote::quote! {<#type_token_stream as #import_path::#postgresql_json_type_upper_camel_case>}
+                generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlJsonTypeUpperCamelCase)
             };
             let generate_type_as_postgresql_type_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-                quote::quote! {<#type_token_stream as #import_path::#postgresql_type_upper_camel_case>}
+                generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlTypeUpperCamelCase)
             };
             let generate_type_as_postgresql_json_type_test_cases_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
-                quote::quote! {<#type_token_stream as #import_path::#postgresql_json_type_test_cases_upper_camel_case>}
+                generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlJsonTypeTestCasesUpperCamelCase)
             };
             let generate_type_as_postgresql_type_test_cases_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
-                quote::quote! {<#type_token_stream as #import_path::#postgresql_type_test_cases_upper_camel_case>}
+                generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlTypeTestCasesUpperCamelCase)
             };
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
@@ -628,11 +627,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         quote::quote! {
                             match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#create_query_part_snake_case(&self.#element_field_ident, #increment_snake_case) {
-                                Ok(value) => {
-                                    #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
+                                Ok(#value_snake_case) => {
+                                    #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(
+                                        #element_field_ident_double_quotes_token_stream,
+                                        &#value_snake_case
+                                    ));
                                 }
-                                Err(error) => {
-                                    return Err(error);
+                                Err(#error_snake_case) => {
+                                    return Err(#error_snake_case);
                                 }
                             }
                         }
