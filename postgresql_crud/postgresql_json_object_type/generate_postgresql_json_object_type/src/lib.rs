@@ -496,7 +496,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let ident_not_null_array_with_id_postfix_upper_camel_case = generate_type_as_postgresql_json_type_subtype_table_type_declaration_or_create_token_stream(&generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId));
                                 quote::quote! {Self(
                                     match #value_snake_case {
-                                        Some(value) => Some(#ident_not_null_array_with_id_postfix_upper_camel_case::new(value)),
+                                        Some(#value_snake_case) => Some(#ident_not_null_array_with_id_postfix_upper_camel_case::new(#value_snake_case)),
                                         None => None
                                     }
 
@@ -685,19 +685,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => generate_standart_not_null_create_query_part_content_token_stream(&is_standart_with_id_false),
                             PostgresqlJsonObjectTypePattern::Array => quote::quote! {
-                                let mut acc = std::string::String::default();
-                                for element in &self.0 {
-                                    match element.#create_query_part_snake_case(#increment_snake_case) {
+                                let mut #acc_snake_case = std::string::String::default();
+                                for #element_snake_case in &self.0 {
+                                    match #element_snake_case.#create_query_part_snake_case(#increment_snake_case) {
                                         Ok(#value_snake_case) => {
-                                            acc.push_str(&format!("{value},"));
+                                            #acc_snake_case.push_str(&format!("{value},"));
                                         },
-                                        Err(error) => {
-                                            return Err(error);
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
                                         }
                                     }
                                 }
-                                let _ = acc.pop();
-                                Ok(format!("jsonb_build_array({acc})"))
+                                let _ = #acc_snake_case.pop();
+                                Ok(format!("jsonb_build_array({})", #acc_snake_case))
                             },
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
