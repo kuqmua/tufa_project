@@ -182,6 +182,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
             let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
             let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
+            let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -334,13 +335,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             #[derive(Debug, Clone, strum_macros::Display)]
             enum PostgresqlTypeSubtype {
-                TableTypeDeclaration,
-                Create,
-                Select,
-                WhereElement,
+                // TableTypeDeclaration,
+                // Create,
+                // Select,
+                // WhereElement,
                 Read,
-                ReadOnlyIds,
-                ReadInner,
+                // ReadOnlyIds,
+                // ReadInner,
                 Update,
             }
             impl quote::ToTokens for PostgresqlTypeSubtype {
@@ -1262,7 +1263,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
                             quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_part(
+                                Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
                                     value,
                                     increment,
                                     &format!(#format_handle_token_stream),
@@ -1328,23 +1329,68 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, #import_path::QueryPartErrorNamed> {
                                             let elem = "elem";
-                                            let value = match #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{elem}->'{field}'"), is_need_to_add_logical_operator) {
-                                                Ok(value) => value,
-                                                Err(error) => {
-                                                    return Err(error);
+                                            let #value_snake_case = match #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                &format!("{elem}->'{field}'"),
+                                                is_need_to_add_logical_operator
+                                            ) {
+                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Err(#error_snake_case) => {
+                                                    return Err(#error_snake_case);
                                                 }
                                             };
                                             Ok(format!("exists (select 1 from jsonb_array_elements({column}) as {elem} where {value})"))
                                         };
                                         match &self {
-                                            Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::LengthEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::LengthMoreThan(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::In(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::DimensionOneIn(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::ContainsAllElementsOfArray(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                            Self::OverlapsWithArray(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                            Self::Equal(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::DimensionOneEqual(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::LengthEqual(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::LengthMoreThan(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::In(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::DimensionOneIn(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::ContainsAllElementsOfArray(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
+                                            Self::OverlapsWithArray(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
+                                                #value_snake_case,
+                                                #increment_snake_case,
+                                                #column_snake_case,
+                                                #is_need_to_add_logical_operator_snake_case
+                                            ),
                                             #(#element_filters_token_stream),*
                                         }
                                     }
