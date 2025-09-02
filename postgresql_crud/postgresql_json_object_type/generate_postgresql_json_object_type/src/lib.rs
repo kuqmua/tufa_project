@@ -2585,29 +2585,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let value_into_inner_token_stream = quote::quote! {#value_snake_case.into_inner()};
             let generate_select_only_ids_query_part_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                    let mut acc = get_vec_syn_field(&is_standart_with_id).iter().fold(std::string::String::new(), |mut acc, element| {
-                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                        });
-                        acc.push_str(&format!("'{field_ident}',{{}},"));
-                        acc
-                    });
-                    let _ = acc.pop();
-                    format!("jsonb_build_object('value',jsonb_build_object({acc}))")
-                });
-                let select_only_ids_query_part_calls_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let acc_push_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{field_ident}',{{}})||"));
+                    let select_only_ids_query_part_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
                     let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
-                    quote::quote! {#field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&format!(#format_handle_token_stream))}
+                    quote::quote! {
+                        #acc_snake_case.push_str(&format!(
+                            #format_handle_token_stream,
+                            #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&format!(#select_only_ids_query_part_format_handle_token_stream))
+                        ));
+                    }
                 });
-                quote::quote! {format!(
-                    #format_handle_token_stream,
-                    #(#select_only_ids_query_part_calls_token_stream),*
-                )}
+                quote::quote! {
+                    let mut #acc_snake_case = std::string::String::default();
+                    #(#acc_push_token_stream)*
+                    let _ = #acc_snake_case.pop();
+                    let _ = #acc_snake_case.pop();
+                    format!("jsonb_build_object('value',{})",#acc_snake_case)
+                }
             };
             let (maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream) = {
                 let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
@@ -3566,8 +3564,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     &#column_snake_case,
                                                     #increment_snake_case
                                                 ) {
-                                                    Ok(#value_snake_case) => {
-                                                        #acc_snake_case.push_str(&#value_snake_case);
+                                                    Ok(mut #value_snake_case) => {
+                                                        let _ = #value_snake_case.pop();
+                                                        #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                                     },
                                                     Err(#error_snake_case) => {
                                                         return Err(#error_snake_case);
@@ -3584,7 +3583,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }
                                         }
                                         let _ = #acc_snake_case.pop();
-                                        Ok(format!("jsonb_build_object('value',jsonb_build_object({})) as {column},", #acc_snake_case))
+                                        let _ = #acc_snake_case.pop();
+                                        Ok(format!("jsonb_build_object('value',{}) as {column},", #acc_snake_case))
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
