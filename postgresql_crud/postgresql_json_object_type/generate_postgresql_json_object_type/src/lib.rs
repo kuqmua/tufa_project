@@ -817,10 +817,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let generate_ident_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                    let ident_select_standart_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+                    let ident_standart_not_null_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
                     generate_pub_struct_ident_select_token_stream(
                         match &is_standart_with_id {
-                            IsStandartWithId::False => &ident_select_standart_not_null_upper_camel_case,
+                            IsStandartWithId::False => &ident_standart_not_null_select_upper_camel_case,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_select_upper_camel_case,
                         },
                         &wrap_content_into_scopes_dot_comma_token_stream(&generate_unique_vec_wrapper_token_stream(match &is_standart_with_id {
@@ -892,7 +892,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_ident_select_token_stream = {
                     let select_query_part_postgresql_type_token_stream = {
                         let content_token_stream = {
-                            let generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                            let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
                                 let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                                 let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                                 let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
@@ -1019,7 +1019,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             };
                             match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&is_standart_with_id_false),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream(&is_standart_with_id_false),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => standart_nullable_token_stream,
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -1084,12 +1084,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                     },
                 );
-                let generate_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                let generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let ident_select_element_or_ident_with_id_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
                     };
-                    let ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = {
+                    let ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = {
                         let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -1109,8 +1109,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     };
-                    let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case);
-                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case, &{
+                    let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case);
+                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case, &{
                         let vec_content_token_stream = {
                             let elements_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                                 let field_ident = &element.ident.as_ref().unwrap_or_else(|| {
@@ -1128,26 +1128,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ]}
                     });
                     quote::quote! {
-                        #ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream
-                        #impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream
-                        #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream
+                        #ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
+                        #impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
+                        #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
                     }
                 };
-                let maybe_ident_select_element_token_stream = if is_standart_not_null { generate_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream(&is_standart_with_id_false) } else { proc_macro2::TokenStream::new() };
-                let maybe_ident_with_id_select_standart_not_null_token_stream = if is_standart_not_null {
-                    let ident_with_id_select_standart_not_null_token_stream = generate_ident_select_standart_not_null_token_stream(&is_standart_with_id_true);
-                    let impl_new_for_ident_with_id_select_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case, &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_with_id_standart_not_null_select_element_upper_camel_case)), &self_value_token_stream);
-                    let impl_sqlx_type_sqlx_postgres_for_ident_with_id_select_standart_not_null_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
-                    let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_standart_not_null_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_select_standart_not_null_token_stream =
+                let maybe_ident_select_element_token_stream = if is_standart_not_null { generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream(&is_standart_with_id_false) } else { proc_macro2::TokenStream::new() };
+                let maybe_ident_with_id_standart_not_null_select_token_stream = if is_standart_not_null {
+                    let ident_with_id_standart_not_null_select_token_stream = generate_ident_select_standart_not_null_token_stream(&is_standart_with_id_true);
+                    let impl_new_for_ident_with_id_standart_not_null_select_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case, &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_with_id_standart_not_null_select_element_upper_camel_case)), &self_value_token_stream);
+                    let impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
+                    let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_select_token_stream =
                         postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case, &proc_macro2::TokenStream::new(), &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream);
-                    let ident_with_id_select_element_token_stream = generate_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream(&is_standart_with_id_true);
+                    let ident_with_id_select_element_token_stream = generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream(&is_standart_with_id_true);
                     quote::quote! {
-                        #ident_with_id_select_standart_not_null_token_stream
-                        #impl_new_for_ident_with_id_select_standart_not_null_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_ident_with_id_select_standart_not_null_token_stream
-                        #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_standart_not_null_token_stream
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_select_standart_not_null_token_stream
+                        #ident_with_id_standart_not_null_select_token_stream
+                        #impl_new_for_ident_with_id_standart_not_null_select_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_select_token_stream
                         #ident_with_id_select_element_token_stream
                     }
                 } else {
@@ -1161,11 +1161,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
                     #maybe_ident_select_element_token_stream
-                    #maybe_ident_with_id_select_standart_not_null_token_stream
+                    #maybe_ident_with_id_standart_not_null_select_token_stream
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-            let ident_with_id_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_where_element_token_stream = match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                     use postgresql_crud_macros_common::NotNullOrNullable;
@@ -1423,22 +1423,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }),
                     };
-                    let maybe_ident_with_id_where_element_standart_not_null_token_stream = if is_standart_not_null {
-                        let ident_with_id_where_element_standart_not_null_token_stream = generate_ident_where_element_token_stream(&ident_with_id_where_element_standart_not_null_upper_camel_case, &generate_ident_where_element_content_token_stream(&is_standart_with_id_true));
-                        let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_standart_not_null_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
-                            &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                    let maybe_ident_with_id_standart_not_null_where_element_token_stream = if is_standart_not_null {
+                        let ident_with_id_standart_not_null_where_element_token_stream = generate_ident_where_element_token_stream(&ident_with_id_standart_not_null_where_element_upper_camel_case, &generate_ident_where_element_content_token_stream(&is_standart_with_id_true));
+                        let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_standart_not_null_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
+                            &ident_with_id_standart_not_null_where_element_upper_camel_case,
                             &generate_where_filter_query_part_content_standart_not_null_token_stream(&is_standart_with_id_true),
                             postgresql_crud_macros_common::IsQueryBindMutable::False,
                             &generate_where_filter_query_bind_content_standart_not_null_token_stream(&is_standart_with_id_true),
                         );
-                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_with_id_where_element_standart_not_null_upper_camel_case);
-                        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_standart_not_null_token_stream =
-                            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_with_id_where_element_standart_not_null_upper_camel_case, &generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element(&is_standart_with_id_true));
+                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_standart_not_null_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_with_id_standart_not_null_where_element_upper_camel_case);
+                        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_where_element_token_stream =
+                            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_with_id_standart_not_null_where_element_upper_camel_case, &generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element(&is_standart_with_id_true));
                         quote::quote! {
-                            #ident_with_id_where_element_standart_not_null_token_stream
-                            #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_standart_not_null_token_stream
-                            #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_standart_not_null_token_stream
-                            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_standart_not_null_token_stream
+                            #ident_with_id_standart_not_null_where_element_token_stream
+                            #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_standart_not_null_where_element_token_stream
+                            #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_standart_not_null_where_element_token_stream
+                            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_where_element_token_stream
                         }
                     } else {
                         proc_macro2::TokenStream::new()
@@ -1448,7 +1448,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream
                         #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream
                         #maybe_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
-                        #maybe_ident_with_id_where_element_standart_not_null_token_stream
+                        #maybe_ident_with_id_standart_not_null_where_element_token_stream
                     }
                 }
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -1516,10 +1516,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
             let ident_with_id_standart_not_null_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+            let generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
                 let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                     IsStandartWithId::False => &ident_read_inner_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
@@ -1548,7 +1548,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let ident_read_token_stream = {
                 let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
-                let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+                let ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
                 let ident_standart_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&ident_standart_not_null_upper_camel_case);
                 let ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
                 let ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&ident_with_id_array_not_null_upper_camel_case);
@@ -1599,7 +1599,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         );
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(&IsStandartWithId::False),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::False),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let into_inner_token_stream = generate_into_inner_token_stream(
                                         &generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case),
@@ -1647,7 +1647,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let generate_ident_read_or_ident_with_id_read_upper_camel_case = |is_standart_with_id: &IsStandartWithId| match &is_standart_with_id {
                     IsStandartWithId::False => &ident_read_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_standart_not_null_read_upper_camel_case,
                 };
                 let generate_impl_try_new_for_ident_read_try_from_error_named_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let ident_token_stream = generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id);
@@ -1675,9 +1675,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         (generate_fields_token_stream(&WithReference::True), generate_fields_token_stream(&WithReference::False))
                     };
-                    let ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
+                    let ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_read_try_from_error_named_upper_camel_case,
-                        IsStandartWithId::True => &ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case,
+                        IsStandartWithId::True => &ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case,
                     };
                     let check_if_all_fields_are_none_token_stream = {
                         let (left_token_stream, right_token_stream) = {
@@ -1699,7 +1699,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         quote::quote! {
                             if let #left_token_stream = #right_token_stream {
-                                return Err(#ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case::#all_fields_are_none_upper_camel_case {
+                                return Err(#ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!()
                                 });
                             }
@@ -1707,7 +1707,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     quote::quote! {
                         impl #ident_token_stream {
-                            pub fn try_new(#fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case> {
+                            pub fn try_new(#fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case> {
                                 #check_if_all_fields_are_none_token_stream
                                 Ok(Self{#fields_token_stream})
                             }
@@ -1715,17 +1715,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream = {
-                    let std_vec_vec_ident_with_id_read_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream);
+                    let std_vec_vec_ident_with_id_standart_not_null_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream);
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_read_upper_camel_case, &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_as_postgresql_json_type_read_token_stream)), &self_value_token_stream),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_read_upper_camel_case, &generate_value_type_token_stream(&std_vec_vec_ident_with_id_read_standart_not_null_token_stream), &self_value_token_stream),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_read_upper_camel_case, &generate_value_type_token_stream(&std_vec_vec_ident_with_id_standart_not_null_read_token_stream), &self_value_token_stream),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
                                 &ident_read_upper_camel_case,
-                                &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&std_vec_vec_ident_with_id_read_standart_not_null_token_stream)),
+                                &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&std_vec_vec_ident_with_id_standart_not_null_read_token_stream)),
                                 &quote::quote! {
                                     Self(match #value_snake_case {
                                         Some(#value_snake_case) => Some(#ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream::new(#value_snake_case)),
@@ -1785,30 +1785,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_read_upper_camel_case);
                 let maybe_ident_with_id_read_token_stream = if is_standart_not_null {
-                    let ident_with_id_read_standart_not_null_token_stream = generate_ident_read_token_stream(
-                        &ident_with_id_read_standart_not_null_upper_camel_case,
+                    let ident_with_id_standart_not_null_read_token_stream = generate_ident_read_token_stream(
+                        &ident_with_id_standart_not_null_read_upper_camel_case,
                         &{
                             let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(&is_standart_with_id_true, &ReadOrReadInner::ReadWithSerdeOptionIsNoneAnnotation);
                             quote::quote! {{#content_token_stream}}
                         },
                         &ShouldDeriveSerdeDeserialize::False,
                     );
-                    let impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream = generate_fn_into_inner_token_stream(&ident_with_id_read_standart_not_null_upper_camel_case, &ident_with_id_standart_not_null_read_inner_upper_camel_case, &generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(&IsStandartWithId::True));
-                    let ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
-                    let impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&is_standart_with_id_true);
-                    let impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream = generate_impl_serde_deserialize_for_ident_read_token_stream(&is_standart_with_id_true);
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream(&is_standart_with_id_true);
-                    let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_standart_not_null_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_read_standart_not_null_upper_camel_case);
-                    let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_standart_not_null_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_with_id_read_standart_not_null_upper_camel_case);
+                    let impl_into_inner_for_ident_with_id_standart_not_null_read_token_stream = generate_fn_into_inner_token_stream(&ident_with_id_standart_not_null_read_upper_camel_case, &ident_with_id_standart_not_null_read_inner_upper_camel_case, &generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::True));
+                    let ident_with_id_standart_not_null_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case);
+                    let impl_try_new_for_ident_with_id_standart_not_null_read_try_from_error_named_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&is_standart_with_id_true);
+                    let impl_serde_deserialize_for_ident_with_id_standart_not_null_read_token_stream = generate_impl_serde_deserialize_for_ident_read_token_stream(&is_standart_with_id_true);
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_read_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream(&is_standart_with_id_true);
+                    let impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_standart_not_null_read_upper_camel_case);
+                    let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_with_id_standart_not_null_read_upper_camel_case);
                     quote::quote! {
-                        #ident_with_id_read_standart_not_null_token_stream
-                        #impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream
-                        #ident_with_id_read_try_from_error_named_standart_not_null_token_stream
-                        #impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream
-                        #impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_standart_not_null_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_standart_not_null_token_stream
-                        #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_standart_not_null_token_stream
+                        #ident_with_id_standart_not_null_read_token_stream
+                        #impl_into_inner_for_ident_with_id_standart_not_null_read_token_stream
+                        #ident_with_id_standart_not_null_read_try_from_error_named_token_stream
+                        #impl_try_new_for_ident_with_id_standart_not_null_read_try_from_error_named_token_stream
+                        #impl_serde_deserialize_for_ident_with_id_standart_not_null_read_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_read_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_read_token_stream
+                        #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_read_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
@@ -1825,9 +1825,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #maybe_ident_with_id_read_token_stream
                 }
             };
-            let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let ident_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_read_only_ids_handle_upper_camel_case = naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_standart_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_handle_upper_camel_case = naming::parameter::SelfReadOnlyIdsHandleUpperCamelCase::from_tokens(&ident);
             let generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
@@ -1887,7 +1887,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let value_std_option_option_ident_read_only_ids_standart_not_null_token_stream = wrap_into_value_declaration_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                    &ident_read_only_ids_standart_not_null_upper_camel_case
+                                    &ident_standart_not_null_read_only_ids_upper_camel_case
                                 ));
                                 quote::quote! {
                                     (#value_std_option_option_ident_read_only_ids_standart_not_null_token_stream);
@@ -1896,11 +1896,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let value_std_vec_vec_ident_with_id_read_only_ids_standart_not_null_token_stream = wrap_into_value_declaration_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                                    &ident_with_id_read_only_ids_standart_not_null_upper_camel_case
+                                let value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_token_stream = wrap_into_value_declaration_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                                    &ident_with_id_standart_not_null_read_only_ids_upper_camel_case
                                 ));
                                 quote::quote! {
-                                    (#value_std_vec_vec_ident_with_id_read_only_ids_standart_not_null_token_stream);
+                                    (#value_std_vec_vec_ident_with_id_standart_not_null_read_only_ids_token_stream);
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -1925,34 +1925,34 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream
                 }
             };
-            let maybe_ident_with_id_read_only_ids_standart_not_null_token_stream = if is_standart_not_null {
-                let ident_with_id_read_only_ids_handle_standart_not_null_token_stream = {
+            let maybe_ident_with_id_standart_not_null_read_only_ids_token_stream = if is_standart_not_null {
+                let ident_with_id_standart_not_null_read_only_ids_handle_token_stream = {
                     let content_token_stream = generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(&IsStandartWithId::True);
                     quote::quote! {
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub struct #ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case #content_token_stream
+                        pub struct #ident_with_id_standart_not_null_read_only_ids_handle_upper_camel_case #content_token_stream
                     }
                 };
-                let ident_with_id_read_only_ids_standart_not_null_token_stream = {
-                    let value_ident_with_id_read_only_ids_handle_standart_not_null_token_stream = wrap_into_value_declaration_token_stream(&ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case);
+                let ident_with_id_standart_not_null_read_only_ids_token_stream = {
+                    let value_ident_with_id_standart_not_null_read_only_ids_handle_token_stream = wrap_into_value_declaration_token_stream(&ident_with_id_standart_not_null_read_only_ids_handle_upper_camel_case);
                     quote::quote! {
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(pub #value_ident_with_id_read_only_ids_handle_standart_not_null_token_stream);
+                        pub struct #ident_with_id_standart_not_null_read_only_ids_upper_camel_case(pub #value_ident_with_id_standart_not_null_read_only_ids_handle_token_stream);
                     }
                 };
-                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = generate_impl_sqlx_decode_token_stream(&ident_with_id_read_only_ids_standart_not_null_upper_camel_case);
-                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = generate_impl_sqlx_type_token_stream(&ident_with_id_read_only_ids_standart_not_null_upper_camel_case);
+                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_read_only_ids_token_stream = generate_impl_sqlx_decode_token_stream(&ident_with_id_standart_not_null_read_only_ids_upper_camel_case);
+                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_read_only_ids_token_stream = generate_impl_sqlx_type_token_stream(&ident_with_id_standart_not_null_read_only_ids_upper_camel_case);
                 quote::quote! {
-                    #ident_with_id_read_only_ids_handle_standart_not_null_token_stream
-                    #ident_with_id_read_only_ids_standart_not_null_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream
+                    #ident_with_id_standart_not_null_read_only_ids_handle_token_stream
+                    #ident_with_id_standart_not_null_read_only_ids_token_stream
+                    #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_read_only_ids_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_read_only_ids_token_stream
                 }
             } else {
                 proc_macro2::TokenStream::new()
             };
             let ident_read_inner_token_stream = {
-                let generate_ident_read_inner_or_ident_with_id_inner_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                let generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_read_inner_upper_camel_case,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
@@ -1969,7 +1969,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let generate_pub_type_ident_read_inner_alias_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_inner_upper_camel_case, &content_token_stream);
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_inner_or_ident_with_id_inner_standart_not_null_token_stream(&IsStandartWithId::False),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream(&IsStandartWithId::False),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_read_inner_alias_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_read_inner_token_stream(&ident_standart_not_null_upper_camel_case))),
                         },
                         PostgresqlJsonObjectTypePattern::Array => generate_pub_type_ident_read_inner_alias_token_stream(&match &not_null_or_nullable {
@@ -1978,18 +1978,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }),
                     }
                 };
-                let maybe_ident_with_id_read_inner_token_stream = if is_standart_not_null { generate_ident_read_inner_or_ident_with_id_inner_standart_not_null_token_stream(&IsStandartWithId::True) } else { proc_macro2::TokenStream::new() };
+                let maybe_ident_with_id_read_inner_token_stream = if is_standart_not_null { generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream(&IsStandartWithId::True) } else { proc_macro2::TokenStream::new() };
                 quote::quote! {
                     #ident_read_inner_token_stream
                     #maybe_ident_with_id_read_inner_token_stream
                 }
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
-            let ident_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+            let ident_standart_not_null_update_element_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_update_element_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident);
             let ident_standart_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_with_id_array_not_null_upper_camel_case);
-            let ident_with_id_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_update_element_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
                 let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
@@ -2007,7 +2007,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_ident_update_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     generate_unique_vec_wrapper_token_stream(match &is_standart_with_id {
                         IsStandartWithId::False => &ident_update_element_upper_camel_case,
-                        IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                        IsStandartWithId::True => &ident_with_id_standart_not_null_update_element_upper_camel_case,
                     })
                 };
                 enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
@@ -2094,7 +2094,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let maybe_impl_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_update_element_standart_not_null_upper_camel_case)), &self_value_token_stream),
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case)), &self_value_token_stream),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)), &self_value_token_stream),
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -2408,12 +2408,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         });
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub enum #ident_update_element_standart_not_null_upper_camel_case {
+                            pub enum #ident_standart_not_null_update_element_upper_camel_case {
                                 #(#variants_token_stream),*
                             }
                         }
                     };
-                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_element_standart_not_null_upper_camel_case, &{
+                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_standart_not_null_update_element_upper_camel_case, &{
                         let elements_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -2423,7 +2423,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                             );
                             quote::quote! {
-                                #ident_update_element_standart_not_null_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_content_token_stream)
+                                #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_content_token_stream)
                             }
                         });
                         quote::quote! {vec![#(#elements_token_stream),*]}
@@ -2435,7 +2435,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 } else {
                     proc_macro2::TokenStream::new()
                 };
-                let maybe_ident_with_id_update_element_standart_not_null_token_stream = if is_standart_not_null {
+                let maybe_ident_with_id_standart_not_null_update_element_token_stream = if is_standart_not_null {
                     //thought it can be reused as struct with generic parameter, but turns out its too painfull
                     // pub trait MyTrait {
                     //     type AdditionalType: PartialEq;
@@ -2452,26 +2452,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     // #[derive(PartialEq)]
                     // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
                     // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
-                    let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = quote::quote! {
+                    let ident_with_id_standart_not_null_update_element_fields_declaration_token_stream = quote::quote! {
                         #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
                         #fields_snake_case: #ident_standart_not_null_as_postgresql_json_type_update_token_stream
                     };
-                    let ident_with_id_update_element_standart_not_null_token_stream = quote::quote! {
+                    let ident_with_id_standart_not_null_update_element_token_stream = quote::quote! {
                         #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                        pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                            #ident_with_id_update_element_standart_not_null_fields_declaration_token_stream
+                        pub struct #ident_with_id_standart_not_null_update_element_upper_camel_case {
+                            #ident_with_id_standart_not_null_update_element_fields_declaration_token_stream
                         }
                     };
-                    let impl_new_for_ident_with_id_update_element_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_with_id_update_element_standart_not_null_upper_camel_case,
-                        &ident_with_id_update_element_standart_not_null_fields_declaration_token_stream,
+                    let impl_new_for_ident_with_id_standart_not_null_update_element_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_with_id_standart_not_null_update_element_upper_camel_case,
+                        &ident_with_id_standart_not_null_update_element_fields_declaration_token_stream,
                         &quote::quote! {Self {
                             #id_snake_case,
                             #fields_snake_case
                         }},
                     );
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_with_id_standart_not_null_update_element_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &quote::quote! {Self {
                             #id_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -2485,19 +2485,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                             pub struct #ident_with_id_standart_not_null_update_upper_camel_case(
-                                #import_path::UniqueVec<#ident_with_id_update_element_standart_not_null_upper_camel_case>
+                                #import_path::UniqueVec<#ident_with_id_standart_not_null_update_element_upper_camel_case>
                             );
                         }
                     };
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_handle_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_handle_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_with_id_standart_not_null_update_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &quote::quote! {Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
                     );
-                    let impl_ident_with_update_handle_standart_not_null_token_stream = {
+                    let impl_ident_with_standart_not_null_update_handle_token_stream = {
                         let new_token_stream = {
                             quote::quote!{
-                                pub fn new(value: #import_path::UniqueVec<#ident_with_id_update_element_standart_not_null_upper_camel_case>) -> Self {
+                                pub fn new(value: #import_path::UniqueVec<#ident_with_id_standart_not_null_update_element_upper_camel_case>) -> Self {
                                     Self(value)
                                 }
                             }
@@ -2508,7 +2508,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     };
-                    let impl_default_for_ident_with_id_update_handle_standart_not_null_token_stream = {
+                    let impl_default_for_ident_with_id_standart_not_null_update_handle_token_stream = {
                         quote::quote!{
                             impl std::default::Default for #ident_with_id_standart_not_null_update_upper_camel_case {
                                 fn default() -> Self {
@@ -2518,14 +2518,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     quote::quote! {
-                        #ident_with_id_update_element_standart_not_null_token_stream
-                        #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream
+                        #ident_with_id_standart_not_null_update_element_token_stream
+                        #impl_new_for_ident_with_id_standart_not_null_update_element_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_element_token_stream
 
                         #ident_with_id_update_handle_token_stream
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_handle_standart_not_null_token_stream
-                        #impl_ident_with_update_handle_standart_not_null_token_stream
-                        #impl_default_for_ident_with_id_update_handle_standart_not_null_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_handle_token_stream
+                        #impl_ident_with_standart_not_null_update_handle_token_stream
+                        #impl_default_for_ident_with_id_standart_not_null_update_handle_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
@@ -2537,7 +2537,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #maybe_impl_serde_deserialize_for_ident_update_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
                     #maybe_ident_update_element_token_stream
-                    #maybe_ident_with_id_update_element_standart_not_null_token_stream
+                    #maybe_ident_with_id_standart_not_null_update_element_token_stream
                 }
             };
             let value_into_inner_token_stream = quote::quote! {#value_snake_case.into_inner()};
@@ -2581,7 +2581,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::True,
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::True,
                     &{
-                        let generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                        let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
                             let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                             let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                             let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
@@ -2709,7 +2709,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&is_standart_with_id_false),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream(&is_standart_with_id_false),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => standart_nullable_token_stream,
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -2793,7 +2793,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
                                         let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                                             IsStandartWithId::False => &ident_update_element_upper_camel_case,
-                                            IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                                            IsStandartWithId::True => &ident_with_id_standart_not_null_update_element_upper_camel_case,
                                         };
                                         quote::quote! {
                                             #ident_token_stream::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => {
@@ -2980,7 +2980,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let is_standart_with_id = &is_standart_with_id_false;
                                     let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                                         IsStandartWithId::False => &ident_update_element_upper_camel_case,
-                                        IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                                        IsStandartWithId::True => &ident_with_id_standart_not_null_update_element_upper_camel_case,
                                     };
                                     let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                         let field_ident_stringified = element
@@ -3072,7 +3072,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"));
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
                                                 match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
                                                     &#value_snake_case.#value_snake_case,
                                                     &#field_ident_double_quotes_token_stream,
@@ -3110,7 +3110,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"));
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
                                                 &value.value,
                                                 &#field_ident_double_quotes_token_stream,
                                                 &format!(#format_handle_token_stream),
@@ -3240,7 +3240,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
                                         let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                                             IsStandartWithId::False => &ident_update_element_upper_camel_case,
-                                            IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                                            IsStandartWithId::True => &ident_with_id_standart_not_null_update_element_upper_camel_case,
                                         };
                                         quote::quote! {
                                             #ident_token_stream::#variant_ident_upper_camel_case_token_stream(value) => {
@@ -3425,7 +3425,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let is_standart_with_id = &is_standart_with_id_false;
                                     let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                                         IsStandartWithId::False => &ident_update_element_upper_camel_case,
-                                        IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                                        IsStandartWithId::True => &ident_with_id_standart_not_null_update_element_upper_camel_case,
                                     };
                                     let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                         let field_ident_stringified = element
@@ -3516,7 +3516,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case(value) => {
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(value) => {
                                                 match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
                                                     &#value_snake_case.#value_snake_case,
                                                     &#field_ident_double_quotes_token_stream,
@@ -3554,7 +3554,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_snake_case}}}"));
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case_token_stream(#value_snake_case) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(#value_snake_case) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
                                                 &#value_snake_case.#value_snake_case,
                                                 &#field_ident_double_quotes_token_stream,
                                                 &format!(#format_handle_token_stream),
@@ -3659,7 +3659,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::True,
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::True,
                     &{
-                        let generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                        let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
                             let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                             let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                             let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
@@ -3735,11 +3735,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             }
                         };
-                        generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::True)
+                        generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream(&IsStandartWithId::True)
                     },
-                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                    &ident_with_id_read_standart_not_null_upper_camel_case,
-                    &ident_with_id_read_only_ids_standart_not_null_upper_camel_case,
+                    &ident_with_id_standart_not_null_where_element_upper_camel_case,
+                    &ident_with_id_standart_not_null_read_upper_camel_case,
+                    &ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                     &generate_select_only_ids_query_part_token_stream(&is_standart_with_id_true),
                     &ident_with_id_standart_not_null_read_inner_upper_camel_case,
                     &value_into_inner_token_stream,
@@ -3758,7 +3758,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                             let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                             quote::quote! {
-                                #ident_update_element_standart_not_null_upper_camel_case::#field_ident_upper_camel_case(value) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
+                                #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(value) => match #field_type_as_postgresql_json_type_token_stream::select_only_updated_ids_query_part(
                                     &#value_snake_case.#value_snake_case,
                                     &#field_ident_double_quotes_token_stream,
                                     &column_name_and_maybe_field_getter,
@@ -4057,7 +4057,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #self_element_as_postgresql_type_read_token_stream::new(match value {
                                     Some(value) => Some(
                                         value.into_iter().map(|element|{
-                                            #ident_with_id_read_standart_not_null_upper_camel_case {
+                                            #ident_with_id_standart_not_null_read_upper_camel_case {
                                                 #(#content_token_stream),*
                                             }
                                         }).collect()
@@ -4123,7 +4123,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     vec![],
                                     #ident_with_id_standart_not_null_update_upper_camel_case::new(
                                         #import_path::UniqueVec::try_new(
-                                            #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_update_element_standart_not_null_upper_camel_case {
+                                            #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_standart_not_null_update_element_upper_camel_case {
                                                 #id_snake_case: #import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().unwrap().#value_snake_case),
                                                 fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(
                                                     #ident_standart_not_null_read_inner_upper_camel_case {
@@ -4230,14 +4230,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let current_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&current_field_ident);
                                     if &field_ident == &current_field_ident {
                                         quote::quote!{
-                                            #ident_update_element_standart_not_null_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(#value_snake_case) => {
+                                            #ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(#value_snake_case) => {
                                                 #field_ident = Some(#value_snake_case.#value_snake_case.clone());
                                             }
                                         }
                                     }
                                     else {
                                         quote::quote!{
-                                            #ident_update_element_standart_not_null_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(_) => ()
+                                            #ident_standart_not_null_update_element_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(_) => ()
                                         }
                                     }
                                 });
@@ -4261,7 +4261,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let value_content_token_stream = wrap_into_value_initialization_token_stream(&{
                                 let uuid_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream);
                                 let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
-                                    #ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case {
+                                    #ident_with_id_standart_not_null_read_only_ids_handle_upper_camel_case {
                                         #id_snake_case: #uuid_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&#element_snake_case.#id_snake_case),
                                         #(#fields_token_stream),*
                                     }
@@ -4270,7 +4270,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     #value_snake_case.#update_snake_case.0.to_vec().iter().map(|#element_snake_case|{
                                         #(#initialization_token_stream)*
                                         #(#for_loop_token_stream)*
-                                        #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(#value_content_token_stream)
+                                        #ident_with_id_standart_not_null_read_only_ids_upper_camel_case(#value_content_token_stream)
                                     }).collect()
                                 }
                             });
@@ -4407,7 +4407,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         });
                         quote::quote!{
-                            #ident_with_id_read_standart_not_null_upper_camel_case {
+                            #ident_with_id_standart_not_null_read_upper_camel_case {
                                 #(#content_token_stream),*
                             }
                         }
@@ -4427,7 +4427,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #ident_where_element_token_stream
                 #ident_read_token_stream
                 #ident_read_only_ids_token_stream
-                #maybe_ident_with_id_read_only_ids_standart_not_null_token_stream
+                #maybe_ident_with_id_standart_not_null_read_only_ids_token_stream
                 #ident_read_inner_token_stream
                 #ident_update_token_stream
                 #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
