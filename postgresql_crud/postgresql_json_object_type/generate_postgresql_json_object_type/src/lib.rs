@@ -297,7 +297,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             });
             let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithoutId);
             let ident_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
-            let ident_standart_not_null_update_element_upper_camel_case = naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithId);
             let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
             let is_standart_not_null = matches!((&not_null_or_nullable, postgresql_json_object_type_pattern), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart));
@@ -705,13 +704,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
                             };
+                            let ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case);
                             quote::quote! {
                                 match &self.0 {
-                                    Some(#value_snake_case) => <
-                                        #ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case
-                                        as
-                                        #import_path::PostgresqlJsonType
-                                    >::#create_query_part_snake_case(#value_snake_case, #increment_snake_case),
+                                    Some(#value_snake_case) => #ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#create_query_part_snake_case(#value_snake_case, #increment_snake_case),
                                     None => match #increment_snake_case.checked_add(1) {
                                         Some(#value_snake_case) => {
                                             *#increment_snake_case = #value_snake_case;
