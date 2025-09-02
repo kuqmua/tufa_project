@@ -3809,8 +3809,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     &column_name_and_maybe_field_getter,
                                     #increment_snake_case
                                 ) {
-                                    Ok(#value_snake_case) => {
-                                        #acc_snake_case.push_str(&#value_snake_case);
+                                    Ok(mut #value_snake_case) => {
+                                        let _ = #value_snake_case.pop();
+                                        current_acc.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                     }
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -3821,20 +3822,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             let mut #acc_snake_case = std::string::String::new();
                             for #element_snake_case in #value_snake_case.0.to_vec() {
-                                #acc_snake_case.push_str(&format!(
-                                    "jsonb_build_object('id',jsonb_build_object('value','{}'),{})||",
-                                    #element_snake_case.#id_snake_case.get_inner(),//todo sql injection potential!!!! use .bind (or try bind) instead
-                                    {
-                                        let mut #acc_snake_case = std::string::String::new();
-                                        for #element_snake_case in #element_snake_case.fields.0.to_vec() {
-                                            match &#element_snake_case {
-                                                #(#match_variants_token_stream),*
-                                            }
-                                        }
-                                        let _ = #acc_snake_case.pop();
-                                        #acc_snake_case
+                                //todo maybe wrong for multiple updates by id?
+                                let mut current_acc = format!("jsonb_build_object('id',jsonb_build_object('value','{}'))||", #element_snake_case.#id_snake_case.get_inner());
+                                for #element_snake_case in #element_snake_case.fields.0.to_vec() {
+                                    match &#element_snake_case {
+                                        #(#match_variants_token_stream),*
                                     }
-                                ));
+                                }
+                                let _ = current_acc.pop();
+                                let _ = current_acc.pop();
+                                #acc_snake_case.push_str(&format!("{}||", current_acc));
                             }
                             let _ = #acc_snake_case.pop();
                             let _ = #acc_snake_case.pop();
