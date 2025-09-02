@@ -169,9 +169,14 @@ where
             None => Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self.0));
-        query
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    > {
+        if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
+            return Err(error.to_string());
+        }
+        Ok(query)
     }
 }
 
@@ -722,10 +727,17 @@ impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Enco
         };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(self.start);
-        query = query.bind(self.end);
-        query
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    > {
+        if let Err(error) = query.try_bind(self.start) {
+            return Err(error.to_string());
+        }
+        if let Err(error) = query.try_bind(self.end) {
+            return Err(error.to_string());
+        }
+        Ok(query)
     }
 }
 

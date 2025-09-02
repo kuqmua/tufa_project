@@ -354,7 +354,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             fn #create_query_bind_snake_case(
                 #value_snake_case: Self::#create_upper_camel_case,
                 #is_create_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-            ) -> #query_postgres_arguments_token_stream {
+            ) -> Result<#query_postgres_arguments_token_stream, std::string::String> {
                 #create_query_bind_token_stream
             }
             type #select_upper_camel_case = #select_type_token_stream;
@@ -392,7 +392,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             fn #update_query_bind_snake_case(
                 #value_snake_case: Self::#update_upper_camel_case,
                 #is_update_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-            ) -> #query_postgres_arguments_token_stream {
+            ) -> Result<#query_postgres_arguments_token_stream, std::string::String> {
                 #update_query_bind_token_stream
             }
             fn #select_only_updated_ids_query_part_snake_case(
@@ -567,7 +567,10 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
                 #query_part_content_token_stream
             }
-            fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+                sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                std::string::String
+            > {
                 #query_bind_content_token_stream
             }
         }
@@ -774,7 +777,10 @@ pub fn generate_impl_postgresql_type_token_stream(
             fn #create_query_bind_snake_case(
                 #create_query_bind_value_underscore: Self::#create_upper_camel_case,
                 #is_create_query_bind_mutable #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            ) -> Result<
+                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                std::string::String
+            > {
                 #create_query_bind_content_token_stream
             }
             type #select_upper_camel_case = #ident_select_upper_camel_case;
@@ -813,7 +819,10 @@ pub fn generate_impl_postgresql_type_token_stream(
             fn #update_query_bind_snake_case<'a>(
                 #value_snake_case: Self::#update_upper_camel_case,
                 #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            ) -> Result<
+                sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                std::string::String
+            > {
                 #update_query_bind_content_token_stream
             }
             fn #select_only_updated_ids_query_part_snake_case(
