@@ -4119,23 +4119,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 });
                                 quote::quote! {#field_ident: element.#field_ident}
                             });
+                            let uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
                             let ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
                             quote::quote! {
                                 #ident_update_upper_camel_case::try_new(
                                     vec![],
                                     #ident_with_id_update_standart_not_null_upper_camel_case::new(
                                         #import_path::UniqueVec::try_new(
-                                            value
-                                                .into_iter()
-                                                .map(|element| #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                                                    id: #import_path::UuidUuidAsNotNullJsonbStringOrigin::new(element.id.clone().unwrap().value),
-                                                    fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(
-                                                        #ident_read_inner_standart_not_null_upper_camel_case {
-                                                            #(#fields_token_stream),*
-                                                        }
-                                                    ),
-                                                })
-                                                .collect(),
+                                            #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_update_element_standart_not_null_upper_camel_case {
+                                                #id_snake_case: #import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().unwrap().#value_snake_case),
+                                                fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::update_new_or_try_new_unwraped_for_test(
+                                                    #ident_read_inner_standart_not_null_upper_camel_case {
+                                                        #(#fields_token_stream),*
+                                                    }
+                                                ),
+                                            })
+                                            .collect(),
                                         )
                                         .unwrap(),
                                     ),
@@ -4234,8 +4233,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let current_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&current_field_ident);
                                     if &field_ident == &current_field_ident {
                                         quote::quote!{
-                                            #ident_update_element_standart_not_null_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(value) => {
-                                                #field_ident = Some(value.value.clone());
+                                            #ident_update_element_standart_not_null_upper_camel_case::#current_field_ident_upper_camel_case_token_stream(#value_snake_case) => {
+                                                #field_ident = Some(#value_snake_case.#value_snake_case.clone());
                                             }
                                         }
                                     }
@@ -4263,15 +4262,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             });
                             let value_content_token_stream = wrap_into_value_initialization_token_stream(&{
-                                let uuid_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&quote::quote!{#import_path::UuidUuidAsNotNullJsonbString});
+                                let uuid_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream);
                                 let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                     #ident_with_id_read_only_ids_handle_standart_not_null_upper_camel_case {
-                                        id: #uuid_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&element.id),
+                                        #id_snake_case: #uuid_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&#element_snake_case.#id_snake_case),
                                         #(#fields_token_stream),*
                                     }
                                 });
                                 quote::quote!{
-                                    value.update.0.to_vec().iter().map(|element|{
+                                    #value_snake_case.#update_snake_case.0.to_vec().iter().map(|#element_snake_case|{
                                         #(#initialization_token_stream)*
                                         #(#for_loop_token_stream)*
                                         #ident_with_id_read_only_ids_standart_not_null_upper_camel_case(#value_content_token_stream)
@@ -4283,8 +4282,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
                             let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
-                                match &value.0 {
-                                    Some(value) => Some(#ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&value)),
+                                match &#value_snake_case.0 {
+                                    Some(#value_snake_case) => Some(#ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&#value_snake_case)),
                                     None => None,
                                 }
                             });
@@ -4333,12 +4332,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let ident_with_id_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
-                                        #value_snake_case.0.#value_snake_case.into_iter().fold(vec![], |mut acc, element| {
+                                        #value_snake_case.0.#value_snake_case.into_iter().fold(vec![], |mut #acc_snake_case, #element_snake_case| {
                                             //is it right?
-                                            if let Some(#value_snake_case) = #ident_with_id_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(element) {
-                                                acc.push(#value_snake_case.#value_snake_case);
+                                            if let Some(#value_snake_case) = #ident_with_id_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(#element_snake_case) {
+                                                #acc_snake_case.push(#value_snake_case.#value_snake_case);
                                             }
-                                            acc
+                                            #acc_snake_case
                                         })
                                     });
                                     quote::quote! {Some(#value_content_token_stream)}
@@ -4381,13 +4380,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         });
                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
-                            read_only_ids.0.#value_snake_case.id.0.#value_snake_case.clone()
+                            #read_only_ids_snake_case.0.#value_snake_case.#id_snake_case.0.#value_snake_case.clone()
                         });
                         quote::quote!{
                             vec![
                                 vec![
                                     #ident_with_id_read_inner_standart_not_null_upper_camel_case {
-                                        id: Some(#value_content_token_stream),
+                                        #id_snake_case: Some(#value_content_token_stream),
                                         #(#content_token_stream),*
                                     }
                                 ]
