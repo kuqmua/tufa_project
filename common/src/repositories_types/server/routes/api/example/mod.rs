@@ -1026,8 +1026,8 @@ pub struct Animal {
     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-    pub field_806: DoggieAsNotNullJsonbObject,
-    // pub field_808: OptionDoggieAsNullableJsonbObject,
+    // pub field_806: DoggieAsNotNullJsonbObject,
+    pub field_808: OptionDoggieAsNullableJsonbObject,
     // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }

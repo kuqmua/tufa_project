@@ -3159,8 +3159,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 &format!(#format_handle_token_stream),
                                                 #increment_snake_case
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #acc_snake_case.push_str(&#value_snake_case);
+                                                Ok(mut #value_snake_case) => {
+                                                    let _ = #value_snake_case.pop();
+                                                    #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                                 }
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3178,7 +3179,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     }
                                                 }
                                                 let _ = #acc_snake_case.pop();
-                                                Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object('value',jsonb_build_object({}))),", #acc_snake_case))
+                                                let _ = #acc_snake_case.pop();
+                                                Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object('value',{})),", #acc_snake_case))
                                             },
                                             None => Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))
                                         }
