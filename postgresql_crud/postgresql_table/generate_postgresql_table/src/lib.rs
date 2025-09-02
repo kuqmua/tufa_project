@@ -3968,7 +3968,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         })
                         .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
                         .join()
-                        .expect("error b2f21a5f-d9ce-435c-809f-bd40741c8795");
+                        // .expect("error b2f21a5f-d9ce-435c-809f-bd40741c8795")
+                        .unwrap_or_else(|error|{
+                            panic!("error b2f21a5f-d9ce-435c-809f-bd40741c8795 {error:#?}");
+                        });
                 }
             }
         }
