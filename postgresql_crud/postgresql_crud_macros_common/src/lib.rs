@@ -459,10 +459,7 @@ impl ImportPath {
 }
 impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.snake_case_std_primitive_str()
-        .parse::<proc_macro2::TokenStream>()
-        .expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59")
-        .to_tokens(tokens)
+        self.snake_case_std_primitive_str().parse::<proc_macro2::TokenStream>().expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59").to_tokens(tokens)
     }
 }
 impl ImportPath {

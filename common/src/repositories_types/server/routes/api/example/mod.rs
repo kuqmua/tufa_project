@@ -1087,7 +1087,6 @@ pub struct Doggie {
     // pub field_27: postgresql_crud::OptionVecOfOptionVecOfVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_28: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_29: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     pub field_806: CatAsNotNullJsonbObject,
     pub field_807: OptionCatAsNullableJsonbObject,
     pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
