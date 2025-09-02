@@ -3741,11 +3741,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_standart_not_null_read_inner_upper_camel_case,
                     &value_into_inner_token_stream,
                     &ident_with_id_standart_not_null_update_upper_camel_case,
-                    &quote::quote! {todo!()},
+                    &quote::quote! {unreachable!()},
                     &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                     &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                    &quote::quote! {todo!()},
+                    &quote::quote! {unreachable!()},
                     &{
                         let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -4294,7 +4294,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &test_cases_content_token_stream,
                         &read_new_or_try_new_unwraped_for_test_token_stream,
                         &update_new_or_try_new_unwraped_for_test_token_stream,
-                        &quote::quote!{todo!()},
+                        &quote::quote!{unreachable!()},
                         &update_to_read_only_ids_token_stream
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
@@ -4409,9 +4409,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     },
-                    &quote::quote!{todo!()},
+                    &quote::quote!{unreachable!()},
                     &generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_true),
-                    &quote::quote!{todo!()}
+                    &quote::quote!{unreachable!()}
                 )
             } else {
                 proc_macro2::TokenStream::new()
