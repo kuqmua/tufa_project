@@ -1,5 +1,4 @@
 //todo generate authorization rights enum for json fields
-//todo error returned from database: cannot pass more than 100 arguments to a function
 #[proc_macro_attribute]
 pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
     item
