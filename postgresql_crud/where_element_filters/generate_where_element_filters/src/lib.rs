@@ -105,14 +105,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         PostgresqlType,
         PostgresqlJsonType,
     }
-    let generate_impl_postgresql_type_where_filter_token_stream = |filter_type: &FilterType,
-                                                                   should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
-                                                                   ident: &dyn quote::ToTokens,
-                                                                   increment_parameter_underscore: &postgresql_crud_macros_common::IncrementParameterUnderscore,
-                                                                   is_need_to_add_logical_operator_underscore: &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore,
-                                                                   query_part_content_token_stream: &dyn quote::ToTokens,
-                                                                   is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
-                                                                   query_bind_content_token_stream: &dyn quote::ToTokens| {
+    let generate_impl_postgresql_type_where_filter_token_stream = |
+        filter_type: &FilterType,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        increment_parameter_underscore: &postgresql_crud_macros_common::IncrementParameterUnderscore,
+        is_need_to_add_logical_operator_underscore: &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore,
+        query_part_content_token_stream: &dyn quote::ToTokens,
+        is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
+        query_bind_content_token_stream: &dyn quote::ToTokens
+    | {
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
@@ -154,12 +156,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
     let query_equals_query_self_value_to_string_token_stream = quote::quote! {
-        query = query.bind(self.value.to_string());
-        query
+        if let Err(error) = query.try_bind(self.value.to_string()) {
+            return Err(error.to_string());
+        }
+        Ok(query)
     };
     let query_bind_one_value_token_stream = quote::quote! {
-        query = query.bind(self.value);
-        query
+        if let Err(error) = query.try_bind(self.value) {
+            return Err(error.to_string());
+        }
+        Ok(query)
     };
     let should_add_declaration_of_struct_ident_generic_false = ShouldAddDeclarationOfStructIdentGeneric::False;
     let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: None };
@@ -194,8 +200,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let pub_value_between_t_token_stream = quote::quote! {pub #value_between_t_token_stream};
     fn generate_query_self_value_query_bind_token_stream() -> proc_macro2::TokenStream {
         quote::quote! {
-            query = self.value.query_bind(query);
-            query
+            match self.value.query_bind(query) {
+                Ok(value) => {
+                    query = value;
+                },
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+            Ok(query)
         }
     }
     let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
@@ -275,7 +288,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
     let dimensions_default_initialization_comma_token_stream = quote::quote! {#dimensions_default_initialization_token_stream,};
-    let query_self_dimensions_query_bind_query_token_stream = quote::quote! {query = self.#dimensions_snake_case.query_bind(query);};
+    let query_self_dimensions_query_bind_query_token_stream = quote::quote! {
+        match self.#dimensions_snake_case.query_bind(query) {
+            Ok(value) => {
+                query = value;
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+    };
     enum PostgresqlTypeKind {
         Standart,
         ArrayDimension,
@@ -338,7 +360,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
-            let (should_add_declaration_of_struct_ident_generic, struct_additional_fields_token_stream, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream, increment_parameter_underscore, query_part_content_token_stream, is_query_bind_mutable, query_bind_content_token_stream) = {
+            let (
+                should_add_declaration_of_struct_ident_generic,
+                struct_additional_fields_token_stream,
+                impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
+                increment_parameter_underscore,
+                query_part_content_token_stream,
+                is_query_bind_mutable,
+                query_bind_content_token_stream
+            ) = {
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(quote::quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
                 };
@@ -452,9 +482,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             for element in self.value.into_vec() {
-                                query = query.bind(element);
+                                if let Err(error) = query.try_bind(element) {
+                                    return Err(error.to_string());
+                                }
                             }
-                            query
+                            Ok(query)
                         },
                     )
                 };
@@ -549,7 +581,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            #query_snake_case
+                            Ok(#query_snake_case)
                         },
                     )
                 };
@@ -592,8 +624,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         is_query_bind_mutable_true.clone(),
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            query = query.bind(self.encoded_string_representation);
-                            query
+                            if let Err(error) = query.try_bind(self.encoded_string_representation) {
+                                return Err(error.to_string());
+                            }
+                            Ok(query)
                         },
                     )
                 };
@@ -638,7 +672,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 dimensions_indexes2,
                             },
                             quote::quote! {
-                                query = self.#dimensions_snake_case.clone().query_bind(query);
+                                match self.#dimensions_snake_case.clone().query_bind(query) {
+                                    Ok(value) => {
+                                        query = value;
+                                    },
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
+                                }
                                 #query_self_dimensions_query_bind_query_token_stream
                             },
                         )
@@ -770,8 +811,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
             };
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
-                query = query.bind(sqlx::types::Json(self.value));
-                query
+                if let Err(error) = query.try_bind(sqlx::types::Json(self.value)) {
+                    return Err(error.to_string());
+                }
+                Ok(query)
             };
             let generate_postgresql_json_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType);
             let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String| {
@@ -907,8 +950,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
-                        query = self.value.query_bind_one_by_one(query);
-                        query
+                        match self.value.query_bind_one_by_one(query) {
+                            Ok(value) => {
+                                query = value;
+                            }
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        }
+                        Ok(query)
                     },
                 )
             };

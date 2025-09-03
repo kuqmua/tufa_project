@@ -72,14 +72,19 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
         let _ = acc.pop();
         Ok(acc)
     }
-    pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >
     where
         T: 'a,
     {
         for element in self.0 {
-            query = query.bind(sqlx::types::Json(element));
+            if let Err(error) = query.try_bind(sqlx::types::Json(element)) {
+                return Err(error.to_string());
+            }
         }
-        query
+        Ok(query)
     }
 }
 const _: () = {
@@ -907,11 +912,16 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
     pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
-    pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    > {
         for element in self.0 {
-            query = query.bind(element);
+            if let Err(error) = query.try_bind(element) {
+                return Err(error.to_string());
+            }
         }
-        query
+        Ok(query)
     }
 }
 impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec<T>> for BoundedStdVecVec<T, LENGTH> {
