@@ -764,7 +764,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #query_snake_case = #value_snake_case;
                             },
                             Err(#error_0_token_stream) => {
-                                return Err(error);
+                                return Err(#error_0_token_stream);
                             }
                         }
                     }
@@ -783,7 +783,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     > {
                         #primary_key_content_token_stream
                         #binded_query_modifications_token_stream
-                        #query_snake_case
+                        Ok(#query_snake_case)
                     }
                 }
             };
@@ -957,7 +957,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #query_snake_case = #value_snake_case;
                                 },
                                 Err(#error_0_token_stream) => {
-                                    return Err(error);
+                                    return Err(#error_0_token_stream);
                                 }
                             }
                         }
@@ -967,7 +967,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     if let Some(#value_snake_case) = self.0 {
                         #binded_query_modifications_token_stream
                     }
-                    #query_snake_case
+                    Ok(#query_snake_case)
                 }
             },
             &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
@@ -3208,6 +3208,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                     if let Err(#error_0_token_stream) = #query_snake_case.try_bind(#element_snake_case.#primary_key_field_ident.clone()) {
+                                        let #error_0_token_stream = #error_0_token_stream.to_string();
                                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                     match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
@@ -3528,6 +3529,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
+                value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(try_bind_syn_variant_wrapper.get_syn_variant());
                 value
             },
