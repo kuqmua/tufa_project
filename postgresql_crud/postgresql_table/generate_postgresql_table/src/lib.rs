@@ -2416,19 +2416,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &#ident::#primary_key_snake_case()
                     )}
                 };
-                let binded_query_token_stream = quote::quote! {
-                    let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
-                    for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
-                        match #element_snake_case.#create_query_bind_snake_case(#query_snake_case) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
-                            },
-                            Err(#error_0_token_stream) => {
-                                return Err(error);
+                let binded_query_token_stream = {
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &try_bind_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
+                    quote::quote! {
+                        let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
+                        for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
+                            match #element_snake_case.#create_query_bind_snake_case(#query_snake_case) {
+                                Ok(#value_snake_case) => {
+                                    #query_snake_case = #value_snake_case;
+                                },
+                                Err(#error_0_token_stream) => {
+                                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                }
                             }
                         }
+                        #query_snake_case
                     }
-                    #query_snake_case
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
@@ -2543,17 +2552,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         )
                     }
                 };
-                let binded_query_token_stream = quote::quote! {
-                    let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                    match #parameters_snake_case.#payload_snake_case.#create_query_bind_snake_case(#query_snake_case) {
-                        Ok(#value_snake_case) => {
-                            #query_snake_case = #value_snake_case;
-                        },
-                        Err(#error_0_token_stream) => {
-                            return Err(error);
+                let binded_query_token_stream = {
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &try_bind_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
+                    quote::quote! {
+                        let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
+                        match #parameters_snake_case.#payload_snake_case.#create_query_bind_snake_case(#query_snake_case) {
+                            Ok(#value_snake_case) => {
+                                #query_snake_case = #value_snake_case;
+                            },
+                            Err(#error_0_token_stream) => {
+                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                            }
                         }
+                        #query_snake_case
                     }
-                    #query_snake_case
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
@@ -3176,6 +3194,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 };
                 let binded_query_token_stream = {
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &try_bind_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
                     let fields_named_without_primary_key_update_assignment_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
@@ -3183,7 +3208,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                     if let Err(#error_0_token_stream) = #query_snake_case.try_bind(#element_snake_case.#primary_key_field_ident.clone()) {
-                                        return Err(error);
+                                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                     match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
                                         #value_snake_case.#value_snake_case.clone(),
@@ -3193,7 +3218,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #query_snake_case = #value_snake_case;
                                         },
                                         Err(#error_0_token_stream) => {
-                                            return Err(error);
+                                            #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
                                 }
@@ -3210,7 +3235,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #query_snake_case = #value_snake_case;
                                 },
                                 Err(#error_0_token_stream) => {
-                                    return Err(error);
+                                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
@@ -3324,6 +3349,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 };
                 let binded_query_token_stream = {
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &try_bind_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
                     let binded_query_modifications_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
@@ -3337,7 +3369,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #query_snake_case = #value_snake_case;
                                     },
                                     Err(#error_0_token_stream) => {
-                                        return Err(error);
+                                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                 }
                             }
@@ -3352,7 +3384,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #query_snake_case = #value_snake_case;
                             },
                             Err(#error_0_token_stream) => {
-                                return Err(error);
+                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
                         }
                     };
@@ -3529,6 +3561,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &#ident::#primary_key_snake_case(),
                 )};
                 let binded_query_token_stream = {
+                    let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                        &operation,
+                        &try_bind_syn_variant_wrapper,
+                        file!(),
+                        line!(),
+                        column!()
+                    );
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(
@@ -3539,7 +3578,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #query_snake_case = #value_snake_case;
                             },
                             Err(#error_0_token_stream) => {
-                                return Err(error);
+                                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
                         }
                         #query_snake_case
