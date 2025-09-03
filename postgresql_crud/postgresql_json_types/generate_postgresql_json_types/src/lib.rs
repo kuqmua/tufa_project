@@ -888,7 +888,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
                         //todo need for uuid bind for json object logic//need for uuid bind for json object logic
                         let query_bind_as_postgresql_text_token_stream = quote::quote! {
-                            pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+                            pub fn query_bind_as_postgresql_text(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                                 std::string::String
                             > {

@@ -1011,15 +1011,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                    #query_snake_case = #query_snake_case.bind(#content_token_stream);
-                    #query_snake_case
+                    if let Err(error) = #query_snake_case.try_bind(#content_token_stream) {
+                        return Err(error.to_string());
+                    }
+                    Ok(#query_snake_case)
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                    #query_snake_case = #query_snake_case.bind(match #content_token_stream .0 {
+                    let value = match #content_token_stream.0 {
                         Some(#value_snake_case) => Some(#value_snake_case),
                         None => None
-                    });
-                    #query_snake_case
+                    };
+                    if let Err(error) = #query_snake_case.try_bind(value) {
+                        return Err(error.to_string());
+                    }
+                    Ok(#query_snake_case)
                 },
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
@@ -4148,11 +4153,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         Ok(#acc_snake_case)
                     }
                 };
+                let ok_query_token_stream = quote::quote!{Ok(#query_snake_case)};
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
                 let (query_part_create_token_stream, bind_value_to_query_create_token_stream): Handle = {
                     let typical: Handle = { (&typical_query_part_token_stream, &typical_query_bind_token_stream) };
-                    let default_initialized_by_postgresql: Handle = (&ok_std_string_string_from_default_token_stream, &query_snake_case);
-                    let uuid_generate_v4_initialized_by_postgresql: Handle = (&ok_std_string_string_from_uuid_generate_v4_token_stream, &query_snake_case);
+                    let default_initialized_by_postgresql: Handle = (
+                        &ok_std_string_string_from_default_token_stream,
+                        &ok_query_token_stream
+                    );
+                    let uuid_generate_v4_initialized_by_postgresql: Handle = (
+                        &ok_std_string_string_from_uuid_generate_v4_token_stream,
+                        &ok_query_token_stream
+                    );
                     match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => typical,
                         PostgresqlType::StdPrimitiveI32AsInt4 => typical,
