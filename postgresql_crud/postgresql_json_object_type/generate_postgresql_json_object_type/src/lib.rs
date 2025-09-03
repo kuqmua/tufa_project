@@ -3067,14 +3067,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         for element in value.#update_snake_case.0.into_vec() {
                                             //todo reuse
-                                            query = element.id.query_bind_as_postgresql_text(query);
+                                            match element.id.query_bind_as_postgresql_text(query) {
+                                                Ok(value) => {
+                                                    query = value;
+                                                },
+                                                Err(error) => {
+                                                    return Err(error);
+                                                }
+                                            }
                                             query = #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_bind(
                                                 element.fields,
                                                 query
                                             );
                                         }
                                         for element in value.delete {
-                                            #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
+                                            match element.query_bind_as_postgresql_text(#query_snake_case) {
+                                                Ok(#value_snake_case) => {
+                                                    #query_snake_case = #value_snake_case;
+                                                },
+                                                Err(error) => {
+                                                    return Err(error);
+                                                }
+                                            }
                                         }
                                         for element in value.create {
                                             #query_snake_case = element.create_query_bind(#query_snake_case);
@@ -3516,14 +3530,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         for element in value.#update_snake_case.0.into_vec() {
                                             //todo reuse
-                                            query = element.id.query_bind_as_postgresql_text(query);
+                                            match element.id.query_bind_as_postgresql_text(query) {
+                                                Ok(value) => {
+                                                    #query_snake_case = value;
+                                                },
+                                                Err(error) => {
+                                                    return Err(error);
+                                                }
+                                            }
                                             query = #ident_standart_not_null_as_postgresql_json_type_token_stream::update_query_bind(
                                                 element.fields,
                                                 query
                                             );
                                         }
                                         for element in value.delete {
-                                            #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
+                                            match element.query_bind_as_postgresql_text(#query_snake_case) {
+                                                Ok(value) => {
+                                                    #query_snake_case = value;
+                                                },
+                                                Err(error) => {
+                                                    return Err(error);
+                                                }
+                                            }
                                         }
                                         for element in value.create {
                                             #query_snake_case = element.create_query_bind(#query_snake_case);

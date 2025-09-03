@@ -888,8 +888,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
                         //todo need for uuid bind for json object logic//need for uuid bind for json object logic
                         let query_bind_as_postgresql_text_token_stream = quote::quote! {
-                            pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                query.bind(self.0.to_string())
+                            pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+                                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                                std::string::String
+                            > {
+                                if let Err(error) = query.try_bind(self.0.to_string()) {
+                                    return Err(error.to_string())
+                                }
+                                Ok(query)
                             }
                         };
                         let get_inner_token_stream = quote::quote! {
@@ -1682,8 +1688,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     &quote::quote! {
-                        query = query.bind(#value_snake_case);
-                        query
+                        if let Err(error) = query.try_bind(#value_snake_case) {
+                            return Err(error.to_string());
+                        }
+                        Ok(query)
                     },
                     &ident_select_upper_camel_case,
                     &match &element.postgresql_json_type_pattern {
@@ -1860,8 +1868,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::False,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &quote::quote! {
-                        query = query.bind(#value_snake_case);
-                        query
+                        if let Err(error) = query.try_bind(#value_snake_case) {
+                            return Err(error.to_string());
+                        }
+                        Ok(query)
                     },
                     &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
