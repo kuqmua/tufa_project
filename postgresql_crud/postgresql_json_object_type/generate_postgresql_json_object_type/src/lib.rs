@@ -3298,6 +3298,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     },
+                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                    &quote::quote!{Ok(#query_snake_case)}
                 );
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
@@ -3795,6 +3797,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     },
+                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                    &quote::quote!{Ok(#query_snake_case)}
                 );
                 match &trait_gen {
                     TraitGen::PostgresqlTypeAndPostgresqlJsonType => (impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream),
@@ -3950,6 +3954,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             Ok(format!("jsonb_build_object('value',{})", #acc_snake_case))
                         }
                     },
+                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                    &quote::quote!{Ok(#query_snake_case)}
                 )
             } else {
                 proc_macro2::TokenStream::new()

@@ -4677,6 +4677,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ok_std_string_string_default_token_stream
                         }
                     },
+                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
+                    &quote::quote!{Ok(#query_snake_case)}
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {
