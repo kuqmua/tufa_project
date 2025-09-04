@@ -24,6 +24,10 @@ pub trait PostgresqlType {
         std::string::String
     >;
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, is_primary_key: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
 }
 
 pub trait PostgresqlJsonType {
@@ -66,6 +70,10 @@ pub trait PostgresqlJsonType {
         std::string::String
     >;
     fn select_only_updated_ids_query_part(value: &Self::Update, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {
