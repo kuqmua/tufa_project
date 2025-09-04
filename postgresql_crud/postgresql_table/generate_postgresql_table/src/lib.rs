@@ -3350,6 +3350,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 };
                 let binded_query_token_stream = {
+                    //todo rename and all copies too (must be named try_bind instead of postgresql)
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                         &operation,
                         &try_bind_syn_variant_wrapper,
@@ -3361,14 +3362,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
                         quote::quote! {
-                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
+                            if let Some(ref #value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
                                 match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
-                                    #value_snake_case.#value_snake_case,
-                                    #query_snake_case,
+                                    #value_snake_case.#value_snake_case.clone(),//todo is there a way to remove .clone here?
+                                    #query_snake_case
                                 ) {
                                     Ok(#value_snake_case) => {
                                         #query_snake_case = #value_snake_case;
-                                    },
+                                    }
                                     Err(#error_0_token_stream) => {
                                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
@@ -3389,10 +3390,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     };
+                    let binded_query_select_only_updated_ids_query_bind_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                        let field_ident = &element.field_ident;
+                        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
+                        quote::quote! {
+                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
+                                match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_only_updated_ids_query_bind(
+                                    &#value_snake_case.#value_snake_case,
+                                    #query_snake_case
+                                ) {
+                                    Ok(#value_snake_case) => {
+                                        #query_snake_case = #value_snake_case;
+                                    },
+                                    Err(#error_0_token_stream) => {
+                                        #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
+                                }
+                            }
+                        }
+                    });
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #binded_query_modifications_token_stream
                         #binded_query_primary_key_modification_token_stream
+                        #binded_query_select_only_updated_ids_query_bind_token_stream
                         #query_snake_case
                     }
                 };
