@@ -4076,7 +4076,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #query_snake_case = #value_snake_case;
                                     },
                                     Err(#error_snake_case) => {
-                                        return Err(#error_snake_cases);
+                                        return Err(#error_snake_case);
                                     }
                                 }
                                 match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
