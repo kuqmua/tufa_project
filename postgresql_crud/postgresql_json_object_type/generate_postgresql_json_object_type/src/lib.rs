@@ -371,6 +371,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream
             );
             let ident_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_array_not_null_upper_camel_case);
+            let ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_array_not_null_upper_camel_case);
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
             let postgresql_json_type_subtype_select = PostgresqlJsonTypeSubtype::Select;
@@ -2838,7 +2839,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream,
                             });
-                            let ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_array_not_null_upper_camel_case);
                             quote::quote! {
                                 #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
                                 format!(#format_handle_token_stream, {
@@ -2907,7 +2907,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     )}
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_array_not_null_upper_camel_case);
                                     quote::quote! {format!(
                                         #case_null_format_handle_token_stream,
                                         #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(column_name_and_maybe_field_getter),
