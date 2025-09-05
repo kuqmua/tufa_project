@@ -18,7 +18,9 @@ fn main() {
                 //     panic!("common::repositories_types::server::telemetry::init_subscriber::init_subscriber failed, error: {error:#?}")
                 // }
                 println!("trying to create postgres pool...");
-                let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(100).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                let postgres_pool = sqlx::postgres::PgPoolOptions::new()
+                .max_connections(50)
+                .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
                 common::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 // println!("trying to create redis session storage...");

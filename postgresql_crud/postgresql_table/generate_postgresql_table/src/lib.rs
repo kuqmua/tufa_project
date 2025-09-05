@@ -3825,7 +3825,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
                                 static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
                                 let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
-                                let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case))).await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
+                                let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new()
+                                .max_connections(50)
+                                .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case)))
+                                .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
                                 let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
                                 async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
                                     let #query_snake_case = #drop_table_if_exists_ident_double_quotes_token_stream;
@@ -3965,11 +3968,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //update part start
                                 // #columns_test_cases_declaration_token_stream
                                 // #columns_test_cases_updates_token_stream
-
                                 let mut acc: #std_vec_vec_futures_future_box_future_token_stream = vec![];
                                 #column_update_futures_add_token_stream
                                 println!("UPDATES LEN {}", acc.len());
-                                let _unused = futures::future::join_all(acc).await;
+                                futures::StreamExt::for_each_concurrent(
+                                    futures::stream::iter(acc),
+                                    50,
+                                    |fut| async move {
+                                        fut.await;
+                                    }
+                                ).await;
 
                                 // for #index_snake_case in #test_cases_max_len_token_stream {
                                 //     let #select_primary_key_field_ident_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).expect("error 5fc78974-50e1-47c8-8cf0-156675513f3f");

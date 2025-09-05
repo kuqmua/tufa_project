@@ -1,11 +1,21 @@
 #actual docker-compose now on ubuntu with ryzen 7600 in pg_jsonschema folder
-version: '3.8'
+version: '3.3'
 services:
+  # postgres_service:
+  #   container_name: postgres_container
+  #   build:
+  #       context: ../pg_jsonschema
+  #       dockerfile: ../pg_jsonschema/dockerfiles/db/Dockerfile
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: dev
+  #   ports:
+  #     - 5432:5432
   postgres_service:
-    container_name: postgres_container
-    build:
-        context: ../pg_jsonschema
-        dockerfile: ../pg_jsonschema/dockerfiles/db/Dockerfile
+    container_name: "postgres_service"
+    image: pg_jsonschema_postgres_service
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -13,6 +23,8 @@ services:
       POSTGRES_DB: dev
     ports:
       - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   # postgres_service:
   #   container_name: postgres_container
   #   image: postgres:16.3
@@ -77,3 +89,5 @@ services:
 
   # #     TRACING_LEVEL: ${TRACING_LEVEL}
   # #     SOURCE_PLACE_TYPE: ${SOURCE_PLACE_TYPE}
+volumes:
+  postgres_data:
