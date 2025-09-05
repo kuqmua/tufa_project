@@ -3731,6 +3731,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         });
         let std_vec_vec_ident_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&quote::quote! {super::#ident_read_upper_camel_case});
         let std_vec_vec_futures_future_box_future_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&quote::quote! {futures::future::BoxFuture<'static, ()>});
+        let column_update_all_future_counter_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            quote::quote! {
+                if let Some(value) = &#common_read_only_ids_returned_from_create_one_snake_case.#field_ident {
+                    for element0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                        for element1 in element0 {
+                            all_future_counter += 1;
+                        }
+                    }
+                }
+            }
+        });
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let column_update_futures_add_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
@@ -3806,12 +3819,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let end = chrono::Local::now();
                                 let duration = end - start;
                                 println!(
-                                    "start: {}, middle: {}, end: {}, diff: {} seconds, counter: {}",
+                                    "start: {}, middle: {}, end: {}, diff: {} seconds, counter: {} of {}",
                                     start.format("%Y-%m-%d %H:%M:%S"),
                                     middle.format("%Y-%m-%d %H:%M:%S"),
                                     end.format("%Y-%m-%d %H:%M:%S"),
                                     duration.num_seconds(),
-                                    future_counter
+                                    future_counter,
+                                    all_future_counter
                                 );
                             }));
                         }
@@ -3978,6 +3992,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //update part start
                                 // #columns_test_cases_declaration_token_stream
                                 // #columns_test_cases_updates_token_stream
+                                let mut all_future_counter = 0;
+                                #column_update_all_future_counter_token_stream
                                 let mut future_counter = 0;
                                 let mut acc: #std_vec_vec_futures_future_box_future_token_stream = vec![];
                                 #column_update_futures_add_token_stream
