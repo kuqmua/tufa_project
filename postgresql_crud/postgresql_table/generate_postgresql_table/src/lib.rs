@@ -3803,7 +3803,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #try_update_one_result_different_error_message_double_quotes_token_stream
                                 );
                                 let end = chrono::Local::now();
-                                println!("start: {}, middle: {}, end: {}", start.format("%Y-%m-%d %H:%M:%S"), middle.format("%Y-%m-%d %H:%M:%S"), end.format("%Y-%m-%d %H:%M:%S"));
+                                let duration = end - start;
+                                println!("start: {}, middle: {}, end: {}, diff: {} seconds", start.format("%Y-%m-%d %H:%M:%S"), middle.format("%Y-%m-%d %H:%M:%S"), end.format("%Y-%m-%d %H:%M:%S"), duration.num_seconds());
                             }));
                         }
                     }
