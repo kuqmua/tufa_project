@@ -367,6 +367,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_standart_not_null_upper_camel_case
             );
             let ident_with_id_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
+            let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
+                &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream
+            );
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
             let postgresql_json_type_subtype_create = PostgresqlJsonTypeSubtype::Create;
             let postgresql_json_type_subtype_select = PostgresqlJsonTypeSubtype::Select;
@@ -3984,9 +3987,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                     &quote::quote! {unreachable!()},
                     &{
-                        let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
-                            &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream
-                        );
                         let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -4046,9 +4046,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True,
                     &{
-                        let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
-                            &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream
-                        );
                         quote::quote!{
                             for #element_snake_case in #value_snake_case.0.to_vec() {
                                 match #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
