@@ -1068,9 +1068,9 @@ pub struct Doggie {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
-    // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
+    pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+    pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
@@ -1280,46 +1280,64 @@ mod example_tests {
                     let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: common_read_only_ids_returned_from_create_one.primary_key_column.clone() });
                     assert_eq!(super::ExampleRead { primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(), column_154: None, column_155: None, column_156: None, column_157: None }, super::Example::try_read_one(&url, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: common_read_only_ids_returned_from_create_one.primary_key_column.clone(), select: select_primary_key.clone() } },).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"), "try_read_one result different after try_create_one");
 
-
-                    let read_only_ids_returned_from_create_many = super::Example::try_create_many(
-                        &url,
-                        super::ExampleCreateManyParameters {
-                            payload: super::ExampleCreateManyPayload(
-                                {
-                                    let mut acc = vec![];
-                                    if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
-                                        for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                            for element1 in element0 {
-                                                acc.push(ident_create_default.clone());
-                                            }
-                                        }
+                    // let read_only_ids_returned_from_create_many
+                    let read_only_ids_vec = {
+                        let acc = {
+                            let mut acc = vec![];
+                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
+                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                    for element1 in element0 {
+                                        acc.push(ident_create_default.clone());
                                     }
-                                    if let Some(value) = &common_read_only_ids_returned_from_create_one.column_155 {
-                                        for element0 in <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                            for element1 in element0 {
-                                                acc.push(ident_create_default.clone());
-                                            }
-                                        }
-                                    }
-                                    if let Some(value) = &common_read_only_ids_returned_from_create_one.column_156 {
-                                        for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                            for element1 in element0 {
-                                                acc.push(ident_create_default.clone());
-                                            }
-                                        }
-                                    }
-                                    if let Some(value) = &common_read_only_ids_returned_from_create_one.column_157 {
-                                        for element0 in <crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                            for element1 in element0 {
-                                                acc.push(ident_create_default.clone());
-                                            }
-                                        }
-                                    }
-                                    acc
                                 }
-                            )
+                            }
+                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_155 {
+                                for element0 in <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                    for element1 in element0 {
+                                        acc.push(ident_create_default.clone());
+                                    }
+                                }
+                            }
+                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_156 {
+                                for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                    for element1 in element0 {
+                                        acc.push(ident_create_default.clone());
+                                    }
+                                }
+                            }
+                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_157 {
+                                for element0 in <crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                    for element1 in element0 {
+                                        acc.push(ident_create_default.clone());
+                                    }
+                                }
+                            }
+                            acc
+                        };
+                        let mut two_dimension_acc = vec![];
+                        let mut if_complete = false;
+                        let mut result = vec![];
+                        while !is_complite {//todo another check?
+                            match super::Example::try_create_many(
+                                &url,
+                                super::ExampleCreateManyParameters {
+                                    payload: super::ExampleCreateManyPayload(
+                                        acc
+                                    )
+                                }
+                            ).await {
+                                Ok(value) => {
+                                    result = value;
+                                    if_complete = true;
+                                },
+                                Err(_) => {
+
+                                }
+                            }
                         }
-                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+                        result
+                        // .expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
+                    };
 
 
                     let mut all_future_counter = 0;
@@ -1360,7 +1378,7 @@ mod example_tests {
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_primary_key_cloned = select_primary_key.clone();
 
-                                let read_only_ids_returned_from_create_one = read_only_ids_returned_from_create_many
+                                let read_only_ids_returned_from_create_one = read_only_ids_vec
                                 .get(future_counter)
                                 .expect("error 0125dabf-df60-4382-b152-ce222cc249ca").clone();
 
@@ -1391,7 +1409,7 @@ mod example_tests {
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_primary_key_cloned = select_primary_key.clone();
 
-                                let read_only_ids_returned_from_create_one = read_only_ids_returned_from_create_many
+                                let read_only_ids_returned_from_create_one = read_only_ids_vec
                                 .get(future_counter)
                                 .expect("error 0125dabf-df60-4382-b152-ce222cc249ca").clone();
 
@@ -1422,7 +1440,7 @@ mod example_tests {
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_primary_key_cloned = select_primary_key.clone();
                                 
-                                let read_only_ids_returned_from_create_one = read_only_ids_returned_from_create_many
+                                let read_only_ids_returned_from_create_one = read_only_ids_vec
                                 .get(future_counter)
                                 .expect("error 0125dabf-df60-4382-b152-ce222cc249ca").clone();
                                 
@@ -1453,7 +1471,7 @@ mod example_tests {
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_primary_key_cloned = select_primary_key.clone();
 
-                                let read_only_ids_returned_from_create_one = read_only_ids_returned_from_create_many
+                                let read_only_ids_returned_from_create_one = read_only_ids_vec
                                 .get(future_counter)
                                 .expect("error 0125dabf-df60-4382-b152-ce222cc249ca").clone();
 
