@@ -3861,7 +3861,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .await
                                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                                 });
-                                tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                                tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
 
                                 let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
