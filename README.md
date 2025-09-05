@@ -1,6 +1,7 @@
 ### test common
 
-* cargo test --features test-utils  -- --nocapture
+* cargo test --features test-utils -- --nocapture
+* RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 
 ### MOVE IT todo tomorrow and merge with notes
 * fix proc macro submodules, rename them
