@@ -4020,7 +4020,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let mut #acc_snake_case = std::string::String::new();
                             for #element_snake_case in #value_snake_case.0.to_vec() {
                                 //todo maybe wrong for multiple updates by id?
-                                let mut current_acc = format!("jsonb_build_object('id',jsonb_build_object('value','{}'))||", #element_snake_case.#id_snake_case.get_inner());
+                                let mut current_acc = #std_string_string_token_stream::new();
+                                //todo reuse as postgresql_crud::PostgresqlJsonType
+                                match <#import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(
+                                    &element.id,
+                                    &"id",
+                                    &column_name_and_maybe_field_getter,
+                                    increment
+                                ) {
+                                    Ok(mut value) => {
+                                        let _ = value.pop();
+                                        current_acc.push_str(&format!("jsonb_build_object({})||", value));
+                                    }
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
+                                }
                                 for #element_snake_case in #element_snake_case.fields.0.to_vec() {
                                     match &#element_snake_case {
                                         #(#match_variants_token_stream),*
