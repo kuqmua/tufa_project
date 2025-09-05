@@ -2095,7 +2095,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #parameters_logic_token_stream
                         #expected_updated_primary_keys_token_stream
                         let #query_string_snake_case = #query_string_token_stream;
-                        println!("{}", #query_string_snake_case);
+                        // println!("{}", #query_string_snake_case);
                         let #binded_query_snake_case = {
                             #binded_query_token_stream
                         };
@@ -3775,6 +3775,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let url_cloned = url.clone();
                             let ident_create_default_cloned = ident_create_default.clone();
                             let select_primary_key_cloned = select_primary_key.clone();
+                            future_counter += 1;
                             acc.push(futures::FutureExt::boxed(async move {
                                 let start = chrono::Local::now();
                                 let #read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
@@ -3804,7 +3805,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 );
                                 let end = chrono::Local::now();
                                 let duration = end - start;
-                                println!("start: {}, middle: {}, end: {}, diff: {} seconds", start.format("%Y-%m-%d %H:%M:%S"), middle.format("%Y-%m-%d %H:%M:%S"), end.format("%Y-%m-%d %H:%M:%S"), duration.num_seconds());
+                                println!(
+                                    "start: {}, middle: {}, end: {}, diff: {} seconds, counter: {}",
+                                    start.format("%Y-%m-%d %H:%M:%S"),
+                                    middle.format("%Y-%m-%d %H:%M:%S"),
+                                    end.format("%Y-%m-%d %H:%M:%S"),
+                                    duration.num_seconds(),
+                                    future_counter
+                                );
                             }));
                         }
                     }
@@ -3969,6 +3977,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //update part start
                                 // #columns_test_cases_declaration_token_stream
                                 // #columns_test_cases_updates_token_stream
+                                let mut future_counter = 0;
                                 let mut acc: #std_vec_vec_futures_future_box_future_token_stream = vec![];
                                 #column_update_futures_add_token_stream
                                 println!("UPDATES LEN {}", acc.len());
