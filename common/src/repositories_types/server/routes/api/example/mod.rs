@@ -1577,6 +1577,14 @@ pub struct AnimalWithIdAsNotNullJsonbObjectWithIdCreate {
     field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
     field_1: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
 }
+//here
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+struct AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle {
+    id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Create,
+    field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
+    field_1: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
+}
+//
 impl AnimalWithIdAsNotNullJsonbObjectWithIdCreate {
     pub fn new(field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create, field_1: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create) -> Self {
         Self { field_0, field_1 }
@@ -3493,6 +3501,10 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclarati
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>);
+//here
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreateHandle(std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle>);
+//
 impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
     pub fn new(value: std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>) -> Self {
         Self(value)
@@ -4125,28 +4137,17 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
     fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
         // value.create_query_bind(query)
         //here
-        // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-        // pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>);
-        // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-        // pub struct AnimalWithIdAsNotNullJsonbObjectWithIdCreate {
-        //     field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
-        //     field_1: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
-        // }
-        #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-        struct AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle {
-            id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Create,
-            field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
-            field_1: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create,
-        }
         if let Err(error) = query.try_bind(
             sqlx::types::Json(
-                value.0.into_iter().map(|element|{
-                    AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle {
-                        id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Create::new(uuid::Uuid::new_v4()),
-                        field_0: element.field_0,
-                        field_1: element.field_1,
-                    }
-                }).collect::<Vec<AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle>>()
+                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreateHandle(
+                    value.0.into_iter().map(|element|{
+                        AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle {
+                            id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Create::new(uuid::Uuid::new_v4()),
+                            field_0: element.field_0,
+                            field_1: element.field_1,
+                        }
+                    }).collect()
+                )
             )
         ) {
             return Err(error.to_string());
@@ -4489,6 +4490,10 @@ impl OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDe
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate(std::option::Option<<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>);
+//here
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreateHandle(std::option::Option<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreateHandle>);
+//
 impl OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate {
     pub fn new(value: std::option::Option<std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create>>) -> Self {
         Self(match value {
@@ -4736,10 +4741,43 @@ impl postgresql_crud::PostgresqlType for OptionVecOfAnimalWithIdAsNullableArrayO
     type TableTypeDeclaration = OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration;
     type Create = OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate;
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        value.create_query_part(increment)
+        //here
+        // value.create_query_part(increment)
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${increment}"))
+            }
+            None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        }
     }
-    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
-        value.create_query_bind(query)
+    //here mut
+    fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+        // value.create_query_bind(query)
+        //here
+        if let Err(error) = query.try_bind(
+            sqlx::types::Json(
+                OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreateHandle(
+                    match value.0 {
+                        Some(value) => Some(
+                            VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreateHandle(
+                                value.0.into_iter().map(|element|{
+                                    AnimalWithIdAsNotNullJsonbObjectWithIdCreateHandle {
+                                        id: <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Create::new(uuid::Uuid::new_v4()),
+                                        field_0: element.field_0,
+                                        field_1: element.field_1,
+                                    }
+                                }).collect()
+                            )
+                        ),
+                        None => None
+                    }
+                )
+            )
+        ) {
+            return Err(error.to_string());
+        }
+        Ok(query)
     }
     type Select = OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect;
     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
