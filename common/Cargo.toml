@@ -37,6 +37,7 @@ utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 # uuid = {version = "=1.10.0", features = ["serde"]}
 # utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
 schemars = {version = "=0.8.22"}
+uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 git_info = {path = "../git_info"}
 from_str = {path = "../from_str"}
 # from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}
