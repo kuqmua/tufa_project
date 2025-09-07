@@ -759,20 +759,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 quote::quote! {
-                                    for #element_snake_case in self.0 {
-                                        match #ident_with_id_standart_not_null_as_postgresql_json_type_token_stream::create_query_bind(
-                                            #element_snake_case,
-                                            #query_snake_case
-                                        ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
-                                            },
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            }
-                                        }
-                                    }
-                                    Ok(#query_snake_case)
+                                    unreachable!()
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -782,7 +769,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }));
                                 quote::quote! {
                                     match self.0 {
-                                        Some(#value_snake_case) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
+                                        Some(#value_snake_case) => #ident_array_not_null_as_postgresql_json_type_token_stream::create_query_bind(
+                                            #value_snake_case,
+                                            #query_snake_case
+                                        ),
                                         None => if let Err(error) = #query_snake_case.try_bind(sqlx::types::Json(None::<#std_option_option_type_as_postgresql_json_type_create_token_stream>)) {
                                             return Err(error.to_string());
                                         }
@@ -3146,7 +3136,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {#value_snake_case.#create_query_bind_snake_case(#query_snake_case)}
+                                quote::quote! {
+                                    for #element_snake_case in #value_snake_case.0 {
+                                        match #ident_with_id_standart_not_null_as_postgresql_json_type_token_stream::create_query_bind(
+                                            #element_snake_case,
+                                            #query_snake_case
+                                        ) {
+                                            Ok(#value_snake_case) => {
+                                                #query_snake_case = #value_snake_case;
+                                            },
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            }
+                                        }
+                                    }
+                                    Ok(#query_snake_case)
+                                }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote! {#value_snake_case.#create_query_bind_snake_case(#query_snake_case)}
@@ -3552,7 +3557,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {#value_snake_case.#create_query_bind_snake_case(#query_snake_case)}
+                                quote::quote! {
+                                    #ident_as_postgresql_json_type_token_stream::create_query_bind(
+                                        #value_snake_case,
+                                        #query_snake_case
+                                    )
+                                }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote! {#value_snake_case.#create_query_bind_snake_case(#query_snake_case)}
