@@ -1675,7 +1675,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident,
                     &ident_origin_upper_camel_case,
                     &ident_origin_upper_camel_case,
-                    &quote::quote!{()},
+                    &ident_origin_upper_camel_case,
                     &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::False,
                     &quote::quote! {
                         match increment.checked_add(1) {
