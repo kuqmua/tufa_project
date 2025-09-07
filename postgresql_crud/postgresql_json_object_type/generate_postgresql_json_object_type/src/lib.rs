@@ -683,24 +683,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", self)});
                 let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(&ident_create_upper_camel_case);
                 let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_create_upper_camel_case);
-                let generate_create_query_part_and_create_query_bind_token_stream = |ident_token_stream: &dyn quote::ToTokens, create_query_part_content_token_stream: &dyn quote::ToTokens, is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable, create_query_bind_content_token_stream: &dyn quote::ToTokens| {
-                    quote::quote! {
-                        impl #ident_token_stream {
-                            fn #create_query_part_snake_case(
-                                &self,
-                                #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
-                            ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
-                                #create_query_part_content_token_stream
-                            }
-                            fn #create_query_bind_snake_case(
-                                self,
-                                #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-                            ) -> Result<#query_postgres_arguments_token_stream, #std_string_string_token_stream> {
-                                #create_query_bind_content_token_stream
-                            }
-                        }
-                    }
-                };
                 let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
                     let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(&ident_with_id_standart_not_null_create_upper_camel_case);
                     let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_with_id_standart_not_null_create_upper_camel_case);
