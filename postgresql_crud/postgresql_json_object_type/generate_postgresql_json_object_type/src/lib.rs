@@ -697,65 +697,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                 };
-                let impl_ident_create_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
-                    &ident_create_upper_camel_case,
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{
-                                    unreachable!()
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{
-                                    unreachable!()
-                                }
-                            }
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            }
-                        },
-                    },
-                    match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsQueryBindMutable::True,
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    },
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            }
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    unreachable!()
-                                }
-                            }
-                        },
-                    },
-                );
                 let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
                     let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(&ident_with_id_standart_not_null_create_upper_camel_case);
                     let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_with_id_standart_not_null_create_upper_camel_case);
@@ -777,7 +718,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #ident_create_common_token_stream
                     #impl_std_fmt_display_for_ident_create_token_stream
                     #impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream
-                    #impl_ident_create_token_stream
                     #maybe_ident_with_id_create_standart_not_null_token_stream
                 }
             };
