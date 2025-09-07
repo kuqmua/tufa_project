@@ -3542,44 +3542,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{
-                                    #ident_standart_not_null_as_postgresql_json_type_token_stream::create_query_bind(
-                                        #value_snake_case,
-                                        #query_snake_case
-                                    )
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_bind(
-                                        #value_snake_case,
-                                        #query_snake_case
-                                    )
-                                }
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_bind(
-                                        #value_snake_case,
-                                        #query_snake_case
-                                    )
-                                }
-                            }
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_bind(
-                                        #value_snake_case,
-                                        #query_snake_case
-                                    )
-                                }
-                            },
-                        },
-                    },
+                    &quote::quote!{#ident_as_postgresql_json_type_token_stream::#create_query_bind_snake_case(
+                        #value_snake_case,
+                        #query_snake_case
+                    )},
                     &ident_select_upper_camel_case,
                     &postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                     &quote::quote! {format!("{} as {column}", #value_snake_case.#select_query_part_postgresql_type_snake_case(#column_snake_case))},
