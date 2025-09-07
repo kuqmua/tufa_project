@@ -719,22 +719,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case = match &postgresql_json_object_type_pattern {
-                                    PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
-                                    PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
-                                };
-                                let ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case);
                                 quote::quote! {
-                                    match &self.0 {
-                                        Some(#value_snake_case) => #ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#create_query_part_snake_case(#value_snake_case, #increment_snake_case),
-                                        None => match #increment_snake_case.checked_add(1) {
-                                            Some(#value_snake_case) => {
-                                                *#increment_snake_case = #value_snake_case;
-                                                Ok(format!("${increment}"))
-                                            },
-                                            None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
-                                        }
-                                    }
+                                    unreachable!()
                                 }
                             }
                         },
@@ -3100,7 +3086,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {#value_snake_case.#create_query_part_snake_case(#increment_snake_case)}
+                                let ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case = match &postgresql_json_object_type_pattern {
+                                    PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
+                                    PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
+                                };
+                                let ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_or_ident_with_id_array_not_null_upper_camel_case);
+                                quote::quote! {
+                                    match &#value_snake_case.0 {
+                                        Some(#value_snake_case) => #ident_standart_not_null_or_ident_with_id_array_not_null_as_postgresql_json_type_token_stream::#create_query_part_snake_case(#value_snake_case, #increment_snake_case),
+                                        None => match #increment_snake_case.checked_add(1) {
+                                            Some(#value_snake_case) => {
+                                                *#increment_snake_case = #value_snake_case;
+                                                Ok(format!("${increment}"))
+                                            },
+                                            None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
+                                        }
+                                    }
+                                }
                             },
                         },
                     },
@@ -3530,7 +3532,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {#value_snake_case.#create_query_part_snake_case(#increment_snake_case)}
+                                quote::quote! {
+                                    #ident_as_postgresql_json_type_token_stream::create_query_part(#value_snake_case, #increment_snake_case)
+                                }
                             },
                         },
                     },
