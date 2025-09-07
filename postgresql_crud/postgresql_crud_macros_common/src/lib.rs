@@ -295,6 +295,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     ident: &dyn quote::ToTokens,
     table_type_declaration_type_token_stream: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
+    create_for_query_type_token_stream: &dyn quote::ToTokens,
     is_create_query_part_self_create_used: &IsCreateQueryPartSelfCreateUsed,
     create_query_part_token_stream: &dyn quote::ToTokens,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
@@ -323,6 +324,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let path_token_stream = quote::quote! {#import_path ::};
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let create_for_query_upper_camel_case = naming::CreateForQueryUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let select_upper_camel_case = naming::SelectUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
@@ -360,6 +362,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #table_type_declaration_type_token_stream;
             type #create_upper_camel_case = #create_type_token_stream;
+            type #create_for_query_upper_camel_case = #create_for_query_type_token_stream;
             fn #create_query_part_snake_case(
                 #is_create_query_part_self_create_used: &Self::#create_upper_camel_case,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream

@@ -2543,6 +2543,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
                     &ident_create_upper_camel_case,
+                    &quote::quote!{()},//here
                     &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::True,
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -3652,6 +3653,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_standart_not_null_upper_camel_case,
                     &ident_with_id_standart_not_null_table_type_declaration_upper_camel_case,
                     &ident_with_id_standart_not_null_create_upper_camel_case,
+                    &quote::quote!{()},//here
                     &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::True,
                     &generate_standart_not_null_create_query_part_content_token_stream(&is_standart_with_id_true),
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
