@@ -3568,35 +3568,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_create_upper_camel_case,
                     &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::False,
                     &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    #ident_standart_not_null_as_postgresql_json_type_token_stream::create_query_part(
-                                        #value_snake_case,
-                                        #increment_snake_case
-                                    )
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_part(#value_snake_case, #increment_snake_case)
-                                }
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_part(#value_snake_case, #increment_snake_case)
-                                }
-                            }
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    #ident_as_postgresql_json_type_token_stream::create_query_part(#value_snake_case, #increment_snake_case)
-                                }
-                            },
-                        },
-                    },
+                    &quote::quote!{#ident_as_postgresql_json_type_token_stream::create_query_part(#value_snake_case, #increment_snake_case)},
                     &postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                     &quote::quote!{#ident_as_postgresql_json_type_token_stream::#create_query_bind_snake_case(
