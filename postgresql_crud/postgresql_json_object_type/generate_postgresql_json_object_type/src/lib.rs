@@ -655,28 +655,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     Ok(#ok_value_token_stream)
                 }
             };
-            let standart_not_null_create_query_bind_content_handle_token_stream = {
-                let create_query_bind_fields_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
-                    quote::quote! {
-                        match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#create_query_bind_snake_case(#value_snake_case.#element_field_ident, #query_snake_case) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
-                            },
-                            Err(#error_snake_case) => {
-                                return Err(#error_snake_case);
-                            }
-                        }
-                    }
-                });
-                quote::quote! {
-                    #(#create_query_bind_fields_token_stream)*
-                    Ok(#query_snake_case)
-                }
-            };
             let ident_create_token_stream = {
                 let ident_create_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
                 let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", self)});
@@ -2762,7 +2740,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                standart_not_null_create_query_bind_content_handle_token_stream.clone()
+                                let create_query_bind_fields_token_stream = vec_syn_field.iter().map(|element| {
+                                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
+                                    quote::quote! {
+                                        match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#create_query_bind_snake_case(#value_snake_case.#element_field_ident, #query_snake_case) {
+                                            Ok(#value_snake_case) => {
+                                                #query_snake_case = #value_snake_case;
+                                            },
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            }
+                                        }
+                                    }
+                                });
+                                quote::quote! {
+                                    #(#create_query_bind_fields_token_stream)*
+                                    Ok(#query_snake_case)
+                                }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote! {
