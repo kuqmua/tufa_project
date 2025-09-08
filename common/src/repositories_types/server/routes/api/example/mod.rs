@@ -4131,26 +4131,36 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
         let create_query_part_acc = {
             let mut create_query_part_acc = std::string::String::default();
             for element in &value.create {
-                let mut increments = std::string::String::from("");
-                match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::create_query_part(&element.field_0, increment) {
-                    Ok(value) => {
-                        increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("field_0", &value));
+                //here
+            //     let mut increments = std::string::String::from("");
+            //     match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::create_query_part(&element.field_0, increment) {
+            //         Ok(value) => {
+            //             increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("field_0", &value));
+            //         }
+            //         Err(error) => {
+            //             return Err(error);
+            //         }
+            //     }
+            //     match <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::create_query_part(&element.field_1, increment) {
+            //         Ok(value) => {
+            //             increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("field_1", &value));
+            //         }
+            //         Err(error) => {
+            //             return Err(error);
+            //         }
+            //     }
+            //     let _ = increments.pop();
+            //     let _ = increments.pop();
+            //     create_query_part_acc.push_str(&format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{increments},"));
+                match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        create_query_part_acc.push_str(&format!("${increment},"));
                     }
-                    Err(error) => {
-                        return Err(error);
-                    }
+                    None => {
+                        return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                    },
                 }
-                match <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::create_query_part(&element.field_1, increment) {
-                    Ok(value) => {
-                        increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("field_1", &value));
-                    }
-                    Err(error) => {
-                        return Err(error);
-                    }
-                }
-                let _ = increments.pop();
-                let _ = increments.pop();
-                create_query_part_acc.push_str(&format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{increments},"));
             }
             let _ = create_query_part_acc.pop();
             create_query_part_acc
@@ -4191,14 +4201,23 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
             }
         }
         for element in value.create {
-            match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::create_query_bind(element, query) {
-                Ok(value) => {
-                    query = value;
-                }
-                Err(error) => {
-                    return Err(error);
-                }
+            //here
+            // match <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::create_query_bind(element, query) {
+            //     Ok(value) => {
+            //         query = value;
+            //     }
+            //     Err(error) => {
+            //         return Err(error);
+            //     }
+            // }
+            //
+            if let Err(error) = query.try_bind(sqlx::types::Json(
+                <AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::CreateForQuery::from(element)
+            )) {
+                return Err(error.to_string());
             }
+            // Ok(query)
+            //
         }
         Ok(query)
     }
