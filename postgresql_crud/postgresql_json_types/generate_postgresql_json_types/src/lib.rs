@@ -1676,25 +1676,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_origin_upper_camel_case,
                     &ident_origin_upper_camel_case,
                     &ident_origin_upper_camel_case,
-                    &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::False,
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("${increment}"))
-                            }
-                            None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!()
-                            }),
-                        }
-                    },
-                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                    &quote::quote! {
-                        if let Err(error) = query.try_bind(#value_snake_case) {
-                            return Err(error.to_string());
-                        }
-                        Ok(query)
-                    },
                     &ident_select_upper_camel_case,
                     &match &element.postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {

@@ -296,10 +296,6 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     table_type_declaration_type_token_stream: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
     create_for_query_type_token_stream: &dyn quote::ToTokens,
-    is_create_query_part_self_create_used: &IsCreateQueryPartSelfCreateUsed,
-    create_query_part_token_stream: &dyn quote::ToTokens,
-    is_create_query_bind_mutable: &IsCreateQueryBindMutable,
-    create_query_bind_token_stream: &dyn quote::ToTokens,
     select_type_token_stream: &dyn quote::ToTokens,
     is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
     is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
@@ -340,8 +336,6 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
-    let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
@@ -363,18 +357,6 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             type #table_type_declaration_upper_camel_case = #table_type_declaration_type_token_stream;
             type #create_upper_camel_case = #create_type_token_stream;
             type #create_for_query_upper_camel_case = #create_for_query_type_token_stream;
-            fn #create_query_part_snake_case(
-                #is_create_query_part_self_create_used: &Self::#create_upper_camel_case,
-                #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
-            ) -> Result<#std_string_string_token_stream, #path_token_stream #query_part_error_named_upper_camel_case> {
-                #create_query_part_token_stream
-            }
-            fn #create_query_bind_snake_case(
-                #value_snake_case: Self::#create_upper_camel_case,
-                #is_create_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-            ) -> Result<#query_postgres_arguments_token_stream, std::string::String> {
-                #create_query_bind_token_stream
-            }
             type #select_upper_camel_case = #select_type_token_stream;
             fn #select_query_part_snake_case(
                 #is_select_query_part_self_select_used: &Self::#select_upper_camel_case,
