@@ -3833,6 +3833,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         });
+        let updates_content_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            quote::quote! {
+                if let Some(value) = &#common_read_only_ids_returned_from_create_one_snake_case.#field_ident {
+                    for element0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                        for element1 in element0 {
+                            #acc_snake_case.push(#ident_create_default_snake_case.clone());
+                        }
+                    }
+                }
+            }
+        });
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3916,6 +3929,58 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                     "try_read_one result different after try_create_one"
                                 );
+
+
+                                let read_only_ids_vec = {
+                                    let updates = {
+                                        let mut #acc_snake_case = vec![];
+                                        #updates_content_token_stream
+                                        #acc_snake_case
+                                    };
+                                    use futures::StreamExt;
+                                    futures::stream::iter(
+                                        updates.chunks(100)
+                                        .map(|element| element.to_vec())
+                                        .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
+                                        .into_iter()
+                                        .map(|element|{
+                                            let url_cloned = url.clone();
+                                            futures::FutureExt::boxed(async move {
+                                                super::#ident::try_create_many(
+                                                    &url_cloned,
+                                                    super::#ident_create_many_parameters_upper_camel_case {
+                                                        payload: super::#ident_create_many_payload_upper_camel_case(
+                                                            element
+                                                        )
+                                                    }
+                                                ).await
+                                                .expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
+                                            })
+                                        })
+                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>()
+                                    )
+                                    .buffer_unordered(10) // run at most 10 at the same time
+                                    .collect::<Vec<Vec<super::ExampleReadOnlyIds>>>()
+                                    .await
+                                    .into_iter()
+                                    .flatten()
+                                    .collect::<Vec<super::ExampleReadOnlyIds>>()
+                                };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                                 let #read_only_ids_returned_from_create_many_snake_case = super::#ident::try_create_many(
