@@ -893,3 +893,10 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_to_option_value_read_inner(value: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::ReadInner>>;
     fn update_to_read_only_ids(value: &<Self::Element as crate::PostgresqlJsonType>::Update) -> <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds;
 }
+
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub struct JsonFieldRights {
+    can_create: std::primitive::bool,
+    can_read: std::primitive::bool,
+    can_update: std::primitive::bool,
+}
