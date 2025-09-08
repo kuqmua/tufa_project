@@ -3876,10 +3876,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                                 });
                                 tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
-
-                                let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
-                                    #ident_create_default_fields_initialization_without_primary_key_token_stream
-                                };
                                 let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                     super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                         #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
@@ -3892,6 +3888,35 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
                                     #value_snake_case
                                 };
+                                let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
+                                    #ident_create_default_fields_initialization_without_primary_key_token_stream
+                                };
+                                let #common_read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
+                                    &#url_snake_case,
+                                    super::#ident_create_one_parameters_upper_camel_case {
+                                        #payload_snake_case: #ident_create_default_snake_case.clone()
+                                    }
+                                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(postgresql_crud::Value { #value_snake_case: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone() });
+                                assert_eq!(
+                                    super::#ident_read_upper_camel_case {
+                                        #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
+                                        #fields_none_initialization_token_stream
+                                    },
+                                    super::#ident::try_read_one(
+                                        &#url_snake_case,
+                                        super::#ident_read_one_parameters_upper_camel_case {
+                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                                #primary_key_field_ident: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
+                                                #select_snake_case: #select_primary_key_snake_case.clone(),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                                    "try_read_one result different after try_create_one"
+                                );
+
 
                                 let #read_only_ids_returned_from_create_many_snake_case = super::#ident::try_create_many(
                                     &url,
@@ -3964,31 +3989,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     ),
                                 //     "try_read_many result different after try_create_many"
                                 // );
-                                let #common_read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
-                                    &#url_snake_case,
-                                    super::#ident_create_one_parameters_upper_camel_case {
-                                        #payload_snake_case: #ident_create_default_snake_case.clone()
-                                    }
-                                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(postgresql_crud::Value { #value_snake_case: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone() });
-                                assert_eq!(
-                                    super::#ident_read_upper_camel_case {
-                                        #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
-                                        #fields_none_initialization_token_stream
-                                    },
-                                    super::#ident::try_read_one(
-                                        &#url_snake_case,
-                                        super::#ident_read_one_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                                #primary_key_field_ident: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
-                                                #select_snake_case: #select_primary_key_snake_case.clone(),
-                                            },
-                                        },
-                                    )
-                                    .await
-                                    .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                    "try_read_one result different after try_create_one"
-                                );
+
+
                                 //update part start
                                 // #columns_test_cases_declaration_token_stream
                                 // #columns_test_cases_updates_token_stream
