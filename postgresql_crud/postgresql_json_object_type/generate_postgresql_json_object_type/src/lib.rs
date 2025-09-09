@@ -474,7 +474,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     });
                     quote::quote! {Self {#(#content_token_stream),*}}
                 };
-                //todo refactor impl_ident_create_token_stream
                 let impl_new_for_ident_table_type_declaration_or_ident_create_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
                     &ident_table_type_declaration_or_ident_create_upper_camel_case,
                     &{
@@ -3447,16 +3446,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         jsonb_set_path,
                         increment
                     )},
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                        },
-                    },
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                     &quote::quote!{#ident_as_postgresql_json_type_token_stream::#update_query_bind_snake_case(
                         value,
                         query
@@ -3598,7 +3588,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     },
-                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True,
+                    &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote::quote!{#ident_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(
                         value,
                         query
