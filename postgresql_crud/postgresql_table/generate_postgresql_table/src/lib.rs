@@ -3872,7 +3872,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 if field_ident == current_field_ident {
                     quote::quote! {
                         #current_field_ident: Some(<
-                            #field_type
+                            #current_field_type
                             as
                             postgresql_crud::PostgresqlTypeTestCases
                         >::update_to_read_only_ids(&update))

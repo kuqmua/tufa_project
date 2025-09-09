@@ -155,7 +155,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
-            let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
             let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let increments_snake_case = naming::IncrementsSnakeCase;
