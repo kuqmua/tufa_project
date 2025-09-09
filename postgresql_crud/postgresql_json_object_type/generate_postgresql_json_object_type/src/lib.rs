@@ -901,77 +901,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_ident_select_token_stream = {
                     let select_query_part_postgresql_type_token_stream = {
                         let content_token_stream = {
-                            let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                                let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
-                                    let field_ident_stringified = element
-                                        .ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string();
-                                    let variant_name_token_stream: &dyn quote::ToTokens = &naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                    let field_ident_double_quotes_token_stream: &dyn quote::ToTokens = &generate_quotes::double_quotes_token_stream(&field_ident_stringified);
-                                    let column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens = &quote::quote! {&#column_name_and_maybe_field_getter_field_ident_snake_case};
-                                    let element_type: &dyn quote::ToTokens = &{
-                                        let element_type = &element.ty;
-                                        quote::quote! {#element_type}
-                                    };
-
-                                    let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_type);
-                                    let ident_select_element_or_ident_with_id_standart_not_null_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
-                                        IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
-                                        IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
-                                    };
-                                    quote::quote! {
-                                        #ident_select_element_or_ident_with_id_standart_not_null_select_element_upper_camel_case::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream::#select_query_part_snake_case(
-                                            &value,
-                                            #field_ident_double_quotes_token_stream,
-                                            #column_name_and_maybe_field_getter_token_stream,
-                                            &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
-                                            false,
-                                        )
-                                    }
-                                });
-                                let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase));
-                                let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
-                                    let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})");
-                                    let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{value_snake_case}',{value})");
-                                    let acc_format_handle = {
-                                        let acc_snake_case = naming::AccSnakeCase;
-                                        format!("{{{acc_snake_case}}}")
-                                    };
-                                    let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
-                                    (acc_format_handle, wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
-                                };
-                                //todo refactor
-                                quote::quote! {
-                                    let field_ident = column;
-                                    let column_name_and_maybe_field_getter = column;
-                                    let column_name_and_maybe_field_getter_for_error_message = column;
-                                    let is_postgresql_type = true;
-
-                                    let mut acc = std::string::String::default();
-                                    let #column_name_and_maybe_field_getter_field_ident_snake_case = column_name_and_maybe_field_getter.to_string();
-                                    let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
-                                    for element in self #self_field_vec_token_stream {
-                                        acc.push_str(&format!(
-                                            "{}||",
-                                            match element {
-                                                #(#variants_token_stream),*
-                                            }
-                                        ));
-                                    }
-                                    let _ = acc.pop();
-                                    let _ = acc.pop();
-                                    if is_postgresql_type {
-                                        format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
-                                    }
-                                    else {
-                                        format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
-                                    }
-                                }
-                            };
                             let standart_nullable_token_stream = {
                                 let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(&match &postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -1022,7 +951,74 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             };
                             match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream(&is_standart_with_id_false),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        // generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream
+                                        let variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident_stringified = element
+                                                .ident
+                                                .as_ref()
+                                                .unwrap_or_else(|| {
+                                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                                })
+                                                .to_string();
+                                            let variant_name_token_stream: &dyn quote::ToTokens = &naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                                            let field_ident_double_quotes_token_stream: &dyn quote::ToTokens = &generate_quotes::double_quotes_token_stream(&field_ident_stringified);
+                                            let column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens = &quote::quote! {&#column_name_and_maybe_field_getter_field_ident_snake_case};
+                                            let element_type: &dyn quote::ToTokens = &{
+                                                let element_type = &element.ty;
+                                                quote::quote! {#element_type}
+                                            };
+
+                                            let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_type);
+                                            quote::quote! {
+                                                #ident_standart_not_null_select_element_upper_camel_case::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream::#select_query_part_snake_case(
+                                                    &value,
+                                                    #field_ident_double_quotes_token_stream,
+                                                    #column_name_and_maybe_field_getter_token_stream,
+                                                    &#column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
+                                                    false,
+                                                )
+                                            }
+                                        });
+                                        let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase));
+                                        let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
+                                            let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})");
+                                            let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{value_snake_case}',{value})");
+                                            let acc_format_handle = {
+                                                let acc_snake_case = naming::AccSnakeCase;
+                                                format!("{{{acc_snake_case}}}")
+                                            };
+                                            let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
+                                            (acc_format_handle, wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
+                                        };
+                                        //todo refactor
+                                        quote::quote! {
+                                            let field_ident = column;
+                                            let column_name_and_maybe_field_getter = column;
+                                            let column_name_and_maybe_field_getter_for_error_message = column;
+                                            let is_postgresql_type = true;
+
+                                            let mut acc = std::string::String::default();
+                                            let #column_name_and_maybe_field_getter_field_ident_snake_case = column_name_and_maybe_field_getter.to_string();
+                                            let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
+                                            for element in self #self_field_vec_token_stream {
+                                                acc.push_str(&format!(
+                                                    "{}||",
+                                                    match element {
+                                                        #(#variants_token_stream),*
+                                                    }
+                                                ));
+                                            }
+                                            let _ = acc.pop();
+                                            let _ = acc.pop();
+                                            if is_postgresql_type {
+                                                format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
+                                            }
+                                            else {
+                                                format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
+                                            }
+                                        }
+                                    },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => standart_nullable_token_stream,
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
