@@ -184,6 +184,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
             let std_string_string_token_stream = token_patterns::StdStringString;
+            let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
 
             let import_path_query_part_error_named_token_stream = {
                 let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
@@ -932,8 +933,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         )
                                     }
                                 });
-                                let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
-                                let maybe_pagination_start_end_initialization_token_stream = proc_macro2::TokenStream::new();
                                 let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase));
                                 let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
                                     let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})");
@@ -965,7 +964,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                     let _ = acc.pop();
                                     let _ = acc.pop();
-                                    #maybe_pagination_start_end_initialization_token_stream
                                     if is_postgresql_type {
                                         format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                                     }
@@ -2678,8 +2676,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     )
                                 }
                             });
-                            let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
-                            let maybe_pagination_start_end_initialization_token_stream = proc_macro2::TokenStream::new();
                             let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}->'{{{field_ident_snake_case}}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase));
                             let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase));
                             let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
@@ -2710,7 +2706,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                                 let _ = acc.pop();
                                 let _ = acc.pop();
-                                #maybe_pagination_start_end_initialization_token_stream
                                 if is_postgresql_type {
                                     format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                                 }
@@ -3620,8 +3615,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     )
                                 }
                             });
-                            let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
-                            let maybe_pagination_start_end_initialization_token_stream = proc_macro2::TokenStream::new();
                             let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}->'{{{field_ident_snake_case}}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase));
                             let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase));
                             let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
@@ -3652,7 +3645,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                                 let _ = acc.pop();
                                 let _ = acc.pop();
-                                #maybe_pagination_start_end_initialization_token_stream
                                 if is_postgresql_type {
                                     format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                                 }
