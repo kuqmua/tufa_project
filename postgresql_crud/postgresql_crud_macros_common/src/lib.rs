@@ -661,6 +661,19 @@ impl quote::ToTokens for SelectQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone)]
+pub enum SelectOnlyIdsIsPrimaryKeyUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for SelectOnlyIdsIsPrimaryKeyUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
 pub enum UpdateQueryPartValueUnderscore {
     True,
     False,
@@ -712,6 +725,19 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
         }
     }
 }
+#[derive(Debug, Clone)]
+pub enum SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {_}.to_tokens(tokens),
+            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_impl_postgresql_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
@@ -730,6 +756,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     normalize_token_stream: &dyn quote::ToTokens,
     read_only_ids_token_stream: &dyn quote::ToTokens,
+    select_only_ids_is_primary_key_underscore: &SelectOnlyIdsIsPrimaryKeyUnderscore,
     select_only_ids_query_part_token_stream: &dyn quote::ToTokens,
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
@@ -741,6 +768,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
+    select_only_updated_ids_query_part_is_primary_key_underscore: &SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore,
     select_only_updated_ids_query_part_token_stream: &dyn quote::ToTokens,
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_token_stream: &dyn quote::ToTokens,
@@ -765,7 +793,6 @@ pub fn generate_impl_postgresql_type_token_stream(
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
-    let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
     let select_only_updated_ids_query_bind_snake_case = naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
@@ -808,7 +835,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
             fn #select_only_ids_query_part_snake_case(
                 #column_snake_case: #reference_std_primitive_str_token_stream,
-                #is_primary_key_snake_case: #std_primitive_bool_token_stream
+                #select_only_ids_is_primary_key_underscore: #std_primitive_bool_token_stream
             ) -> #std_string_string_token_stream {
                 #select_only_ids_query_part_token_stream
             }
@@ -839,7 +866,7 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #value_snake_case: &Self::#update_upper_camel_case,
                 #column_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,
-                #is_primary_key_snake_case: #std_primitive_bool_token_stream
+                #select_only_updated_ids_query_part_is_primary_key_underscore: #std_primitive_bool_token_stream
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_updated_ids_query_part_token_stream
             }

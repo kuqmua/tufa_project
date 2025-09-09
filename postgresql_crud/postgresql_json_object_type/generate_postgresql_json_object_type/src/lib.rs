@@ -3354,7 +3354,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
                     &ident_create_upper_camel_case,
-                    &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::False,
+                    &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                     &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     &quote::quote!{
                         match #increment_snake_case.checked_add(1) {
@@ -3382,6 +3382,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_read_upper_camel_case,
                     &value_snake_case,
                     &ident_read_only_ids_upper_camel_case,
+                    &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::True,
                     &{
                         let ident_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident);
                         quote::quote! {format!("{} as {column},", #ident_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#column_snake_case))}
@@ -3405,6 +3406,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         value,
                         query
                     )},
+                    &postgresql_crud_macros_common::SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore::True,
                     &{
                         //todo maybe reuse
                         match &postgresql_json_object_type_pattern {
