@@ -154,10 +154,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let value_snake_case = naming::ValueSnakeCase;
             let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
-            let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
             let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
             let increment_snake_case = naming::IncrementSnakeCase;
-            let increments_snake_case = naming::IncrementsSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let field_ident_snake_case = naming::FieldIdentSnakeCase;
@@ -612,47 +610,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let generate_type_as_postgresql_json_type_create_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create);
             let generate_type_as_postgresql_json_type_create_for_query_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create_for_query);
-            let generate_create_query_part_fields_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                let token_stream = vec_syn_field.iter().map(|element| {
-                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_field_ident);
-                    let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
-                    let postgresql_crud_wrap_into_jsonb_build_object_token_stream = {
-                        let wrap_into_jsonb_build_object_snake_case = naming::WrapIntoJsonbBuildObjectSnakeCase;
-                        quote::quote! {#import_path::#wrap_into_jsonb_build_object_snake_case}
-                    };
-                    quote::quote! {
-                        match #field_type_as_crud_postgresql_json_type_from_field_token_stream::#create_query_part_snake_case(&#content_token_stream.#element_field_ident, #increment_snake_case) {
-                            Ok(#value_snake_case) => {
-                                #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(
-                                    #element_field_ident_double_quotes_token_stream,
-                                    &#value_snake_case
-                                ));
-                            }
-                            Err(#error_snake_case) => {
-                                return Err(#error_snake_case);
-                            }
-                        }
-                    }
-                });
-                quote::quote! {#(#token_stream)*}
-            };
-            let generate_standart_not_null_create_query_part_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                let ok_value_token_stream = match &is_standart_with_id {
-                    IsStandartWithId::False => quote::quote! {format!("{increments}")},
-                    IsStandartWithId::True => quote::quote! {format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{increments}")},
-                };
-                let create_query_part_fields_token_stream = generate_create_query_part_fields_token_stream(&value_snake_case);
-                quote::quote! {
-                    let mut #increments_snake_case = std::string::String::from("");
-                    #create_query_part_fields_token_stream
-                    let _ = #increments_snake_case.pop();
-                    let _ = #increments_snake_case.pop();
-                    Ok(#ok_value_token_stream)
-                }
-            };
             let ident_create_token_stream = {
                 let ident_create_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
                 let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", self)});
@@ -2082,7 +2039,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_standart_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_with_id_array_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_update_element_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let ident_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(&ident_with_id_standart_not_null_upper_camel_case);
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
                 let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
@@ -2938,7 +2894,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let create_query_part_fields_token_stream = generate_create_query_part_fields_token_stream(&element_snake_case);
                                 quote::quote! {
                                     let update_query_part_acc = {
                                         if value.update.0.is_empty() {

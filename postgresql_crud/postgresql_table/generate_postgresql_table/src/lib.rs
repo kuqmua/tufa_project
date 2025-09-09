@@ -169,7 +169,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValueReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase; //here
-    let read_only_ids_returned_from_create_many_snake_case = naming::ReadOnlyIdsReturnedFromCreateManySnakeCase;
     let read_only_ids_returned_from_create_one_snake_case = naming::ReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let common_read_only_ids_returned_from_create_one_snake_case = naming::CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
@@ -3730,109 +3729,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {#field_ident: None}
         });
         let std_vec_vec_ident_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&quote::quote! {super::#ident_read_upper_camel_case});
-        let std_vec_vec_futures_future_box_future_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&quote::quote! {futures::future::BoxFuture<'static, ()>});
-        let column_update_all_future_counter_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            let field_type = &element.syn_field.ty;
-            quote::quote! {
-                if let Some(value) = &#common_read_only_ids_returned_from_create_one_snake_case.#field_ident {
-                    for element0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                        for element1 in element0 {
-                            all_future_counter += 1;
-                        }
-                    }
-                }
-            }
-        });
         //todo instead of first dropping table - check if its not exists. if exists test must fail
-        // let column_update_futures_add_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-        //     let field_ident = &element.field_ident;
-        //     let field_type = &element.syn_field.ty;
-        //     let try_create_one_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 870927ab-3ba2-445f-96b5-0f7b8618fc63 {field_ident}"));
-        //     let update_try_new_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 {field_ident}"));
-        //     let try_update_one_expect_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error d2de0bd6-1b01-4ef2-b074-a60878241b52 {field_ident}"));
-        //     let try_update_one_result_different_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("try_update_one result different {field_ident}"));
-        //     let fields_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-        //         let current_field_ident = &element.field_ident;
-        //         let current_field_type = &element.syn_field.ty;
-        //         if field_ident == current_field_ident {
-        //             quote::quote! {
-        //                 #current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(
-        //                     &update
-        //                 ))
-        //             }
-        //         } else {
-        //             quote::quote! {
-        //                 #current_field_ident: None
-        //             }
-        //         }
-        //     });
-        //     let some_value_or_none_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-        //         let current_field_ident = &element.field_ident;
-        //         if field_ident == current_field_ident {
-        //             quote::quote! {
-        //                 Some(postgresql_crud::Value {
-        //                     value: update
-        //                 })
-        //             }
-        //         } else {
-        //             quote::quote! {
-        //                 None
-        //             }
-        //         }
-        //     });
-        //     quote::quote! {
-        //         if let Some(value) = &#common_read_only_ids_returned_from_create_one_snake_case.#field_ident {
-        //             for element0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-        //                 for element1 in element0 {
-        //                     let url_cloned = url.clone();
-        //                     let ident_create_default_cloned = ident_create_default.clone();
-        //                     let select_primary_key_cloned = select_primary_key.clone();
-        //                     future_counter += 1;
-        //                     acc.push(futures::FutureExt::boxed(async move {
-        //                         let start = chrono::Local::now();
-        //                         let #read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
-        //                             &url_cloned,
-        //                             super::#ident_create_one_parameters_upper_camel_case { payload: ident_create_default_cloned }
-        //                         ).await.expect(#try_create_one_error_message_double_quotes_token_stream);
-        //                         let middle = chrono::Local::now();
-        //                         let update = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-        //                         assert_eq!(
-        //                             super::#ident_read_only_ids_upper_camel_case {
-        //                                 #primary_key_field_ident: #read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
-        //                                 #fields_token_stream
-        //                             },
-        //                             super::#ident::try_update_one(
-        //                                 &url_cloned,
-        //                                 super::#ident_update_one_parameters_upper_camel_case {
-        //                                     #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
-        //                                         <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(#read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone()),
-        //                                         #some_value_or_none_token_stream
-        //                                     )
-        //                                     .expect(#update_try_new_error_message_double_quotes_token_stream),
-        //                                 },
-        //                             )
-        //                             .await
-        //                             .expect(#try_update_one_expect_error_message_double_quotes_token_stream),
-        //                             #try_update_one_result_different_error_message_double_quotes_token_stream
-        //                         );
-        //                         let end = chrono::Local::now();
-        //                         let duration = end - start;
-        //                         println!(
-        //                             "start: {}, middle: {}, end: {}, diff: {} seconds, counter: {} of {}",
-        //                             start.format("%Y-%m-%d %H:%M:%S"),
-        //                             middle.format("%Y-%m-%d %H:%M:%S"),
-        //                             end.format("%Y-%m-%d %H:%M:%S"),
-        //                             duration.num_seconds(),
-        //                             future_counter,
-        //                             all_future_counter
-        //                         );
-        //                     }));
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
         let updates_content_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
@@ -3904,16 +3801,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let url_cloned = url.clone();
                             let ident_create_default_cloned = ident_create_default.clone();
                             let select_primary_key_cloned = select_primary_key.clone();
-                            let read_only_ids_returned_from_create_one = read_only_ids_vec
+                            let #read_only_ids_returned_from_create_one_snake_case = read_only_ids_vec
                             .get(future_counter)
-                            .expect("error 0125dabf-df60-4382-b152-ce222cc249ca").clone();
+                            .expect(#try_create_one_error_message_double_quotes_token_stream).clone();
                             future_counter += 1;
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
                                 let start = chrono::Local::now();
                                 let update = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
                                 assert_eq!(
                                     super::#ident_read_only_ids_upper_camel_case {
-                                        primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                                        primary_key_column: #read_only_ids_returned_from_create_one_snake_case.primary_key_column.clone(),
                                         #fields_token_stream
                                     },
                                     super::#ident::try_update_one(
@@ -3921,13 +3818,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         super::#ident_update_one_parameters_upper_camel_case {
                                             payload: super::#ident_update_upper_camel_case::try_new(
                                                 #primary_key_field_type_as_postgresql_type_update_token_stream::from(
-                                                    read_only_ids_returned_from_create_one.primary_key_column.clone()
+                                                    #read_only_ids_returned_from_create_one_snake_case.primary_key_column.clone()
                                                 ),
                                                 #some_value_or_none_token_stream
-                                            ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_154")
+                                            ).expect(#update_try_new_error_message_double_quotes_token_stream)
                                         }
-                                    ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154"),
-                                    "try_update_one result different column_154"
+                                    ).await.expect(#try_update_one_expect_error_message_double_quotes_token_stream),
+                                    #try_update_one_result_different_error_message_double_quotes_token_stream
                                 );
                                 let end = chrono::Local::now();
                                 let duration = end - start;
