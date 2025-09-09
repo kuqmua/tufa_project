@@ -180,6 +180,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
             let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
             let select_only_updated_ids_query_bind_snake_case = naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
+            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
+            let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -899,8 +901,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let select_query_part_postgresql_type_token_stream = {
                         let content_token_stream = {
                             let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                                let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
-                                let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                                 let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                                     let field_ident_stringified = element
                                         .ident
@@ -2642,8 +2642,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::True,
                     &{
                         let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
-                            let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                             let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
@@ -3581,8 +3579,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::True,
                     &{
                         let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
-                            let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                             let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
