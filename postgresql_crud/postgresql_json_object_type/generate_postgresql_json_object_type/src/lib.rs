@@ -170,6 +170,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
             let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
             let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
+            let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
             let column_snake_case = naming::ColumnSnakeCase;
             let query_part_snake_case = naming::QueryPartSnakeCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
@@ -918,7 +919,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     };
 
                                     let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_type);
-                                    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
                                     let ident_select_element_or_ident_with_id_standart_not_null_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                                         IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
                                         IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
@@ -2659,7 +2659,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 };
 
                                 let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_type);
-                                let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
                                 let ident_select_element_or_ident_with_id_standart_not_null_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                                     IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
                                     IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
@@ -3596,7 +3595,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 };
 
                                 let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_type_as_postgresql_json_type_token_stream(&element_type);
-                                let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
                                 let ident_select_element_or_ident_with_id_standart_not_null_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                                     IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
                                     IsStandartWithId::True => &ident_with_id_standart_not_null_select_element_upper_camel_case,
