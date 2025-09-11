@@ -1131,36 +1131,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             ),
                             &self_value_token_stream
                         );
-                        let select_query_part_token_stream = {
-                            // let generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                            let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
-                                &is_standart_with_id_true,
-                                &self_snake_case,
-                                &column_name_and_maybe_field_getter_field_ident_snake_case,
-                                &column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
-                            );
-                            quote::quote! {
-                                fn #select_query_part_snake_case(
-                                    &self,
-                                    #field_ident_snake_case: &std::primitive::str,
-                                    #column_name_and_maybe_field_getter_snake_case: &std::primitive::str,
-                                    #column_name_and_maybe_field_getter_for_error_message_snake_case: &std::primitive::str,
-                                    is_postgresql_type: std::primitive::bool
-                                ) -> std::string::String {
-                                    let mut #acc_snake_case = std::string::String::default();
-                                    let #column_name_and_maybe_field_getter_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_format_handle_token_stream);
-                                    let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
-                                    #select_query_part_for_loop_token_stream
-                                    let _ = #acc_snake_case.pop();
-                                    let _ = #acc_snake_case.pop();
-                                    format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
-                                }
-                            }
-                        };
                         quote::quote!{
                             impl #ident_with_id_standart_not_null_select_upper_camel_case {
                                 #impl_new_for_ident_with_id_standart_not_null_select_token_stream
-                                #select_query_part_token_stream
                             }
                         }
                     };
@@ -2929,17 +2902,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
+                                        &is_standart_with_id_true,
+                                        &quote::quote!{#value_snake_case.#ident_with_id_standart_not_null_select_snake_case},
+                                        &column_name_and_maybe_field_getter_field_ident_snake_case,
+                                        &column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
+                                    );
                                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                                         "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"
                                     ));
                                     quote::quote! {
-                                        let #ident_with_id_standart_not_null_select_snake_case = #ident_with_id_standart_not_null_select_upper_camel_case::select_query_part(
-                                            &#value_snake_case.#ident_with_id_standart_not_null_select_snake_case,
-                                            field_ident,
-                                            &"value",
-                                            &"value",
-                                            true
-                                        );
+                                        let #ident_with_id_standart_not_null_select_snake_case = {
+                                            let mut #acc_snake_case = std::string::String::default();
+                                            let #column_name_and_maybe_field_getter_field_ident_snake_case = format!("value->'{field_ident}'");
+                                            let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!("value.{field_ident}");
+                                            #select_query_part_for_loop_token_stream
+                                            let _ = #acc_snake_case.pop();
+                                            let _ = #acc_snake_case.pop();
+                                            format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
+                                        };
                                         let dimension1_start = #value_snake_case.#dimension1_pagination_token_stream.start();
                                         let dimension1_end = #value_snake_case.#dimension1_pagination_token_stream.end();
                                         format!(#format_handle_token_stream)
