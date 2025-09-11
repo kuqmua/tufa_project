@@ -2267,7 +2267,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                         ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => proc_macro2::TokenStream::new(),
                     };
-                    let std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                    let std_vec_vec_ident_with_id_standart_not_null_create_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
                         &ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream
                     );
                     let std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
@@ -2275,7 +2275,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     );
                     quote::quote! {
                         #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
-                        #create_snake_case: #std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream,
+                        #create_snake_case: #std_vec_vec_ident_with_id_standart_not_null_create_token_stream,
                         #update_snake_case: #ident_with_id_standart_not_null_update_upper_camel_case,
                         #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
                         #delete_snake_case: #std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
@@ -2444,7 +2444,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let tuple_struct_ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("tuple struct {ident_update_upper_camel_case}"));
                             let ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_update_upper_camel_case);
                             let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident_update_upper_camel_case, &quote::quote! {__field0, __field1, __field2});
-                            let std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                            let std_vec_vec_ident_with_id_standart_not_null_create_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
                                 &ident_with_id_standart_not_null_create_upper_camel_case
                             );
                             let std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
@@ -2529,7 +2529,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             where
                                                 __A: serde::de::SeqAccess<'de>,
                                             {
-                                                let __field0 = match serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream>(&mut __seq)? {
+                                                let __field0 = match serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __seq)? {
                                                     serde::__private::Some(__value) => __value,
                                                     serde::__private::None => {
                                                         vec![]
@@ -2554,7 +2554,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             where
                                                 __A: serde::de::MapAccess<'de>,
                                             {
-                                                let mut __field0: serde::__private::Option<#std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream> = serde::__private::None;
+                                                let mut __field0: serde::__private::Option<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream> = serde::__private::None;
                                                 let mut __field1: serde::__private::Option<#ident_with_id_standart_not_null_update_upper_camel_case> = serde::__private::None;
                                                 let mut __field2: serde::__private::Option<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream> = serde::__private::None;
                                                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
@@ -2563,7 +2563,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             if serde::__private::Option::is_some(&__field0) {
                                                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
                                                             }
-                                                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<#std_vec_vec_ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream>(&mut __map)?);
+                                                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __map)?);
                                                         }
                                                         __Field::__field1 => {
                                                             if serde::__private::Option::is_some(&__field1) {
