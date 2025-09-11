@@ -3709,7 +3709,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_tests_snake_case = naming::parameter::SelfTestsSnakeCase::from_display(&ident);
         let drop_table_if_exists_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("drop table if exists {}", naming::DisplayToSnakeCaseStringified::case(&ident)));
         let ident_create_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateMany);
+        let ident_read_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadMany);
         let ident_create_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::CreateMany);
+        let ident_read_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::ReadMany);
         let ident_create_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateOne);
         let ident_read_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadOne);
         let ident_read_one_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::ReadOne);
@@ -3840,6 +3842,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     }
                 }
+            }
+        });
+        let try_read_many_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+            quote::quote! {
+                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
+                    <
+                        <#field_type as postgresql_crud::PostgresqlType>::Select
+                        as
+                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                )
             }
         });
         quote::quote! {
@@ -3978,7 +3994,33 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         fut.await;
                                     }
                                 ).await;
-                         
+                                //////////
+                                let try_read_many_data = super::#ident::try_read_many(
+                                    &url,
+                                    super::#ident_read_many_parameters_upper_camel_case {
+                                        payload: super::#ident_read_many_payload_upper_camel_case {
+                                            where_many: super::#std_option_option_ident_where_many_upper_camel_case(None),
+                                            select: postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                                                #try_read_many_not_empty_unique_enum_vec_token_stream
+                                            ]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1")
+                                            ,
+                                            order_by: postgresql_crud::OrderBy {
+                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
+                                                ),
+                                                order: Some(postgresql_crud::Order::Asc),
+                                            },
+                                            pagination: postgresql_crud::PaginationStartsWithZero::try_new(
+                                                10000,
+                                                0
+                                            ).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+                                        },
+                                    },
+                                )
+                                .await
+                                .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                println!("try_read_many result len {}", try_read_many_data.len());
+                                ////////
                                 // let (
                                 //     #primary_key_read_returned_from_create_many1_token_stream,
                                 //     #primary_key_read_returned_from_create_many2_token_stream
