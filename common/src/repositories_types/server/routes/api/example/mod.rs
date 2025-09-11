@@ -1240,4 +1240,4 @@ pub struct Cat {
     pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
 }
 
-// //////////////
+//////////////
