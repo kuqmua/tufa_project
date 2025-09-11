@@ -2175,7 +2175,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_read_inner_alias_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_read_inner_token_stream(&ident_standart_not_null_upper_camel_case))),
                         },
                         PostgresqlJsonObjectTypePattern::Array => generate_pub_type_ident_read_inner_alias_token_stream(&match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_read_inner_token_stream(&ident_with_id_standart_not_null_upper_camel_case)),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                                &ident_with_id_standart_not_null_read_inner_upper_camel_case
+                            ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_read_inner_token_stream(&ident_with_id_array_not_null_upper_camel_case)),
                         }),
                     }
