@@ -1562,6 +1562,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+            let ident_array_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
             let ident_with_id_standart_not_null_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -1638,10 +1639,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let generate_into_inner_token_stream = |ident_token_stream: &dyn quote::ToTokens, parameters_token_stream: &dyn quote::ToTokens|{
                             quote::quote!{#ident_token_stream::into_inner(#parameters_token_stream)}
                         };
-                        let ident_with_id_standart_not_null_read_into_inner_element_token_stream = generate_into_inner_token_stream(
-                            &ident_with_id_standart_not_null_read_upper_camel_case,
-                            &element_snake_case
-                        );
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::False),
@@ -1660,14 +1657,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    quote::quote! {
-                                        self.0.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_read_into_inner_element_token_stream).collect()
-                                    }
+                                    let content_token_stream = generate_into_inner_token_stream(
+                                        &ident_with_id_standart_not_null_read_upper_camel_case,
+                                        &element_snake_case
+                                    );
+                                    quote::quote! {self.0.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let content_token_stream = generate_into_inner_token_stream(
+                                        &ident_array_not_null_read_upper_camel_case,
+                                        &value_snake_case
+                                    );
                                     quote::quote! {
                                         match self.0 {
-                                            Some(#value_snake_case) => Some(#value_snake_case.0.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_read_into_inner_element_token_stream).collect()),
+                                            Some(#value_snake_case) => Some(#content_token_stream),
                                             None => None
                                         }
                                     }
