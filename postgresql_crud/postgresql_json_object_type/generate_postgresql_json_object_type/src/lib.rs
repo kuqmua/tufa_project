@@ -175,6 +175,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let self_snake_case = naming::SelfSnakeCase;
             let query_part_snake_case = naming::QueryPartSnakeCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+            let test_cases_snake_case = naming::TestCasesSnakeCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
             let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
@@ -373,6 +374,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_type_as_postgresql_type_test_cases_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                 generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlTypeTestCasesUpperCamelCase)
             };
+            let ident_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident);
             let ident_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
                 &ident_standart_not_null_upper_camel_case
             );
@@ -3522,10 +3524,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &value_snake_case,
                     &ident_read_only_ids_upper_camel_case,
                     &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::True,
-                    &{
-                        let ident_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident);
-                        quote::quote! {format!("{} as {column},", #ident_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#column_snake_case))}
-                    },
+                    &quote::quote! {format!("{} as {column},", #ident_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#column_snake_case))},
                     &ident_read_inner_upper_camel_case,
                     &value_into_inner_token_stream,
                     &ident_update_upper_camel_case,
@@ -3696,157 +3695,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let (impl_postgresql_json_type_test_cases_for_ident_token_stream, impl_postgresql_type_test_cases_for_ident_token_stream) = {
                 let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
-                //todo maybe put into function and reuse function call here?
-                let test_cases_content_token_stream = match &element.postgresql_json_object_type_pattern {
-                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            let fields_last_initialization_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                });
-                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
-                                let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                quote::quote! {
-                                    let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
-                                        read_only_ids.0.value.#field_ident.clone()
-                                    );
-                                }
-                            });
-                            let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                });
-                                let field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&field_ident);
-                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
-                                let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                    let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    });
-                                    let current_field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&current_field_ident);
-                                    let current_field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&current_field_ident);
-                                    if field_ident == current_field_ident {
-                                        quote::quote! {
-                                            #current_field_ident: #current_field_ident_current_snake_case.clone()
-                                        }
-                                    } else {
-                                        quote::quote! {
-                                            #current_field_ident: #current_field_ident_last_snake_case.clone()
-                                        }
-                                    }
-                                });
-                                let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element1});
-                                quote::quote! {
-                                    for element0 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(&#read_only_ids_snake_case.0.value.#field_ident) {
-                                        for element1 in element0 {
-                                            let #field_ident_current_snake_case = Some(#value_content_token_stream);
-                                            #field_ident_last_snake_case = #field_ident_current_snake_case.clone();
-                                            #acc_snake_case.push(#ident_standart_not_null_read_inner_upper_camel_case {
-                                                #(#fields_token_stream),*
-                                            });
-                                        }
-                                    }
-                                }
-                            });
-                            //just for the linter to not show me error variable not read
-                            let drop_fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                });
-                                let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
-                                quote::quote! {drop(#field_ident_last_snake_case);}
-                            });
-                            quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                #(#fields_last_initialization_token_stream)*
-                                #(#content_token_stream)*
-                                #(#drop_fields_token_stream)*
-                                vec![#acc_snake_case]
-                            }
-                        }
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
-                            quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
-                                    for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
-                                        for element1 in element0 {
-                                            #acc_snake_case.push(Some(element1));
-                                        }
-                                    }
-                                }
-                                #acc_snake_case.push(None);
-                                vec![#acc_snake_case]
-                            }
-                        }
-                    },
-                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                });
-                                let fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                    let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    });
-                                    if field_ident == current_field_ident {
-                                        let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element2});
-                                        quote::quote! {
-                                            #current_field_ident: Some(#value_content_token_stream)
-                                        }
-                                    } else {
-                                        let current_field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                        quote::quote! {
-                                            #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
-                                                element0.0.#value_snake_case.#current_field_ident.clone()
-                                            )
-                                        }
-                                    }
-                                });
-                                let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element0.0.#value_snake_case.#id_snake_case.0.#value_snake_case.clone()});
-                                quote::quote! {
-                                    for element1 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(
-                                        &element0.0.#value_snake_case.#field_ident.clone()
-                                    ) {
-                                        for element2 in element1 {
-                                            #acc_snake_case.push(vec![
-                                                #ident_with_id_standart_not_null_read_inner_upper_camel_case {
-                                                    #id_snake_case: Some(#value_content_token_stream),
-                                                    #(#fields_token_stream),*
-                                                }
-                                            ]);
-                                        }
-                                    }
-                                }
-                            });
-                            quote::quote! {
-                                #read_only_ids_snake_case.0.#value_snake_case.iter().map(|element0|{
-                                    let mut #acc_snake_case = vec![];
-                                    #(#content_token_stream)*
-                                    #acc_snake_case
-                                })
-                                .collect()
-                            }
-                        }
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
-                            quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
-                                    for element0 in #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
-                                        for element1 in element0 {
-                                            #acc_snake_case.push(Some(element1));
-                                        }
-                                    }
-                                }
-                                #acc_snake_case.push(None);
-                                vec![#acc_snake_case]
-                            }
-                        }
-                    },
-                };
                 let read_new_or_try_new_unwraped_for_test_token_stream = match &element.postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -4150,7 +3998,156 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
-                        &test_cases_content_token_stream,
+                        &match &element.postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let fields_last_initialization_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
+                                        let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                        quote::quote! {
+                                            let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                                read_only_ids.0.value.#field_ident.clone()
+                                            );
+                                        }
+                                    });
+                                    let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&field_ident);
+                                        let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
+                                        let fields_token_stream = vec_syn_field.iter().map(|element| {
+                                            let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            let current_field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&current_field_ident);
+                                            let current_field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&current_field_ident);
+                                            if field_ident == current_field_ident {
+                                                quote::quote! {
+                                                    #current_field_ident: #current_field_ident_current_snake_case.clone()
+                                                }
+                                            } else {
+                                                quote::quote! {
+                                                    #current_field_ident: #current_field_ident_last_snake_case.clone()
+                                                }
+                                            }
+                                        });
+                                        let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                        let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element1});
+                                        quote::quote! {
+                                            for element0 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(&#read_only_ids_snake_case.0.value.#field_ident) {
+                                                for element1 in element0 {
+                                                    let #field_ident_current_snake_case = Some(#value_content_token_stream);
+                                                    #field_ident_last_snake_case = #field_ident_current_snake_case.clone();
+                                                    #acc_snake_case.push(#ident_standart_not_null_read_inner_upper_camel_case {
+                                                        #(#fields_token_stream),*
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    });
+                                    //just for the linter to not show me error variable not read
+                                    let drop_fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
+                                        quote::quote! {drop(#field_ident_last_snake_case);}
+                                    });
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        #(#fields_last_initialization_token_stream)*
+                                        #(#content_token_stream)*
+                                        #(#drop_fields_token_stream)*
+                                        vec![#acc_snake_case]
+                                    }
+                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
+                                            for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
+                                                for element1 in element0 {
+                                                    #acc_snake_case.push(Some(element1));
+                                                }
+                                            }
+                                        }
+                                        #acc_snake_case.push(None);
+                                        vec![#acc_snake_case]
+                                    }
+                                }
+                            },
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let fields_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            if field_ident == current_field_ident {
+                                                let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element2});
+                                                quote::quote! {
+                                                    #current_field_ident: Some(#value_content_token_stream)
+                                                }
+                                            } else {
+                                                let current_field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                                quote::quote! {
+                                                    #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                                        element0.0.#value_snake_case.#current_field_ident.clone()
+                                                    )
+                                                }
+                                            }
+                                        });
+                                        let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                        let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element0.0.#value_snake_case.#id_snake_case.0.#value_snake_case.clone()});
+                                        quote::quote! {
+                                            for element1 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(
+                                                &element0.0.#value_snake_case.#field_ident.clone()
+                                            ) {
+                                                for element2 in element1 {
+                                                    #acc_snake_case.push(vec![
+                                                        #ident_with_id_standart_not_null_read_inner_upper_camel_case {
+                                                            #id_snake_case: Some(#value_content_token_stream),
+                                                            #(#fields_token_stream),*
+                                                        }
+                                                    ]);
+                                                }
+                                            }
+                                        }
+                                    });
+                                    quote::quote! {
+                                        #read_only_ids_snake_case.0.#value_snake_case.iter().map(|element0|{
+                                            let mut #acc_snake_case = vec![];
+                                            #(#content_token_stream)*
+                                            #acc_snake_case
+                                        })
+                                        .collect()
+                                    }
+                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
+                                            for element0 in #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
+                                                for element1 in element0 {
+                                                    #acc_snake_case.push(Some(element1));
+                                                }
+                                            }
+                                        }
+                                        #acc_snake_case.push(None);
+                                        vec![#acc_snake_case]
+                                    }
+                                }
+                            },
+                        },
                         &read_new_or_try_new_unwraped_for_test_token_stream,
                         &update_new_or_try_new_unwraped_for_test_token_stream,
                         &match &element.postgresql_json_object_type_pattern {
@@ -4231,7 +4228,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
-                        &test_cases_content_token_stream,
+                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#test_cases_snake_case(&#read_only_ids_snake_case)},
                         &read_new_or_try_new_unwraped_for_test_token_stream,
                         &update_new_or_try_new_unwraped_for_test_token_stream,
                         &quote::quote!{unreachable!()},
