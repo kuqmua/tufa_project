@@ -737,10 +737,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_token_stream(
                                     &postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                                        &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                            &ident_with_id_standart_not_null_upper_camel_case,
-                                            &postgresql_json_type_subtype_create_for_query,
-                                        )
+                                        &ident_with_id_standart_not_null_create_for_query_upper_camel_case
                                     )
                                 ),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_token_stream(
