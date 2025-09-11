@@ -1731,8 +1731,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    self.0.into_iter().map(|#element_snake_case|#into_inner_token_stream).collect()
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream = generate_into_inner_token_stream(
+                                        &ident_with_id_standart_not_null_read_upper_camel_case,
+                                        &element_snake_case
+                                    );
+                                    quote::quote! {
+                                        self.0.into_iter().map(|#element_snake_case|#content_token_stream).collect()
+                                    }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                     match self.0 {
