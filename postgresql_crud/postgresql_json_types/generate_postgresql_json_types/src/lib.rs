@@ -2159,7 +2159,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         quote::quote! {#ident_read_only_ids_upper_camel_case(#import_path::Value{value: #content_token_stream})}
                     },
-                    &quote::quote!{todo!()},
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        quote::quote! {Some(#import_path::Value { value: #ident_read_upper_camel_case::new(value.0.value)})}
+                    } else {
+                        quote::quote! {Some(#import_path::Value { value: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream })}
+                    },
                 )
             };
             let generated = quote::quote! {
