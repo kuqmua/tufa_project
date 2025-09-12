@@ -924,7 +924,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 #update_to_read_only_ids_token_stream
             }
             fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                value: <Self::Element as #import_path::PostgresqlType>::ReadOnlyIds
+                value: &<Self::Element as #import_path::PostgresqlType>::ReadOnlyIds
             ) -> std::option::Option<#import_path::Value<<Self::Element as #import_path::PostgresqlType>::Read>> {
                 #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             }
@@ -975,7 +975,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 #update_to_read_only_ids_token_stream
             }
             fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                value: <Self::Element as #import_path::PostgresqlJsonType>::ReadOnlyIds
+                value: &<Self::Element as #import_path::PostgresqlJsonType>::ReadOnlyIds
             ) -> std::option::Option<#import_path::Value<<Self::Element as #import_path::PostgresqlJsonType>::Read>> {
                 #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             }

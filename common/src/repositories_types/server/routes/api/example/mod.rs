@@ -1408,13 +1408,12 @@ mod example_tests {
                                             Some(value) => crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::new({
                                                 value.0.value.clone().into_iter().map(|element|{
                                                     crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdRead::try_new(
-                                                        Some(postgresql_crud::Value {
-                                                            value: postgresql_crud::UuidUuidAsNotNullJsonbStringRead::new(element.0.value.id.0.value)
-                                                        }),
-                                                        //here
-                                                        Some(postgresql_crud::Value {
-                                                            value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                        }),
+                                                        <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                                            &element.0.value.id
+                                                        ),
+                                                        <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                                            &element.0.value.field_0
+                                                        )
                                                     ).expect("error 9c373e3c-19b4-4a2b-853f-22e1b850be52")
                                                 }).collect()
                                             }),
