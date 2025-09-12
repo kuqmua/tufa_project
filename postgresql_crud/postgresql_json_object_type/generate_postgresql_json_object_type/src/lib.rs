@@ -4223,7 +4223,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
-                                                match &value {
+                                                match &value.0 {
                                                     Some(value) => Some(#ident_standart_not_null_read_upper_camel_case::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value)),
                                                     None => None
                                                 }
@@ -4257,7 +4257,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
-                                                match &value {
+                                                match &value.0 {
                                                     Some(value) => Some(#ident_array_not_null_read_upper_camel_case::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value)),
                                                     None => None
                                                 }
