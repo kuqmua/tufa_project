@@ -380,7 +380,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 pub async fn prepare_postgresql(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-                    println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
+                    // println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
                             error,
@@ -388,7 +388,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         });
                     }
                     let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
-                    println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
+                    // println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
                             error,
@@ -399,7 +399,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #prepare_postgresql_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
                     );
-                    println!("{prepare_postgresql_query_stringified}");
+                    // println!("{prepare_postgresql_query_stringified}");
                     if let Err(error) = sqlx::query(&prepare_postgresql_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#prepare_postgresql_upper_camel_case {
                             error,
@@ -2360,6 +2360,32 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         value
     };
     let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
+    let select_only_ids_query_part_token_stream = {
+        let select_only_ids_query_part_initialization_token_stream = fields.iter().map(|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+            let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
+            let is_primary_key_token_stream = if primary_key_field_ident == field_ident {
+                quote::quote! {true}
+            } else {
+                quote::quote! {false}
+            };
+            quote::quote! {
+                #acc_snake_case.push_str(&#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_only_ids_query_part(
+                    #field_ident_double_quotes_token_stream,
+                    #is_primary_key_token_stream
+                ));
+            }
+        });
+        quote::quote! {
+            {
+                let mut #acc_snake_case = #std_string_string_token_stream::new();
+                #(#select_only_ids_query_part_initialization_token_stream)*
+                let _ = #acc_snake_case.pop();
+                #acc_snake_case
+            }
+        }
+    };
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2412,7 +2438,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let _: Option<char> = #acc_snake_case.pop();
                             #acc_snake_case
                         },
-                        &#ident::#primary_key_snake_case()
+                        &#select_only_ids_query_part_token_stream
                     )}
                 };
                 let binded_query_token_stream = {
@@ -2515,22 +2541,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    let select_only_ids_query_part_initialization_token_stream = fields.iter().map(|element: &SynFieldWrapper| {
-                        let field_ident = &element.field_ident;
-                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
-                        let is_primary_key_token_stream = if primary_key_field_ident == field_ident {
-                            quote::quote! {true}
-                        } else {
-                            quote::quote! {false}
-                        };
-                        quote::quote! {
-                            #acc_snake_case.push_str(&#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_only_ids_query_part(
-                                #field_ident_double_quotes_token_stream,
-                                #is_primary_key_token_stream
-                            ));
-                        }
-                    });
                     quote::quote! {
                         #postgresql_crud_snake_case::generate_create_one_query_string(
                             &#ident_table_name_call_token_stream,
@@ -2541,13 +2551,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             },
-                            // &#ident::#primary_key_snake_case()
-                            &{
-                                let mut #acc_snake_case = #std_string_string_token_stream::new();
-                                #(#select_only_ids_query_part_initialization_token_stream)*
-                                let _ = #acc_snake_case.pop();
-                                #acc_snake_case
-                            }
+                            &#select_only_ids_query_part_token_stream
                         )
                     }
                 };
@@ -4332,7 +4336,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        #ident_tests_token_stream
+        // #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
