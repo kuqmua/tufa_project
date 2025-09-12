@@ -417,6 +417,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+            let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -4232,16 +4233,36 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_true).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            let field_type = &element.ty;
+                                            quote::quote! {
+                                                <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                                    &value.0.value.#field_ident
+                                                )
+                                            }
+                                        });
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
                                                 value.into_iter().map(|element|{
-                                                    #ident_with_id_standart_not_null_read_upper_camel_case:: //here
+                                                    #ident_with_id_standart_not_null_read_upper_camel_case::try_new(
+                                                        #(#parameters_token_stream),*
+                                                    ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
                                                 }).collect()
                                             )
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        quote::quote! {todo!()}
+                                        quote::quote! {
+                                            #ident_read_upper_camel_case::new(
+                                                match &value {
+                                                    Some(value) => #ident_array_not_null_read_upper_camel_case::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value),
+                                                    None => None
+                                                }
+                                            )
+                                        }
                                     }
                                 },
                             };
