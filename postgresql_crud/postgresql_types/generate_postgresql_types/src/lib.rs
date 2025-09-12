@@ -5078,6 +5078,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             none_token_stream
                         }
                     },
+                    &quote::quote! {todo!()},
                 )
             };
             let generated = quote::quote! {

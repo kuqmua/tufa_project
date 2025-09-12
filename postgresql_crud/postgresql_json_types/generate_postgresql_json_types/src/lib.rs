@@ -2159,6 +2159,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         quote::quote! {#ident_read_only_ids_upper_camel_case(#import_path::Value{value: #content_token_stream})}
                     },
+                    &quote::quote!{todo!()},
                 )
             };
             let generated = quote::quote! {

@@ -4197,7 +4197,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {#ident_read_only_ids_upper_camel_case(#value_content_token_stream)}
                                 }
                             },
-                        }
+                        },
+                        &quote::quote!{todo!()},
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,
@@ -4209,6 +4210,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case)},
                         &quote::quote!{unreachable!()},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(#value_snake_case)},
+                        &quote::quote!{todo!()},
                     ),
                 )
             };
