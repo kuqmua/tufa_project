@@ -1400,9 +1400,9 @@ mod example_tests {
                             let mut acc = vec![];
                             for element in &read_only_ids_vec {
                                 acc.push(super::ExampleRead {
-                                    primary_key_column: Some(postgresql_crud::Value {
-                                        value: element.primary_key_column.clone()
-                                    }),
+                                    primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        &element.primary_key_column
+                                    ),
                                     column_156: Some(postgresql_crud::Value {
                                         value: match &element.column_156 {
                                             Some(value) => crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::new({

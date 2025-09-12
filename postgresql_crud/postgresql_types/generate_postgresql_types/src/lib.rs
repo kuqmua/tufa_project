@@ -5078,7 +5078,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             none_token_stream
                         }
                     },
-                    &quote::quote! {todo!()},
+                    &if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                        && let CanBePrimaryKey::True = &can_be_primary_key
+                    {
+                        quote::quote! {
+                            Some(postgresql_crud_common::Value {
+                                value: value.clone()
+                            })
+                        }
+                    } else {
+                        quote::quote!{
+                            Some(postgresql_crud_common::Value {
+                                value: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                            })
+                        }
+                    }
                 )
             };
             let generated = quote::quote! {
