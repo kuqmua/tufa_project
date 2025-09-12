@@ -4223,8 +4223,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
-                                                match &value.0 {
-                                                    Some(value) => Some(#ident_standart_not_null_read_upper_camel_case::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value)),
+                                                match &value.0.value {
+                                                    Some(value) => match <
+                                                        #ident_standart_not_null_upper_camel_case
+                                                        as
+                                                        postgresql_crud::PostgresqlJsonTypeTestCases
+                                                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value) {
+                                                        Some(value) => Some(value.value),
+                                                        None => None,
+                                                    }
                                                     None => None
                                                 }
                                             )
@@ -4240,13 +4247,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let field_type = &element.ty;
                                             quote::quote! {
                                                 <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                    &value.0.value.#field_ident
+                                                    &element.0.value.#field_ident
                                                 )
                                             }
                                         });
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
-                                                value.into_iter().map(|element|{
+                                                value.0.value.clone().into_iter().map(|element|{
                                                     #ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #(#parameters_token_stream),*
                                                     ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
@@ -4257,8 +4264,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new(
-                                                match &value.0 {
-                                                    Some(value) => Some(#ident_array_not_null_read_upper_camel_case::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value)),
+                                                match &value.0.value {
+                                                    Some(value) => match <
+                                                        #ident_array_not_null_upper_camel_case
+                                                        as
+                                                        postgresql_crud::PostgresqlJsonTypeTestCases
+                                                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value) {
+                                                        Some(value) => Some(value.value.0),
+                                                        None => None,
+                                                    },
                                                     None => None
                                                 }
                                             )
