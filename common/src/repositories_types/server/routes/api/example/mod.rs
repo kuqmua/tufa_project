@@ -1403,23 +1403,18 @@ mod example_tests {
                                     primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                         &element.primary_key_column
                                     ),
-                                    column_156: Some(postgresql_crud::Value {
-                                        value: match &element.column_156 {
-                                            Some(value) => crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::new({
-                                                value.0.value.clone().into_iter().map(|element|{
-                                                    crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdRead::try_new(
-                                                        <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                            &element.0.value.id
-                                                        ),
-                                                        <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                            &element.0.value.field_0
-                                                        )
-                                                    ).expect("error 9c373e3c-19b4-4a2b-853f-22e1b850be52")
-                                                }).collect()
-                                            }),
-                                            None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        }
-                                    })
+                                    column_156: match &element.column_156 {
+                                        Some(value) => <
+                                            crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
+                                            as
+                                            postgresql_crud::PostgresqlJsonTypeTestCases
+                                        >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                            &value
+                                        ),
+                                        None => Some(postgresql_crud::Value {
+                                            value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                        })
+                                    }
                                 });
                             }
                             acc.sort_by(|a, b| {
