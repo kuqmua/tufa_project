@@ -246,6 +246,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let fields_len = fields.len();
     let fields_len_without_primary_key = fields_without_primary_key.len();
     let primary_key_field_type = &primary_key_field.syn_field.ty;
+    let primary_key_field_type_where_element_token_stream = naming::parameter::SelfWhereElementUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_origin_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let generate_as_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens| {
         quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
@@ -3862,6 +3864,44 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             }
         });
+        let select_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+            quote::quote! {
+                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
+                    <
+                        <
+                            #field_type
+                            as
+                            postgresql_crud::PostgresqlType
+                        >::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                )
+            }
+        });
+        let ident_read_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+            quote::quote! {
+                #field_ident: match &element.#field_ident {
+                    Some(value) => <
+                        #field_type
+                        as
+                        postgresql_crud::PostgresqlJsonTypeTestCases
+                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                        &value
+                    ),
+                    None => Some(postgresql_crud::Value {
+                        value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                    })
+                }
+            }
+        });
+        let none_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper| {
+            quote::quote! {None}
+        });
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3980,6 +4020,87 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .flatten()
                                     .collect::<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>()
                                 };
+                                let try_read_many_data_after_create_many = super::#ident::try_read_many(
+                                    &url,
+                                    super::#ident_read_many_parameters_upper_camel_case {
+                                        payload: super::#ident_read_many_payload_upper_camel_case {
+                                            where_many: super::#std_option_option_ident_where_many_upper_camel_case(Some(
+                                                super::#ident_where_many_upper_camel_case::try_new(
+                                                    Some(
+                                                        postgresql_crud::PostgresqlTypeWhere::try_new(
+                                                            postgresql_crud::LogicalOperator::Or,
+                                                            {
+                                                                let mut acc = vec![];
+                                                                for element in &read_only_ids_vec {
+                                                                    acc.push(#primary_key_field_type_where_element_token_stream::Equal(
+                                                                        postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                            value: #primary_key_field_type_origin_token_stream::new(
+                                                                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone())
+                                                                            ),
+                                                                        }
+                                                                    ));
+                                                                }
+                                                                acc
+                                                            }
+                                                        ).expect("error f4202d10-5444-4717-8af0-9358ee044c20")
+                                                    ),
+                                                    #none_parameters_initialization_without_primary_key_token_stream
+                                                ).expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb")
+                                            )),
+                                            select: postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                                                #select_not_empty_unique_enum_vec_token_stream
+                                            ])
+                                            .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1"),
+                                            order_by: postgresql_crud::OrderBy {
+                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
+                                                order: Some(postgresql_crud::Order::Asc),
+                                            },
+                                            pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+                                        },
+                                    },
+                                )
+                                .await
+                                .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                assert_eq!(
+                                    {
+                                        let mut acc = vec![];
+                                        for element in &read_only_ids_vec {
+                                            acc.push(super::#ident_read_upper_camel_case {
+                                                primary_key_column: <
+                                                    #primary_key_field_type
+                                                    as
+                                                    postgresql_crud::PostgresqlTypeTestCases
+                                                >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                                    &element.primary_key_column
+                                                ),
+                                                #ident_read_fields_initialization_without_primary_key_token_stream
+                                            });
+                                        }
+                                        acc.sort_by(|a, b| {
+                                            if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                value_a.value.cmp(&value_b.value)
+                                            }
+                                            else {
+                                                panic!("must not be what");
+                                            }
+                                        });
+                                        acc
+                                    },
+                                    {
+                                        let mut acc = try_read_many_data_after_create_many;
+                                        acc.sort_by(|a, b| {
+                                            if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                value_a.value.cmp(&value_b.value)
+                                            }
+                                            else {
+                                                panic!("must not be what")
+                                            }
+                                        });
+                                        acc
+                                    },
+                                    "try_read_many result different after try_create_many"
+                                );
                                 futures::StreamExt::for_each_concurrent(
                                     futures::stream::iter({
                                         let all_future_counter = {
@@ -4336,7 +4457,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
