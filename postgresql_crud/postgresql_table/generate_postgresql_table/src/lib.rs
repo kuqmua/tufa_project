@@ -3983,7 +3983,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                     .await
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                    "try_read_one result different after try_create_one"
+                                    "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                                 );
                                 let read_only_ids_vec = {
                                     let updates = {
@@ -4099,7 +4099,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         });
                                         acc
                                     },
-                                    "try_read_many result different after try_create_many"
+                                    "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
                                 );
                                 futures::StreamExt::for_each_concurrent(
                                     futures::stream::iter({

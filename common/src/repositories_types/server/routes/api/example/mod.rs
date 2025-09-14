@@ -1499,16 +1499,28 @@ mod example_tests {
                                                 ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154"),
                                                 "try_update_one result different column_154"
                                             );
-                                            //todo add try_read_one check
-                                            let read_one_data = super::Example::try_read_one(
-                                                &url_cloned,
-                                                super::ExampleReadOneParameters {
-                                                    payload: super::ExampleReadOnePayload {
-                                                        primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
-                                                        select: select_default_all_cloned
+                                            //here
+                                            assert_eq!(
+                                                super::ExampleRead {
+                                                    primary_key_column: Some(postgresql_crud::Value {
+                                                        value: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                                                    }),
+                                                    column_154: None,
+                                                    column_155: None,
+                                                    column_156: None,
+                                                    column_157: None
+                                                },
+                                                super::Example::try_read_one(
+                                                    &url_cloned,
+                                                    super::ExampleReadOneParameters {
+                                                        payload: super::ExampleReadOnePayload {
+                                                            primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone(),
+                                                            select: select_default_all_cloned
+                                                        }
                                                     }
-                                                }
-                                            ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                                ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                                                "try_read_one result different after try_create_one"
+                                            );
                                             /////////
                                             let end = chrono::Local::now();
                                             let duration = end - start;
