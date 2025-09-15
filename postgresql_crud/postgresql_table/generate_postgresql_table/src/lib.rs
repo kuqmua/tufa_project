@@ -3883,7 +3883,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_read_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
-            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
             quote::quote! {
                 #field_ident: match &element.#field_ident {
                     Some(value) => <

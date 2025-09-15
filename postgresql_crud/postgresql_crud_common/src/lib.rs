@@ -885,6 +885,10 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds
     ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
+    fn read_from_previous_read_unwraped_merged_with_update(
+        read: <Self::Element as crate::PostgresqlType>::Read,
+        update: <Self::Element as crate::PostgresqlType>::Update,
+    ) -> <Self::Element as crate::PostgresqlType>::Read;
 }
 
 #[cfg(feature = "test-utils")]
@@ -898,6 +902,10 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds
     ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
+    fn read_from_previous_read_unwraped_merged_with_update(
+        read: <Self::Element as crate::PostgresqlJsonType>::Read,
+        update: <Self::Element as crate::PostgresqlJsonType>::Update,
+    ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]

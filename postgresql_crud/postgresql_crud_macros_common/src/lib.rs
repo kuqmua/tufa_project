@@ -891,42 +891,63 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     read_only_ids_to_option_value_read_inner_token_stream: &dyn quote::ToTokens,
     update_to_read_only_ids_token_stream: &dyn quote::ToTokens,
     read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream: &dyn quote::ToTokens,
+    read_from_previous_read_unwraped_merged_with_update_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let test_cases_snake_case = naming::TestCasesSnakeCase;
     let element_upper_camel_case = naming::ElementUpperCamelCase;
     let self_upper_camel_case = naming::SelfUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let read_snake_case = naming::ReadSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let update_snake_case = naming::UpdateSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+    let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
+    let update_new_or_try_new_unwraped_for_test_snake_case = naming::UpdateNewOrTryNewUnwrapedForTestSnakeCase;
+    let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
+    let read_from_previous_read_unwraped_merged_with_update_snake_case = naming::ReadFromPreviousReadUnwrapedMergedWithUpdateSnakeCase;
+    let self_element_as_postgresql_type_token_stream = quote::quote! {<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>};
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
-                #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_only_ids_upper_camel_case
-            ) -> std::vec::Vec<std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case>> {
+                #read_only_ids_snake_case: &#self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::vec::Vec<std::vec::Vec<#self_element_as_postgresql_type_token_stream::#read_inner_upper_camel_case>> {
                 #test_cases_content_token_stream
             }
-            fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_upper_camel_case {
+            fn #read_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #type_token_stream) -> #self_element_as_postgresql_type_token_stream::#read_upper_camel_case {
                 #read_new_or_try_new_unwraped_for_test_token_stream
             }
-            fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#update_upper_camel_case {
+            fn #update_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #type_token_stream) -> #self_element_as_postgresql_type_token_stream::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
             }
-            fn read_only_ids_to_option_value_read_inner(value: <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::ReadOnlyIds) -> std::option::Option<#import_path::Value<<#self_upper_camel_case::#element_upper_camel_case as #import_path::PostgresqlType>::ReadInner>> {
+            fn #read_only_ids_to_option_value_read_inner_snake_case(
+                #value_snake_case: #self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::option::Option<#import_path::Value<#self_element_as_postgresql_type_token_stream::#read_inner_upper_camel_case>> {
                 #read_only_ids_to_option_value_read_inner_token_stream
             }
-            fn update_to_read_only_ids(value: &<Self::Element as #import_path::PostgresqlType>::Update) -> <Self::Element as #import_path::PostgresqlType>::ReadOnlyIds {
+            fn #update_to_read_only_ids_snake_case(
+                #value_snake_case: &#self_element_as_postgresql_type_token_stream::#update_upper_camel_case
+            ) -> #self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case {
                 #update_to_read_only_ids_token_stream
             }
-            fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                value: &<Self::Element as #import_path::PostgresqlType>::ReadOnlyIds
-            ) -> std::option::Option<#import_path::Value<<Self::Element as #import_path::PostgresqlType>::Read>> {
+            fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
+                #value_snake_case: &#self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::option::Option<#import_path::Value<#self_element_as_postgresql_type_token_stream::#read_upper_camel_case>> {
                 #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+            }
+            fn #read_from_previous_read_unwraped_merged_with_update_snake_case(
+                #read_snake_case: #self_element_as_postgresql_type_token_stream::#read_upper_camel_case,
+                #update_snake_case: #self_element_as_postgresql_type_token_stream::#update_upper_camel_case,
+            ) -> #self_element_as_postgresql_type_token_stream::#read_upper_camel_case {
+                #read_from_previous_read_unwraped_merged_with_update_token_stream
             }
         }
     }
@@ -942,42 +963,67 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     read_only_ids_to_option_value_read_inner_token_stream: &dyn quote::ToTokens,
     update_to_read_only_ids_token_stream: &dyn quote::ToTokens,
     read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream: &dyn quote::ToTokens,
+    read_from_previous_read_unwraped_merged_with_update_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    let read_snake_case = naming::ReadSnakeCase;
+    let update_snake_case = naming::UpdateSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
-    let test_cases_snake_case = naming::TestCasesSnakeCase;
     let element_upper_camel_case = naming::ElementUpperCamelCase;
     let self_upper_camel_case = naming::SelfUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
+    let update_new_or_try_new_unwraped_for_test_snake_case = naming::UpdateNewOrTryNewUnwrapedForTestSnakeCase;
+    let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
+    let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
+    let read_from_previous_read_unwraped_merged_with_update_snake_case = naming::ReadFromPreviousReadUnwrapedMergedWithUpdateSnakeCase;
+    let self_element_as_postgresql_json_type_token_stream = quote::quote! {<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>};
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case(
-                #read_only_ids_snake_case: &<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_only_ids_upper_camel_case
-            ) -> std::vec::Vec<std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_inner_upper_camel_case>> {
+                #read_only_ids_snake_case: &#self_element_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::vec::Vec<std::vec::Vec<#self_element_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
                 #test_cases_content_token_stream
             }
-            fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_upper_camel_case {
+            fn #read_new_or_try_new_unwraped_for_test_snake_case(
+                #value_snake_case: #type_token_stream
+            ) -> #self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case {
                 #read_new_or_try_new_unwraped_for_test_token_stream
             }
-            fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#update_upper_camel_case {
+            fn #update_new_or_try_new_unwraped_for_test_snake_case(
+                #value_snake_case: #type_token_stream
+            ) -> #self_element_as_postgresql_json_type_token_stream::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
             }
-            fn read_only_ids_to_option_value_read_inner(value: <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::ReadOnlyIds) ->  std::option::Option<#import_path::Value<<Self::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::ReadInner>> {
+            fn #read_only_ids_to_option_value_read_inner_snake_case(
+                #value_snake_case: #self_element_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::option::Option<#import_path::Value<#self_element_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
                 #read_only_ids_to_option_value_read_inner_token_stream
             }
-            fn update_to_read_only_ids(value: &<Self::Element as #import_path::PostgresqlJsonType>::Update) -> <Self::Element as #import_path::PostgresqlJsonType>::ReadOnlyIds {
+            fn #update_to_read_only_ids_snake_case(
+                #value_snake_case: &#self_element_as_postgresql_json_type_token_stream::#update_upper_camel_case
+            ) -> #self_element_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case {
                 #update_to_read_only_ids_token_stream
             }
-            fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                value: &<Self::Element as #import_path::PostgresqlJsonType>::ReadOnlyIds
-            ) -> std::option::Option<#import_path::Value<<Self::Element as #import_path::PostgresqlJsonType>::Read>> {
+            fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
+                #value_snake_case: &#self_element_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
+            ) -> std::option::Option<#import_path::Value<#self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case>> {
                 #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+            }
+            fn #read_from_previous_read_unwraped_merged_with_update_snake_case(
+                #read_snake_case: #self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case,
+                #update_snake_case: #self_element_as_postgresql_json_type_token_stream::#update_upper_camel_case,
+            ) -> #self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case {
+                #read_from_previous_read_unwraped_merged_with_update_token_stream
             }
         }
     }
