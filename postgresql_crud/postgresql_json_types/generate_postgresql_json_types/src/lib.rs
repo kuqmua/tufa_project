@@ -453,6 +453,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let element_upper_camel_case = naming::ElementUpperCamelCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
+            let update_snake_case = naming::UpdateSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
 
@@ -2167,7 +2168,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } else {
                         quote::quote! {Some(#import_path::Value { value: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream })}
                     },
-                    &quote::quote!{todo!()}
+                    &quote::quote!{#ident_read_upper_camel_case(#update_snake_case)}
                 )
             };
             let generated = quote::quote! {
