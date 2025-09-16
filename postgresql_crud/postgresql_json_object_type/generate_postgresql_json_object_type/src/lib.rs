@@ -4439,11 +4439,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                                 #(#match_content_token_stream),*
                                                             }
                                                         }
-                                                        #acc_snake_case.push({
-                                                            #ident_with_id_standart_not_null_read_upper_camel_case {
-                                                                #id_snake_case: found_read_element.#id_snake_case,
-                                                                #struct_initializattion_token_stream
-                                                            }
+                                                        #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case {
+                                                            #id_snake_case: found_read_element.#id_snake_case,
+                                                            #struct_initializattion_token_stream
                                                         });
                                                     }
                                                     #acc_snake_case
