@@ -4394,16 +4394,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     quote::quote! {
                                         match #option_update_snake_case {
-                                            //todo reuse #ident_read_upper_camel_case
-                                            Some(#value_snake_case) => match (#read_snake_case.0, #value_snake_case.0) {
-                                                (Some(#read_snake_case), Some(#update_snake_case)) => #ident_read_upper_camel_case(Some(
+                                            Some(#value_snake_case) => #ident_read_upper_camel_case(match (#read_snake_case.0, #value_snake_case.0) {
+                                                (Some(#read_snake_case), Some(#update_snake_case)) => Some(
                                                     <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
                                                         #read_snake_case,
                                                         Some(#update_snake_case)
                                                     )
-                                                )),
-                                                (Some(#read_snake_case), None) => #ident_read_upper_camel_case(Some(#read_snake_case)),
-                                                (None, Some(#update_snake_case)) => {
+                                                ),
+                                                (Some(#read_snake_case), None) => Some(#read_snake_case),
+                                                (None, Some(#update_snake_case)) => Some({
                                                     #(#fields_initialization_content_token_stream)*
                                                     for #element_snake_case in #update_snake_case.0.into_vec() {
                                                         match #element_snake_case {
@@ -4411,12 +4410,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         }
                                                     }
                                                     #(#fields_check_content_token_stream)*
-                                                    #ident_read_upper_camel_case(Some(#ident_standart_not_null_read_upper_camel_case {
+                                                    #ident_standart_not_null_read_upper_camel_case {
                                                         #(#ident_read_content_token_stream),*
-                                                    }))
-                                                },
-                                                (None, None) => #ident_read_upper_camel_case(None),
-                                            },
+                                                    }
+                                                }),
+                                                (None, None) => None,
+                                            }),
                                             None => read,
                                         }
                                     }
