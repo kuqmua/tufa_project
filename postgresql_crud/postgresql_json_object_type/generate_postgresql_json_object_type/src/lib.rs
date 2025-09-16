@@ -4347,7 +4347,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote! {todo!()}
+                                    quote::quote! {match #option_update_snake_case {
+                                        Some(#value_snake_case) => todo!(),
+                                        None => #read_snake_case,
+                                    }}
                                 }
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
