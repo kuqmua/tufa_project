@@ -4384,7 +4384,57 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for VecOfAnimalWithIdAsNotNull
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        todo!()
+        //here
+        match option_update {
+            Some(value) => VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead({
+                let mut acc = vec![];
+                for update_element in value.update.0.into_vec() {
+                    let mut option_read_element = None;
+                    for read_element in &read.0 {
+                        if 
+                            *update_element.id.get_inner()
+                            ==
+                            <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::into_inner(read_element.id.clone().expect("error df2413fe-e703-451b-ab75-add67da716f7").value)
+                        {
+                            option_read_element = Some(read_element.clone());
+                            break;
+                        }
+                    }
+                    let found_read_element = option_read_element.expect("error 139882b9-d38f-4cb5-98ea-af0ab23ec474");
+                    let mut field_0 = None;
+                    let mut field_1 = None;
+                    for element in update_element.fields.0.into_vec() {
+                        match element {
+                            AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => {
+                                field_0 = Some(value.value);
+                            }
+                            AnimalAsNotNullJsonbObjectUpdateElement::Field1(value) => {
+                                field_1 = Some(value.value);
+                            }
+                        }
+                    }
+                    acc.push({
+                        AnimalWithIdAsNotNullJsonbObjectWithIdRead {
+                            id: found_read_element.id,
+                            field_0: Some(postgresql_crud::Value {
+                                value: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                    found_read_element.field_0.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").value,
+                                    field_0
+                                ),
+                            }),
+                            field_1: Some(postgresql_crud::Value {
+                                value: <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                    found_read_element.field_1.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").value,
+                                    field_1
+                                ),
+                            }),
+                        }
+                    });
+                }
+                acc
+            }),
+            None => read
+        }
     }
 }
 #[cfg(feature = "test-utils")]

@@ -4394,6 +4394,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     quote::quote! {
                                         match #option_update_snake_case {
+                                            //todo reuse #ident_read_upper_camel_case
                                             Some(#value_snake_case) => match (#read_snake_case.0, #value_snake_case.0) {
                                                 (Some(#read_snake_case), Some(#update_snake_case)) => #ident_read_upper_camel_case(Some(
                                                     <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
@@ -4423,6 +4424,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    //here
                                     quote::quote! {todo!()}
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
