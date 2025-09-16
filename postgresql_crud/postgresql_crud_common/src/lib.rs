@@ -887,7 +887,7 @@ pub trait PostgresqlTypeTestCases {
     ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
     fn read_from_previous_read_unwraped_merged_with_update(
         read: <Self::Element as crate::PostgresqlType>::Read,
-        update: <Self::Element as crate::PostgresqlType>::Update,
+        option_update: std::option::Option<<Self::Element as crate::PostgresqlType>::Update>,
     ) -> <Self::Element as crate::PostgresqlType>::Read;
 }
 
@@ -904,7 +904,7 @@ pub trait PostgresqlJsonTypeTestCases {
     ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
     fn read_from_previous_read_unwraped_merged_with_update(
         read: <Self::Element as crate::PostgresqlJsonType>::Read,
-        update: <Self::Element as crate::PostgresqlJsonType>::Update,
+        option_update: std::option::Option<<Self::Element as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
 }
 

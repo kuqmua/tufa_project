@@ -860,7 +860,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
-            let update_snake_case = naming::UpdateSnakeCase;
+            let option_update_snake_case = naming::OptionUpdateSnakeCase;
+            let read_snake_case = naming::ReadSnakeCase;
             let hour_snake_case = naming::HourSnakeCase;
             let min_snake_case = naming::MinSnakeCase;
             let sec_snake_case = naming::SecSnakeCase;
@@ -5095,7 +5096,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             })
                         }
                     },
-                    &quote::quote!{#ident_read_upper_camel_case(#update_snake_case)}
+                    &quote::quote!{match #option_update_snake_case {
+                        Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case),
+                        None => #read_snake_case
+                    }}
                 )
             };
             let generated = quote::quote! {

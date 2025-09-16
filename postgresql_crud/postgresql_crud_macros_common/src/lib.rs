@@ -902,7 +902,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_snake_case = naming::ReadSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let update_snake_case = naming::UpdateSnakeCase;
+    let option_update_snake_case = naming::OptionUpdateSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
@@ -945,7 +945,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             }
             fn #read_from_previous_read_unwraped_merged_with_update_snake_case(
                 #read_snake_case: #self_element_as_postgresql_type_token_stream::#read_upper_camel_case,
-                #update_snake_case: #self_element_as_postgresql_type_token_stream::#update_upper_camel_case,
+                #option_update_snake_case: std::option::Option<#self_element_as_postgresql_type_token_stream::#update_upper_camel_case>,
             ) -> #self_element_as_postgresql_type_token_stream::#read_upper_camel_case {
                 #read_from_previous_read_unwraped_merged_with_update_token_stream
             }
@@ -967,7 +967,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
 ) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     let read_snake_case = naming::ReadSnakeCase;
-    let update_snake_case = naming::UpdateSnakeCase;
+    let option_update_snake_case = naming::OptionUpdateSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
@@ -1021,7 +1021,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             }
             fn #read_from_previous_read_unwraped_merged_with_update_snake_case(
                 #read_snake_case: #self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case,
-                #update_snake_case: #self_element_as_postgresql_json_type_token_stream::#update_upper_camel_case,
+                #option_update_snake_case: std::option::Option<#self_element_as_postgresql_json_type_token_stream::#update_upper_camel_case>,
             ) -> #self_element_as_postgresql_json_type_token_stream::#read_upper_camel_case {
                 #read_from_previous_read_unwraped_merged_with_update_token_stream
             }
