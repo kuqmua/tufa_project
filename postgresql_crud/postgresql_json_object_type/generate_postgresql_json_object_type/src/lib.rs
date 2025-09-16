@@ -4402,7 +4402,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     }),
                                                     (None, None) => None,
                                                 }),
-                                                None => read,
+                                                None => #read_snake_case,
                                             }
                                         }
                                     }
