@@ -4706,13 +4706,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let generate_range_test_cases_token_stream = |min_token_stream: &dyn quote::ToTokens,
-                                                                                  negative_less_typical_token_stream: &dyn quote::ToTokens,
-                                                                                  negative_more_typical_token_stream: &dyn quote::ToTokens,
-                                                                                  near_zero_token_stream: &dyn quote::ToTokens,
-                                                                                  positive_less_typical_token_stream: &dyn quote::ToTokens,
-                                                                                  positive_more_typical_token_stream: &dyn quote::ToTokens,
-                                                                                  max_token_stream: &dyn quote::ToTokens| {
+                                    let generate_range_test_cases_token_stream = |
+                                        min_token_stream: &dyn quote::ToTokens,
+                                        negative_less_typical_token_stream: &dyn quote::ToTokens,
+                                        negative_more_typical_token_stream: &dyn quote::ToTokens,
+                                        near_zero_token_stream: &dyn quote::ToTokens,
+                                        positive_less_typical_token_stream: &dyn quote::ToTokens,
+                                        positive_more_typical_token_stream: &dyn quote::ToTokens,
+                                        max_token_stream: &dyn quote::ToTokens
+                                    | {
                                         quote::quote! {
                                             let min = #min_token_stream;
                                             let negative_less_typical = #negative_less_typical_token_stream;

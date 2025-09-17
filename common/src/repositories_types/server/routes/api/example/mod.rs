@@ -2032,7 +2032,39 @@ mod example_tests {
                     };
                     //todo add another counters for another columns
                     //create vec of read_only_ids for column
-
+                    let column_154_counter_read_only_ids_vec = super::Example::try_create_many(
+                        &url,
+                        super::ExampleCreateManyParameters {
+                            payload: super::ExampleCreateManyPayload({
+                                let mut acc = vec![];
+                                for _ in 1..=column_154_counter {
+                                    acc.push(ident_create_default.clone());
+                                }
+                                acc
+                            })
+                        }
+                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+                    struct ReadInnerTestCaseWithReadOnlyIds {
+                        read_inner_test_case: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner,
+                        read_only_ids: super::ExampleReadOnlyIds
+                    }
+                    let read_inner_test_case_with_read_only_ids_column_154_vec = {
+                        let mut acc = vec![];
+                        if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
+                            let mut increment = 0;
+                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                for element1 in element0 {
+                                    acc.push(ReadInnerTestCaseWithReadOnlyIds {
+                                        read_inner_test_case: element1,
+                                        read_only_ids: column_154_counter_read_only_ids_vec.get(increment).expect("error c16ce7f9-7dcd-48a7-8109-89f8f875f1e9").clone()
+                                    });
+                                    increment = increment.checked_add(1).expect("error c9feff76-cd94-41ed-b6b9-bfdaf293753f");
+                                }
+                            }
+                        }
+                        acc
+                    };
+                    println!("read_inner_test_case_with_read_only_ids_column_154_vec {}", read_inner_test_case_with_read_only_ids_column_154_vec.len());
                     // let update_test_cases = {
                     //     // enum ColumnReadInnerTestCases {
                     //     //     Column154(crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner)
