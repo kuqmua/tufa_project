@@ -4639,33 +4639,24 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for OptionDoggieAsNullableJson
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        let read_cloned = read.clone();
-        let option_update_cloned = option_update.clone();
         //here
-        let f = match option_update {
-            Some(update_value) => {
-                let read_handle = match read.0 {
-                    Some(value) => value,
-                    None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                };
-                OptionDoggieAsNullableJsonbObjectRead(
-                    match update_value.0 {
-                        Some(value) => Some(
-                            <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                read_handle,
-                                Some(value),
-                            )
-                        ),
-                        None => None,
-                    }
-                )
-            },
-            None => {
-                read
-            },
-        };
-        println!("@@@5\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}\n{f:#?}");
-        f
+        match option_update {
+            Some(update_value) => OptionDoggieAsNullableJsonbObjectRead(
+                match update_value.0 {
+                    Some(value) => Some(
+                        <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                            match read.0 {
+                                Some(value) => value,
+                                None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            },
+                            Some(value),
+                        )
+                    ),
+                    None => None,
+                }
+            ),
+            None => read,
+        }
     }
 }
 #[cfg(feature = "test-utils")]
