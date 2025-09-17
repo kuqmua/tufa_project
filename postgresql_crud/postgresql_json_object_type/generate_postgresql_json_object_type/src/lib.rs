@@ -4377,56 +4377,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&generate_struct_initialization_default_token_stream);
                                         quote::quote! {
-                                            // match #option_update_snake_case {
-                                            //     Some(#value_snake_case) => #ident_read_upper_camel_case(match (#read_snake_case.0, #value_snake_case.0) {
-                                            //         (Some(#read_snake_case), Some(#update_snake_case)) => Some(
-                                            //             <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                            //                 #read_snake_case,
-                                            //                 Some(#update_snake_case)
-                                            //             )
-                                            //         ),
-                                            //         (Some(#read_snake_case), None) => Some(#read_snake_case),
-                                            //         (None, Some(#update_snake_case)) => Some({
-                                            //             #(#fields_initialization_content_token_stream)*
-                                            //             for #element_snake_case in #update_snake_case.0.into_vec() {
-                                            //                 match #element_snake_case {
-                                            //                     #(#match_content_token_stream),*
-                                            //                 }
-                                            //             }
-                                            //             #(#fields_check_content_token_stream)*
-                                            //             #ident_standart_not_null_read_upper_camel_case {
-                                            //                 #struct_initializattion_token_stream
-                                            //             }
-                                            //         }),
-                                            //         (None, None) => None,
-                                            //     }),
-                                            //     None => #read_snake_case,
-                                            // }
-                                            //
                                             match option_update {
                                                 Some(update_value) => #ident_read_upper_camel_case(
-                                                    match read.0 {
-                                                        Some(read_value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                                            read_value,
-                                                            match update_value.0 {
-                                                                Some(value) => Some(value),
-                                                                None => None
-                                                            }
-                                                        )),
-                                                        None => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                                            match update_value.0 {
-                                                                Some(value) => Some(value),
-                                                                None => None
-                                                            }
-                                                        ))
+                                                    match update_value.0 {
+                                                        Some(value) => Some(
+                                                            <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                                                match read.0 {
+                                                                    Some(value) => value,
+                                                                    None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                                                },
+                                                                Some(value),
+                                                            )
+                                                        ),
+                                                        None => None,
                                                     }
                                                 ),
-                                                None => read
+                                                None => read,
                                             }
-                                            //
                                         }
                                     }
                                 },
