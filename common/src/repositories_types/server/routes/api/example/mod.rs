@@ -1885,9 +1885,11 @@ mod example_tests {
                                             let start = chrono::Local::now();
                                             //here
                                             let current_primary_key = &read_only_ids_returned_from_create_one.primary_key_column.clone();
+                                            //here
+                                            println!("current_primary_key {current_primary_key:#?}\nelement1 {element1:#?}");
 
                                             let update = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test(element1.clone());
-
+                                            // println!("UPDATE {update:#?}");
                                             assert_eq!(
                                                 super::ExampleReadOnlyIds {
                                                     primary_key_column: current_primary_key.clone(),
@@ -1899,25 +1901,29 @@ mod example_tests {
                                                 super::Example::try_update_one(
                                                     &url_cloned,
                                                     super::ExampleUpdateOneParameters {
-                                                        payload: super::ExampleUpdate::try_new(
-                                                            <
-                                                                postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql
-                                                                as
-                                                                postgresql_crud::PostgresqlType
-                                                            >::Update::from(
-                                                                current_primary_key.clone()
-                                                            ),
-                                                            Some(postgresql_crud::Value { value: update.clone() }),
-                                                            // None,
-                                                            // None,
-                                                            // None
-                                                        ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_154")
+                                                        payload: {
+                                                            let g = super::ExampleUpdate::try_new(
+                                                                <
+                                                                    postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql
+                                                                    as
+                                                                    postgresql_crud::PostgresqlType
+                                                                >::Update::from(
+                                                                    current_primary_key.clone()
+                                                                ),
+                                                                Some(postgresql_crud::Value { value: update.clone() }),
+                                                                // None,
+                                                                // None,
+                                                                // None
+                                                            ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 column_154");
+                                                            // println!("!!!UPDATE {g:#?}");
+                                                            g
+                                                        }
                                                     }
                                                 ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52 column_154"),
                                                 "try_update_one result different column_154"
                                             );
-
-                                            println!("value_read_only_ids {value_read_only_ids:#?}");
+                                            // println!("after UPDATE");
+                                            // println!("value_read_only_ids {value_read_only_ids:#?}");
                                             let left = super::ExampleRead {
                                                 primary_key_column: Some(postgresql_crud::Value {
                                                     value: current_primary_key.clone(),
@@ -1962,7 +1968,7 @@ mod example_tests {
                                                     }
                                                 }
                                             ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                            println!("update {update:#?}\n\nLEFT {left:#?}\n\nRIGHT {right:#?}");
+                                            // println!("update {update:#?}\n\nLEFT {left:#?}\n\nRIGHT {right:#?}");
                                             assert_eq!(
                                                 left,
                                                 right,
@@ -3097,7 +3103,7 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for DoggieAsNotNullJsonbObject
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        println!("@@@2");
+        // println!("@@@2");
         match option_update {
             Some(value) => {
                 let mut field_0 = None;
@@ -3521,7 +3527,7 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for OptionDoggieAsNullableJson
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        println!("@@@3");
+        // println!("@@@3");
         match option_update {
             Some(update_value) => OptionDoggieAsNullableJsonbObjectRead(match update_value.0 {
                 Some(value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
@@ -4432,7 +4438,7 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for VecOfDoggieWithIdAsNotNull
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
         let read_cloned = read.clone();
         let option_update_cloned = option_update.clone();
-        println!("@@@4\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}");
+        //here
         let f = match option_update {
             Some(value) => VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead({
                 let mut acc = vec![];
@@ -4464,7 +4470,7 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for VecOfDoggieWithIdAsNotNull
             }),
             None => read,
         };
-        
+        // println!("@@@4\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}\n{f:#?}");
         f
     }
 }
