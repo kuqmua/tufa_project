@@ -3082,8 +3082,9 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for AnimalAsNotNullJsonbObject
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        println!("@@@1");
-        match option_update {
+        let read_cloned = read.clone();
+        let option_update_cloned = option_update.clone();
+        let f = match option_update {
             Some(value) => {
                 let mut field_808 = None;
                 for element in value.0.into_vec() {
@@ -3100,7 +3101,9 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for AnimalAsNotNullJsonbObject
                 }
             }
             None => read,
-        }
+        };
+        println!("@@@1\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}\n{f:#?}");
+        f
     }
 }
 #[cfg(feature = "test-utils")]
@@ -4209,8 +4212,9 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for DoggieAsNotNullJsonbObject
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        println!("@@@3");
-        match option_update {
+        let read_cloned = read.clone();
+        let option_update_cloned = option_update.clone();
+        let f = match option_update {
             Some(value) => {
                 let mut field_0 = None;
                 for element in value.0.into_vec() {
@@ -4227,7 +4231,9 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for DoggieAsNotNullJsonbObject
                 }
             }
             None => read,
-        }
+        };
+        println!("@@@3\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}\n{f:#?}");
+        f
     }
 }
 #[cfg(feature = "test-utils")]
@@ -4633,26 +4639,33 @@ impl postgresql_crud::PostgresqlJsonTypeTestCases for OptionDoggieAsNullableJson
         })
     }
     fn read_from_previous_read_unwraped_merged_with_update(read: <Self::Element as postgresql_crud::PostgresqlJsonType>::Read, option_update: std::option::Option<<Self::Element as postgresql_crud::PostgresqlJsonType>::Update>) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-        println!("@@@5");
-        match option_update {
-            Some(update_value) => OptionDoggieAsNullableJsonbObjectRead(match read.0 {
-                Some(read_value) => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                    read_value,
+        let read_cloned = read.clone();
+        let option_update_cloned = option_update.clone();
+        //here
+        let f = match option_update {
+            Some(update_value) => {
+                let read_handle = match read.0 {
+                    Some(value) => value,
+                    None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                };
+                OptionDoggieAsNullableJsonbObjectRead(
                     match update_value.0 {
-                        Some(value) => Some(value),
+                        Some(value) => Some(
+                            <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                read_handle,
+                                Some(value),
+                            )
+                        ),
                         None => None,
-                    },
-                )),
-                None => Some(<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    match update_value.0 {
-                        Some(value) => Some(value),
-                        None => None,
-                    },
-                )),
-            }),
-            None => read,
-        }
+                    }
+                )
+            },
+            None => {
+                read
+            },
+        };
+        println!("@@@5\nread {read_cloned:#?}\noption_update {option_update_cloned:#?}\n{f:#?}");
+        f
     }
 }
 #[cfg(feature = "test-utils")]
