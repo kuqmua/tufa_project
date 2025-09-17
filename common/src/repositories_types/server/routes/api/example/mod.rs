@@ -2031,7 +2031,7 @@ mod example_tests {
                         counter
                     };
                     //todo add another counters for another columns
-
+                    //create vec of read_only_ids for column
 
                     // let update_test_cases = {
                     //     // enum ColumnReadInnerTestCases {
