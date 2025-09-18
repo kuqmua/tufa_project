@@ -1455,7 +1455,12 @@ mod example_tests {
                                             &read_only_ids_element.column_154.clone().unwrap()
                                         ) {
                                             for element_1 in element_0 {
-                                                test_cases.push(element_1);
+                                                if test_cases.get(increment).is_none() {
+                                                    test_cases.push(element_1);
+                                                }
+                                                else {
+                                                    break;
+                                                }
                                             }
                                         }
                                         current_read_only_ids_with_test_case = Some((
