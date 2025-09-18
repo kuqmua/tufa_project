@@ -1445,31 +1445,31 @@ mod example_tests {
                             ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
                             let mut increment: usize = 0;
                             for read_only_ids_current_element in read_only_ids_current_elements {
-                                let mut local_increment = 0;
-                                let mut option_test_case = None;
-                                for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                    &read_only_ids_current_element.column_154.clone().unwrap()
-                                ) {
-                                    let mut should_break = false;
-                                    for element_1 in element_0 {
-                                        if local_increment == increment {
-                                            option_test_case = Some(element_1);
-                                            should_break = true;
+                                let option_test_case = {
+                                    let mut local_increment = 0;
+                                    let mut option_test_case = None;
+                                    for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                        &read_only_ids_current_element.column_154.clone().unwrap()
+                                    ) {
+                                        let mut should_break = false;
+                                        for element_1 in element_0 {
+                                            if local_increment == increment {
+                                                option_test_case = Some(element_1);
+                                                should_break = true;
+                                                break;
+                                            }
+                                            else {
+                                                local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+                                            }
+                                        }
+                                        if should_break {
                                             break;
                                         }
-                                        else {
-                                            local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                                        }
                                     }
-                                    if should_break {
-                                        break;
-                                    }
-                                }
-                                increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
-                                let element = (
-                                    read_only_ids_current_element,
-                                    option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
-                                );
+                                    increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
+                                    option_test_case
+                                };
+
 
                                 let url_cloned = url.clone();
                                 let ident_create_default_cloned = ident_create_default.clone();
@@ -1480,7 +1480,7 @@ mod example_tests {
                                         &url_cloned,
                                         super::ExampleReadOneParameters {
                                             payload: super::ExampleReadOnePayload {
-                                                primary_key_column: element.0.primary_key_column.clone(),
+                                                primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
                                                 select: select_default_all_cloned.clone()
                                             }
                                         }
@@ -1490,11 +1490,11 @@ mod example_tests {
                                         as
                                         postgresql_crud::PostgresqlTypeTestCases
                                     >::update_new_or_try_new_unwraped_for_test(
-                                        element.1
+                                        option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
                                     );
                                     assert_eq!(
                                         super::ExampleReadOnlyIds {
-                                            primary_key_column: element.0.primary_key_column.clone(),
+                                            primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
                                             column_154: Some(<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update)),
                                             //// column_155: None,
                                         },
@@ -1507,7 +1507,7 @@ mod example_tests {
                                                         as
                                                         postgresql_crud::PostgresqlType
                                                     >::Update::from(
-                                                        element.0.primary_key_column.clone()
+                                                        read_only_ids_current_element.primary_key_column.clone()
                                                     ),
                                                     Some(postgresql_crud::Value { value: update.clone() }),
                                                     //// None,
@@ -1519,7 +1519,7 @@ mod example_tests {
                                     assert_eq!(
                                         super::ExampleRead {
                                             primary_key_column: Some(postgresql_crud::Value {
-                                                value: element.0.primary_key_column.clone(),
+                                                value: read_only_ids_current_element.primary_key_column.clone(),
                                             }),
                                             column_154: Some(postgresql_crud::Value {
                                                 value: <
@@ -1532,7 +1532,7 @@ mod example_tests {
                                                         as
                                                         postgresql_crud::PostgresqlTypeTestCases
                                                     >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                        &element.0.column_154.clone().unwrap()
+                                                        &read_only_ids_current_element.column_154.clone().unwrap()
                                                     ).unwrap().value,
                                                     Some(update.clone())
                                                 )
@@ -1547,7 +1547,7 @@ mod example_tests {
                                             &url_cloned,
                                             super::ExampleReadOneParameters {
                                                 payload: super::ExampleReadOnePayload {
-                                                    primary_key_column: element.0.primary_key_column.clone(),
+                                                    primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
                                                     select: select_default_all_cloned
                                                 }
                                             }
