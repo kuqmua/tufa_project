@@ -1436,6 +1436,15 @@ mod example_tests {
                                 let select_default_all_cloned = select_default_all.clone();
                                 let column_154_is_some = common_read_only_ids_returned_from_create_one.column_154.is_some();
                                 acc.push(futures::FutureExt::boxed(async move {
+                                    let previous_read = super::Example::try_read_one(
+                                        &url_cloned,
+                                        super::ExampleReadOneParameters {
+                                            payload: super::ExampleReadOnePayload {
+                                                primary_key_column: element.read_only_ids.primary_key_column.clone(),
+                                                select: select_default_all_cloned.clone()
+                                            }
+                                        }
+                                    ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
                                     let update = <
                                         crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
                                         as
@@ -1499,6 +1508,8 @@ mod example_tests {
                                                     Some(update.clone())
                                                 )
                                             }),
+
+                                            // previous_read
                                             // column_155: match &read_only_ids_returned_from_create_one.column_155 {
                                             //     Some(value) => <crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
                                             //     None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
