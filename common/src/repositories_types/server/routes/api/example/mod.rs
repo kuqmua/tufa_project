@@ -1232,10 +1232,10 @@ pub struct Doggie {
 }]
 pub struct Cat {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
-    // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+    pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+    pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
     // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
@@ -1312,6 +1312,7 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                     );
+                    //todo maybe not need here
                     let read_only_ids_vec = {
                         let updates = {
                             let mut acc = vec![];
@@ -1344,7 +1345,6 @@ mod example_tests {
                         .flatten()
                         .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
                     };
-                    //
                     let try_read_many_data_after_create_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
@@ -1414,6 +1414,8 @@ mod example_tests {
                         "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
                     );
                     // println!("read_only_ids_vec {read_only_ids_vec:#?}");
+
+
                     let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                         super::ExampleSelect::Column154(<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1426,15 +1428,28 @@ mod example_tests {
                         futures::stream::iter({
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                             let finally_acc = {
+                                
+                                
+                                let read_only_ids_current_elements = super::Example::try_create_many(
+                                    &url,
+                                    super::ExampleCreateManyParameters {
+                                        payload: super::ExampleCreateManyPayload({
+                                            let mut acc = vec![];
+                                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
+                                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                                    for _ in element0 {
+                                                        acc.push(ident_create_default.clone());
+                                                    }
+                                                }
+                                            }
+                                            acc
+                                        })
+                                    }
+                                ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+
                                 let mut finally_acc = vec![];
                                 let mut increment: usize = 0;
-                                for read_only_ids_element in read_only_ids_vec {
-                                    let read_only_ids_current_element = super::Example::try_create_one(
-                                        &url,
-                                        super::ExampleCreateOneParameters {
-                                            payload: ident_create_default.clone()
-                                        }
-                                    ).await.expect("error 40bed32d-cbfd-4cda-83e9-8853ec22c900");
+                                for read_only_ids_current_element in read_only_ids_current_elements {
                                     let mut local_increment = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
@@ -1573,7 +1588,7 @@ mod example_tests {
                     )
                     .await
                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    println!("try_read_many result len {}", try_read_many_data.len());
+                    // println!("try_read_many result len {}", try_read_many_data.len());
                     ////////////////////
                 });
             })
