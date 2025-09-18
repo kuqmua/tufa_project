@@ -1710,38 +1710,22 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                     );
-                    let read_only_ids_vec = {
-                        let updates = {
-                            let mut acc = vec![];
-                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
-                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                    for element1 in element0 {
-                                        acc.push(ident_create_default.clone());
+                    let read_only_ids_vec = super::Example::try_create_many(
+                        &url,
+                        super::ExampleCreateManyParameters {
+                            payload: super::ExampleCreateManyPayload({
+                                let mut acc = vec![];
+                                if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
+                                    for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                        for _ in element0 {
+                                            acc.push(ident_create_default.clone());
+                                        }
                                     }
                                 }
-                            }
-                            acc
-                        };
-                        use futures::StreamExt;
-                        futures::stream::iter(
-                            updates
-                                .chunks(25)
-                                .map(|element| element.to_vec())
-                                .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
-                                .into_iter()
-                                .map(|element| {
-                                    let url_cloned = url.clone();
-                                    futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
-                                })
-                                .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
-                        )
-                        .buffer_unordered(5)
-                        .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
-                        .await
-                        .into_iter()
-                        .flatten()
-                        .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
-                    };
+                                acc
+                            })
+                        }
+                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
                     //here
                     let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1822,55 +1806,31 @@ mod example_tests {
                     );
                     // println!("read_only_ids_vec {read_only_ids_vec:#?}");
                     ///////////////////new
-                    let column_154_counter = {
-                        let mut counter: std::primitive::u64 = 0;
-                        if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
-                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                for _ in element0 {
-                                    counter = counter.checked_add(1).expect("error 0919e32a-8b5f-4bc2-9f28-aa8bd7574df0");
-                                }
-                            }
-                        }
-                        counter
-                    };
-                    let column_154_counter_read_only_ids_vec = super::Example::try_create_many(
-                        &url,
-                        super::ExampleCreateManyParameters {
-                            payload: super::ExampleCreateManyPayload({
-                                let mut acc = vec![];
-                                for _ in 1..=column_154_counter {
-                                    acc.push(ident_create_default.clone());
-                                }
-                                acc
-                            })
-                        }
-                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
-                    // println!("column_154_counter_read_only_ids_vec {column_154_counter_read_only_ids_vec:#?}");
-                    #[derive(Debug)]
-                    struct ReadInnerTestCaseWithReadOnlyIds {
-                        read_only_ids: super::ExampleReadOnlyIds,
-                        read_inner_test_case: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner,
-                    }
-                    let read_inner_test_case_with_read_only_ids_column_154_vec = {
-                        let mut acc = vec![];
-                        for element in &column_154_counter_read_only_ids_vec {
-                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                &element.column_154.clone().unwrap()
-                            ) {
-                                for element1 in element0 {
-                                    let g = ReadInnerTestCaseWithReadOnlyIds {
-                                        read_only_ids: element.clone(),
-                                        read_inner_test_case: element1
-                                    };
-                                    acc.push(g);
-                                }
-                            }
-                        }
-                        acc
-                    };
-                    // println!("read_inner_test_case_with_read_only_ids_column_154_vec {:#?}", read_inner_test_case_with_read_only_ids_column_154_vec);
                     futures::StreamExt::for_each_concurrent(
                         futures::stream::iter({
+                            #[derive(Debug)]
+                            struct ReadInnerTestCaseWithReadOnlyIds {
+                                read_only_ids: super::ExampleReadOnlyIds,
+                                read_inner_test_case: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner,
+                            }
+                            let read_inner_test_case_with_read_only_ids_column_154_vec = {
+                                let mut acc = vec![];
+                                for element in &read_only_ids_vec {
+                                    for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                        &element.column_154.clone().unwrap()
+                                    ) {
+                                        for element1 in element0 {
+                                            acc.push(ReadInnerTestCaseWithReadOnlyIds {
+                                                read_only_ids: element.clone(),
+                                                read_inner_test_case: element1
+                                            });
+                                        }
+                                    }
+                                    //here
+                                }
+                                acc
+                            };
+                            // println!("read_inner_test_case_with_read_only_ids_column_154_vec {:#?}", read_inner_test_case_with_read_only_ids_column_154_vec);
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                             for element in read_inner_test_case_with_read_only_ids_column_154_vec {
                                 let url_cloned = url.clone();
