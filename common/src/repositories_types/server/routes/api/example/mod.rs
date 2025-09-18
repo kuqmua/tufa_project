@@ -1195,9 +1195,9 @@ pub struct Doggie {
     // pub field_123: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
     pub field_806: CatAsNotNullJsonbObject,
-    // pub field_807: OptionCatAsNullableJsonbObject,
-    // pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_807: OptionCatAsNullableJsonbObject,
+    pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
@@ -1312,25 +1312,6 @@ mod example_tests {
                         .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                         "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                     );
-                    //here
-                    // let indexes = {
-                        
-                    //     let mut indexes: Vec<usize> = vec![];
-                    //     for element in read_only_ids_vec.clone() {
-                    //         for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                    //             &element.column_154.clone().unwrap()
-                    //         ) {
-                    //             for element1 in element0 {
-                    //                 indexes.push(increment);
-                    //                 increment = increment.checked_add(1).expect("error 5b708049-8f84-4882-816d-84ae45fca91e");
-                    //             }
-                    //         }
-                    //     }
-
-                    // };
-                    // let mut column_154_increment = 0;
-                    let mut increment = 0;
-                    let mut indexes: Vec<usize> = vec![];
                     let read_only_ids_vec = {
                         let updates = {
                             let mut acc = vec![];
@@ -1338,13 +1319,9 @@ mod example_tests {
                                 for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
                                     for element1 in element0 {
                                         acc.push(ident_create_default.clone());
-                                        indexes.push(increment);
-                                        increment = increment.checked_add(1).expect("error 5b708049-8f84-4882-816d-84ae45fca91e");
-                                        // column_154_increment = column_154_increment.checked_add(1).expect("error 5b708049-8f84-4882-816d-84ae45fca91e");
                                     }
                                 }
                             }
-                            println!("acc {}", acc.len());
                             acc
                         };
                         use futures::StreamExt;
@@ -1448,63 +1425,67 @@ mod example_tests {
                     futures::StreamExt::for_each_concurrent(
                         futures::stream::iter({
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                            let mut column_154_read_inner_test_cases = vec![];
-                            for element in read_only_ids_vec.clone() {
-                                let mut acc = vec![];
-                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                    &element.column_154.clone().unwrap()
-                                ) {
-                                    for element1 in element0 {
-                                        // column_154_read_inner_test_cases.push((
-                                        //     element.clone(),
-                                        //     element1.clone()
-                                        // ));
-                                        acc.push(element1.clone());
-                                    }
-                                }
-                                column_154_read_inner_test_cases.push((
-                                    element,
-                                    acc
-                                ));
-                            }
-                            // println!("column_154_read_inner_test_cases {column_154_read_inner_test_cases:#?}");
-                            let mut w = vec![];
-                            for element0 in column_154_read_inner_test_cases {
-                                let mut acc = vec![];
-                                for element1 in &element0.1 {
-                                    let element_read_only_ids = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default.clone() }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                                    acc.push(element_read_only_ids);
-                                }
-                                w.push((
-                                    element0.0,
-                                    element0.1,
-                                    acc
-                                ))
-                            }
-                            // println!("@@@{w:#?}");
-                            let mut finally_acc = vec![];
-                            let mut increment: usize = 0;
-                            for element in w.clone() {
-                                let len_of_test_cases = element.1.len();
-                                let mut current_read_only_ids_with_test_case = None;
-                                for read_only_ids_element in element.2 {
-                                    let mut test_cases = vec![];
-                                    for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                        &read_only_ids_element.column_154.clone().unwrap()
+                            let column_154_read_inner_test_cases = {
+                                let mut column_154_read_inner_test_cases = vec![];
+                                for element in read_only_ids_vec.clone() {
+                                    let mut acc = vec![];
+                                    for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                        &element.column_154.clone().unwrap()
                                     ) {
-                                        for element_1 in element_0 {
-                                            test_cases.push(element_1);
+                                        for element1 in element0 {
+                                            acc.push(element1.clone());
                                         }
                                     }
-                                    current_read_only_ids_with_test_case = Some((
-                                        read_only_ids_element.clone(),
-                                        test_cases.get(increment).unwrap().clone()
+                                    column_154_read_inner_test_cases.push((
+                                        element,
+                                        acc
                                     ));
                                 }
-                                increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
-                                finally_acc.push(current_read_only_ids_with_test_case.unwrap());
-                            }
-                            // println!("***{finally_acc:#?}");
+                                column_154_read_inner_test_cases
+                            };
+                            let w = {
+                                let mut w = vec![];
+                                for element0 in column_154_read_inner_test_cases {
+                                    let acc = super::Example::try_create_many(&url, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload({
+                                        let mut acc = vec![];
+                                        for _ in &element0.1 {
+                                            acc.push(ident_create_default.clone());
+                                        }
+                                        acc
+                                    }) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+                                    w.push((
+                                        element0.1,
+                                        acc
+                                    ))
+                                }
+                                w
+                            };
+                            let finally_acc = {
+                                let mut finally_acc = vec![];
+                                let mut increment: usize = 0;
+                                for element in w.clone() {
+                                    let len_of_test_cases = element.0.len();
+                                    let mut current_read_only_ids_with_test_case = None;
+                                    for read_only_ids_element in element.1 {
+                                        let mut test_cases = vec![];
+                                        for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                            &read_only_ids_element.column_154.clone().unwrap()
+                                        ) {
+                                            for element_1 in element_0 {
+                                                test_cases.push(element_1);
+                                            }
+                                        }
+                                        current_read_only_ids_with_test_case = Some((
+                                            read_only_ids_element.clone(),
+                                            test_cases.get(increment).unwrap().clone()
+                                        ));
+                                    }
+                                    increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
+                                    finally_acc.push(current_read_only_ids_with_test_case.unwrap());
+                                }
+                                // println!("***{finally_acc:#?}");
+                                finally_acc
+                            };
                             for element in finally_acc {
                                 let url_cloned = url.clone();
                                 let ident_create_default_cloned = ident_create_default.clone();
@@ -1593,7 +1574,7 @@ mod example_tests {
                             }
                             acc
                         }),
-                        1,
+                        100,
                         |fut| async move {
                             fut.await;
                         },
