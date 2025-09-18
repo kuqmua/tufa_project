@@ -3031,7 +3031,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         &"",
                                                         increment
                                                     ) {
-                                                        Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
+                                                        Ok(value) => Ok(format!("when elem->>'id' = ${id_increment} then {value} ")),
                                                         Err(error) => Err(error)
                                                     }
                                                 };
