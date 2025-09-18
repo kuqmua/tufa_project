@@ -1469,7 +1469,13 @@ mod example_tests {
                                     increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
                                     option_test_case
                                 };
-
+                                let update = <
+                                    crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
+                                    as
+                                    postgresql_crud::PostgresqlTypeTestCases
+                                >::update_new_or_try_new_unwraped_for_test(
+                                    option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
+                                );
 
                                 let url_cloned = url.clone();
                                 let ident_create_default_cloned = ident_create_default.clone();
@@ -1485,13 +1491,6 @@ mod example_tests {
                                             }
                                         }
                                     ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                    let update = <
-                                        crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                        as
-                                        postgresql_crud::PostgresqlTypeTestCases
-                                    >::update_new_or_try_new_unwraped_for_test(
-                                        option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
-                                    );
                                     assert_eq!(
                                         super::ExampleReadOnlyIds {
                                             primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
