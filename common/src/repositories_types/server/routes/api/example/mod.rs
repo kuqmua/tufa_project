@@ -1427,58 +1427,50 @@ mod example_tests {
                     futures::StreamExt::for_each_concurrent(
                         futures::stream::iter({
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                            let finally_acc = {
-                                
-                                
-                                let read_only_ids_current_elements = super::Example::try_create_many(
-                                    &url,
-                                    super::ExampleCreateManyParameters {
-                                        payload: super::ExampleCreateManyPayload({
-                                            let mut acc = vec![];
-                                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
-                                                for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
-                                                    for _ in element0 {
-                                                        acc.push(ident_create_default.clone());
-                                                    }
+                            let read_only_ids_current_elements = super::Example::try_create_many(
+                                &url,
+                                super::ExampleCreateManyParameters {
+                                    payload: super::ExampleCreateManyPayload({
+                                        let mut acc = vec![];
+                                        if let Some(value) = &common_read_only_ids_returned_from_create_one.column_154 {
+                                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                                for _ in element0 {
+                                                    acc.push(ident_create_default.clone());
                                                 }
                                             }
-                                            acc
-                                        })
-                                    }
-                                ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
-
-                                let mut finally_acc = vec![];
-                                let mut increment: usize = 0;
-                                for read_only_ids_current_element in read_only_ids_current_elements {
-                                    let mut local_increment = 0;
-                                    let mut option_test_case = None;
-                                    for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                        &read_only_ids_current_element.column_154.clone().unwrap()
-                                    ) {
-                                        let mut should_break = false;
-                                        for element_1 in element_0 {
-                                            if local_increment == increment {
-                                                option_test_case = Some(element_1);
-                                                should_break = true;
-                                                break;
-                                            }
-                                            else {
-                                                local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                                            }
                                         }
-                                        if should_break {
+                                        acc
+                                    })
+                                }
+                            ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+                            let mut increment: usize = 0;
+                            for read_only_ids_current_element in read_only_ids_current_elements {
+                                let mut local_increment = 0;
+                                let mut option_test_case = None;
+                                for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                    &read_only_ids_current_element.column_154.clone().unwrap()
+                                ) {
+                                    let mut should_break = false;
+                                    for element_1 in element_0 {
+                                        if local_increment == increment {
+                                            option_test_case = Some(element_1);
+                                            should_break = true;
                                             break;
                                         }
+                                        else {
+                                            local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+                                        }
                                     }
-                                    increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
-                                    finally_acc.push((
-                                        read_only_ids_current_element,
-                                        option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
-                                    ));
+                                    if should_break {
+                                        break;
+                                    }
                                 }
-                                finally_acc
-                            };
-                            for element in finally_acc {
+                                increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
+                                let element = (
+                                    read_only_ids_current_element,
+                                    option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
+                                );
+
                                 let url_cloned = url.clone();
                                 let ident_create_default_cloned = ident_create_default.clone();
                                 let select_default_all_cloned = select_default_all.clone();
