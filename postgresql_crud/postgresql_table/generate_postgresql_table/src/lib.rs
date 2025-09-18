@@ -3850,20 +3850,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         });
-        let try_read_many_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            let field_type = &element.syn_field.ty;
-            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-            quote::quote! {
-                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
-                    <
-                        <#field_type as postgresql_crud::PostgresqlType>::Select
-                        as
-                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                )
-            }
-        });
         let select_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
@@ -3900,6 +3886,24 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         });
         let none_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper| {
             quote::quote! {None}
+        });
+        let select_default_all_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_type = &element.syn_field.ty;
+            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+            quote::quote! {
+                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
+                    <
+                        <
+                            #field_type
+                            as
+                            postgresql_crud::PostgresqlType
+                        >::Select
+                        as
+                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                )
+            }
         });
         quote::quote! {
             #[cfg(test)]
@@ -4100,34 +4104,37 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                     "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
                                 );
-                                futures::StreamExt::for_each_concurrent(
-                                    futures::stream::iter({
-                                        let all_future_counter = {
-                                            let mut #acc_snake_case = 0;
-                                            #all_future_counter_content_token_stream
-                                            #acc_snake_case
-                                        };
-                                        let mut future_counter = 0;
-                                        let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                                        #update_futures_content_token_stream
-                                        println!("UPDATES LEN {}", acc.len());
-                                        acc
-                                    }),
-                                    50,
-                                    |fut| async move {
-                                        fut.await;
-                                    }
-                                ).await;
+                                let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#select_default_all_not_empty_unique_enum_vec_token_stream]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                                
+                                
+                                // futures::StreamExt::for_each_concurrent(
+                                //     futures::stream::iter({
+                                //         let all_future_counter = {
+                                //             let mut #acc_snake_case = 0;
+                                //             #all_future_counter_content_token_stream
+                                //             #acc_snake_case
+                                //         };
+                                //         let mut future_counter = 0;
+                                //         let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                                //         #update_futures_content_token_stream
+                                //         println!("UPDATES LEN {}", acc.len());
+                                //         acc
+                                //     }),
+                                //     50,
+                                //     |fut| async move {
+                                //         fut.await;
+                                //     }
+                                // ).await;
+
+
+                                
                                 //////////
                                 let try_read_many_data = super::#ident::try_read_many(
                                     &url,
                                     super::#ident_read_many_parameters_upper_camel_case {
                                         payload: super::#ident_read_many_payload_upper_camel_case {
                                             where_many: super::#std_option_option_ident_where_many_upper_camel_case(None),
-                                            select: postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                                #try_read_many_not_empty_unique_enum_vec_token_stream
-                                            ]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1")
-                                            ,
+                                            select: select_default_all.clone(),
                                             order_by: postgresql_crud::OrderBy {
                                                 column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
