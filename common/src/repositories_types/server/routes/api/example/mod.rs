@@ -1426,35 +1426,28 @@ mod example_tests {
                         futures::stream::iter({
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                             let finally_acc = {
-                                let w = {
-                                    let mut column_154_read_inner_test_cases = vec![];
-                                    for element in read_only_ids_vec {
-                                        column_154_read_inner_test_cases.push(
-                                            super::Example::try_create_many(
-                                                &url,
-                                                super::ExampleCreateManyParameters {
-                                                    payload: super::ExampleCreateManyPayload(
-                                                        {
-                                                            let mut acc = vec![];
-                                                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                                                &element.column_154.unwrap()
-                                                            ) {
-                                                                for _ in element0 {
-                                                                    acc.push(ident_create_default.clone());
-                                                                }
-                                                            }
-                                                            acc
-                                                        }
-                                                    )
-                                                }
-                                            ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
-                                        );
-                                    }
-                                    column_154_read_inner_test_cases
-                                };
                                 let mut finally_acc = vec![];
                                 let mut increment: usize = 0;
-                                for element in w {
+                                for read_only_ids_element in read_only_ids_vec {
+                                    let element = super::Example::try_create_many(
+                                        &url,
+                                        super::ExampleCreateManyParameters {
+                                            payload: super::ExampleCreateManyPayload(
+                                                {
+                                                    let mut acc = vec![];
+                                                    for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                                        &read_only_ids_element.column_154.unwrap()
+                                                    ) {
+                                                        for _ in element0 {
+                                                            acc.push(ident_create_default.clone());
+                                                        }
+                                                    }
+                                                    acc
+                                                }
+                                            )
+                                        }
+                                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
+
                                     let mut current_read_only_ids_with_test_case = None;
                                     for read_only_ids_element in element {
                                         let mut test_cases = vec![];
@@ -1473,7 +1466,6 @@ mod example_tests {
                                     increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
                                     finally_acc.push(current_read_only_ids_with_test_case.unwrap());
                                 }
-                                // println!("***{finally_acc:#?}");
                                 finally_acc
                             };
                             println!("finally_acc len {}", finally_acc.len());
