@@ -1450,7 +1450,7 @@ mod example_tests {
 
                                     let mut current_read_only_ids_with_test_case = None;
                                     for read_only_ids_element in element {
-                                        let mut test_cases = vec![];
+                                        let mut test_cases = vec![];//todo must not be an array
                                         for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
                                             &read_only_ids_element.column_154.clone().unwrap()
                                         ) {
