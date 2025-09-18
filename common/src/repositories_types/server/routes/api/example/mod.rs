@@ -1028,10 +1028,10 @@ pub struct Animal {
     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-    // pub field_806: DoggieAsNotNullJsonbObject,
-    // pub field_808: OptionDoggieAsNullableJsonbObject,
+    pub field_806: DoggieAsNotNullJsonbObject,
+    pub field_808: OptionDoggieAsNullableJsonbObject,
     pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1194,55 +1194,55 @@ pub struct Doggie {
     // pub field_122: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_123: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
-    // pub field_806: CatAsNotNullJsonbObject,
-    // pub field_807: OptionCatAsNullableJsonbObject,
-    // pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_806: CatAsNotNullJsonbObject,
+    pub field_807: OptionCatAsNullableJsonbObject,
+    pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-// #[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-// // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
-// #[postgresql_crud::postgresql_json_object_type_pattern{
-//     // "All"
-//     {
-//         "Concrete":
-//         // [
-//             // {
-//             //     "not_null_or_nullable": "NotNull",
-//             //     "postgresql_json_object_type_pattern": "Standart",
-//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-//             // },
-//             // {
-//             //     "not_null_or_nullable": "Nullable",
-//             //     "postgresql_json_object_type_pattern": "Standart",
-//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-//             // },
-//             // {
-//             //     "not_null_or_nullable": "NotNull",
-//             //     "postgresql_json_object_type_pattern": "Array",
-//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-//             // },
-//             {
-//                 "not_null_or_nullable": "Nullable",
-//                 "postgresql_json_object_type_pattern": "Array",
-//                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-//             }
-//         // ]
-//     }
-// }]
-// pub struct Cat {
-//     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-//     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
-//     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-//     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-//     // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
-//     // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
-//     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
-//     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
-//     // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
-//     // pub field_9: postgresql_crud::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
-//     // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
-// }
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+// #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+#[postgresql_crud::postgresql_json_object_type_pattern{
+    // "All"
+    {
+        "Concrete":
+        // [
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // },
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // },
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // },
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
+        // ]
+    }
+}]
+pub struct Cat {
+    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
+    // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
+    // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
+    // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
+    // pub field_9: postgresql_crud::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
+    // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
+}
 
 /////////
 #[cfg(test)]
@@ -1427,43 +1427,36 @@ mod example_tests {
                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                             let finally_acc = {
                                 let w = {
-                                    let column_154_read_inner_test_cases = {
-                                        let mut column_154_read_inner_test_cases = vec![];
-                                        for element in read_only_ids_vec {
-                                            let mut acc = vec![];
-                                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
-                                                &element.column_154.clone().unwrap()
-                                            ) {
-                                                for element1 in element0 {
-                                                    acc.push(element1);
+                                    let mut column_154_read_inner_test_cases = vec![];
+                                    for element in read_only_ids_vec {
+                                        column_154_read_inner_test_cases.push(
+                                            super::Example::try_create_many(
+                                                &url,
+                                                super::ExampleCreateManyParameters {
+                                                    payload: super::ExampleCreateManyPayload(
+                                                        {
+                                                            let mut acc = vec![];
+                                                            for element0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
+                                                                &element.column_154.unwrap()
+                                                            ) {
+                                                                for _ in element0 {
+                                                                    acc.push(ident_create_default.clone());
+                                                                }
+                                                            }
+                                                            acc
+                                                        }
+                                                    )
                                                 }
-                                            }
-                                            column_154_read_inner_test_cases.push(acc);
-                                        }
-                                        column_154_read_inner_test_cases
-                                    };
-                                    let mut w = vec![];
-                                    for element0 in column_154_read_inner_test_cases {
-                                        let acc = super::Example::try_create_many(&url, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload({
-                                            let mut acc = vec![];
-                                            for _ in &element0 {
-                                                acc.push(ident_create_default.clone());
-                                            }
-                                            acc
-                                        }) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
-                                        w.push((
-                                            element0,
-                                            acc
-                                        ))
+                                            ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
+                                        );
                                     }
-                                    w
+                                    column_154_read_inner_test_cases
                                 };
                                 let mut finally_acc = vec![];
                                 let mut increment: usize = 0;
                                 for element in w {
-                                    let len_of_test_cases = element.0.len();
                                     let mut current_read_only_ids_with_test_case = None;
-                                    for read_only_ids_element in element.1 {
+                                    for read_only_ids_element in element {
                                         let mut test_cases = vec![];
                                         for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
                                             &read_only_ids_element.column_154.clone().unwrap()
@@ -1473,7 +1466,7 @@ mod example_tests {
                                             }
                                         }
                                         current_read_only_ids_with_test_case = Some((
-                                            read_only_ids_element.clone(),
+                                            read_only_ids_element,
                                             test_cases.get(increment).unwrap().clone()
                                         ));
                                     }
