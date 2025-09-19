@@ -3985,7 +3985,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 } else {
                     quote::quote! {
-                        #current_field_ident: match &read_only_ids_returned_from_create_one.#current_field_ident {
+                        #current_field_ident: match &read_only_ids_current_element.#current_field_ident {
                             Some(#value_snake_case) => <
                                 #current_field_type
                                 as
