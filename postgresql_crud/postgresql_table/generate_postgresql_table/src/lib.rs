@@ -3967,24 +3967,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 if field_ident == current_field_ident {
                     quote::quote! {
                         #current_field_ident: Some(postgresql_crud::Value {
-                            #value_snake_case: {
-                                let f = <
+                            #value_snake_case: <
+                                #current_field_type
+                                as
+                                postgresql_crud::PostgresqlTypeTestCases
+                            >::read_from_previous_read_unwraped_merged_with_update(
+                                <
                                     #current_field_type
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
-                                >::read_from_previous_read_unwraped_merged_with_update(
-                                    <
-                                        #current_field_type
-                                        as
-                                        postgresql_crud::PostgresqlTypeTestCases
-                                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                        &read_only_ids_current_element.#current_field_ident.clone().unwrap()
-                                    ).unwrap().#value_snake_case,
-                                    Some(update.clone())
-                                );
-                                println!("@@@ {f:#?}");
-                                f
-                            }
+                                >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                    &read_only_ids_current_element.#current_field_ident.clone().unwrap()
+                                ).unwrap().#value_snake_case,
+                                Some(update.clone())
+                            )
                         })
                     }
                 } else {
@@ -4149,8 +4145,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                                 option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
                             });
-                            println!("update ### {update:#?}");
-                            println!("+++++++++++++++");
                             assert_eq!(
                                 super::#ident_read_only_ids_upper_camel_case {
                                     #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone(),
@@ -4173,15 +4167,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                 "try_update_one result different"
                             );
-                            println!("------------------ {:#?}", read_only_ids_current_element.#primary_key_field_ident.clone());
-                            let left = super::#ident_read_upper_camel_case {
+                            assert_eq!(
+                                super::#ident_read_upper_camel_case {
                                     #primary_key_field_ident: Some(postgresql_crud::Value {
                                         #value_snake_case: read_only_ids_current_element.#primary_key_field_ident.clone(),
                                     }),
                                     #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
-                                };
-                            println!("*****");
-                            let right = super::#ident::try_read_one(
+                                },
+                                super::#ident::try_read_one(
                                     &url_cloned,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         payload: super::#ident_read_one_payload_upper_camel_case {
@@ -4189,11 +4182,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             select: select_default_all_cloned
                                         }
                                     }
-                                ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                            println!("@@@@@@@@@@@@@@@@@@@@@@");
-                            assert_eq!(
-                                left,
-                                right,
+                                ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                 "try_read_one result different after try_create_one"
                             );
                         }));
@@ -4609,7 +4598,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #ident_where_many_token_stream
         #std_option_option_ident_where_many_token_stream
         #select_token_stream
-        // #ident_read_token_stream
+        #ident_read_token_stream
         #ident_read_only_ids_token_stream
         #ident_column_read_permission_token_stream
         #ident_update_token_stream
@@ -4625,7 +4614,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #create_many_token_stream
         #create_one_token_stream
         #read_many_token_stream
-        // #read_one_token_stream
+        #read_one_token_stream
         #update_many_token_stream
         #update_one_token_stream
         #delete_many_token_stream
