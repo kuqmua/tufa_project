@@ -1445,7 +1445,11 @@ mod example_tests {
                             ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98");
                             let mut increment: usize = 0;
                             for read_only_ids_current_element in read_only_ids_current_elements {
-                                let option_test_case = {
+                                let update = <
+                                    crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
+                                    as
+                                    postgresql_crud::PostgresqlTypeTestCases
+                                >::update_new_or_try_new_unwraped_for_test({
                                     let mut local_increment = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::test_cases(
@@ -1467,15 +1471,8 @@ mod example_tests {
                                         }
                                     }
                                     increment = increment.checked_add(1).expect("error fc831c62-b8ad-4b2e-bf13-9b244386af75");
-                                    option_test_case
-                                };
-                                let update = <
-                                    crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                    as
-                                    postgresql_crud::PostgresqlTypeTestCases
-                                >::update_new_or_try_new_unwraped_for_test(
-                                    option_test_case.expect("error 247dbc55-fc3a-41a3-9ea1-6ddfab14ad70")
-                                );
+                                    option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+                                });
 
                                 let url_cloned = url.clone();
                                 let ident_create_default_cloned = ident_create_default.clone();
