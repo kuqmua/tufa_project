@@ -4351,9 +4351,34 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let generate_struct_initialization_default_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                                 import_path_default_but_option_is_always_some_call_token_stream.clone()
                             };
-                            match &element.postgresql_json_object_type_pattern {
-                                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let generate_option_token_stream = |postgresql_json_object_type_pattern: &PostgresqlJsonObjectTypePattern|{
+                                let content_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
+                                    PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
+                                    PostgresqlJsonObjectTypePattern::Array => &ident_array_not_null_upper_camel_case
+                                };
+                                quote::quote! {
+                                    match #option_update_snake_case {
+                                        Some(#value_snake_case) => #ident_read_upper_camel_case(
+                                            match #value_snake_case.0 {
+                                                Some(#value_snake_case) => Some(
+                                                    <#content_token_stream as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                                        match #read_snake_case.0 {
+                                                            Some(#value_snake_case) => #value_snake_case,
+                                                            None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                                        },
+                                                        Some(#value_snake_case),
+                                                    )
+                                                ),
+                                                None => None,
+                                            }
+                                        ),
+                                        None => #read_snake_case,
+                                    }
+                                }
+                            };
+                            match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_object_type_pattern {
+                                    PostgresqlJsonObjectTypePattern::Standart => {
                                         let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&|content_token_stream: &dyn quote::ToTokens|{
                                             quote::quote!{
                                                 #read_snake_case.#content_token_stream.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
@@ -4375,31 +4400,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 None => #read_snake_case
                                             }
                                         }
-                                    }
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        quote::quote! {
-                                            match option_update {
-                                                Some(update_value) => #ident_read_upper_camel_case(
-                                                    match update_value.0 {
-                                                        Some(value) => Some(
-                                                            <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                                                match read.0 {
-                                                                    Some(value) => value,
-                                                                    None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                                },
-                                                                Some(value),
-                                                            )
-                                                        ),
-                                                        None => None,
-                                                    }
-                                                ),
-                                                None => read,
-                                            }
-                                        }
-                                    }
-                                },
-                                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    },
+                                    PostgresqlJsonObjectTypePattern::Array => {
                                         let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&|content_token_stream: &dyn quote::ToTokens|{
                                             quote::quote!{
                                                 found_read_element.#content_token_stream.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
@@ -4440,30 +4442,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 None => #read_snake_case
                                             }
                                         }
-                                    }
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        //todo reuse
-                                        quote::quote! {
-                                            match option_update {
-                                                Some(update_value) => #ident_read_upper_camel_case(
-                                                    match update_value.0 {
-                                                        Some(value) => Some(
-                                                            <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                                                match read.0 {
-                                                                    Some(value) => value,
-                                                                    None => postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                                },
-                                                                Some(value),
-                                                            )
-                                                        ),
-                                                        None => None,
-                                                    }
-                                                ),
-                                                None => read,
-                                            }
-                                        }
-                                    }
+                                    },
                                 },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_option_token_stream(&element.postgresql_json_object_type_pattern)
                             }
                         },
                     ),
