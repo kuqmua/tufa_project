@@ -3418,49 +3418,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                     },
-                    &{
-                        //todo reuse
-                        match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                }
-                            },
-                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                            },
+                    &quote::quote!{
+                        match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
+                            &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                            #increment_snake_case
+                        ) {
+                            Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
+                            Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True,
@@ -3635,49 +3599,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #query_snake_case
                     )},
                     &postgresql_crud_macros_common::SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore::True,
-                    &{
-                        //todo maybe reuse
-                        match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &#column_snake_case,
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &#column_snake_case,
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                }
-                            },
-                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &#column_snake_case,
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
-                                        &#column_snake_case,
-                                        #increment_snake_case
-                                    ) {
-                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                },
-                            },
+                    &quote::quote!{
+                        match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
+                            &#column_snake_case,
+                            #increment_snake_case
+                        ) {
+                            Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
+                            Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
