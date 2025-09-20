@@ -3646,7 +3646,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     quote::quote! {
-                                        Ok(format!("jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)::jsonb) as {column},", {
+                                        Ok(format!("jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)) as {column},", {
                                             match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
                                                &#value_snake_case.#update_snake_case,
                                                 &"",
