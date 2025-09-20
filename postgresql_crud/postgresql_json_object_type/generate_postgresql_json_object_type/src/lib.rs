@@ -3350,7 +3350,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"));
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(#value_snake_case) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(
+                                                #value_snake_case
+                                            ) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
                                                 &#value_snake_case.#value_snake_case,
                                                 &#field_ident_double_quotes_token_stream,
                                                 &format!(#format_handle_token_stream),
@@ -3367,20 +3369,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote! {
-                                        match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => {
-                                                let mut #acc_snake_case = std::string::String::default();
-                                                for #element_snake_case in #value_snake_case.0.to_vec() {
-                                                    match &#element_snake_case {
-                                                        #(#match_content_token_stream),*
+                                        Ok(format!(
+                                            "'{field_ident}',jsonb_build_object('value',{}),",
+                                            match &#value_snake_case.0 {
+                                                Some(#value_snake_case) => {
+                                                    let mut #acc_snake_case = std::string::String::default();
+                                                    for #element_snake_case in #value_snake_case.0.to_vec() {
+                                                        match &#element_snake_case {
+                                                            #(#match_content_token_stream),*
+                                                        }
                                                     }
-                                                }
-                                                let _ = #acc_snake_case.pop();
-                                                let _ = #acc_snake_case.pop();
-                                                Ok(format!("'{field_ident}',jsonb_build_object('value',jsonb_build_object('value',{})),", #acc_snake_case))
-                                            },
-                                            None => Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))
-                                        }
+                                                    let _ = #acc_snake_case.pop();
+                                                    let _ = #acc_snake_case.pop();
+                                                    format!("jsonb_build_object('value',{})", #acc_snake_case)
+                                                },
+                                                None => "'null'::jsonb".to_string()
+                                            }
+                                        ))
                                     }
                                 }
                             },
