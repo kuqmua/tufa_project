@@ -3405,19 +3405,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     quote::quote! {
-                                        Ok(format!("'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column_name_and_maybe_field_getter}->'{field_ident}') as elem)),", {
-                                            match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
-                                               &#value_snake_case.#update_snake_case,
-                                                &"",
-                                                &"elem",
-                                                #increment_snake_case
-                                            ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
-                                                Err(#error_snake_case) => {
-                                                    return Err(#error_snake_case);
-                                                }
-                                            }
-                                        }))
+                                        Ok(format!(
+                                            "'{field_ident}',{},",
+                                            format!(
+                                                "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem))",
+                                                match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
+                                                   &#value_snake_case.#update_snake_case,
+                                                    &"",
+                                                    &"elem",
+                                                    #increment_snake_case
+                                                ) {
+                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#error_snake_case);
+                                                    }
+                                                },
+                                                format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
+                                            )
+                                        ))
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -3646,19 +3651,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     quote::quote! {
-                                        Ok(format!("jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({column}) as elem)) as {column},", {
-                                            match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
-                                               &#value_snake_case.#update_snake_case,
-                                                &"",
-                                                &"elem",
-                                                #increment_snake_case
-                                            ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
-                                                Err(#error_snake_case) => {
-                                                    return Err(#error_snake_case);
-                                                }
-                                            }
-                                        }))
+                                        Ok(format!(
+                                            "{} as {column},",
+                                            format!(
+                                                "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem))",
+                                                match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
+                                                   &#value_snake_case.#update_snake_case,
+                                                    &"",
+                                                    &"elem",
+                                                    #increment_snake_case
+                                                ) {
+                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#error_snake_case);
+                                                    }
+                                                },
+                                                column
+                                            )
+                                        ))
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
