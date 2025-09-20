@@ -950,7 +950,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     );
-                    //todo why need this as separate function?
                     let select_query_part_postgresql_type_token_stream = {
                         let content_token_stream = {
                             let standart_nullable_token_stream = {
@@ -2146,12 +2145,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                     }
                 };
-
                 let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
                 let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
                 let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
                 let create_update_delete_are_empty_upper_camel_case = naming::CreateUpdateDeleteAreEmptyUpperCamelCase;
-
                 let ident_update_try_new_error_named_upper_camel_case = &naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_named_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),
@@ -2182,88 +2179,98 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
                 };
-                let maybe_impl_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
-                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case)), &self_value_token_stream),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)), &self_value_token_stream),
-                    },
-                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False);
-                            let custom_serde_error_deserializing_ident_update_stringified = format!("custom serde error deserializing {ident_update_upper_camel_case}");
-                            let check_if_all_empty_token_stream = {
-                                quote::quote! {
-                                    if create.is_empty() && update.0.is_empty() && delete.is_empty() {
-                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#create_update_delete_are_empty_upper_camel_case {
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        });
-                                    }
-                                }
-                            };
-                            let check_not_unique_id_token_stream = {
-                                let check_not_unique_id_in_update_array_token_stream = {
-                                    let not_unique_id_in_json_update_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique id in json update array: {{}}"));
-                                    //todo maybe remove this check?
+                let impl_ident_update_token_stream = {
+                    let maybe_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_new_token_stream(
+                                &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case)),
+                                &self_value_token_stream
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_new_token_stream(
+                                &generate_value_type_token_stream(
+                                    &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                        &ident_standart_not_null_as_postgresql_json_type_update_token_stream
+                                    )
+                                ),
+                                &self_value_token_stream
+                            ),
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False);
+                                let custom_serde_error_deserializing_ident_update_stringified = format!("custom serde error deserializing {ident_update_upper_camel_case}");
+                                let check_if_all_empty_token_stream = {
                                     quote::quote! {
-                                        let update_acc = {
-                                            let mut update_acc = vec![];
-                                            for element in update.0.to_vec() {
-                                                let #id_snake_case = &element.#id_snake_case;
-                                                if update_acc.contains(&#id_snake_case) {
-                                                    return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_array_upper_camel_case {
-                                                        error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case.get_inner()),
-                                                        code_occurence: error_occurence_lib::code_occurence!()
-                                                    });
-                                                } else {
-                                                    update_acc.push(#id_snake_case);
-                                                }
-                                            }
-                                            update_acc
-                                        };
+                                        if create.is_empty() && update.0.is_empty() && delete.is_empty() {
+                                            return Err(#ident_update_try_new_error_named_upper_camel_case::#create_update_delete_are_empty_upper_camel_case {
+                                                code_occurence: error_occurence_lib::code_occurence!()
+                                            });
+                                        }
                                     }
                                 };
-                                let check_not_unique_id_in_delete_aray_token_stream = {
-                                    let not_unique_id_in_json_delete_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json delete array: {{}}"));
-                                    quote::quote! {
-                                        let delete_acc = {
-                                            let mut delete_acc = vec![];
-                                            for element in &delete {
-                                                if delete_acc.contains(&element) {
-                                                    return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_delete_array_upper_camel_case {
-                                                        error: format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.get_inner()),
+                                let check_not_unique_id_token_stream = {
+                                    let check_not_unique_id_in_update_array_token_stream = {
+                                        let not_unique_id_in_json_update_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique id in json update array: {{}}"));
+                                        //todo maybe remove this check?
+                                        quote::quote! {
+                                            let update_acc = {
+                                                let mut update_acc = vec![];
+                                                for element in update.0.to_vec() {
+                                                    let #id_snake_case = &element.#id_snake_case;
+                                                    if update_acc.contains(&#id_snake_case) {
+                                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_array_upper_camel_case {
+                                                            error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case.get_inner()),
+                                                            code_occurence: error_occurence_lib::code_occurence!()
+                                                        });
+                                                    } else {
+                                                        update_acc.push(#id_snake_case);
+                                                    }
+                                                }
+                                                update_acc
+                                            };
+                                        }
+                                    };
+                                    let check_not_unique_id_in_delete_aray_token_stream = {
+                                        let not_unique_id_in_json_delete_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json delete array: {{}}"));
+                                        quote::quote! {
+                                            let delete_acc = {
+                                                let mut delete_acc = vec![];
+                                                for element in &delete {
+                                                    if delete_acc.contains(&element) {
+                                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_delete_array_upper_camel_case {
+                                                            error: format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.get_inner()),
+                                                            code_occurence: error_occurence_lib::code_occurence!()
+                                                        });
+                                                    } else {
+                                                        delete_acc.push(element);
+                                                    }
+                                                }
+                                                delete_acc
+                                            };
+                                        }
+                                    };
+                                    let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
+                                        let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json update and delete arrays: {{}}"));
+                                        quote::quote! {
+                                            for element in update_acc {
+                                                if delete_acc.contains(&&element) {
+                                                    return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
+                                                        error: format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.get_inner()),
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
-                                                } else {
-                                                    delete_acc.push(element);
                                                 }
                                             }
-                                            delete_acc
-                                        };
-                                    }
-                                };
-                                let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
-                                    let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json update and delete arrays: {{}}"));
+                                        }
+                                    };
                                     quote::quote! {
-                                        for element in update_acc {
-                                            if delete_acc.contains(&&element) {
-                                                return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
-                                                    error: format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.get_inner()),
-                                                    code_occurence: error_occurence_lib::code_occurence!()
-                                                });
-                                            }
+                                        {
+                                            #check_not_unique_id_in_update_array_token_stream
+                                            #check_not_unique_id_in_delete_aray_token_stream
+                                            #check_not_unique_id_in_update_and_delete_arrays_token_stream
                                         }
                                     }
                                 };
                                 quote::quote! {
-                                    {
-                                        #check_not_unique_id_in_update_array_token_stream
-                                        #check_not_unique_id_in_delete_aray_token_stream
-                                        #check_not_unique_id_in_update_and_delete_arrays_token_stream
-                                    }
-                                }
-                            };
-                            quote::quote! {
-                                impl #ident_update_upper_camel_case {
                                     pub fn try_new(#fields_token_stream) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
                                         #check_if_all_empty_token_stream
                                         #check_not_unique_id_token_stream
@@ -2275,9 +2282,81 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_new_token_stream(
+                                &generate_value_type_token_stream(
+                                    &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                        &ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream
+                                    )
+                                ),
+                                &self_value_token_stream
+                            ),
+                        },
+                    };
+                    let select_only_updated_ids_query_part_token_stream = {
+                        let content_token_stream = match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                                        let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
+                                        quote::quote! {
+                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
+                                                match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
+                                                    &#value_snake_case.#value_snake_case,
+                                                    &#field_ident_double_quotes_token_stream,
+                                                    &column_name_and_maybe_field_getter,
+                                                    #increment_snake_case
+                                                ) {
+                                                    Ok(mut #value_snake_case) => {
+                                                        let _ = #value_snake_case.pop();
+                                                        #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                    },
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#error_snake_case);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    });
+                                    quote::quote!{
+                                        fn #select_only_updated_ids_query_part_snake_case(
+                                            &self,
+                                            column_name_and_maybe_field_getter: &std::primitive::str,
+                                            increment: &mut std::primitive::u64
+                                        ) -> Result<std::string::String, #import_path_query_part_error_named_token_stream> {
+                                            let mut #acc_snake_case = std::string::String::default();
+                                            for #element_snake_case in self.0.to_vec() {
+                                                match &#element_snake_case {
+                                                    #(#match_variants_token_stream),*
+                                                }
+                                            }
+                                            let _ = #acc_snake_case.pop();
+                                            let _ = #acc_snake_case.pop();
+                                            Ok(#acc_snake_case)
+                                        }
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            },
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            },
+                        };
+                        quote::quote!{
+                            #content_token_stream
                         }
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(&ident_update_upper_camel_case, &generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream)), &self_value_token_stream),
-                    },
+                    };
+                    quote::quote!{
+                        impl #ident_update_upper_camel_case {
+                            #maybe_new_or_try_new_for_ident_update_token_stream
+                            #select_only_updated_ids_query_part_token_stream
+                        }
+                    }
                 };
                 let maybe_impl_serde_deserialize_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),
@@ -2719,7 +2798,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 quote::quote! {
                     #ident_update_token_stream
                     #maybe_ident_update_try_new_error_named_token_stream
-                    #maybe_impl_new_or_try_new_for_ident_update_token_stream
+                    #impl_ident_update_token_stream
                     #maybe_impl_serde_deserialize_for_ident_update_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
                     #maybe_ident_update_element_token_stream
@@ -3252,46 +3331,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         //todo reuse
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        });
-                                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"));
-                                        let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
-                                        quote::quote! {
-                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
-                                                match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
-                                                    &#value_snake_case.#value_snake_case,
-                                                    &#field_ident_double_quotes_token_stream,
-                                                    &format!(#format_handle_token_stream),
-                                                    #increment_snake_case
-                                                ) {
-                                                    Ok(mut #value_snake_case) => {
-                                                        let _ = #value_snake_case.pop();
-                                                        #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
-                                                    },
-                                                    Err(#error_snake_case) => {
-                                                        return Err(#error_snake_case);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote::quote! {
-                                        let mut #acc_snake_case = std::string::String::default();
-                                        for #element_snake_case in #value_snake_case.0.to_vec() {
-                                            match &#element_snake_case {
-                                                #(#match_variants_token_stream),*
-                                            }
-                                        }
-                                        let _ = #acc_snake_case.pop();
-                                        let _ = #acc_snake_case.pop();
-                                        Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #acc_snake_case))
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
+                                        &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                                        #increment_snake_case
+                                    ) {
+                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
+                                        Err(#error_snake_case) => Err(#error_snake_case)
                                     }
-                                }
+                                },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -3558,45 +3606,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         //todo maybe reuse
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let match_variants_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        });
-                                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                        let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
-                                        quote::quote! {
-                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
-                                                match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
-                                                    &#value_snake_case.#value_snake_case,
-                                                    &#field_ident_double_quotes_token_stream,
-                                                    &#column_snake_case,
-                                                    #increment_snake_case
-                                                ) {
-                                                    Ok(mut #value_snake_case) => {
-                                                        let _ = #value_snake_case.pop();
-                                                        #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
-                                                    },
-                                                    Err(#error_snake_case) => {
-                                                        return Err(#error_snake_case);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    });
-                                    quote::quote! {
-                                        let mut #acc_snake_case = std::string::String::default();
-                                        for #element_snake_case in #value_snake_case.0.to_vec() {
-                                            match &#element_snake_case {
-                                                #(#match_variants_token_stream),*
-                                            }
-                                        }
-                                        let _ = #acc_snake_case.pop();
-                                        let _ = #acc_snake_case.pop();
-                                        Ok(format!("jsonb_build_object('value',{}) as {column},", #acc_snake_case))
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                    match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
+                                        &#column_snake_case,
+                                        #increment_snake_case
+                                    ) {
+                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
+                                        Err(#error_snake_case) => Err(#error_snake_case)
                                     }
-                                }
+                                },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let match_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
