@@ -73,11 +73,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
                         trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
                     },
-                    PostgresqlJsonObjectTypeRecord {
-                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
-                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
-                    },
                     postgresql_json_object_type_record
                 ],
                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => vec![
