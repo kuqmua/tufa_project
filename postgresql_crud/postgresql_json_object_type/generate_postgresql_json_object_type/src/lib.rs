@@ -2394,7 +2394,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #increment_snake_case: &mut std::primitive::u64
                                     ) -> Result<std::string::String, #import_path_query_part_error_named_token_stream> {
                                         Ok(format!(
-                                            "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem))",
+                                            "(select jsonb_agg({}) from jsonb_array_elements({}) as elem)",
                                             match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
                                                &self.#update_snake_case,
                                                 &"",
@@ -3447,7 +3447,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                                         #increment_snake_case
                                     ) {
-                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',{},", #value_snake_case)),
+                                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 },
@@ -3664,7 +3664,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         &#column_snake_case,
                                         #increment_snake_case
                                     ) {
-                                        Ok(#value_snake_case) => Ok(format!("{} as {column},", #value_snake_case)),
+                                        Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{}) as {column},", #value_snake_case)),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 },
