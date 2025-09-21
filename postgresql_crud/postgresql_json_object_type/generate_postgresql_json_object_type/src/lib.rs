@@ -3017,10 +3017,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     if is_postgresql_type { format!("{acc}") } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(&match &postgresql_json_object_type_pattern {
-                                        PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
-                                        PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream,
-                                    });
+                                    let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
+                                        &ident_standart_not_null_as_postgresql_json_type_select_token_stream
+                                    );
                                     quote::quote! {
                                         let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
                                         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))", {
