@@ -945,26 +945,60 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     );
-                    let select_query_part_postgresql_type_token_stream = {
+                    let select_query_part_token_stream = {
                         let content_token_stream = match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    // generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream
                                     let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
                                         &is_standart_with_id_false,
                                         &self_snake_case,
-                                        &column_snake_case,
-                                        &column_snake_case,
+                                        &quote::quote!{column_name_and_maybe_field_getter},
+                                        &quote::quote!{column_name_and_maybe_field_getter_for_error_message},
                                     );
-                                    //todo refactor
                                     quote::quote! {
-                                        let mut #acc_snake_case = std::string::String::default();
-                                        #select_query_part_for_loop_token_stream
-                                        let _ = #acc_snake_case.pop();
-                                        let _ = #acc_snake_case.pop();
-                                        format!(#acc_format_handle)
+                                        fn select_query_part(
+                                            &self,
+                                            column_name_and_maybe_field_getter: &std::primitive::str,
+                                            column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+                                        ) -> std::string::String {
+                                            let mut #acc_snake_case = std::string::String::default();
+                                            #select_query_part_for_loop_token_stream
+                                            let _ = #acc_snake_case.pop();
+                                            let _ = #acc_snake_case.pop();
+                                            format!("{acc}")
+                                        }
                                     }
                                 },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote! {
+                                        
+                                    }
+                                },
+                            },
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote! {
+                                        
+                                    }
+                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote! {
+                                        
+                                    }
+                                },
+                            },
+                        };
+                        quote::quote! {
+                            #content_token_stream
+                        }
+                    };
+                    let select_query_part_postgresql_type_token_stream = {
+                        let content_token_stream = match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#self_snake_case.#select_query_part_snake_case(
+                                    &#column_snake_case,
+                                    &#column_snake_case,
+                                )},
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(&match &postgresql_json_object_type_pattern {
                                         PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -1035,6 +1069,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     quote::quote! {
                         impl #ident_select_upper_camel_case {
                             #pub_new_token_stream
+                            #select_query_part_token_stream
                             #select_query_part_postgresql_type_token_stream
                         }
                     }
@@ -3052,32 +3087,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    // generate_select_query_part_content_for_ident_select_or_ident_with_id_standart_not_null_select_token_stream
-                                    let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
-                                        &is_standart_with_id_false,
-                                        &value_snake_case,
-                                        &column_name_and_maybe_field_getter_field_ident_snake_case,
-                                        &column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case,
-                                    );
-                                    quote::quote! {
-                                        let mut #acc_snake_case = std::string::String::default();
-                                        let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                    let acc = value.select_query_part(
+                                        &if is_postgresql_type {
                                             column_name_and_maybe_field_getter.to_string()
                                         } else {
-                                            format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
-                                        };
-                                        let #column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = format!(#column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream);
-                                        #select_query_part_for_loop_token_stream
-                                        let _ = #acc_snake_case.pop();
-                                        let _ = #acc_snake_case.pop();
-                                        if is_postgresql_type {
-                                            format!(#acc_format_handle)
-                                        }
-                                        else {
-                                            format!(#if_postgresql_type_is_false_format_handle_double_quotes_token_stream)
-                                        }
-                                    }
+                                            format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
+                                        },
+                                        &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+                                    );
+                                    if is_postgresql_type { format!("{acc}") } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => standart_nullable_token_stream,
                             },
