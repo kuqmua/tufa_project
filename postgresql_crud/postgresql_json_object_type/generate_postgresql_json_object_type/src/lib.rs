@@ -2727,13 +2727,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             );
                         }
                     };
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_handle_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_with_id_standart_not_null_update_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &quote::quote! {Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
                     );
-                    //todo rename ident_with_standart_not_null_update_handle to _ident_with_standart_not_null_update
-                    let impl_ident_with_standart_not_null_update_handle_token_stream = {
+                    let impl_ident_with_standart_not_null_update_token_stream = {
                         let new_token_stream = macros_helpers::generate_pub_new_token_stream(
                             &quote::quote!{#value_snake_case: #import_path::UniqueVec<#ident_with_id_standart_not_null_update_element_upper_camel_case>},
                             &self_value_token_stream
@@ -2860,8 +2859,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_element_token_stream
 
                         #ident_with_id_update_handle_token_stream
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_handle_token_stream
-                        #impl_ident_with_standart_not_null_update_handle_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_standart_not_null_update_token_stream
+                        #impl_ident_with_standart_not_null_update_token_stream
                         #impl_default_for_ident_with_id_standart_not_null_update_handle_token_stream
                     }
                 } else {
