@@ -232,6 +232,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
             let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
             let uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
+            let import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case = quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case};
             let id_syn_field = syn::Field {
                 attrs: vec![],
                 vis: syn::Visibility::Public(syn::token::Pub { span: proc_macro2::Span::call_site() }),
@@ -761,7 +762,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_with_id_standart_not_null_create_for_query_upper_camel_case,
                         &quote::quote! {Self {
                             #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_create_for_query_token_stream::from(
-                                #import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(uuid::Uuid::new_v4())
+                                #import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(uuid::Uuid::new_v4())
                             ),
                             #impl_std_convert_from_standart_not_null_without_id_content_token_stream
                         }}
@@ -2172,7 +2173,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                     }
                 };
-                let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
                 let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
                 let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
                 let create_update_delete_are_empty_upper_camel_case = naming::CreateUpdateDeleteAreEmptyUpperCamelCase;
@@ -2184,11 +2184,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                             pub enum #ident_update_try_new_error_named_upper_camel_case {
                                 #create_update_delete_are_empty_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #not_unique_id_in_json_update_array_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    error: std::string::String,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                                 #not_unique_id_in_json_delete_array_upper_camel_case {
@@ -2238,23 +2233,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let check_not_unique_id_token_stream = {
                                     let check_not_unique_id_in_update_array_token_stream = {
                                         let not_unique_id_in_json_update_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique id in json update array: {{}}"));
-                                        //todo maybe remove this check?
                                         quote::quote! {
-                                            let update_acc = {
-                                                let mut update_acc = vec![];
-                                                for element in update.0.to_vec() {
-                                                    let #id_snake_case = &element.#id_snake_case;
-                                                    if update_acc.contains(&#id_snake_case) {
-                                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_array_upper_camel_case {
-                                                            error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case.get_inner()),
-                                                            code_occurence: error_occurence_lib::code_occurence!()
-                                                        });
-                                                    } else {
-                                                        update_acc.push(#id_snake_case);
-                                                    }
-                                                }
-                                                update_acc
-                                            };
+                                            let update_acc = 
+                                            #update_snake_case.0.to_vec().iter().map(|#element_snake_case|&#element_snake_case.#id_snake_case)
+                                            .collect::<std::vec::Vec<&#import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case>>();
                                         }
                                     };
                                     let check_not_unique_id_in_delete_aray_token_stream = {
@@ -3921,7 +3903,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_with_id_standart_not_null_update_upper_camel_case::new(
                                                 #import_path::UniqueVec::try_new(
                                                     #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_standart_not_null_update_element_upper_camel_case {
-                                                        #id_snake_case: #import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().unwrap().#value_snake_case),
+                                                        #id_snake_case: #import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().unwrap().#value_snake_case),
                                                         fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#update_new_or_try_new_unwraped_for_test_snake_case(
                                                             #ident_standart_not_null_read_inner_upper_camel_case {
                                                                 #(#fields_token_stream),*
