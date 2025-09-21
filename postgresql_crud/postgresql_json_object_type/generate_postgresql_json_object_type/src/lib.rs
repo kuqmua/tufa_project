@@ -182,9 +182,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
             let select_only_updated_ids_query_bind_snake_case = naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
             let update_new_or_try_new_unwraped_for_test_snake_case = naming::UpdateNewOrTryNewUnwrapedForTestSnakeCase;
-            let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
-            let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
-            let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -808,13 +805,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let dimension1_pagination_token_stream = quote::quote! {dimension1_pagination};
             let ident_standart_not_null_select_element_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_select_element_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let acc_format_handle = format!("{{{acc_snake_case}}}");
-            let if_postgresql_type_is_false_format_handle_double_quotes_token_stream = {
-                let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{{{field_ident_snake_case}}}',{value})");
-                let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{value_snake_case}',{value})");
-                let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
-                wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle)
-            };
             let generate_select_query_part_for_loop_token_stream = |
                 is_standart_with_id: &IsStandartWithId,
                 in_token_stream: &dyn quote::ToTokens,
@@ -857,8 +847,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
-            let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{{field_ident_snake_case}}}'"));
-            let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}"));
             let ident_select_token_stream = {
                 let generate_pub_struct_ident_select_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {
@@ -2231,13 +2219,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 let check_not_unique_id_token_stream = {
-                                    let check_not_unique_id_in_update_array_token_stream = {
-                                        let not_unique_id_in_json_update_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique id in json update array: {{}}"));
-                                        quote::quote! {
-                                            let update_acc = 
-                                            #update_snake_case.0.to_vec().iter().map(|#element_snake_case|&#element_snake_case.#id_snake_case)
-                                            .collect::<std::vec::Vec<&#import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case>>();
-                                        }
+                                    let check_not_unique_id_in_update_array_token_stream = quote::quote! {
+                                        let update_acc = #update_snake_case.0.to_vec().iter()
+                                        .map(|#element_snake_case|&#element_snake_case.#id_snake_case)
+                                        .collect::<std::vec::Vec<&#import_path_uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case>>();
                                     };
                                     let check_not_unique_id_in_delete_aray_token_stream = {
                                         let not_unique_id_in_json_delete_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json delete array: {{}}"));
