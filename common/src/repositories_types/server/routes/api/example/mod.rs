@@ -3013,7 +3013,7 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         Ok(Self { create, update, delete })
     }
     fn select_only_updated_ids_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        Ok(format!(
+        let f = format!(
             "(select jsonb_agg({}) from jsonb_array_elements({}) as elem)",
             {
                 let mut acc = std::string::String::new();
@@ -3050,7 +3050,9 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                 format!("jsonb_build_object('value',{})", acc)
             },
             column_name_and_maybe_field_getter
-        ))
+        );
+        println!("###4 {f}");
+        Ok(f)
     }
 }
 impl<'de> serde::Deserialize<'de> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
@@ -3510,6 +3512,7 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
         <VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::update_query_bind(value, query)
     }
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, _: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        println!("###6");
         match value.select_only_updated_ids_query_part(&column, increment) {
             Ok(value) => Ok(format!("jsonb_build_object('value',{}) as {column},", value)),
             Err(error) => Err(error),
