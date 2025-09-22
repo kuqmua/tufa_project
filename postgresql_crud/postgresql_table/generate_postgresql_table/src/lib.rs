@@ -4122,7 +4122,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #update_one_only_one_column_tests_token_stream
                                         #acc_snake_case
                                     }),
-                                    1,
+                                    100,
                                     |fut| async move {
                                         fut.await;
                                     },
