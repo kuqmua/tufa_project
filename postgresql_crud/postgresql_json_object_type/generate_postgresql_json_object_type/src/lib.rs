@@ -414,6 +414,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+            let ident_array_not_null_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_array_not_null_upper_camel_case);
             let ident_standart_not_null_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -2372,19 +2373,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                     Ok(match &self.0 {
                                         Some(#value_snake_case) => format!(
-                                            "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem))",
-                                            match #ident_with_id_standart_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
-                                                &#value_snake_case.#update_snake_case,
-                                                &"",
-                                                &"elem",
+                                            "jsonb_build_object('value',{})",
+                                            match #ident_array_not_null_update_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
+                                                &#value_snake_case,
+                                                &column_name_and_maybe_field_getter,
                                                 #increment_snake_case
                                             ) {
                                                 Ok(#value_snake_case) => #value_snake_case,
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
                                                 }
-                                            },
-                                            column_name_and_maybe_field_getter
+                                            }
                                         ),
                                         None => "'null'::jsonb".to_string(),
                                     })
