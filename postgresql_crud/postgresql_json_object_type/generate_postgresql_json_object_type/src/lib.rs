@@ -2761,38 +2761,36 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &quote::quote!{#value_snake_case: #import_path::UniqueVec<#ident_with_id_standart_not_null_update_element_upper_camel_case>},
                             &self_value_token_stream
                         );
-                        let select_only_updated_ids_query_bind_token_stream = {
-                            quote::quote!{
-                                fn #select_only_updated_ids_query_bind_snake_case<'a>(
-                                    &'a #self_snake_case,
-                                    mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-                                ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
-                                    for #element_snake_case in #self_snake_case.0.to_vec() {
-                                        match #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
-                                            &#element_snake_case.#id_snake_case,
-                                            #query_snake_case
-                                        ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
-                                            },
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            }
-                                        }
-                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
-                                            &#element_snake_case.fields,
-                                            #query_snake_case
-                                        ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
-                                            },
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            }
+                        let select_only_updated_ids_query_bind_token_stream = quote::quote!{
+                            fn #select_only_updated_ids_query_bind_snake_case<'a>(
+                                &'a #self_snake_case,
+                                mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+                                for #element_snake_case in #self_snake_case.0.to_vec() {
+                                    match #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
+                                        &#element_snake_case.#id_snake_case,
+                                        #query_snake_case
+                                    ) {
+                                        Ok(#value_snake_case) => {
+                                            #query_snake_case = #value_snake_case;
+                                        },
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
                                         }
                                     }
-                                    Ok(#query_snake_case)
+                                    match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
+                                        &#element_snake_case.fields,
+                                        #query_snake_case
+                                    ) {
+                                        Ok(#value_snake_case) => {
+                                            #query_snake_case = #value_snake_case;
+                                        },
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
+                                        }
+                                    }
                                 }
+                                Ok(#query_snake_case)
                             }
                         };
                         quote::quote!{
@@ -2960,99 +2958,96 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
                     &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::True,
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::True,
-                    &{
-                        match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    //here
-                                    let acc = value.select_query_part(
-                                        &if is_postgresql_type {
-                                            column_name_and_maybe_field_getter.to_string()
-                                        } else {
-                                            format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
-                                        },
-                                        &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
-                                    );
-                                    if is_postgresql_type { format!("{acc}") } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
-                                        &ident_standart_not_null_as_postgresql_json_type_select_token_stream
-                                    );
-                                    quote::quote! {
-                                        let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-                                        format!(
-                                            "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
-                                            {
-                                                let #value_snake_case = match &#value_snake_case.0 {
-                                                    Some(#value_snake_case) => #value_snake_case,
-                                                    None => &#default_but_option_is_always_some_call_token_stream,
-                                                };
-                                                #ident_standart_not_null_as_postgresql_json_type_token_stream::select_query_part(
-                                                    value,
-                                                    field_ident,
-                                                    &column_name_and_maybe_field_getter_field_ident,
-                                                    column_name_and_maybe_field_getter_for_error_message,
-                                                    true
-                                                )
-                                            }
-                                        )
-                                    }
-                                },
+                    &match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                let acc = value.select_query_part(
+                                    &if is_postgresql_type {
+                                        column_name_and_maybe_field_getter.to_string()
+                                    } else {
+                                        format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
+                                    },
+                                    &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
+                                );
+                                if is_postgresql_type { format!("{acc}") } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
                             },
-                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let select_query_part_for_loop_token_stream = {
-                                        let value_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
-                                        generate_select_query_part_for_loop_token_stream(
-                                            &is_standart_with_id_true,
-                                            &quote::quote!{#value_snake_case.#ident_with_id_standart_not_null_select_snake_case},
-                                            &value_double_quotes_token_stream,
-                                            &value_double_quotes_token_stream,
-                                        )
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
+                                    &ident_standart_not_null_as_postgresql_json_type_select_token_stream
+                                );
+                                quote::quote! {
+                                    let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                                    format!(
+                                        "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
+                                        {
+                                            let #value_snake_case = match &#value_snake_case.0 {
+                                                Some(#value_snake_case) => #value_snake_case,
+                                                None => &#default_but_option_is_always_some_call_token_stream,
+                                            };
+                                            #ident_standart_not_null_as_postgresql_json_type_token_stream::select_query_part(
+                                                value,
+                                                field_ident,
+                                                &column_name_and_maybe_field_getter_field_ident,
+                                                column_name_and_maybe_field_getter_for_error_message,
+                                                true
+                                            )
+                                        }
+                                    )
+                                }
+                            },
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let select_query_part_for_loop_token_stream = {
+                                    let value_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
+                                    generate_select_query_part_for_loop_token_stream(
+                                        &is_standart_with_id_true,
+                                        &quote::quote!{#value_snake_case.#ident_with_id_standart_not_null_select_snake_case},
+                                        &value_double_quotes_token_stream,
+                                        &value_double_quotes_token_stream,
+                                    )
+                                };
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                                    "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"
+                                ));
+                                quote::quote! {
+                                    let #ident_with_id_standart_not_null_select_snake_case = {
+                                        let mut #acc_snake_case = std::string::String::default();
+                                        #select_query_part_for_loop_token_stream
+                                        let _ = #acc_snake_case.pop();
+                                        let _ = #acc_snake_case.pop();
+                                        #acc_snake_case
                                     };
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                                        "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_standart_not_null_select_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"
-                                    ));
-                                    quote::quote! {
-                                        let #ident_with_id_standart_not_null_select_snake_case = {
-                                            let mut #acc_snake_case = std::string::String::default();
-                                            #select_query_part_for_loop_token_stream
-                                            let _ = #acc_snake_case.pop();
-                                            let _ = #acc_snake_case.pop();
-                                            #acc_snake_case
-                                        };
-                                        let dimension1_start = #value_snake_case.#dimension1_pagination_token_stream.start();
-                                        let dimension1_end = #value_snake_case.#dimension1_pagination_token_stream.end();
-                                        format!(#format_handle_token_stream)
-                                    }
+                                    let dimension1_start = #value_snake_case.#dimension1_pagination_token_stream.start();
+                                    let dimension1_end = #value_snake_case.#dimension1_pagination_token_stream.end();
+                                    format!(#format_handle_token_stream)
                                 }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end");
-                                    let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
-                                        &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
-                                    );
-                                    quote::quote! {
-                                        format!(
-                                            #format_handle_token_stream,
-                                            {
-                                                let #value_snake_case = match &#value_snake_case.0 {
-                                                    Some(#value_snake_case) => #value_snake_case,
-                                                    None => &#default_but_option_is_always_some_call_token_stream,
-                                                };
-                                                #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::select_query_part(
-                                                    #value_snake_case,
-                                                    field_ident,
-                                                    &column_name_and_maybe_field_getter,
-                                                    column_name_and_maybe_field_getter_for_error_message,
-                                                    true
-                                                )
-                                            }
-                                        )
-                                    }
+                            }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end");
+                                let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
+                                    &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                                );
+                                quote::quote! {
+                                    format!(
+                                        #format_handle_token_stream,
+                                        {
+                                            let #value_snake_case = match &#value_snake_case.0 {
+                                                Some(#value_snake_case) => #value_snake_case,
+                                                None => &#default_but_option_is_always_some_call_token_stream,
+                                            };
+                                            #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::select_query_part(
+                                                #value_snake_case,
+                                                field_ident,
+                                                &column_name_and_maybe_field_getter,
+                                                column_name_and_maybe_field_getter_for_error_message,
+                                                true
+                                            )
+                                        }
+                                    )
                                 }
-                            },
-                        }
+                            }
+                        },
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
@@ -3383,27 +3378,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Ok(#query_snake_case)
                                 }
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{
-                                    if let Some(#value_snake_case) = &#value_snake_case.0 {
-                                        match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(&#value_snake_case, #query_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
-                                            },
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                if let Some(#value_snake_case) = &#value_snake_case.0 {
+                                    match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(&#value_snake_case, #query_snake_case) {
+                                        Ok(#value_snake_case) => {
+                                            #query_snake_case = #value_snake_case;
+                                        },
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
                                         }
                                     }
-                                    Ok(#query_snake_case)
                                 }
+                                Ok(#query_snake_case)
                             },
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{
-                                    match #ident_with_id_standart_not_null_update_upper_camel_case::select_only_updated_ids_query_bind(
-                                        &#value_snake_case.update,
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                for #element_snake_case in #value_snake_case.#update_snake_case.0.to_vec() {
+                                    match #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
+                                        &#element_snake_case.#id_snake_case,
                                         #query_snake_case
                                     ) {
                                         Ok(#value_snake_case) => {
@@ -3413,23 +3406,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             return Err(#error_snake_case);
                                         }
                                     }
-                                    Ok(#query_snake_case)
-                                }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{
-                                    if let Some(#value_snake_case) = &#value_snake_case.0 {
-                                        match #ident_array_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(&#value_snake_case, #query_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
-                                            },
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            }
+                                    match #ident_standart_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(
+                                        &#element_snake_case.fields,
+                                        #query_snake_case
+                                    ) {
+                                        Ok(#value_snake_case) => {
+                                            #query_snake_case = #value_snake_case;
+                                        },
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
                                         }
                                     }
-                                    Ok(#query_snake_case)
                                 }
+                                Ok(#query_snake_case)
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                if let Some(#value_snake_case) = &#value_snake_case.0 {
+                                    match #ident_array_not_null_as_postgresql_json_type_token_stream::select_only_updated_ids_query_bind(&#value_snake_case, #query_snake_case) {
+                                        Ok(#value_snake_case) => {
+                                            #query_snake_case = #value_snake_case;
+                                        },
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
+                                        }
+                                    }
+                                }
+                                Ok(#query_snake_case)
                             },
                         },
                     }
