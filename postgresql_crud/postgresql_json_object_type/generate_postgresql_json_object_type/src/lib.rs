@@ -1322,7 +1322,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {Self::#element_ident_upper_camel_case(value) => generate_element_query(value, &#element_ident_double_quotes_token_stream)}
                                     });
                                     quote::quote! {
-                                        let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, #import_path::QueryPartErrorNamed> {
+                                        let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, #import_path_query_part_error_named_token_stream> {
                                             let elem = "elem";
                                             let #value_snake_case = match #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
                                                 #value_snake_case,
@@ -2382,7 +2382,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     quote::quote!{
                                         Ok(format!(
-                                            "(select jsonb_agg({}) from jsonb_array_elements({}) as elem)",
+                                            "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
                                             {
                                                 let mut #acc_snake_case = std::string::String::new();
                                                 for #element_snake_case in self.#update_snake_case.to_vec() {
@@ -2415,7 +2415,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let _ = #acc_snake_case.pop();
                                                 format!("jsonb_build_object('value',{})", #acc_snake_case)
                                             },
-                                            column_name_and_maybe_field_getter
+                                            column_name_and_maybe_field_getter,
+                                            {
+                                                let mut #acc_snake_case = std::string::String::new();
+                                                for _ in self.#update_snake_case.to_vec() {
+                                                    match #increment_snake_case.checked_add(1) {
+                                                        Some(#value_snake_case) => {
+                                                            *#increment_snake_case = #value_snake_case;
+                                                            #acc_snake_case.push_str(&format!("${increment},"));
+                                                        }
+                                                        None => {
+                                                            return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                                        }
+                                                    }
+                                                }
+                                                let _ = #acc_snake_case.pop();
+                                                #acc_snake_case
+                                            }
                                         ))
                                     }
                                 },
@@ -3341,6 +3357,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
                                         }
+                                    }
+                                }
+                                //todo maybe refactor?
+                                for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
+                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(#element_snake_case.#id_snake_case.get_inner().to_string()) {
+                                        return Err(#error_snake_case.to_string());
                                     }
                                 }
                                 Ok(#query_snake_case)
