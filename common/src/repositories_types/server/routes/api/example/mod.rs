@@ -3609,8 +3609,18 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
             //here add block where
             {
                 let mut acc = std::string::String::new();
-                for element in self.update.to_vec() {
-                    acc.push_str(&format!("'{}',", &element.id.get_inner()));
+                for _ in self.update.to_vec() {
+                    //here
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            acc.push_str(&format!("${increment},"));
+                        }
+                        None => {
+                            return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                        }
+                    }
+                    // acc.push_str(&format!("'{}',", &element.id.get_inner()));
                 }
                 let _ = acc.pop();
                 acc
@@ -3977,6 +3987,12 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
                 }
             }
         }
+        //here4
+        for element in value.update.to_vec() {
+            if let Err(error) = query.try_bind(element.id.get_inner().to_string()) {
+                return Err(error.to_string());
+            }
+        }
         Ok(query)
     }
 }
@@ -4090,6 +4106,7 @@ impl postgresql_crud::PostgresqlType for VecOfAnimalWithIdAsNotNullArrayOfNotNul
     fn update_query_bind<'a>(value: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
         <VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::update_query_bind(value, query)
     }
+    //here1
     fn select_only_updated_ids_query_part(value: &Self::Update, column: &std::primitive::str, increment: &mut std::primitive::u64, _: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         match value.select_only_updated_ids_query_part(&column, increment) {
             Ok(value) => Ok(format!("jsonb_build_object('value',{}) as {column},", value)),
@@ -4452,6 +4469,7 @@ impl OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
     pub fn new(value: std::option::Option<<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Update>) -> Self {
         Self(value)
     }
+    //here222
     fn select_only_updated_ids_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         Ok(match &self.0 {
             Some(value) => format!(
