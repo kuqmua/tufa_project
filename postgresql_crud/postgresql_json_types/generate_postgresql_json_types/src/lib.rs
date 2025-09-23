@@ -454,6 +454,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let increment_snake_case = naming::IncrementSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
             let read_snake_case = naming::ReadSnakeCase;
+            let error_snake_case = naming::ErrorSnakeCase;
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
@@ -1672,6 +1673,36 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
+                //todo maybe reuse it in a function(not in the proc macro)
+                let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                    && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                    && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                {
+                    quote::quote! {
+                        match #increment_snake_case.checked_add(1) {
+                            Some(#value_snake_case) => {
+                                *#increment_snake_case = #value_snake_case;
+                                Ok(format!("'{field_ident}',jsonb_build_object('value',${increment}),"))
+                            }
+                            None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                        }
+                    }
+                } else {
+                    quote::quote! {Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))}
+                };
+                let select_only_created_or_updated_ids_query_bind_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                    && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                    && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                {
+                    quote::quote! {
+                        if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case) {
+                            return Err(#error_snake_case.to_string());
+                        }
+                        Ok(#query_snake_case)
+                    }
+                } else {
+                    quote::quote! {Ok(#query_snake_case)}
+                };
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
                     &ident,
@@ -1858,22 +1889,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                         Ok(query)
                     },
-                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
-                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
-                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
-                    {
-                        quote::quote! {
-                            match #increment_snake_case.checked_add(1) {
-                                Some(#value_snake_case) => {
-                                    *#increment_snake_case = #value_snake_case;
-                                    Ok(format!("'{field_ident}',jsonb_build_object('value',${increment}),"))
-                                }
-                                None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
-                            }
-                        }
-                    } else {
-                        quote::quote! {Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))}
-                    },
+                    &select_only_created_or_updated_ids_query_part_token_stream,
                     &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                         && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
@@ -1882,19 +1898,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } else {
                         postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False
                     },
+                    &select_only_created_or_updated_ids_query_bind_token_stream,
+                    &select_only_created_or_updated_ids_query_part_token_stream,
                     &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                         && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
                     {
-                        quote::quote! {
-                            if let Err(error) = query.try_bind(value) {
-                                return Err(error.to_string());
-                            }
-                            Ok(#query_snake_case)
-                        }
+                        postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True
                     } else {
-                        quote::quote! {Ok(#query_snake_case)}
+                        postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False
                     },
+                    &select_only_created_or_updated_ids_query_bind_token_stream,
                 )
             };
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {

@@ -154,7 +154,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let increment_snake_case = naming::IncrementSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            let field_ident_snake_case = naming::FieldIdentSnakeCase;
             let id_snake_case = naming::IdSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
@@ -3381,7 +3380,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 Ok(#query_snake_case)
                             },
                         },
-                    }
+                    },
+                    &quote::quote!{todo!()},
+                    &postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
+                    &quote::quote!{todo!()},
                 );
                 let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,

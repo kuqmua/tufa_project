@@ -70,6 +70,11 @@ pub trait PostgresqlJsonType {
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
+    fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {

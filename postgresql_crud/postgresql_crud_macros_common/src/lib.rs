@@ -290,6 +290,18 @@ impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
         }
     }
 }
+pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectOnlyCreatedIdsQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_impl_postgresql_json_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
@@ -316,6 +328,9 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     select_only_updated_ids_query_part_token_stream: &dyn quote::ToTokens,
     is_select_only_updated_ids_query_bind_mutable: &IsSelectOnlyUpdatedIdsQueryBindMutable,
     select_only_updated_ids_query_bind_token_stream: &dyn quote::ToTokens,
+    select_only_created_ids_query_part_token_stream: &dyn quote::ToTokens,
+    is_select_only_created_ids_query_bind_mutable: &IsSelectOnlyCreatedIdsQueryBindMutable,
+    select_only_created_ids_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_token_stream = quote::quote! {#import_path ::};
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
@@ -341,6 +356,8 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
     let select_only_updated_ids_query_bind_snake_case = naming::SelectOnlyUpdatedIdsQueryBindSnakeCase;
+    let select_only_created_ids_query_part_snake_case = naming::SelectOnlyCreatedIdsQueryPartSnakeCase;
+    let select_only_created_ids_query_bind_snake_case = naming::SelectOnlyCreatedIdsQueryBindSnakeCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
@@ -408,6 +425,21 @@ pub fn generate_impl_postgresql_json_type_token_stream(
                 #is_select_only_updated_ids_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
                 #select_only_updated_ids_query_bind_token_stream
+            }
+
+            fn #select_only_created_ids_query_part_snake_case(
+                #value_snake_case: &Self::#create_for_query_upper_camel_case,
+                #field_ident_snake_case: #reference_std_primitive_str_token_stream,
+                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
+                #increment_snake_case: &mut #std_primitive_u64_token_stream
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
+                #select_only_created_ids_query_part_token_stream
+            }
+            fn #select_only_created_ids_query_bind_snake_case<'a>(
+                #value_snake_case: &'a Self::#create_for_query_upper_camel_case,
+                #is_select_only_created_ids_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+                #select_only_created_ids_query_bind_token_stream
             }
         }
     }
