@@ -3424,8 +3424,45 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
+                                    let field_ident_double_quotes_token_stream = &generate_quotes::double_quotes_token_stream(&field_ident);
+                                    quote::quote! {
+                                        match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
+                                            &#value_snake_case.#field_ident,
+                                            &#field_ident_double_quotes_token_stream,
+                                            &column_name_and_maybe_field_getter,
+                                            #increment_snake_case
+                                        ) {
+                                            Ok(value) => {
+                                                 #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                            },
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            }
+                                        }
+                                    }
+                                });
                                 quote::quote!{
-                                    todo!()
+                                    Ok(format!(
+                                        "'{field_ident}',jsonb_build_object('value',{}),",
+                                        match &#value_snake_case.0 {
+                                            Some(#value_snake_case) => format!(
+                                                "jsonb_build_object('value',{})",
+                                                {
+                                                    let mut #acc_snake_case = std::string::String::new();
+                                                    #(#content_token_stream)*
+                                                    let _ = #acc_snake_case.pop();
+                                                    let _ = #acc_snake_case.pop();
+                                                    #acc_snake_case
+                                                }
+                                            ),
+                                            None => "'null'::jsonb".to_string(),
+                                        }
+                                    ))
                                 }
                             },
                         },
