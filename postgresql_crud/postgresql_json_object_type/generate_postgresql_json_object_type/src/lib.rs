@@ -3679,7 +3679,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
-                                    todo!()
+                                    if let Some(#value_snake_case) = &#value_snake_case.0 {
+                                        match <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::#select_only_created_ids_query_bind_snake_case(&#value_snake_case, #query_snake_case) {
+                                            Ok(#value_snake_case) => {
+                                                #query_snake_case = #value_snake_case;
+                                            }
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            }
+                                        }
+                                    }
+                                    Ok(#query_snake_case)
                                 }
                             },
                         },
