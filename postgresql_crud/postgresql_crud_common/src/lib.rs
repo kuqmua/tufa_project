@@ -844,6 +844,17 @@ impl<T> std::convert::From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
         value.0
     }
 }
+impl<T1> NotEmptyUniqueEnumVec<T1> {
+    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: NotEmptyUniqueEnumVec<T1>) -> NotEmptyUniqueEnumVec<T2> {
+        NotEmptyUniqueEnumVec(
+            value.0
+            .into_iter()
+            .map(T2::from)
+            .collect::<std::vec::Vec<T2>>()
+        )
+    }
+}
+
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,

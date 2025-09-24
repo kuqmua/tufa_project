@@ -2832,7 +2832,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(
                                 &ShouldDeriveSerdeDeserialize::True,
                                 &generate_std_option_option_ident_type_token_stream(
-                                    &ident_standart_not_null_as_postgresql_json_type_update_token_stream
+                                    &ident_standart_not_null_as_postgresql_json_type_update_for_query_token_stream
                                 )
                             ),
                         },
@@ -2857,24 +2857,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let contne_token_stream = vec_syn_field.iter().map(|element| {
-                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    });
-                                    let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                    let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                                    let type_as_postgresql_json_type_update_for_query_token_stream = generate_type_as_postgresql_json_type_update_for_query_token_stream(&element.ty);
-                                    quote::quote! {
-                                        #field_ident: #type_as_postgresql_json_type_update_for_query_token_stream::from(#value_snake_case.#field_ident)
-                                    }
-                                });
                                 quote::quote!{
-                                    todo!()
+                                    Self(postgresql_crud::NotEmptyUniqueEnumVec::from_t1_impl_from_t2(#value_snake_case.0))
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
-                                    todo!()
+                                    Self(match #value_snake_case.0 {
+                                        Some(#value_snake_case) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::UpdateForQuery::from(#value_snake_case)),
+                                        None => None,
+                                    })
                                 }
                             },
                         },
