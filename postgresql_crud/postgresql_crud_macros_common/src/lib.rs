@@ -320,6 +320,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     read_inner_type_token_stream: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
+    update_type_for_query_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
     is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
     is_update_query_part_jsonb_set_target_used: &IsUpdateQueryPartJsonbSetTargetUsed,
@@ -344,6 +345,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -397,6 +399,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
                 #into_inner_token_stream
             }
             type #update_upper_camel_case = #update_type_token_stream;
+            type #update_for_query_upper_camel_case = #update_type_for_query_token_stream;
             fn #update_query_part_snake_case(
                 #is_update_query_part_self_update_used: &Self::#update_upper_camel_case,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
