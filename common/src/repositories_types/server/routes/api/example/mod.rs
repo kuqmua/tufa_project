@@ -2733,34 +2733,40 @@ impl postgresql_crud::PostgresqlJsonType for AnimalAsNotNullJsonbObject {
         Ok(query)
     }
     fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        //heremeow
-        // pub struct AnimalAsNotNullJsonbObjectCreateForQuery {
-        //     field_0: <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::CreateForQuery,
-        // }
-        // fn select_only_updated_ids_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        //     let mut acc = std::string::String::default();
-        //     for element in self.0.to_vec() {
-        //         match &element {
-        //             AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.value, &"field_0", &column_name_and_maybe_field_getter, increment) {
-        //                 Ok(mut value) => {
-        //                     let _ = value.pop();
-        //                     acc.push_str(&format!("jsonb_build_object({})||", value));
-        //                 }
-        //                 Err(error) => {
-        //                     return Err(error);
-        //                 }
-        //             },
-        //         }
-        //     }
-        //     let _ = acc.pop();
-        //     let _ = acc.pop();
-        //     Ok(acc)
-        // }
-        // Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", value))
-        todo!()
+        //here
+        Ok(format!(
+            "'{field_ident}',jsonb_build_object('value',{}),",
+            {
+                let mut acc = std::string::String::new();
+                match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_created_ids_query_part(
+                    &value.field_0,
+                    &"field_0",
+                    &column_name_and_maybe_field_getter,
+                    increment
+                ) {
+                    Ok(value) => {
+                         acc.push_str(&format!("jsonb_build_object({})||", value));
+                    },
+                    Err(error) => {
+                        return Err(error);
+                    }
+                }
+                acc
+            }
+        ))
     }
-    fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
-        todo!()
+    //here mut
+    fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+        //here
+        match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_bind(&value.field_0, query) {
+            Ok(value) => {
+                query = value;
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        Ok(query)
     }
 }
 impl postgresql_crud::PostgresqlType for AnimalAsNotNullJsonbObject {
