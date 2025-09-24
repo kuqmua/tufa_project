@@ -2787,15 +2787,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let generate_std_option_option_ident_type_token_stream = |ident_token_stream: &dyn quote::ToTokens| wrap_content_into_scopes_dot_comma_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_token_stream));
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(&ShouldDeriveSerdeDeserialize::True, &wrap_content_into_scopes_dot_comma_token_stream(&generate_ident_update_standart_not_null_content_token_stream(&is_standart_with_id_false))),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(&ShouldDeriveSerdeDeserialize::True, &generate_std_option_option_ident_type_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_for_query_token_stream(&ShouldDeriveSerdeDeserialize::True, &wrap_content_into_scopes_dot_comma_token_stream(&generate_ident_update_standart_not_null_content_token_stream(&is_standart_with_id_false))),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(&ShouldDeriveSerdeDeserialize::True, &generate_std_option_option_ident_type_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(&ShouldDeriveSerdeDeserialize::False, &{
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_for_query_token_stream(&ShouldDeriveSerdeDeserialize::False, &{
                                 let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                 quote::quote! {{#fields_token_stream}}
                             }),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(&ShouldDeriveSerdeDeserialize::True, &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream)),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(&ShouldDeriveSerdeDeserialize::True, &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream)),
                         },
                     }
                 };
