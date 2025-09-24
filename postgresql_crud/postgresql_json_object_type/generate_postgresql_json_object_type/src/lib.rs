@@ -708,7 +708,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         };
                         quote::quote! {
-                            #[derive(Debug, serde::Serialize)]
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                             pub struct #ident_create_for_query_upper_camel_case #content_token_stream
                         }
                     };
@@ -754,7 +754,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let ident_with_id_standart_not_null_create_for_query_token_stream = {
                         let content_token_stream = generate_struct_standart_not_null_content_token_stream(&is_standart_with_id_true);
                         quote::quote! {
-                            #[derive(Debug, serde::Serialize)]
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                             pub struct #ident_with_id_standart_not_null_create_for_query_upper_camel_case #content_token_stream
                         }
                     };
@@ -2852,8 +2852,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &quote::quote!{<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Update},
-                    &quote::quote!{<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::UpdateForQuery},
+                    &quote::quote!{<#ident as postgresql_crud::PostgresqlJsonType>::Update},
+                    &quote::quote!{<#ident as postgresql_crud::PostgresqlJsonType>::UpdateForQuery},
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
