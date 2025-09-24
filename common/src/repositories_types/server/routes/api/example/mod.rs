@@ -4252,9 +4252,6 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
                     return Err(error);
                 }
             }
-            /////////
-
-            //////////
         }
         for element in &value.0 {
             if let Err(error) = query.try_bind(element.id.get_inner().to_string()) {
