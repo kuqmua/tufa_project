@@ -422,6 +422,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let wrap_into_scopes_token_stream = |content: &dyn quote::ToTokens| {
                 quote::quote! {(#content);}
             };
@@ -2788,7 +2789,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //todo maybe reuse
                     let generate_ident_update_for_query_token_stream = |should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize, content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, #should_derive_serde_deserialize utoipa::ToSchema, schemars::JsonSchema)]
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                             pub struct #ident_update_for_query_upper_camel_case #content_token_stream
                         }
                     };
@@ -2850,8 +2851,38 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                     }
                 };
+                let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    &quote::quote!{<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Update},
+                    &quote::quote!{<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::UpdateForQuery},
+                    &match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+                                    todo!()
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                    todo!()
+                                }
+                            },
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+                                    todo!()
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                    todo!()
+                                }
+                            },
+                        },
+                    }
+                );
                 let maybe_ident_update_for_query_element_token_stream = if is_standart_not_null {
-                    let ident_update_for_query_element_token_stream = {
+                    let ident_standart_not_null_update_for_query_element_token_stream = {
                         let variants_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -2865,14 +2896,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         });
                         quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                             pub enum #ident_standart_not_null_update_for_query_element_upper_camel_case {
                                 #(#variants_token_stream),*
                             }
                         }
                     };
+                    let impl_std_convert_from_ident_standart_not_null_update_element_for_ident_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                        &ident_standart_not_null_update_element_upper_camel_case,
+                        &ident_standart_not_null_update_for_query_element_upper_camel_case,
+                        &{
+                            quote::quote!{
+                                todo!()
+                            }
+                        }
+                    );
                     quote::quote! {
-                        #ident_update_for_query_element_token_stream
+                        #ident_standart_not_null_update_for_query_element_token_stream
+                        #impl_std_convert_from_ident_standart_not_null_update_element_for_ident_standart_not_null_update_for_query_element_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
@@ -2883,7 +2924,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #fields_snake_case: #ident_standart_not_null_as_postgresql_json_type_update_for_query_token_stream
                     };
                     let ident_with_id_standart_not_null_update_for_query_element_token_stream = quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                        #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                         pub struct #ident_with_id_standart_not_null_update_for_query_element_upper_camel_case {
                             #ident_with_id_standart_not_null_update_for_query_element_fields_declaration_token_stream
                         }
@@ -2896,15 +2937,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #fields_snake_case
                         }},
                     );
+                    let impl_std_convert_from_ident_with_id_standart_not_null_update_element_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                        &ident_with_id_standart_not_null_update_element_upper_camel_case,
+                        &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
+                        &{
+                            quote::quote!{
+                                todo!()
+                            }
+                        }
+                    );
                     quote::quote! {
                         #ident_with_id_standart_not_null_update_for_query_element_token_stream
                         #impl_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream
+                        #impl_std_convert_from_ident_with_id_standart_not_null_update_element_for_ident_with_id_standart_not_null_update_for_query_element_token_stream
                     }
                 } else {
                     proc_macro2::TokenStream::new()
                 };
                 quote::quote!{
                     #ident_update_for_query_token_stream
+                    #impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream
                     #maybe_ident_update_for_query_element_token_stream
                     #maybe_ident_with_id_standart_not_null_update_for_query_element_token_stream
                 }
