@@ -3590,19 +3590,40 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False,
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False,
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True,
                         },
                     },
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
+                                    let field_ident_double_quotes_token_stream = &generate_quotes::double_quotes_token_stream(&field_ident);
+                                    quote::quote! {
+                                        match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_bind_snake_case(
+                                            &#value_snake_case.#field_ident,
+                                            #query_snake_case
+                                        ) {
+                                            Ok(#value_snake_case) => {
+                                                #query_snake_case = #value_snake_case;
+                                            }
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            }
+                                        }
+                                    }
+                                });
                                 quote::quote!{
-                                    todo!()
+                                    #(#content_token_stream)*
+                                    Ok(#query_snake_case)
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
