@@ -2976,7 +2976,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
                         &{
                             quote::quote!{
-                                todo!()
+                                Self {
+                                    #id_snake_case: <#import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream as postgresql_crud::PostgresqlJsonType>::UpdateForQuery::from(
+                                        #value_snake_case.#id_snake_case
+                                    ),
+                                    fields: <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::UpdateForQuery::from(
+                                        #value_snake_case.fields
+                                    ),
+                                }
                             }
                         }
                     );
