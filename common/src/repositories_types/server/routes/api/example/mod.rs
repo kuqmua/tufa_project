@@ -1781,141 +1781,6 @@ mod example_tests {
 }
 
 //////////////////
-// impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
-//     //here1
-//     fn select_only_updated_ids_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         let create_for_query_vec = {
-//             let mut acc = vec![];
-//             for element in &self.create {
-//                 acc.push(AnimalWithIdAsNotNullJsonbObjectWithIdCreateForQuery::from(element.clone()));
-//             }
-//             acc
-//         };
-//         Ok(format!(
-//             "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
-//             {
-//                 let mut acc = std::string::String::new();
-//                 for element in self.update.to_vec() {
-//                     let mut current_acc = std::string::String::new();
-//                     match <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&element.id, &"id", &"elem", increment) {
-//                         Ok(mut value) => {
-//                             let _ = value.pop();
-//                             current_acc.push_str(&format!("jsonb_build_object({})||", value));
-//                         }
-//                         Err(error) => {
-//                             return Err(error);
-//                         }
-//                     }
-//                     for element in element.fields.0.to_vec() {
-//                         match &element {
-//                             AnimalAsNotNullJsonbObjectUpdateElement::Field0(value) => match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&value.value, &"field_0", &"elem", increment) {
-//                                 Ok(mut value) => {
-//                                     let _ = value.pop();
-//                                     current_acc.push_str(&format!("jsonb_build_object({})||", value));
-//                                 }
-//                                 Err(error) => {
-//                                     return Err(error);
-//                                 }
-//                             },
-//                         }
-//                     }
-//                     let _ = current_acc.pop();
-//                     let _ = current_acc.pop();
-//                     acc.push_str(&format!("{}||", current_acc));
-//                 }
-//                 ///////////
-//                 for element in &create_for_query_vec {
-//                     //here2222
-//                     let s = format!(
-//                         "jsonb_build_object('id', '{}', 'field_0', 'null'::jsonb)||",
-//                         element.id.get_inner(),
-//                     );
-//                     println!("sssssssssss {s:#?}");
-//                     acc.push_str(&s);
-
-//                     // match <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_part(&element.id, &"id", &"elem", increment) {
-//                     //     Ok(mut value) => {
-//                     //         let _ = value.pop();
-//                     //         current_acc.push_str(&format!("jsonb_build_object({})||", value));
-//                     //     }
-//                     //     Err(error) => {
-//                     //         return Err(error);
-//                     //     }
-//                     // }
-//                     // std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdCreate>
-//                 }
-//                 ////////////
-//                 let _ = acc.pop();
-//                 let _ = acc.pop();
-//                 format!("jsonb_build_object('value',{})", acc)
-//             },
-//             column_name_and_maybe_field_getter,
-//             {
-//                 let mut acc = std::string::String::new();
-//                 for _ in self.update.to_vec() {
-//                     match increment.checked_add(1) {
-//                         Some(value) => {
-//                             *increment = value;
-//                             acc.push_str(&format!("${increment},"));
-//                         }
-//                         None => {
-//                             return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//                         }
-//                     }
-//                 }
-//                 for element in &create_for_query_vec {
-//                     //here2222
-//                     // println!("@@@@@@@@ {element:#?}");
-//                     // let element_create_for_query = AnimalWithIdAsNotNullJsonbObjectWithIdCreateForQuery::from(element.clone());
-//                     // println!("$$$$$$$$ {element_create_for_query:#?}");
-//                     // // acc.push_str(&format!("jsonb_build_object({})||", value));
-//                     // let s = format!(
-//                     //     "jsonb_build_object('id', '{}', 'field_0', 'null'::jsonb)||",
-//                     //     element_create_for_query.id.get_inner(),
-//                     //     // <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::into_inner(postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumberRead::new(element_create_for_query.field_0.0))
-//                     // );
-//                     // println!("sssssssssss {s:#?}");
-//                     acc.push_str(&format!("'{}',", &element.id.get_inner().to_string()));
-
-                    
-//                     // std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdCreate>
-//                 }
-//                 let _ = acc.pop();
-//                 acc
-//             }
-//         ))
-//     }
-// }
-// impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId {
-//     //here2
-//     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::Update, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
-//         for element in value.update.to_vec() {
-//             match <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_bind(&element.id, query) {
-//                 Ok(value) => {
-//                     query = value;
-//                 }
-//                 Err(error) => {
-//                     return Err(error);
-//                 }
-//             }
-//             match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::select_only_updated_ids_query_bind(&element.fields, query) {
-//                 Ok(value) => {
-//                     query = value;
-//                 }
-//                 Err(error) => {
-//                     return Err(error);
-//                 }
-//             }
-//         }
-//         for element in value.update.to_vec() {
-//             if let Err(error) = query.try_bind(element.id.get_inner().to_string()) {
-//                 return Err(error.to_string());
-//             }
-//         }
-//         Ok(query)
-//     }
-// }
-
 //////////
 // #[derive(Debug)]
 // pub struct AnimalAsNotNullJsonbObject;
@@ -7039,6 +6904,7 @@ pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateForQue
     delete: std::vec::Vec<<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::UpdateForQuery>,
 }
 impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateForQuery {
+    //meow
     fn select_only_updated_ids_query_part(&self, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         Ok(format!(
             "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
@@ -7072,6 +6938,44 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateForQuery {
                     let _ = current_acc.pop();
                     acc.push_str(&format!("{}||", current_acc));
                 }
+                // for element in &self.create {
+                //     //here2222
+                //     let s = format!(
+                //         "jsonb_build_object('id', '{}', 'field_0', 'null'::jsonb)||",
+                //         element.id.get_inner(),
+                //     );
+                // }
+                for element in &self.create {
+                    //here2222
+                    match <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_created_ids_query_part(
+                        &element.id,
+                        &"id",
+                        &column_name_and_maybe_field_getter,
+                        increment
+                    ) {
+                        Ok(mut value) => {
+                            let _ = value.pop();
+                             acc.push_str(&format!("jsonb_build_object({})||", value));
+                        },
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                    match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_created_ids_query_part(
+                        &element.field_0,
+                        &"field_0",
+                        &column_name_and_maybe_field_getter,
+                        increment
+                    ) {
+                        Ok(mut value) => {
+                            let _ = value.pop();
+                             acc.push_str(&format!("jsonb_build_object({})||", value));
+                        },
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                }
                 let _ = acc.pop();
                 let _ = acc.pop();
                 format!("jsonb_build_object('value',{})", acc)
@@ -7089,6 +6993,10 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateForQuery {
                             return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                         }
                     }
+                }
+                for element in &self.create {
+                    //here2222
+                    acc.push_str(&format!("'{}',", &element.id.get_inner().to_string()));
                 }
                 let _ = acc.pop();
                 acc
@@ -7277,11 +7185,30 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
                 }
             }
         }
+        //here
+        for element in &value.create {
+            match <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_created_ids_query_bind(&element.id, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        //
         for element in value.update.to_vec() {
             if let Err(error) = query.try_bind(element.id.get_inner().to_string()) {
                 return Err(error.to_string());
             }
         }
+        //here
+        for element in &value.create {
+            if let Err(error) = query.try_bind(element.id.get_inner().to_string()) {
+                return Err(error.to_string());
+            }
+        }
+        //
         Ok(query)
     }
     fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
