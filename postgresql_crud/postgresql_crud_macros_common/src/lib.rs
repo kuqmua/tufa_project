@@ -796,6 +796,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
+    ident_update_for_query_upper_camel_case: &dyn quote::ToTokens,
     update_query_part_value_underscore: &UpdateQueryPartValueUnderscore,
     update_query_part_jsonb_set_accumulator_underscore: &UpdateQueryPartJsonbSetAccumulatorUnderscore,
     update_query_part_jsonb_set_target_underscore: &UpdateQueryPartJsonbSetTargetUnderscore,
@@ -822,6 +823,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     let normalize_snake_case = naming::NormalizeSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -879,6 +881,7 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #into_inner_token_stream
             }
             type #update_upper_camel_case = #ident_update_upper_camel_case;
+            type #update_for_query_upper_camel_case = #ident_update_for_query_upper_camel_case;
             fn #update_query_part_snake_case(
                 #update_query_part_value_underscore: &Self::#update_upper_camel_case,
                 #update_query_part_jsonb_set_accumulator_underscore: #reference_std_primitive_str_token_stream,

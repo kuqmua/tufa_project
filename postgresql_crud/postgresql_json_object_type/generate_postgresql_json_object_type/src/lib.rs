@@ -3948,6 +3948,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_read_inner_upper_camel_case,
                     &value_into_inner_token_stream,
                     &ident_update_upper_camel_case,
+                    &ident_update_for_query_upper_camel_case,
                     &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::False,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::False,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::False,

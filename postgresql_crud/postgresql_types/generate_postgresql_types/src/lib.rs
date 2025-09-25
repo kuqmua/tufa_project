@@ -4129,6 +4129,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
+            let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
+            let ident_update_for_query_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_postgresql_type_for_ident_token_stream = {
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#std_string_string_token_stream::from(#content_token_stream))}
@@ -4655,6 +4657,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &ident_update_upper_camel_case,
+                    &ident_update_for_query_upper_camel_case,
                     &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::True,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::True,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::True,
@@ -5115,6 +5118,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #ident_read_only_ids_token_stream
                 #ident_read_inner_token_stream
                 #ident_update_token_stream
+                #ident_update_for_query_token_stream
                 #impl_postgresql_type_for_ident_token_stream
                 #impl_postgresql_type_test_cases_for_ident_token_stream
             };
