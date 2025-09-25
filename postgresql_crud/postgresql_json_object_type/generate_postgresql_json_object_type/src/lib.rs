@@ -2853,7 +2853,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                    &quote::quote!{<#ident as postgresql_crud::PostgresqlJsonType>::Update},//here
+                    &quote::quote!{<#ident as postgresql_crud::PostgresqlJsonType>::Update},
                     &quote::quote!{<#ident as postgresql_crud::PostgresqlJsonType>::UpdateForQuery},
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -2919,8 +2919,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_standart_not_null_update_element_upper_camel_case,
                         &ident_standart_not_null_update_for_query_element_upper_camel_case,
                         &{
+                            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                let field_type_as_json_type_update_for_query_token_stream = generate_type_as_postgresql_json_type_update_for_query_token_stream(&element.ty);
+                                quote::quote! {
+                                    #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => #ident_standart_not_null_update_for_query_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(
+                                        postgresql_crud::Value {
+                                            #value_snake_case: #field_type_as_json_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
+                                        }
+                                    )
+                                }
+                            });
                             quote::quote!{
-                                todo!()
+                                match #value_snake_case {
+                                    #(#variants_token_stream),*
+                                }
                             }
                         }
                     );
