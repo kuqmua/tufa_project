@@ -6996,7 +6996,16 @@ impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateForQuery {
                 }
                 for element in &self.create {
                     //here2222
-                    acc.push_str(&format!("'{}',", &element.id.get_inner().to_string()));
+                    // acc.push_str(&format!("'{}',", &element.id.get_inner().to_string()));
+                    match increment.checked_add(1) {
+                        Some(value) => {
+                            *increment = value;
+                            acc.push_str(&format!("${increment},"));
+                        }
+                        None => {
+                            return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                        }
+                    }
                 }
                 let _ = acc.pop();
                 acc
