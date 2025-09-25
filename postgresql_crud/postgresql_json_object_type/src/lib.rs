@@ -117,3 +117,14 @@ impl<T> std::convert::From<UniqueVec<T>> for Vec<T> {
         value.0
     }
 }
+
+impl<T1> UniqueVec<T1> {
+    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: UniqueVec<T1>) -> UniqueVec<T2> {
+        UniqueVec(
+            value.0
+            .into_iter()
+            .map(T2::from)
+            .collect::<std::vec::Vec<T2>>()
+        )
+    }
+}

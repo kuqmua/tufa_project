@@ -2082,6 +2082,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_standart_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_as_postgresql_json_type_update_for_query_token_stream = generate_type_as_postgresql_json_type_update_for_query_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident_with_id_array_not_null_upper_camel_case);
+            let ident_with_id_array_not_null_as_postgresql_json_type_update_for_query_token_stream = generate_type_as_postgresql_json_type_update_for_query_token_stream(&ident_with_id_array_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_update_element_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_update_for_query_element_upper_camel_case = &naming::parameter::SelfUpdateForQueryElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
@@ -2846,7 +2847,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(
                                 &ShouldDeriveSerdeDeserialize::True,
-                                &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_token_stream)
+                                &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_for_query_token_stream)
                             ),
                         },
                     }
@@ -2873,12 +2874,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 quote::quote!{
-                                    todo!()
+                                    Self {
+                                        create: #value_snake_case.create.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
+                                            #element_snake_case
+                                        )).collect(),
+                                        update: postgresql_crud::UniqueVec::from_t1_impl_from_t2(#value_snake_case.update),
+                                        delete: #value_snake_case.delete,
+                                    }
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
-                                    todo!()
+                                    Self(match #value_snake_case.0 {
+                                        Some(#value_snake_case) => Some(<#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::UpdateForQuery::from(#value_snake_case)),
+                                        None => None,
+                                    })
                                 }
                             },
                         },
