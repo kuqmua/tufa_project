@@ -7195,6 +7195,15 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
                     return Err(error);
                 }
             }
+            //here
+            match <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_created_ids_query_bind(&element.field_0, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
         }
         //
         for element in value.update.to_vec() {
