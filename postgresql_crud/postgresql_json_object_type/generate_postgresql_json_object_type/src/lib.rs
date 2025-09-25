@@ -2750,7 +2750,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                                         let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                         quote::quote! {
-                                            #ident_standart_not_null_update_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
+                                            #ident_standart_not_null_update_for_query_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
                                                 &#value_snake_case.#value_snake_case,
                                                 &#field_ident_double_quotes_token_stream,
                                                 &"elem",
