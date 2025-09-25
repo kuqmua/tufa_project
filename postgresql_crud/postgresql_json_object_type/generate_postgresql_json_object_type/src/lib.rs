@@ -422,7 +422,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let ident_with_id_standart_not_null_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let wrap_into_scopes_token_stream = |content: &dyn quote::ToTokens| {
                 quote::quote! {(#content);}
             };
@@ -2788,7 +2787,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_update_for_query_token_stream = {
                 let ident_update_for_query_token_stream = {
                     //todo maybe reuse
-                    let generate_ident_update_for_query_token_stream = |should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize, content_token_stream: &dyn quote::ToTokens| {
+                    let generate_ident_update_for_query_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize)]
                             pub struct #ident_update_for_query_upper_camel_case #content_token_stream
@@ -2823,7 +2822,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_for_query_token_stream(
-                                &ShouldDeriveSerdeDeserialize::True,
                                 &wrap_content_into_scopes_dot_comma_token_stream(
                                     &generate_ident_update_for_query_standart_not_null_content_token_stream(
                                         &is_standart_with_id_false
@@ -2831,7 +2829,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 )
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(
-                                &ShouldDeriveSerdeDeserialize::True,
                                 &generate_std_option_option_ident_type_token_stream(
                                     &ident_standart_not_null_as_postgresql_json_type_update_for_query_token_stream
                                 )
@@ -2839,14 +2836,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_for_query_token_stream(
-                                &ShouldDeriveSerdeDeserialize::False,
                                 &{
                                     let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                     quote::quote! {{#fields_token_stream}}
                                 }
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_for_query_token_stream(
-                                &ShouldDeriveSerdeDeserialize::True,
                                 &generate_std_option_option_ident_type_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_update_for_query_token_stream)
                             ),
                         },
