@@ -172,7 +172,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
             let query_part_snake_case = naming::QueryPartSnakeCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-            let test_cases_snake_case = naming::TestCasesSnakeCase;
+            let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
             let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
@@ -4141,7 +4141,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element1});
                                         quote::quote! {
-                                            for element0 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(&#read_only_ids_snake_case.0.value.#field_ident) {
+                                            for element0 in #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case.0.value.#field_ident) {
                                                 for element1 in element0 {
                                                     let #field_ident_current_snake_case = Some(#value_content_token_stream);
                                                     #field_ident_last_snake_case = #field_ident_current_snake_case.clone();
@@ -4172,7 +4172,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
                                         if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
-                                            for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
+                                            for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#value_snake_case) {
                                                 for element1 in element0 {
                                                     #acc_snake_case.push(Some(element1));
                                                 }
@@ -4210,7 +4210,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element0.0.#value_snake_case.#id_snake_case.0.#value_snake_case.clone()});
                                         quote::quote! {
-                                            for element1 in #field_type_as_postgresql_json_type_test_cases_token_stream::test_cases(
+                                            for element1 in #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(
                                                 &element0.0.#value_snake_case.#field_ident.clone()
                                             ) {
                                                 for element2 in element1 {
@@ -4237,7 +4237,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
                                         if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
-                                            for element0 in #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::test_cases(&#value_snake_case) {
+                                            for element0 in #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#value_snake_case) {
                                                 for element1 in element0 {
                                                     #acc_snake_case.push(Some(element1));
                                                 }
@@ -4865,7 +4865,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
-                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#test_cases_snake_case(&#read_only_ids_snake_case)},
+                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case)},
                         &quote::quote! {unreachable!()},
