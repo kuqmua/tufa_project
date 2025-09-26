@@ -1465,7 +1465,7 @@ mod example_tests {
                                                     let f = super::ExampleUpdateOneParameters {
                                                         payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone()), Some(postgresql_crud::Value { value: update.clone() })).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")
                                                     };
-                                                    println!("{f:#?}");
+                                                    // println!("{f:#?}");
                                                     f
                                                 }
                                             )
@@ -1525,7 +1525,7 @@ mod example_tests {
                     )
                     .await
                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    println!("try_read_many result len {}", try_read_many_data.len());
+                    // println!("try_read_many result len {}", try_read_many_data.len());
                     /////////////////
                     futures::StreamExt::for_each_concurrent(
                         futures::stream::iter({
@@ -1564,7 +1564,7 @@ mod example_tests {
                                     .flatten()
                                     .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
                                 };
-                                println!("@@@ {read_only_ids_current_elements:#?}");
+                                // println!("@@@ {read_only_ids_current_elements:#?}");
                                 assert_eq!(
                                     {
                                         let mut acc = vec![];
@@ -1699,7 +1699,7 @@ mod example_tests {
                                                     )
                                                 ];
                                                 let ddd = serde_json::to_string(&f).unwrap();
-                                                println!("DDDD {ddd:#?}");
+                                                // println!("DDDD {ddd:#?}");
                                                 f
                                             },
                                             postgresql_crud::UniqueVec::try_new(vec![]).expect("error bb6d3378-d6bf-4e66-b70c-f0e48aa70772"),
@@ -1744,7 +1744,7 @@ mod example_tests {
                                                         ),
                                                         Some(postgresql_crud::Value { value: update.clone() })
                                                     ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2");
-                                                    println!("PPP {p:#?}");
+                                                    // println!("PPP {p:#?}");
                                                     p
                                                 }
                                             }

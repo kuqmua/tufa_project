@@ -2188,7 +2188,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &quote::quote!{match #option_update_snake_case {
                         Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case),
                         None => #read_snake_case
-                    }}
+                    }},
+                    &quote::quote!{todo!()}
                 )
             };
             let generated = quote::quote! {

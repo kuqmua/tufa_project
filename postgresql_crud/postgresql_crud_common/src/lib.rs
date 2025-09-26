@@ -907,6 +907,7 @@ pub trait PostgresqlTypeTestCases {
         read: <Self::Element as crate::PostgresqlType>::Read,
         option_update: std::option::Option<<Self::Element as crate::PostgresqlType>::Update>,
     ) -> <Self::Element as crate::PostgresqlType>::Read;
+    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::Create>;
 }
 
 #[cfg(feature = "test-utils")]
@@ -924,6 +925,7 @@ pub trait PostgresqlJsonTypeTestCases {
         read: <Self::Element as crate::PostgresqlJsonType>::Read,
         option_update: std::option::Option<<Self::Element as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
+    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::Create>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
