@@ -205,17 +205,17 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
             {
-                "not_null_or_nullable": "Nullable",
+                "not_null_or_nullable": "NotNull",
                 "postgresql_json_object_type_pattern": "Array",
                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             }
+            // ,
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
         // ]
     }
 }]
@@ -1048,11 +1048,11 @@ pub struct Animal {
             //     "postgresql_json_object_type_pattern": "Standart",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // },
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Standart",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
             // ,
             // {
             //     "not_null_or_nullable": "NotNull",
@@ -1060,16 +1060,16 @@ pub struct Animal {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             //,
-            {
-                "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
         // ]
     }
 }]
 pub struct Doggie {
-    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    // pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
@@ -1200,7 +1200,9 @@ pub struct Doggie {
     // pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+#[derive(Debug
+    , postgresql_crud::GeneratePostgresqlJsonObjectType
+)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
@@ -1217,16 +1219,17 @@ pub struct Doggie {
             //     "postgresql_json_object_type_pattern": "Standart",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // },
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // },
             {
-                "not_null_or_nullable": "Nullable",
+                "not_null_or_nullable": "NotNull",
                 "postgresql_json_object_type_pattern": "Array",
                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             }
+            // ,
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
         // ]
     }
 }]

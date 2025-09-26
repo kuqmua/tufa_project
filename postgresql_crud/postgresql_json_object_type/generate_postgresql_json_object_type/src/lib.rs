@@ -3718,11 +3718,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&element.ty);
                                     let field_ident_double_quotes_token_stream = &generate_quotes::double_quotes_token_stream(&field_ident);
+                                    let column_name_and_maybe_field_getter_field_ident_double_quotes_token_stream = &generate_quotes::double_quotes_token_stream(
+                                        &format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{field_ident}'")
+                                    );
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                             &#value_snake_case.#field_ident,
                                             &#field_ident_double_quotes_token_stream,
-                                            &column_name_and_maybe_field_getter,
+                                            &format!(#column_name_and_maybe_field_getter_field_ident_double_quotes_token_stream),
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
