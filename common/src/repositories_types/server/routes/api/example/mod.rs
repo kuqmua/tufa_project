@@ -1028,7 +1028,7 @@ pub struct Animal {
     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-    // pub field_806: DoggieAsNotNullJsonbObject,
+    pub field_806: DoggieAsNotNullJsonbObject,
     pub field_808: OptionDoggieAsNullableJsonbObject,
     // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
@@ -1676,11 +1676,11 @@ mod example_tests {
                                                         //     as
                                                         //     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
                                                         // >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                                        // <
-                                                        //     <super::DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Create
-                                                        //     as
-                                                        //     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        // >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                        <
+                                                            <super::DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Create
+                                                            as
+                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                                         <
                                                             <super::OptionDoggieAsNullableJsonbObject as postgresql_crud::PostgresqlJsonType>::Create
                                                             as
