@@ -157,7 +157,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let binded_query_snake_case = naming::BindedQuerySnakeCase;
     let rollback_snake_case = naming::RollbackSnakeCase;
     let table_name_snake_case = naming::TableNameSnakeCase;
-    let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
