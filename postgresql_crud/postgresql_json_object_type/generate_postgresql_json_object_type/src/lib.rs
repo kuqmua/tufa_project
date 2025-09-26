@@ -3725,8 +3725,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             &column_name_and_maybe_field_getter,
                                             #increment_snake_case
                                         ) {
-                                            Ok(value) => {
-                                                 #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                            Ok(mut #value_snake_case) => {
+                                                let _ = #value_snake_case.pop();
+                                                #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
