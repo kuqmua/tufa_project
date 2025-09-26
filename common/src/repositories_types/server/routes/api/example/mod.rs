@@ -205,22 +205,22 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
-            // ,
             // {
-            //     "not_null_or_nullable": "Nullable",
+            //     "not_null_or_nullable": "NotNull",
             //     "postgresql_json_object_type_pattern": "Array",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
+            // ,
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
         // ]
     }
 }]
 pub struct Animal {
-    // pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
@@ -1030,8 +1030,8 @@ pub struct Animal {
 
     pub field_806: DoggieAsNotNullJsonbObject,
     pub field_808: OptionDoggieAsNullableJsonbObject,
-    // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1048,11 +1048,11 @@ pub struct Animal {
             //     "postgresql_json_object_type_pattern": "Standart",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // },
-            {
-                "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Standart",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
             // ,
             // {
             //     "not_null_or_nullable": "NotNull",
@@ -1060,16 +1060,16 @@ pub struct Animal {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             //,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
         // ]
     }
 }]
 pub struct Doggie {
-    // pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
@@ -1194,10 +1194,10 @@ pub struct Doggie {
     // pub field_122: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_123: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
-    // pub field_806: CatAsNotNullJsonbObject,
-    // pub field_807: OptionCatAsNullableJsonbObject,
+    pub field_806: CatAsNotNullJsonbObject,
+    pub field_807: OptionCatAsNullableJsonbObject,
     pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1219,17 +1219,17 @@ pub struct Doggie {
             //     "postgresql_json_object_type_pattern": "Standart",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // },
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
-            // ,
             // {
-            //     "not_null_or_nullable": "Nullable",
+            //     "not_null_or_nullable": "NotNull",
             //     "postgresql_json_object_type_pattern": "Array",
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
+            // ,
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
         // ]
     }
 }]
@@ -1671,11 +1671,11 @@ mod example_tests {
                                                 let f = vec![
                                                     crate::repositories_types::server::routes::api::example::AnimalWithIdAsNotNullJsonbObjectWithIdCreate::new(
                                                         //todo make it Create
-                                                        // <
-                                                        //     <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create
-                                                        //     as
-                                                        //     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        // >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                        <
+                                                            <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Create
+                                                            as
+                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                                         <
                                                             <super::DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Create
                                                             as
@@ -1686,16 +1686,16 @@ mod example_tests {
                                                             as
                                                             postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
                                                         >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                                        // <
-                                                        //     <super::VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create
-                                                        //     as
-                                                        //     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        // >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                                        // <
-                                                        //     <super::OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create
-                                                        //     as
-                                                        //     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        // >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                        <
+                                                            <super::VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create
+                                                            as
+                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                        <
+                                                            <super::OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Create
+                                                            as
+                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                                     )
                                                 ];
                                                 let ddd = serde_json::to_string(&f).unwrap();
