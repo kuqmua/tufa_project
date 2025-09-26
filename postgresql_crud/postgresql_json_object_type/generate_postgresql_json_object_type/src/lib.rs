@@ -2776,7 +2776,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                                 &#element_snake_case.#field_ident,
                                                 &#field_ident_double_quotes_token_stream,
-                                                &column_name_and_maybe_field_getter,
+                                                &"elem",
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
