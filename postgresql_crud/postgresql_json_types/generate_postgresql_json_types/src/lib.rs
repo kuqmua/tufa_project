@@ -456,6 +456,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let read_snake_case = naming::ReadSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
+            let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
 
@@ -1935,7 +1936,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             quote::quote! {
                                 let mut acc = vec![];
-                                for element in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::test_cases(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone())) {
+                                for element in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone())) {
                                     acc.push(#element_or_some_element_token_stream);
                                 }
                                 #maybe_push_none_token_stream
@@ -1965,7 +1966,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 NotNullOrNullable::Nullable => {
                                     quote::quote! {
                                         let mut acc = vec![];
-                                        for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::test_cases(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
+                                        for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
                                             for element1 in element0 {
                                                 acc.push(Some(element1));
                                             }

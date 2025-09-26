@@ -1330,7 +1330,7 @@ mod example_tests {
                                         {
                                             let mut acc = vec![];
                                             if let Some(value) = &common_read_only_ids_returned_from_create_one.column_156 {
-                                                for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                                for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
                                                     for element1 in element0 {
                                                         acc.push(ident_create_default.clone());
                                                     }
@@ -1437,7 +1437,7 @@ mod example_tests {
                                         let update = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
                                             let mut local_increment = 0;
                                             let mut option_test_case = None;
-                                            for element_0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&read_only_ids_current_element.column_156.clone().unwrap()) {
+                                            for element_0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_156.clone().unwrap()) {
                                                 let mut should_break = false;
                                                 for element_1 in element_0 {
                                                     if local_increment == increment {
@@ -1537,7 +1537,7 @@ mod example_tests {
                                         {
                                             // let mut acc = vec![];
                                             // if let Some(value) = &common_read_only_ids_returned_from_create_one.column_156 {
-                                            //     for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&value) {
+                                            //     for element0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
                                             //         for element1 in element0 {
                                             //             acc.push(ident_create_default.clone());
                                             //         }
@@ -1647,7 +1647,7 @@ mod example_tests {
                                         // let update = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
                                         //     let mut local_increment = 0;
                                         //     let mut option_test_case = None;
-                                        //     for element_0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::test_cases(&read_only_ids_current_element.column_156.clone().unwrap()) {
+                                        //     for element_0 in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_156.clone().unwrap()) {
                                         //         let mut should_break = false;
                                         //         for element_1 in element_0 {
                                         //             if local_increment == increment {
