@@ -458,6 +458,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let create_vec_snake_case = naming::CreateVecSnakeCase;
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
             let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
+            let acc_snake_case = naming::AccSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
 
@@ -2212,17 +2213,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#element_snake_case)
                                     ).collect()
                                 },
-                                NotNullOrNullable::Nullable => {
-                                    quote::quote! {
-                                        {
-                                            let mut acc = vec![];
-                                            for element in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#create_vec_snake_case() {
-                                                acc.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(Some(element.0)));
-                                            }
-                                            acc.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));
-                                            acc
-                                        }
+                                NotNullOrNullable::Nullable => quote::quote! {
+                                    let mut #acc_snake_case = vec![];
+                                    for #element_snake_case in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#create_vec_snake_case() {
+                                        #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(Some(#element_snake_case.0)));
                                     }
+                                    #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));
+                                    #acc_snake_case
                                 }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
