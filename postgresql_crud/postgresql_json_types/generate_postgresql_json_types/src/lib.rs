@@ -1922,6 +1922,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         #postgresql_crud_macros_common_import_path_postgresql_crud_common::#postgresql_json_type_upper_camel_case
                     >::#read_or_update_upper_camel_case::#new_snake_case(#value_snake_case)}
                 };
+                let standart_not_null_test_cases_vec_name_token_stream = match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote!{std_primitive_i8_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote!{std_primitive_i16_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote!{std_primitive_i32_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => quote::quote!{std_primitive_i64_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => quote::quote!{std_primitive_u8_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => quote::quote!{std_primitive_u16_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => quote::quote!{std_primitive_u32_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => quote::quote!{std_primitive_u64_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => quote::quote!{std_primitive_f32_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => quote::quote!{std_primitive_f64_test_cases_vec},
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{std_primitive_bool_test_cases_vec},
+                    PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{std_string_string_test_cases_vec},
+                    PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{uuid_uuid_test_cases_vec},
+                };
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -1946,24 +1961,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => {
-                                    let content_token_stream = match &postgresql_json_type {
-                                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => postgresql_crud_macros_common::generate_int_min_zero_max_test_vec_token_stream(&quote::quote! {std::primitive::i8}),
-                                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => postgresql_crud_macros_common::std_primitive_i16_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => postgresql_crud_macros_common::std_primitive_i32_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => postgresql_crud_macros_common::std_primitive_i64_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => postgresql_crud_macros_common::generate_int_min_zero_max_test_vec_token_stream(&quote::quote! {std::primitive::u8}),
-                                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => postgresql_crud_macros_common::generate_int_min_zero_max_test_vec_token_stream(&quote::quote! {std::primitive::u16}),
-                                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => postgresql_crud_macros_common::generate_int_min_zero_max_test_vec_token_stream(&quote::quote! {std::primitive::u32}),
-                                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => postgresql_crud_macros_common::generate_int_min_zero_max_test_vec_token_stream(&quote::quote! {std::primitive::u64}),
-                                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => postgresql_crud_macros_common::std_primitive_f32_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => postgresql_crud_macros_common::std_primitive_f64_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => postgresql_crud_macros_common::std_primitive_bool_test_vec_token_stream(),
-                                        PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::std_string_string_test_vec_token_stream(),
-                                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![uuid::Uuid::new_v4()]},
-                                    };
-                                    quote::quote! {vec![#content_token_stream]}
-                                }
+                                NotNullOrNullable::NotNull => quote::quote!{vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
                                 NotNullOrNullable::Nullable => {
                                     quote::quote! {
                                         let mut acc = vec![];
@@ -2191,7 +2189,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         None => #read_snake_case
                     }},
                     &{
-                        ////////////
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
                             let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_token_stream);
@@ -2210,27 +2207,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => {
-                                    let content_token_stream = match &postgresql_json_type {
-                                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote!{std_primitive_i8_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote!{std_primitive_i16_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote!{std_primitive_i32_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => quote::quote!{std_primitive_i64_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => quote::quote!{std_primitive_u8_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => quote::quote!{std_primitive_u16_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => quote::quote!{std_primitive_u32_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => quote::quote!{std_primitive_u64_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => quote::quote!{std_primitive_f32_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => quote::quote!{std_primitive_f64_test_cases_vec},
-                                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{std_primitive_bool_test_cases_vec},
-                                        PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{std_string_string_test_cases_vec},
-                                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{uuid_uuid_test_cases_vec},
-                                    };
-                                    quote::quote!{
-                                        postgresql_crud_common::#content_token_stream().into_iter().map(|element|
-                                            <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(element)
-                                        ).collect()
-                                    }
+                                NotNullOrNullable::NotNull => quote::quote!{
+                                    postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into_iter().map(|#element_snake_case|
+                                        <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#element_snake_case)
+                                    ).collect()
                                 },
                                 NotNullOrNullable::Nullable => {
                                     quote::quote! {
@@ -2298,7 +2278,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             },
                         };
-                        /////////////
                         match &element.postgresql_json_type {
                             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => content_token_stream,
                             PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => content_token_stream,
