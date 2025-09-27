@@ -2211,148 +2211,26 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => {
-                                    //todo reuse as lib functions with read_inner_vec_vec
-                                    // let vec = match &postgresql_json_type {
-                                    //     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::i8::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::i8::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::i16::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::i16::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::i32::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::i32::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::i64::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::i64::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::u8::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::u8::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::u16::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::u16::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::u32::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::u32::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::u64::MIN},
-                                    //         quote::quote!{0},
-                                    //         quote::quote!{std::primitive::u64::MAX}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::f32::EPSILON},
-                                    //         quote::quote!{std::primitive::f32::MAX},
-                                    //         quote::quote!{std::primitive::f32::MIN},
-                                    //         quote::quote!{std::primitive::f32::MIN_POSITIVE},
-                                    //         quote::quote!{-1e30},
-                                    //         quote::quote!{-1e-30},
-                                    //         quote::quote!{-1.0},
-                                    //         quote::quote!{-0.0},
-                                    //         quote::quote!{0.0},
-                                    //         quote::quote!{1.0},
-                                    //         quote::quote!{3.1415},
-                                    //         quote::quote!{-3.1415},
-                                    //         quote::quote!{1e-30},
-                                    //         quote::quote!{1e30},
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => vec![
-                                    //         quote::quote!{std::primitive::f64::MAX},
-                                    //         quote::quote!{std::primitive::f64::MIN},
-                                    //         quote::quote!{std::primitive::f64::MIN_POSITIVE},
-                                    //         quote::quote!{-1e300},
-                                    //         quote::quote!{-1e-300},
-                                    //         quote::quote!{-1.0},
-                                    //         quote::quote!{-0.0},
-                                    //         quote::quote!{0.0},
-                                    //         quote::quote!{1.0},
-                                    //         quote::quote!{1e-300},
-                                    //         quote::quote!{1e300},
-                                    //     ],
-                                    //     PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => vec![
-                                    //         quote::quote!{true},
-                                    //         quote::quote!{false}
-                                    //     ],
-                                    //     PostgresqlJsonType::StdStringStringAsJsonbString => vec![
-                                    //         quote::quote!{"".to_string()},
-                                    //         quote::quote!{"a".to_string()},
-                                    //         quote::quote!{"Hello, world!".to_string()},
-                                    //         quote::quote!{"   ".to_string()},
-                                    //         quote::quote!{"\n\r\t".to_string()},
-                                    //         quote::quote!{"1234567890".to_string()},
-                                    //         quote::quote!{"😀".to_string()},
-                                    //         quote::quote!{"こんにちは".to_string()},
-                                    //         quote::quote!{"🌍🚀✨ Rust 💖🦀".to_string()},
-                                    //         quote::quote!{"a".repeat(1024)},
-                                    //         quote::quote!{"line1\nline2\nline3".to_string()},
-                                    //         quote::quote!{std::string::String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string()},
-                                    //     ],
-                                    //     PostgresqlJsonType::UuidUuidAsJsonbString => vec![
-                                    //         quote::quote!{uuid::Uuid::new_v4()},
-                                    //     ],
-                                    // };
-                                    // let content_token_stream = vec.iter().map(|element|{quote::quote!{
-                                    //     <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#element)
-                                    // }}).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                                    // quote::quote!{vec![#(#content_token_stream),*]}
-                                    ///////////
-                                    match &postgresql_json_type {
-                                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote!{
-                                            postgresql_crud_common::std_primitive_i8_test_cases_vec().into_iter().map(|element|
-                                                <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(element)
-                                            ).collect()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
-                                            todo!()
-                                        },
-                                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{
-                                            todo!()
-                                        },
+                                    let content_token_stream = match &postgresql_json_type {
+                                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote!{std_primitive_i8_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote!{std_primitive_i16_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote!{std_primitive_i32_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => quote::quote!{std_primitive_i64_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => quote::quote!{std_primitive_u8_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => quote::quote!{std_primitive_u16_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => quote::quote!{std_primitive_u32_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => quote::quote!{std_primitive_u64_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => quote::quote!{std_primitive_f32_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => quote::quote!{std_primitive_f64_test_cases_vec},
+                                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{std_primitive_bool_test_cases_vec},
+                                        PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{std_string_string_test_cases_vec},
+                                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{uuid_uuid_test_cases_vec},
+                                    };
+                                    quote::quote!{
+                                        postgresql_crud_common::#content_token_stream().into_iter().map(|element|
+                                            <#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(element)
+                                        ).collect()
                                     }
-                                    ///////////
                                 },
                                 NotNullOrNullable::Nullable => {
                                     quote::quote! {
