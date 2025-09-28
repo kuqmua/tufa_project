@@ -2202,18 +2202,25 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
-                            let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_token_stream);
-                            let (element_or_some_element_token_stream, maybe_push_none_token_stream) = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => (quote::quote! {<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#element_snake_case.0)}, proc_macro2::TokenStream::new()),
-                                NotNullOrNullable::Nullable => (quote::quote! {<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(Some(#element_snake_case.0))}, quote::quote! {#acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));}),
+                            let (
+                                new_content_token_stream,
+                                maybe_acc_push_none_token_stream
+                            ) = match &&not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    quote::quote!{vec![#element_snake_case.into()]},
+                                    proc_macro2::TokenStream::new()
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    quote::quote!{Some(#element_snake_case.into())},
+                                    quote::quote!{#acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));}
+                                ),
                             };
-                            //here
                             quote::quote! {
                                 let mut #acc_snake_case = vec![];
                                 for #element_snake_case in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#create_vec_snake_case() {
-                                    #acc_snake_case.push(#element_or_some_element_token_stream);
+                                    #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#new_content_token_stream));
                                 }
-                                #maybe_push_none_token_stream
+                                #maybe_acc_push_none_token_stream
                                 #acc_snake_case
                             }
                         };
@@ -2253,7 +2260,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             for #element_snake_case in <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#create_vec_snake_case() {
                                                 #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(vec![#element_snake_case.into()]));
                                             }
-                                            #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(vec![None]));
+                                            // #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(vec![None]));
                                             #acc_snake_case
                                         }
                                     }
