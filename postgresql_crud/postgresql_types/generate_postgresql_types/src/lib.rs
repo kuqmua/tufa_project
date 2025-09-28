@@ -5200,20 +5200,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }},
                     &{
                         let generate_acc_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
-                            //////
-                            // let new_or_try_new_first_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                            //     quote::quote!{try_new(Some(#element_snake_case.into())).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                            // }
-                            // else {
-                            //     quote::quote!{new(Some(#element_snake_case.into()))}
-                            // };
-                            // let new_or_try_new_second_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                            //     quote::quote!{try_new(None).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                            // }
-                            // else {
-                            //     quote::quote!{new(None)}
-                            // };
-                            //////
                             let (
                                 new_or_try_new_content_token_stream,
                                 maybe_acc_push_none_token_stream
@@ -5274,44 +5260,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     )
                                 )
                             },
-                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => generate_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart,
-                                    )
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => generate_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-                                        &PostgresqlTypePattern::Standart,
-                                    )
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => generate_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::ArrayDimension1 {
-                                            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_token_stream(
+                                &not_null_or_nullable,
+                                &generate_ident_token_stream(
+                                    &postgresql_type,
+                                    &match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    },
+                                    &match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
+                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
                                         },
-                                    )
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => generate_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::ArrayDimension1 {
-                                            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                                        },
-                                    )
-                                ),
-                            },
+                                    },
+                                )
+                            )
                         }
                     },
                 )
