@@ -3193,42 +3193,45 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_std_convert_into_ident_origin_impl_new_or_try_new_value_type_for_ident_origin_token_stream = {
-                    let content_token_stream = match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#self_snake_case.0},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match #self_snake_case.0 {
-                                    Some(#value_snake_case) => Some(#value_snake_case.0),
+                    let content_token_stream = {
+                        let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+                        let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
+                        let generate_match_token_stream = |match_content_token_stream: &dyn quote::ToTokens, some_content_token_stream: &dyn quote::ToTokens|{
+                            quote::quote! {
+                                match #match_content_token_stream {
+                                    Some(#value_snake_case) => Some(#value_snake_case.0#some_content_token_stream),
                                     None => None
                                 }
                             }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                #self_snake_case.0.into_iter().map(|#element_snake_case|#element_snake_case.0).collect()
+                        };
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_dot_zero_token_stream.clone(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                    &self_dot_zero_token_stream,
+                                    &proc_macro2::TokenStream::new(),
+                                )
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                #self_snake_case.0.into_iter().map(|#element_snake_case|match #element_snake_case.0 {
-                                    Some(#value_snake_case) => Some(#value_snake_case.0),
-                                    None => None
-                                }).collect()
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                match #self_snake_case.0 {
-                                    Some(#value_snake_case) => Some(#value_snake_case.0.into_iter().map(|#element_snake_case|#element_snake_case.0).collect()),
-                                    None => None
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                                let dimension1_token_stream = match &dimension1_not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                        &element_dot_zero_token_stream,
+                                        &proc_macro2::TokenStream::new(),
+                                    )
+                                };
+                                let into_iter_dimension1_token_stream = quote::quote!{.into_iter().map(|#element_snake_case|#dimension1_token_stream).collect()};
+                                match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                        #self_dot_zero_token_stream #into_iter_dimension1_token_stream
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                        &self_dot_zero_token_stream,
+                                        &into_iter_dimension1_token_stream,
+                                    )
                                 }
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                match #self_snake_case.0 {
-                                    Some(#value_snake_case) => Some(#value_snake_case.0.into_iter().map(|#element_snake_case|match #element_snake_case.0 {
-                                        Some(#value_snake_case) => Some(#value_snake_case.0),
-                                        None => None
-                                    }).collect()),
-                                    None => None
-                                }
-                            },
-                        },
+                        }
                     };
                     quote::quote! {
                         impl std::convert::Into<#ident_inner_type_token_stream> for #ident_origin_upper_camel_case {
