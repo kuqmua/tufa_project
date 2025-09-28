@@ -265,6 +265,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let is_standart_with_id_false = IsStandartWithId::False;
             let is_standart_with_id_true = IsStandartWithId::True;
+            //todo rename variants as StandartNotNullWithoutId
             enum IdentPattern {
                 NotNullStandartWithoutId,
                 NotNullStandartWithId,
@@ -299,6 +300,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::NullableArrayWithId,
             });
             let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithoutId);
+            let ident_standart_nullable_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NullableStandartWithoutId);
             let ident_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
             let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithId);
             let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
@@ -4903,7 +4905,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
-                                        todo!()
+                                        let mut #acc_snake_case = vec![];
+                                        for #element_snake_case in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
+                                            #acc_snake_case.push(<#ident_standart_nullable_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Create::new(Some(#element_snake_case)));
+                                        }
+                                        #acc_snake_case.push(<#ident_standart_nullable_upper_camel_case as postgresql_crud::PostgresqlJsonType>::Create::new(None));
+                                        #acc_snake_case
                                     }
                                 }
                             },
