@@ -459,6 +459,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
             let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
+            let create_snake_case = naming::CreateSnakeCase;
+            let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
 
@@ -2344,9 +2346,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                         && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
                     {
-                        quote::quote! {todo!()}
+                        quote::quote! {Some(#import_path::Value { #value_snake_case: #ident_read_upper_camel_case(#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case))})}
                     } else {
-                        quote::quote! {todo!()}
+                        quote::quote! {Some(#import_path::Value { #value_snake_case: #ident_read_upper_camel_case(#create_snake_case)})}
                     },
                 )
             };
