@@ -4972,21 +4972,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let content_token_stream = match &element.postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        // let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                        //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        //     });
-                                        //     let field_type = &element.ty;
-                                        //     quote::quote! {
-                                        //         <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                        //             &value.0.value.#field_ident
-                                        //         )
-                                        //     }
-                                        // });
+                                        let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            let field_type = &element.ty;
+                                            quote::quote! {
+                                                <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    #create_snake_case.#field_ident
+                                                )
+                                            }
+                                        });
                                         quote::quote! {
-                                            // #ident_read_upper_camel_case::try_new(
-                                            //     #(#parameters_token_stream),*
-                                            // ).expect("error 52ad3994-8392-4fc5-8427-4ca42d87d726")
+                                            Some(postgresql_crud::Value {
+                                                #value_snake_case: #ident_read_upper_camel_case::try_new(
+                                                    #(#parameters_token_stream),*
+                                                ).expect("error 52ad3994-8392-4fc5-8427-4ca42d87d726")
+                                            })
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -5000,6 +5003,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             //         None => None
                                             //     }
                                             // )
+                                            todo!()
                                         }
                                     }
                                 },
@@ -5042,6 +5046,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             //     });
                                             //     acc
                                             // })
+                                            todo!()
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -5057,13 +5062,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             //         None => None
                                             //     }
                                             // )
+                                            todo!()
                                         }
                                     }
                                 },
                             };
                             quote::quote!{
                                 // Some(postgresql_crud::Value { #value_snake_case: #content_token_stream })
-                                todo!()
+                                #content_token_stream
                             }
                         },
                     ),
