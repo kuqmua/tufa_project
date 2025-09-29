@@ -2340,7 +2340,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![]},
                         }
                     },
-                    &quote::quote!{todo!()}
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        quote::quote! {todo!()}
+                    } else {
+                        quote::quote! {todo!()}
+                    },
                 )
             };
             let generated = quote::quote! {
