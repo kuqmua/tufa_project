@@ -4941,16 +4941,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         quote::quote! {
                                             for #element_snake_case in #field_type_type_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                                #acc_snake_case.push(#ident_with_id_standart_not_null_create_upper_camel_case::new(
+                                                #acc_snake_case.push(#ident_create_upper_camel_case::new(vec![#ident_with_id_standart_not_null_create_upper_camel_case::new(
                                                     #(#parameters_token_stream),*
-                                                ));
+                                                )]));
                                             }
                                         }
                                     });
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
                                         #(#content_token_stream)*
-                                        vec![#ident_create_upper_camel_case::new(#acc_snake_case)]
+                                        #acc_snake_case
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
