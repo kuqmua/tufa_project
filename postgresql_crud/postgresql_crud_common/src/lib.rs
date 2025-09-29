@@ -908,6 +908,10 @@ pub trait PostgresqlTypeTestCases {
         option_update: std::option::Option<<Self::Element as crate::PostgresqlType>::Update>,
     ) -> <Self::Element as crate::PostgresqlType>::Read;
     fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::Create>;
+    fn read_only_ids_merged_with_create_into_option_value_read(
+        read_only_ids: <Self::Element as crate::PostgresqlType>::ReadOnlyIds,
+        create: <Self::Element as crate::PostgresqlType>::Create
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
 }
 
 #[cfg(feature = "test-utils")]
@@ -926,6 +930,10 @@ pub trait PostgresqlJsonTypeTestCases {
         option_update: std::option::Option<<Self::Element as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
     fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::Create>;
+    fn read_only_ids_merged_with_create_into_option_value_read(
+        read_only_ids: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::Element as crate::PostgresqlJsonType>::Create
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
