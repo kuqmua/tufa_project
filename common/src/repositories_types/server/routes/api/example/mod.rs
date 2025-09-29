@@ -1194,58 +1194,58 @@ pub struct Doggie {
     // pub field_122: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_123: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
-    pub field_806: CatAsNotNullJsonbObject,
-    pub field_807: OptionCatAsNullableJsonbObject,
-    pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    // pub field_806: CatAsNotNullJsonbObject,
+    // pub field_807: OptionCatAsNullableJsonbObject,
+    // pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
-// #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
-#[postgresql_crud::postgresql_json_object_type_pattern{
-    // "All"
-    {
-        "Concrete":
-        // [
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // },
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // },
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            {
-                "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
-        // ]
-    }
-}]
-pub struct Cat {
-    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
-    // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
-    // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
-    // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
-    // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
-    // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
-    // pub field_9: postgresql_crud::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
-    // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
-}
+// #[derive(Debug
+//     , postgresql_crud::GeneratePostgresqlJsonObjectType
+// )]
+// // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{
+//     // "All"
+//     {
+//         "Concrete":
+//         // [
+//             // {
+//             //     "not_null_or_nullable": "NotNull",
+//             //     "postgresql_json_object_type_pattern": "Standart",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // },
+//             // {
+//             //     "not_null_or_nullable": "Nullable",
+//             //     "postgresql_json_object_type_pattern": "Standart",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // },
+//             // {
+//             //     "not_null_or_nullable": "NotNull",
+//             //     "postgresql_json_object_type_pattern": "Array",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             {
+//                 "not_null_or_nullable": "Nullable",
+//                 "postgresql_json_object_type_pattern": "Array",
+//                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             }
+//         // ]
+//     }
+// }]
+// pub struct Cat {
+//     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+//     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+//     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+//     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+//     // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+//     // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
+//     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
+//     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
+//     // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,
+//     // pub field_9: postgresql_crud::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
+//     // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
+// }
 
 
 #[cfg(test)]
@@ -1798,113 +1798,107 @@ mod example_tests {
                     .await;
                     //
                     //here
-                    let u = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::create_vec();
-                    println!("test cases: {}", u.len());
-                    // println!("test cases: {}", serde_json::to_string(&u).unwrap());
-                    /////////////////
-                    let read_only_ids_current_elements = {
-                        use futures::StreamExt;
-                        futures::stream::iter(
-                            {
-                                let mut acc = vec![];
-                                for element in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
-                                    acc.push(super::ExampleCreate {
-                                        column_156: element,
-                                        // column_156: <<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    });
-                                }
-                                acc
-                            }
-                            .chunks(25)
-                            .map(|element| element.to_vec())
-                            .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
-                            .into_iter()
-                            .map(|element| {
-                                let url_cloned = url.clone();
-                                futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
-                            })
-                            .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
-                        )
-                        .buffer_unordered(5)
-                        .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
-                        .await
-                        .into_iter()
-                        .flatten()
-                        .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
-                    };
-                    // println!("read_only_ids_current_elements {read_only_ids_current_elements:?}");
+                    // let u = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::create_vec();
+                    // println!("test cases: {}", u.len());
+                    // // println!("test cases: {}", serde_json::to_string(&u).unwrap());
+                    // /////////////////
+                    // let read_only_ids_current_elements = {
+                    //     use futures::StreamExt;
+                    //     futures::stream::iter(
+                    //         {
+                    //             let mut acc = vec![];
+                    //             for element in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
+                    //                 acc.push(super::ExampleCreate {
+                    //                     column_156: element,
+                    //                     // column_156: <<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    //                 });
+                    //             }
+                    //             acc
+                    //         }
+                    //         .chunks(25)
+                    //         .map(|element| element.to_vec())
+                    //         .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
+                    //         .into_iter()
+                    //         .map(|element| {
+                    //             let url_cloned = url.clone();
+                    //             futures::FutureExt::boxed(async move { 
+                    //                 (
+                    //                     super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element.clone()) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98"),
+                    //                     element
+                    //                 )
+                    //             })
+                    //         })
+                    //         .collect::<std::vec::Vec<futures::future::BoxFuture<'static, (std::vec::Vec<super::ExampleReadOnlyIds>)>>>(),
+                    //     )
+                    //     .buffer_unordered(5)
+                    //     .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
+                    //     .await
+                    //     .into_iter()
+                    //     .flatten()
+                    //     .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
+                    // };
+                    // println!("read_only_ids_current_elements {read_only_ids_current_elements:#?}");
 
                     //todo method read_only_ids + create into read
-                    // let left = {
-                    //         let mut acc = vec![];
-                    //         for element in &read_only_ids_current_elements {
-                    //             acc.push(super::ExampleRead {
-                    //                 primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                    //                     &element.primary_key_column
-                    //                 ),
-                    //                 column_156: match &element.column_156 {
-                    //                     Some(value) => <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
-                    //                     None => Some(postgresql_crud::Value {
-                    //                         value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    //                     }),
-                    //                 },
-                    //             });
-                    //         }
-                    //         acc.sort_by(|a, b| {
-                    //             if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
-                    //                 value_a.value.cmp(&value_b.value)
-                    //             } else {
-                    //                 panic!("must not be what");
-                    //             }
-                    //         });
-                    //         acc
-                    //     };
-                    // let right = {
-                    //         let mut acc = super::Example::try_read_many(
-                    //             &url,
-                    //             super::ExampleReadManyParameters {
-                    //                 payload: super::ExampleReadManyPayload {
-                    //                     where_many: super::StdOptionOptionExampleWhereMany(Some(
-                    //                         super::ExampleWhereMany::try_new(
-                    //                             Some(
-                    //                                 postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                    //                                     let mut acc = vec![];
-                    //                                     for element in &read_only_ids_current_elements {
-                    //                                         acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                    //                                             logical_operator: postgresql_crud::LogicalOperator::Or,
-                    //                                             value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone())),
-                    //                                         }));
-                    //                                     }
-                    //                                     acc
-                    //                                 })
-                    //                                 .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
-                    //                             ),
-                    //                             None,
-                    //                         )
-                    //                         .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
-                    //                     )),
-                    //                     select: select_default_all.clone(),
-                    //                     order_by: postgresql_crud::OrderBy {
-                    //                         column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //                         order: Some(postgresql_crud::Order::Asc),
-                    //                     },
-                    //                     pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
-                    //                 },
-                    //             },
-                    //         )
-                    //         .await
-                    //         .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    //         acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
-                    //         acc
-                    //     };
-                    // println!("left len {}", left.len());
-                    // println!("right len {}", right.len());
-                    // println!("www {}", left[0] == right[0]);
-                    // assert_eq!(
-                    //     left[0],
-                    //     right[0],
-                    //     "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
-                    // );
+                    
+                    /////////////////
+                    futures::StreamExt::for_each_concurrent(
+                        futures::stream::iter({
+                            let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                            {
+                                for element in <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
+                                    let url_cloned = url.clone();
+                                    let ident_create_default_cloned = ident_create_default.clone();
+                                    let select_default_all_cloned = select_default_all.clone();
+                                    acc.push(futures::FutureExt::boxed(async move {
+                                        let ident_create = super::ExampleCreate {
+                                            column_156: element,
+                                            // column_156: <<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        };
+                                        let read_only_ids = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters {
+                                                payload: ident_create.clone()
+                                        }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                        println!("ident_create {ident_create:#?}\nread_only_ids {read_only_ids:#?}");
+                                        /////////
+                                        // let left = super::ExampleRead {
+                                        //     primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone() }),
+                                        //     column_156: Some(postgresql_crud::Value {
+                                        //         value: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                        //             <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_156.clone().unwrap())
+                                        //                 .unwrap()
+                                        //                 .value,
+                                        //             Some(update.clone())
+                                        //         )
+                                        //     })
+                                        // };
+                                        let right = super::Example::try_read_one(
+                                            &url_cloned,
+                                            super::ExampleReadOneParameters {
+                                                payload: super::ExampleReadOnePayload {
+                                                    primary_key_column: read_only_ids.primary_key_column.clone(),
+                                                    select: select_default_all_cloned
+                                                }
+                                            }
+                                        )
+                                        .await
+                                        .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                        // assert_eq!(
+                                        //     left,
+                                        //     right,
+                                        //     "try_read_one result different after try_create_one"
+                                        // );
+                                        /////////
+                                    }));
+                                }
+                            }
+                            acc
+                        }),
+                        1,
+                        |fut| async move {
+                            fut.await;
+                        },
+                    )
+                    .await;
                     /////////////////
                 });
             })
