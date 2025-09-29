@@ -885,6 +885,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
             let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let create_vec_snake_case = naming::CreateVecSnakeCase;
+            let create_snake_case = naming::CreateSnakeCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -5278,7 +5279,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         }
                     },
-                    &quote::quote!{todo!()}
+                    &{
+                        let content_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                            && let CanBePrimaryKey::True = &can_be_primary_key
+                        {
+                            quote::quote! {#read_only_ids_snake_case}
+                        } else {
+                            quote::quote!{#ident_read_upper_camel_case(#create_snake_case)}
+                        };
+                        quote::quote! {Some(postgresql_crud_common::Value { #value_snake_case: #content_token_stream })}
+                    }
                 )
             };
             let generated = quote::quote! {

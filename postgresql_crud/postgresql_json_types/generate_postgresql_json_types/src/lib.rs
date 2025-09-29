@@ -2342,13 +2342,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![]},
                         }
                     },
-                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
-                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
-                        && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
-                    {
-                        quote::quote! {Some(#import_path::Value { #value_snake_case: #ident_read_upper_camel_case(#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case))})}
-                    } else {
-                        quote::quote! {Some(#import_path::Value { #value_snake_case: #ident_read_upper_camel_case(#create_snake_case)})}
+                    &{
+                        let content_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
+                            && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                        {
+                            quote::quote! {#ident_read_upper_camel_case(#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case))}
+                        } else {
+                            quote::quote! {#ident_read_upper_camel_case(#create_snake_case)}
+                        };
+                        quote::quote! {Some(#import_path::Value { #value_snake_case: #content_token_stream })}
                     },
                 )
             };
