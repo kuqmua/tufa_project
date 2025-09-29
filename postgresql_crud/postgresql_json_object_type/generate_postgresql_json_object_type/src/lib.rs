@@ -4968,7 +4968,104 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         },
-                        &quote::quote!{todo!()}
+                        &{
+                            let content_token_stream = match &element.postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        // let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        //     });
+                                        //     let field_type = &element.ty;
+                                        //     quote::quote! {
+                                        //         <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        //             &value.0.value.#field_ident
+                                        //         )
+                                        //     }
+                                        // });
+                                        quote::quote! {
+                                            // #ident_read_upper_camel_case::try_new(
+                                            //     #(#parameters_token_stream),*
+                                            // ).expect("error 52ad3994-8392-4fc5-8427-4ca42d87d726")
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            // #ident_read_upper_camel_case::new(
+                                            //     match &value.0.value {
+                                            //         Some(value) => match #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value) {
+                                            //             Some(value) => Some(value.value),
+                                            //             None => None,
+                                            //         }
+                                            //         None => None
+                                            //     }
+                                            // )
+                                        }
+                                    }
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        // let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_true).iter().map(|element| {
+                                        //     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                        //         panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        //     });
+                                        //     let field_type = &element.ty;
+                                        //     quote::quote! {
+                                        //         <#field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        //             &element.0.value.#field_ident
+                                        //         )
+                                        //     }
+                                        // });
+                                        // let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
+                                        //     &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream
+                                        // );
+                                        quote::quote! {
+                                            // #ident_read_upper_camel_case::new({
+                                            //     let mut acc = value.0.value.clone().into_iter().map(|element|{
+                                            //         #ident_with_id_standart_not_null_read_upper_camel_case::try_new(
+                                            //             #(#parameters_token_stream),*
+                                            //         ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
+                                            //     }).collect::<std::vec::Vec<#ident_with_id_standart_not_null_read_upper_camel_case>>();
+                                            //     acc.sort_by(|a, b| {
+                                            //         if let (Some(value_a), Some(value_b)) = (&a.id, &b.id) {
+                                            //             //maybe remove .clone - add .get by ref method
+                                            //             #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::into_inner(
+                                            //                 value_a.value.clone()
+                                            //             )
+                                            //             .cmp(&#import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::into_inner(
+                                            //                 value_b.value.clone()
+                                            //             ))
+                                            //         }
+                                            //         else {
+                                            //             panic!("error 0bdf0f44-0012-4cda-9a27-3a89804d871b");
+                                            //         }
+                                            //     });
+                                            //     acc
+                                            // })
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            // #ident_read_upper_camel_case::new(
+                                            //     match &value.0.value {
+                                            //         Some(value) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                            //             value
+                                            //         ) {
+                                            //             Some(value) => Some(value.value.0),
+                                            //             None => None,
+                                            //         },
+                                            //         None => None
+                                            //     }
+                                            // )
+                                        }
+                                    }
+                                },
+                            };
+                            quote::quote!{
+                                // Some(postgresql_crud::Value { #value_snake_case: #content_token_stream })
+                                todo!()
+                            }
+                        },
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,
