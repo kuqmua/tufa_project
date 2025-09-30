@@ -1855,16 +1855,16 @@ mod example_tests {
                                             column_156: element,
                                             // column_156: <<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                         };
-                                        let read_only_ids = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters {
+                                        let read_only_ids_from_try_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters {
                                                 payload: ident_create.clone()
                                         }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                                         assert_eq!(
                                             super::ExampleRead {
                                                 primary_key_column: Some(postgresql_crud::Value {
-                                                    value: read_only_ids.primary_key_column.clone()
+                                                    value: read_only_ids_from_try_create_one.primary_key_column.clone()
                                                 }),
                                                 column_156: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                                                    read_only_ids.column_156.expect("error 2432bf87-cf90-45c9-9a7c-f1d2283d22f3"),
+                                                    read_only_ids_from_try_create_one.column_156.expect("error 2432bf87-cf90-45c9-9a7c-f1d2283d22f3"),
                                                     ident_create.column_156
                                                 )
                                             },
@@ -1872,7 +1872,7 @@ mod example_tests {
                                                 &url_cloned,
                                                 super::ExampleReadOneParameters {
                                                     payload: super::ExampleReadOnePayload {
-                                                        primary_key_column: read_only_ids.primary_key_column.clone(),
+                                                        primary_key_column: read_only_ids_from_try_create_one.primary_key_column.clone(),
                                                         select: select_default_all_cloned
                                                     }
                                                 }
@@ -1880,6 +1880,19 @@ mod example_tests {
                                             .await
                                             .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                             "try_read_one result different after try_create_one"
+                                        );
+                                        let read_only_ids_from_try_delete_one = super::Example::try_delete_one(
+                                            &url_cloned,
+                                            super::ExampleDeleteOneParameters {
+                                                payload: super::ExampleDeleteOnePayload {
+                                                    primary_key_column: read_only_ids_from_try_create_one.primary_key_column.clone()
+                                                }
+                                            }
+                                        ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                        assert_eq!(
+                                            read_only_ids_from_try_delete_one,
+                                            read_only_ids_from_try_create_one.primary_key_column.clone(),
+                                            "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                                         );
                                     }));
                                 }
