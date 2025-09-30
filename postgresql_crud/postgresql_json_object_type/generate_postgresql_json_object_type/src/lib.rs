@@ -5064,18 +5064,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
-                                            // #ident_read_upper_camel_case::new(
-                                            //     match &value.0.value {
-                                            //         Some(value) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                            //             value
-                                            //         ) {
-                                            //             Some(value) => Some(value.value.0),
-                                            //             None => None,
-                                            //         },
-                                            //         None => None
-                                            //     }
-                                            // )
-                                            todo!()
+                                            Some(postgresql_crud::Value {
+                                                #value_snake_case: #ident_read_upper_camel_case::new(
+                                                    match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                                        (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => {
+                                                            Some(
+                                                                <#ident_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                                    #read_only_ids_snake_case,
+                                                                    #create_snake_case
+                                                                ).expect("error 56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case.0
+                                                            )
+                                                        },
+                                                        (Some(_), None) => {
+                                                            panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6")
+                                                        },
+                                                        (None, Some(_)) => {
+                                                            panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799")
+                                                        },
+                                                        (None, None) => None,
+                                                    }
+                                                )
+                                            })
                                         }
                                     }
                                 },
