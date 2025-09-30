@@ -1952,7 +1952,7 @@ mod example_tests {
                                         };
                                         let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters {
                                             payload: super::ExampleCreateManyPayload(ident_create_vec.clone())
-                                        }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                        }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
                                         assert_eq!(
                                             {
                                                 let mut acc = vec![];
@@ -1970,7 +1970,7 @@ mod example_tests {
                                                     if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
                                                         value_a.value.cmp(&value_b.value)
                                                     } else {
-                                                        panic!("must not be what");
+                                                        panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
                                                     }
                                                 });
                                                 acc
@@ -1992,11 +1992,11 @@ mod example_tests {
                                                                         }
                                                                         acc
                                                                     })
-                                                                    .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
+                                                                    .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
                                                                 ),
                                                                 None,
                                                             )
-                                                            .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
+                                                            .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
                                                         )),
                                                         select: select_default_all_cloned,
                                                         order_by: postgresql_crud::OrderBy {
@@ -2008,36 +2008,44 @@ mod example_tests {
                                                 }
                                             )
                                             .await
-                                            .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                            "try_read_one result different after try_create_one error c902281a-f955-44cc-8e63-4f2f9484630f"
+                                            .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
+                                            "try_read_one result different after try_create_one error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
                                         );
-                                        let read_only_ids_from_try_delete_many = super::Example::try_delete_many(
-                                            &url_cloned,
-                                            super::ExampleDeleteManyParameters {
-                                                payload: super::ExampleDeleteManyPayload {
-                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
-                                                        primary_key_column: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
-                                                            postgresql_crud::LogicalOperator::Or,
-                                                            {
-                                                                let mut acc = vec![];
-                                                                for element in &read_only_ids_from_try_create_many {
-                                                                    acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone())),
-                                                                    }));
+                                        let read_only_ids_from_try_delete_many = {
+                                            let mut acc = super::Example::try_delete_many(
+                                                &url_cloned,
+                                                super::ExampleDeleteManyParameters {
+                                                    payload: super::ExampleDeleteManyPayload {
+                                                        where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                                                            primary_key_column: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
+                                                                postgresql_crud::LogicalOperator::Or,
+                                                                {
+                                                                    let mut acc = vec![];
+                                                                    for element in &read_only_ids_from_try_create_many {
+                                                                        acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                            value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as     postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone())),
+                                                                        }));
+                                                                    }
+                                                                    acc
                                                                 }
-                                                                acc
-                                                            }
-                                                        ).expect("error b20e67f4-ac47-42fd-9faa-3d39c902f053")),
-                                                        column_156: None,
-                                                    }))
+                                                            ).expect("error 5f1e5f9d-d189-4368-807e-a84348967610")),
+                                                            column_156: None,
+                                                        }))
+                                                    }
                                                 }
-                                            }
-                                        ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                                            ).await.expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
+                                            acc.sort_by(|a,b|a.cmp(&b));
+                                            acc
+                                        };
                                         assert_eq!(
                                             read_only_ids_from_try_delete_many,
-                                            read_only_ids_from_try_create_many.into_iter().map(|element|element.primary_key_column.clone()).collect::<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead>>(),
-                                            "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
+                                            {
+                                                let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element|element.primary_key_column.clone()).collect::<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead>>();
+                                                acc.sort_by(|a,b|a.cmp(&b));
+                                                acc
+                                            },
+                                            "error f58f5572-4286-4a74-8006-0507339910d4"
                                         );
                                         // if let Err(error) = super::Example::try_read_one(
                                         //     &url_cloned,
@@ -2074,7 +2082,7 @@ mod example_tests {
                                         // }
                                     }));
                                 }
-                                ///////
+                                /////
                             }
                             acc
                         }),
