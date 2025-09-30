@@ -1873,7 +1873,7 @@ mod example_tests {
                                                 super::ExampleReadOneParameters {
                                                     payload: super::ExampleReadOnePayload {
                                                         primary_key_column: read_only_ids_from_try_create_one.primary_key_column.clone(),
-                                                        select: select_default_all_cloned
+                                                        select: select_default_all_cloned.clone()
                                                     }
                                                 }
                                             )
@@ -1894,6 +1894,39 @@ mod example_tests {
                                             read_only_ids_from_try_create_one.primary_key_column.clone(),
                                             "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                                         );
+                                        if let Err(error) = super::Example::try_read_one(
+                                            &url_cloned,
+                                            super::ExampleReadOneParameters {
+                                                payload: super::ExampleReadOnePayload {
+                                                    primary_key_column: read_only_ids_from_try_create_one.primary_key_column.clone(),
+                                                    select: select_default_all_cloned
+                                                }
+                                            }
+                                        )
+                                        .await {
+                                            if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
+                                                read_one_error_named_with_serialize_deserialize,
+                                                code_occurence,
+                                            } = error {
+                                                if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql {
+                                                    postgresql,
+                                                    code_occurence
+                                                } = read_one_error_named_with_serialize_deserialize {
+                                                    if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                                        panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
+                                                    }
+                                                }
+                                                else {
+                                                     panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
+                                                }
+                                            }
+                                            else {
+                                                panic!("error bcd3f9bf-d6b7-4594-b078-8fe9c34bcf18")
+                                            }
+                                        }
+                                        else {
+                                            panic!("error 893263c9-7c62-4551-9225-74153c6e1c57")
+                                        }
                                     }));
                                 }
                             }
