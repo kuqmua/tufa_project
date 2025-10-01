@@ -998,7 +998,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 #create_vec_token_stream
             }
             fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
-                #read_only_ids_snake_case: #self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
+                #read_only_ids_snake_case: std::option::Option<#self_element_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case>,//todo maybe remove option
                 #create_snake_case: #self_element_as_postgresql_type_token_stream::#create_upper_camel_case
             ) -> std::option::Option<#import_path::Value<#self_element_as_postgresql_type_token_stream::#read_upper_camel_case>> {
                 #read_only_ids_merged_with_create_into_option_value_read_token_stream

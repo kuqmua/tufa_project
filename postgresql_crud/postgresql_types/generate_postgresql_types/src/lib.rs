@@ -5284,7 +5284,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
                             && let CanBePrimaryKey::True = &can_be_primary_key
                         {
-                            quote::quote! {#read_only_ids_snake_case}
+                            quote::quote! {#read_only_ids_snake_case.expect("error 5f763c94-ada9-4459-b162-4b15e32c8b04")}//todo maybe remove expect
                         } else {
                             quote::quote!{#ident_read_upper_camel_case(#create_snake_case)}
                         };

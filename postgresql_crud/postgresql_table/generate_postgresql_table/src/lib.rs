@@ -3916,8 +3916,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
                                 >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                    &read_only_ids_current_element.#current_field_ident.clone().unwrap()
-                                ).unwrap().#value_snake_case,
+                                    &read_only_ids_current_element.#current_field_ident.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
+                                ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
                                 Some(update.clone())
                             )
                         })
@@ -4056,7 +4056,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let mut local_increment = 0;
                                 let mut option_test_case = None;
                                 for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(
-                                    &read_only_ids_current_element.#field_ident.clone().unwrap()
+                                    &read_only_ids_current_element.#field_ident.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")
                                 ) {
                                     let mut should_break = false;
                                     for element_1 in element_0 {
@@ -4144,7 +4144,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let current_field_type = &element.syn_field.ty;
                 quote::quote! {
                     #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                        #read_only_ids_snake_case.#current_field_ident.expect("error 2432bf87-cf90-45c9-9a7c-f1d2283d22f3"),
+                        #read_only_ids_snake_case.#current_field_ident,//todo maybe add expect
                         #create_snake_case.#current_field_ident
                     )
                 }
