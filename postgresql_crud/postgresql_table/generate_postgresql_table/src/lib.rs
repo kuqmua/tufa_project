@@ -3874,7 +3874,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let current_field_type = &element.syn_field.ty;
                 quote::quote! {
                     #current_field_ident: match &#element_snake_case.#current_field_ident {
-                        Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&#value_snake_case),
+                        Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&#value_snake_case),
                         None => Some(postgresql_crud::Value {
                             #value_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                         }),
