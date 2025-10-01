@@ -3553,6 +3553,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     //     &"update_one",
     //     &update_one_token_stream,
     // );
+    //todo return deleted rows ids vec
     let delete_many_token_stream = {
         let operation = Operation::DeleteMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
