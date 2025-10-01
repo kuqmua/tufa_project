@@ -214,6 +214,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let value_upper_camel_case = naming::ValueUpperCamelCase;
+            //todo reuse
             let wrap_into_value_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{#import_path::#value_upper_camel_case<#ident_token_stream>}
             };
