@@ -231,11 +231,11 @@ generate_postgresql_types::generate_postgresql_types!("All");
 //         //         }
 //         //     }
 //         // },
-//         // {
-//         //     "postgresql_type": "StdPrimitiveI16AsSmallSerialInitializedByPostgresql",
-//         //     "not_null_or_nullable": "NotNull",
-//         //     "postgresql_type_pattern": "Standart"
-//         // },
+//         {
+//             "postgresql_type": "StdPrimitiveI16AsSmallSerialInitializedByPostgresql",
+//             "not_null_or_nullable": "NotNull",
+//             "postgresql_type_pattern": "Standart"
+//         },
 //         // {
 //         //     "postgresql_type": "StdPrimitiveI32AsSerialInitializedByPostgresql",
 //         //     "not_null_or_nullable": "NotNull",
