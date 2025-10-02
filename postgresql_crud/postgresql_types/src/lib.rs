@@ -6,47 +6,47 @@ generate_postgresql_types::generate_postgresql_types!({
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
         },
-        // {
-        //     "postgresql_type": "StdPrimitiveI16AsInt2",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "StdPrimitiveI16AsInt2",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "StdPrimitiveI16AsInt2",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "StdPrimitiveI16AsInt2",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "StdPrimitiveI16AsInt2",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
+        {
+            "postgresql_type": "StdPrimitiveI16AsInt2",
+            "not_null_or_nullable": "Nullable",
+            "postgresql_type_pattern": "Standart"
+        },
+        {
+            "postgresql_type": "StdPrimitiveI16AsInt2",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "NotNull"
+                }
+            }
+        },
+        {
+            "postgresql_type": "StdPrimitiveI16AsInt2",
+            "not_null_or_nullable": "Nullable",
+            "postgresql_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "NotNull"
+                }
+            }
+        },
+        {
+            "postgresql_type": "StdPrimitiveI16AsInt2",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "Nullable"
+                }
+            }
+        },
+        {
+            "postgresql_type": "StdPrimitiveI16AsInt2",
+            "not_null_or_nullable": "Nullable",
+            "postgresql_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "Nullable"
+                }
+            }
+        },
         // {
         //     "postgresql_type": "StdPrimitiveI32AsInt4",
         //     "not_null_or_nullable": "NotNull",
