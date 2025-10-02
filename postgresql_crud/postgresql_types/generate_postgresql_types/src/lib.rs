@@ -4217,6 +4217,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         pub struct #ident_read_only_ids_upper_camel_case(postgresql_crud_common::Value<#content_token_stream>);
                     }
                 };
+                let maybe_impl_ident_read_only_ids_token_stream = if let PostgresqlTypePattern::Standart = &PostgresqlTypePattern::Standart &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                    let CanBePrimaryKey::True = &can_be_primary_key
+                {
+                    quote::quote!{
+                        impl #ident_read_only_ids_upper_camel_case {
+                            pub fn into_read(self) -> #ident_read_upper_camel_case {
+                                self.0.#value_snake_case
+                            }
+                        }
+                    }
+                }
+                else {
+                    proc_macro2::TokenStream::new()
+                };
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = {
                     quote::quote! {
                         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
@@ -4243,6 +4258,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 quote::quote! {
                     #ident_read_only_ids_token_stream
+                    #maybe_impl_ident_read_only_ids_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream
                 }
