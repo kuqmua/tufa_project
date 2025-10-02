@@ -4663,7 +4663,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::False,
                     //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
                     &{
-                        let std_string_string_default_token_stream = quote::quote! {std::string::String::default()};
+                        let format_value_null_jsonb_as_column_comma_token_stream = quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")};
                         if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
                             && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
                             && let CanBePrimaryKey::True = &can_be_primary_key
@@ -4673,24 +4673,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     format!("{column},")
                                 }
                                 else {
-                                    #std_string_string_default_token_stream
+                                    #format_value_null_jsonb_as_column_comma_token_stream
                                 }
                             }
                         } else {
-                            std_string_string_default_token_stream
+                            format_value_null_jsonb_as_column_comma_token_stream
                         }
-                        // match &postgresql_type_pattern {
-                        //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => ,
-                        //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => 
-                        //     },
-                        //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        //         (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => ,
-                        //         (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => ,
-                        //         (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => ,
-                        //         (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => 
-                        //     },
-                        // },
                     },
                     &ident_read_inner_upper_camel_case,
                     &{
