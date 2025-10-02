@@ -4386,7 +4386,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #payload_snake_case: #ident_create_default_snake_case.clone()
                                     }
                                 ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(postgresql_crud::Value { #value_snake_case: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone() });
+                                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(postgresql_crud::Value { #value_snake_case: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone().into_read() });
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
                                         #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
@@ -4396,7 +4396,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &#url_snake_case,
                                         super::#ident_read_one_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                                #primary_key_field_ident: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone(),
+                                                #primary_key_field_ident: #common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone().into_read(),
                                                 #select_snake_case: #select_primary_key_snake_case.clone(),
                                             },
                                         },
