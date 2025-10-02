@@ -1,41 +1,41 @@
 #[derive(Debug
-    , postgresql_crud::GeneratePostgresqlTable
+    // , postgresql_crud::GeneratePostgresqlTable
 )]
-#[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
-#[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
-#[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
-#[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
-#[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
-#[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
-#[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
-#[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
-#[postgresql_crud::common_additional_error_variants{
-    enum CommonAdditionalErrorVariants {
-        CheckCommit {
-            #[eo_error_occurence]
-            check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
-            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-        },
-    }
-}]
-#[postgresql_crud::create_many_additional_logic{
-    println!("GeneratePostgresqlTypesExample create_many log");
-}]
-#[postgresql_crud::create_one_additional_logic{}]
-#[postgresql_crud::read_many_additional_logic{}]
-#[postgresql_crud::read_one_additional_logic{}]
-#[postgresql_crud::update_many_additional_logic{}]
-#[postgresql_crud::update_one_additional_logic{}]
-#[postgresql_crud::delete_many_additional_logic{}]
-#[postgresql_crud::delete_one_additional_logic{}]
-#[postgresql_crud::common_additional_logic{}]
+// #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::read_one_additional_error_variants{enum ReadOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::update_many_additional_error_variants{enum UpdateManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::update_one_additional_error_variants{enum UpdateOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::delete_many_additional_error_variants{enum DeleteManyAdditionalErrorVariants{}}]
+// #[postgresql_crud::delete_one_additional_error_variants{enum DeleteOneAdditionalErrorVariants{}}]
+// #[postgresql_crud::common_additional_error_variants{
+//     enum CommonAdditionalErrorVariants {
+//         CheckCommit {
+//             #[eo_error_occurence]
+//             check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+//             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//         },
+//     }
+// }]
+// #[postgresql_crud::create_many_additional_logic{
+//     println!("GeneratePostgresqlTypesExample create_many log");
+// }]
+// #[postgresql_crud::create_one_additional_logic{}]
+// #[postgresql_crud::read_many_additional_logic{}]
+// #[postgresql_crud::read_one_additional_logic{}]
+// #[postgresql_crud::update_many_additional_logic{}]
+// #[postgresql_crud::update_one_additional_logic{}]
+// #[postgresql_crud::delete_many_additional_logic{}]
+// #[postgresql_crud::delete_one_additional_logic{}]
+// #[postgresql_crud::common_additional_logic{}]
 pub struct Example {
     // #[generate_postgresql_crud_primary_key]
     // pub primary_key: postgresql_crud::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
-    #[generate_postgresql_table_primary_key]
+    // #[generate_postgresql_table_primary_key]
     pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
+    pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
@@ -1028,10 +1028,10 @@ pub struct Example {
 //     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
 //     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-//     pub field_806: DoggieAsNotNullJsonbObject,
-//     pub field_808: OptionDoggieAsNullableJsonbObject,
-//     pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-//     pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+//     // pub field_806: DoggieAsNotNullJsonbObject,
+//     // pub field_808: OptionDoggieAsNullableJsonbObject,
+//     // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+//     // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 // }
 
 // #[derive(Debug
@@ -2125,6 +2125,4457 @@ pub struct Example {
 //     }
 // }
 
+// #[cfg(test)]
+// mod example_tests {
+//     #[test]
+//     fn test_size_of() {
+//         assert_eq!(std::mem::size_of::<super::Example>(), 0);
+//     }
+//     #[test]
+//     fn test_crud() {
+//         std::thread::Builder::new()
+//             .stack_size(16 * 1024 * 1024)
+//             .spawn(|| {
+//                 tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
+//                     tracing_subscriber::fmt::init();
+//                     static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
+//                     let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
+//                     let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
+//                     let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+//                     async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
+//                         let query = "drop table if exists example";
+//                         println!("{query}");
+//                         let _unused = sqlx::query(query).execute(postgres_pool).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
+//                     }
+//                     drop_table_if_exists(&postgres_pool).await;
+//                     let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
+//                     let _unused = tokio::spawn(async move {
+//                         super::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
+//                         let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState { postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(), config: &config, project_git_info: &git_info::PROJECT_GIT_INFO });
+//                         axum::serve(tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"), axum::Router::new().merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service()).await.unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+//                     });
+//                     tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+//                     let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+//                     let sort_vec_of_ident_read_with_primary_key_by_primary_key = |mut value: std::vec::Vec<super::ExampleRead>| -> std::vec::Vec<super::ExampleRead> {
+//                         value.sort_by_key(|element| element.primary_key_column.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").value);
+//                         value
+//                     };
+//                     let ident_create_default = super::ExampleCreate {
+//                         column_0: <<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//                         column_30: <<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//                     };
+//                     let common_read_only_ids_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default.clone() }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+//                     let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read() });
+//                     assert_eq!(super::ExampleRead { primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(), column_0: None, column_30: None }, super::Example::try_read_one(&url, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(), select: select_primary_key.clone() } },).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"), "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4");
+//                     let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()), super::ExampleSelect::Column0(<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()), super::ExampleSelect::Column30(<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+//                     let start = std::time::Instant::now();
+//                     futures::StreamExt::for_each_concurrent(
+//                         futures::stream::iter({
+//                             let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+//                             for chunk in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::create_vec().chunks(10).map(|element| element.to_vec()).collect::<std::vec::Vec<std::vec::Vec<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create>>>() {
+//                                 let url_cloned = url.clone();
+//                                 let ident_create_default_cloned = ident_create_default.clone();
+//                                 let select_default_all_cloned = select_default_all.clone();
+//                                 acc.push(futures::FutureExt::boxed(async move {
+//                                     let ident_create_vec = {
+//                                         let mut acc = vec![];
+//                                         for element in chunk {
+//                                             acc.push(super::ExampleCreate { column_0: element, column_30: <<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element() });
+//                                         }
+//                                         acc
+//                                     };
+//                                     let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(ident_create_vec.clone()) }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
+//                                     println!("@@@{read_only_ids_from_try_create_many:#?}");
+//                                     let right = {
+//                                         let mut acc = vec![];
+//                                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_create_vec.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
+//                                         for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_create_vec.into_iter()).collect::<std::vec::Vec<(super::ExampleReadOnlyIds, super::ExampleCreate)>>() {
+//                                             acc.push(super::ExampleRead {
+//                                                 primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids.primary_key_column),
+//                                                 column_0: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_0, create.column_0),
+//                                                 column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_30, create.column_30),
+//                                             });
+//                                         }
+//                                         acc.sort_by(|a, b| {
+//                                             if let (Some(a), Some(b)) = (&a.primary_key_column, &b.primary_key_column) {
+//                                                 a.value.cmp(&b.value)
+//                                             } else {
+//                                                 panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
+//                                             }
+//                                         });
+//                                         acc
+//                                     };
+//                                     // let left = super::Example::try_read_many(
+//                                     //     &url_cloned,
+//                                     //     super::ExampleReadManyParameters {
+//                                     //         payload: super::ExampleReadManyPayload {
+//                                     //             where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                                     //                 super::ExampleWhereMany::try_new(
+//                                     //                     Some(
+//                                     //                         postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                                     //                             let mut acc = vec![];
+//                                     //                             for element in &read_only_ids_from_try_create_many {
+//                                     //                                 acc.push(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                                     //                             }
+//                                     //                             acc
+//                                     //                         })
+//                                     //                         .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+//                                     //                     ),
+//                                     //                     None,
+//                                     //                     None
+//                                     //                 )
+//                                     //                 .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+//                                     //             )),
+//                                     //             select: select_default_all_cloned.clone(),
+//                                     //             order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                                     //             pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+//                                     //         }
+//                                     //     }
+//                                     // )
+//                                     // .await
+//                                     // .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598");
+//                                     // assert_eq!(
+//                                     //     right,
+//                                     //     left,
+//                                     //     "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+//                                     // );
+//                                     // let read_only_ids_from_try_delete_many = {
+//                                     //     let mut acc = super::Example::try_delete_many(
+//                                     //         &url_cloned,
+//                                     //         super::ExampleDeleteManyParameters {
+//                                     //             payload: super::ExampleDeleteManyPayload {
+//                                     //                 where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+//                                     //                     primary_key_column: Some(
+//                                     //                         postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                                     //                             let mut acc = vec![];
+//                                     //                             for element in &read_only_ids_from_try_create_many {
+//                                     //                                 acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                                     //                             }
+//                                     //                             acc
+//                                     //                         })
+//                                     //                         .expect("error 5f1e5f9d-d189-4368-807e-a84348967610"),
+//                                     //                     ),
+//                                     //                     column_0: None,
+//                                     //                     column_30: None,
+//                                     //                 })),
+//                                     //             },
+//                                     //         },
+//                                     //     )
+//                                     //     .await
+//                                     //     .expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
+//                                     //     acc.sort_by(|a, b| a.cmp(&b));
+//                                     //     acc
+//                                     // };
+//                                     // assert_eq!(
+//                                     //     read_only_ids_from_try_delete_many,
+//                                     //     {
+//                                     //         let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element| element.primary_key_column.clone().into_read()).collect::<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>();
+//                                     //         acc.sort_by(|a, b| a.cmp(&b));
+//                                     //         acc
+//                                     //     },
+//                                     //     "error f58f5572-4286-4a74-8006-0507339910d4"
+//                                     // );
+//                                     // match super::Example::try_read_many(
+//                                     //     &url_cloned,
+//                                     //     super::ExampleReadManyParameters {
+//                                     //         payload: super::ExampleReadManyPayload {
+//                                     //             where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                                     //                 super::ExampleWhereMany::try_new(
+//                                     //                     Some(
+//                                     //                         postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                                     //                             let mut acc = vec![];
+//                                     //                             for element in &read_only_ids_from_try_delete_many {
+//                                     //                                 acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.clone())) }));
+//                                     //                             }
+//                                     //                             acc
+//                                     //                         })
+//                                     //                         .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+//                                     //                     ),
+//                                     //                     None,
+//                                     //                     None,
+//                                     //                 )
+//                                     //                 .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+//                                     //             )),
+//                                     //             select: select_default_all_cloned,
+//                                     //             order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                                     //             pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+//                                     //         },
+//                                     //     },
+//                                     // )
+//                                     // .await
+//                                     // {
+//                                     //     Ok(value) => {
+//                                     //         if value != std::vec::Vec::new() {
+//                                     //             panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
+//                                     //         }
+//                                     //     }
+//                                     //     Err(error) => {
+//                                     //         panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
+//                                     //     }
+//                                     // }
+//                                 }));
+//                             }
+//                             // for chunk in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::create_vec().chunks(10).map(|element| element.to_vec()).collect::<std::vec::Vec<std::vec::Vec<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create>>>() {
+//                             //     let url_cloned = url.clone();
+//                             //     let ident_create_default_cloned = ident_create_default.clone();
+//                             //     let select_default_all_cloned = select_default_all.clone();
+//                             //     acc.push(futures::FutureExt::boxed(async move {
+//                             //         let ident_create_vec = {
+//                             //             let mut acc = vec![];
+//                             //             for element in chunk {
+//                             //                 acc.push(super::ExampleCreate { column_0: <<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(), column_30: element });
+//                             //             }
+//                             //             acc
+//                             //         };
+//                             //         let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(ident_create_vec.clone()) }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
+//                             //         assert_eq!(
+//                             //             {
+//                             //                 let mut acc = vec![];
+//                             //                 assert_eq!(read_only_ids_from_try_create_many.len(), ident_create_vec.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
+//                             //                 for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_create_vec.into_iter()).collect::<std::vec::Vec<(super::ExampleReadOnlyIds, super::ExampleCreate)>>() {
+//                             //                     acc.push(super::ExampleRead {
+//                             //                         primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids.primary_key_column),
+//                             //                         column_0: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_0, create.column_0),
+//                             //                         column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_30, create.column_30),
+//                             //                     });
+//                             //                 }
+//                             //                 acc.sort_by(|a, b| {
+//                             //                     if let (Some(a), Some(b)) = (&a.primary_key_column, &b.primary_key_column) {
+//                             //                         a.value.cmp(&b.value)
+//                             //                     } else {
+//                             //                         panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
+//                             //                     }
+//                             //                 });
+//                             //                 acc
+//                             //             },
+//                             //             super::Example::try_read_many(
+//                             //                 &url_cloned,
+//                             //                 super::ExampleReadManyParameters {
+//                             //                     payload: super::ExampleReadManyPayload {
+//                             //                         where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                             //                             super::ExampleWhereMany::try_new(
+//                             //                                 Some(
+//                             //                                     postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                             //                                         let mut acc = vec![];
+//                             //                                         for element in &read_only_ids_from_try_create_many {
+//                             //                                             acc.push(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                             //                                         }
+//                             //                                         acc
+//                             //                                     })
+//                             //                                     .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+//                             //                                 ),
+//                             //                                 None,
+//                             //                                 None
+//                             //                             )
+//                             //                             .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+//                             //                         )),
+//                             //                         select: select_default_all_cloned.clone(),
+//                             //                         order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                             //                         pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+//                             //                     }
+//                             //                 }
+//                             //             )
+//                             //             .await
+//                             //             .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
+//                             //             "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+//                             //         );
+//                             //         let read_only_ids_from_try_delete_many = {
+//                             //             let mut acc = super::Example::try_delete_many(
+//                             //                 &url_cloned,
+//                             //                 super::ExampleDeleteManyParameters {
+//                             //                     payload: super::ExampleDeleteManyPayload {
+//                             //                         where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+//                             //                             primary_key_column: Some(
+//                             //                                 postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                             //                                     let mut acc = vec![];
+//                             //                                     for element in &read_only_ids_from_try_create_many {
+//                             //                                         acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                             //                                     }
+//                             //                                     acc
+//                             //                                 })
+//                             //                                 .expect("error 5f1e5f9d-d189-4368-807e-a84348967610"),
+//                             //                             ),
+//                             //                             column_0: None,
+//                             //                             column_30: None,
+//                             //                         })),
+//                             //                     },
+//                             //                 },
+//                             //             )
+//                             //             .await
+//                             //             .expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
+//                             //             acc.sort_by(|a, b| a.cmp(&b));
+//                             //             acc
+//                             //         };
+//                             //         assert_eq!(
+//                             //             read_only_ids_from_try_delete_many,
+//                             //             {
+//                             //                 let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element| element.primary_key_column.clone().into_read()).collect::<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>();
+//                             //                 acc.sort_by(|a, b| a.cmp(&b));
+//                             //                 acc
+//                             //             },
+//                             //             "error f58f5572-4286-4a74-8006-0507339910d4"
+//                             //         );
+//                             //         match super::Example::try_read_many(
+//                             //             &url_cloned,
+//                             //             super::ExampleReadManyParameters {
+//                             //                 payload: super::ExampleReadManyPayload {
+//                             //                     where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                             //                         super::ExampleWhereMany::try_new(
+//                             //                             Some(
+//                             //                                 postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                             //                                     let mut acc = vec![];
+//                             //                                     for element in &read_only_ids_from_try_delete_many {
+//                             //                                         acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.clone())) }));
+//                             //                                     }
+//                             //                                     acc
+//                             //                                 })
+//                             //                                 .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+//                             //                             ),
+//                             //                             None,
+//                             //                             None,
+//                             //                         )
+//                             //                         .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+//                             //                     )),
+//                             //                     select: select_default_all_cloned,
+//                             //                     order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                             //                     pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+//                             //                 },
+//                             //             },
+//                             //         )
+//                             //         .await
+//                             //         {
+//                             //             Ok(value) => {
+//                             //                 if value != std::vec::Vec::new() {
+//                             //                     panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
+//                             //                 }
+//                             //             }
+//                             //             Err(error) => {
+//                             //                 panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
+//                             //             }
+//                             //         }
+//                             //     }));
+//                             // }
+//                             acc
+//                         }),
+//                         10,
+//                         |fut| async move {
+//                             fut.await;
+//                         },
+//                     )
+//                     .await;
+//                     let create_many_elapsed = start.elapsed();
+//                     let create_one_elapsed = start.elapsed();
+//                     println!("Elapsed: create_many_elapsed {:?}, create_one_elapsed {:?}", create_many_elapsed, create_one_elapsed);
+//                     // futures::StreamExt::for_each_concurrent(
+//                     //     futures::stream::iter({
+//                     //         let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+//                     //         {
+//                     //             let read_only_ids_current_elements = {
+//                     //                 use futures::StreamExt;
+//                     //                 futures::stream::iter(
+//                     //                     {
+//                     //                         let mut acc = vec![];
+//                     //                         if let Some(value) = &common_read_only_ids_returned_from_create_one.column_0 {
+//                     //                             for element0 in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
+//                     //                                 for element1 in element0 {
+//                     //                                     acc.push(ident_create_default.clone());
+//                     //                                 }
+//                     //                             }
+//                     //                         }
+//                     //                         acc
+//                     //                     }
+//                     //                     .chunks(25)
+//                     //                     .map(|element| element.to_vec())
+//                     //                     .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
+//                     //                     .into_iter()
+//                     //                     .map(|element| {
+//                     //                         let url_cloned = url.clone();
+//                     //                         futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
+//                     //                     })
+//                     //                     .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
+//                     //                 )
+//                     //                 .buffer_unordered(5)
+//                     //                 .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
+//                     //                 .await
+//                     //                 .into_iter()
+//                     //                 .flatten()
+//                     //                 .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
+//                     //             };
+//                     //             assert_eq!(
+//                     //                 {
+//                     //                     let mut acc = vec![];
+//                     //                     for element in &read_only_ids_current_elements {
+//                     //                         acc.push(super::ExampleRead {
+//                     //                             primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&element.primary_key_column),
+//                     //                             column_0: match &element.column_0 {
+//                     //                                 Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+//                     //                                 None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+//                     //                             },
+//                     //                             column_30: match &element.column_30 {
+//                     //                                 Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+//                     //                                 None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+//                     //                             },
+//                     //                         });
+//                     //                     }
+//                     //                     acc.sort_by(|a, b| {
+//                     //                         if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+//                     //                             value_a.value.cmp(&value_b.value)
+//                     //                         } else {
+//                     //                             panic!("must not be what");
+//                     //                         }
+//                     //                     });
+//                     //                     acc
+//                     //                 },
+//                     //                 {
+//                     //                     let mut acc = super::Example::try_read_many(
+//                     //                         &url,
+//                     //                         super::ExampleReadManyParameters {
+//                     //                             payload: super::ExampleReadManyPayload {
+//                     //                                 where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                     //                                     super::ExampleWhereMany::try_new(
+//                     //                                         Some(
+//                     //                                             postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                     //                                                 let mut acc = vec![];
+//                     //                                                 for element in &read_only_ids_current_elements {
+//                     //                                                     acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                     //                                                 }
+//                     //                                                 acc
+//                     //                                             })
+//                     //                                             .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
+//                     //                                         ),
+//                     //                                         None,
+//                     //                                         None,
+//                     //                                     )
+//                     //                                     .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
+//                     //                                 )),
+//                     //                                 select: select_default_all.clone(),
+//                     //                                 order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                     //                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+//                     //                             },
+//                     //                         },
+//                     //                     )
+//                     //                     .await
+//                     //                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+//                     //                     acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
+//                     //                     acc
+//                     //                 },
+//                     //                 "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+//                     //             );
+//                     //             for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
+//                     //                 let url_cloned = url.clone();
+//                     //                 let ident_create_default_cloned = ident_create_default.clone();
+//                     //                 let select_default_all_cloned = select_default_all.clone();
+//                     //                 acc.push(futures::FutureExt::boxed(async move {
+//                     //                     let previous_read = super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned.clone() } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+//                     //                     let update = <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
+//                     //                         let mut local_increment = 0;
+//                     //                         let mut option_test_case = None;
+//                     //                         for element_0 in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_0.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")) {
+//                     //                             let mut should_break = false;
+//                     //                             for element_1 in element_0 {
+//                     //                                 if local_increment == increment {
+//                     //                                     option_test_case = Some(element_1);
+//                     //                                     should_break = true;
+//                     //                                     break;
+//                     //                                 } else {
+//                     //                                     local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+//                     //                                 }
+//                     //                             }
+//                     //                             if should_break {
+//                     //                                 break;
+//                     //                             }
+//                     //                         }
+//                     //                         option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+//                     //                     });
+//                     //                     assert_eq!(super::ExampleReadOnlyIds { primary_key_column: read_only_ids_current_element.primary_key_column.clone(), column_0: Some(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update)), column_30: None }, super::Example::try_update_one(&url_cloned, super::ExampleUpdateOneParameters { payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone().into_read()), Some(postgresql_crud::Value { value: update.clone() }), None).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2") }).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"), "try_update_one result different");
+//                     //                     assert_eq!(
+//                     //                         super::ExampleRead {
+//                     //                             primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone().into_read() }),
+//                     //                             column_0: Some(postgresql_crud::Value { value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_0.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value, Some(update.clone())) }),
+//                     //                             column_30: previous_read.column_30
+//                     //                         },
+//                     //                         super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+//                     //                         "try_read_one result different after try_create_one"
+//                     //                     );
+//                     //                 }));
+//                     //             }
+//                     //         }
+//                     //         {
+//                     //             let read_only_ids_current_elements = {
+//                     //                 use futures::StreamExt;
+//                     //                 futures::stream::iter(
+//                     //                     {
+//                     //                         let mut acc = vec![];
+//                     //                         if let Some(value) = &common_read_only_ids_returned_from_create_one.column_30 {
+//                     //                             for element0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
+//                     //                                 for element1 in element0 {
+//                     //                                     acc.push(ident_create_default.clone());
+//                     //                                 }
+//                     //                             }
+//                     //                         }
+//                     //                         acc
+//                     //                     }
+//                     //                     .chunks(25)
+//                     //                     .map(|element| element.to_vec())
+//                     //                     .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
+//                     //                     .into_iter()
+//                     //                     .map(|element| {
+//                     //                         let url_cloned = url.clone();
+//                     //                         futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
+//                     //                     })
+//                     //                     .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
+//                     //                 )
+//                     //                 .buffer_unordered(5)
+//                     //                 .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
+//                     //                 .await
+//                     //                 .into_iter()
+//                     //                 .flatten()
+//                     //                 .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
+//                     //             };
+//                     //             assert_eq!(
+//                     //                 {
+//                     //                     let mut acc = vec![];
+//                     //                     for element in &read_only_ids_current_elements {
+//                     //                         acc.push(super::ExampleRead {
+//                     //                             primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&element.primary_key_column),
+//                     //                             column_0: match &element.column_0 {
+//                     //                                 Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+//                     //                                 None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+//                     //                             },
+//                     //                             column_30: match &element.column_30 {
+//                     //                                 Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+//                     //                                 None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+//                     //                             },
+//                     //                         });
+//                     //                     }
+//                     //                     acc.sort_by(|a, b| {
+//                     //                         if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+//                     //                             value_a.value.cmp(&value_b.value)
+//                     //                         } else {
+//                     //                             panic!("must not be what");
+//                     //                         }
+//                     //                     });
+//                     //                     acc
+//                     //                 },
+//                     //                 {
+//                     //                     let mut acc = super::Example::try_read_many(
+//                     //                         &url,
+//                     //                         super::ExampleReadManyParameters {
+//                     //                             payload: super::ExampleReadManyPayload {
+//                     //                                 where_many: super::StdOptionOptionExampleWhereMany(Some(
+//                     //                                     super::ExampleWhereMany::try_new(
+//                     //                                         Some(
+//                     //                                             postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+//                     //                                                 let mut acc = vec![];
+//                     //                                                 for element in &read_only_ids_current_elements {
+//                     //                                                     acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+//                     //                                                 }
+//                     //                                                 acc
+//                     //                                             })
+//                     //                                             .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
+//                     //                                         ),
+//                     //                                         None,
+//                     //                                         None,
+//                     //                                     )
+//                     //                                     .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
+//                     //                                 )),
+//                     //                                 select: select_default_all.clone(),
+//                     //                                 order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+//                     //                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+//                     //                             },
+//                     //                         },
+//                     //                     )
+//                     //                     .await
+//                     //                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+//                     //                     acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
+//                     //                     acc
+//                     //                 },
+//                     //                 "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+//                     //             );
+//                     //             for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
+//                     //                 let url_cloned = url.clone();
+//                     //                 let ident_create_default_cloned = ident_create_default.clone();
+//                     //                 let select_default_all_cloned = select_default_all.clone();
+//                     //                 acc.push(futures::FutureExt::boxed(async move {
+//                     //                     let previous_read = super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned.clone() } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+//                     //                     let update = <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
+//                     //                         let mut local_increment = 0;
+//                     //                         let mut option_test_case = None;
+//                     //                         for element_0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_30.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")) {
+//                     //                             let mut should_break = false;
+//                     //                             for element_1 in element_0 {
+//                     //                                 if local_increment == increment {
+//                     //                                     option_test_case = Some(element_1);
+//                     //                                     should_break = true;
+//                     //                                     break;
+//                     //                                 } else {
+//                     //                                     local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+//                     //                                 }
+//                     //                             }
+//                     //                             if should_break {
+//                     //                                 break;
+//                     //                             }
+//                     //                         }
+//                     //                         option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+//                     //                     });
+//                     //                     assert_eq!(super::ExampleReadOnlyIds { primary_key_column: read_only_ids_current_element.primary_key_column.clone(), column_0: None, column_30: Some(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update)) }, super::Example::try_update_one(&url_cloned, super::ExampleUpdateOneParameters { payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone().into_read()), None, Some(postgresql_crud::Value { value: update.clone() })).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2") }).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"), "try_update_one result different");
+//                     //                     assert_eq!(
+//                     //                         super::ExampleRead {
+//                     //                             primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone().into_read() }),
+//                     //                             column_0: previous_read.column_0,
+//                     //                             column_30: Some(postgresql_crud::Value {
+//                     //                                 value: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_30.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value, Some(update.clone()))
+//                     //                             })
+//                     //                         },
+//                     //                         super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+//                     //                         "try_read_one result different after try_create_one"
+//                     //                     );
+//                     //                 }));
+//                     //             }
+//                     //         }
+//                     //         acc
+//                     //     }),
+//                     //     100,
+//                     //     |fut| async move {
+//                     //         fut.await;
+//                     //     },
+//                     // )
+//                     // .await;
+//                     // let try_read_many_data = super::Example::try_read_many(&url, super::ExampleReadManyParameters { payload: super::ExampleReadManyPayload { where_many: super::StdOptionOptionExampleWhereMany(None), select: select_default_all.clone(), order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) }, pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a") } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+//                     // println!("try_read_many result len {}", try_read_many_data.len());
+//                 });
+//             })
+//             .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
+//             .join()
+//             .unwrap_or_else(|error| {
+//                 panic!("error b2f21a5f-d9ce-435c-809f-bd40741c8795 {error:#?}");
+//             });
+//     }
+// }
+
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExamplePreparePostgresqlErrorNamed {
+    CreateExtensionIfNotExistsPgJsonschema {
+        #[eo_to_std_string_string]
+        error: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CreateExtensionIfNotExistsUuidOssp {
+        #[eo_to_std_string_string]
+        error: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    PreparePostgresql {
+        #[eo_to_std_string_string]
+        error: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub fn table_name() -> &'static str {
+        "example"
+    }
+    fn primary_key() -> &'static std::primitive::str {
+        "primary_key_column"
+    }
+    pub async fn prepare_postgresql(pool: &sqlx::Pool<sqlx::Postgres>) -> Result<(), ExamplePreparePostgresqlErrorNamed> {
+        let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
+        if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(pool).await {
+            return Err(ExamplePreparePostgresqlErrorNamed::CreateExtensionIfNotExistsPgJsonschema { error, code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
+        if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(pool).await {
+            return Err(ExamplePreparePostgresqlErrorNamed::CreateExtensionIfNotExistsUuidOssp { error, code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        let prepare_postgresql_query_stringified = format!("create table if not exists example ({},{},{})", <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"primary_key_column", true), <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_0", false), <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_30", false));
+        if let Err(error) = sqlx::query(&prepare_postgresql_query_stringified).execute(pool).await {
+            return Err(ExamplePreparePostgresqlErrorNamed::PreparePostgresql { error, code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(())
+    }
+    pub fn allow_methods() -> [http::Method; 4] {
+        [http::Method::GET, http::Method::POST, http::Method::PATCH, http::Method::DELETE]
+    }
+    fn generate_select_query_part(select: &postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>) -> std::string::String {
+        let mut value = std::string::String::default();
+        for element in select.to_vec() {
+            value.push_str(&match element {
+                ExampleSelect::PrimaryKeyColumn(value) => <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_query_part(value, "primary_key_column"),
+                ExampleSelect::Column0(value) => <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::select_query_part(value, "column_0"),
+                ExampleSelect::Column30(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::select_query_part(value, "column_30"),
+            });
+            value.push_str(",");
+        }
+        let _: std::option::Option<std::primitive::char> = value.pop();
+        value
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    serde :: Serialize,
+    serde :: Deserialize,
+    utoipa ::
+ToSchema,
+)]
+pub struct ExampleCreate {
+    pub column_0: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create,
+    pub column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create,
+}
+impl ExampleCreate {
+    fn create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_part(&<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(), increment) {
+            Ok(value) => {
+                acc.push_str(&format!("{value},"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::create_query_part(&self.column_0, increment) {
+            Ok(value) => {
+                acc.push_str(&format!("{value},"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_part(&self.column_30, increment) {
+            Ok(value) => {
+                acc.push_str(&format!("{value},"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        let _: Option<char> = acc.pop();
+        Ok(acc)
+    }
+    fn create_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+        match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_bind(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(), query) {
+            Ok(value) => {
+                query = value;
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::create_query_bind(self.column_0, query) {
+            Ok(value) => {
+                query = value;
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_bind(self.column_30, query) {
+            Ok(value) => {
+                query = value;
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        Ok(query)
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self { column_0: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(), column_30: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }
+    }
+}
+#[derive(Debug, Clone, serde :: Serialize, utoipa :: ToSchema)]
+pub struct ExampleWhereMany {
+    primary_key_column: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>,
+    column_0: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::WhereElement>>,
+    column_30: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>,
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleWhereManyTryNewErrorNamed {
+    NoFieldsProvided {
+        #[eo_to_std_string_string]
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl ExampleWhereMany {
+    pub fn try_new(primary_key_column: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>, column_0: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::WhereElement>>, column_30: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>) -> Result<ExampleWhereMany, ExampleWhereManyTryNewErrorNamed> {
+        if let (None, None, None) = (&primary_key_column, &column_0, &column_30) {
+            return Err(ExampleWhereManyTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self { primary_key_column, column_0, column_30 })
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for ExampleWhereMany {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __field2,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => serde::__private::Ok(__Field::__field0),
+                        1u64 => serde::__private::Ok(__Field::__field1),
+                        2u64 => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        "column_0" => serde::__private::Ok(__Field::__field1),
+                        "column_30" => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        b"column_0" => serde::__private::Ok(__Field::__field1),
+                        b"column_30" => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<ExampleWhereMany>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = ExampleWhereMany;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "struct ExampleWhereMany")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleWhereMany with 3 elements"));
+                        }
+                    };
+                    let __field1 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleWhereMany with 3 elements"));
+                        }
+                    };
+                    let __field2 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleWhereMany with 3 elements"));
+                        }
+                    };
+                    match ExampleWhereMany::try_new(__field0, __field1, __field2) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: serde::__private::Option<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>> = serde::__private::None;
+                    let mut __field1: serde::__private::Option<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::WhereElement>>> = serde::__private::None;
+                    let mut __field2: serde::__private::Option<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>> = serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if serde::__private::Option::is_some(&__field0) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("primary_key_column"));
+                                }
+                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if serde::__private::Option::is_some(&__field1) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_0"));
+                                }
+                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __map)?);
+                            }
+                            __Field::__field2 => {
+                                if serde::__private::Option::is_some(&__field2) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_30"));
+                                }
+                                __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>>(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        serde::__private::Some(__field0) => __field0,
+                        serde::__private::None => serde::__private::de::missing_field("primary_key_column")?,
+                    };
+                    let __field1 = match __field1 {
+                        serde::__private::Some(__field1) => __field1,
+                        serde::__private::None => serde::__private::de::missing_field("column_0")?,
+                    };
+                    let __field2 = match __field2 {
+                        serde::__private::Some(__field2) => __field2,
+                        serde::__private::None => serde::__private::de::missing_field("column_30")?,
+                    };
+                    match ExampleWhereMany::try_new(__field0, __field1, __field2) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["primary_key_column", "column_0", "column_30"];
+            _serde::Deserializer::deserialize_struct(__deserializer, "ExampleWhereMany", FIELDS, __Visitor { marker: _serde::__private::PhantomData::<ExampleWhereMany>, lifetime: _serde::__private::PhantomData })
+        }
+    }
+};
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleWhereMany {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self { primary_key_column: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()), column_0: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()), column_30: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()) }
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    serde :: Serialize,
+    serde :: Deserialize,
+    utoipa ::
+ToSchema,
+)]
+pub struct StdOptionOptionExampleWhereMany(pub std::option::Option<ExampleWhereMany>);
+impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for StdOptionOptionExampleWhereMany {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        Ok(match &self.0 {
+            Some(value) => {
+                let mut additional_parameters = std::string::String::from("where");
+                let mut is_first_push_to_additional_parameters_already_happend = false;
+                if let Some(value) = &value.primary_key_column {
+                    match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &"primary_key_column", is_first_push_to_additional_parameters_already_happend) {
+                        Ok(value) => {
+                            additional_parameters.push_str(&value);
+                            is_first_push_to_additional_parameters_already_happend = true;
+                        }
+                        Err(error_0) => {
+                            return Err(error_0);
+                        }
+                    }
+                }
+                if let Some(value) = &value.column_0 {
+                    match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &"column_0", is_first_push_to_additional_parameters_already_happend) {
+                        Ok(value) => {
+                            additional_parameters.push_str(&value);
+                            is_first_push_to_additional_parameters_already_happend = true;
+                        }
+                        Err(error_0) => {
+                            return Err(error_0);
+                        }
+                    }
+                }
+                if let Some(value) = &value.column_30 {
+                    match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &"column_30", is_first_push_to_additional_parameters_already_happend) {
+                        Ok(value) => {
+                            additional_parameters.push_str(&value);
+                        }
+                        Err(error_0) => {
+                            return Err(error_0);
+                        }
+                    }
+                }
+                additional_parameters
+            }
+            None => std::string::String::default(),
+        })
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+        if let Some(value) = self.0 {
+            if let Some(value) = value.primary_key_column {
+                match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                }
+            }
+            if let Some(value) = value.column_0 {
+                match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                }
+            }
+            if let Some(value) = value.column_30 {
+                match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                }
+            }
+        }
+        Ok(query)
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for StdOptionOptionExampleWhereMany {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone)]
+pub enum ExampleSelect {
+    #[serde(rename(serialize = "primary_key_column", deserialize = "primary_key_column"))]
+    PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select),
+    #[serde(rename(serialize = "column_0", deserialize = "column_0"))]
+    Column0(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select),
+    #[serde(rename(serialize = "column_30", deserialize = "column_30"))]
+    Column30(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select),
+}
+impl std::fmt::Display for ExampleSelect {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e| format!("cannot serialize into json: {e:?}")))
+    }
+}
+impl error_occurence_lib::ToStdStringString for ExampleSelect {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleSelect {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()), ExampleSelect::Column0(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()), ExampleSelect::Column30(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+    }
+}
+#[derive(Debug, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct ExampleRead {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub primary_key_column: std::option::Option<postgresql_crud::Value<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub column_30: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>,
+}
+impl ExampleRead {
+    fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow, select: &postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>) -> Result<Self, sqlx::Error> {
+        let mut primary_key_column: std::option::Option<postgresql_crud::Value<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>> = None;
+        let mut column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read>> = None;
+        let mut column_30: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>> = None;
+        for element in select.to_vec() {
+            match element {
+                ExampleSelect::PrimaryKeyColumn(_) => match sqlx::Row::try_get::<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, "primary_key_column") {
+                    Ok(value) => {
+                        primary_key_column = Some(postgresql_crud::Value { value: value });
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                },
+                ExampleSelect::Column0(_) => match sqlx::Row::try_get::<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read, &std::primitive::str>(&value, "column_0") {
+                    Ok(value) => {
+                        column_0 = Some(postgresql_crud::Value { value: value });
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                },
+                ExampleSelect::Column30(_) => match sqlx::Row::try_get::<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read, &std::primitive::str>(&value, "column_30") {
+                    Ok(value) => {
+                        column_30 = Some(postgresql_crud::Value { value: value });
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                },
+            }
+        }
+        Ok(Self { primary_key_column, column_0, column_30 })
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct ExampleReadOnlyIds {
+    pub primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::ReadOnlyIds,
+    pub column_0: std::option::Option<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadOnlyIds>,
+    pub column_30: std::option::Option<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::ReadOnlyIds>,
+}
+impl std::convert::TryFrom<sqlx::postgres::PgRow> for ExampleReadOnlyIds {
+    type Error = sqlx::Error;
+    fn try_from(value: sqlx::postgres::PgRow) -> Result<Self, Self::Error> {
+        let primary_key_column = match sqlx::Row::try_get::<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::ReadOnlyIds, &std::primitive::str>(&value, "primary_key_column") {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        };
+        let column_0 = if let Ok(value) = sqlx::Row::try_get::<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadOnlyIds, &std::primitive::str>(&value, "column_0") { Some(value) } else { None };
+        let column_30 = if let Ok(value) = sqlx::Row::try_get::<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::ReadOnlyIds, &std::primitive::str>(&value, "column_30") { Some(value) } else { None };
+        Ok(Self { primary_key_column, column_0, column_30 })
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct ExampleColumnReadPermission {
+    primary_key_column: std::primitive::bool,
+    column_0: std::primitive::bool,
+    column_30: std::primitive::bool,
+}
+#[derive(Debug, serde :: Serialize, utoipa :: ToSchema)]
+pub struct ExampleUpdate {
+    primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate,
+    column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>,
+    column_30: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>,
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleUpdateTryNewErrorNamed {
+    NoFieldsProvided {
+        #[eo_to_std_string_string]
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl ExampleUpdate {
+    pub fn try_new(primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate, column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>, column_30: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>) -> Result<ExampleUpdate, ExampleUpdateTryNewErrorNamed> {
+        if let (None, None) = (&column_0, &column_30) {
+            return Err(ExampleUpdateTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self { primary_key_column, column_0, column_30 })
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for ExampleUpdate {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __field2,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => serde::__private::Ok(__Field::__field0),
+                        1u64 => serde::__private::Ok(__Field::__field1),
+                        2u64 => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        "column_0" => serde::__private::Ok(__Field::__field1),
+                        "column_30" => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"primary_key_column" => serde::__private::Ok(__Field::__field0),
+                        b"column_0" => serde::__private::Ok(__Field::__field1),
+                        b"column_30" => serde::__private::Ok(__Field::__field2),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<ExampleUpdate>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = ExampleUpdate;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "struct ExampleUpdate")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match serde::de::SeqAccess::next_element::<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleUpdate with 3 elements"));
+                        }
+                    };
+                    let __field1 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleUpdate with 3 elements"));
+                        }
+                    };
+                    let __field2 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>>(&mut __seq)? {
+                        serde::__private::Some(__value) => __value,
+                        serde::__private::None => {
+                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct ExampleUpdate with 3 elements"));
+                        }
+                    };
+                    match ExampleUpdate::try_new(__field0, __field1, __field2) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: serde::__private::Option<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate> = serde::__private::None;
+                    let mut __field1: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>> = serde::__private::None;
+                    let mut __field2: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>> = serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if serde::__private::Option::is_some(&__field0) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("primary_key_column"));
+                                }
+                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if serde::__private::Option::is_some(&__field1) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_0"));
+                                }
+                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>>(&mut __map)?);
+                            }
+                            __Field::__field2 => {
+                                if serde::__private::Option::is_some(&__field2) {
+                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_30"));
+                                }
+                                __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>>(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        serde::__private::Some(__field0) => __field0,
+                        serde::__private::None => serde::__private::de::missing_field("primary_key_column")?,
+                    };
+                    let __field1 = match __field1 {
+                        serde::__private::Some(__field1) => __field1,
+                        serde::__private::None => serde::__private::de::missing_field("column_0")?,
+                    };
+                    let __field2 = match __field2 {
+                        serde::__private::Some(__field2) => __field2,
+                        serde::__private::None => serde::__private::de::missing_field("column_30")?,
+                    };
+                    match ExampleUpdate::try_new(__field0, __field1, __field2) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["primary_key_column", "column_0", "column_30"];
+            _serde::Deserializer::deserialize_struct(__deserializer, "ExampleUpdate", FIELDS, __Visitor { marker: _serde::__private::PhantomData::<ExampleUpdate>, lifetime: _serde::__private::PhantomData })
+        }
+    }
+};
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleUpdate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            primary_key_column: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            column_0: Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+            column_30: Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, utoipa :: ToSchema)]
+pub struct ExampleUpdateForQuery {
+    primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdateForQuery,
+    column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::UpdateForQuery>>,
+    column_30: std::option::Option<postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery>>,
+}
+impl ExampleUpdateForQuery {
+    fn update_query_part_primary_key(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(&self.primary_key_column, &"", &Example::primary_key(), &"", increment) {
+            Ok(value_snake_case) => Ok(value_snake_case),
+            Err(error_0) => Err(error_0),
+        }
+    }
+    fn update_query_part_column_0(value: &postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::UpdateForQuery>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"column_0", &"column_0", &"", increment) {
+            Ok(value) => Ok(value),
+            Err(error_0) => Err(error_0),
+        }
+    }
+    fn update_query_part_column_30(value: &postgresql_crud::Value<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery>, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"column_30", &"column_30", &"", increment) {
+            Ok(value) => Ok(value),
+            Err(error_0) => Err(error_0),
+        }
+    }
+    fn select_only_updated_ids_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::new();
+        acc.push_str(&match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(&self.primary_key_column, "primary_key_column", increment, true) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            }
+        });
+        if let Some(value) = &self.column_0 {
+            acc.push_str(&match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(&value.value, "column_0", increment, false) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            });
+        }
+        if let Some(value) = &self.column_30 {
+            acc.push_str(&match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_part(&value.value, "column_30", increment, false) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            });
+        }
+        let _ = acc.pop();
+        Ok(acc)
+    }
+}
+impl std::convert::From<ExampleUpdate> for ExampleUpdateForQuery {
+    fn from(value: ExampleUpdate) -> Self {
+        Self {
+            primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.primary_key_column),
+            column_0: match value.column_0 {
+                Some(value) => Some(postgresql_crud::Value { value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.value) }),
+                None => None,
+            },
+            column_30: match value.column_30 {
+                Some(value) => Some(postgresql_crud::Value { value: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.value) }),
+                None => None,
+            },
+        }
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleCreateManyPayload(pub std::vec::Vec<ExampleCreate>);
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleCreateManyPayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+#[derive(Debug)]
+pub struct ExampleCreateManyParameters {
+    pub payload: ExampleCreateManyPayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleCreateManyResponseVariants {
+    Desirable(std::vec::Vec<ExampleReadOnlyIds>),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleCreateManyErrorNamed> for ExampleCreateManyResponseVariants {
+    fn from(value: ExampleCreateManyErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleCreateManyErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn create_many(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleCreateManyErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateManyErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        println!("GeneratePostgresqlTypesExample create_many log");
+        let parameters = ExampleCreateManyParameters {
+            payload: match serde_json::from_slice::<ExampleCreateManyPayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleCreateManyPayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleCreateManyErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_create_many_query_string(
+            &Example::table_name(),
+            "primary_key_column,column_0,column_30",
+            {
+                let mut increment: std::primitive::u64 = 0;
+                let mut acc = std::string::String::default();
+                for element in &parameters.payload.0 {
+                    match element.create_query_part(&mut increment) {
+                        Ok(value) => {
+                            acc.push_str(&format!("({value}),"));
+                        }
+                        Err(error_0) => {
+                            let error = ExampleCreateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2507, column: 254 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                            return response;
+                        }
+                    }
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            },
+            &{
+                let mut acc = std::string::String::new();
+                acc.push_str(&<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::select_only_ids_query_part("primary_key_column", true));
+                acc.push_str(&<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_0", false));
+                acc.push_str(&<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_30", false));
+                let _ = acc.pop();
+                acc
+            },
+        );
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            for element in parameters.payload.0 {
+                match element.create_query_bind(query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleCreateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2535, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                let mut rows = binded_query.fetch(executor.as_mut());
+                let mut acc = std::vec::Vec::new();
+                while let Some(value) = match {
+                    use postgresql_crud::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => match ExampleReadOnlyIds::try_from(value) {
+                            Ok(value) => Some(value),
+                            Err(error_0) => {
+                                drop(rows);
+                                match executor.rollback().await {
+                                    Ok(_) => {
+                                        let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2567, column: 230 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                    Err(error_1) => {
+                                        let error = ExampleCreateManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2567, column: 259 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                }
+                            }
+                        },
+                        None => None,
+                    },
+                    Err(error_0) => {
+                        drop(rows);
+                        match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2577, column: 149 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleCreateManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2577, column: 178 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        }
+                    }
+                } {
+                    acc.push(value);
+                }
+                acc
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleCreateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateManyResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::CREATED;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryCreateManyErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleCreateManyErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        create_many_error_named_with_serialize_deserialize: ExampleCreateManyErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_create_many(endpoint_location: &std::primitive::str, parameters: ExampleCreateManyParameters) -> Result<std::vec::Vec<ExampleReadOnlyIds>, ExampleTryCreateManyErrorNamed> {
+        let payload = {
+            let value = ExampleCreateManyPayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryCreateManyErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/create_many", endpoint_location,);
+        let future = reqwest::Client::new().post(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryCreateManyErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryCreateManyErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleCreateManyResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryCreateManyErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let create_many_error_named_with_serialize_deserialize = match expected_response {
+            ExampleCreateManyResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleCreateManyResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateManyResponseVariants::Postgresql { postgresql, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleCreateManyResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleCreateManyResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateManyResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleCreateManyResponseVariants::QueryPart { error, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleCreateManyResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateManyResponseVariants::TryBind { try_bind, code_occurence } => ExampleCreateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryCreateManyErrorNamed::ExampleCreateManyErrorNamedWithSerializeDeserialize { create_many_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn create_many_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleCreateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug)]
+pub struct ExampleCreateOneParameters {
+    pub payload: ExampleCreate,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleCreateOneResponseVariants {
+    Desirable(ExampleReadOnlyIds),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleCreateOneErrorNamed> for ExampleCreateOneResponseVariants {
+    fn from(value: ExampleCreateOneErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleCreateOneErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn create_one(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleCreateOneErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleCreateOneParameters {
+            payload: match serde_json::from_slice::<ExampleCreate>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleCreate::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_create_one_query_string(
+            &Example::table_name(),
+            "primary_key_column,column_0,column_30",
+            match parameters.payload.create_query_part(&mut 0) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2629, column: 254 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+            &{
+                let mut acc = std::string::String::new();
+                acc.push_str(&<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::select_only_ids_query_part("primary_key_column", true));
+                acc.push_str(&<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_0", false));
+                acc.push_str(&<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_30", false));
+                let _ = acc.pop();
+                acc
+            },
+        );
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            match parameters.payload.create_query_bind(query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2649, column: 25 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                match binded_query.fetch_one(executor.as_mut()).await {
+                    Ok(value) => match ExampleReadOnlyIds::try_from(value) {
+                        Ok(value) => value,
+                        Err(error_0) => match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2683, column: 196 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleCreateOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2683, column: 225 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        },
+                    },
+                    Err(error_0) => match executor.rollback().await {
+                        Ok(_) => {
+                            let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2693, column: 132 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                        Err(error_1) => {
+                            let error = ExampleCreateOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2693, column: 161 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    },
+                }
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleCreateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::CREATED;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryCreateOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleCreateOneErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        create_one_error_named_with_serialize_deserialize: ExampleCreateOneErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_create_one(endpoint_location: &std::primitive::str, parameters: ExampleCreateOneParameters) -> Result<ExampleReadOnlyIds, ExampleTryCreateOneErrorNamed> {
+        let payload = {
+            let value = ExampleCreate::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryCreateOneErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/create_one", endpoint_location,);
+        let future = reqwest::Client::new().post(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryCreateOneErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryCreateOneErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleCreateOneResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryCreateOneErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let create_one_error_named_with_serialize_deserialize = match expected_response {
+            ExampleCreateOneResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleCreateOneResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateOneResponseVariants::Postgresql { postgresql, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleCreateOneResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleCreateOneResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateOneResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleCreateOneResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateOneResponseVariants::QueryPart { error, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleCreateOneResponseVariants::TryBind { try_bind, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryCreateOneErrorNamed::ExampleCreateOneErrorNamedWithSerializeDeserialize { create_one_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn create_one_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleCreate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleReadManyPayload {
+    pub where_many: StdOptionOptionExampleWhereMany,
+    pub select: postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>,
+    pub order_by: postgresql_crud::OrderBy<ExampleSelect>,
+    pub pagination: postgresql_crud::PaginationStartsWithZero,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleReadManyPayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            where_many: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            select: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            order_by: postgresql_crud::OrderBy { column: ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()), order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()) },
+            pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+#[derive(Debug)]
+pub struct ExampleReadManyParameters {
+    pub payload: ExampleReadManyPayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleReadManyResponseVariants {
+    Desirable(std::vec::Vec<ExampleRead>),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    NotUniqueField { not_unique_field: ExampleSelect, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleReadManyErrorNamed> for ExampleReadManyResponseVariants {
+    fn from(value: ExampleReadManyErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleReadManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence } => Self::NotUniqueField { not_unique_field, code_occurence },
+            ExampleReadManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleReadManyErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        not_unique_field: ExampleSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn read_many(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleReadManyErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadManyErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleReadManyParameters {
+            payload: match serde_json::from_slice::<ExampleReadManyPayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleReadManyPayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleReadManyErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_read_many_query_string(&Example::table_name(), Example::generate_select_query_part(&parameters.payload.select), {
+            let mut increment: std::primitive::u64 = 0;
+            let mut additional_parameters = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(&parameters.payload.where_many, &mut increment, &"", false) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleReadManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1020, column: 274 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            };
+            {
+                let prefix = match additional_parameters.is_empty() {
+                    true => "",
+                    false => " ",
+                };
+                let value = &parameters.payload.order_by;
+                let order = match &value.order {
+                    Some(value) => value.to_snake_case_stringified(),
+                    None => postgresql_crud::Order::default().to_snake_case_stringified(),
+                };
+                additional_parameters.push_str(&format!(
+                    "{}order by {} {}",
+                    prefix,
+                    &match &value.column {
+                        ExampleSelect::PrimaryKeyColumn(_) => "primary_key_column",
+                        ExampleSelect::Column0(_) => "column_0",
+                        ExampleSelect::Column30(_) => "column_30",
+                    },
+                    order,
+                ));
+            }
+            {
+                let prefix = match additional_parameters.is_empty() {
+                    true => "",
+                    false => " ",
+                };
+                let value = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(&parameters.payload.pagination, &mut increment, &"", std::primitive::bool::default()) {
+                    Ok(value) => value,
+                    Err(error_0) => {
+                        let error = ExampleReadManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2785, column: 254 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                        return response;
+                    }
+                };
+                additional_parameters.push_str(&format!("{}{}", prefix, value));
+            }
+            additional_parameters
+        });
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.where_many, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleReadManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1051, column: 13 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.pagination, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleReadManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2846, column: 25 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let value = {
+                let mut rows = binded_query.fetch(executor.as_mut());
+                let mut acc = std::vec::Vec::new();
+                while let Some(value) = match {
+                    use postgresql_crud::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => Some(match ExampleRead::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value, &parameters.payload.select) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleReadManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1086, column: 271 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        }),
+                        None => None,
+                    },
+                    Err(error_0) => {
+                        let error = ExampleReadManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2872, column: 169 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                } {
+                    acc.push(value);
+                }
+                acc
+            };
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadManyResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryReadManyErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        not_unique_field: ExampleSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleReadManyErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        read_many_error_named_with_serialize_deserialize: ExampleReadManyErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_read_many(endpoint_location: &std::primitive::str, parameters: ExampleReadManyParameters) -> Result<std::vec::Vec<ExampleRead>, ExampleTryReadManyErrorNamed> {
+        let payload = {
+            let value = ExampleReadManyPayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryReadManyErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/read_many", endpoint_location,);
+        let future = reqwest::Client::new().post(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryReadManyErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryReadManyErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleReadManyResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryReadManyErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let read_many_error_named_with_serialize_deserialize = match expected_response {
+            ExampleReadManyResponseVariants::Desirable(value) => {
+                let value = value.into_iter().fold(std::vec::Vec::new(), |mut acc, element| {
+                    acc.push(element);
+                    acc
+                });
+                return Ok(value);
+            }
+            ExampleReadManyResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleReadManyResponseVariants::Postgresql { postgresql, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleReadManyResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleReadManyResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleReadManyResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleReadManyResponseVariants::QueryPart { error, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleReadManyResponseVariants::NotUniqueField { not_unique_field, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence },
+            ExampleReadManyResponseVariants::TryBind { try_bind, code_occurence } => ExampleReadManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryReadManyErrorNamed::ExampleReadManyErrorNamedWithSerializeDeserialize { read_many_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn read_many_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleReadManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleReadOnePayload {
+    pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead,
+    pub select: postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleReadOnePayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self { primary_key_column: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(), select: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }
+    }
+}
+#[derive(Debug)]
+pub struct ExampleReadOneParameters {
+    pub payload: ExampleReadOnePayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleReadOneResponseVariants {
+    Desirable(ExampleRead),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    NotUniqueField { not_unique_field: ExampleSelect, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleReadOneErrorNamed> for ExampleReadOneResponseVariants {
+    fn from(value: ExampleReadOneErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleReadOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence } => Self::NotUniqueField { not_unique_field, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleReadOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleReadOneErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        not_unique_field: ExampleSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn read_one(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleReadOneErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadOneErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleReadOneParameters {
+            payload: match serde_json::from_slice::<ExampleReadOnePayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleReadOnePayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleReadOneErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_read_one_query_string(
+            &Example::table_name(),
+            Example::generate_select_query_part(&parameters.payload.select),
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_part(&parameters.payload.primary_key_column, &mut 0, &Example::primary_key(), false) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleReadOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2960, column: 254 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        );
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.primary_key_column, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleReadOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2983, column: 29 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleReadOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let value = {
+                match binded_query.fetch_one(executor.as_mut()).await {
+                    Ok(value) => match ExampleRead::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value, &parameters.payload.select) {
+                        Ok(value) => value,
+                        Err(error_0) => {
+                            let error = ExampleReadOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1086, column: 271 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    },
+                    Err(error_0) => {
+                        let error = ExampleReadOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3006, column: 169 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            };
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleReadOneResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryReadOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueField {
+        #[eo_to_std_string_string_serialize_deserialize]
+        not_unique_field: ExampleSelect,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleReadOneErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        read_one_error_named_with_serialize_deserialize: ExampleReadOneErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_read_one(endpoint_location: &std::primitive::str, parameters: ExampleReadOneParameters) -> Result<ExampleRead, ExampleTryReadOneErrorNamed> {
+        let payload = {
+            let value = ExampleReadOnePayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryReadOneErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/read_one", endpoint_location,);
+        let future = reqwest::Client::new().post(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryReadOneErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryReadOneErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleReadOneResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryReadOneErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let read_one_error_named_with_serialize_deserialize = match expected_response {
+            ExampleReadOneResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleReadOneResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleReadOneResponseVariants::Postgresql { postgresql, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleReadOneResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleReadOneResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleReadOneResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleReadOneResponseVariants::NotUniqueField { not_unique_field, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence },
+            ExampleReadOneResponseVariants::QueryPart { error, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleReadOneResponseVariants::TryBind { try_bind, code_occurence } => ExampleReadOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize { read_one_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn read_one_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleReadOnePayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, serde :: Serialize, utoipa :: ToSchema)]
+pub struct ExampleUpdateManyPayload(std::vec::Vec<ExampleUpdate>);
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleUpdateManyPayloadTryNewErrorNamed {
+    NotUniquePrimaryKey {
+        #[eo_to_std_string_string]
+        not_unique_primary_key: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlUpdate,
+        #[eo_to_std_string_string]
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl ExampleUpdateManyPayload {
+    fn try_new(value: std::vec::Vec<ExampleUpdate>) -> Result<Self, ExampleUpdateManyPayloadTryNewErrorNamed> {
+        let mut acc = std::vec::Vec::new();
+        for element in &value {
+            if !acc.contains(&&element.primary_key_column) {
+                acc.push(&element.primary_key_column);
+            } else {
+                return Err(ExampleUpdateManyPayloadTryNewErrorNamed::NotUniquePrimaryKey { not_unique_primary_key: element.primary_key_column.clone(), code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        Ok(Self(value))
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for ExampleUpdateManyPayload {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<ExampleUpdateManyPayload>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = ExampleUpdateManyPayload;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct ExampleUpdateManyPayload")
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::vec::Vec<ExampleUpdate> = <std::vec::Vec<ExampleUpdate> as _serde::Deserialize>::deserialize(__e)?;
+                    match ExampleUpdateManyPayload::try_new(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<ExampleUpdate>>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct ExampleUpdateManyPayload with 1 element"));
+                        }
+                    };
+                    match ExampleUpdateManyPayload::try_new(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(__deserializer, "ExampleUpdateManyPayload", __Visitor { marker: _serde::__private::PhantomData::<ExampleUpdateManyPayload>, lifetime: _serde::__private::PhantomData })
+        }
+    }
+};
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleUpdateManyPayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+#[derive(Debug)]
+pub struct ExampleUpdateManyParameters {
+    pub payload: ExampleUpdateManyPayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleUpdateManyResponseVariants {
+    Desirable(std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleUpdateManyErrorNamed> for ExampleUpdateManyResponseVariants {
+    fn from(value: ExampleUpdateManyErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleUpdateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleUpdateManyErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn update_many(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleUpdateManyErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateManyErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleUpdateManyParameters {
+            payload: match serde_json::from_slice::<ExampleUpdateManyPayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleUpdateManyPayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleUpdateManyErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let update_for_query_vec = parameters.payload.0.into_iter().map(|element| ExampleUpdateForQuery::from(element)).collect::<std::vec::Vec<ExampleUpdateForQuery>>();
+        let query_string = {
+            let mut increment: std::primitive::u64 = 0;
+            let elements = {
+                let mut acc = std::string::String::default();
+                {
+                    let mut is_column_0_update_exist = false;
+                    for element in &update_for_query_vec {
+                        if element.column_0.is_some() {
+                            is_column_0_update_exist = true;
+                            break;
+                        }
+                    }
+                    if is_column_0_update_exist {
+                        acc.push_str(&postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(&"column_0", {
+                            let mut acc = std::string::String::default();
+                            for element in &update_for_query_vec {
+                                if let Some(value) = &element.column_0 {
+                                    acc.push_str(&postgresql_crud::generate_when_column_id_then_value_update_many_query_part(
+                                        &Example::primary_key(),
+                                        match element.update_query_part_primary_key(&mut increment) {
+                                            Ok(value) => value,
+                                            Err(error_0) => {
+                                                let error = ExampleUpdateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3220, column: 258 })) };
+                                                eprintln!("{error}");
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                return response;
+                                            }
+                                        },
+                                        match ExampleUpdateForQuery::update_query_part_column_0(&value, &mut increment) {
+                                            Ok(value) => value,
+                                            Err(error_0) => {
+                                                let error = ExampleUpdateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3220, column: 258 })) };
+                                                eprintln!("{error}");
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                return response;
+                                            }
+                                        },
+                                    ));
+                                }
+                            }
+                            acc
+                        }));
+                    }
+                }
+                {
+                    let mut is_column_30_update_exist = false;
+                    for element in &update_for_query_vec {
+                        if element.column_30.is_some() {
+                            is_column_30_update_exist = true;
+                            break;
+                        }
+                    }
+                    if is_column_30_update_exist {
+                        acc.push_str(&postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(&"column_30", {
+                            let mut acc = std::string::String::default();
+                            for element in &update_for_query_vec {
+                                if let Some(value) = &element.column_30 {
+                                    acc.push_str(&postgresql_crud::generate_when_column_id_then_value_update_many_query_part(
+                                        &Example::primary_key(),
+                                        match element.update_query_part_primary_key(&mut increment) {
+                                            Ok(value) => value,
+                                            Err(error_0) => {
+                                                let error = ExampleUpdateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3220, column: 258 })) };
+                                                eprintln!("{error}");
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                return response;
+                                            }
+                                        },
+                                        match ExampleUpdateForQuery::update_query_part_column_30(&value, &mut increment) {
+                                            Ok(value) => value,
+                                            Err(error_0) => {
+                                                let error = ExampleUpdateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3220, column: 258 })) };
+                                                eprintln!("{error}");
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                return response;
+                                            }
+                                        },
+                                    ));
+                                }
+                            }
+                            acc
+                        }));
+                    }
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            };
+            let primary_keys = {
+                let mut acc = std::string::String::default();
+                for element in &update_for_query_vec {
+                    acc.push_str(&format!(
+                        "{},",
+                        match element.update_query_part_primary_key(&mut increment) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleUpdateManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1676, column: 241 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
+                        }
+                    ));
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            };
+            postgresql_crud::generate_update_many_query_string(&Example::table_name(), elements, &Example::primary_key(), primary_keys)
+        };
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            for element in &update_for_query_vec {
+                if let Some(value) = &element.column_0 {
+                    if let Err(error_0) = query.try_bind(element.primary_key_column.clone()) {
+                        let error_0 = error_0.to_string();
+                        let error = ExampleUpdateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3297, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                    match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query) {
+                        Ok(value) => {
+                            query = value;
+                        }
+                        Err(error_0) => {
+                            let error = ExampleUpdateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3297, column: 25 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    }
+                }
+            }
+            for element in &update_for_query_vec {
+                if let Some(value) = &element.column_30 {
+                    if let Err(error_0) = query.try_bind(element.primary_key_column.clone()) {
+                        let error_0 = error_0.to_string();
+                        let error = ExampleUpdateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3297, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                    match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query) {
+                        Ok(value) => {
+                            query = value;
+                        }
+                        Err(error_0) => {
+                            let error = ExampleUpdateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3297, column: 25 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    }
+                }
+            }
+            for element in update_for_query_vec {
+                match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(element.primary_key_column, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleUpdateManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3297, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                let mut rows = binded_query.fetch(executor.as_mut());
+                let mut acc = std::vec::Vec::new();
+                while let Some(value) = match {
+                    use postgresql_crud::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => match sqlx::Row::try_get::<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
+                            Ok(value) => Some(value),
+                            Err(error_0) => {
+                                drop(rows);
+                                match executor.rollback().await {
+                                    Ok(_) => {
+                                        let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2386, column: 137 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                    Err(error_1) => {
+                                        let error = ExampleUpdateManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2386, column: 166 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                }
+                            }
+                        },
+                        None => None,
+                    },
+                    Err(error_0) => {
+                        drop(rows);
+                        match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2388, column: 133 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleUpdateManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2388, column: 162 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        }
+                    }
+                } {
+                    acc.push(value);
+                }
+                acc
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleUpdateManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateManyResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryUpdateManyErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleUpdateManyErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        update_many_error_named_with_serialize_deserialize: ExampleUpdateManyErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_update_many(endpoint_location: &std::primitive::str, parameters: ExampleUpdateManyParameters) -> Result<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>, ExampleTryUpdateManyErrorNamed> {
+        let payload = {
+            let value = ExampleUpdateManyPayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryUpdateManyErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/update_many", endpoint_location,);
+        let future = reqwest::Client::new().patch(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryUpdateManyErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryUpdateManyErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleUpdateManyResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryUpdateManyErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let update_many_error_named_with_serialize_deserialize = match expected_response {
+            ExampleUpdateManyResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleUpdateManyResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleUpdateManyResponseVariants::Postgresql { postgresql, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleUpdateManyResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleUpdateManyResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleUpdateManyResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleUpdateManyResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleUpdateManyResponseVariants::QueryPart { error, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleUpdateManyResponseVariants::TryBind { try_bind, code_occurence } => ExampleUpdateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryUpdateManyErrorNamed::ExampleUpdateManyErrorNamedWithSerializeDeserialize { update_many_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn update_many_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleUpdateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug)]
+pub struct ExampleUpdateOneParameters {
+    pub payload: ExampleUpdate,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleUpdateOneResponseVariants {
+    Desirable(ExampleReadOnlyIds),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleUpdateOneErrorNamed> for ExampleUpdateOneResponseVariants {
+    fn from(value: ExampleUpdateOneErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleUpdateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleUpdateOneErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn update_one(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleUpdateOneErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateOneErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleUpdateOneParameters {
+            payload: match serde_json::from_slice::<ExampleUpdate>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleUpdate::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let update_for_query = ExampleUpdateForQuery::from(parameters.payload);
+        let query_string = {
+            let mut increment: std::primitive::u64 = 0;
+            let columns = {
+                let mut acc = std::string::String::default();
+                if let Some(value) = &update_for_query.column_0 {
+                    acc.push_str(&postgresql_crud::generate_column_queals_value_comma_update_one_query_part(
+                        "column_0",
+                        match ExampleUpdateForQuery::update_query_part_column_0(&value, &mut increment) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleUpdateOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3406, column: 258 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
+                        },
+                    ));
+                }
+                if let Some(value) = &update_for_query.column_30 {
+                    acc.push_str(&postgresql_crud::generate_column_queals_value_comma_update_one_query_part(
+                        "column_30",
+                        match ExampleUpdateForQuery::update_query_part_column_30(&value, &mut increment) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleUpdateOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3406, column: 258 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
+                        },
+                    ));
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            };
+            let primary_key_query_part = match update_for_query.update_query_part_primary_key(&mut increment) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1676, column: 241 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            };
+            let return_columns = match update_for_query.select_only_updated_ids_query_part(&mut increment) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3426, column: 254 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            };
+            postgresql_crud::generate_update_one_query_string(&Example::table_name(), columns, &Example::primary_key(), primary_key_query_part, &return_columns)
+        };
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            if let Some(ref value) = update_for_query.column_0 {
+                match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleUpdateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3460, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            if let Some(ref value) = update_for_query.column_30 {
+                match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleUpdateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3460, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            match <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(update_for_query.primary_key_column, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3460, column: 25 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            if let Some(value) = &update_for_query.column_0 {
+                match <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_bind(&value.value, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleUpdateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3460, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            if let Some(value) = &update_for_query.column_30 {
+                match <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_updated_ids_query_bind(&value.value, query) {
+                    Ok(value) => {
+                        query = value;
+                    }
+                    Err(error_0) => {
+                        let error = ExampleUpdateOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3460, column: 25 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        return response;
+                    }
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                match binded_query.fetch_one(executor.as_mut()).await {
+                    Ok(value) => match ExampleReadOnlyIds::try_from(value) {
+                        Ok(value) => value,
+                        Err(error_0) => match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3534, column: 196 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleUpdateOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3534, column: 225 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        },
+                    },
+                    Err(error_0) => match executor.rollback().await {
+                        Ok(_) => {
+                            let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3542, column: 132 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                        Err(error_1) => {
+                            let error = ExampleUpdateOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3542, column: 161 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    },
+                }
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleUpdateOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleUpdateOneResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryUpdateOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleUpdateOneErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        update_one_error_named_with_serialize_deserialize: ExampleUpdateOneErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_update_one(endpoint_location: &std::primitive::str, parameters: ExampleUpdateOneParameters) -> Result<ExampleReadOnlyIds, ExampleTryUpdateOneErrorNamed> {
+        let payload = {
+            let value = ExampleUpdate::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryUpdateOneErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/update_one", endpoint_location,);
+        let future = reqwest::Client::new().patch(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryUpdateOneErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryUpdateOneErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleUpdateOneResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryUpdateOneErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let update_one_error_named_with_serialize_deserialize = match expected_response {
+            ExampleUpdateOneResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleUpdateOneResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleUpdateOneResponseVariants::Postgresql { postgresql, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleUpdateOneResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleUpdateOneResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleUpdateOneResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleUpdateOneResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleUpdateOneResponseVariants::QueryPart { error, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleUpdateOneResponseVariants::TryBind { try_bind, code_occurence } => ExampleUpdateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryUpdateOneErrorNamed::ExampleUpdateOneErrorNamedWithSerializeDeserialize { update_one_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn update_one_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleUpdate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleDeleteManyPayload {
+    pub where_many: StdOptionOptionExampleWhereMany,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleDeleteManyPayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self { where_many: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }
+    }
+}
+#[derive(Debug)]
+pub struct ExampleDeleteManyParameters {
+    pub payload: ExampleDeleteManyPayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleDeleteManyResponseVariants {
+    Desirable(std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleDeleteManyErrorNamed> for ExampleDeleteManyResponseVariants {
+    fn from(value: ExampleDeleteManyErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+            ExampleDeleteManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleDeleteManyErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn delete_many(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleDeleteManyErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteManyErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleDeleteManyParameters {
+            payload: match serde_json::from_slice::<ExampleDeleteManyPayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleDeleteManyPayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleDeleteManyErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_delete_many_query_string(
+            &Example::table_name(),
+            {
+                let mut increment: std::primitive::u64 = 0;
+                let additional_parameters = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(&parameters.payload.where_many, &mut increment, &"", false) {
+                    Ok(value) => value,
+                    Err(error_0) => {
+                        let error = ExampleDeleteManyErrorNamed::QueryPart { error: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1020, column: 274 })) };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                        return response;
+                    }
+                };
+                additional_parameters
+            },
+            &Example::primary_key(),
+        );
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.where_many, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleDeleteManyErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1051, column: 13 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                let mut rows = binded_query.fetch(executor.as_mut());
+                let mut acc = std::vec::Vec::new();
+                while let Some(value) = match {
+                    use postgresql_crud::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => match sqlx::Row::try_get::<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
+                            Ok(value) => Some(value),
+                            Err(error_0) => {
+                                drop(rows);
+                                match executor.rollback().await {
+                                    Ok(_) => {
+                                        let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2386, column: 137 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                    Err(error_1) => {
+                                        let error = ExampleDeleteManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2386, column: 166 })) };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                }
+                            }
+                        },
+                        None => None,
+                    },
+                    Err(error_0) => {
+                        drop(rows);
+                        match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2388, column: 133 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleDeleteManyErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2388, column: 162 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        }
+                    }
+                } {
+                    acc.push(value);
+                }
+                acc
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleDeleteManyErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteManyResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryDeleteManyErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleDeleteManyErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        delete_many_error_named_with_serialize_deserialize: ExampleDeleteManyErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_delete_many(endpoint_location: &std::primitive::str, parameters: ExampleDeleteManyParameters) -> Result<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>, ExampleTryDeleteManyErrorNamed> {
+        let payload = {
+            let value = ExampleDeleteManyPayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryDeleteManyErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/delete_many", endpoint_location,);
+        let future = reqwest::Client::new().delete(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryDeleteManyErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryDeleteManyErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleDeleteManyResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryDeleteManyErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let delete_many_error_named_with_serialize_deserialize = match expected_response {
+            ExampleDeleteManyResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleDeleteManyResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleDeleteManyResponseVariants::Postgresql { postgresql, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleDeleteManyResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleDeleteManyResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleDeleteManyResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleDeleteManyResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleDeleteManyResponseVariants::QueryPart { error, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+            ExampleDeleteManyResponseVariants::TryBind { try_bind, code_occurence } => ExampleDeleteManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryDeleteManyErrorNamed::ExampleDeleteManyErrorNamedWithSerializeDeserialize { delete_many_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn delete_many_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleDeleteManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleDeleteOnePayload {
+    pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleDeleteOnePayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self { primary_key_column: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }
+    }
+}
+#[derive(Debug)]
+pub struct ExampleDeleteOneParameters {
+    pub payload: ExampleDeleteOnePayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleDeleteOneResponseVariants {
+    Desirable(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey),
+    CheckBodySize { check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    Postgresql { postgresql: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    SerdeJson { serde_json: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    CheckCommit { check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    RowAndRollback { row: std::string::String, rollback: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    TryBind { try_bind: std::string::String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl std::convert::From<ExampleDeleteOneErrorNamed> for ExampleDeleteOneResponseVariants {
+    fn from(value: ExampleDeleteOneErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleDeleteOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleDeleteOneErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    TryBind {
+        #[eo_to_std_string_string_serialize_deserialize]
+        try_bind: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn delete_one(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleDeleteOneErrorNamed::HeaderContentTypeApplicationJsonNotFound { code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2117, column: 330 })) };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteOneErrorNamed::CheckBodySize { check_body_size: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2118, column: 268 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleDeleteOneParameters {
+            payload: match serde_json::from_slice::<ExampleDeleteOnePayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleDeleteOnePayload::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleDeleteOneErrorNamed::SerdeJson { serde_json: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2193, column: 249 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_delete_one_query_string(&Example::table_name(), &Example::primary_key());
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.primary_key_column, query) {
+                Ok(value) => {
+                    query = value;
+                }
+                Err(error_0) => {
+                    let error = ExampleDeleteOneErrorNamed::TryBind { try_bind: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 3694, column: 25 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2144, column: 257 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1911, column: 245 })) };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                match binded_query.fetch_one(executor.as_mut()).await {
+                    Ok(value) => match sqlx::Row::try_get::<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
+                        Ok(value) => value,
+                        Err(error_0) => match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2412, column: 261 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleDeleteOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2412, column: 290 })) };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        },
+                    },
+                    Err(error_0) => match executor.rollback().await {
+                        Ok(_) => {
+                            let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2413, column: 116 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                        Err(error_1) => {
+                            let error = ExampleDeleteOneErrorNamed::RowAndRollback { row: error_0, rollback: error_1, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2413, column: 145 })) };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    },
+                }
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleDeleteOneErrorNamed::Postgresql { postgresql: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 1922, column: 245 })) };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleDeleteOneResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryDeleteOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleDeleteOneErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        delete_one_error_named_with_serialize_deserialize: ExampleDeleteOneErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_delete_one(endpoint_location: &std::primitive::str, parameters: ExampleDeleteOneParameters) -> Result<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, ExampleTryDeleteOneErrorNamed> {
+        let payload = {
+            let value = ExampleDeleteOnePayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryDeleteOneErrorNamed::SerdeJsonToString { serde_json_to_string: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2218, column: 178 })) });
+                }
+            }
+        };
+        let url = format!("{}/example/delete_one", endpoint_location,);
+        let future = reqwest::Client::new().delete(&url).header(&"commit".to_string(), git_info::PROJECT_GIT_INFO.commit).header(reqwest::header::CONTENT_TYPE, "application/json").body(payload).send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryDeleteOneErrorNamed::Reqwest { reqwest: error_0, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2267, column: 152 })) });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryDeleteOneErrorNamed::FailedToGetResponseText { status_code: error_0, headers: error_1, reqwest: error_2, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2284, column: 192 })) });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleDeleteOneResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryDeleteOneErrorNamed::DeserializeResponse { status_code: error_0, headers: error_1, response_text: error_2, serde: error_3, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2296, column: 178 })) });
+            }
+        };
+        let delete_one_error_named_with_serialize_deserialize = match expected_response {
+            ExampleDeleteOneResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleDeleteOneResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleDeleteOneResponseVariants::Postgresql { postgresql, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleDeleteOneResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleDeleteOneResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleDeleteOneResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleDeleteOneResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleDeleteOneResponseVariants::TryBind { try_bind, code_occurence } => ExampleDeleteOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence },
+        };
+        Err(ExampleTryDeleteOneErrorNamed::ExampleDeleteOneErrorNamedWithSerializeDeserialize { delete_one_error_named_with_serialize_deserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(file!().to_owned(), line!(), column!(), Some(error_occurence_lib::code_occurence::MacroOccurence { file: std::string::String::from("postgresql_crud/postgresql_table/generate_postgresql_table/src/lib.rs"), line: 2334, column: 223 })) })
+    }
+}
+impl Example {
+    pub async fn delete_one_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleDeleteOnePayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+impl Example {
+    pub fn routes(app_state: std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>) -> axum::Router {
+        axum::Router::new().nest(&format!("/{}", Example::table_name()), axum::Router::new().route("/create_many", axum::routing::post(Example::create_many)).route("/create_many_payload_example", axum::routing::get(Example::create_many_payload_example)).route("/create_one", axum::routing::post(Example::create_one)).route("/create_one_payload_example", axum::routing::get(Example::create_one_payload_example)).route("/read_many", axum::routing::post(Example::read_many)).route("/read_many_payload_example", axum::routing::get(Example::read_many_payload_example)).route("/read_one", axum::routing::post(Example::read_one)).route("/read_one_payload_example", axum::routing::get(Example::read_one_payload_example)).route("/update_many", axum::routing::patch(Example::update_many)).route("/update_many_payload_example", axum::routing::get(Example::update_many_payload_example)).route("/update_one", axum::routing::patch(Example::update_one)).route("/update_one_payload_example", axum::routing::get(Example::update_one_payload_example)).route("/delete_many", axum::routing::delete(Example::delete_many)).route("/delete_many_payload_example", axum::routing::get(Example::delete_many_payload_example)).route("/delete_one", axum::routing::delete(Example::delete_one)).route("/delete_one_payload_example", axum::routing::get(Example::delete_one_payload_example)).with_state(app_state))
+    }
+}
 #[cfg(test)]
 mod example_tests {
     #[test]
@@ -2151,17 +6602,8 @@ mod example_tests {
                     let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
                     let _unused = tokio::spawn(async move {
                         super::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
-                        let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
-                            postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
-                            config: &config,
-                            project_git_info: &git_info::PROJECT_GIT_INFO,
-                        });
-                        axum::serve(
-                            tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"),
-                            axum::Router::new().merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service(),
-                        )
-                        .await
-                        .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+                        let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState { postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(), config: &config, project_git_info: &git_info::PROJECT_GIT_INFO });
+                        axum::serve(tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"), axum::Router::new().merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service()).await.unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                     });
                     tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
                     let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
@@ -2170,410 +6612,585 @@ mod example_tests {
                         value
                     };
                     let ident_create_default = super::ExampleCreate {
+                        column_0: <<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                         column_30: <<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                     };
                     let common_read_only_ids_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default.clone() }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                    println!("{common_read_only_ids_returned_from_create_one:#?}");
-                    // let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value {
-                    //     value: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
-                    // });
-                    // assert_eq!(
-                    //     super::ExampleRead {
-                    //         primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(),
-                    //         column_30: None
-                    //     },
-                    //     super::Example::try_read_one(
-                    //         &url,
-                    //         super::ExampleReadOneParameters {
-                    //             payload: super::ExampleReadOnePayload {
-                    //                 primary_key_column: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
-                    //                 select: select_primary_key.clone(),
-                    //             },
-                    //         },
-                    //     )
-                    //     .await
-                    //     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                    //     "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
-                    // );
-                    // let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                    //     super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //     super::ExampleSelect::Column30(<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    // ])
-                    // .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                    // let start = std::time::Instant::now();
-                    // futures::StreamExt::for_each_concurrent(
-                    //     futures::stream::iter({
-                    //         let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                    //         for chunk in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::create_vec()
-                    //             .chunks(10)
-                    //             .map(|element| element.to_vec())
-                    //             .collect::<std::vec::Vec<std::vec::Vec<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create>>>()
-                    //         {
-                    //             let url_cloned = url.clone();
-                    //             let ident_create_default_cloned = ident_create_default.clone();
-                    //             let select_default_all_cloned = select_default_all.clone();
-                    //             acc.push(futures::FutureExt::boxed(async move {
-                    //                 let ident_create_vec = {
-                    //                     let mut acc = vec![];
-                    //                     for element in chunk {
-                    //                         acc.push(super::ExampleCreate { column_30: element });
-                    //                     }
-                    //                     acc
-                    //                 };
-                    //                 let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(ident_create_vec.clone()) }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
-                    //                 assert_eq!(
-                    //                     {
-                    //                         let mut acc = vec![];
-                    //                         assert_eq!(read_only_ids_from_try_create_many.len(), ident_create_vec.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
-                    //                         for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_create_vec.into_iter()).collect::<std::vec::Vec<(super::ExampleReadOnlyIds, super::ExampleCreate)>>() {
-                    //                             acc.push(super::ExampleRead {
-                    //                                 primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids.primary_key_column),
-                    //                                 column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_30, create.column_30),
-                    //                             });
-                    //                         }
-                    //                         acc.sort_by(|a, b| {
-                    //                             if let (Some(a), Some(b)) = (&a.primary_key_column, &b.primary_key_column) {
-                    //                                 a.value.cmp(&b.value)
-                    //                             } else {
-                    //                                 panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
-                    //                             }
-                    //                         });
-                    //                         acc
-                    //                     },
-                    //                     super::Example::try_read_many(
-                    //                         &url_cloned,
-                    //                         super::ExampleReadManyParameters {
-                    //                             payload: super::ExampleReadManyPayload {
-                    //                                 where_many: super::StdOptionOptionExampleWhereMany(Some(
-                    //                                     super::ExampleWhereMany::try_new(
-                    //                                         Some(
-                    //                                             postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                    //                                                 let mut acc = vec![];
-                    //                                                 for element in &read_only_ids_from_try_create_many {
-                    //                                                     acc.push(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                    //                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                    //                                                         value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())),
-                    //                                                     }));
-                    //                                                 }
-                    //                                                 acc
-                    //                                             })
-                    //                                             .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
-                    //                                         ),
-                    //                                         None
-                    //                                     )
-                    //                                     .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
-                    //                                 )),
-                    //                                 select: select_default_all_cloned.clone(),
-                    //                                 order_by: postgresql_crud::OrderBy {
-                    //                                     column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //                                     order: Some(postgresql_crud::Order::Asc),
-                    //                                 },
-                    //                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
-                    //                             }
-                    //                         }
-                    //                     )
-                    //                     .await
-                    //                     .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
-                    //                     "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
-                    //                 );
-                    //                 let read_only_ids_from_try_delete_many = {
-                    //                     let mut acc = super::Example::try_delete_many(
-                    //                         &url_cloned,
-                    //                         super::ExampleDeleteManyParameters {
-                    //                             payload: super::ExampleDeleteManyPayload {
-                    //                                 where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
-                    //                                     primary_key_column: Some(
-                    //                                         postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                    //                                             let mut acc = vec![];
-                    //                                             for element in &read_only_ids_from_try_create_many {
-                    //                                                 acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                    //                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                    //                                                     value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())),
-                    //                                                 }));
-                    //                                             }
-                    //                                             acc
-                    //                                         })
-                    //                                         .expect("error 5f1e5f9d-d189-4368-807e-a84348967610"),
-                    //                                     ),
-                    //                                     column_30: None,
-                    //                                 })),
-                    //                             },
-                    //                         },
-                    //                     )
-                    //                     .await
-                    //                     .expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
-                    //                     acc.sort_by(|a, b| a.cmp(&b));
-                    //                     acc
-                    //                 };
-                    //                 assert_eq!(
-                    //                     read_only_ids_from_try_delete_many,
-                    //                     {
-                    //                         let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element| element.primary_key_column.clone().into_read()).collect::<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>();
-                    //                         acc.sort_by(|a, b| a.cmp(&b));
-                    //                         acc
-                    //                     },
-                    //                     "error f58f5572-4286-4a74-8006-0507339910d4"
-                    //                 );
-                    //                 match super::Example::try_read_many(
-                    //                     &url_cloned,
-                    //                     super::ExampleReadManyParameters {
-                    //                         payload: super::ExampleReadManyPayload {
-                    //                             where_many: super::StdOptionOptionExampleWhereMany(Some(
-                    //                                 super::ExampleWhereMany::try_new(
-                    //                                     Some(
-                    //                                         postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                    //                                             let mut acc = vec![];
-                    //                                             for element in &read_only_ids_from_try_delete_many {
-                    //                                                 acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                    //                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                    //                                                     value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.clone())),
-                    //                                                 }));
-                    //                                             }
-                    //                                             acc
-                    //                                         })
-                    //                                         .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
-                    //                                     ),
-                    //                                     None,
-                    //                                 )
-                    //                                 .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
-                    //                             )),
-                    //                             select: select_default_all_cloned,
-                    //                             order_by: postgresql_crud::OrderBy {
-                    //                                 column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //                                 order: Some(postgresql_crud::Order::Asc),
-                    //                             },
-                    //                             pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
-                    //                         },
-                    //                     },
-                    //                 )
-                    //                 .await
-                    //                 {
-                    //                     Ok(value) => {
-                    //                         if value != std::vec::Vec::new() {
-                    //                             panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
-                    //                         }
-                    //                     }
-                    //                     Err(error) => {
-                    //                         panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
-                    //                     }
-                    //                 }
-                    //             }));
-                    //         }
-                    //         acc
-                    //     }),
-                    //     10,
-                    //     |fut| async move {
-                    //         fut.await;
-                    //     },
-                    // )
-                    // .await;
-                    // let create_many_elapsed = start.elapsed();
-                    // let create_one_elapsed = start.elapsed();
-                    // println!("Elapsed: create_many_elapsed {:?}, create_one_elapsed {:?}", create_many_elapsed, create_one_elapsed);
-                    // futures::StreamExt::for_each_concurrent(
-                    //     futures::stream::iter({
-                    //         let 
-                    //         // mut 
-                    //         acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                    //         {
-                    //             let read_only_ids_current_elements = {
-                    //                 use futures::StreamExt;
-                    //                 futures::stream::iter(
-                    //                     {
-                    //                         let mut acc = vec![];
-                    //                         if let Some(value) = &common_read_only_ids_returned_from_create_one.column_30 {
-                    //                             for element0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
-                    //                                 for element1 in element0 {
-                    //                                     acc.push(ident_create_default.clone());
-                    //                                 }
-                    //                             }
-                    //                         }
-                    //                         acc
-                    //                     }
-                    //                     .chunks(25)
-                    //                     .map(|element| element.to_vec())
-                    //                     .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
-                    //                     .into_iter()
-                    //                     .map(|element| {
-                    //                         let url_cloned = url.clone();
-                    //                         futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
-                    //                     })
-                    //                     .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
-                    //                 )
-                    //                 .buffer_unordered(5)
-                    //                 .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
-                    //                 .await
-                    //                 .into_iter()
-                    //                 .flatten()
-                    //                 .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
-                    //             };
-                    //             assert_eq!(
-                    //                 {
-                    //                     let mut acc = vec![];
-                    //                     for element in &read_only_ids_current_elements {
-                    //                         acc.push(super::ExampleRead {
-                    //                             primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&element.primary_key_column),
-                    //                             column_30: match &element.column_30 {
-                    //                                 Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
-                    //                                 None => Some(postgresql_crud::Value {
-                    //                                     value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    //                                 }),
-                    //                             },
-                    //                         });
-                    //                     }
-                    //                     acc.sort_by(|a, b| {
-                    //                         if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
-                    //                             value_a.value.cmp(&value_b.value)
-                    //                         } else {
-                    //                             panic!("must not be what");
-                    //                         }
-                    //                     });
-                    //                     acc
-                    //                 },
-                    //                 {
-                    //                     let mut acc = super::Example::try_read_many(
-                    //                         &url,
-                    //                         super::ExampleReadManyParameters {
-                    //                             payload: super::ExampleReadManyPayload {
-                    //                                 where_many: super::StdOptionOptionExampleWhereMany(Some(
-                    //                                     super::ExampleWhereMany::try_new(
-                    //                                         Some(
-                    //                                             postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                    //                                                 let mut acc = vec![];
-                    //                                                 for element in &read_only_ids_current_elements {
-                    //                                                     acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
-                    //                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                    //                                                         value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())),
-                    //                                                     }));
-                    //                                                 }
-                    //                                                 acc
-                    //                                             })
-                    //                                             .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
-                    //                                         ),
-                    //                                         None,
-                    //                                     )
-                    //                                     .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
-                    //                                 )),
-                    //                                 select: select_default_all.clone(),
-                    //                                 order_by: postgresql_crud::OrderBy {
-                    //                                     column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //                                     order: Some(postgresql_crud::Order::Asc),
-                    //                                 },
-                    //                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
-                    //                             },
-                    //                         },
-                    //                     )
-                    //                     .await
-                    //                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    //                     acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
-                    //                     acc
-                    //                 },
-                    //                 "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
-                    //             );
-                    //             // for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                    //             //     let url_cloned = url.clone();
-                    //             //     let ident_create_default_cloned = ident_create_default.clone();
-                    //             //     let select_default_all_cloned = select_default_all.clone();
-                    //             //     acc.push(futures::FutureExt::boxed(async move {
-                    //             //         let previous_read = super::Example::try_read_one(
-                    //             //             &url_cloned,
-                    //             //             super::ExampleReadOneParameters {
-                    //             //                 payload: super::ExampleReadOnePayload {
-                    //             //                     primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(),
-                    //             //                     select: select_default_all_cloned.clone(),
-                    //             //                 },
-                    //             //             },
-                    //             //         )
-                    //             //         .await
-                    //             //         .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    //             //         let update = <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
-                    //             //             let mut local_increment = 0;
-                    //             //             let mut option_test_case = None;
-                    //             //             for element_0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_30.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")) {
-                    //             //                 let mut should_break = false;
-                    //             //                 for element_1 in element_0 {
-                    //             //                     if local_increment == increment {
-                    //             //                         option_test_case = Some(element_1);
-                    //             //                         should_break = true;
-                    //             //                         break;
-                    //             //                     } else {
-                    //             //                         local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                    //             //                     }
-                    //             //                 }
-                    //             //                 if should_break {
-                    //             //                     break;
-                    //             //                 }
-                    //             //             }
-                    //             //             option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
-                    //             //         });
-                    //             //         assert_eq!(
-                    //             //             super::ExampleReadOnlyIds {
-                    //             //                 primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
-                    //             //                 column_30: Some(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))
-                    //             //             },
-                    //             //             super::Example::try_update_one(
-                    //             //                 &url_cloned,
-                    //             //                 super::ExampleUpdateOneParameters {
-                    //             //                     payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone().into_read()), Some(postgresql_crud::Value { value: update.clone() })).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")
-                    //             //                 }
-                    //             //             )
-                    //             //             .await
-                    //             //             .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                    //             //             "try_update_one result different"
-                    //             //         );
-                    //             //         assert_eq!(
-                    //             //             super::ExampleRead {
-                    //             //                 primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone().into_read() }),
-                    //             //                 column_30: Some(postgresql_crud::Value {
-                    //             //                     value: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                    //             //                         <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_30.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129"))
-                    //             //                             .expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5")
-                    //             //                             .value,
-                    //             //                         Some(update.clone())
-                    //             //                     )
-                    //             //                 })
-                    //             //             },
-                    //             //             super::Example::try_read_one(
-                    //             //                 &url_cloned,
-                    //             //                 super::ExampleReadOneParameters {
-                    //             //                     payload: super::ExampleReadOnePayload {
-                    //             //                         primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(),
-                    //             //                         select: select_default_all_cloned
-                    //             //                     }
-                    //             //                 }
-                    //             //             )
-                    //             //             .await
-                    //             //             .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                    //             //             "try_read_one result different after try_create_one"
-                    //             //         );
-                    //             //     }));
-                    //             // }
-                    //         }
-                    //         acc
-                    //     }),
-                    //     1,
-                    //     |fut| async move {
-                    //         fut.await;
-                    //     },
-                    // )
-                    // .await;
-                    // let try_read_many_data = super::Example::try_read_many(
-                    //     &url,
-                    //     super::ExampleReadManyParameters {
-                    //         payload: super::ExampleReadManyPayload {
-                    //             where_many: super::StdOptionOptionExampleWhereMany(None),
-                    //             select: select_default_all.clone(),
-                    //             order_by: postgresql_crud::OrderBy {
-                    //                 column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //                 order: Some(postgresql_crud::Order::Asc),
-                    //             },
-                    //             pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                    // println!("try_read_many result len {}", try_read_many_data.len());
+                    let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read() });
+                    assert_eq!(super::ExampleRead { primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(), column_0: None, column_30: None }, super::Example::try_read_one(&url, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(), select: select_primary_key.clone() } },).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"), "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4");
+                    let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()), super::ExampleSelect::Column0(<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()), super::ExampleSelect::Column30(<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                    let start = std::time::Instant::now();
+                    futures::StreamExt::for_each_concurrent(
+                        futures::stream::iter({
+                            let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                            for chunk in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::create_vec().chunks(10).map(|element| element.to_vec()).collect::<std::vec::Vec<std::vec::Vec<<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create>>>() {
+                                let url_cloned = url.clone();
+                                let ident_create_default_cloned = ident_create_default.clone();
+                                let select_default_all_cloned = select_default_all.clone();
+                                acc.push(futures::FutureExt::boxed(async move {
+                                    let ident_create_vec = {
+                                        let mut acc = vec![];
+                                        for element in chunk {
+                                            acc.push(super::ExampleCreate { column_0: element, column_30: <<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element() });
+                                        }
+                                        acc
+                                    };
+                                    let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(ident_create_vec.clone()) }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
+                                    assert_eq!(
+                                        {
+                                            let mut acc = vec![];
+                                            assert_eq!(read_only_ids_from_try_create_many.len(), ident_create_vec.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
+                                            for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_create_vec.into_iter()).collect::<std::vec::Vec<(super::ExampleReadOnlyIds, super::ExampleCreate)>>() {
+                                                acc.push(super::ExampleRead {
+                                                    primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids.primary_key_column),
+                                                    column_0: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_0, create.column_0),
+                                                    column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_30, create.column_30),
+                                                });
+                                            }
+                                            acc.sort_by(|a, b| {
+                                                if let (Some(a), Some(b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                    a.value.cmp(&b.value)
+                                                } else {
+                                                    panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
+                                                }
+                                            });
+                                            acc
+                                        },
+                                        super::Example::try_read_many(
+                                            &url_cloned,
+                                            super::ExampleReadManyParameters {
+                                                payload: super::ExampleReadManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                        super::ExampleWhereMany::try_new(
+                                                            Some(
+                                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                    let mut acc = vec![];
+                                                                    for element in &read_only_ids_from_try_create_many {
+                                                                        acc.push(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                    }
+                                                                    acc
+                                                                })
+                                                                .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+                                                            ),
+                                                            None,
+                                                            None
+                                                        )
+                                                        .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+                                                    )),
+                                                    select: select_default_all_cloned.clone(),
+                                                    order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+                                                }
+                                            }
+                                        )
+                                        .await
+                                        .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
+                                        "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+                                    );
+                                    let read_only_ids_from_try_delete_many = {
+                                        let mut acc = super::Example::try_delete_many(
+                                            &url_cloned,
+                                            super::ExampleDeleteManyParameters {
+                                                payload: super::ExampleDeleteManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                                                        primary_key_column: Some(
+                                                            postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                let mut acc = vec![];
+                                                                for element in &read_only_ids_from_try_create_many {
+                                                                    acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                }
+                                                                acc
+                                                            })
+                                                            .expect("error 5f1e5f9d-d189-4368-807e-a84348967610"),
+                                                        ),
+                                                        column_0: None,
+                                                        column_30: None,
+                                                    })),
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
+                                        acc.sort_by(|a, b| a.cmp(&b));
+                                        acc
+                                    };
+                                    assert_eq!(
+                                        read_only_ids_from_try_delete_many,
+                                        {
+                                            let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element| element.primary_key_column.clone().into_read()).collect::<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>();
+                                            acc.sort_by(|a, b| a.cmp(&b));
+                                            acc
+                                        },
+                                        "error f58f5572-4286-4a74-8006-0507339910d4"
+                                    );
+                                    match super::Example::try_read_many(
+                                        &url_cloned,
+                                        super::ExampleReadManyParameters {
+                                            payload: super::ExampleReadManyPayload {
+                                                where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                    super::ExampleWhereMany::try_new(
+                                                        Some(
+                                                            postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                let mut acc = vec![];
+                                                                for element in &read_only_ids_from_try_delete_many {
+                                                                    acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.clone())) }));
+                                                                }
+                                                                acc
+                                                            })
+                                                            .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+                                                        ),
+                                                        None,
+                                                        None,
+                                                    )
+                                                    .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+                                                )),
+                                                select: select_default_all_cloned,
+                                                order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    {
+                                        Ok(value) => {
+                                            if value != std::vec::Vec::new() {
+                                                panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
+                                            }
+                                        }
+                                        Err(error) => {
+                                            panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
+                                        }
+                                    }
+                                }));
+                            }
+                            for chunk in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::create_vec().chunks(10).map(|element| element.to_vec()).collect::<std::vec::Vec<std::vec::Vec<<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Create>>>() {
+                                let url_cloned = url.clone();
+                                let ident_create_default_cloned = ident_create_default.clone();
+                                let select_default_all_cloned = select_default_all.clone();
+                                acc.push(futures::FutureExt::boxed(async move {
+                                    let ident_create_vec = {
+                                        let mut acc = vec![];
+                                        for element in chunk {
+                                            acc.push(super::ExampleCreate { column_0: <<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(), column_30: element });
+                                        }
+                                        acc
+                                    };
+                                    let read_only_ids_from_try_create_many = super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(ident_create_vec.clone()) }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
+                                    assert_eq!(
+                                        {
+                                            let mut acc = vec![];
+                                            assert_eq!(read_only_ids_from_try_create_many.len(), ident_create_vec.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
+                                            for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_create_vec.into_iter()).collect::<std::vec::Vec<(super::ExampleReadOnlyIds, super::ExampleCreate)>>() {
+                                                acc.push(super::ExampleRead {
+                                                    primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids.primary_key_column),
+                                                    column_0: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_0, create.column_0),
+                                                    column_30: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids.column_30, create.column_30),
+                                                });
+                                            }
+                                            acc.sort_by(|a, b| {
+                                                if let (Some(a), Some(b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                    a.value.cmp(&b.value)
+                                                } else {
+                                                    panic!("must not be what error 4428083a-53be-4184-a5b7-94ae2de21d40");
+                                                }
+                                            });
+                                            acc
+                                        },
+                                        super::Example::try_read_many(
+                                            &url_cloned,
+                                            super::ExampleReadManyParameters {
+                                                payload: super::ExampleReadManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                        super::ExampleWhereMany::try_new(
+                                                            Some(
+                                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                    let mut acc = vec![];
+                                                                    for element in &read_only_ids_from_try_create_many {
+                                                                        acc.push(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                    }
+                                                                    acc
+                                                                })
+                                                                .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+                                                            ),
+                                                            None,
+                                                            None
+                                                        )
+                                                        .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+                                                    )),
+                                                    select: select_default_all_cloned.clone(),
+                                                    order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+                                                }
+                                            }
+                                        )
+                                        .await
+                                        .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
+                                        "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+                                    );
+                                    let read_only_ids_from_try_delete_many = {
+                                        let mut acc = super::Example::try_delete_many(
+                                            &url_cloned,
+                                            super::ExampleDeleteManyParameters {
+                                                payload: super::ExampleDeleteManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                                                        primary_key_column: Some(
+                                                            postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                let mut acc = vec![];
+                                                                for element in &read_only_ids_from_try_create_many {
+                                                                    acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                }
+                                                                acc
+                                                            })
+                                                            .expect("error 5f1e5f9d-d189-4368-807e-a84348967610"),
+                                                        ),
+                                                        column_0: None,
+                                                        column_30: None,
+                                                    })),
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
+                                        acc.sort_by(|a, b| a.cmp(&b));
+                                        acc
+                                    };
+                                    assert_eq!(
+                                        read_only_ids_from_try_delete_many,
+                                        {
+                                            let mut acc = read_only_ids_from_try_create_many.into_iter().map(|element| element.primary_key_column.clone().into_read()).collect::<std::vec::Vec<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read>>();
+                                            acc.sort_by(|a, b| a.cmp(&b));
+                                            acc
+                                        },
+                                        "error f58f5572-4286-4a74-8006-0507339910d4"
+                                    );
+                                    match super::Example::try_read_many(
+                                        &url_cloned,
+                                        super::ExampleReadManyParameters {
+                                            payload: super::ExampleReadManyPayload {
+                                                where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                    super::ExampleWhereMany::try_new(
+                                                        Some(
+                                                            postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                let mut acc = vec![];
+                                                                for element in &read_only_ids_from_try_delete_many {
+                                                                    acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.clone())) }));
+                                                                }
+                                                                acc
+                                                            })
+                                                            .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+                                                        ),
+                                                        None,
+                                                        None,
+                                                    )
+                                                    .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+                                                )),
+                                                select: select_default_all_cloned,
+                                                order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    {
+                                        Ok(value) => {
+                                            if value != std::vec::Vec::new() {
+                                                panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
+                                            }
+                                        }
+                                        Err(error) => {
+                                            panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
+                                        }
+                                    }
+                                }));
+                            }
+                            acc
+                        }),
+                        10,
+                        |fut| async move {
+                            fut.await;
+                        },
+                    )
+                    .await;
+                    let create_many_elapsed = start.elapsed();
+                    let create_one_elapsed = start.elapsed();
+                    println!("Elapsed: create_many_elapsed {:?}, create_one_elapsed {:?}", create_many_elapsed, create_one_elapsed);
+                    futures::StreamExt::for_each_concurrent(
+                        futures::stream::iter({
+                            let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                            {
+                                let read_only_ids_current_elements = {
+                                    use futures::StreamExt;
+                                    futures::stream::iter(
+                                        {
+                                            let mut acc = vec![];
+                                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_0 {
+                                                for element0 in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
+                                                    for element1 in element0 {
+                                                        acc.push(ident_create_default.clone());
+                                                    }
+                                                }
+                                            }
+                                            acc
+                                        }
+                                        .chunks(25)
+                                        .map(|element| element.to_vec())
+                                        .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
+                                        .into_iter()
+                                        .map(|element| {
+                                            let url_cloned = url.clone();
+                                            futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
+                                        })
+                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
+                                    )
+                                    .buffer_unordered(5)
+                                    .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
+                                    .await
+                                    .into_iter()
+                                    .flatten()
+                                    .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
+                                };
+                                assert_eq!(
+                                    {
+                                        let mut acc = vec![];
+                                        for element in &read_only_ids_current_elements {
+                                            acc.push(super::ExampleRead {
+                                                primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&element.primary_key_column),
+                                                column_0: match &element.column_0 {
+                                                    Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+                                                    None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+                                                },
+                                                column_30: match &element.column_30 {
+                                                    Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+                                                    None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+                                                },
+                                            });
+                                        }
+                                        acc.sort_by(|a, b| {
+                                            if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                value_a.value.cmp(&value_b.value)
+                                            } else {
+                                                panic!("must not be what");
+                                            }
+                                        });
+                                        acc
+                                    },
+                                    {
+                                        let mut acc = super::Example::try_read_many(
+                                            &url,
+                                            super::ExampleReadManyParameters {
+                                                payload: super::ExampleReadManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                        super::ExampleWhereMany::try_new(
+                                                            Some(
+                                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                    let mut acc = vec![];
+                                                                    for element in &read_only_ids_current_elements {
+                                                                        acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                    }
+                                                                    acc
+                                                                })
+                                                                .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
+                                                            ),
+                                                            None,
+                                                            None,
+                                                        )
+                                                        .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
+                                                    )),
+                                                    select: select_default_all.clone(),
+                                                    order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                        acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
+                                        acc
+                                    },
+                                    "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+                                );
+                                for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
+                                    let url_cloned = url.clone();
+                                    let ident_create_default_cloned = ident_create_default.clone();
+                                    let select_default_all_cloned = select_default_all.clone();
+                                    acc.push(futures::FutureExt::boxed(async move {
+                                        let previous_read = super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned.clone() } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                        let update = <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
+                                            let mut local_increment = 0;
+                                            let mut option_test_case = None;
+                                            for element_0 in <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_0.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")) {
+                                                let mut should_break = false;
+                                                for element_1 in element_0 {
+                                                    if local_increment == increment {
+                                                        option_test_case = Some(element_1);
+                                                        should_break = true;
+                                                        break;
+                                                    } else {
+                                                        local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+                                                    }
+                                                }
+                                                if should_break {
+                                                    break;
+                                                }
+                                            }
+                                            option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+                                        });
+                                        assert_eq!(super::ExampleReadOnlyIds { primary_key_column: read_only_ids_current_element.primary_key_column.clone(), column_0: Some(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update)), column_30: None }, super::Example::try_update_one(&url_cloned, super::ExampleUpdateOneParameters { payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone().into_read()), Some(postgresql_crud::Value { value: update.clone() }), None).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2") }).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"), "try_update_one result different");
+                                        assert_eq!(
+                                            super::ExampleRead {
+                                                primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone().into_read() }),
+                                                column_0: Some(postgresql_crud::Value { value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_0.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value, Some(update.clone())) }),
+                                                column_30: previous_read.column_30
+                                            },
+                                            super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                                            "try_read_one result different after try_create_one"
+                                        );
+                                    }));
+                                }
+                            }
+                            {
+                                let read_only_ids_current_elements = {
+                                    use futures::StreamExt;
+                                    futures::stream::iter(
+                                        {
+                                            let mut acc = vec![];
+                                            if let Some(value) = &common_read_only_ids_returned_from_create_one.column_30 {
+                                                for element0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&value) {
+                                                    for element1 in element0 {
+                                                        acc.push(ident_create_default.clone());
+                                                    }
+                                                }
+                                            }
+                                            acc
+                                        }
+                                        .chunks(25)
+                                        .map(|element| element.to_vec())
+                                        .collect::<std::vec::Vec<std::vec::Vec<super::ExampleCreate>>>()
+                                        .into_iter()
+                                        .map(|element| {
+                                            let url_cloned = url.clone();
+                                            futures::FutureExt::boxed(async move { super::Example::try_create_many(&url_cloned, super::ExampleCreateManyParameters { payload: super::ExampleCreateManyPayload(element) }).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
+                                        })
+                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::ExampleReadOnlyIds>>>>(),
+                                    )
+                                    .buffer_unordered(5)
+                                    .collect::<std::vec::Vec<std::vec::Vec<super::ExampleReadOnlyIds>>>()
+                                    .await
+                                    .into_iter()
+                                    .flatten()
+                                    .collect::<std::vec::Vec<super::ExampleReadOnlyIds>>()
+                                };
+                                assert_eq!(
+                                    {
+                                        let mut acc = vec![];
+                                        for element in &read_only_ids_current_elements {
+                                            acc.push(super::ExampleRead {
+                                                primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&element.primary_key_column),
+                                                column_0: match &element.column_0 {
+                                                    Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+                                                    None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+                                                },
+                                                column_30: match &element.column_30 {
+                                                    Some(value) => <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&value),
+                                                    None => Some(postgresql_crud::Value { value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element() }),
+                                                },
+                                            });
+                                        }
+                                        acc.sort_by(|a, b| {
+                                            if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) {
+                                                value_a.value.cmp(&value_b.value)
+                                            } else {
+                                                panic!("must not be what");
+                                            }
+                                        });
+                                        acc
+                                    },
+                                    {
+                                        let mut acc = super::Example::try_read_many(
+                                            &url,
+                                            super::ExampleReadManyParameters {
+                                                payload: super::ExampleReadManyPayload {
+                                                    where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                        super::ExampleWhereMany::try_new(
+                                                            Some(
+                                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                                    let mut acc = vec![];
+                                                                    for element in &read_only_ids_current_elements {
+                                                                        acc.push(postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual { logical_operator: postgresql_crud::LogicalOperator::Or, value: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(element.primary_key_column.clone().into_read())) }));
+                                                                    }
+                                                                    acc
+                                                                })
+                                                                .expect("error f4202d10-5444-4717-8af0-9358ee044c20"),
+                                                            ),
+                                                            None,
+                                                            None,
+                                                        )
+                                                        .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
+                                                    )),
+                                                    select: select_default_all.clone(),
+                                                    order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                        acc.sort_by(|a, b| if let (Some(value_a), Some(value_b)) = (&a.primary_key_column, &b.primary_key_column) { value_a.value.cmp(&value_b.value) } else { panic!("must not be what") });
+                                        acc
+                                    },
+                                    "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+                                );
+                                for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
+                                    let url_cloned = url.clone();
+                                    let ident_create_default_cloned = ident_create_default.clone();
+                                    let select_default_all_cloned = select_default_all.clone();
+                                    acc.push(futures::FutureExt::boxed(async move {
+                                        let previous_read = super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned.clone() } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                        let update = <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
+                                            let mut local_increment = 0;
+                                            let mut option_test_case = None;
+                                            for element_0 in <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&read_only_ids_current_element.column_30.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")) {
+                                                let mut should_break = false;
+                                                for element_1 in element_0 {
+                                                    if local_increment == increment {
+                                                        option_test_case = Some(element_1);
+                                                        should_break = true;
+                                                        break;
+                                                    } else {
+                                                        local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
+                                                    }
+                                                }
+                                                if should_break {
+                                                    break;
+                                                }
+                                            }
+                                            option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+                                        });
+                                        assert_eq!(super::ExampleReadOnlyIds { primary_key_column: read_only_ids_current_element.primary_key_column.clone(), column_0: None, column_30: Some(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update)) }, super::Example::try_update_one(&url_cloned, super::ExampleUpdateOneParameters { payload: super::ExampleUpdate::try_new(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(read_only_ids_current_element.primary_key_column.clone().into_read()), None, Some(postgresql_crud::Value { value: update.clone() })).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2") }).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"), "try_update_one result different");
+                                        assert_eq!(
+                                            super::ExampleRead {
+                                                primary_key_column: Some(postgresql_crud::Value { value: read_only_ids_current_element.primary_key_column.clone().into_read() }),
+                                                column_0: previous_read.column_0,
+                                                column_30: Some(postgresql_crud::Value {
+                                                    value: <postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(<postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_current_element.column_30.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value, Some(update.clone()))
+                                                })
+                                            },
+                                            super::Example::try_read_one(&url_cloned, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(), select: select_default_all_cloned } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                                            "try_read_one result different after try_create_one"
+                                        );
+                                    }));
+                                }
+                            }
+                            acc
+                        }),
+                        100,
+                        |fut| async move {
+                            fut.await;
+                        },
+                    )
+                    .await;
+                    let try_read_many_data = super::Example::try_read_many(&url, super::ExampleReadManyParameters { payload: super::ExampleReadManyPayload { where_many: super::StdOptionOptionExampleWhereMany(None), select: select_default_all.clone(), order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) }, pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a") } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                    println!("try_read_many result len {}", try_read_many_data.len());
                 });
             })
             .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
