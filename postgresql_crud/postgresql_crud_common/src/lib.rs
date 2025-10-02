@@ -1058,3 +1058,27 @@ pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid;1] {
         uuid::Uuid::new_v4()
     ]
 }
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<std::option::Option<()>>);
+impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl std::default::Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+    fn default() -> Self {
+        Self(Value{ value: None })
+    }
+}
