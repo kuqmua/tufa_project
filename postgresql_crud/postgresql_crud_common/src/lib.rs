@@ -81,6 +81,8 @@ pub trait PostgresqlJsonType {
 
 pub trait PostgresqlTypePrimaryKey {
     type PrimaryKey;
+    type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    fn select_only_ids_query_part(column: &std::primitive::str, is_primary_key: std::primitive::bool) -> std::string::String;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {

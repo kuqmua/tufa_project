@@ -4241,6 +4241,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
             let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_update_for_query_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
+            let select_only_ids_query_part_token_stream = {
+                let format_value_null_jsonb_as_column_comma_token_stream = quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")};
+                if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                    && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                    && let CanBePrimaryKey::True = &can_be_primary_key
+                {
+                    quote::quote! {
+                        if is_primary_key {
+                            format!("{column},")
+                        }
+                        else {
+                            #format_value_null_jsonb_as_column_comma_token_stream
+                        }
+                    }
+                } else {
+                    format_value_null_jsonb_as_column_comma_token_stream
+                }
+            };
             let impl_postgresql_type_for_ident_token_stream = {
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#std_string_string_token_stream::from(#content_token_stream))}
@@ -4658,24 +4676,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_read_only_ids_upper_camel_case,
                     &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::False,
                     //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
-                    &{
-                        let format_value_null_jsonb_as_column_comma_token_stream = quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")};
-                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
-                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
-                            && let CanBePrimaryKey::True = &can_be_primary_key
-                        {
-                            quote::quote! {
-                                if is_primary_key {
-                                    format!("{column},")
-                                }
-                                else {
-                                    #format_value_null_jsonb_as_column_comma_token_stream
-                                }
-                            }
-                        } else {
-                            format_value_null_jsonb_as_column_comma_token_stream
-                        }
-                    },
+                    &select_only_ids_query_part_token_stream,
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -5328,6 +5329,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {
                     impl postgresql_crud_common::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
                         type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
+                        type ReadOnlyIds = #ident_read_only_ids_upper_camel_case;
+                        fn select_only_ids_query_part(column: &std::primitive::str, is_primary_key: std::primitive::bool) -> std::string::String {
+                            #select_only_ids_query_part_token_stream
+                        }
                     }
                 }
             }
