@@ -4781,7 +4781,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &typical_query_bind_token_stream,
                     &postgresql_crud_macros_common::SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore::False,
                     &{
-                        let ok_std_string_string_default_token_stream = quote::quote! {Ok(std::string::String::default())};
+                        let ok_format_value_null_jsonb_as_column_comma_token_stream = quote::quote! {Ok(format!("'{{\"value\": null}}'::jsonb as {column},"))};
                         if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
                             && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
                             && let CanBePrimaryKey::True = &can_be_primary_key
@@ -4791,11 +4791,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     Ok(format!("{column},"))
                                 }
                                 else {
-                                    #ok_std_string_string_default_token_stream
+                                    #ok_format_value_null_jsonb_as_column_comma_token_stream
                                 }
                             }
                         } else {
-                            ok_std_string_string_default_token_stream
+                            ok_format_value_null_jsonb_as_column_comma_token_stream
                         }
                     },
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
