@@ -1089,10 +1089,6 @@ generate_postgresql_types::generate_postgresql_types!("All");
 //     ]
 // });
 
-pub trait PostgresqlTypePrimaryKey {
-    type PrimaryKey;
-}
-
 fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
     if is_primary_key { "primary key" } else { "" }
 }

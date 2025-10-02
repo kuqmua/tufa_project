@@ -79,6 +79,10 @@ pub trait PostgresqlJsonType {
     >;
 }
 
+pub trait PostgresqlTypePrimaryKey {
+    type PrimaryKey;
+}
+
 pub trait PostgresqlTypeWhereFilter<'a> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<

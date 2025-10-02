@@ -4141,41 +4141,38 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(#value_snake_case))});
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
-                let (maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream, maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream) =
-                    if let (CanBePrimaryKey::True, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern) {
-                        (
-                            postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                                &quote::quote! {<'a>},
-                                &ident_standart_not_null_read_upper_camel_case,
-                                &proc_macro2::TokenStream::new(),
-                                &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
-                                &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
-                                &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
-                                &{
-                                    let postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream();
-                                    quote::quote! {
-                                        match #increment_snake_case.checked_add(1) {
-                                            Some(value) => {
-                                                *#increment_snake_case = value;
-                                                Ok(format!("({} = ${})", column, #increment_snake_case))
-                                            },
-                                            None => Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream)
-                                        }
-                                    }
-                                },
-                                &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                                &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
-                                &postgresql_crud_macros_common_import_path_postgresql_crud_common, //meeow
-                            ),
+                let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if let (
+                    CanBePrimaryKey::True,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                    PostgresqlTypePattern::Standart
+                ) = (&can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern) {
+                    postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
+                        &quote::quote! {<'a>},
+                        &ident_standart_not_null_read_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
+                        &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
+                        &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
+                        &{
+                            let postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream();
                             quote::quote! {
-                                impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
-                                    type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
+                                match #increment_snake_case.checked_add(1) {
+                                    Some(value) => {
+                                        *#increment_snake_case = value;
+                                        Ok(format!("({} = ${})", column, #increment_snake_case))
+                                    },
+                                    None => Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream)
                                 }
-                            },
-                        )
-                    } else {
-                        (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new())
-                    };
+                            }
+                        },
+                        &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
+                        &postgresql_crud_macros_common_import_path_postgresql_crud_common, //meeow
+                    )
+                }
+                else {
+                    proc_macro2::TokenStream::new()
+                };
                 quote::quote! {
                     #ident_read_token_stream
                     #impl_ident_read_token_stream
@@ -4185,7 +4182,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream
                     #maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream
-                    #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 }
             };
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
@@ -5322,6 +5318,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 )
             };
+            let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let (
+                CanBePrimaryKey::True,
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                PostgresqlTypePattern::Standart
+            ) = (
+                &can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern
+            ) {
+                quote::quote! {
+                    impl postgresql_crud_common::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
+                        type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
+                    }
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
@@ -5336,6 +5348,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #ident_update_for_query_token_stream
                 #impl_postgresql_type_for_ident_token_stream
                 #impl_postgresql_type_test_cases_for_ident_token_stream
+                #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
             };
             (
                 {

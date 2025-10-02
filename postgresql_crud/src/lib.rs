@@ -42,7 +42,7 @@ pub use postgresql_json_object_type::UniqueVec;
 pub use postgresql_json_object_type::UniqueVecTryNewErrorNamed;
 pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
 
-pub use postgresql_types::PostgresqlTypePrimaryKey;
+pub use postgresql_crud_common::PostgresqlTypePrimaryKey;
 pub use postgresql_types::*;
 
 pub use postgresql_json_types::*;
