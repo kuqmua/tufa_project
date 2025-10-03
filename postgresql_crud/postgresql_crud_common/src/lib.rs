@@ -85,6 +85,50 @@ pub trait PostgresqlTypePrimaryKey {
     fn select_only_ids_query_part(column: &std::primitive::str, is_primary_key: std::primitive::bool) -> std::string::String;
 }
 
+#[cfg(feature = "test-utils")]
+pub trait PostgresqlTypeTestCases {
+    type Element: crate::PostgresqlType;
+    fn read_inner_vec_vec(read_only_ids: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner>>;
+    fn read_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlType>::ReadInner) -> <Self::Element as crate::PostgresqlType>::Read;
+    fn update_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlType>::ReadInner) -> <Self::Element as crate::PostgresqlType>::Update;
+    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as crate::PostgresqlType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::ReadInner>>;
+    fn update_to_read_only_ids(value: &<Self::Element as crate::PostgresqlType>::Update) -> <Self::Element as crate::PostgresqlType>::ReadOnlyIds;
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+        value: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
+    fn read_from_previous_read_unwraped_merged_with_update(
+        read: <Self::Element as crate::PostgresqlType>::Read,
+        option_update: std::option::Option<<Self::Element as crate::PostgresqlType>::Update>,
+    ) -> <Self::Element as crate::PostgresqlType>::Read;
+    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::Create>;
+    fn read_only_ids_merged_with_create_into_option_value_read(
+        read_only_ids: std::option::Option<<Self::Element as crate::PostgresqlType>::ReadOnlyIds>,//todo maybe remove option
+        create: <Self::Element as crate::PostgresqlType>::Create
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
+}
+
+#[cfg(feature = "test-utils")]
+pub trait PostgresqlJsonTypeTestCases {
+    type Element: crate::PostgresqlJsonType;
+    fn read_inner_vec_vec(read_only_ids: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::ReadInner>>;
+    fn read_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlJsonType>::ReadInner) -> <Self::Element as crate::PostgresqlJsonType>::Read;
+    fn update_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlJsonType>::ReadInner) -> <Self::Element as crate::PostgresqlJsonType>::Update;
+    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::ReadInner>>;
+    fn update_to_read_only_ids(value: &<Self::Element as crate::PostgresqlJsonType>::Update) -> <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds;
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+        value: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
+    fn read_from_previous_read_unwraped_merged_with_update(
+        read: <Self::Element as crate::PostgresqlJsonType>::Read,
+        option_update: std::option::Option<<Self::Element as crate::PostgresqlJsonType>::Update>,
+    ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
+    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::Create>;
+    fn read_only_ids_merged_with_create_into_option_value_read(
+        read_only_ids: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::Element as crate::PostgresqlJsonType>::Create
+    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
+}
+
 pub trait PostgresqlTypeWhereFilter<'a> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -896,50 +940,6 @@ where
         }
         Ok(query)
     }
-}
-
-#[cfg(feature = "test-utils")]
-pub trait PostgresqlTypeTestCases {
-    type Element: crate::PostgresqlType;
-    fn read_inner_vec_vec(read_only_ids: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner>>;
-    fn read_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlType>::ReadInner) -> <Self::Element as crate::PostgresqlType>::Read;
-    fn update_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlType>::ReadInner) -> <Self::Element as crate::PostgresqlType>::Update;
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as crate::PostgresqlType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::ReadInner>>;
-    fn update_to_read_only_ids(value: &<Self::Element as crate::PostgresqlType>::Update) -> <Self::Element as crate::PostgresqlType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::Element as crate::PostgresqlType>::ReadOnlyIds
-    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
-    fn read_from_previous_read_unwraped_merged_with_update(
-        read: <Self::Element as crate::PostgresqlType>::Read,
-        option_update: std::option::Option<<Self::Element as crate::PostgresqlType>::Update>,
-    ) -> <Self::Element as crate::PostgresqlType>::Read;
-    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::Create>;
-    fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: std::option::Option<<Self::Element as crate::PostgresqlType>::ReadOnlyIds>,//todo maybe remove option
-        create: <Self::Element as crate::PostgresqlType>::Create
-    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlType>::Read>>;
-}
-
-#[cfg(feature = "test-utils")]
-pub trait PostgresqlJsonTypeTestCases {
-    type Element: crate::PostgresqlJsonType;
-    fn read_inner_vec_vec(read_only_ids: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::ReadInner>>;
-    fn read_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlJsonType>::ReadInner) -> <Self::Element as crate::PostgresqlJsonType>::Read;
-    fn update_new_or_try_new_unwraped_for_test(value: <Self::Element as crate::PostgresqlJsonType>::ReadInner) -> <Self::Element as crate::PostgresqlJsonType>::Update;
-    fn read_only_ids_to_option_value_read_inner(value: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::ReadInner>>;
-    fn update_to_read_only_ids(value: &<Self::Element as crate::PostgresqlJsonType>::Update) -> <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds
-    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
-    fn read_from_previous_read_unwraped_merged_with_update(
-        read: <Self::Element as crate::PostgresqlJsonType>::Read,
-        option_update: std::option::Option<<Self::Element as crate::PostgresqlJsonType>::Update>,
-    ) -> <Self::Element as crate::PostgresqlJsonType>::Read;
-    fn create_vec() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::Create>;
-    fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: <Self::Element as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::Element as crate::PostgresqlJsonType>::Create
-    ) -> std::option::Option<crate::Value<<Self::Element as crate::PostgresqlJsonType>::Read>>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]

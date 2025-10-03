@@ -4652,10 +4652,30 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         }
                     },
-                    &import_path_non_primary_key_postgresql_type_read_only_ids_token_stream,
+                    &{
+                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                            && let CanBePrimaryKey::True = &can_be_primary_key
+                        {
+                            quote::quote! {#ident_read_only_ids_upper_camel_case}
+                        } else {
+                            import_path_non_primary_key_postgresql_type_read_only_ids_token_stream.clone()
+                        }
+                    },
                     &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::False,
                     //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
-                    &quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")},
+                    &{
+                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                            && let CanBePrimaryKey::True = &can_be_primary_key
+                        {
+                            quote::quote! {
+                                format!("{column},")
+                            }
+                        } else {
+                            quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")}
+                        }
+                    },
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens| {
