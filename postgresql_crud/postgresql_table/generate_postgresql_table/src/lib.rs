@@ -4076,19 +4076,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let current_field_type = &element.syn_field.ty;
                 quote::quote! {
                     #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                        #read_only_ids_snake_case.#current_field_ident,//todo maybe add expect
-                        #create_snake_case.#current_field_ident
+                        read_only_ids_from_try_create_one.#current_field_ident,
+                        ident_create.#current_field_ident
                     )
                 }
-            });
-            let std_option_option_ident_where_many_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let current_field_ident = &element.field_ident;
-                quote::quote! {
-                    #current_field_ident: None
-                }
-            });
-            let ident_where_many_try_new_parameters_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                quote::quote! {None}
             });
             quote::quote! {
                 for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
@@ -4097,28 +4088,24 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let select_default_all_cloned = select_default_all.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
                         let ident_create = super::#ident_create_upper_camel_case {
-                            column_156: element,
-                            // column_156: <<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            #ident_create_content_token_stream
                         };
                         let read_only_ids_from_try_create_one = super::#ident::try_create_one(&url_cloned, super::#ident_create_one_parameters_upper_camel_case {
                             payload: ident_create.clone()
                         }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                         assert_eq!(
                             super::#ident_read_upper_camel_case {
-                                primary_key_column: Some(postgresql_crud::Value {
-                                    value: read_only_ids_from_try_create_one.primary_key_column.clone().into_read()
+                                #primary_key_field_ident: Some(postgresql_crud::Value {
+                                    #value_snake_case: read_only_ids_from_try_create_one.#primary_key_field_ident.clone().into_read()
                                 }),
-                                column_156: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                                    read_only_ids_from_try_create_one.column_156,
-                                    ident_create.column_156
-                                )
+                                #ident_read_content_token_stream
                             },
                             super::#ident::try_read_one(
                                 &url_cloned,
                                 super::#ident_read_one_parameters_upper_camel_case {
-                                    payload: super::#ident_read_one_payload_upper_camel_case {
+                                    #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                         #primary_key_field_ident: read_only_ids_from_try_create_one.#primary_key_field_ident.clone().into_read(),
-                                        select: select_default_all_cloned.clone()
+                                        #select_snake_case: select_default_all_cloned.clone()
                                     }
                                 }
                             )
@@ -4129,7 +4116,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let read_only_ids_from_try_delete_one = super::#ident::try_delete_one(
                             &url_cloned,
                             super::#ident_delete_one_parameters_upper_camel_case {
-                                payload: super::#ident_delete_one_payload_upper_camel_case {
+                                #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
                                     #primary_key_field_ident: read_only_ids_from_try_create_one.#primary_key_field_ident.clone().into_read()
                                 }
                             }
@@ -4139,12 +4126,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             read_only_ids_from_try_create_one.#primary_key_field_ident.clone().into_read(),
                             "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                         );
-                        if let Err(error) = super::#ident::try_read_one(
+                        if let Err(#error_snake_case) = super::#ident::try_read_one(
                             &url_cloned,
                             super::#ident_read_one_parameters_upper_camel_case {
-                                payload: super::#ident_read_one_payload_upper_camel_case {
+                                #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                     #primary_key_field_ident: read_only_ids_from_try_create_one.#primary_key_field_ident.clone().into_read(),
-                                    select: select_default_all_cloned
+                                    #select_snake_case: select_default_all_cloned
                                 }
                             }
                         )
@@ -4152,7 +4139,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
                                 read_one_error_named_with_serialize_deserialize,
                                 code_occurence,
-                            } = error {
+                            } = #error_snake_case {
                                 if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
                                     postgresql,
                                     code_occurence
