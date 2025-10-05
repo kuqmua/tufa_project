@@ -363,5 +363,9 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "create", "for", "query"],
     ["self", "update", "for", "query", "element"],
     ["self", "delete", "many", "parameters"],
-    ["self", "delete", "many", "payload"]
+    ["self", "delete", "many", "payload"],
+    ["self", "delete", "one", "parameters"],
+    ["self", "delete", "one", "payload"],
+    ["self", "try", "read", "one", "error", "named"],
+    ["self", "read", "one", "error", "named", "with", "serialize", "deserialize"]
 ]);
