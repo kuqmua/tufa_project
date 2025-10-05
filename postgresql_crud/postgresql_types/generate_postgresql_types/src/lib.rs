@@ -4662,7 +4662,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             import_path_non_primary_key_postgresql_type_read_only_ids_token_stream.clone()
                         }
                     },
-                    &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::False,
                     //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
                     &{
                         if let PostgresqlTypePattern::Standart = &postgresql_type_pattern

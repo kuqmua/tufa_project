@@ -2448,16 +2448,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let field_ident = &element.field_ident;
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
-            //todo remove
-            let content_token_stream = if primary_key_field_ident == field_ident {
-                quote::quote! {true}
-            } else {
-                quote::quote! {false}
-            };
             quote::quote! {
                 #acc_snake_case.push_str(&#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_only_ids_query_part(
-                    #field_ident_double_quotes_token_stream,
-                    #content_token_stream
+                    #field_ident_double_quotes_token_stream
                 ));
             }
         });

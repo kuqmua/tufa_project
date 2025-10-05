@@ -4030,7 +4030,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_read_upper_camel_case,
                     &value_snake_case,
                     &ident_read_only_ids_upper_camel_case,
-                    &postgresql_crud_macros_common::SelectOnlyIdsIsPrimaryKeyUnderscore::True,
                     &quote::quote! {format!("{} as {column},", #ident_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#column_snake_case))},
                     &ident_read_inner_upper_camel_case,
                     &value_into_inner_token_stream,

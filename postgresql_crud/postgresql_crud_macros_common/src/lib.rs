@@ -697,19 +697,6 @@ impl quote::ToTokens for SelectQueryPartValueUnderscore {
     }
 }
 #[derive(Debug, Clone)]
-pub enum SelectOnlyIdsIsPrimaryKeyUnderscore {
-    True,
-    False,
-}
-impl quote::ToTokens for SelectOnlyIdsIsPrimaryKeyUnderscore {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        match &self {
-            Self::True => quote::quote! {_}.to_tokens(tokens),
-            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
-        }
-    }
-}
-#[derive(Debug, Clone)]
 pub enum UpdateQueryPartValueUnderscore {
     True,
     False,
@@ -792,7 +779,6 @@ pub fn generate_impl_postgresql_type_token_stream(
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     normalize_token_stream: &dyn quote::ToTokens,
     read_only_ids_token_stream: &dyn quote::ToTokens,
-    select_only_ids_is_primary_key_underscore: &SelectOnlyIdsIsPrimaryKeyUnderscore,
     select_only_ids_query_part_token_stream: &dyn quote::ToTokens,
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
@@ -872,8 +858,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             }
             type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
             fn #select_only_ids_query_part_snake_case(
-                #column_snake_case: #reference_std_primitive_str_token_stream,
-                #select_only_ids_is_primary_key_underscore: #std_primitive_bool_token_stream
+                #column_snake_case: #reference_std_primitive_str_token_stream
             ) -> #std_string_string_token_stream {
                 #select_only_ids_query_part_token_stream
             }
