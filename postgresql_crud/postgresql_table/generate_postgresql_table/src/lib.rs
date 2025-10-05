@@ -1589,7 +1589,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &self.#primary_key_field_ident,
                             #primary_key_field_ident_double_quotes_token_stream,
                             increment,
-                            true,
                         ){
                             Ok(value) => value,
                             Err(error) => {
@@ -1608,7 +1607,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &value.value,
                                 #field_ident_double_quotes_token_stream,
                                 increment,
-                                false,
                             ){
                                 Ok(value) => value,
                                 Err(error) => {

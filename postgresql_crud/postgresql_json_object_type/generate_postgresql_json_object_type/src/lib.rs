@@ -4082,7 +4082,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #value_snake_case,
                         #query_snake_case
                     )},
-                    &postgresql_crud_macros_common::SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore::True,
                     &quote::quote!{
                         match #value_snake_case.#select_only_updated_ids_query_part_snake_case(
                             &#column_snake_case,

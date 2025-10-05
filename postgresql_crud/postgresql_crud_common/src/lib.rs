@@ -24,7 +24,7 @@ pub trait PostgresqlType {
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &std::primitive::str, increment: &mut std::primitive::u64, is_primary_key: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String

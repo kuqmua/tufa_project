@@ -4306,6 +4306,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
                     }
                 };
+                let select_only_ids_and_select_only_updated_ids_query_common_token_stream = {
+                    if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
+                        && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                        && let CanBePrimaryKey::True = &can_be_primary_key
+                    {
+                        quote::quote! {format!("{column},")}
+                    } else {
+                        quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")}
+                    }
+                };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
                     &ident,
@@ -4663,18 +4673,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
-                    &{
-                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
-                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
-                            && let CanBePrimaryKey::True = &can_be_primary_key
-                        {
-                            quote::quote! {
-                                format!("{column},")
-                            }
-                        } else {
-                            quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")}
-                        }
-                    },
+                    &select_only_ids_and_select_only_updated_ids_query_common_token_stream,
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -4774,25 +4773,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
-                    &postgresql_crud_macros_common::SelectOnlyUpdatedIdsQueryPartIsPrimaryKeyUnderscore::False,
-                    &{
-                        let ok_format_value_null_jsonb_as_column_comma_token_stream = quote::quote! {Ok(format!("'{{\"value\": null}}'::jsonb as {column},"))};
-                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
-                            && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
-                            && let CanBePrimaryKey::True = &can_be_primary_key
-                        {
-                            quote::quote! {
-                                if is_primary_key {
-                                    Ok(format!("{column},"))
-                                }
-                                else {
-                                    #ok_format_value_null_jsonb_as_column_comma_token_stream
-                                }
-                            }
-                        } else {
-                            ok_format_value_null_jsonb_as_column_comma_token_stream
-                        }
-                    },
+                    &quote::quote!{Ok(#select_only_ids_and_select_only_updated_ids_query_common_token_stream)},
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote::quote!{Ok(#query_snake_case)}
                 )
