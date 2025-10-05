@@ -35,7 +35,7 @@ pub struct Example {
     #[generate_postgresql_table_primary_key]
     pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
+    pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
@@ -65,7 +65,7 @@ pub struct Example {
     // pub column_27: postgresql_crud::OptionVecOfStdPrimitiveF64AsNullableArrayOfNotNullFloat8,
     // pub column_28: postgresql_crud::VecOfOptionStdPrimitiveF64AsNotNullArrayOfNullableFloat8,
     // pub column_29: postgresql_crud::OptionVecOfOptionStdPrimitiveF64AsNullableArrayOfNullableFloat8,
-    // pub column_30: postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql,
+    pub column_30: postgresql_crud::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql,
     // pub column_31: postgresql_crud::StdPrimitiveI32AsNotNullSerialInitializedByPostgresql,
     // pub column_32: postgresql_crud::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
     // pub column_33: postgresql_crud::SqlxPostgresTypesPgMoneyAsNotNullMoney,
@@ -182,10 +182,10 @@ pub struct Example {
 
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
 
-    // pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
-    // pub column_155: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
-    // pub column_156: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
+    pub column_155: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
+    pub column_156: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1238,11 +1238,11 @@ pub struct Doggie {
 }]
 pub struct Cat {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-    pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
-    pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-    pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
-    pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
+    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_8: postgresql_crud::VecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNotNullJsonbNumber,

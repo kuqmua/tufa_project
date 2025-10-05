@@ -5337,10 +5337,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {
                     impl postgresql_crud_common::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
                         type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
-                        type ReadOnlyIds = #ident_read_only_ids_upper_camel_case;
-                        fn select_only_ids_query_part(column: &std::primitive::str, is_primary_key: std::primitive::bool) -> std::string::String {
-                            format!("{column},")
-                        }
                     }
                 }
             }
