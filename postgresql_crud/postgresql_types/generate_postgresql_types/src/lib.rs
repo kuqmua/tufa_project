@@ -5303,7 +5303,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         } else {
                             quote::quote!{#ident_read_upper_camel_case(#create_snake_case)}
                         };
-                        quote::quote! {Some(postgresql_crud_common::Value { #value_snake_case: #content_token_stream })}
+                        quote::quote! {Some(postgresql_crud_common::Value { #value_snake_case: <Self::Element as postgresql_crud_common::PostgresqlType>::normalize(#content_token_stream) })}
                     }
                 )
             };
