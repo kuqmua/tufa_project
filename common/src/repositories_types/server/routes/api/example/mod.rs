@@ -1,4 +1,6 @@
-#[derive(Debug, postgresql_crud::GeneratePostgresqlTable)]
+#[derive(Debug
+    , postgresql_crud::GeneratePostgresqlTable
+)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -1245,9 +1247,6 @@ pub struct Cat {
     // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
 }
 
-
-
-
 #[cfg(test)]
 mod example_tests {
     #[test]
@@ -1470,9 +1469,7 @@ mod example_tests {
                     //here start
                     futures::StreamExt::for_each_concurrent(
                         futures::stream::iter({
-                            let 
-                            mut 
-                            acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                            let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                             {
                                 let read_inner_vec_vec_acc = {
                                     let mut acc = vec![];
@@ -1485,7 +1482,7 @@ mod example_tests {
                                     }
                                     acc
                                 };
-                                println!("update_one len {}", read_inner_vec_vec_acc.len());
+                                println!("update_many len {}", read_inner_vec_vec_acc.len());
                                 if read_inner_vec_vec_acc.is_empty() {
                                     println!("PostgresqlTypeTestCases read_inner_vec_vec is empty for column_0");
                                 } else {
@@ -1603,15 +1600,16 @@ mod example_tests {
                                                             ),
                                                             Some(postgresql_crud::Value { value: update.clone() })
                                                         ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")
-                                                    }).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
+                                                    }
+                                                ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                                 "try_update_one result different"
                                             );
                                             assert_eq!(
                                                 super::ExampleRead {
                                                     primary_key_column: Some(postgresql_crud::Value {
                                                         value: read_only_ids_current_element.primary_key_column.clone().into_read()
-                                                    }), 
-                                                    column_0: Some(postgresql_crud::Value { 
+                                                    }),
+                                                    column_0: Some(postgresql_crud::Value {
                                                         value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
                                                             <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                                                 &read_only_ids_current_element.column_0.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
