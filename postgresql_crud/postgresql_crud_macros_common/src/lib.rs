@@ -809,7 +809,6 @@ pub fn generate_impl_postgresql_type_token_stream(
     let std_string_string_token_stream = token_patterns::StdStringString;
     let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
-    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {

@@ -4880,8 +4880,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                             });
-                                            let current_field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&current_field_ident);
-                                            let current_field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&current_field_ident);
                                             if field_ident == current_field_ident {
                                                 quote::quote! {
                                                     #element_snake_case
@@ -4929,8 +4927,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                             });
-                                            let current_field_ident_current_snake_case = naming::parameter::SelfCurrentSnakeCase::from_display(&current_field_ident);
-                                            let current_field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&current_field_ident);
                                             if field_ident == current_field_ident {
                                                 quote::quote! {
                                                     #element_snake_case

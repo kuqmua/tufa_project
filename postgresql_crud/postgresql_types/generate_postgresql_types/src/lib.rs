@@ -886,7 +886,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let create_vec_snake_case = naming::CreateVecSnakeCase;
             let create_snake_case = naming::CreateSnakeCase;
-            let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -930,7 +929,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let generate_as_postgresql_type_test_cases_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{<#content_token_stream as postgresql_crud_common::PostgresqlTypeTestCases>}
             };
-            let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident);
             let ident_standart_not_null_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_standart_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_nullable_upper_camel_case);
             let ident_array_not_null_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
@@ -2273,12 +2271,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let value_ident_inner_type_token_stream = quote::quote! {#value_snake_case: #ident_inner_type_token_stream};
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-            let ident_standart_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-            //
-            let ident_standart_nullable_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
-            let ident_array_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_array_not_null_upper_camel_case);
-            let ident_array_nullable_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_array_nullable_upper_camel_case);
-            //
             let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
             enum IntRangeType {

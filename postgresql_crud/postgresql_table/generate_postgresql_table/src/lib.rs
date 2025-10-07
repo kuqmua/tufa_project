@@ -255,9 +255,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_as_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens| {
         quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
-    let generate_as_postgresql_type_primary_key_token_stream = |field_type: &dyn quote::ToTokens| {
-        quote::quote! {<#field_type as postgresql_crud::PostgresqlTypePrimaryKey>::}
-    };
     let primary_key_field_type_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_tokens_token_stream = |field_type: &dyn quote::ToTokens, tokens: &dyn quote::ToTokens| {
         let as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
@@ -3885,7 +3882,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #current_field_ident: None
                 }
             });
-            let ident_where_many_try_new_parameters_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+
+            //
+            let ident_where_many_try_new_parameters_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper| {
                 quote::quote! {None}
             });
             quote::quote! {
@@ -4055,7 +4054,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let create_one_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
-            let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&field_type);
             let ident_create_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
                 let current_field_type = &element.syn_field.ty;
