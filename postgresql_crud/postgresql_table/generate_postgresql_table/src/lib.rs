@@ -3882,8 +3882,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #current_field_ident: None
                 }
             });
-
-            //
             let ident_where_many_try_new_parameters_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper| {
                 quote::quote! {None}
             });
@@ -3894,7 +3892,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                 {
                     let url_cloned = url.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
                     let select_default_all_cloned = select_default_all.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
                         let ident_create_vec = {
@@ -4082,7 +4079,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
                     let url_cloned = url.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
                     let select_default_all_cloned = select_default_all.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
                         let ident_create = super::#ident_create_upper_camel_case {
@@ -4136,11 +4132,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .await {
                             if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
                                 read_one_error_named_with_serialize_deserialize,
-                                code_occurence,
+                                code_occurence: _,
                             } = #error_snake_case {
                                 if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
                                     postgresql,
-                                    code_occurence
+                                    code_occurence: _,
                                 } = read_one_error_named_with_serialize_deserialize {
                                     if postgresql != "no rows returned by a query that expected to return at least one row" {
                                         panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
@@ -4191,8 +4187,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 if field_ident == current_field_ident {
                     quote::quote! {
                         if let Some(#value_snake_case) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                            for element0 in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&#value_snake_case) {
-                                for element1 in element0 {
+                            for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(&#value_snake_case) {
+                                for _ in #element_snake_case {
                                     #acc_snake_case.push(ident_create_default.clone());
                                 }
                             }
@@ -4375,7 +4371,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         );
                         for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                             let url_cloned = url.clone();
-                            let ident_create_default_cloned = ident_create_default.clone();
                             let select_default_all_cloned = select_default_all.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
                                 #maybe_previous_read_token_stream
@@ -4501,12 +4496,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 ])
                                 .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                                let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |
-                                    mut #value_snake_case: #std_vec_vec_ident_read_token_stream
-                                | -> #std_vec_vec_ident_read_token_stream {
-                                    #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
-                                    #value_snake_case
-                                };
+                                // let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |
+                                //     mut #value_snake_case: #std_vec_vec_ident_read_token_stream
+                                // | -> #std_vec_vec_ident_read_token_stream {
+                                //     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
+                                //     #value_snake_case
+                                // };
                                 let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 };
@@ -4910,7 +4905,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        #ident_tests_token_stream
+        // #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
