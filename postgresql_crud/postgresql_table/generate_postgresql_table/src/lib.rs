@@ -4169,6 +4169,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             // let update_try_new_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 {field_ident}"));
             // let try_update_one_expect_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error d2de0bd6-1b01-4ef2-b074-a60878241b52 {field_ident}"));
             // let try_update_one_result_different_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("try_update_one result different {field_ident}"));
+            let maybe_previous_read_token_stream = if fields_without_primary_key.len() > 1 {
+                quote::quote! {
+                    let previous_read = super::#ident::try_read_one(
+                        &url_cloned,
+                        super::#ident_read_one_parameters_upper_camel_case {
+                            payload: super::#ident_read_one_payload_upper_camel_case {
+                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone().into_read(),
+                                select: select_default_all_cloned.clone()
+                            }
+                        }
+                    ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
+            };
             let ident_create_defaults_for_column_read_inner_vec_vec_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
                 let current_field_type = &element.syn_field.ty;
@@ -4362,15 +4378,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let ident_create_default_cloned = ident_create_default.clone();
                             let select_default_all_cloned = select_default_all.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                                let previous_read = super::#ident::try_read_one(
-                                    &url_cloned,
-                                    super::#ident_read_one_parameters_upper_camel_case {
-                                        payload: super::#ident_read_one_payload_upper_camel_case {
-                                            #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone().into_read(),
-                                            select: select_default_all_cloned.clone()
-                                        }
-                                    }
-                                ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                                #maybe_previous_read_token_stream
                                 let update = <
                                     #field_type
                                     as
