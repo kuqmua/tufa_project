@@ -2545,6 +2545,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     // &generate_create_update_delete_many_fetch_token_stream(
                     //     &CreateManyOrUpdateManyOrDeleteMany::CreateMany
                     // )
+                    //todo reuse
                     &{
                         let create_many_or_update_many_or_delete_many = &CreateManyOrUpdateManyOrDeleteMany::CreateMany;
                         let current_operation = match &create_many_or_update_many_or_delete_many {
@@ -3190,7 +3191,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         });
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(&operation, &std_vec_vec_primary_key_field_type_read_token_stream, &type_variants_from_request_response_syn_variants);
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(&operation, &std_vec_vec_ident_read_only_ids_token_stream, &type_variants_from_request_response_syn_variants);
             let operation_token_stream = {
                 let parameters_logic_token_stream = {
                     let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
@@ -3334,7 +3335,48 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::UpdateMany));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    // &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::UpdateMany)
+                    // &{
+                    //     let create_many_or_update_many_or_delete_many = CreateManyOrUpdateManyOrDeleteMany::UpdateMany;
+                    //     let current_operation = match &create_many_or_update_many_or_delete_many {
+                    //         CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
+                    //         CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
+                    //         CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
+                    //     };
+                    //     generate_fetch_token_stream(
+                    //         &generate_sqlx_row_try_get_primary_key_token_stream(
+                    //             &ident_read_only_ids_upper_camel_case,
+                    //             &quote::quote! {Some(#value_snake_case)},
+                    //             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                    //         ),
+                    //         &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                    //     )
+                    // }
+                    &{
+                        let create_many_or_update_many_or_delete_many = &CreateManyOrUpdateManyOrDeleteMany::UpdateMany;
+                        let current_operation = match &create_many_or_update_many_or_delete_many {
+                            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
+                            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
+                            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
+                        };
+                        generate_fetch_token_stream(
+                            &{
+                                let drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
+                                quote::quote! {
+                                    match #ident_read_only_ids_upper_camel_case::try_from(value) {
+                                        Ok(value) => Some(value),
+                                        Err(error_0) => {
+                                            #drop_rows_match_postgres_transaction_rollback_await_handle_token_stream
+                                        },
+                                    }
+                                }
+                            },
+                            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                        )
+                    },
+                );
                 generate_operation_token_stream(&operation, &common_additional_logic_token_stream, &parameters_logic_token_stream, &proc_macro2::TokenStream::new(), &query_string_token_stream, &binded_query_token_stream, &postgresql_logic_token_stream)
             };
             quote::quote! {
@@ -3344,7 +3386,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_primary_key_field_type_read_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case);
+            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_ident_read_only_ids_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case);
             quote::quote! {
                 #try_operation_error_named_token_stream
                 #try_operation_token_stream
