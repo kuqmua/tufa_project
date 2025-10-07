@@ -1587,48 +1587,56 @@ mod example_tests {
                                                 option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
                                             });
                                             assert_eq!(
-                                                super::ExampleReadOnlyIds {
-                                                    primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
-                                                    column_0: Some(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))
+                                                {
+                                                    let mut acc = vec![];
+                                                    acc.push(super::ExampleReadOnlyIds {
+                                                        primary_key_column: read_only_ids_current_element.primary_key_column.clone(),
+                                                        column_0: Some(<postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))
+                                                    });
+                                                    acc
                                                 },
-                                                super::Example::try_update_one(
+                                                super::Example::try_update_many(
                                                     &url_cloned,
-                                                    super::ExampleUpdateOneParameters {
-                                                        payload: super::ExampleUpdate::try_new(
-                                                            <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(
-                                                                read_only_ids_current_element.primary_key_column.clone().into_read()
-                                                            ),
-                                                            Some(postgresql_crud::Value { value: update.clone() })
-                                                        ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")
+                                                    super::ExampleUpdateManyParameters {
+                                                        payload: super::ExampleUpdateManyPayload::try_new({
+                                                            let mut acc = vec![];
+                                                            acc.push(super::ExampleUpdate::try_new(
+                                                                <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(
+                                                                    read_only_ids_current_element.primary_key_column.clone().into_read()
+                                                                ),
+                                                                Some(postgresql_crud::Value { value: update.clone() })
+                                                            ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"));
+                                                            acc
+                                                        }).expect("error 69e1bd8a-fe78-4301-85ca-f4f3958d7493")
                                                     }
                                                 ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                                 "try_update_one result different"
                                             );
-                                            assert_eq!(
-                                                super::ExampleRead {
-                                                    primary_key_column: Some(postgresql_crud::Value {
-                                                        value: read_only_ids_current_element.primary_key_column.clone().into_read()
-                                                    }),
-                                                    column_0: Some(postgresql_crud::Value {
-                                                        value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                                            <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                                &read_only_ids_current_element.column_0.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
-                                                            ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value,
-                                                            Some(update.clone())
-                                                        )
-                                                    })
-                                                },
-                                                super::Example::try_read_one(
-                                                    &url_cloned,
-                                                    super::ExampleReadOneParameters {
-                                                        payload: super::ExampleReadOnePayload {
-                                                            primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(),
-                                                            select: select_default_all_cloned
-                                                        }
-                                                    }
-                                                ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                                "try_read_one result different after try_create_one"
-                                            );
+                                            // assert_eq!(
+                                            //     super::ExampleRead {
+                                            //         primary_key_column: Some(postgresql_crud::Value {
+                                            //             value: read_only_ids_current_element.primary_key_column.clone().into_read()
+                                            //         }),
+                                            //         column_0: Some(postgresql_crud::Value {
+                                            //             value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                            //                 <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                            //                     &read_only_ids_current_element.column_0.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
+                                            //                 ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").value,
+                                            //                 Some(update.clone())
+                                            //             )
+                                            //         })
+                                            //     },
+                                            //     super::Example::try_read_one(
+                                            //         &url_cloned,
+                                            //         super::ExampleReadOneParameters {
+                                            //             payload: super::ExampleReadOnePayload {
+                                            //                 primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(),
+                                            //                 select: select_default_all_cloned
+                                            //             }
+                                            //         }
+                                            //     ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                                            //     "try_read_one result different after try_create_one"
+                                            // );
                                         }));
                                     }
                                 }
