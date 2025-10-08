@@ -3916,7 +3916,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
         ) = {
             let generate_select_default_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
-                let id = "0776170e-4dd6-4c14-a412-ce10b0c746f1";
                 let (
                     name_token_stream,
                     id
@@ -4295,7 +4294,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&format!("PostgresqlTypeTestCases read_inner_vec_vec is empty for {field_ident}"));
             let is_fields_without_primary_key_len_more_than_one = fields_without_primary_key.len() > 1;
             let maybe_previous_read_token_stream = if is_fields_without_primary_key_len_more_than_one {
-                let none_parameters_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper|quote::quote!{None});
+                let none_parameters_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper|quote::quote!{None});
                 quote::quote! {
                     let previous_read = {
                         let mut #acc_snake_case = super::#ident::try_read_many(
