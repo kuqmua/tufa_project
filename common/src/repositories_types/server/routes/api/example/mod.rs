@@ -1284,7 +1284,16 @@ mod example_tests {
                     let some_value_read_only_ids_returned_from_create_one = Some(postgresql_crud::Value { value: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read() });
                     assert_eq!(super::ExampleRead { primary_key_column: some_value_read_only_ids_returned_from_create_one.clone(), column_47: None }, super::Example::try_read_one(&url, super::ExampleReadOneParameters { payload: super::ExampleReadOnePayload { primary_key_column: common_read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(), select: select_primary_key.clone() } },).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"), "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4");
                     let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(<<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()), super::ExampleSelect::Column47(<<postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element())]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                    
+                    let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueEnumVec::try_new(
+                        vec![
+                            super::ExampleSelect::PrimaryKeyColumn(
+                                <<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize>::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
+                            ),
+                            super::ExampleSelect::Column47(
+                                <<postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize>::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
+                            )
+                        ]
+                    ).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
                     // let start = std::time::Instant::now();
                     // futures::StreamExt::for_each_concurrent(
                     //     futures::stream::iter({
@@ -1756,21 +1765,9 @@ mod example_tests {
                                     for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                                         let url_cloned = url.clone();
                                         let select_default_all_cloned = select_default_all.clone();
+                                        let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                                         acc.push(futures::FutureExt::boxed(async move {
                                             println!("select_default_all {select_default_all_cloned:#?}");
-
-                                            let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueEnumVec::try_new(
-                                                vec![
-                                                    super::ExampleSelect::PrimaryKeyColumn(
-                                                        <<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize>::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-                                                    ),
-                                                    super::ExampleSelect::Column47(
-                                                        <<postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText as postgresql_crud::PostgresqlType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize>::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-                                                    )
-                                                ]
-                                            ).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-
-                                            println!("select_default_all_with_max_page_size {select_default_all_with_max_page_size:#?}");
                                             let update = <postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText as postgresql_crud::PostgresqlTypeTestCases>::update_new_or_try_new_unwraped_for_test({
                                                 let mut local_increment = 0;
                                                 let mut option_test_case = None;
@@ -1803,7 +1800,7 @@ mod example_tests {
                                                         primary_key_column: read_only_ids_current_element.primary_key_column.clone().into_read(),
                                                         select: 
                                                         // select_default_all_cloned
-                                                        select_default_all_with_max_page_size
+                                                        select_default_all_with_max_page_size_cloned
                                                         
                                                     }
                                                 }
