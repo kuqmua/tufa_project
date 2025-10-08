@@ -3699,35 +3699,42 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     ImplDefault::True,
                 );
-                let generate_default_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
-                    match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                            let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                                postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
-                            };
-                            let mut arguments_token_stream = vec![];
-                            for element in 1..=array_dimensions_number {
-                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
-                                arguments_token_stream.push(quote::quote! {
-                                    #dimension_number_pagination_token_stream: #content_token_stream
-                                });
+                let (
+                    impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream,
+                    impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
+                ) = {
+                    let generate_default_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
+                            PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                                let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
+                                };
+                                let mut arguments_token_stream = vec![];
+                                for element in 1..=array_dimensions_number {
+                                    let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                                    arguments_token_stream.push(quote::quote! {
+                                        #dimension_number_pagination_token_stream: #content_token_stream
+                                    });
+                                }
+                                quote::quote! {Self {
+                                    #(#arguments_token_stream),*
+                                }}
                             }
-                            quote::quote! {Self {
-                                #(#arguments_token_stream),*
-                            }}
                         }
-                    }
+                    };
+                    (
+                        postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                            &ident_select_upper_camel_case,
+                            &generate_default_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                        ),
+                        postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
+                            &ident_select_upper_camel_case,
+                            &generate_default_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                        )
+                    )
                 };
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_select_upper_camel_case,
-                    &generate_default_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
-                );
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
-                    &ident_select_upper_camel_case,
-                    &generate_default_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
-                );
                 quote::quote! {
                     #pub_struct_ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
