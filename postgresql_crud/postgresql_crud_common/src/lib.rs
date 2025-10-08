@@ -186,6 +186,9 @@ pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
 pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self>;
 }
+pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self;
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
@@ -767,6 +770,15 @@ impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagin
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
+    #[inline]
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
+        Self(PaginationBase::new_unchecked(
+            std::primitive::i32::MAX.into(),
+            0
+        ))
+    }
+}
 
 //this needed coz serde std::option::Option<std::option::Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -881,6 +893,13 @@ const _: () = {
 impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
+impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
+        Self(vec![
+            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
+        ])
     }
 }
 impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {

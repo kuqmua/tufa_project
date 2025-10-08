@@ -471,7 +471,17 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
         }
     }
 }
-
+pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(impl_generic_token_stream: &dyn quote::ToTokens, import_path: &ImportPath, ident: &dyn quote::ToTokens, ident_generic_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let path_trait_token_stream = import_path.default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size();
+    let default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeSnakeCase;
+    quote::quote! {
+        impl #impl_generic_token_stream #path_trait_token_stream for #ident #ident_generic_token_stream {
+            fn #default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_snake_case() -> Self {
+                #content_token_stream
+            }
+        }
+    }
+}
 pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrudCommon, ident, &proc_macro2::TokenStream::new(), content_token_stream)
 }
@@ -483,6 +493,10 @@ pub fn generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_
 }
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
+}
+
+pub fn generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrudCommon, ident, &proc_macro2::TokenStream::new(), content_token_stream)
 }
 
 pub enum ImportPath {
@@ -517,6 +531,13 @@ impl ImportPath {
             ImportPath::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
             ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(&self) -> &dyn quote::ToTokens {
+        match &self {
+            ImportPath::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
         }
     }
     pub fn to_path(&self) -> &'static std::primitive::str {

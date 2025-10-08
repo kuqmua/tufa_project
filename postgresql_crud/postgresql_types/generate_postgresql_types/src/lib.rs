@@ -895,6 +895,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+            let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
 
             let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote!{#postgresql_crud_macros_common_import_path_postgresql_crud_common::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
@@ -3698,27 +3699,43 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     ImplDefault::True,
                 );
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_select_upper_camel_case,
-                    &match &postgresql_type_pattern {
+                enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
+                    DefaultSomeOne,
+                    DefaultSomeOneWithMaxPageSize
+                }
+                let generate_default_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                    match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                            let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
+                            };
                             let mut arguments_token_stream = vec![];
                             for element in 1..=array_dimensions_number {
                                 let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
                                 arguments_token_stream.push(quote::quote! {
-                                    #dimension_number_pagination_token_stream: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                    #dimension_number_pagination_token_stream: #content_token_stream
                                 });
                             }
                             quote::quote! {Self {
                                 #(#arguments_token_stream),*
                             }}
                         }
-                    },
+                    }
+                };
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_select_upper_camel_case,
+                    &generate_default_content_token_stream(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                );
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
+                    &ident_select_upper_camel_case,
+                    &generate_default_content_token_stream(&DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
                 );
                 quote::quote! {
                     #pub_struct_ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
@@ -5128,10 +5145,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
                                 let mut #acc_snake_case = vec![];
-                                for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case) {
+                                let read_inner_vec_vec = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
+                                for element0 in read_inner_vec_vec.clone() {
                                     for element1 in element0 {
                                         #acc_snake_case.push(vec![vec![element1]]);
                                     }
+                                }
+                                for element in read_inner_vec_vec {
+                                    #acc_snake_case.push(vec![element]);
                                 }
                                 #acc_snake_case
                             },

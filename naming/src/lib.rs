@@ -668,7 +668,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["update", "for", "query", "vec"],
     ["read", "inner", "vec", "vec"],
     ["create", "vec"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "option", "value", "read"]
+    ["read", "only", "ids", "merged", "with", "create", "into", "option", "value", "read"],
+    ["default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains", "one", "element", "with", "max", "page", "size"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
