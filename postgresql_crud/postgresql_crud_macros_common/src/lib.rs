@@ -1462,3 +1462,8 @@ pub enum PostgresqlTypeOrPostgresqlJsonType {
     PostgresqlType,
     PostgresqlJsonType,
 }
+
+pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
+    DefaultSomeOne,
+    DefaultSomeOneWithMaxPageSize
+}

@@ -3911,24 +3911,74 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let none_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|_: &SynFieldWrapper| {
             quote::quote! {None}
         });
-        let select_default_all_not_empty_unique_enum_vec_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            let field_type = &element.syn_field.ty;
-            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-            quote::quote! {
-                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
-                    <
-                        <
-                            #field_type
-                            as
-                            postgresql_crud::PostgresqlType
-                        >::Select
-                        as
-                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                )
-            }
-        });
+        let (
+            select_default_all_not_empty_unique_enum_vec_token_stream,
+            select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
+        ) = {
+            let generate_select_default_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                let id = "0776170e-4dd6-4c14-a412-ce10b0c746f1";
+                let (
+                    name_token_stream,
+                    id
+                ): (
+                    &dyn quote::ToTokens,
+                    &dyn std::fmt::Display
+                ) = match &default_some_one_or_default_some_one_with_max_page_size {
+                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
+                        &quote::quote!{select_default_all},//todo name use naming?
+                        &"70f3e400-eef6-4e3e-8098-85dcd148e282"
+                    ),
+                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
+                        &quote::quote!{select_default_all_with_max_page_size},//todo name use naming?
+                        &"8f42ee4f-00d9-4b67-8ead-adddf5bcdf94"
+                    ),
+                };
+                let content_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.syn_field.ty;
+                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                    let (
+                        upper_camel_case,
+                        snake_case
+                    ): (
+                        &dyn quote::ToTokens,
+                        &dyn quote::ToTokens
+                    ) = match &default_some_one_or_default_some_one_with_max_page_size {
+                        postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
+                            &naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase,
+                            &naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase
+                        ),
+                        postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
+                            &naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeUpperCamelCase,
+                            &naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeSnakeCase
+                        ),
+                    };
+                    quote::quote! {
+                        super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
+                            <
+                                <
+                                    #field_type
+                                    as
+                                    postgresql_crud::PostgresqlType
+                                >::Select
+                                as
+                                postgresql_crud::#upper_camel_case
+                            >::#snake_case()
+                        )
+                    }
+                });
+                let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&format!("error {id}"));
+                quote::quote! {
+                    let #name_token_stream = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                        #content_token_stream
+                    ]).expect(#warning_message_double_quote_token_stream);
+                }
+            };
+            (
+                generate_select_default_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne),
+                generate_select_default_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+            )
+        };
         let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
@@ -4511,6 +4561,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                             let url_cloned = url.clone();
                             let select_default_all_cloned = select_default_all.clone();
+                            let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
                                 #maybe_previous_read_token_stream
                                 let update = <
@@ -4593,7 +4644,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         ).expect("error 5f1e5f9d-d189-4368-807e-a84348967610")),
                                                         #std_option_option_ident_where_many_content_token_stream
                                                     })),
-                                                    select: select_default_all_cloned,
+                                                    select: select_default_all_with_max_page_size_cloned,
                                                     order_by: postgresql_crud::OrderBy {
                                                         column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                                             #primary_key_field_type_as_postgresql_type_token_stream Select::default()
@@ -4836,6 +4887,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                             let url_cloned = url.clone();
                             let select_default_all_cloned = select_default_all.clone();
+                            let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
                                 #maybe_previous_read_token_stream
                                 let update = <
@@ -4899,7 +4951,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         super::#ident_read_one_parameters_upper_camel_case {
                                             payload: super::#ident_read_one_payload_upper_camel_case {
                                                 #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone().into_read(),
-                                                select: select_default_all_cloned
+                                                select: select_default_all_with_max_page_size_cloned
                                             }
                                         }
                                     ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
@@ -4994,7 +5046,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                     "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                                 );
-                                let select_default_all = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#select_default_all_not_empty_unique_enum_vec_token_stream]).expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                                #select_default_all_not_empty_unique_enum_vec_token_stream
+                                #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                                 let start = std::time::Instant::now();
                                 futures::StreamExt::for_each_concurrent(
                                     futures::stream::iter({
@@ -5382,7 +5435,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
