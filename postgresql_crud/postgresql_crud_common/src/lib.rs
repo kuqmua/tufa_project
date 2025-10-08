@@ -7,7 +7,7 @@ pub trait PostgresqlType {
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
     type WhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'a> crate::PostgresqlTypeWhereFilter<'a>;
@@ -35,7 +35,7 @@ pub trait PostgresqlJsonType {
     type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type CreateForQuery: std::fmt::Debug + serde::Serialize + std::convert::From<Self::Create>;
-    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
         value: &Self::Select,
@@ -188,6 +188,9 @@ pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
 }
 pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self;
+}
+pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size() -> std::vec::Vec<Self>;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -895,11 +898,9 @@ impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysConta
         Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
+impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        Self(vec![
-            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size()
-        ])
+        Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
 impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {

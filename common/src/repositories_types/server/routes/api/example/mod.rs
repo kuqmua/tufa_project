@@ -35,8 +35,8 @@ pub struct Example {
     #[generate_postgresql_table_primary_key]
     pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
-    // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
+    pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
+    pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
     // pub column_4: postgresql_crud::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
@@ -82,7 +82,7 @@ pub struct Example {
     // pub column_44: postgresql_crud::OptionVecOfOptionStdPrimitiveBoolAsNullableArrayOfNullableBool,
     // pub column_45: postgresql_crud::StdStringStringAsNotNullText,
     // pub column_46: postgresql_crud::OptionStdStringStringAsNullableText,
-    pub column_47: postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText,
+    // pub column_47: postgresql_crud::VecOfStdStringStringAsNotNullArrayOfNotNullText,
     // pub column_48: postgresql_crud::OptionVecOfStdStringStringAsNullableArrayOfNotNullText,
     // pub column_49: postgresql_crud::VecOfOptionStdStringStringAsNotNullArrayOfNullableText,
     // pub column_50: postgresql_crud::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableText,
@@ -180,10 +180,10 @@ pub struct Example {
 
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
 
-    // pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
-    // pub column_155: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
-    // pub column_156: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
+    pub column_155: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
+    pub column_156: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug

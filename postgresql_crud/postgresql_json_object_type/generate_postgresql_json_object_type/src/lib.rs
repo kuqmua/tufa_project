@@ -203,8 +203,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     code_occurence: error_occurence_lib::code_occurence!()
                 }
             };
-
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+            let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
             let import_path_default_but_option_is_always_some_call_token_stream = quote::quote!{
                 #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
             };
@@ -801,6 +801,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote! {
                 Self(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
             };
+            let self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = quote::quote! {
+                Self(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream))
+            };
             let wrap_content_into_scopes_dot_comma_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                 let scopes_content_token_stream = postgresql_crud_macros_common::wrap_content_into_scopes_token_stream(&content_token_stream);
                 quote::quote! {#scopes_content_token_stream;}
@@ -1062,25 +1065,70 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream = quote::quote! {
                     Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 };
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_select_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.clone(),
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                Self {
-                                    #ident_with_id_standart_not_null_select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                    #dimension1_pagination_token_stream: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                }
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_standart_not_null_content_token_stream = quote::quote! {
+                    Self(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream)
+                };
+                let (
+                    impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream,
+                    impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
+                ) = {
+                    let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                        match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => quote::quote! {#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream},
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => quote::quote! {#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_standart_not_null_content_token_stream},
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.clone(),
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream.clone(),
+                                },
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.clone(),
-                        },
-                    },
-                );
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let (
+                                        ident_with_id_standart_not_null_select_content_token_stream,
+                                        dimension1_pagination_content_token_stream
+                                    ): (
+                                        &dyn quote::ToTokens,
+                                        &dyn quote::ToTokens
+                                    ) = match &default_some_one_or_default_some_one_with_max_page_size {
+                                        postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => (
+                                            &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                            &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                        ),
+                                        postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => (
+                                            &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
+                                            &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream
+                                        ),
+                                    };
+                                    quote::quote! {
+                                        Self {
+                                            #ident_with_id_standart_not_null_select_snake_case: #ident_with_id_standart_not_null_select_content_token_stream,
+                                            #dimension1_pagination_token_stream: #dimension1_pagination_content_token_stream,
+                                        }
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &default_some_one_or_default_some_one_with_max_page_size {
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.clone(),
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream.clone(),
+                                },
+                            },
+                        }
+                    };
+                    (
+                        postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                            &ident_select_upper_camel_case,
+                            &proc_macro2::TokenStream::new(),
+                            &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                        ),
+                        postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
+                            &ident_select_upper_camel_case,
+                            &proc_macro2::TokenStream::new(),
+                            &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                        )
+                    )
+                };
                 let generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let ident_select_element_or_ident_with_id_select_element_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                         IsStandartWithId::False => &ident_standart_not_null_select_element_upper_camel_case,
@@ -1107,27 +1155,47 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case);
-                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case, &{
-                        let vec_content_token_stream = {
-                            let elements_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
-                                let field_ident = &element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    let (
+                        impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream,
+                        impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_with_max_page_size_token_stream
+                    ) = {
+                        let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
+                            let vec_content_token_stream = {
+                                let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                    postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
+                                };
+                                let elements_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
+                                    let field_ident = &element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    quote::quote! {
+                                        #ident_select_element_or_ident_with_id_select_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(#content_token_stream)
+                                    }
                                 });
-                                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                quote::quote! {
-                                    #ident_select_element_or_ident_with_id_select_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                                }
-                            });
-                            quote::quote! {#(#elements_token_stream),*}
+                                quote::quote! {#(#elements_token_stream),*}
+                            };
+                            quote::quote! {vec![
+                                #vec_content_token_stream
+                            ]}
                         };
-                        quote::quote! {vec![
-                            #vec_content_token_stream
-                        ]}
-                    });
+                        (
+                            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                                &ident_select_element_or_ident_with_id_select_element_upper_camel_case,
+                                &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne)
+                            ),
+                            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
+                                &ident_select_element_or_ident_with_id_select_element_upper_camel_case,
+                                &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize)
+                            )
+                        )
+                    };
                     quote::quote! {
                         #ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
                         #impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
                         #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream
+                        #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_with_max_page_size_token_stream
                     }
                 };
                 let maybe_ident_select_element_token_stream = if is_standart_not_null { generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream(&is_standart_with_id_false) } else { proc_macro2::TokenStream::new() };
@@ -1150,8 +1218,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     let impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
                     let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case);
-                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_select_token_stream =
-                        postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_with_id_standart_not_null_select_upper_camel_case, &proc_macro2::TokenStream::new(), &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream);
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_with_id_standart_not_null_select_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream
+                    );
+                    let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_with_id_standart_not_null_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(
+                        &ident_with_id_standart_not_null_select_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_standart_not_null_content_token_stream
+                    );
                     let ident_with_id_select_element_token_stream = generate_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream(&is_standart_with_id_true);
                     quote::quote! {
                         #ident_with_id_standart_not_null_select_token_stream
@@ -1159,6 +1235,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #impl_sqlx_type_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream
                         #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_standart_not_null_select_token_stream
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_standart_not_null_select_token_stream
+                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_with_id_standart_not_null_select_token_stream
                         #ident_with_id_select_element_token_stream
                     }
                 } else {
@@ -1170,6 +1247,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #impl_sqlx_type_sqlx_postgres_for_ident_select_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
                     #maybe_ident_select_element_token_stream
                     #maybe_ident_with_id_standart_not_null_select_token_stream
                 }
