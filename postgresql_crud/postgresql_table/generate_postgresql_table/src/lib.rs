@@ -4243,7 +4243,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
             let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&format!("PostgresqlTypeTestCases read_inner_vec_vec is empty for {field_ident}"));
-            let maybe_previous_read_token_stream = if fields_without_primary_key.len() > 1 {
+            let is_fields_without_primary_key_len_more_than_one = fields_without_primary_key.len() > 1;
+            let maybe_previous_read_token_stream = if is_fields_without_primary_key_len_more_than_one {
                 let none_parameters_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper|quote::quote!{None});
                 quote::quote! {
                     let previous_read = {
@@ -4360,10 +4361,36 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 } else {
                     quote::quote! {
-                        #current_field_ident: element.#current_field_ident
+                        #current_field_ident: #element_snake_case.#current_field_ident
                     }
                 }
             });
+            let expected_read_many_token_stream = if is_fields_without_primary_key_len_more_than_one {
+                quote::quote! {
+                    let mut #acc_snake_case = vec![];
+                    for #element_snake_case in previous_read {
+                        #acc_snake_case.push(super::#ident_read_upper_camel_case {
+                            #primary_key_field_ident: Some(postgresql_crud::Value {
+                                value: read_only_ids_current_element.#primary_key_field_ident.clone().into_read()
+                            }),
+                            #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
+                        });
+                    }
+                    #acc_snake_case
+                }
+            }
+            else {
+                quote::quote! {
+                    vec![
+                        super::#ident_read_upper_camel_case {
+                            #primary_key_field_ident: Some(postgresql_crud::Value {
+                                #value_snake_case: read_only_ids_current_element.#primary_key_field_ident.clone().into_read(),
+                            }),
+                            #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
+                        }
+                    ]
+                }
+            };
             let std_option_option_ident_where_many_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
                 quote::quote! {
@@ -4545,16 +4572,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 );
                                 assert_eq!(
                                     {
-                                        let mut #acc_snake_case = vec![];
-                                        for #element_snake_case in previous_read {
-                                            #acc_snake_case.push(super::#ident_read_upper_camel_case {
-                                                #primary_key_field_ident: Some(postgresql_crud::Value {
-                                                    value: read_only_ids_current_element.#primary_key_field_ident.clone().into_read()
-                                                }),
-                                                #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
-                                            });
-                                        }
-                                        #acc_snake_case
+                                        #expected_read_many_token_stream
                                     },
                                     {
                                         let mut #acc_snake_case = super::#ident::try_read_many(
