@@ -1973,31 +1973,59 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
                             let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_token_stream);
                             let (element_or_some_element_token_stream, maybe_push_none_token_stream) = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => (quote::quote! {element}, proc_macro2::TokenStream::new()),
-                                NotNullOrNullable::Nullable => (quote::quote! {Some(element)}, quote::quote! {acc.push(None);}),
+                                NotNullOrNullable::NotNull => (
+                                    quote::quote! {
+                                        #acc_snake_case.push(vec![#element_snake_case.clone()]);
+                                        #acc_snake_case.push(vec![#element_snake_case.clone(), #element_snake_case]);
+                                    },
+                                    proc_macro2::TokenStream::new()
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    quote::quote! {
+                                        #acc_snake_case.push(vec![Some(#element_snake_case.clone())]);
+                                        #acc_snake_case.push(vec![Some(#element_snake_case.clone()), Some(#element_snake_case)]);
+                                    },
+                                    quote::quote! {
+                                        #acc_snake_case.push(vec![None]);
+                                        #acc_snake_case.push(vec![None, None]);
+                                    }
+                                ),
                             };
                             quote::quote! {
-                                let mut acc = vec![];
-                                for element in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone())) {
-                                    acc.push(#element_or_some_element_token_stream);
+                                let mut #acc_snake_case = vec![];
+                                for #element_snake_case in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone())) {
+                                    #element_or_some_element_token_stream
                                 }
                                 #maybe_push_none_token_stream
-                                vec![acc]
+                                #acc_snake_case
                             }
                         };
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote::quote! {vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
-                                NotNullOrNullable::Nullable => {
+                                NotNullOrNullable::NotNull => {
                                     quote::quote! {
-                                        let mut acc = vec![];
+                                        let mut #acc_snake_case = vec![];
                                         for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
                                             for element1 in element0 {
-                                                acc.push(Some(element1));
+                                                #acc_snake_case.push(vec![element1.clone()]);
+                                                #acc_snake_case.push(vec![element1.clone(), element1]);
                                             }
                                         }
-                                        acc.push(None);
-                                        vec![acc]
+                                        #acc_snake_case
+                                    }
+                                },
+                                NotNullOrNullable::Nullable => {
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(vec![Some(element1.clone())]);
+                                                #acc_snake_case.push(vec![Some(element1.clone()), Some(element1)]);
+                                            }
+                                        }
+                                        #acc_snake_case.push(vec![None]);
+                                        #acc_snake_case.push(vec![None, None]);
+                                        #acc_snake_case
                                     }
                                 }
                             },
