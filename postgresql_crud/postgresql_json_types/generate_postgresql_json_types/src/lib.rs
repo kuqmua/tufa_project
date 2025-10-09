@@ -2008,7 +2008,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => {quote::quote! {vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
+                                NotNullOrNullable::NotNull => quote::quote! {vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
                                 NotNullOrNullable::Nullable => {
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
