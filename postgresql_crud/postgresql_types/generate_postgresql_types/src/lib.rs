@@ -5147,77 +5147,55 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                let read_inner_vec_vec = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                for element0 in read_inner_vec_vec.clone() {
-                                    for element1 in element0 {
-                                        #acc_snake_case.push(vec![vec![element1.clone()]]);
-                                        #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()]]);
-                                        #acc_snake_case.push(vec![vec![element1.clone()], vec![element1.clone()]]);
-                                        #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()], vec![element1.clone(), element1]]);
-                                    }
-                                }
-                                for #element_snake_case in read_inner_vec_vec {
-                                    #acc_snake_case.push(vec![#element_snake_case.clone()]);
-                                    #acc_snake_case.push(vec![#element_snake_case.clone(), #element_snake_case]);
-                                }
-                                #acc_snake_case
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
-                                quote::quote! {
-                                    let mut #acc_snake_case = vec![];
-                                    let read_inner_vec_vec = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                    for element0 in read_inner_vec_vec.clone() {
-                                        for element1 in element0 {
-                                            #acc_snake_case.push(vec![vec![element1.clone()]]);
-                                            #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()]]);
-                                            #acc_snake_case.push(vec![vec![element1.clone()], vec![element1.clone()]]);
-                                            #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()], vec![element1.clone(), element1]]);
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                            match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_as_postgresql_type_test_cases_token_stream,
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgresql_type_test_cases_token_stream
+                                    };
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        let read_inner_vec_vec = #content_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
+                                        for element0 in read_inner_vec_vec.clone() {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(vec![vec![element1.clone()]]);
+                                                #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()]]);
+                                                #acc_snake_case.push(vec![vec![element1.clone()], vec![element1.clone()]]);
+                                                #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()], vec![element1.clone(), element1]]);
+                                            }
                                         }
+                                        for #element_snake_case in read_inner_vec_vec {
+                                            #acc_snake_case.push(vec![#element_snake_case.clone()]);
+                                            #acc_snake_case.push(vec![#element_snake_case.clone(), #element_snake_case]);
+                                        }
+                                        #acc_snake_case
                                     }
-                                    for #element_snake_case in read_inner_vec_vec {
-                                        #acc_snake_case.push(vec![#element_snake_case.clone()]);
-                                        #acc_snake_case.push(vec![#element_snake_case.clone(), #element_snake_case]);
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let content_token_stream: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_array_not_null_as_postgresql_type_test_cases_token_stream,
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream
+                                    };
+                                    quote::quote! {
+                                        let mut #acc_snake_case = vec![];
+                                        let read_inner_vec_vec = #content_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
+                                        for element0 in read_inner_vec_vec.clone() {
+                                            for element1 in element0 {
+                                                for element2 in element1 {
+                                                    #acc_snake_case.push(vec![Some(vec![element2.clone()])]);
+                                                    #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()])]);
+                                                    #acc_snake_case.push(vec![Some(vec![element2.clone()]), Some(vec![element2.clone()])]);
+                                                    #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()]), Some(vec![element2.clone(), element2])]);
+                                                }
+                                            }
+                                        }
+                                        #acc_snake_case.push(vec![None]);
+                                        #acc_snake_case.push(vec![None, None]);
+                                        #acc_snake_case
                                     }
-                                    #acc_snake_case
-                                }
+                                },
                             }
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                let read_inner_vec_vec = #ident_array_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                for element0 in read_inner_vec_vec.clone() {
-                                    for element1 in element0 {
-                                        for element2 in element1 {
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone()]), Some(vec![element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()]), Some(vec![element2.clone(), element2])]);
-                                        }
-                                    }
-                                }
-                                #acc_snake_case.push(vec![None]);
-                                #acc_snake_case.push(vec![None, None]);
-                                #acc_snake_case
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                let read_inner_vec_vec = #ident_array_nullable_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                for element0 in read_inner_vec_vec.clone() {
-                                    for element1 in element0 {
-                                        for element2 in element1 {
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone()]), Some(vec![element2.clone()])]);
-                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()]), Some(vec![element2.clone(), element2])]);
-                                        }
-                                    }
-                                }
-                                #acc_snake_case.push(vec![None]);
-                                #acc_snake_case.push(vec![None, None]);
-                                #acc_snake_case
-                            },
                         },
                     },
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
