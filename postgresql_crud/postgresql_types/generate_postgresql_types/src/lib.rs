@@ -5130,29 +5130,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::True);
-                                quote::quote! {
-                                    vec![{#content_token_stream}]
-                                    //todo should add more?
-                                    // vec![{#content_token_stream}, {#content_token_stream}]
-                                }
+                                quote::quote! {vec![{#content_token_stream}]}
                             }
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    let mut #acc_snake_case = vec![];
-                                    for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case) {
-                                        for element1 in element0 {
-                                            #acc_snake_case.push(vec![Some(element1)]);
-                                            //todo should add more?
-                                            // #acc_snake_case.push(vec![Some(element1.clone())]);
-                                            // #acc_snake_case.push(vec![Some(element1.clone()), Some(element1)]);
-                                        }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                let mut #acc_snake_case = vec![];
+                                for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case) {
+                                    for element1 in element0 {
+                                        #acc_snake_case.push(vec![Some(element1)]);
                                     }
-                                    #acc_snake_case.push(vec![None]);
-                                    //todo should add more?
-                                    // #acc_snake_case.push(vec![None]);
-                                    // #acc_snake_case.push(vec![None, None]);
-                                    #acc_snake_case
                                 }
+                                #acc_snake_case.push(vec![None]);
+                                #acc_snake_case
                             }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
@@ -5165,21 +5153,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
                                         let read_inner_vec_vec = #content_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                        for element0 in read_inner_vec_vec.clone() {
+                                        let mut option_additional = None;
+                                        for element0 in &read_inner_vec_vec {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
                                             for element1 in element0 {
-                                                #acc_snake_case.push(vec![vec![element1]]);
-                                                //todo should add more?
-                                                // #acc_snake_case.push(vec![vec![element1.clone()]]);
-                                                // #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()]]);
-                                                // #acc_snake_case.push(vec![vec![element1.clone()], vec![element1.clone()]]);
-                                                // #acc_snake_case.push(vec![vec![element1.clone(), element1.clone()], vec![element1.clone(), element1]]);
+                                                if option_additional.is_none() {
+                                                    option_additional = Some(vec![vec![element1.clone()]]);
+                                                }
+                                                else {
+                                                    break;
+                                                }
                                             }
                                         }
                                         for #element_snake_case in read_inner_vec_vec {
                                             #acc_snake_case.push(vec![#element_snake_case]);
-                                            //todo should add more?
-                                            // #acc_snake_case.push(vec![#element_snake_case.clone()]);
-                                            // #acc_snake_case.push(vec![#element_snake_case.clone(), #element_snake_case]);
+                                        }
+                                        if let Some(#value_snake_case) = option_additional {
+                                            #acc_snake_case.push(#value_snake_case);
                                         }
                                         #acc_snake_case
                                     }
