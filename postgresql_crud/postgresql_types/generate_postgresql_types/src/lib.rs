@@ -5190,7 +5190,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 for element0 in read_inner_vec_vec.clone() {
                                     for element1 in element0 {
                                         for element2 in element1 {
-                                            #acc_snake_case.push(vec![Some(vec![element2])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone()]), Some(vec![element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()]), Some(vec![element2.clone(), element2])]);
                                         }
                                     }
                                 }
@@ -5204,7 +5207,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 for element0 in read_inner_vec_vec.clone() {
                                     for element1 in element0 {
                                         for element2 in element1 {
-                                            #acc_snake_case.push(vec![Some(vec![element2])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone()]), Some(vec![element2.clone()])]);
+                                            #acc_snake_case.push(vec![Some(vec![element2.clone(), element2.clone()]), Some(vec![element2.clone(), element2])]);
                                         }
                                     }
                                 }
