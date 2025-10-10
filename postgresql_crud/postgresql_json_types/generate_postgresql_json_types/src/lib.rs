@@ -2003,6 +2003,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #acc_snake_case
                             }
                         };
+                        let if_let_some_push_token_stream = quote::quote!{
+                            if let Some(#value_snake_case) = option_additional {
+                                if has_len_more_than_one {
+                                    #acc_snake_case.push(#value_snake_case.0);
+                                }
+                                if !has_len_more_than_one {
+                                    #acc_snake_case.push(#value_snake_case.1);
+                                }
+                            }
+                        };
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote::quote! {vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
@@ -2055,18 +2065,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             has_len_more_than_one
                                         };
                                         for #element_snake_case in read_inner_vec_vec {
-                                            // #element_or_some_element_token_stream
                                             #acc_snake_case.push(vec![#element_snake_case]);
                                         }
-                                        // #maybe_push_none_token_stream
-                                        if let Some(#value_snake_case) = option_additional {
-                                            if has_len_more_than_one {
-                                                #acc_snake_case.push(#value_snake_case.0);
-                                            }
-                                            if !has_len_more_than_one {
-                                                #acc_snake_case.push(#value_snake_case.1);
-                                            }
-                                        }
+                                        #if_let_some_push_token_stream
                                         #acc_snake_case
                                     },
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
@@ -2099,28 +2100,80 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             }
                                             #acc_snake_case
                                         }]);
-                                        if let Some(#value_snake_case) = option_additional {
-                                            if has_len_more_than_one {
-                                                #acc_snake_case.push(#value_snake_case.0);
-                                            }
-                                            if !has_len_more_than_one {
-                                                #acc_snake_case.push(#value_snake_case.1);
-                                            }
-                                        }
+                                        #if_let_some_push_token_stream
                                         #acc_snake_case
                                     },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_acc_content_token_stream(
-                                        not_null_or_nullable,
-                                        &current_ident,
-                                        &proc_macro2::TokenStream::new(),
-                                        &proc_macro2::TokenStream::new(),
-                                    ),
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_acc_content_token_stream(
-                                        not_null_or_nullable,
-                                        &current_ident,
-                                        &proc_macro2::TokenStream::new(),
-                                        &proc_macro2::TokenStream::new(),
-                                    ),
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                        let mut #acc_snake_case = vec![];
+                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                        let option_additional = {
+                                            let mut option_additional = None;
+                                            for element0 in &read_inner_vec_vec {
+                                                if option_additional.is_some() {
+                                                    break;
+                                                }
+                                                for element1 in element0 {
+                                                    if option_additional.is_none() {
+                                                        option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
+                                                    }
+                                                    else {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            option_additional
+                                        };
+                                        let has_len_more_than_one = {
+                                            let mut has_len_more_than_one = false;
+                                            for #element_snake_case in &read_inner_vec_vec {
+                                                if #element_snake_case.len() > 1 {
+                                                    has_len_more_than_one = true;
+                                                    break;
+                                                }
+                                            }
+                                            has_len_more_than_one
+                                        };
+                                        for #element_snake_case in read_inner_vec_vec {
+                                            #acc_snake_case.push(vec![Some(#element_snake_case)]);
+                                        }
+                                        #acc_snake_case.push(vec![None]);
+                                        #if_let_some_push_token_stream
+                                        #acc_snake_case
+                                    },
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                        let mut #acc_snake_case = vec![];
+                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                        let option_additional = {
+                                            let mut option_additional = None;
+                                            for element0 in &read_inner_vec_vec {
+                                                if option_additional.is_some() {
+                                                    break;
+                                                }
+                                                for element1 in element0 {
+                                                    if option_additional.is_none() {
+                                                        option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
+                                                    }
+                                                    else {
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            option_additional
+                                        };
+                                        let has_len_more_than_one = read_inner_vec_vec.len() > 1;
+                                        #acc_snake_case.push(vec![Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for element0 in read_inner_vec_vec {
+                                                for element1 in element0 {
+                                                    #acc_snake_case.push(element1);
+                                                }
+                                            }
+                                            #acc_snake_case
+                                        })]);
+                                        #acc_snake_case.push(vec![None]);
+                                        #if_let_some_push_token_stream
+                                        #acc_snake_case
+                                    },
                                 }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
