@@ -2003,6 +2003,44 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #acc_snake_case
                             }
                         };
+                        let option_additional_token_stream = quote::quote!{
+                            let option_additional = {
+                                let mut option_additional = None;
+                                for element0 in &read_inner_vec_vec {
+                                    if option_additional.is_some() {
+                                        break;
+                                    }
+                                    for element1 in element0 {
+                                        if option_additional.is_none() {
+                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                        }
+                                        else {
+                                            break;
+                                        }
+                                    }
+                                }
+                                option_additional
+                            };
+                        };
+                        let option_additional_some_token_stream = quote::quote!{
+                            let option_additional = {
+                                let mut option_additional = None;
+                                for element0 in &read_inner_vec_vec {
+                                    if option_additional.is_some() {
+                                        break;
+                                    }
+                                    for element1 in element0 {
+                                        if option_additional.is_none() {
+                                            option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
+                                        }
+                                        else {
+                                            break;
+                                        }
+                                    }
+                                }
+                                option_additional
+                            };
+                        };
                         let if_let_some_push_token_stream = quote::quote!{
                             if let Some(#value_snake_case) = option_additional {
                                 if has_len_more_than_one {
@@ -2038,23 +2076,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         NotNullOrNullable::NotNull => quote::quote!{
                                             let mut #acc_snake_case = vec![];
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                            let option_additional = {
-                                                let mut option_additional = None;
-                                                for element0 in &read_inner_vec_vec {
-                                                    if option_additional.is_some() {
-                                                        break;
-                                                    }
-                                                    for element1 in element0 {
-                                                        if option_additional.is_none() {
-                                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                        }
-                                                        else {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                option_additional
-                                            };
+                                            #option_additional_token_stream
                                             let has_len_more_than_one = {
                                                 let mut has_len_more_than_one = false;
                                                 for #element_snake_case in &read_inner_vec_vec {
@@ -2074,23 +2096,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         NotNullOrNullable::Nullable => quote::quote!{
                                             let mut #acc_snake_case = vec![];
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                            let option_additional = {
-                                                let mut option_additional = None;
-                                                for element0 in &read_inner_vec_vec {
-                                                    if option_additional.is_some() {
-                                                        break;
-                                                    }
-                                                    for element1 in element0 {
-                                                        if option_additional.is_none() {
-                                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                        }
-                                                        else {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                option_additional
-                                            };
+                                            #option_additional_token_stream
                                             let has_len_more_than_one = read_inner_vec_vec.len() > 1;
                                             #acc_snake_case.push(vec![{
                                                 let mut #acc_snake_case = vec![];
@@ -2108,23 +2114,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     NotNullOrNullable::Nullable => quote::quote!{
                                         let mut #acc_snake_case = vec![];
                                         let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_inner_vec_vec {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
+                                        #option_additional_some_token_stream
                                         let has_len_more_than_one = read_inner_vec_vec.len() > 1;
                                         #acc_snake_case.push(vec![Some({
                                             let mut #acc_snake_case = vec![];
@@ -2155,23 +2145,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             quote::quote!{
                                                 let mut #acc_snake_case = vec![];
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                let option_additional = {
-                                                    let mut option_additional = None;
-                                                    for element0 in &read_inner_vec_vec {
-                                                        if option_additional.is_some() {
-                                                            break;
-                                                        }
-                                                        for element1 in element0 {
-                                                            if option_additional.is_none() {
-                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                            }
-                                                            else {
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    option_additional
-                                                };
+                                                #option_additional_token_stream
                                                 let has_len_more_than_one = {
                                                     let mut has_len_more_than_one = false;
                                                     for element0 in &read_inner_vec_vec {
@@ -2201,23 +2175,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             quote::quote!{
                                                 let mut #acc_snake_case = vec![];
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                let option_additional = {
-                                                    let mut option_additional = None;
-                                                    for element0 in &read_inner_vec_vec {
-                                                        if option_additional.is_some() {
-                                                            break;
-                                                        }
-                                                        for element1 in element0 {
-                                                            if option_additional.is_none() {
-                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                            }
-                                                            else {
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    option_additional
-                                                };
+                                                #option_additional_token_stream
                                                 let has_len_more_than_one = {
                                                     let mut has_len_more_than_one = false;
                                                     for element0 in &read_inner_vec_vec {
@@ -2247,23 +2205,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             quote::quote!{
                                                 let mut #acc_snake_case = vec![];
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                let option_additional = {
-                                                    let mut option_additional = None;
-                                                    for element0 in &read_inner_vec_vec {
-                                                        if option_additional.is_some() {
-                                                            break;
-                                                        }
-                                                        for element1 in element0 {
-                                                            if option_additional.is_none() {
-                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                            }
-                                                            else {
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    option_additional
-                                                };
+                                                #option_additional_token_stream
                                                 let has_len_more_than_one = read_inner_vec_vec.len() > 1;
                                                 #acc_snake_case.push(vec![{
                                                     let mut #acc_snake_case = vec![];
@@ -2282,23 +2224,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             quote::quote!{
                                                 let mut #acc_snake_case = vec![];
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                let option_additional = {
-                                                    let mut option_additional = None;
-                                                    for element0 in &read_inner_vec_vec {
-                                                        if option_additional.is_some() {
-                                                            break;
-                                                        }
-                                                        for element1 in element0 {
-                                                            if option_additional.is_none() {
-                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                            }
-                                                            else {
-                                                                break;
-                                                            }
-                                                        }
-                                                    }
-                                                    option_additional
-                                                };
+                                                #option_additional_token_stream
                                                 let has_len_more_than_one = read_inner_vec_vec.len() > 1;
                                                 #acc_snake_case.push(vec![{
                                                     let mut #acc_snake_case = vec![];
@@ -2318,23 +2244,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         quote::quote!{
                                             let mut #acc_snake_case = vec![];
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                            let option_additional = {
-                                                let mut option_additional = None;
-                                                for element0 in &read_inner_vec_vec {
-                                                    if option_additional.is_some() {
-                                                        break;
-                                                    }
-                                                    for element1 in element0 {
-                                                        if option_additional.is_none() {
-                                                            option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
-                                                        }
-                                                        else {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                option_additional
-                                            };
+                                            #option_additional_some_token_stream
                                             let has_len_more_than_one = read_inner_vec_vec.len() > 1;
                                             #acc_snake_case.push(vec![Some({
                                                 let mut #acc_snake_case = vec![];
