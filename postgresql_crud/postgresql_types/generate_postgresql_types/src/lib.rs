@@ -5167,8 +5167,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     };
                                     let has_len_more_than_one = {
                                         let mut has_len_more_than_one = false;
-                                        for element0 in &read_inner_vec_vec {
-                                            if element0.len() > 1 {
+                                        for #element_snake_case in &read_inner_vec_vec {
+                                            if #element_snake_case.len() > 1 {
                                                 has_len_more_than_one = true;
                                                 break;
                                             }
@@ -5193,25 +5193,40 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote! {
                                     let mut #acc_snake_case = vec![];
                                     let read_inner_vec_vec = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case);
-                                    let mut option_additional = None;
-                                    for element0 in &read_inner_vec_vec {
-                                        if option_additional.is_some() {
-                                            break;
-                                        }
-                                        for element1 in element0 {
-                                            if option_additional.is_none() {
-                                                option_additional = Some(vec![vec![element1.clone()]]);
-                                            }
-                                            else {
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_inner_vec_vec {
+                                            if option_additional.is_some() {
                                                 break;
                                             }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
                                         }
-                                    }
-                                    for #element_snake_case in read_inner_vec_vec {
-                                        #acc_snake_case.push(vec![#element_snake_case]);
-                                    }
+                                        option_additional
+                                    };
+                                    let has_len_more_than_one = read_inner_vec_vec.len() > 1;
+                                    #acc_snake_case.push({
+                                        let mut #acc_snake_case = vec![];
+                                        for element0 in read_inner_vec_vec {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(element1);
+                                            }
+                                        }
+                                        vec![#acc_snake_case]
+                                    });
                                     if let Some(#value_snake_case) = option_additional {
-                                        #acc_snake_case.push(#value_snake_case);
+                                        if has_len_more_than_one {
+                                            #acc_snake_case.push(#value_snake_case.0);
+                                        }
+                                        if !has_len_more_than_one {
+                                            #acc_snake_case.push(#value_snake_case.1);
+                                        }
                                     }
                                     #acc_snake_case
                                 }
