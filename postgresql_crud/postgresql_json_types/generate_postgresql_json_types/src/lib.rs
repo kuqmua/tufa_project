@@ -2183,15 +2183,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable
                                     }
                                 );
+                                let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
                                 match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                        let current_ident = generate_ident_token_stream(
-                                            dimension1_not_null_or_nullable,
-                                            &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                                dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable
-                                            }
-                                        );
-                                        let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
                                         quote::quote!{
                                             let mut #acc_snake_case = vec![];
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
@@ -2214,17 +2208,25 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             };
                                             let has_len_more_than_one = {
                                                 let mut has_len_more_than_one = false;
-                                                for #element_snake_case in &read_inner_vec_vec {
-                                                    if #element_snake_case.len() > 1 {
-                                                        has_len_more_than_one = true;
-                                                        break;
+                                                for element0 in &read_inner_vec_vec {
+                                                    for element1 in element0 {
+                                                        if element1.len() > 1 {
+                                                            has_len_more_than_one = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
                                                 has_len_more_than_one
                                             };
-                                            for #element_snake_case in read_inner_vec_vec {
-                                                #acc_snake_case.push(vec![#element_snake_case]);
-                                            }
+                                            #acc_snake_case.push(vec![{
+                                                let mut #acc_snake_case = vec![];
+                                                for element0 in read_inner_vec_vec {
+                                                    for element1 in element0 {
+                                                        #acc_snake_case.push(element1);
+                                                    }
+                                                }
+                                                #acc_snake_case
+                                            }]);
                                             #if_let_some_push_token_stream
                                             #acc_snake_case
                                         }
