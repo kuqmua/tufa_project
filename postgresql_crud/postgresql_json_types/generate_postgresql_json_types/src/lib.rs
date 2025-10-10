@@ -2184,8 +2184,172 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 );
                                 let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
-                                match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                match &not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                            quote::quote!{
+                                                let mut #acc_snake_case = vec![];
+                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                                let option_additional = {
+                                                    let mut option_additional = None;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        if option_additional.is_some() {
+                                                            break;
+                                                        }
+                                                        for element1 in element0 {
+                                                            if option_additional.is_none() {
+                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                            }
+                                                            else {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    option_additional
+                                                };
+                                                let has_len_more_than_one = {
+                                                    let mut has_len_more_than_one = false;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            if element1.len() > 1 {
+                                                                has_len_more_than_one = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    has_len_more_than_one
+                                                };
+                                                #acc_snake_case.push(vec![{
+                                                    let mut #acc_snake_case = vec![];
+                                                    for element0 in read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            #acc_snake_case.push(element1);
+                                                        }
+                                                    }
+                                                    #acc_snake_case
+                                                }]);
+                                                #if_let_some_push_token_stream
+                                                #acc_snake_case
+                                            }
+                                        },
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                            quote::quote!{
+                                                let mut #acc_snake_case = vec![];
+                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                                let option_additional = {
+                                                    let mut option_additional = None;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        if option_additional.is_some() {
+                                                            break;
+                                                        }
+                                                        for element1 in element0 {
+                                                            if option_additional.is_none() {
+                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                            }
+                                                            else {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    option_additional
+                                                };
+                                                let has_len_more_than_one = {
+                                                    let mut has_len_more_than_one = false;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            if element1.len() > 1 {
+                                                                has_len_more_than_one = true;
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    has_len_more_than_one
+                                                };
+                                                #acc_snake_case.push(vec![{
+                                                    let mut #acc_snake_case = vec![];
+                                                    for element0 in read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            #acc_snake_case.push(element1);
+                                                        }
+                                                    }
+                                                    #acc_snake_case
+                                                }]);
+                                                #if_let_some_push_token_stream
+                                                #acc_snake_case
+                                            }
+                                        },
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                            quote::quote!{
+                                                let mut #acc_snake_case = vec![];
+                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                                let option_additional = {
+                                                    let mut option_additional = None;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        if option_additional.is_some() {
+                                                            break;
+                                                        }
+                                                        for element1 in element0 {
+                                                            if option_additional.is_none() {
+                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                            }
+                                                            else {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    option_additional
+                                                };
+                                                let has_len_more_than_one = read_inner_vec_vec.len() > 1;
+                                                #acc_snake_case.push(vec![{
+                                                    let mut #acc_snake_case = vec![];
+                                                    for element0 in read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            #acc_snake_case.push(element1);
+                                                        }
+                                                    }
+                                                    #acc_snake_case
+                                                }]);
+                                                #if_let_some_push_token_stream
+                                                #acc_snake_case
+                                            }
+                                        },
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                            quote::quote!{
+                                                let mut #acc_snake_case = vec![];
+                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                                                let option_additional = {
+                                                    let mut option_additional = None;
+                                                    for element0 in &read_inner_vec_vec {
+                                                        if option_additional.is_some() {
+                                                            break;
+                                                        }
+                                                        for element1 in element0 {
+                                                            if option_additional.is_none() {
+                                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                            }
+                                                            else {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                    option_additional
+                                                };
+                                                let has_len_more_than_one = read_inner_vec_vec.len() > 1;
+                                                #acc_snake_case.push(vec![{
+                                                    let mut #acc_snake_case = vec![];
+                                                    for element0 in read_inner_vec_vec {
+                                                        for element1 in element0 {
+                                                            #acc_snake_case.push(element1);
+                                                        }
+                                                    }
+                                                    #acc_snake_case
+                                                }]);
+                                                #if_let_some_push_token_stream
+                                                #acc_snake_case
+                                            }
+                                        },
+                                    },
+                                    NotNullOrNullable::Nullable => {
                                         quote::quote!{
                                             let mut #acc_snake_case = vec![];
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
@@ -2197,7 +2361,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                     }
                                                     for element1 in element0 {
                                                         if option_additional.is_none() {
-                                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                            option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
                                                         }
                                                         else {
                                                             break;
@@ -2206,19 +2370,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 }
                                                 option_additional
                                             };
-                                            let has_len_more_than_one = {
-                                                let mut has_len_more_than_one = false;
-                                                for element0 in &read_inner_vec_vec {
-                                                    for element1 in element0 {
-                                                        if element1.len() > 1 {
-                                                            has_len_more_than_one = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                has_len_more_than_one
-                                            };
-                                            #acc_snake_case.push(vec![{
+                                            let has_len_more_than_one = read_inner_vec_vec.len() > 1;
+                                            #acc_snake_case.push(vec![Some({
                                                 let mut #acc_snake_case = vec![];
                                                 for element0 in read_inner_vec_vec {
                                                     for element1 in element0 {
@@ -2226,203 +2379,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                     }
                                                 }
                                                 #acc_snake_case
-                                            }]);
+                                            })]);
+                                            #acc_snake_case.push(vec![None]);
                                             #if_let_some_push_token_stream
                                             #acc_snake_case
                                         }
                                     },
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                        quote::quote!{
-                                            let mut #acc_snake_case = vec![];
-                                            let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                            let option_additional = {
-                                                let mut option_additional = None;
-                                                for element0 in &read_inner_vec_vec {
-                                                    if option_additional.is_some() {
-                                                        break;
-                                                    }
-                                                    for element1 in element0 {
-                                                        if option_additional.is_none() {
-                                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                        }
-                                                        else {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                option_additional
-                                            };
-                                            let has_len_more_than_one = {
-                                                let mut has_len_more_than_one = false;
-                                                for element0 in &read_inner_vec_vec {
-                                                    for element1 in element0 {
-                                                        if element1.len() > 1 {
-                                                            has_len_more_than_one = true;
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                has_len_more_than_one
-                                            };
-                                            #acc_snake_case.push(vec![{
-                                                let mut #acc_snake_case = vec![];
-                                                for element0 in read_inner_vec_vec {
-                                                    for element1 in element0 {
-                                                        #acc_snake_case.push(element1);
-                                                    }
-                                                }
-                                                #acc_snake_case
-                                            }]);
-                                            #if_let_some_push_token_stream
-                                            #acc_snake_case
-                                        }
-                                    },
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                        let mut #acc_snake_case = vec![];
-                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_inner_vec_vec {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_more_than_one = read_inner_vec_vec.len() > 1;
-                                        #acc_snake_case.push(vec![{
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_inner_vec_vec {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            #acc_snake_case
-                                        }]);
-                                        #if_let_some_push_token_stream
-                                        #acc_snake_case
-                                    },
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                        let mut #acc_snake_case = vec![];
-                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_inner_vec_vec {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_more_than_one = read_inner_vec_vec.len() > 1;
-                                        #acc_snake_case.push(vec![{
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_inner_vec_vec {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            #acc_snake_case
-                                        }]);
-                                        #if_let_some_push_token_stream
-                                        #acc_snake_case
-                                    },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                        let mut #acc_snake_case = vec![];
-                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_inner_vec_vec {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_more_than_one = read_inner_vec_vec.len() > 1;
-                                        #acc_snake_case.push(vec![Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_inner_vec_vec {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            #acc_snake_case
-                                        })]);
-                                        #acc_snake_case.push(vec![None]);
-                                        #if_let_some_push_token_stream
-                                        #acc_snake_case
-                                    },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                        let mut #acc_snake_case = vec![];
-                                        let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_inner_vec_vec {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_more_than_one = read_inner_vec_vec.len() > 1;
-                                        #acc_snake_case.push(vec![Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_inner_vec_vec {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            #acc_snake_case
-                                        })]);
-                                        #acc_snake_case.push(vec![None]);
-                                        #if_let_some_push_token_stream
-                                        #acc_snake_case
-                                    },
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_acc_content_token_stream(
-                                        not_null_or_nullable,
-                                        &current_ident,
-                                        &proc_macro2::TokenStream::new(),
-                                        &proc_macro2::TokenStream::new(),
-                                    ),
-                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_acc_content_token_stream(
-                                        not_null_or_nullable,
-                                        &current_ident,
-                                        &proc_macro2::TokenStream::new(),
-                                        &proc_macro2::TokenStream::new(),
-                                    ),
                                 }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension3 {
