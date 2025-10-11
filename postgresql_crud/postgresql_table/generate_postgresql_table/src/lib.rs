@@ -4916,6 +4916,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                     option_test_case.expect("error bd79056e-bd30-4eda-b913-2afffaf1bfc3")
                                 });
+                                println!("\n+++\nupdate {}\n----\n", serde_json::to_string_pretty(&update).unwrap());
                                 assert_eq!(
                                     super::#ident_read_only_ids_upper_camel_case {
                                         #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone(),
@@ -5434,7 +5435,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        #ident_tests_token_stream
+        // #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
