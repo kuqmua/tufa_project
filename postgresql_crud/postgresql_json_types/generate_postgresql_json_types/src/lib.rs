@@ -2064,6 +2064,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             }
                         };
+                        let acc_push_vec_token_stream = quote::quote!{
+                            #acc_snake_case.push(vec![{
+                                let mut #acc_snake_case = vec![];
+                                for element0 in read_inner_vec_vec {
+                                    for element1 in element0 {
+                                        #acc_snake_case.push(element1);
+                                    }
+                                }
+                                #acc_snake_case
+                            }]);
+                        };
+                        let acc_push_vec_some_token_stream = quote::quote!{
+                            #acc_snake_case.push(vec![Some({
+                                let mut #acc_snake_case = vec![];
+                                for element0 in read_inner_vec_vec {
+                                    for element1 in element0 {
+                                        #acc_snake_case.push(element1);
+                                    }
+                                }
+                                #acc_snake_case
+                            })]);
+                        };
+                        let acc_push_vec_none_token_stream = quote::quote!{#acc_snake_case.push(vec![None]);};
                         let content_token_stream = match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => quote::quote! {vec![postgresql_crud_common::#standart_not_null_test_cases_vec_name_token_stream().into()]},
@@ -2091,9 +2114,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                             #option_additional_token_stream
                                             #has_len_more_than_one_for_for_token_stream
-                                            for #element_snake_case in read_inner_vec_vec {
-                                                #acc_snake_case.push(vec![#element_snake_case]);
-                                            }
+                                            #acc_push_vec_token_stream
                                             #if_let_some_push_token_stream
                                             #acc_snake_case
                                         },
@@ -2102,15 +2123,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                             #option_additional_token_stream
                                             #has_len_more_than_one_token_stream
-                                            #acc_snake_case.push(vec![{
-                                                let mut #acc_snake_case = vec![];
-                                                for element0 in read_inner_vec_vec {
-                                                    for element1 in element0 {
-                                                        #acc_snake_case.push(element1);
-                                                    }
-                                                }
-                                                #acc_snake_case
-                                            }]);
+                                            #acc_push_vec_token_stream
                                             #if_let_some_push_token_stream
                                             #acc_snake_case
                                         },
@@ -2120,16 +2133,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                         #option_additional_some_token_stream
                                         #has_len_more_than_one_token_stream
-                                        #acc_snake_case.push(vec![Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_inner_vec_vec {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            #acc_snake_case
-                                        })]);
-                                        #acc_snake_case.push(vec![None]);
+                                        #acc_push_vec_some_token_stream
+                                        #acc_push_vec_none_token_stream
                                         #if_let_some_push_token_stream
                                         #acc_snake_case
                                     },
@@ -2151,15 +2156,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                                 #option_additional_token_stream
                                                 #has_len_more_than_one_for_for_token_stream
-                                                #acc_snake_case.push(vec![{
-                                                    let mut #acc_snake_case = vec![];
-                                                    for element0 in read_inner_vec_vec {
-                                                        for element1 in element0 {
-                                                            #acc_snake_case.push(element1);
-                                                        }
-                                                    }
-                                                    #acc_snake_case
-                                                }]);
+                                                #acc_push_vec_token_stream
                                                 #if_let_some_push_token_stream
                                                 #acc_snake_case
                                             }
@@ -2170,15 +2167,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                                 #option_additional_token_stream
                                                 #has_len_more_than_one_for_for_token_stream
-                                                #acc_snake_case.push(vec![{
-                                                    let mut #acc_snake_case = vec![];
-                                                    for element0 in read_inner_vec_vec {
-                                                        for element1 in element0 {
-                                                            #acc_snake_case.push(element1);
-                                                        }
-                                                    }
-                                                    #acc_snake_case
-                                                }]);
+                                                #acc_push_vec_token_stream
                                                 #if_let_some_push_token_stream
                                                 #acc_snake_case
                                             }
@@ -2189,15 +2178,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                                 #option_additional_token_stream
                                                 #has_len_more_than_one_token_stream
-                                                #acc_snake_case.push(vec![{
-                                                    let mut #acc_snake_case = vec![];
-                                                    for element0 in read_inner_vec_vec {
-                                                        for element1 in element0 {
-                                                            #acc_snake_case.push(element1);
-                                                        }
-                                                    }
-                                                    #acc_snake_case
-                                                }]);
+                                                #acc_push_vec_token_stream
                                                 #if_let_some_push_token_stream
                                                 #acc_snake_case
                                             }
@@ -2208,15 +2189,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                                 #option_additional_token_stream
                                                 #has_len_more_than_one_token_stream
-                                                #acc_snake_case.push(vec![{
-                                                    let mut #acc_snake_case = vec![];
-                                                    for element0 in read_inner_vec_vec {
-                                                        for element1 in element0 {
-                                                            #acc_snake_case.push(element1);
-                                                        }
-                                                    }
-                                                    #acc_snake_case
-                                                }]);
+                                                #acc_push_vec_token_stream
                                                 #if_let_some_push_token_stream
                                                 #acc_snake_case
                                             }
@@ -2228,16 +2201,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                                             #option_additional_some_token_stream
                                             #has_len_more_than_one_token_stream
-                                            #acc_snake_case.push(vec![Some({
-                                                let mut #acc_snake_case = vec![];
-                                                for element0 in read_inner_vec_vec {
-                                                    for element1 in element0 {
-                                                        #acc_snake_case.push(element1);
-                                                    }
-                                                }
-                                                #acc_snake_case
-                                            })]);
-                                            #acc_snake_case.push(vec![None]);
+                                            #acc_push_vec_some_token_stream
+                                            #acc_push_vec_none_token_stream
                                             #if_let_some_push_token_stream
                                             #acc_snake_case
                                         }
