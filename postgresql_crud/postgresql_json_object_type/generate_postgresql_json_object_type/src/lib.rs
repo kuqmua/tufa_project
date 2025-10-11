@@ -2247,6 +2247,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
                 let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
                 let create_update_delete_are_empty_upper_camel_case = naming::CreateUpdateDeleteAreEmptyUpperCamelCase;
+                let ids_are_not_unique_uppper_camel_case = naming::IdsAreNotUniqueUpperCamelCase;
                 let ident_update_try_new_error_named_upper_camel_case = &naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
                 let maybe_ident_update_try_new_error_named_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),
@@ -2255,6 +2256,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                             pub enum #ident_update_try_new_error_named_upper_camel_case {
                                 #create_update_delete_are_empty_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                #ids_are_not_unique_uppper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    duplicate: std::string::String,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                                 #not_unique_id_in_json_delete_array_upper_camel_case {
@@ -2300,6 +2306,33 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             });
                                         }
                                     }
+                                };
+                                let check_if_ids_are_unique_token_stream = {
+                                    quote::quote!{{
+                                        let mut #acc_snake_case: Vec<&postgresql_crud::UuidUuidAsNotNullJsonbStringOrigin> = vec![];
+                                        for #element_snake_case in update.to_vec() {
+                                            if #acc_snake_case.contains(&&#element_snake_case.#id_snake_case) {
+                                                return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
+                                                    duplicate: #element_snake_case.#id_snake_case.to_string(),
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                });
+                                            }
+                                            else {
+                                                #acc_snake_case.push(&#element_snake_case.#id_snake_case);
+                                            }
+                                        }
+                                        for #element_snake_case in &delete {
+                                            if #acc_snake_case.contains(&#element_snake_case) {
+                                                return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
+                                                    duplicate: #element_snake_case.to_string(),
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                });
+                                            }
+                                            else {
+                                                #acc_snake_case.push(&#element_snake_case);
+                                            }
+                                        }
+                                    }}
                                 };
                                 let check_not_unique_id_token_stream = {
                                     let check_not_unique_id_in_update_array_token_stream = quote::quote! {
@@ -2350,6 +2383,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote! {
                                     pub fn try_new(#fields_token_stream) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
                                         #check_if_all_empty_token_stream
+                                        #check_if_ids_are_unique_token_stream
                                         #check_not_unique_id_token_stream
                                         Ok(Self {
                                             #create_snake_case,
