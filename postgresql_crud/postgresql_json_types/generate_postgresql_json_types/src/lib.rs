@@ -2003,44 +2003,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #acc_snake_case
                             }
                         };
-                        let option_additional_token_stream = quote::quote!{
-                            let option_additional = {
-                                let mut option_additional = None;
-                                for element0 in &read_inner_vec_vec {
-                                    if option_additional.is_some() {
-                                        break;
-                                    }
-                                    for element1 in element0 {
-                                        if option_additional.is_none() {
-                                            option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                        }
-                                        else {
-                                            break;
-                                        }
-                                    }
-                                }
-                                option_additional
-                            };
-                        };
-                        let option_additional_some_token_stream = quote::quote!{
-                            let option_additional = {
-                                let mut option_additional = None;
-                                for element0 in &read_inner_vec_vec {
-                                    if option_additional.is_some() {
-                                        break;
-                                    }
-                                    for element1 in element0 {
-                                        if option_additional.is_none() {
-                                            option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
-                                        }
-                                        else {
-                                            break;
-                                        }
-                                    }
-                                }
-                                option_additional
-                            };
-                        };
                         let has_len_more_than_one_token_stream = quote::quote!{let has_len_more_than_one = read_inner_vec_vec.len() > 1;};
                         let has_len_more_than_one_for_for_token_stream = quote::quote!{
                             let has_len_more_than_one = {
@@ -2054,55 +2016,78 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 has_len_more_than_one
                             };
                         };
-                        let if_let_some_push_token_stream = quote::quote!{
-                            if let Some(#value_snake_case) = option_additional {
-                                if has_len_more_than_one {
-                                    #acc_snake_case.push(#value_snake_case.0);
-                                }
-                                if !has_len_more_than_one {
-                                    #acc_snake_case.push(#value_snake_case.1);
-                                }
-                            }
-                        };
-                        let acc_push_vec_token_stream = quote::quote!{
-                            #acc_snake_case.push(vec![{
-                                let mut #acc_snake_case = vec![];
-                                for element0 in read_inner_vec_vec {
-                                    for element1 in element0 {
-                                        #acc_snake_case.push(element1);
-                                    }
-                                }
-                                #acc_snake_case
-                            }]);
-                        };
-                        let acc_push_vec_some_token_stream = quote::quote!{
-                            #acc_snake_case.push(vec![Some({
-                                let mut #acc_snake_case = vec![];
-                                for element0 in read_inner_vec_vec {
-                                    for element1 in element0 {
-                                        #acc_snake_case.push(element1);
-                                    }
-                                }
-                                #acc_snake_case
-                            })]);
-                        };
-                        let acc_push_vec_none_token_stream = quote::quote!{#acc_snake_case.push(vec![None]);};
                         let generate_acc_content_handle_token_stream = |
                             current_ident_token_stream: &dyn quote::ToTokens,
                             has_len_more_than_one_content_token_stream: &dyn quote::ToTokens,
                         | {
                             let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident_token_stream);
                             let option_additional_content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => &option_additional_token_stream,
-                                NotNullOrNullable::Nullable => &option_additional_some_token_stream,
+                                NotNullOrNullable::NotNull => &quote::quote!{
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_inner_vec_vec {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                },
+                                NotNullOrNullable::Nullable => &quote::quote!{
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_inner_vec_vec {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![Some(vec![element1.clone()])], vec![Some(vec![element1.clone(), element1.clone()])]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                },
                             };
                             let acc_push_vec_content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => &acc_push_vec_token_stream,
-                                NotNullOrNullable::Nullable => &acc_push_vec_some_token_stream,
+                                NotNullOrNullable::NotNull => &quote::quote!{
+                                    #acc_snake_case.push(vec![{
+                                        let mut #acc_snake_case = vec![];
+                                        for element0 in read_inner_vec_vec {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(element1);
+                                            }
+                                        }
+                                        #acc_snake_case
+                                    }]);
+                                },
+                                NotNullOrNullable::Nullable => &quote::quote!{
+                                    #acc_snake_case.push(vec![Some({
+                                        let mut #acc_snake_case = vec![];
+                                        for element0 in read_inner_vec_vec {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(element1);
+                                            }
+                                        }
+                                        #acc_snake_case
+                                    })]);
+                                },
                             };
                             let maybe_acc_push_vec_none_token_stream = match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                                NotNullOrNullable::Nullable => acc_push_vec_none_token_stream.clone(),
+                                NotNullOrNullable::Nullable => quote::quote!{#acc_snake_case.push(vec![None]);},
                             };
                             quote::quote! {
                                 let mut #acc_snake_case = vec![];
@@ -2111,7 +2096,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #has_len_more_than_one_content_token_stream
                                 #acc_push_vec_content_token_stream
                                 #maybe_acc_push_vec_none_token_stream
-                                #if_let_some_push_token_stream
+                                if let Some(#value_snake_case) = option_additional {
+                                    if has_len_more_than_one {
+                                        #acc_snake_case.push(#value_snake_case.0);
+                                    }
+                                    if !has_len_more_than_one {
+                                        #acc_snake_case.push(#value_snake_case.1);
+                                    }
+                                }
                                 #acc_snake_case
                             }
                         };
@@ -2129,31 +2121,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     #acc_snake_case
                                 },
                             },
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                let current_ident = generate_ident_token_stream(
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_handle_token_stream(
+                                &generate_ident_token_stream(
                                     dimension1_not_null_or_nullable,
                                     &PostgresqlJsonTypePattern::Standart
-                                );
-                                match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_acc_content_handle_token_stream(
-                                            &current_ident,
-                                            &has_len_more_than_one_for_for_token_stream,
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_acc_content_handle_token_stream(
-                                            &current_ident,
-                                            &has_len_more_than_one_token_stream,
-                                        ),
-                                    },
-                                    NotNullOrNullable::Nullable => generate_acc_content_handle_token_stream(
-                                        &current_ident,
-                                        match &dimension1_not_null_or_nullable {
-                                            NotNullOrNullable::NotNull => &has_len_more_than_one_for_for_token_stream,
-                                            NotNullOrNullable::Nullable => &has_len_more_than_one_token_stream,
-                                        },
-                                    ),
-                                }
-                            },
+                                ),
+                                &match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => &has_len_more_than_one_for_for_token_stream,
+                                    NotNullOrNullable::Nullable => &has_len_more_than_one_token_stream,
+                                },
+                            ),
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_acc_content_handle_token_stream(
                                 &generate_ident_token_stream(
                                     dimension1_not_null_or_nullable,
