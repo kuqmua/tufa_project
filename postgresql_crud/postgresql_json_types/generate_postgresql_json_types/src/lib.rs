@@ -2030,9 +2030,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     };
                                 }
                             };
-                            let acc_push_vec_content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => &quote::quote!{
-                                    #acc_snake_case.push(vec![{
+                            let acc_push_vec_content_token_stream = {
+                                let content_token_stream = {
+                                    let inner_content_token_stream = quote::quote!{{
                                         let mut #acc_snake_case = vec![];
                                         for element0 in read_inner_vec_vec {
                                             for element1 in element0 {
@@ -2040,19 +2040,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             }
                                         }
                                         #acc_snake_case
-                                    }]);
-                                },
-                                NotNullOrNullable::Nullable => &quote::quote!{
-                                    #acc_snake_case.push(vec![Some({
-                                        let mut #acc_snake_case = vec![];
-                                        for element0 in read_inner_vec_vec {
-                                            for element1 in element0 {
-                                                #acc_snake_case.push(element1);
-                                            }
-                                        }
-                                        #acc_snake_case
-                                    })]);
-                                },
+                                    }};
+                                    match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => inner_content_token_stream,
+                                        NotNullOrNullable::Nullable => quote::quote!{Some(#inner_content_token_stream)},
+                                    }
+                                };
+                                quote::quote!{#acc_snake_case.push(vec![#content_token_stream]);}
                             };
                             let maybe_acc_push_vec_none_token_stream = match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
