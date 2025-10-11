@@ -2125,7 +2125,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     dimension1_not_null_or_nullable,
                                     &PostgresqlJsonTypePattern::Standart
                                 );
-                                let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
                                 match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
                                         NotNullOrNullable::NotNull => generate_acc_content_handle_token_stream(
@@ -2165,63 +2164,42 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
                                 match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            quote::quote!{
-                                                let mut #acc_snake_case = vec![];
-                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                #option_additional_token_stream
-                                                #has_len_more_than_one_for_for_token_stream
-                                                #acc_push_vec_token_stream
-                                                #if_let_some_push_token_stream
-                                                #acc_snake_case
-                                            }
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            quote::quote!{
-                                                let mut #acc_snake_case = vec![];
-                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                #option_additional_token_stream
-                                                #has_len_more_than_one_for_for_token_stream
-                                                #acc_push_vec_token_stream
-                                                #if_let_some_push_token_stream
-                                                #acc_snake_case
-                                            }
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            quote::quote!{
-                                                let mut #acc_snake_case = vec![];
-                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                #option_additional_token_stream
-                                                #has_len_more_than_one_token_stream
-                                                #acc_push_vec_token_stream
-                                                #if_let_some_push_token_stream
-                                                #acc_snake_case
-                                            }
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            quote::quote!{
-                                                let mut #acc_snake_case = vec![];
-                                                let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                                #option_additional_token_stream
-                                                #has_len_more_than_one_token_stream
-                                                #acc_push_vec_token_stream
-                                                #if_let_some_push_token_stream
-                                                #acc_snake_case
-                                            }
-                                        },
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_acc_content_handle_token_stream(
+                                            &current_ident,
+                                            &option_additional_token_stream,
+                                            &has_len_more_than_one_token_stream,
+                                            &acc_push_vec_token_stream,
+                                            &proc_macro2::TokenStream::new(),
+                                        ),
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_acc_content_handle_token_stream(
+                                            &current_ident,
+                                            &option_additional_token_stream,
+                                            &has_len_more_than_one_token_stream,
+                                            &acc_push_vec_token_stream,
+                                            &proc_macro2::TokenStream::new(),
+                                        ),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_acc_content_handle_token_stream(
+                                            &current_ident,
+                                            &option_additional_token_stream,
+                                            &has_len_more_than_one_token_stream,
+                                            &acc_push_vec_token_stream,
+                                            &proc_macro2::TokenStream::new(),
+                                        ),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_acc_content_handle_token_stream(
+                                            &current_ident,
+                                            &option_additional_token_stream,
+                                            &has_len_more_than_one_token_stream,
+                                            &acc_push_vec_token_stream,
+                                            &proc_macro2::TokenStream::new(),
+                                        ),
                                     },
-                                    NotNullOrNullable::Nullable => {
-                                        quote::quote!{
-                                            let mut #acc_snake_case = vec![];
-                                            let read_inner_vec_vec = <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_inner_vec_vec_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
-                                            #option_additional_some_token_stream
-                                            #has_len_more_than_one_token_stream
-                                            #acc_push_vec_some_token_stream
-                                            #acc_push_vec_none_token_stream
-                                            #if_let_some_push_token_stream
-                                            #acc_snake_case
-                                        }
-                                    },
+                                    NotNullOrNullable::Nullable => generate_acc_content_handle_token_stream(
+                                        &current_ident,
+                                        &option_additional_some_token_stream,
+                                        &has_len_more_than_one_token_stream,
+                                        &acc_push_vec_some_token_stream,
+                                        &acc_push_vec_none_token_stream,
+                                    ),
                                 }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension3 {
