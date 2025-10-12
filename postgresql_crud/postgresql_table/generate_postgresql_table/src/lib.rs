@@ -272,8 +272,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateUpperCamelCase);
     let generate_as_postgresql_type_update_for_query_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateForQueryUpperCamelCase);
-    let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
-        <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
+    let primary_key_field_type_as_primary_key_upper_camel_case = {
+        let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
+        let primary_key_upper_camel_case = naming::PrimaryKeyUpperCamelCase;
+        quote::quote! {
+            <#primary_key_field_type as postgresql_crud::#postgresql_type_primary_key_upper_camel_case>::#primary_key_upper_camel_case
+        }
     };
     let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_parameters_upper_camel_case = naming::parameter::SelfDeleteManyParametersUpperCamelCase::from_tokens(&ident);
@@ -327,23 +331,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let impl_ident_token_stream = {
         let ident_prepare_postgresql_error_named_upper_camel_case = naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
+        let content_token_stream = quote::quote!{
+            #[eo_to_std_string_string]
+            error: sqlx::Error,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+        };
         let ident_prepare_postgresql_error_named_token_stream = quote::quote! {
             #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
             pub enum #ident_prepare_postgresql_error_named_upper_camel_case {
                 #create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
-                    #[eo_to_std_string_string]
-                    error: sqlx::Error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    #content_token_stream
                 },
                 #create_extension_if_not_exists_uuid_ossp_upper_camel_case {
-                    #[eo_to_std_string_string]
-                    error: sqlx::Error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    #content_token_stream
                 },
                 #prepare_postgresql_upper_camel_case {
-                    #[eo_to_std_string_string]
-                    error: sqlx::Error,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    #content_token_stream
                 },
             }
         };

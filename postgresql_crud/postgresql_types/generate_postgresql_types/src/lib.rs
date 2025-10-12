@@ -4509,16 +4509,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         let sqlx_postgres_types_pg_range_unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&unbounded_upper_camel_case, &excluded_end_token_stream);
                                         let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&included_start_token_stream, &excluded_end_token_stream);
                                         let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&unbounded_upper_camel_case, &unbounded_upper_camel_case);
-                                        let generate_range_match_token_stream = |included_included_token_stream: &dyn quote::ToTokens,
-                                                                                 included_excluded_token_stream: &dyn quote::ToTokens,
-                                                                                 included_unbounded_token_stream: &dyn quote::ToTokens,
-                                                                                 excluded_included_token_stream: &dyn quote::ToTokens,
-                                                                                 excluded_excluded_token_stream: &dyn quote::ToTokens,
-                                                                                 excluded_unbounded_token_stream: &dyn quote::ToTokens,
-                                                                                 unbounded_included_token_stream: &dyn quote::ToTokens,
-                                                                                 unbounded_excluded_token_stream: &dyn quote::ToTokens| {
+                                        let generate_range_match_token_stream = |
+                                            included_included_token_stream: &dyn quote::ToTokens,
+                                            included_excluded_token_stream: &dyn quote::ToTokens,
+                                            included_unbounded_token_stream: &dyn quote::ToTokens,
+                                            excluded_included_token_stream: &dyn quote::ToTokens,
+                                            excluded_excluded_token_stream: &dyn quote::ToTokens,
+                                            excluded_unbounded_token_stream: &dyn quote::ToTokens,
+                                            unbounded_included_token_stream: &dyn quote::ToTokens,
+                                            unbounded_excluded_token_stream: &dyn quote::ToTokens
+                                        | {
                                             quote::quote! {
-                                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
+                                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (
+                                                    #value_snake_case.0.0.#start_snake_case,
+                                                    #value_snake_case.0.0.#end_snake_case
+                                                ) {
                                                     (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
                                                         #included_included_token_stream
                                                     },
@@ -5476,9 +5481,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             ) = (
                 &can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern
             ) {
+                let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
+                let primary_key_upper_camel_case = naming::PrimaryKeyUpperCamelCase;
                 quote::quote! {
-                    impl #import_path::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
-                        type PrimaryKey = #ident_standart_not_null_read_upper_camel_case;
+                    impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
+                        type #primary_key_upper_camel_case = #ident_standart_not_null_read_upper_camel_case;
                     }
                 }
             }
