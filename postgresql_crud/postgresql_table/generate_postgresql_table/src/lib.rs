@@ -5090,6 +5090,36 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                 )
                                 .await;
+                                //todo read tests
+                                if let Err(#error_snake_case) = super::#ident::try_read_one(
+                                    &url,
+                                    super::#ident_read_one_parameters_upper_camel_case {
+                                        payload: super::#ident_read_one_payload_upper_camel_case {
+                                            #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
+                                            select: select_default_all.clone()
+                                        }
+                                    }
+                                ).await {
+                                    if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                                        read_one_error_named_with_serialize_deserialize,
+                                        code_occurence: _
+                                    } = #error_snake_case {
+                                        if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
+                                            postgresql,
+                                            code_occurence: _
+                                        } = read_one_error_named_with_serialize_deserialize {
+                                            if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                                panic!("error 10010cca-57ec-4620-8ddf-4a3227999b06");
+                                            }
+                                        } else {
+                                            panic!("error c77029fe-1f95-4df5-a5fb-ef663d7bc08d");
+                                        }
+                                    } else {
+                                        panic!("error 8031870d-aea7-44ef-a91b-1b1ea068e5dd")
+                                    }
+                                } else {
+                                    panic!("error 9153abfc-f12f-45dd-8d64-52147577f8dd")
+                                }
                                 let update_many_elapsed = start.elapsed();
                                 futures::StreamExt::for_each_concurrent(
                                     futures::stream::iter({
