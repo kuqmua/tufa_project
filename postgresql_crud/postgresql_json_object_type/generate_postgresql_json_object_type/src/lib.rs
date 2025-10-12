@@ -5041,25 +5041,72 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                         });
                                         let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                        let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
-                                            let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                            });
-                                            if field_ident == current_field_ident {
-                                                quote::quote! {
-                                                    #element_snake_case
-                                                }
-                                            } else {
-                                                quote::quote! {
-                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                }
+                                        #[derive(Clone)]
+                                        enum ShouldAddDotClone {
+                                            True,
+                                            False
+                                        }
+                                        let generate_parameters_token_stream = |should_add_dot_clone: ShouldAddDotClone|{
+                                            let mut acc = vec![];
+                                            for element in get_vec_syn_field(&is_standart_with_id_false) {
+                                                let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                                });
+                                                acc.push(if field_ident == current_field_ident {
+                                                    let maybe_dot_clone_token_stream = match should_add_dot_clone.clone() {
+                                                        ShouldAddDotClone::True => quote::quote!{.clone()},
+                                                        ShouldAddDotClone::False => proc_macro2::TokenStream::new()
+                                                    };
+                                                    quote::quote! {
+                                                        #element_snake_case #maybe_dot_clone_token_stream
+                                                    }
+                                                } else {
+                                                    quote::quote! {
+                                                        #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                    }
+                                                });
                                             }
-                                        });
+                                            acc
+                                        };
+                                        let option_additional_parameters_token_stream = generate_parameters_token_stream(ShouldAddDotClone::True);
+                                        let parameters_token_stream = generate_parameters_token_stream(ShouldAddDotClone::False);
                                         quote::quote! {
-                                            for #element_snake_case in #field_type_type_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                                #acc_snake_case.push(#ident_create_upper_camel_case::new(vec![#ident_with_id_standart_not_null_create_upper_camel_case::new(
-                                                    #(#parameters_token_stream),*
-                                                )]));
+                                            {
+                                                let mut inner_acc = vec![];
+                                                let create_vec = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case();
+                                                let option_additional = {
+                                                    let mut option_additional = None;
+                                                    for #element_snake_case in &create_vec {
+                                                        if option_additional.is_none() {
+                                                            let #value_snake_case = #ident_with_id_standart_not_null_create_upper_camel_case::new(
+                                                                #(#option_additional_parameters_token_stream),*
+                                                            );
+                                                            option_additional = Some((
+                                                                #ident_create_upper_camel_case::new(vec![#value_snake_case.clone()]),
+                                                                #ident_create_upper_camel_case::new(vec![#value_snake_case.clone(), #value_snake_case])
+                                                            ));
+                                                        }
+                                                        else {
+                                                            break;
+                                                        }
+                                                    }
+                                                    option_additional
+                                                };
+                                                let has_len_more_than_one = create_vec.len() > 1;
+                                                for #element_snake_case in create_vec {
+                                                    inner_acc.push(#ident_with_id_standart_not_null_create_upper_camel_case::new(
+                                                        #(#parameters_token_stream),*
+                                                    ));
+                                                }
+                                                #acc_snake_case.push(#ident_create_upper_camel_case::new(inner_acc));
+                                                if let Some(#value_snake_case) = option_additional {
+                                                    if has_len_more_than_one {
+                                                        #acc_snake_case.push(#value_snake_case.0);
+                                                    }
+                                                    if !has_len_more_than_one {
+                                                        #acc_snake_case.push(#value_snake_case.1);
+                                                    }
+                                                }
                                             }
                                         }
                                     });
