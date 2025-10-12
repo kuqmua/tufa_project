@@ -1074,9 +1074,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
 
-            let generate_double_dot_space_tokens_token_stream = |value: &dyn quote::ToTokens| {
-                quote::quote! {: #value}
-            };
             let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |months_token_stream: &dyn quote::ToTokens, days_token_stream: &dyn quote::ToTokens, microseconds_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {#inner_type_standart_not_null_token_stream {
                     #months_snake_case #months_token_stream,
@@ -3375,8 +3372,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => &generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream(&quote::quote! {0,0,0,0}),
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &{
-                                        let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
-                                        generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(&double_dots_space_core_default_default_default_token_stream, &double_dots_space_core_default_default_default_token_stream, &double_dots_space_core_default_default_default_token_stream)
+                                        let double_dots_space_core_default_default_default_token_stream = quote::quote! {: #core_default_default_default_token_stream};
+                                        generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                                            &double_dots_space_core_default_default_default_token_stream,
+                                            &double_dots_space_core_default_default_default_token_stream,
+                                            &double_dots_space_core_default_default_default_token_stream
+                                        )
                                     },
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
