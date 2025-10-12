@@ -1876,9 +1876,76 @@ mod example_tests {
                     )
                     .await;
                     let update_one_elapsed = start.elapsed();
-                    //
-
-                    //
+                    //here start
+                    //delete_one
+                    let read_only_ids_returned_from_create_one = super::Example::try_create_one(
+                        &url,
+                        super::ExampleCreateOneParameters {
+                            payload: ident_create_default.clone()
+                        }
+                    ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    assert_eq!(
+                        super::ExampleRead {
+                            primary_key_column: Some(postgresql_crud::Value {
+                                value: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read()
+                            }),
+                            column_156: <
+                                crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
+                                as
+                                postgresql_crud::PostgresqlTypeTestCases
+                            >::read_only_ids_merged_with_create_into_option_value_read(
+                                read_only_ids_returned_from_create_one.column_156,
+                                ident_create_default.column_156
+                            )
+                        },
+                        super::Example::try_read_one(
+                            &url,
+                            super::ExampleReadOneParameters {
+                                payload: super::ExampleReadOnePayload {
+                                    primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
+                                    select: select_default_all.clone()
+                                }
+                            }
+                        ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                        "try_read_one result different after try_create_one"
+                    );
+                    let read_only_ids_from_try_delete_one = super::Example::try_delete_one(
+                        &url,
+                        super::ExampleDeleteOneParameters {
+                            payload: super::ExampleDeleteOnePayload { 
+                                primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read()
+                            }
+                        }
+                    ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    assert_eq!(
+                        read_only_ids_from_try_delete_one,
+                        read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
+                        "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
+                    );
+                    if let Err(error) = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
+                                select: select_default_all.clone()
+                            }
+                        }
+                    ).await {
+                        if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = error {
+                            if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = read_one_error_named_with_serialize_deserialize {
+                                if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                    panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
+                                }
+                            } else {
+                                panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
+                            }
+                        } else {
+                            panic!("error bcd3f9bf-d6b7-4594-b078-8fe9c34bcf18")
+                        }
+                    } else {
+                        panic!("error 893263c9-7c62-4551-9225-74153c6e1c57")
+                    }
+                    //here end
                     println!("Elapsed: create_many_elapsed {:?}\ncreate_one_elapsed {:?}\nupdate_one_elapsed {:?}\nupdate_many_elapsed {:?}", create_many_elapsed, create_one_elapsed, update_one_elapsed, update_many_elapsed);
                     let try_read_many_data = super::Example::try_read_many(&url, super::ExampleReadManyParameters { payload: super::ExampleReadManyPayload { where_many: super::StdOptionOptionExampleWhereMany(None), select: select_default_all.clone(), order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) }, pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a") } }).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
                     println!("try_read_many result len {}", try_read_many_data.len());
