@@ -5358,7 +5358,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         } else {
                             quote::quote! {
-                                #import_path_non_primary_key_postgresql_type_read_only_ids_token_stream(#import_path::Value { value: None })
+                                #import_path_non_primary_key_postgresql_type_read_only_ids_token_stream(#import_path::Value { #value_snake_case: None })
                             }
                         }
                     },

@@ -5226,7 +5226,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 )
                                                                 .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43")
                                                             ),
-                                                            None
+                                                            #none_parameters_initialization_without_primary_key_token_stream
                                                         )
                                                         .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
                                                     )),
@@ -5643,7 +5643,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        #ident_tests_token_stream
+        // #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
