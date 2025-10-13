@@ -4235,7 +4235,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     postgresql,
                                     code_occurence: _,
                                 } = read_one_error_named_with_serialize_deserialize {
-                                    if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                    if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
                                         panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
                                     }
                                 }
@@ -4954,7 +4954,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             postgresql,
                             code_occurence: _
                         } = delete_one_error_named_with_serialize_deserialize {
-                            if postgresql != "no rows returned by a query that expected to return at least one row" {
+                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
                                 panic!("error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
                             }
                         } else {
@@ -5017,7 +5017,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             postgresql,
                             code_occurence: _
                         } = read_one_error_named_with_serialize_deserialize {
-                            if postgresql != "no rows returned by a query that expected to return at least one row" {
+                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
                                 panic!("error 2c10a1e0-ee7f-4710-9329-5e6ba04a880c");
                             }
                         } else {
@@ -5045,6 +5045,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .spawn(|| {
                             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
                                 tracing_subscriber::fmt::init();
+                                let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
                                 static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
                                 let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
                                 let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new()
@@ -5230,7 +5231,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 postgresql,
                                                 code_occurence: _
                                             } = read_one_error_named_with_serialize_deserialize {
-                                                if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                                if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
                                                     panic!("error 10010cca-57ec-4620-8ddf-4a3227999b06");
                                                 }
                                             } else {
@@ -5552,7 +5553,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     code_occurence: _,
                                 // } = &#error_snake_case &&
                                 // let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize &&
-                                // "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
+                                // no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.to_string() != *postgresql {
                                 //     panic!("error f09b40a0-23aa-45f9-968c-c893a58dfa03");
                                 // }
                                 // drop_table_if_exists(&#postgres_pool_snake_case).await;
