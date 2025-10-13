@@ -1878,6 +1878,28 @@ mod example_tests {
                     let update_one_elapsed = start.elapsed();
                     //here start
                     //delete_one
+                    if let Err(error) = super::Example::try_delete_one(
+                        &url,
+                        super::ExampleDeleteOneParameters {
+                            payload: super::ExampleDeleteOnePayload { 
+                                primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(uuid::Uuid::new_v4())
+                            }
+                        }
+                    ).await {
+                        if let super::ExampleTryDeleteOneErrorNamed::ExampleDeleteOneErrorNamedWithSerializeDeserialize { delete_one_error_named_with_serialize_deserialize, code_occurence: _ } = error {
+                            if let super::ExampleDeleteOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = delete_one_error_named_with_serialize_deserialize {
+                                if postgresql != "no rows returned by a query that expected to return at least one row" {
+                                    panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
+                                }
+                            } else {
+                                panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
+                            }
+                        } else {
+                            panic!("error bcd3f9bf-d6b7-4594-b078-8fe9c34bcf18")
+                        }
+                    } else {
+                        panic!("error 893263c9-7c62-4551-9225-74153c6e1c57")
+                    }
                     let read_only_ids_returned_from_create_one = super::Example::try_create_one(
                         &url,
                         super::ExampleCreateOneParameters {
