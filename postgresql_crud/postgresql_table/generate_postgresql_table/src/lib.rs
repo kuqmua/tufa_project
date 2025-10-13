@@ -4926,6 +4926,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         });
+        let delete_many_token_stream =  {
+            quote::quote!{
+                
+            }
+        };
         let delete_one_token_stream = {
             let ident_read_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let current_field_ident = &element.field_ident;
@@ -5259,15 +5264,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .await;
                                 let update_one_elapsed = start.elapsed();
                                 {
+                                    #delete_many_token_stream
+                                }
+                                let delete_many_elapsed = start.elapsed();
+                                {
                                     #delete_one_token_stream
                                 }
                                 let delete_one_elapsed = start.elapsed();
                                 println!(
-                                    "create_many {:?}\ncreate_one {:?}\nupdate_one {:?}\nupdate_many {:?}\ndelete_one_elapsed {:?}",
+                                    "create_many {:?}\ncreate_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
                                     create_many_elapsed,
                                     create_one_elapsed,
-                                    update_one_elapsed,
                                     update_many_elapsed,
+                                    update_one_elapsed,
+                                    delete_many_elapsed,
                                     delete_one_elapsed
                                 );
                                 let try_read_many_data = super::#ident::try_read_many(
