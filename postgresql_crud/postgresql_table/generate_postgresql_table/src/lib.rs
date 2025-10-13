@@ -4098,7 +4098,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             )
                             .await
                             .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
-                            "try_read_many result different after try_create_many error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
+                            "error d19bbbf6-f64c-4151-8b5b-998a93e13af5"
                         );
                         let read_only_ids_from_try_delete_many = {
                             let mut #acc_snake_case = super::#ident::try_delete_many(
@@ -4241,7 +4241,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             )
                             .await
                             .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                            "try_read_one result different after try_create_one"
+                            "error 5f2adbed-f716-440e-a990-4f1c258808b1"
                         );
                         let read_only_ids_from_try_delete_one = super::#ident::try_delete_one(
                             &url_cloned,
@@ -4560,7 +4560,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 });
                                 #acc_snake_case
                             },
-                            "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+                            "error 50198a7f-e65c-4e4e-8d7f-9881cfd42453"
                         );
                         for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                             let url_cloned = url.clone();
@@ -4623,7 +4623,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }).expect("error 69e1bd8a-fe78-4301-85ca-f4f3958d7493")
                                         }
                                     ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                                    "try_update_many result different"
+                                    "error 34bfb3c7-7a53-479e-9d4f-0856003573e1"
                                 );
                                 assert_eq!(
                                     {
@@ -4668,7 +4668,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         });
                                         #acc_snake_case
                                     },
-                                    "try_read_many result different after try_update_many"
+                                    "error ae2a2da5-3697-4fd7-9ad2-4a535618fbc3"
                                 );
                             }));
                         }
@@ -4683,7 +4683,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             // let try_create_one_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 870927ab-3ba2-445f-96b5-0f7b8618fc63 {field_ident}"));
             // let update_try_new_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 {field_ident}"));
             // let try_update_one_expect_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error d2de0bd6-1b01-4ef2-b074-a60878241b52 {field_ident}"));
-            // let try_update_one_result_different_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("try_update_one result different {field_ident}"));
             let maybe_previous_read_token_stream = if fields_without_primary_key.len() > 1 {
                 quote::quote! {
                     let previous_read = super::#ident::try_read_one(
@@ -4886,7 +4885,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 });
                                 #acc_snake_case
                             },
-                            "try_read_many result different after try_create_many db146190-0496-42a7-93d6-8405eb641954"
+                            "error db146190-0496-42a7-93d6-8405eb641954"
                         );
                         for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                             let url_cloned = url.clone();
@@ -4942,7 +4941,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
                                         }
                                     ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                                    "try_update_one result different"
+                                    "error 564de31c-3664-4c62-85fc-e03793372f8f"
                                 );
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
@@ -4960,7 +4959,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                         }
                                     ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                    "try_read_one result different after try_create_one"
+                                    "error d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
                                 );
                             }));
                         }
@@ -5154,7 +5153,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                     .await
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                    "try_read_one result different after try_create_one 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
+                                    "error 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                                 );
                                 #select_default_all_not_empty_unique_enum_vec_token_stream
                                 #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
@@ -5383,7 +5382,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //         .await
                                 //         .expect("error 8219870c-0290-4806-b0ce-15692284c30d")
                                 //     ),
-                                //     "try_read_many result different after try_create_many"
+                                //     "error 5904b29a-b9f5-44ae-86b1-ebb9ae1fb4d4"
                                 // );
 
                                 //update part start
@@ -5434,7 +5433,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     //         #value_snake_case.sort();
                                 //     //         #value_snake_case
                                 //     //     },
-                                //     //     "try_update_many result different"
+                                //     //     "error 92ab0eca-b51f-4ae3-a746-e714885c9b33"
                                 //     // );
 
                                 //     // assert_eq!(
@@ -5466,7 +5465,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     //         .await
                                 //     //         .expect("error 3efbb893-4d65-4a65-a8d3-f7f6ac518057")
                                 //     //     ),
-                                //     //     "try_read_many result different after try_update_many"
+                                //     //     "error 3fcb8bab-3bf0-4365-90c4-f70fea5932f1"
                                 //     // );
                                 //     assert_eq!(
                                 //         super::#ident_read_only_ids_upper_camel_case {
@@ -5485,7 +5484,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //         )
                                 //         .await
                                 //         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                                //         "try_update_one result different"
+                                //         "error b85441d0-f1f0-4e12-b8f0-6513730e5988"
                                 //     );
                                 //     // assert_eq!(
                                 //     //     super::#ident_read_upper_camel_case {
@@ -5508,7 +5507,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     //     )
                                 //     //     .await
                                 //     //     .expect("error 770fc785-f87a-42b0-a0c7-d08291f65293"),
-                                //     //     "try_read_one result different after try_update_one"
+                                //     //     "error fc6c0ac4-a288-44e2-9d3f-69562fa8d350"
                                 //     // );
                                 //     // let end = super::#ident::try_read_one(
                                 //     //     &#url_snake_case,
@@ -5547,7 +5546,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //         #value_snake_case.sort();
                                 //         #value_snake_case
                                 //     },
-                                //     "try_delete_many result different"
+                                //     "error 5b13cdae-704d-43ca-8284-b03990778baa"
                                 // );
                                 // assert_eq!(
                                 //     #std_vec_vec_ident_read_token_stream::default(),
@@ -5569,7 +5568,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //     )
                                 //     .await
                                 //     .expect("error 560e761c-e8ad-4ed3-a1d9-d489bb42c3e2"),
-                                //     "try_read_many result different after try_delete_many"
+                                //     "error 6a962bc3-d188-450f-903a-8cdd07dd08e2"
                                 // );
                                 // let primary_key_returned_from_delete_one = super::#ident::try_delete_one(
                                 //     &#url_snake_case,
@@ -5579,7 +5578,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 // )
                                 // .await
                                 // .expect("error ade96823-3158-43af-95ac-f8f464b2a2aa");
-                                // assert_eq!(#read_only_ids_returned_from_create_one_snake_case.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
+                                // assert_eq!(#read_only_ids_returned_from_create_one_snake_case.clone(), primary_key_returned_from_delete_one, "error 43365e95-67ed-4102-a535-91655ffa7f53");
                                 // if let Err(#error_snake_case) = super::#ident::try_read_one(
                                 //     &#url_snake_case,
                                 //     super::#ident_read_one_parameters_upper_camel_case {
@@ -5595,7 +5594,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 // } = &#error_snake_case &&
                                 // let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize &&
                                 // "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
-                                //     panic!("try_read_one result different after try_delete_one");
+                                //     panic!("error f09b40a0-23aa-45f9-968c-c893a58dfa03");
                                 // }
                                 // drop_table_if_exists(&#postgres_pool_snake_case).await;
                             });
