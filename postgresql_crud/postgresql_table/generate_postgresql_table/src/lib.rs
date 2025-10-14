@@ -4928,7 +4928,143 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         });
         let delete_many_token_stream = {
             quote::quote!{
-
+                {
+                    let generate_test_delete_many_by_non_existent_primary_keys = async |length: std::primitive::usize| match super::#ident::try_delete_many(
+                        &url,
+                        super::#ident_delete_many_parameters_upper_camel_case {
+                            payload: super:: #ident_delete_many_payload_upper_camel_case {
+                                where_many: super::#std_option_option_ident_where_many_upper_camel_case(Some(super::#ident_where_many_upper_camel_case {
+                                    #primary_key_field_ident: Some(
+                                        postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                            let mut #acc_snake_case = vec![];
+                                            for _ in 1..=length {
+                                                #acc_snake_case.push(
+                                                    #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
+                                                        postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                            #value_snake_case: #primary_key_field_type_origin_token_stream::new(
+                                                                uuid::Uuid::new_v4()
+                                                            )
+                                                        }
+                                                    )
+                                                );
+                                            }
+                                            #acc_snake_case
+                                        })
+                                        .expect("error 7affcad2-0410-4eab-b766-eaf23b133540"),
+                                    ),
+                                    #fields_none_initialization_token_stream
+                                })),
+                            },
+                        },
+                    )
+                    .await {
+                        Ok(value) => if value.len() != 0 {
+                            panic!("error 51d14103-5122-4d96-a45c-4dd958ab3adc")
+                        },
+                        Err(error) => panic!("error 0d5dec47-8b2e-4f02-909b-3a58b65bc6a5"),
+                    };
+                    generate_test_delete_many_by_non_existent_primary_keys(1).await;
+                    generate_test_delete_many_by_non_existent_primary_keys(2).await;
+                }
+                {
+                    let generate_test_delete_many_by_primary_keys = async |length: std::primitive::usize| {
+                        let read_only_ids_from_try_create_many = super::#ident::try_create_many(
+                            &url,
+                            super::#ident_create_many_parameters_upper_camel_case {
+                                payload: super::#ident_create_many_payload_upper_camel_case({
+                                    let mut #acc_snake_case = vec![];
+                                    for _ in 1..=length {
+                                        #acc_snake_case.push(ident_create_default.clone());
+                                    }
+                                    #acc_snake_case
+                                })
+                            }
+                        ).await.expect("error b8695890-65fb-469b-a6f9-be481d648eb9");
+                        let read_only_ids_from_try_delete_many = super::#ident::try_delete_many(
+                            &url,
+                            super::#ident_delete_many_parameters_upper_camel_case {
+                                payload: super::#ident_delete_many_payload_upper_camel_case {
+                                    where_many: super::#std_option_option_ident_where_many_upper_camel_case(Some(super::#ident_where_many_upper_camel_case {
+                                        #primary_key_field_ident: Some(
+                                            postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                let mut #acc_snake_case = vec![];
+                                                for #element_snake_case in &read_only_ids_from_try_create_many {
+                                                    #acc_snake_case.push(
+                                                        #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
+                                                            postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                #value_snake_case: #element_snake_case.#primary_key_field_ident.clone().into_read().into()
+                                                            }
+                                                        )
+                                                    );
+                                                }
+                                                #acc_snake_case
+                                            })
+                                            .expect("error 059792c8-a025-45bb-9895-3be8dbbdb6a5"),
+                                        ),
+                                        #fields_none_initialization_token_stream
+                                    })),
+                                },
+                            },
+                        ).await.expect("error b80b91b8-7de1-4ea2-97cf-1987a5f7cc57");
+                        assert_eq!(
+                            read_only_ids_from_try_delete_many,
+                            {
+                                read_only_ids_from_try_create_many.iter().map(|#element_snake_case|
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        &#element_snake_case.#primary_key_field_ident
+                                    ).unwrap().#value_snake_case
+                                ).collect::<std::vec::Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>()
+                            },
+                            "error db5e88a6-c75b-421b-acfb-56931b97ba3b"
+                        );
+                        match super::#ident::try_read_many(
+                            &url,
+                            super::#ident_read_many_parameters_upper_camel_case {
+                                payload: super::#ident_read_many_payload_upper_camel_case {
+                                    where_many: super::#std_option_option_ident_where_many_upper_camel_case(Some(
+                                        super::#ident_where_many_upper_camel_case::try_new(
+                                            Some(
+                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                    let mut #acc_snake_case = vec![];
+                                                    for element in read_only_ids_from_try_delete_many {
+                                                        #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
+                                                            postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                #value_snake_case: #element_snake_case.into()
+                                                            }
+                                                        ));
+                                                    }
+                                                    #acc_snake_case
+                                                })
+                                                .expect("error b5d89c37-b41e-49c8-bc50-2872b456b37d"),
+                                            ),
+                                            #none_parameters_initialization_without_primary_key_token_stream
+                                        )
+                                        .expect("error 3d716223-4ad8-40fc-99a2-d0de3ea5ca5c"),
+                                    )),
+                                    select: select_default_all_with_max_page_size.clone(),
+                                    order_by: postgresql_crud::OrderBy {
+                                        column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                            #primary_key_field_type_as_postgresql_type_select_token_stream::default()
+                                        ),
+                                        order: Some(postgresql_crud::Order::Asc)
+                                    },
+                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error e5b2edbc-f2b2-48a0-82b9-02720f721eae"),
+                                },
+                            },
+                        )
+                        .await {
+                            Ok(#value_snake_case) => if #value_snake_case.len() != 0 {
+                                panic!("error 77f038b0-6f39-4b5b-a402-a1b6142acd0d")
+                            },
+                            Err(#error_snake_case) => panic!("error bcb79917-ee81-416e-82a3-f43a823266a3 {error:#?}")
+                        }
+                    };
+                    generate_test_delete_many_by_primary_keys(1).await;
+                    generate_test_delete_many_by_primary_keys(2).await;
+                }
             }
         };
         let delete_one_token_stream = {
@@ -4988,7 +5124,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &url,
                         super::#ident_read_one_parameters_upper_camel_case {
                             payload: super::#ident_read_one_payload_upper_camel_case {
-                                primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
+                                #primary_key_field_ident: read_only_ids_returned_from_create_one.#primary_key_field_ident.clone().into_read(),
                                 select: select_default_all_with_max_page_size.clone()
                             }
                         }
@@ -4999,13 +5135,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &url,
                     super::#ident_delete_one_parameters_upper_camel_case {
                         payload: super::#ident_delete_one_payload_upper_camel_case {
-                            primary_key_column: read_only_ids_returned_from_create_one.primary_key_column.clone().into_read()
+                            #primary_key_field_ident: read_only_ids_returned_from_create_one.#primary_key_field_ident.clone().into_read()
                         }
                     }
                 ).await.expect("error acab86b7-b199-4732-b8ea-76c00a12abb2");
                 assert_eq!(
                     read_only_ids_from_try_delete_one,
-                    read_only_ids_returned_from_create_one.primary_key_column.clone().into_read(),
+                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone().into_read(),
                     "error 99f81971-dc80-46db-b466-4f309b215a8c"
                 );
                 if let Err(#error_snake_case) = super::#ident::try_read_one(
@@ -5349,7 +5485,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
