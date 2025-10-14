@@ -2535,7 +2535,6 @@ mod example_tests {
                             }
                         ).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
                         println!("read_only_ids_from_try_create_many {read_only_ids_from_try_create_many:#?}");
-                        //
                         let read_only_ids_from_try_delete_many = super::Example::try_delete_many(
                             &url,
                             super::ExampleDeleteManyParameters {
@@ -2575,6 +2574,48 @@ mod example_tests {
                             },
                             "error db146190-0496-42a7-93d6-8405eb641954"
                         );
+                        match super::Example::try_read_many(
+                            &url,
+                            super::ExampleReadManyParameters {
+                                payload: super::ExampleReadManyPayload {
+                                    where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                        super::ExampleWhereMany::try_new(
+                                            Some(
+                                                postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
+                                                    let mut acc = vec![];
+                                                    for element in read_only_ids_from_try_delete_many {
+                                                        acc.push(<
+                                                            postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql
+                                                            as
+                                                            postgresql_crud::PostgresqlType
+                                                        >::WhereElement::Equal(
+                                                            postgresql_crud::PostgresqlTypeWhereElementEqual {
+                                                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                value: element.into()
+                                                            }
+                                                        ));
+                                                    }
+                                                    acc
+                                                })
+                                                .expect("error 6de1e731-a28a-4f74-8a73-0f8f8ec34a43"),
+                                            ),
+                                            None,
+                                            None,
+                                        )
+                                        .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
+                                    )),
+                                    select: select_default_all_with_max_page_size.clone(),
+                                    order_by: postgresql_crud::OrderBy { column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()), order: Some(postgresql_crud::Order::Asc) },
+                                    pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
+                                },
+                            },
+                        )
+                        .await {
+                            Ok(value) => if value.len() != 0 {
+                                panic!("error b32b172c-563f-455c-94f4-81905627cc1e")
+                            },
+                            Err(error) => panic!("error cc7f193f-7ac2-4022-9bef-440e7c679185")
+                        }
                         //here end
                     }
                     let delete_many_elapsed = start.elapsed();
