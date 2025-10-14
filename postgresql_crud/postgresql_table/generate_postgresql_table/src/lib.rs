@@ -5176,7 +5176,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                     postgresql_crud::LogicalOperator::Or,
                                                                     {
                                                                         let mut #acc_snake_case = vec![];
-                                                                        for i in 1..=length {
+                                                                        for _ in 1..=length {
                                                                             #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                                                 postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,

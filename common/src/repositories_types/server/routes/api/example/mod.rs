@@ -2494,7 +2494,7 @@ mod example_tests {
                                             primary_key_column: Some(
                                                 postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
                                                     let mut acc = vec![];
-                                                    for i in 1..=length {
+                                                    for _ in 1..=length {
                                                         acc.push(
                                                             postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(
                                                                 postgresql_crud::PostgresqlTypeWhereElementEqual {
@@ -2536,7 +2536,7 @@ mod example_tests {
                         ).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
                         println!("read_only_ids_from_try_create_many {read_only_ids_from_try_create_many:#?}");
                         //
-                        match super::Example::try_delete_many(
+                        let read_only_ids_from_try_delete_many = super::Example::try_delete_many(
                             &url,
                             super::ExampleDeleteManyParameters {
                                 payload: super::ExampleDeleteManyPayload {
@@ -2544,16 +2544,12 @@ mod example_tests {
                                         primary_key_column: Some(
                                             postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
                                                 let mut acc = vec![];
-                                                for element in read_only_ids_from_try_create_many {
+                                                for element in &read_only_ids_from_try_create_many {
                                                     acc.push(
                                                         postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlWhereElement::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                value:
-                                                                element.primary_key_column.into_read().into()
-                                                                // postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(
-                                                                //     uuid::Uuid::new_v4()
-                                                                // )
+                                                                value: element.primary_key_column.clone().into_read().into()
                                                             }
                                                         )
                                                     );
@@ -2567,17 +2563,18 @@ mod example_tests {
                                     })),
                                 },
                             },
-                        )
-                        .await {
-                            Ok(value) => {
-                                println!("MEOW {value:#?}");
+                        ).await.expect("error 5267d0fa-92cd-4421-8d7e-04e6b4f06c1e");
+                        assert_eq!(
+                            read_only_ids_from_try_delete_many,
+                            {
+                                read_only_ids_from_try_create_many.iter().map(|element|
+                                    <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        &element.primary_key_column
+                                    ).unwrap().value
+                                ).collect::<std::vec::Vec<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead>>()
                             },
-                            Err(error) => panic!("error 5267d0fa-92cd-4421-8d7e-04e6b4f06c1e"),
-                        }
-                        //here
-                        
-                        //here
-                        //here
+                            "error db146190-0496-42a7-93d6-8405eb641954"
+                        );
                         //here end
                     }
                     let delete_many_elapsed = start.elapsed();
