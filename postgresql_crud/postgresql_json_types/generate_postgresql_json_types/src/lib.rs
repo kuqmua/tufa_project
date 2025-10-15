@@ -1137,6 +1137,31 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
                 }
             };
+            let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
+            let ident_create_for_query_token_stream = {
+                let ident_create_for_query_token_stream = {
+                    quote::quote!{
+                        #[derive(
+                            Debug,
+                            serde::Serialize
+                        )]
+                        pub struct #ident_create_for_query_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_std_convert_into_ident_origin_for_ident_create_for_query_token_stream = {
+                    quote::quote! {
+                        impl std::convert::Into<#ident_origin_upper_camel_case> for #ident_create_for_query_upper_camel_case {
+                            fn into(self) -> #ident_origin_upper_camel_case {
+                                self.0
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #ident_create_for_query_token_stream
+                    #impl_std_convert_into_ident_origin_for_ident_create_for_query_token_stream
+                }
+            };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let ident_select_token_stream = {
                 let ident_select_token_stream = {
@@ -2444,6 +2469,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
+                #ident_create_for_query_token_stream
                 #ident_select_token_stream
                 #ident_where_element_token_stream
                 #ident_read_token_stream
