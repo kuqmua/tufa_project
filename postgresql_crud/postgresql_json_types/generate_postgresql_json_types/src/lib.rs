@@ -710,6 +710,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(&content_token_stream, &into_inner_content_token_stream),
                 }
             };
+            let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
                 let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
                 let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
@@ -996,6 +997,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
+                let impl_std_convert_from_ident_update_for_ident_origin_token_stream = {
+                    quote::quote!{
+                        impl std::convert::From<#ident_update_upper_camel_case> for #ident_origin_upper_camel_case {
+                            fn from(#value_snake_case: #ident_update_upper_camel_case) -> Self {
+                                #value_snake_case.0
+                            }
+                        }
+                    }
+                };
                 let maybe_impl_schemars_json_schema_for_ident_origin_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
                     SchemarsJsonSchema::Derive => &proc_macro2_token_stream_new,
                     SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
@@ -1125,6 +1135,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_ident_origin_token_stream
                     #maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream
                     #impl_std_convert_into_ident_origin_impl_new_value_type_for_ident_origin_token_stream
+                    #impl_std_convert_from_ident_update_for_ident_origin_token_stream
 
                     #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
                     #maybe_impl_is_string_empty_for_ident_origin_token_stream
@@ -1790,6 +1801,63 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_read_inner_token_stream = quote::quote! {
                 pub type #ident_read_inner_upper_camel_case = #ident_origin_impl_new_value_type_token_stream;
             };
+            let ident_update_token_stream = {
+                let ident_update_token_stream = {
+                    quote::quote!{
+                        #[derive(
+                            Debug,
+                            Clone,
+                            PartialEq,
+                            serde::Serialize,
+                            serde::Deserialize,
+                            utoipa::ToSchema,
+                            schemars::JsonSchema
+                        )]
+                        pub struct #ident_update_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_ident_update_token_stream = {
+                    let pub_fn_new_token_stream = {
+                        quote::quote! {
+                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
+                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                            }
+                        }
+                    };
+                    quote::quote! {
+                        impl #ident_update_upper_camel_case {
+                            #pub_fn_new_token_stream
+                        }
+                    }
+                };
+                //todo put it in trait
+                let impl_std_fmt_display_for_ident_update_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+                    &proc_macro2::TokenStream::new(),
+                    &ident_update_upper_camel_case,
+                    &proc_macro2::TokenStream::new(),
+                    &quote::quote! {write!(formatter, "{self:?}")}
+                );
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_update_upper_camel_case,
+                    &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
+                );
+                //todo its was temp. remove later
+                let impl_std_convert_from_ident_update_for_ident_origin_token_stream = {
+                    quote::quote!{
+                        impl std::convert::From<#ident_update_upper_camel_case> for #ident_origin_upper_camel_case {
+                            fn from(#value_snake_case: #ident_update_upper_camel_case) -> Self {
+                                #value_snake_case.0
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #ident_update_token_stream
+                    #impl_ident_update_token_stream
+                    #impl_std_fmt_display_for_ident_update_token_stream
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
+                }
+            };
             let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let impl_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -1929,7 +1997,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_read_inner_upper_camel_case,
                     &generate_into_inner_content_token_stream(&quote::quote! {#value_snake_case.0.0}),
-                    &ident_origin_upper_camel_case,
+                    &ident_update_upper_camel_case,
                     &ident_origin_upper_camel_case,
                     &{
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
@@ -2242,7 +2310,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => quote::quote! {value.0},
+                                    NotNullOrNullable::NotNull => quote::quote! {value.0.clone().into()},
                                     NotNullOrNullable::Nullable => generate_iter_or_match_token_stream(not_null_or_nullable, &generate_update_to_read_only_ids_token_stream(&generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart), not_null_or_nullable)),
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_iter_or_match_token_stream(
@@ -2352,7 +2420,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {Some(#import_path::Value { value: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream })}
                     },
                     &quote::quote! {match #option_update_snake_case {
-                        Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case),
+                        Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.into()),
                         None => #read_snake_case
                     }},
                     &{
@@ -2490,6 +2558,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_read_token_stream
                 #ident_read_only_ids_token_stream
                 #ident_read_inner_token_stream
+                #ident_update_token_stream
                 #impl_postgresql_json_type_for_ident_token_stream
                 #impl_postgresql_json_type_test_cases_for_ident_token_stream
             };
