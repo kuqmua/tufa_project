@@ -83,6 +83,19 @@ pub trait PostgresqlTypePrimaryKey {
     type PrimaryKey;
 }
 
+pub trait PostgresqlJsonTypeElementId {
+    type Id;//todo temp name. find out - is it create read update delete or something
+    type IdInner;
+    fn query_bind_as_postgresql_text(
+        value: Self::Id,
+        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
+    fn get_inner<'a>(value: &'a Self::Id) -> &'a Self::IdInner;
+}
+
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
     type Element: crate::PostgresqlType;

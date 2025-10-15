@@ -464,6 +464,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
 
+            let std_string_string_token_stream = token_patterns::StdStringString;
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -953,37 +954,36 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                     };
-                    let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
-                        //todo need for uuid bind for json object logic//need for uuid bind for json object logic
-                        let query_bind_as_postgresql_text_token_stream = quote::quote! {
-                            pub fn query_bind_as_postgresql_text(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-                                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                                std::string::String
-                            > {
-                                if let Err(error) = query.try_bind(self.0.to_string()) {
-                                    return Err(error.to_string())
-                                }
-                                Ok(query)
-                            }
-                        };
-                        let get_inner_token_stream = quote::quote! {
-                            pub fn get_inner<'a>(&'a self) -> &'a #field_type_handle {
-                                &self.0
-                            }
-                        };
-                        quote::quote! {
-                            #query_bind_as_postgresql_text_token_stream
-                            #get_inner_token_stream
-                        }
-                    } else {
-                        proc_macro2::TokenStream::new()
-                    };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_token_stream
-                            #maybe_additional_uuid_standart_not_null_impl_token_stream
                         }
                     }
+                };
+                let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
+                    quote::quote! {
+                        impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
+                            type Id = #ident_origin_upper_camel_case;
+                            type IdInner = #field_type_handle;
+                            fn query_bind_as_postgresql_text(
+                                #value_snake_case: Self::Id,
+                                mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> Result<
+                                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                                #std_string_string_token_stream
+                            > {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.to_string()) {
+                                    return Err(#error_snake_case.to_string())
+                                }
+                                Ok(#query_snake_case)
+                            }
+                            fn get_inner<'a>(#value_snake_case: &'a Self::Id) -> &'a Self::IdInner {
+                                &#value_snake_case.0
+                            }
+                        }
+                    }
+                } else {
+                    proc_macro2::TokenStream::new()
                 };
                 //todo maybe not need or move into trait
                 let impl_std_convert_into_ident_origin_impl_new_value_type_for_ident_origin_token_stream = {
@@ -1123,6 +1123,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 quote::quote! {
                     #ident_origin_token_stream
                     #impl_ident_origin_token_stream
+                    #maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream
                     #impl_std_convert_into_ident_origin_impl_new_value_type_for_ident_origin_token_stream
 
                     #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
