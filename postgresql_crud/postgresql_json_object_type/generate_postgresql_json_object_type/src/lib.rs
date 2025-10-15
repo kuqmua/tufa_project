@@ -5006,7 +5006,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         let mut option_read_element = None;
                                                         for read_element in &#read_snake_case.0 {
                                                             if 
-                                                                *#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::get_inner(&update_element.#id_snake_case)
+                                                                *#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::get_inner(&update_element.#id_snake_case.clone().into())
                                                                 ==
                                                                 <#uuid_uuid_as_not_null_jsonb_string_token_stream as postgresql_crud::PostgresqlJsonType>::into_inner(
                                                                     read_element.#id_snake_case.clone().expect("error df2413fe-e703-451b-ab75-add67da716f7").#value_snake_case
