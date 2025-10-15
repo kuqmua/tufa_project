@@ -1031,22 +1031,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
                                 }
                                 fn json_schema(_: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
-                                    {
-                                        schemars::schema::Schema::Object(schemars::schema::SchemaObject {
-                                            metadata: #metadata_token_stream,
-                                            instance_type: #instance_type_token_stream,
-                                            format: #format_token_stream,
-                                            enum_values: #enum_values_token_stream,
-                                            const_value: #const_value_token_stream,
-                                            subschemas: #subschemas_token_stream,
-                                            number: #number_token_stream,
-                                            string: #string_token_stream,
-                                            array: #array_token_stream,
-                                            object: #object_token_stream,
-                                            reference: #reference_token_stream,
-                                            extensions: #extensions_token_stream,
-                                        })
-                                    }
+                                    schemars::schema::Schema::Object(schemars::schema::SchemaObject {
+                                        metadata: #metadata_token_stream,
+                                        instance_type: #instance_type_token_stream,
+                                        format: #format_token_stream,
+                                        enum_values: #enum_values_token_stream,
+                                        const_value: #const_value_token_stream,
+                                        subschemas: #subschemas_token_stream,
+                                        number: #number_token_stream,
+                                        string: #string_token_stream,
+                                        array: #array_token_stream,
+                                        object: #object_token_stream,
+                                        reference: #reference_token_stream,
+                                        extensions: #extensions_token_stream,
+                                    })
                                 }
                             }
                         }
@@ -2285,9 +2283,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let content_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                             //todo remove useless .clone()
                             let generate_update_to_read_only_ids_token_stream = |ident_token_stream: &dyn quote::ToTokens, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
-                                let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &element_snake_case,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &value_snake_case,
+                                let ident_update_token_stream = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_token_stream);
+                                let content_token_stream = {
+                                    let content_token_stream = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#element_snake_case},
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{#value_snake_case.into()}
+                                    };
+                                    quote::quote!{&#ident_update_token_stream(#content_token_stream)}
                                 };
                                 quote::quote! {
                                     <
@@ -2299,10 +2301,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             let generate_iter_or_match_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    value.0.clone().into_iter().map(|element|#content_token_stream).collect()
+                                    value.0.clone().0.into_iter().map(|element|#content_token_stream).collect()
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    match value.0.clone() {
+                                    match value.0.clone().0 {
                                         Some(value) => Some(#content_token_stream),
                                         None => None
                                     }
@@ -2311,7 +2313,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote::quote! {value.0.clone().into()},
-                                    NotNullOrNullable::Nullable => generate_iter_or_match_token_stream(not_null_or_nullable, &generate_update_to_read_only_ids_token_stream(&generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart), not_null_or_nullable)),
+                                    NotNullOrNullable::Nullable => generate_iter_or_match_token_stream(
+                                        not_null_or_nullable,
+                                        &generate_update_to_read_only_ids_token_stream(
+                                            &generate_ident_token_stream(
+                                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                                &PostgresqlJsonTypePattern::Standart
+                                            ),
+                                            not_null_or_nullable
+                                        )
+                                    ),
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_iter_or_match_token_stream(
                                     not_null_or_nullable,
