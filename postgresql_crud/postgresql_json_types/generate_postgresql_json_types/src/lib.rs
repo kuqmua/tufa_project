@@ -1146,6 +1146,44 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
                 }
             };
+            let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
+            let ident_table_type_declaration_token_stream = {
+                let ident_table_type_declaration_token_stream = {
+                    quote::quote!{
+                        #[derive(
+                            Debug,
+                            Clone,
+                            PartialEq,
+                            serde::Serialize,
+                            serde::Deserialize,
+                        )]
+                        struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_ident_table_type_declaration_token_stream = {
+                    let pub_fn_new_token_stream = {
+                        quote::quote! {
+                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
+                                Self(#ident_table_type_declaration_upper_camel_case::new(#value_snake_case))
+                            }
+                        }
+                    };
+                    quote::quote! {
+                        impl #ident_table_type_declaration_upper_camel_case {
+                            #pub_fn_new_token_stream
+                        }
+                    }
+                };
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_table_type_declaration_upper_camel_case,
+                    &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                );
+                quote::quote!{
+                    #ident_table_type_declaration_token_stream
+                    #impl_ident_table_type_declaration_token_stream
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
+                }
+            };
             let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_create_for_query_token_stream = {
                 let ident_create_for_query_token_stream = {
@@ -1895,7 +1933,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
                     &ident,
-                    &ident_origin_upper_camel_case,
+                    &ident_table_type_declaration_upper_camel_case,
                     &ident_origin_upper_camel_case,
                     &ident_origin_upper_camel_case,
                     &ident_select_upper_camel_case,
@@ -2563,6 +2601,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
+                #ident_table_type_declaration_token_stream
                 #ident_create_for_query_token_stream
                 #ident_select_token_stream
                 #ident_where_element_token_stream
