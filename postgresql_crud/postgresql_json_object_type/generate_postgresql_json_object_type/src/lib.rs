@@ -775,8 +775,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_with_id_standart_not_null_create_upper_camel_case,
                         &ident_with_id_standart_not_null_create_for_query_upper_camel_case,
                         &quote::quote! {Self {
-                            #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_create_for_query_token_stream::from(
-                                #uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case::new(uuid::Uuid::new_v4())
+                            #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_create_for_query_token_stream::new(
+                                uuid::Uuid::new_v4()
                             ),
                             #impl_std_convert_from_standart_not_null_without_id_content_token_stream
                         }}
