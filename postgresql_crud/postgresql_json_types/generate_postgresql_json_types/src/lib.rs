@@ -1148,6 +1148,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         pub struct #ident_create_for_query_upper_camel_case(#ident_origin_upper_camel_case);
                     }
                 };
+                let impl_ident_create_for_query_token_stream = {
+                    let pub_fn_new_token_stream = {
+                        quote::quote! {
+                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
+                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                            }
+                        }
+                    };
+                    quote::quote! {
+                        impl #ident_create_for_query_upper_camel_case {
+                            #pub_fn_new_token_stream
+                        }
+                    }
+                };
                 let impl_std_convert_into_ident_origin_for_ident_create_for_query_token_stream = {
                     quote::quote! {
                         impl std::convert::Into<#ident_origin_upper_camel_case> for #ident_create_for_query_upper_camel_case {
@@ -1159,6 +1173,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 quote::quote!{
                     #ident_create_for_query_token_stream
+                    #impl_ident_create_for_query_token_stream
                     #impl_std_convert_into_ident_origin_for_ident_create_for_query_token_stream
                 }
             };
