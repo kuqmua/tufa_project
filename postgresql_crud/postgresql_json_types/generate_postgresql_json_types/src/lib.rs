@@ -1156,15 +1156,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PartialEq,
                             serde::Serialize,
                             serde::Deserialize,
+                            utoipa::ToSchema,
+                            schemars::JsonSchema
                         )]
-                        struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
+                        pub struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
                     }
                 };
                 let impl_ident_table_type_declaration_token_stream = {
                     let pub_fn_new_token_stream = {
                         quote::quote! {
                             pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_table_type_declaration_upper_camel_case::new(#value_snake_case))
+                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
                             }
                         }
                     };

@@ -32,7 +32,7 @@ pub trait PostgresqlType {
 }
 
 pub trait PostgresqlJsonType {
-    type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type CreateForQuery: std::fmt::Debug + serde::Serialize + std::convert::From<Self::Create>;
     type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
