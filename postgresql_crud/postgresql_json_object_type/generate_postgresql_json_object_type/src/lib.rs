@@ -234,10 +234,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
             let uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
-            let uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case = {
-                let uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
-                quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case}
-            };
             let uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case = {
                 let uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
                 quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case}
