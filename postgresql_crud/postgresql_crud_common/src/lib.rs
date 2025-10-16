@@ -18,7 +18,9 @@ pub trait PostgresqlType {
     type ReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize;
+    type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize
+    //  + for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>
+     ;
     fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -34,7 +36,7 @@ pub trait PostgresqlType {
 pub trait PostgresqlJsonType {
     type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type CreateForQuery: std::fmt::Debug + serde::Serialize + std::convert::From<Self::Create>;
+    type CreateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize + std::convert::From<Self::Create>;
     type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
@@ -84,16 +86,24 @@ pub trait PostgresqlTypePrimaryKey {
 }
 
 pub trait PostgresqlJsonTypeElementId {
-    type Id;//todo temp name. find out - is it create read update delete or something
-    type IdInner;
-    fn query_bind_as_postgresql_text(
-        value: Self::Id,
+    type CreateForQuery;
+    type UpdateForQuery;
+    type Inner;
+    fn query_bind_string_as_postgresql_text_create_for_query(
+        value: Self::CreateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn get_inner<'a>(value: &'a Self::Id) -> &'a Self::IdInner;
+    fn query_bind_string_as_postgresql_text_update_for_query(
+        value: Self::UpdateForQuery,
+        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
+    fn get_inner<'a>(value: &'a Self::CreateForQuery) -> &'a Self::Inner;
 }
 
 #[cfg(feature = "test-utils")]

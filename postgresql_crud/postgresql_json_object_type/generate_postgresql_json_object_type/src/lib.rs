@@ -1980,6 +1980,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 quote::quote! {{#(#content_token_stream),*}}
             };
+            // let generate_impl_sqlx_encode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+            //     quote::quote! {
+            //         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_token_stream {
+            //             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+            //                 sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(&self.0.0), buf)
+            //             }
+            //         }
+            //     }
+            // };
             let generate_impl_sqlx_decode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
                     impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
@@ -3621,7 +3630,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 quote::quote! {
                                     for #element_snake_case in #value_snake_case.#update_snake_case.into_vec() {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_as_postgresql_text(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                             #element_snake_case.#id_snake_case,
                                             #query_snake_case
                                         ) {
@@ -3645,7 +3654,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     }
                                     for #element_snake_case in #value_snake_case.delete {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_as_postgresql_text(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                             #element_snake_case,
                                             #query_snake_case
                                         ) {
@@ -3794,7 +3803,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#select_only_created_ids_query_bind_content_token_stream)*
                                     }
                                     for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_as_postgresql_text(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
@@ -3807,7 +3816,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     }
                                     for #element_snake_case in &#value_snake_case.#create_snake_case {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_as_postgresql_text(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
@@ -4128,7 +4137,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#content_token_stream)*
                                     }
                                     for #element_snake_case in &#value_snake_case.0 {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_as_postgresql_text(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
