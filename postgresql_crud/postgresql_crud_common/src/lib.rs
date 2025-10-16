@@ -88,6 +88,7 @@ pub trait PostgresqlTypePrimaryKey {
 pub trait PostgresqlJsonTypeElementId {
     type CreateForQuery;
     type UpdateForQuery;
+    type Origin;
     type Inner;
     fn query_bind_string_as_postgresql_text_create_for_query(
         value: Self::CreateForQuery,
@@ -98,6 +99,13 @@ pub trait PostgresqlJsonTypeElementId {
     >;
     fn query_bind_string_as_postgresql_text_update_for_query(
         value: Self::UpdateForQuery,
+        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        std::string::String
+    >;
+    fn query_bind_string_as_postgresql_text_origin(
+        value: Self::Origin,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,

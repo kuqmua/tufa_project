@@ -968,8 +968,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     quote::quote! {
                         impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
                             type CreateForQuery = #ident_create_for_query_upper_camel_case;
-                            // type UpdateForQuery = #ident_update_for_query_upper_camel_case;
-                            type UpdateForQuery = #ident_origin_upper_camel_case;
+                            type UpdateForQuery = #ident_update_for_query_upper_camel_case;
+                            type Origin = #ident_origin_upper_camel_case;
                             type Inner = #field_type_handle;
                             //todo reuse?
                             fn query_bind_string_as_postgresql_text_create_for_query(
@@ -986,6 +986,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                             fn query_bind_string_as_postgresql_text_update_for_query(
                                 #value_snake_case: Self::UpdateForQuery,
+                                mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> Result<
+                                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                                #std_string_string_token_stream
+                            > {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.to_string()) {
+                                    return Err(#error_snake_case.to_string())
+                                }
+                                Ok(#query_snake_case)
+                            }
+                            fn query_bind_string_as_postgresql_text_origin(
+                                #value_snake_case: Self::Origin,
                                 mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> Result<
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
