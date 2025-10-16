@@ -879,7 +879,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             utoipa::ToSchema,
                             #maybe_derive_schemars_json_schema_token_stream
                         )]
-                        pub struct #ident_origin_upper_camel_case(#field_type_handle);
+                        struct #ident_origin_upper_camel_case(#field_type_handle);
                     }
                 };
                 let ident_origin_impl_new_self_content_token_stream = {
