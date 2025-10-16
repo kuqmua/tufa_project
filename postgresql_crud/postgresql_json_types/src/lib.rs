@@ -9298,7 +9298,11 @@ impl postgresql_crud_common::PostgresqlJsonTypeElementId for UuidUuidAsNotNullJs
         Ok(query)
     }
     fn query_bind_string_as_postgresql_text_update_for_query(value: Self::UpdateForQuery, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
-        if let Err(error) = query.try_bind(value.0.to_string()) {
+        let g = value.0.to_string();
+        println!("ggggg {g}");
+        // ggggg UuidUuidAsNotNullJsonbStringOrigin(fba73d00-850c-4757-b684-3f971ed33485)
+
+        if let Err(error) = query.try_bind(g) {
             return Err(error.to_string());
         }
         Ok(query)
@@ -9538,28 +9542,51 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
         Self(postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
-#[derive(Debug, Clone, PartialEq, serde :: Serialize)]
-pub struct UuidUuidAsNotNullJsonbStringUpdateForQuery(UuidUuidAsNotNullJsonbStringOrigin);
-impl UuidUuidAsNotNullJsonbStringUpdateForQuery {
-    pub fn new(value: uuid::Uuid) -> Self {
-        Self(UuidUuidAsNotNullJsonbStringOrigin::new(value))
-    }
-}
-impl std::convert::From<UuidUuidAsNotNullJsonbStringUpdate> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
-    fn from(value: UuidUuidAsNotNullJsonbStringUpdate) -> Self {
-        Self(value.0)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(
-            //here
-            // &self.0
-            &self.0.0
-        ), buf)
-    }
-}
-//here
+
+////////
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
+// pub struct UuidUuidAsNotNullJsonbStringUpdateForQuery(UuidUuidAsNotNullJsonbStringOrigin);
+// impl UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     pub fn new(value: uuid::Uuid) -> Self {
+//         Self(UuidUuidAsNotNullJsonbStringOrigin::new(value))
+//     }
+// }
+// impl std::convert::From<UuidUuidAsNotNullJsonbStringUpdate> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn from(value: UuidUuidAsNotNullJsonbStringUpdate) -> Self {
+//         Self(value.0)
+//     }
+// }
+// // impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+// //     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+// //         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(
+// //             &self.0.0
+// //         ), buf)
+// //     }
+// // }
+// // impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+// //     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+// //         <
+// //             // sqlx::types::Json<uuid::Uuid>
+// //             sqlx::types::Json<UuidUuidAsNotNullJsonbStringOrigin>
+// //             as
+// //             sqlx::Type<sqlx::Postgres>
+// //         >::type_info()
+// //     }
+// //     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+// //         <
+// //             // sqlx::types::Json<uuid::Uuid>
+// //             sqlx::types::Json<UuidUuidAsNotNullJsonbStringOrigin>
+// //             as
+// //             sqlx::Type<sqlx::Postgres>
+// //         >::compatible(ty)
+// //     }
+// // }
+
+// impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(&self.0), buf)
+//     }
+// }
 // impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
 //     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
 //         <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -9568,6 +9595,29 @@ impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQ
 //         <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::compatible(ty)
 //     }
 // }
+
+
+
+//here working
+#[derive(Debug, Clone, PartialEq, serde :: Serialize)]
+pub struct UuidUuidAsNotNullJsonbStringUpdateForQuery(uuid::Uuid);
+impl UuidUuidAsNotNullJsonbStringUpdateForQuery {
+    pub fn new(value: uuid::Uuid) -> Self {
+        Self(value)
+    }
+}
+impl std::convert::From<UuidUuidAsNotNullJsonbStringUpdate> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+    fn from(value: UuidUuidAsNotNullJsonbStringUpdate) -> Self {
+        Self(value.0.0)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(
+            &self.0
+        ), buf)
+    }
+}
 impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -9576,6 +9626,41 @@ impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
         <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
+
+//
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize)]
+// pub struct UuidUuidAsNotNullJsonbStringUpdateForQuery(UuidUuidAsNotNullJsonbStringOrigin);
+// impl UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     pub fn new(value: uuid::Uuid) -> Self {
+//         Self(UuidUuidAsNotNullJsonbStringOrigin(value))
+//     }
+// }
+// impl std::convert::From<UuidUuidAsNotNullJsonbStringUpdate> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn from(value: UuidUuidAsNotNullJsonbStringUpdate) -> Self {
+//         Self(value.0)
+//     }
+// }
+// impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(
+//             &self.0.0
+//         ), buf)
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+//         <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+
+
+
+
+
+
 impl postgresql_crud_common::PostgresqlJsonType for UuidUuidAsNotNullJsonbString {
     type TableTypeDeclaration = UuidUuidAsNotNullJsonbStringTableTypeDeclaration;
     type Create = UuidUuidAsNotNullJsonbStringCreate;
