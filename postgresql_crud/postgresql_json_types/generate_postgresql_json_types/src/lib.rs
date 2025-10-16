@@ -979,7 +979,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                                 #std_string_string_token_stream
                             > {
-                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.to_string()) {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.0.to_string()) {
                                     return Err(#error_snake_case.to_string())
                                 }
                                 Ok(#query_snake_case)
@@ -991,7 +991,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                                 #std_string_string_token_stream
                             > {
-                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.to_string()) {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.0.to_string()) {
                                     return Err(#error_snake_case.to_string())
                                 }
                                 Ok(#query_snake_case)
@@ -2235,8 +2235,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_read_inner_upper_camel_case,
                     &generate_into_inner_content_token_stream(&quote::quote! {#value_snake_case.0.0}),
                     &ident_update_upper_camel_case,
-                    // &ident_update_for_query_upper_camel_case,
-                    &ident_origin_upper_camel_case,
+                    &ident_update_for_query_upper_camel_case,
                     &{
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
