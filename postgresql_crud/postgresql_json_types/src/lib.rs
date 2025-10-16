@@ -9552,15 +9552,28 @@ impl std::convert::From<UuidUuidAsNotNullJsonbStringUpdate> for UuidUuidAsNotNul
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(&self.0), buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(
+            //here
+            // &self.0
+            &self.0.0
+        ), buf)
     }
 }
+//here
+// impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+//         <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
 impl sqlx::Type<sqlx::Postgres> for UuidUuidAsNotNullJsonbStringUpdateForQuery {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::type_info()
+        <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <UuidUuidAsNotNullJsonbStringOrigin as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <sqlx::types::Json<uuid::Uuid> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
 impl postgresql_crud_common::PostgresqlJsonType for UuidUuidAsNotNullJsonbString {
@@ -9582,7 +9595,8 @@ impl postgresql_crud_common::PostgresqlJsonType for UuidUuidAsNotNullJsonbString
         value.0.0
     }
     type Update = UuidUuidAsNotNullJsonbStringUpdate;
-    type UpdateForQuery = UuidUuidAsNotNullJsonbStringOrigin;
+    // type UpdateForQuery = UuidUuidAsNotNullJsonbStringOrigin;
+    type UpdateForQuery = UuidUuidAsNotNullJsonbStringUpdateForQuery;
     fn update_query_part(_: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, _: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
