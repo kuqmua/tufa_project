@@ -3762,34 +3762,72 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_origin_upper_camel_case);
+                let ident_create_not_primary_key_token_stream = {
+                    let ident_create_token_stream = {
+                        quote::quote! {
+                            #[derive(
+                                Debug,
+                                Clone,
+                                PartialEq,
+                                serde::Serialize,
+                                serde::Deserialize,
+                            )]
+                            pub struct #ident_create_upper_camel_case(#ident_origin_upper_camel_case);
+                        }
+                    };
+                    //
+                
+                    //
+                    let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_create_upper_camel_case,
+                        &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
+                    );
+                    let impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                        &ident_create_upper_camel_case,
+                        &ident_origin_upper_camel_case
+                    );
+                    let impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = quote::quote! {
+                        impl sqlx::Encode<'_, sqlx::Postgres> for #ident_create_upper_camel_case {
+                            fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+                                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
+                            }
+                        }
+                    };
+                    quote::quote! {
+                        #ident_create_token_stream
+                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
+                        #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
+                    }
+                };
                 match &postgresql_type {
-                    PostgresqlType::StdPrimitiveI16AsInt2 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveI32AsInt4 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveI64AsInt8 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveF32AsFloat4 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveF64AsFloat8 => alias_token_stream,
+                    PostgresqlType::StdPrimitiveI16AsInt2 => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsInt4 => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsInt8 => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdPrimitiveF32AsFloat4 => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdPrimitiveF64AsFloat8 => ident_create_not_primary_key_token_stream,
                     PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => ident_create_token_stream,
                     PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => ident_create_token_stream,
                     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => alias_token_stream,
-                    PostgresqlType::StdPrimitiveBoolAsBool => alias_token_stream,
-                    PostgresqlType::StdStringStringAsText => alias_token_stream,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => alias_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => alias_token_stream,
-                    PostgresqlType::SqlxTypesTimeTimeAsTime => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => alias_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => alias_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => alias_token_stream,
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => alias_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdPrimitiveBoolAsBool => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdStringStringAsText => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesTimeTimeAsTime => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => ident_create_not_primary_key_token_stream,
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => alias_token_stream,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => alias_token_stream,
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => alias_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => ident_create_not_primary_key_token_stream,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ident_create_not_primary_key_token_stream,
                 }
             };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
