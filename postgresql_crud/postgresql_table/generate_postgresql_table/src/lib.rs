@@ -4700,7 +4700,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                             as
                                                             postgresql_crud::PostgresqlType
                                                         >::Update::from(
-                                                            read_only_ids_current_element.#primary_key_field_ident.clone().into_read()
+                                                            read_only_ids_current_element.#primary_key_field_ident.clone().into_update()
                                                         ),
                                                         #ident_update_parameters_initialization_without_primary_key_token_stream
                                                     ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"));
@@ -5034,7 +5034,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         as
                                                         postgresql_crud::PostgresqlType
                                                     >::Update::from(
-                                                        read_only_ids_current_element.#primary_key_field_ident.clone().into_read()
+                                                        read_only_ids_current_element.#primary_key_field_ident.clone().into_update()
                                                     ),
                                                     #ident_update_parameters_initialization_without_primary_key_token_stream
                                                 ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
