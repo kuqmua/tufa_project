@@ -1063,7 +1063,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Ok(#query_snake_case)
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                    let value = match #content_token_stream.0 {
+                    let value = match #content_token_stream.0.0 {
                         Some(#value_snake_case) => Some(#value_snake_case),
                         None => None
                     };
@@ -1074,7 +1074,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
-
+            //todo reuse
+            let generate_typical_query_bind_handle_token_stream = |content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                    if let Err(error) = #query_snake_case.try_bind(#content_token_stream) {
+                        return Err(error.to_string());
+                    }
+                    Ok(#query_snake_case)
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                    let value = match #content_token_stream.0 {
+                        Some(#value_snake_case) => Some(#value_snake_case),
+                        None => None
+                    };
+                    if let Err(error) = #query_snake_case.try_bind(value) {
+                        return Err(error.to_string());
+                    }
+                    Ok(#query_snake_case)
+                },
+            };
+            let typical_query_bind_handle_token_stream = generate_typical_query_bind_handle_token_stream(&value_snake_case);
             let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |months_token_stream: &dyn quote::ToTokens, days_token_stream: &dyn quote::ToTokens, microseconds_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {#inner_type_standart_not_null_token_stream {
                     #months_snake_case #months_token_stream,
@@ -3752,17 +3771,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
-            let ident_create_token_stream = {
-                let ident_create_token_stream = {
+            let ident_create_token_stream = match &can_be_primary_key {
+                CanBePrimaryKey::True => {
                     let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False);
                     let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
                     quote::quote! {
                         #ident_create_token_stream
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
                     }
-                };
-                let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_origin_upper_camel_case);
-                let ident_create_not_primary_key_token_stream = {
+                },
+                CanBePrimaryKey::False => {
                     let ident_create_token_stream = {
                         quote::quote! {
                             #[derive(
@@ -3775,9 +3793,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             pub struct #ident_create_upper_camel_case(#ident_origin_upper_camel_case);
                         }
                     };
-                    //
-                
-                    //
+                    let impl_ident_create_token_stream = {
+                        let pub_fn_new_or_try_new_token_stream = {
+                            if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                quote::quote! {
+                                    pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                        match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
+                                            Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                            Err(#error_snake_case) => Err(#error_snake_case)
+                                        }
+                                    }
+                                }
+                            } else {
+                                quote::quote! {
+                                    pub fn new(#value_ident_inner_type_token_stream) -> Self {
+                                        Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                                    }
+                                }
+                            }
+                        };
+                        quote::quote! {
+                            impl #ident_create_upper_camel_case {
+                                #pub_fn_new_or_try_new_token_stream
+                            }
+                        }
+                    };
                     let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_create_upper_camel_case,
                         &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
@@ -3795,39 +3835,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     quote::quote! {
                         #ident_create_token_stream
+                        #impl_ident_create_token_stream
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
                         #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
                         #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
                     }
-                };
-                match &postgresql_type {
-                    PostgresqlType::StdPrimitiveI16AsInt2 => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveI32AsInt4 => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveI64AsInt8 => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveF32AsFloat4 => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveF64AsFloat8 => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdPrimitiveBoolAsBool => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdStringStringAsText => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesTimeTimeAsTime => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => ident_create_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => ident_create_not_primary_key_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ident_create_not_primary_key_token_stream,
                 }
             };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
@@ -4953,7 +4965,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::True,
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                    &typical_query_bind_token_stream,
+                    // &typical_query_bind_token_stream,
+                    //
+                    &typical_query_bind_handle_token_stream,
+                    //
                     &quote::quote!{Ok(#select_only_ids_and_select_only_updated_ids_query_common_token_stream)},
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote::quote!{Ok(#query_snake_case)}
@@ -5511,19 +5526,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 maybe_acc_push_none_token_stream
                             ) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (
-                                    quote::quote!{try_new(vec![#element_snake_case.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
+                                    quote::quote!{try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
                                     proc_macro2::TokenStream::new()
                                 ),
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (
-                                    quote::quote!{new(vec![#element_snake_case.into()])},
+                                    quote::quote!{new(vec![#element_snake_case.0.into()])},
                                     proc_macro2::TokenStream::new()
                                 ),
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
-                                    quote::quote!{try_new(Some(#element_snake_case.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
+                                    quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
                                     quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
                                 ),
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
-                                    quote::quote!{new(Some(#element_snake_case.into()))},
+                                    quote::quote!{new(Some(#element_snake_case.0.into()))},
                                     quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
                                 ),
                             };
@@ -5592,7 +5607,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         {
                             quote::quote! {#read_only_ids_snake_case.expect("error 5f763c94-ada9-4459-b162-4b15e32c8b04").0}//todo maybe remove expect
                         } else {
-                            quote::quote!{#ident_read_upper_camel_case(#create_snake_case)}
+                            quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
                         };
                         quote::quote! {Some(#import_path::Value {
                             #value_snake_case: #self_element_as_postgresql_type_token_stream::normalize(#content_token_stream)
