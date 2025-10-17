@@ -1003,7 +1003,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } else {
                     proc_macro2::TokenStream::new()
                 };
-                //todo maybe temp
                 let impl_std_convert_from_ident_create_for_ident_origin_token_stream = {
                     quote::quote!{
                         impl std::convert::From<#ident_create_upper_camel_case> for #ident_origin_upper_camel_case {
