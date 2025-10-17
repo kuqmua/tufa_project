@@ -5697,10 +5697,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern
             ) {
                 let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
-                let primary_key_upper_camel_case = naming::PrimaryKeyUpperCamelCase;
+                let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+                let postgresql_type_read_upper_camel_case = naming::PostgresqlTypeReadUpperCamelCase;
                 quote::quote! {
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
-                        type #primary_key_upper_camel_case = #ident_standart_not_null_read_upper_camel_case;
+                        type #postgresql_type_upper_camel_case = #ident_standart_not_null_upper_camel_case;
+                        type #postgresql_type_read_upper_camel_case = #ident_standart_not_null_read_upper_camel_case;
                     }
                 }
             }

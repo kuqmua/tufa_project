@@ -82,7 +82,8 @@ pub trait PostgresqlJsonType {
 }
 
 pub trait PostgresqlTypePrimaryKey {
-    type PrimaryKey;
+    type PostgresqlType: crate::PostgresqlType;
+    type PostgresqlTypeRead;
     // into_read
     // into_update
 }

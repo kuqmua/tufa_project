@@ -272,11 +272,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateUpperCamelCase);
     let generate_as_postgresql_type_update_for_query_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateForQueryUpperCamelCase);
-    let primary_key_field_type_as_primary_key_upper_camel_case = {
+    let primary_key_field_type_as_postgresql_type_read_upper_camel_case = {
         let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
-        let primary_key_upper_camel_case = naming::PrimaryKeyUpperCamelCase;
+        let postgresql_type_read_upper_camel_case = naming::PostgresqlTypeReadUpperCamelCase;
         quote::quote! {
-            <#primary_key_field_type as postgresql_crud::#postgresql_type_primary_key_upper_camel_case>::#primary_key_upper_camel_case
+            <#primary_key_field_type as postgresql_crud::#postgresql_type_primary_key_upper_camel_case>::#postgresql_type_read_upper_camel_case
         }
     };
     let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
@@ -288,7 +288,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfReadOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
     let ident_try_delete_one_error_named_upper_camel_case = naming::parameter::SelfTryDeleteOneErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_delete_one_error_named_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfDeleteOneErrorNamedWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
-    let std_vec_vec_primary_key_field_type_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&primary_key_field_type_as_primary_key_upper_camel_case);
+    let std_vec_vec_primary_key_field_type_read_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&primary_key_field_type_as_postgresql_type_read_upper_camel_case);
     let std_vec_vec_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&ident_read_only_ids_upper_camel_case);
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
@@ -1171,7 +1171,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let impl_ident_read_token_stream = {
             let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = {
                 let declaration_primary_key_token_stream = {
-                    let std_option_option_value_primary_key_field_type_as_primary_key_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&primary_key_field_type_as_primary_key_upper_camel_case));
+                    let std_option_option_value_primary_key_field_type_as_primary_key_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&primary_key_field_type_as_postgresql_type_read_upper_camel_case));
                     quote::quote! {
                         let mut #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_primary_key_token_stream = None;
                     }
@@ -1188,7 +1188,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let value_initialization_token_stream = generate_value_initialization_token_stream(&value_snake_case);
                     quote::quote! {
                         #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
-                            #primary_key_field_type_as_primary_key_upper_camel_case,
+                            #primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                             #ref_std_primitive_str
                         >(
                             &#value_snake_case,
@@ -2389,7 +2389,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &primary_key_field_type_as_primary_key_upper_camel_case,
+                &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                 &quote::quote! {Some(#value_snake_case)},
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
@@ -2417,7 +2417,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
         };
         generate_fetch_one_token_stream(
-            &generate_sqlx_row_try_get_primary_key_token_stream(&quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case}, &value_snake_case, &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!())),
+            &generate_sqlx_row_try_get_primary_key_token_stream(&quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case}, &value_snake_case, &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!())),
             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
@@ -2673,7 +2673,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };
                         generate_fetch_one_token_stream(
                             // &generate_sqlx_row_try_get_primary_key_token_stream(
-                            //     &quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
+                            //     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
                             //     &value_snake_case,
                             //     &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                             // ),
@@ -2704,7 +2704,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let try_operation_token_stream = generate_try_operation_token_stream(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                // &primary_key_field_type_as_primary_key_upper_camel_case,
+                // &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                 &ident_read_only_ids_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &value_snake_case,
@@ -3756,7 +3756,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(&operation, &primary_key_field_type_as_primary_key_upper_camel_case, &type_variants_from_request_response_syn_variants);
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(&operation, &primary_key_field_type_as_postgresql_type_read_upper_camel_case, &type_variants_from_request_response_syn_variants);
             let operation_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = quote::quote! {#postgresql_crud_snake_case::generate_delete_one_query_string(
@@ -3797,7 +3797,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &primary_key_field_type_as_primary_key_upper_camel_case, &proc_macro2::TokenStream::new(), &value_snake_case);
+            let try_operation_token_stream = generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &primary_key_field_type_as_postgresql_type_read_upper_camel_case, &proc_macro2::TokenStream::new(), &value_snake_case);
             quote::quote! {
                 #try_operation_error_named_token_stream
                 #try_operation_token_stream

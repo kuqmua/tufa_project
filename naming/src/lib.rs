@@ -672,7 +672,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["default", "but", "option", "is", "always", "some", "and", "vec", "always", "contains", "one", "element", "with", "max", "page", "size"],
     ["all", "enum", "variants", "array", "default", "but", "std", "option", "option", "is", "always", "some", "and", "std", "vec", "vec", "always", "contains", "one", "element", "with", "max", "page", "size"],
     ["ids", "are", "not", "unique"],
-    ["postgresql", "type", "primary", "key"]
+    ["postgresql", "type", "primary", "key"],
+    ["postgresql", "type", "read"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
