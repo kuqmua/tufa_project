@@ -175,6 +175,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let update_for_query_snake_case = naming::UpdateForQuerySnakeCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -272,13 +274,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateUpperCamelCase);
     let generate_as_postgresql_type_update_for_query_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateForQueryUpperCamelCase);
-    let primary_key_field_type_as_postgresql_type_read_upper_camel_case = {
-        let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
-        let postgresql_type_read_upper_camel_case = naming::PostgresqlTypeReadUpperCamelCase;
-        quote::quote! {
-            <#primary_key_field_type as postgresql_crud::#postgresql_type_primary_key_upper_camel_case>::#postgresql_type_read_upper_camel_case
-        }
-    };
+    let primary_key_field_type_as_postgresql_type_read_upper_camel_case = quote::quote! {<#primary_key_field_type as postgresql_crud::#postgresql_type_upper_camel_case>::#read_upper_camel_case};
     let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_parameters_upper_camel_case = naming::parameter::SelfDeleteManyParametersUpperCamelCase::from_tokens(&ident);
     let ident_delete_many_payload_upper_camel_case = naming::parameter::SelfDeleteManyPayloadUpperCamelCase::from_tokens(&ident);

@@ -83,9 +83,12 @@ pub trait PostgresqlJsonType {
 
 pub trait PostgresqlTypePrimaryKey {
     type PostgresqlType: crate::PostgresqlType;
-    type PostgresqlTypeRead;
-    // into_read
-    // into_update
+    fn into_read(
+        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
+    fn into_update(
+        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
 }
 
 pub trait PostgresqlJsonTypeElementId {
