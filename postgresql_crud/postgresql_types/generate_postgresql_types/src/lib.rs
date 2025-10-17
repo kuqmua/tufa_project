@@ -3619,16 +3619,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                     IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
                 };
-                //todo it was temp
-                let impl_std_convert_from_ident_update_for_ident_origin_token_stream = {
-                    quote::quote! {
-                        impl std::convert::From<#ident_update_upper_camel_case> for #ident_origin_upper_camel_case {
-                            fn from(#value_snake_case: #ident_update_upper_camel_case) -> Self {
-                                #value_snake_case.0
-                            }
-                        }
-                    }
-                };
                 quote::quote! {
                     #ident_origin_token_stream
                     #maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream
@@ -3648,7 +3638,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream
                     #impl_create_table_column_query_part_for_ident_origin_token_stream
                     #maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream
-                    #impl_std_convert_from_ident_update_for_ident_origin_token_stream
                 }
             };
             enum ImplDefault {
