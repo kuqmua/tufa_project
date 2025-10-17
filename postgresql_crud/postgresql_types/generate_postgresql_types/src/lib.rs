@@ -1075,26 +1075,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
-            //todo reuse
-            let generate_typical_query_bind_handle_token_stream = |content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                    if let Err(error) = #query_snake_case.try_bind(#content_token_stream) {
-                        return Err(error.to_string());
-                    }
-                    Ok(#query_snake_case)
-                },
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                    let value = match #content_token_stream.0 {
-                        Some(#value_snake_case) => Some(#value_snake_case),
-                        None => None
-                    };
-                    if let Err(error) = #query_snake_case.try_bind(value) {
-                        return Err(error.to_string());
-                    }
-                    Ok(#query_snake_case)
-                },
-            };
-            let typical_query_bind_handle_token_stream = generate_typical_query_bind_handle_token_stream(&value_snake_case);
             let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |months_token_stream: &dyn quote::ToTokens, days_token_stream: &dyn quote::ToTokens, microseconds_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {#inner_type_standart_not_null_token_stream {
                     #months_snake_case #months_token_stream,
@@ -2404,7 +2384,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #maybe_derive_serde_serialize_token_stream
                             #maybe_derive_serde_deserialize_token_stream
                         )]
-                        pub struct #ident_origin_upper_camel_case(#type_token_stream);
+                        struct #ident_origin_upper_camel_case(#type_token_stream);
                     }
                 };
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
@@ -3918,10 +3898,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
                 }
             };
+            let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
-                    let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote::quote! {#ident_origin_upper_camel_case} }];
+                    let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote::quote! {#ident_read_upper_camel_case} }];//here
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
@@ -4276,7 +4257,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
                 &postgresql_crud_macros_common::IsQueryBindMutable::False,
             );
-            let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
             let ident_read_token_stream = {
                 let ident_read_token_stream = {
                     let maybe_derive_partial_ord_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
@@ -4482,7 +4462,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
-            let ident_update_for_query_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
+            let ident_update_for_query_token_stream = {
+                let ident_update_for_query_token_stream = {
+                    quote::quote! {
+                        #[derive(
+                            Debug,
+                            Clone,
+                            PartialEq,
+                            serde::Serialize,
+                            serde::Deserialize,
+                        )]
+                        pub struct #ident_update_for_query_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_update_for_query_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                );
+                let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = quote::quote! {
+                    impl sqlx::Encode<'_, sqlx::Postgres> for #ident_update_for_query_upper_camel_case {
+                        fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
+                        }
+                    }
+                };
+                let impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream = {
+                    quote::quote! {
+                        impl std::convert::From<#ident_update_upper_camel_case> for #ident_update_for_query_upper_camel_case {
+                            fn from(#value_snake_case: #ident_update_upper_camel_case) -> Self {
+                                Self(#value_snake_case.0)
+                            }
+                        }
+                    }
+                };
+                quote::quote!{
+                    #ident_update_for_query_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream
+                    #impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream
+                    #impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream
+                }
+            };
             let impl_postgresql_type_for_ident_token_stream = {
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#std_string_string_token_stream::from(#content_token_stream))}
@@ -5034,10 +5053,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::True,
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                    // &typical_query_bind_token_stream,
-                    //
-                    &typical_query_bind_handle_token_stream,
-                    //
+                    &typical_query_bind_token_stream,
                     &quote::quote!{Ok(#select_only_ids_and_select_only_updated_ids_query_common_token_stream)},
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote::quote!{Ok(#query_snake_case)}
