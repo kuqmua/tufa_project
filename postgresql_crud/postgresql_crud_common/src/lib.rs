@@ -83,6 +83,8 @@ pub trait PostgresqlJsonType {
 
 pub trait PostgresqlTypePrimaryKey {
     type PrimaryKey;
+    // into_read
+    // into_update
 }
 
 pub trait PostgresqlJsonTypeElementId {
