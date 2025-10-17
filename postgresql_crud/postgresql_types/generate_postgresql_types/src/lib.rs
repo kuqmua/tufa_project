@@ -4354,16 +4354,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub struct #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case);
                 };
-                let impl_ident_read_only_ids_token_stream = quote::quote!{
-                    impl #ident_read_only_ids_upper_camel_case {
-                        pub fn into_read(self) -> #ident_read_upper_camel_case {
-                            self.0
-                        }
-                        pub fn into_update(self) -> #ident_update_upper_camel_case {
-                            #ident_update_upper_camel_case(self.0.0)
-                        }
-                    }
-                };
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = quote::quote! {
                     impl sqlx::Decode<'_, sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
                         fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
@@ -4386,7 +4376,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 quote::quote! {
                     #ident_read_only_ids_token_stream
-                    #impl_ident_read_only_ids_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream
                 }
