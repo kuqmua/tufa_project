@@ -83,6 +83,7 @@ pub trait PostgresqlJsonType {
 
 pub trait PostgresqlTypePrimaryKey {
     type PostgresqlType: crate::PostgresqlType;
+    type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + PartialOrd + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     fn into_read(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;

@@ -889,6 +889,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
             let read_upper_camel_case = naming::ReadUpperCamelCase;
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
+            let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -3572,7 +3573,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PartialEq,
                             serde::Serialize,
                             serde::Deserialize,
-                            //todo put it in trait?
                             #maybe_derive_partial_ord_token_stream
                         )]
                         pub struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
@@ -5625,6 +5625,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
                         type #postgresql_type_upper_camel_case = #ident_standart_not_null_upper_camel_case;
+                        type #table_type_declaration_upper_camel_case = #ident_standart_not_null_table_type_declaration_upper_camel_case;
                         fn into_read(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#read_upper_camel_case {
                             #value_snake_case.0
                         }
