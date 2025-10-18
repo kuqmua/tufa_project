@@ -5552,25 +5552,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                        quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                                    }
-                                    else {
-                                        quote::quote!{new(#element_snake_case)}
-                                    };
-                                    match &can_be_primary_key {
-                                        CanBePrimaryKey::True => quote::quote!{vec![]},//todo maybe wrong
-                                        CanBePrimaryKey::False => {
-                                            let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
-                                            quote::quote!{
-                                                #content_token_stream.into_iter().map(|#element_snake_case|
-                                                    #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
-                                                ).collect()
-                                            }
-                                        },
-                                    }
-                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
+                                    CanBePrimaryKey::True => quote::quote!{vec![]},
+                                    CanBePrimaryKey::False => {
+                                        let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
+                                        let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                            quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
+                                        }
+                                        else {
+                                            quote::quote!{new(#element_snake_case)}
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream.into_iter().map(|#element_snake_case|
+                                                #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
+                                            ).collect()
+                                        }
+                                    },
+                                },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_acc_content_token_stream(
                                     &not_null_or_nullable,
                                     &generate_ident_token_stream(
