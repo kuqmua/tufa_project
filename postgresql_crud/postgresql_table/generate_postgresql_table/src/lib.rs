@@ -4017,7 +4017,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let current_field_type = &element.syn_field.ty;
                     quote::quote! {
                         #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                            #read_only_ids_snake_case.#current_field_ident,//todo maybe add expect
+                            #read_only_ids_snake_case.#current_field_ident.expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"),
                             #create_snake_case.#current_field_ident
                         )
                     }
@@ -4237,7 +4237,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let current_field_type = &element.syn_field.ty;
                     quote::quote! {
                         #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                            read_only_ids_from_try_create_one.#current_field_ident,
+                            read_only_ids_from_try_create_one.#current_field_ident.expect("error 23a79f15-caae-4673-844c-fa4366adf267"),
                             ident_create.#current_field_ident
                         )
                     }
@@ -5274,7 +5274,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let current_field_type = &element.syn_field.ty;
                 quote::quote! {
                     #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                        read_only_ids_returned_from_create_one.#current_field_ident,//todo maybe add expect
+                        read_only_ids_returned_from_create_one.#current_field_ident.expect("error eb1fcdfb-7126-49f2-aed8-2ed377b19241"),
                         ident_create_default.#current_field_ident
                     )
                 }
