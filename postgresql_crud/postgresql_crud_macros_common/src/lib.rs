@@ -1013,6 +1013,23 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         }
     }
 }
+
+pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let postgresql_type_not_primary_key_upper_camel_case = naming::PostgresqlTypeNotPrimaryKeyUpperCamelCase;
+    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+    let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+    quote::quote! {
+        impl #import_path::#postgresql_type_not_primary_key_upper_camel_case for #ident {
+            type #postgresql_type_upper_camel_case = #ident;
+            type #create_upper_camel_case = #ident_create_upper_camel_case;
+        }
+    }
+}
+
 pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     cfg_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,

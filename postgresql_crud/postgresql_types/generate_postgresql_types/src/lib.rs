@@ -3741,10 +3741,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &ident_create_upper_camel_case,
                         &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
                     );
-                    let impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
-                        &ident_create_upper_camel_case,
-                        &ident_origin_upper_camel_case
-                    );
                     let impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = quote::quote! {
                         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_create_upper_camel_case {
                             fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
@@ -3752,12 +3748,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
+                    let impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                        &ident_create_upper_camel_case,
+                        &ident_origin_upper_camel_case
+                    );
                     quote::quote! {
                         #ident_create_token_stream
                         #impl_ident_create_token_stream
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
                         #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
+                        #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
                     }
                 }
             };
@@ -5638,6 +5638,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             else {
                 proc_macro2::TokenStream::new()
             };
+            let maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream = if let (
+                CanBePrimaryKey::True,
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                PostgresqlTypePattern::Standart
+            ) = (
+                &can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern
+            ) {
+                proc_macro2::TokenStream::new()
+            }
+            else {
+                postgresql_crud_macros_common::generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(&import_path, &ident)
+            };
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
@@ -5653,6 +5665,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_postgresql_type_for_ident_token_stream
                 #impl_postgresql_type_test_cases_for_ident_token_stream
                 #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
+                #maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream
             };
             (
                 {

@@ -11,16 +11,14 @@ pub trait PostgresqlType {
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
     type WhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'a> crate::PostgresqlTypeWhereFilter<'a>;
-    type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
+    type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Decode<'__, sqlx::Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(column: &std::primitive::str) -> std::string::String;
     type ReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize
-    //  + for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>
-     ;
+    type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize;
     fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -90,6 +88,11 @@ pub trait PostgresqlTypePrimaryKey {
     fn into_update(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
+}
+
+pub trait PostgresqlTypeNotPrimaryKey {
+    type PostgresqlType: crate::PostgresqlType;
+    type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> sqlx::Encode<'__, sqlx::Postgres>  + sqlx::Type<sqlx::Postgres> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
 }
 
 pub trait PostgresqlJsonTypeElementId {
