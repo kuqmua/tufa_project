@@ -4868,7 +4868,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             import_path_non_primary_key_postgresql_type_read_only_ids_token_stream.clone()
                         }
                     },
-                    //todo reuse select_only_ids_query_part and select_only_updated_ids_query_part code
                     &select_only_ids_and_select_only_updated_ids_query_common_token_stream,
                     &ident_read_inner_upper_camel_case,
                     &{
@@ -5488,7 +5487,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
-                    &quote::quote! {todo!()},
                     &{
                         if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
                             && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable

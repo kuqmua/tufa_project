@@ -5305,7 +5305,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_vec_vec_snake_case(&#read_only_ids_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case)},
-                        &quote::quote! {unreachable!()},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_from_previous_read_unwraped_merged_with_update_snake_case(#read_snake_case, #option_update_snake_case)},
