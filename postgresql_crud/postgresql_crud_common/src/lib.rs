@@ -96,24 +96,31 @@ pub trait PostgresqlTypeNotPrimaryKey {
 }
 
 pub trait PostgresqlJsonTypeElementId {
-    type CreateForQuery;
-    type UpdateForQuery;
+    type PostgresqlJsonType: crate::PostgresqlJsonType;
+    type CreateForQuery: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + for<'__> sqlx::Encode<'__, sqlx::Postgres>
+        + sqlx::Type<sqlx::Postgres>
+        + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>
+        + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>;
     type Inner;
     fn query_bind_string_as_postgresql_text_create_for_query(
-        value: Self::CreateForQuery,
+        value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
     fn query_bind_string_as_postgresql_text_update_for_query(
-        value: Self::UpdateForQuery,
+        value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::UpdateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn get_inner<'a>(value: &'a Self::CreateForQuery) -> &'a Self::Inner;
+    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery) -> &'a Self::Inner;
 }
 
 #[cfg(feature = "test-utils")]

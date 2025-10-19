@@ -967,12 +967,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
                     quote::quote! {
                         impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
+                            type PostgresqlJsonType = #ident;
                             type CreateForQuery = #ident_create_for_query_upper_camel_case;
-                            type UpdateForQuery = #ident_update_for_query_upper_camel_case;
                             type Inner = #field_type_handle;
                             //todo reuse?
                             fn query_bind_string_as_postgresql_text_create_for_query(
-                                #value_snake_case: Self::CreateForQuery,
+                                #value_snake_case: <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::CreateForQuery,
                                 mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> Result<
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -984,7 +984,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 Ok(#query_snake_case)
                             }
                             fn query_bind_string_as_postgresql_text_update_for_query(
-                                #value_snake_case: Self::UpdateForQuery,
+                                #value_snake_case: <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::UpdateForQuery,
                                 mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                             ) -> Result<
                                 sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -995,7 +995,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                                 Ok(#query_snake_case)
                             }
-                            fn get_inner<'a>(#value_snake_case: &'a Self::CreateForQuery) -> &'a Self::Inner {
+                            fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::CreateForQuery) -> &'a Self::Inner {
                                 &#value_snake_case.0.0
                             }
                         }
@@ -1318,6 +1318,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
+                //here
                 let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
                     let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
                     let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
