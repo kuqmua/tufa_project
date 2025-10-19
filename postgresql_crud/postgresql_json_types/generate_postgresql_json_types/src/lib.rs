@@ -465,6 +465,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let create_for_query_upper_camel_case = naming::CreateForQueryUpperCamelCase;
             let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
+            let update_upper_camel_case = naming::UpdateUpperCamelCase;
 
             let std_string_string_token_stream = token_patterns::StdStringString;
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
@@ -1011,6 +1012,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
                             type PostgresqlJsonType = #ident;
                             type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
+                            type #update_upper_camel_case = #ident_update_upper_camel_case;
                             type Inner = #field_type_handle;
                             #query_bind_string_as_postgresql_text_create_for_query_token_stream
                             #query_bind_string_as_postgresql_text_update_for_query_token_stream
@@ -1990,13 +1992,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                //todo put it in trait
-                let impl_std_fmt_display_for_ident_update_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_update_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {write!(formatter, "{self:?}")}
-                );
+                let impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                    let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type
+                {
+                    macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                        &proc_macro2::TokenStream::new(),
+                        &ident_update_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &quote::quote! {format!("{self:?}")}
+                    )
+                }
+                else {
+                    proc_macro2::TokenStream::new()
+                };
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_update_upper_camel_case,
                     &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
@@ -2004,7 +2013,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 quote::quote!{
                     #ident_update_token_stream
                     #impl_ident_update_token_stream
-                    #impl_std_fmt_display_for_ident_update_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
                 }
             };

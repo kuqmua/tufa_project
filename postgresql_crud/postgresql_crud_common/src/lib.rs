@@ -107,6 +107,15 @@ pub trait PostgresqlJsonTypeElementId {
         + sqlx::Type<sqlx::Postgres>
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>;
+    type Update: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + for<'__> serde::Deserialize<'__>
+        + for<'__> utoipa::ToSchema<'__>
+        + schemars::JsonSchema
+        + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + error_occurence_lib::ToStdStringString;
     type Inner;
     fn query_bind_string_as_postgresql_text_create_for_query(
         value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery,

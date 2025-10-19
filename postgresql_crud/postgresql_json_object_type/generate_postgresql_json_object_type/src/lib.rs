@@ -2350,11 +2350,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 };
                                 let check_if_ids_are_unique_token_stream = {
                                     quote::quote!{{
+                                        //todo reuse postgresql_crud::UuidUuidAsNotNullJsonbString
                                         let mut #acc_snake_case: std::vec::Vec<&<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update> = vec![];
                                         for #element_snake_case in update.to_vec() {
                                             if #acc_snake_case.contains(&&#element_snake_case.#id_snake_case) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
-                                                    duplicate: #element_snake_case.#id_snake_case.to_string(),
+                                                    duplicate: <<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update as error_occurence_lib::ToStdStringString>::to_std_string_string(
+                                                        &#element_snake_case.#id_snake_case
+                                                    ),
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             }
@@ -2365,7 +2368,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         for #element_snake_case in &delete {
                                             if #acc_snake_case.contains(&#element_snake_case) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
-                                                    duplicate: #element_snake_case.to_string(),
+                                                    duplicate: <<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update as error_occurence_lib::ToStdStringString>::to_std_string_string(
+                                                        &#element_snake_case
+                                                    ),
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             }
