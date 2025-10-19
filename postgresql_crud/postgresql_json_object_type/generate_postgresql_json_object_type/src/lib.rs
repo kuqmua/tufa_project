@@ -238,6 +238,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
                 quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case}
             };
+            let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = quote::quote!{
+                <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonType>
+            };
+            let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream = quote::quote!{
+                <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonType>::Update
+            };
             let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream = quote::quote!{
                 <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeElementId>
             };
@@ -2349,15 +2355,36 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 let check_if_ids_are_unique_token_stream = {
+                                    let (
+                                        uuid_as_postgresql_json_type_update_to_std_string_string_element_id_token_stream,
+                                        uuid_as_postgresql_json_type_update_to_std_string_string_element_token_stream,
+                                    ) = {
+                                        enum UpdateOrDelete {
+                                            Update,
+                                            Delete
+                                        }
+                                        let generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream = |update_or_delete: &UpdateOrDelete|{
+                                            let content_token_stream: &dyn quote::ToTokens = match &update_or_delete {
+                                                UpdateOrDelete::Update => &quote::quote!{#element_snake_case.#id_snake_case},
+                                                UpdateOrDelete::Delete => &element_snake_case
+                                            };
+                                            quote::quote!{
+                                                <#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream as error_occurence_lib::ToStdStringString>::to_std_string_string(
+                                                    &#content_token_stream
+                                                )
+                                            }
+                                        };
+                                        (
+                                            generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(&UpdateOrDelete::Update),
+                                            generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(&UpdateOrDelete::Delete)
+                                        )
+                                    };
                                     quote::quote!{{
-                                        //todo reuse postgresql_crud::UuidUuidAsNotNullJsonbString
-                                        let mut #acc_snake_case: std::vec::Vec<&<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update> = vec![];
+                                        let mut #acc_snake_case = vec![];
                                         for #element_snake_case in update.to_vec() {
                                             if #acc_snake_case.contains(&&#element_snake_case.#id_snake_case) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
-                                                    duplicate: <<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update as error_occurence_lib::ToStdStringString>::to_std_string_string(
-                                                        &#element_snake_case.#id_snake_case
-                                                    ),
+                                                    duplicate: #uuid_as_postgresql_json_type_update_to_std_string_string_element_id_token_stream,
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             }
@@ -2368,9 +2395,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         for #element_snake_case in &delete {
                                             if #acc_snake_case.contains(&#element_snake_case) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
-                                                    duplicate: <<postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update as error_occurence_lib::ToStdStringString>::to_std_string_string(
-                                                        &#element_snake_case
-                                                    ),
+                                                    duplicate: #uuid_as_postgresql_json_type_update_to_std_string_string_element_token_stream,
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             }
@@ -2384,10 +2409,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let check_not_unique_id_in_update_array_token_stream = quote::quote! {
                                         let update_acc = #update_snake_case.to_vec().iter()
                                         .map(|#element_snake_case|&#element_snake_case.#id_snake_case)
-                                        .collect::<std::vec::Vec<&
-                                            // #uuid_uuid_as_not_null_jsonb_string_origin_upper_camel_case
-                                            <postgresql_crud::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update
-                                        >>();
+                                        .collect::<std::vec::Vec<&#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream>>();
                                     };
                                     let check_not_unique_id_in_delete_aray_token_stream = {
                                         let not_unique_id_in_json_delete_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json delete array: {{}}"));
