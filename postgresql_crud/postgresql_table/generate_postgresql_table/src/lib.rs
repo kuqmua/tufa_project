@@ -1281,54 +1281,54 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_try_from_pg_row_for_ident_read_only_ids_token_stream = {
-            let primary_key_token_stream = {
-                let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&primary_key_field_type);
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
-                quote::quote! {
-                    let #primary_key_field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
-                        &#value_snake_case,
-                        #field_ident_double_quotes_token_stream
-                    ) {
-                        Ok(#value_snake_case) => #value_snake_case,
-                        Err(#error_0_token_stream) => {
-                            return Err(#error_0_token_stream);
+        let impl_try_from_pg_row_for_ident_read_only_ids_token_stream = macros_helpers::generate_impl_std_convert_try_from_token_stream::generate_impl_std_convert_try_from_token_stream(
+            &quote::quote!{sqlx::postgres::PgRow},
+            &ident_read_only_ids_upper_camel_case,
+            &quote::quote!{sqlx::Error},
+            &{
+                let primary_key_token_stream = {
+                    let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&primary_key_field_type);
+                    let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
+                    quote::quote! {
+                        let #primary_key_field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
+                            &#value_snake_case,
+                            #field_ident_double_quotes_token_stream
+                        ) {
+                            Ok(#value_snake_case) => #value_snake_case,
+                            Err(#error_0_token_stream) => {
+                                return Err(#error_0_token_stream);
+                            }
+                        };
+                    }
+                };
+                let fields_initialization_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.syn_field.ty;
+                    let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote! {#field_ident});
+                    let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
+                    quote::quote! {
+                        let #field_ident = if let Ok(#value_snake_case) = sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
+                            &#value_snake_case,
+                            #field_ident_double_quotes_token_stream
+                        ) {
+                            Some(#value_snake_case)
                         }
-                    };
-                }
-            };
-            let fields_initialization_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                let field_type = &element.syn_field.ty;
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote! {#field_ident});
-                let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
-                quote::quote! {
-                    let #field_ident = if let Ok(#value_snake_case) = sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
-                        &#value_snake_case,
-                        #field_ident_double_quotes_token_stream
-                    ) {
-                        Some(#value_snake_case)
+                        else {
+                            None
+                        };
                     }
-                    else {
-                        None
-                    };
-                }
-            });
-            let self_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                quote::quote! {#field_ident}
-            });
-            quote::quote! {
-                impl std::convert::TryFrom<sqlx::postgres::PgRow> for #ident_read_only_ids_upper_camel_case {
-                    type Error = sqlx::Error;
-                    fn try_from(#value_snake_case: sqlx::postgres::PgRow) -> Result<Self, Self::Error> {
-                        #primary_key_token_stream
-                        #fields_initialization_token_stream
-                        Ok(Self { #self_fields_token_stream })
-                    }
+                });
+                let self_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                    let field_ident = &element.field_ident;
+                    quote::quote! {#field_ident}
+                });
+                quote::quote!{
+                    #primary_key_token_stream
+                    #fields_initialization_token_stream
+                    Ok(Self { #self_fields_token_stream })
                 }
             }
-        };
+        );
         quote::quote! {
             #ident_read_only_ids_token_stream
             #impl_try_from_pg_row_for_ident_read_only_ids_token_stream
