@@ -45,7 +45,13 @@ impl std::default::Default for NotNullOrNullable {
     }
 }
 
-pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>, prefix: &dyn quote::ToTokens, should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema, is_query_bind_mutable: &IsQueryBindMutable) -> proc_macro2::TokenStream {
+pub fn generate_postgresql_type_where_element_token_stream(
+    variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
+    prefix: &dyn quote::ToTokens,
+    should_derive_utoipa_to_schema: &crate::ShouldDeriveUtoipaToSchema,
+    should_derive_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
+    is_query_bind_mutable: &IsQueryBindMutable
+) -> proc_macro2::TokenStream {
     let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -64,7 +70,7 @@ pub fn generate_postgresql_type_where_element_token_stream(variants: &std::vec::
             quote::quote! {#element_upper_camel_case(where_element_filters::#prefix_where_element_self_upper_camel_case #type_token_stream)}
         });
         quote::quote! {
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_implement_schemars_json_schema)]
+            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize #should_derive_utoipa_to_schema #should_derive_schemars_json_schema)]
             pub enum #ident {
                 #(#variants_token_stream),*
             }
@@ -177,6 +183,19 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+
+pub enum ShouldDeriveUtoipaToSchema {
+    True,
+    False,
+}
+impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote! {, utoipa::ToSchema}.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
         }
     }

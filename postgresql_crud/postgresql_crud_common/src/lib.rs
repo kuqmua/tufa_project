@@ -50,7 +50,8 @@ pub trait PostgresqlJsonType {
         + PartialEq
         + serde::Serialize
         + for<'__> serde::Deserialize<'__>
-        // + schemars::JsonSchema //todo
+        // + for<'__> utoipa::ToSchema<'__>
+        // + schemars::JsonSchema
         + for<'__> crate::PostgresqlTypeWhereFilter<'__>
         + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     //todo impl get fields from read
@@ -174,7 +175,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
     >;
 }
 //todo custom deserialization - must not contain more than one element
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]//todo make copy of this type for PostgresqlJsonType, utoipa::ToSchema, schemars::JsonSchema
 pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where

@@ -4178,6 +4178,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 .map(|element| element as &dyn postgresql_crud_macros_common::PostgresqlFilter)
                 .collect(),
                 &ident,
+                &postgresql_crud_macros_common::ShouldDeriveUtoipaToSchema::False,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
                 &postgresql_crud_macros_common::IsQueryBindMutable::False,
             );
