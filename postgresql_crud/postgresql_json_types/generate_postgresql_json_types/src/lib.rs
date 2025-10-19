@@ -1318,7 +1318,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream = {
+                let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                    let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                {
                     quote::quote!{
                         impl std::convert::From<#ident_update_upper_camel_case> for #ident_create_for_query_upper_camel_case {
                             fn from(#value_snake_case: #ident_update_upper_camel_case) -> Self {
@@ -1326,6 +1329,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                     }
+                }
+                else {
+                    proc_macro2::TokenStream::new()
                 };
                 quote::quote!{
                     #ident_create_for_query_token_stream
@@ -1333,7 +1339,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream
                     #impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream
-                    #impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream
+                    #maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream
                 }
             };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
