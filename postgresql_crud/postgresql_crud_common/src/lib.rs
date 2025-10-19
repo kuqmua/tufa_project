@@ -53,7 +53,8 @@ pub trait PostgresqlJsonType {
         + for<'__> utoipa::ToSchema<'__>
         + schemars::JsonSchema
         + for<'__> crate::PostgresqlTypeWhereFilter<'__>
-        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
