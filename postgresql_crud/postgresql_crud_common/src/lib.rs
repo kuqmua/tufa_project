@@ -175,7 +175,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
     >;
 }
 //todo custom deserialization - must not contain more than one element
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]//todo make copy of this type for PostgresqlJsonType, utoipa::ToSchema, schemars::JsonSchema
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
@@ -281,7 +281,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeWhereElement>,
