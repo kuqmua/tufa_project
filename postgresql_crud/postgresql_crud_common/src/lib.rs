@@ -50,8 +50,8 @@ pub trait PostgresqlJsonType {
         + PartialEq
         + serde::Serialize
         + for<'__> serde::Deserialize<'__>
-        // + for<'__> utoipa::ToSchema<'__>
-        // + schemars::JsonSchema
+        + for<'__> utoipa::ToSchema<'__>
+        + schemars::JsonSchema
         + for<'__> crate::PostgresqlTypeWhereFilter<'__>
         + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     //todo impl get fields from read
