@@ -653,13 +653,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     proc_macro2::TokenStream::new()
                 };
                 //todo need for create_for_query, not for create
-                let impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = quote::quote! {
-                    impl sqlx::Encode<'_, sqlx::Postgres> for #ident_create_upper_camel_case {
-                        fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(#self_snake_case), buf)
-                        }
-                    }
-                };
+                let impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = macros_helpers::generate_impl_sqlx_encode_token_stream::generate_impl_sqlx_encode_token_stream(
+                    &ident_create_upper_camel_case,
+                    &quote::quote!{sqlx::types::Json(#self_snake_case)}
+                );
                 let impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                     &ident_create_upper_camel_case,
                     &quote::quote!{sqlx::types::Json<#ident_create_upper_camel_case>}
@@ -747,13 +744,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             pub struct #ident_create_for_query_upper_camel_case #content_token_stream
                         }
                     };
-                    let impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream = quote::quote! {
-                        impl sqlx::Encode<'_, sqlx::Postgres> for #ident_create_for_query_upper_camel_case {
-                            fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-                                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(#self_snake_case), buf)
-                            }
-                        }
-                    };
+                    let impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_sqlx_encode_token_stream::generate_impl_sqlx_encode_token_stream(
+                        &ident_create_for_query_upper_camel_case,
+                        &quote::quote!{sqlx::types::Json(#self_snake_case)}
+                    );
                     let impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                         &ident_create_for_query_upper_camel_case,
                         &quote::quote!{sqlx::types::Json<#ident_create_for_query_upper_camel_case>}
@@ -2009,15 +2003,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 quote::quote! {{#(#content_token_stream),*}}
             };
-            // let generate_impl_sqlx_encode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-            //     quote::quote! {
-            //         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_token_stream {
-            //             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-            //                 sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(&self.0.0), buf)
-            //             }
-            //         }
-            //     }
-            // };
             let generate_impl_sqlx_decode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
                     impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
