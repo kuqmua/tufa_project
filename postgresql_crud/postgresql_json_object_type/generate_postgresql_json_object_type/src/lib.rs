@@ -614,19 +614,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration);
-                let generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                    let ident_token_stream = match &is_standart_with_id {
-                        IsStandartWithId::False => &ident_table_type_declaration_upper_camel_case,
-                        IsStandartWithId::True => &ident_with_id_standart_not_null_table_type_declaration_upper_camel_case,
-                    };
-                    postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(&ident_token_stream, postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True, &proc_macro2::TokenStream::new(), &{
+                let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
+                    &ident_table_type_declaration_upper_camel_case,
+                    postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
+                    &proc_macro2::TokenStream::new(),
+                    &{
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
                         quote::quote! {
-                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_token_stream)).unwrap())
+                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).unwrap())
                         }
-                    })
-                };
-                let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(&is_standart_with_id_false);
+                    }
+                );
                 quote::quote! {
                     #ident_table_type_declaration_common_token_stream
                     #impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
