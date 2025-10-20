@@ -277,13 +277,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let is_standart_with_id_false = IsStandartWithId::False;
             let is_standart_with_id_true = IsStandartWithId::True;
-            //todo rename variants as StandartNotNullWithoutId
             enum IdentPattern {
-                NotNullStandartWithoutId,
-                NotNullStandartWithId,
-                NullableStandartWithoutId,
-                NotNullArrayWithId,
-                NullableArrayWithId,
+                StandartNotNullWithoutId,
+                StandartNotNullWithId,
+                StandartNullableWithoutId,
+                ArrayNotNullWithId,
+                ArrayNullableWithId,
             }
             let generate_ident_upper_camel_case = |ident_pattern: &IdentPattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
@@ -295,28 +294,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let vec_of_syn_derive_input_ident_with_id = format!("{vec_of_upper_camel_case}{syn_derive_input_ident}{with_id_upper_camel_case}");
                 let array_of_not_null_jsonb_object_with_id = format!("{array_of_upper_camel_case}{}{jsonb_object_upper_camel_case}{with_id_upper_camel_case}", postgresql_crud_macros_common::NotNullOrNullable::NotNull);
                 let (rust_part, postgresql_part, current_not_null_or_nullable) = match &ident_pattern {
-                    IdentPattern::NotNullStandartWithoutId => (syn_derive_input_ident_stringified, jsonb_object_upper_camel_case_stringified, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::NotNullStandartWithId => (format!("{syn_derive_input_ident}{with_id_upper_camel_case}"), format!("{jsonb_object_upper_camel_case}{with_id_upper_camel_case}"), postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::NullableStandartWithoutId => (syn_derive_input_ident_stringified, jsonb_object_upper_camel_case_stringified, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
-                    IdentPattern::NotNullArrayWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::NullableArrayWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
+                    IdentPattern::StandartNotNullWithoutId => (syn_derive_input_ident_stringified, jsonb_object_upper_camel_case_stringified, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                    IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{with_id_upper_camel_case}"), format!("{jsonb_object_upper_camel_case}{with_id_upper_camel_case}"), postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                    IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_stringified, jsonb_object_upper_camel_case_stringified, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
+                    IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                    IdentPattern::ArrayNullableWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
                 format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().unwrap()
             };
 
             let ident = &generate_ident_upper_camel_case(&match (&not_null_or_nullable, &postgresql_json_object_type_pattern) {
-                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::NotNullStandartWithoutId,
-                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::NotNullArrayWithId,
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::NullableStandartWithoutId,
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::NullableArrayWithId,
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::StandartNotNullWithoutId,
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::ArrayNotNullWithId,
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::StandartNullableWithoutId,
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::ArrayNullableWithId,
             });
-            let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithoutId);
-            let ident_standart_nullable_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NullableStandartWithoutId);
-            let ident_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
-            let ident_array_nullable_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NullableArrayWithId);
-            let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullStandartWithId);
-            let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId);
+            let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::StandartNotNullWithoutId);
+            let ident_standart_nullable_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::StandartNullableWithoutId);
+            let ident_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId);
+            let ident_array_nullable_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::ArrayNullableWithId);
+            let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::StandartNotNullWithId);
+            let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId);
             let is_standart_not_null = matches!((&not_null_or_nullable, postgresql_json_object_type_pattern), (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart));
             let generate_type_as_import_path_token_stream = |first_type_token_stream: &dyn quote::ToTokens, second_type_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {<#first_type_token_stream as #import_path::#second_type_token_stream>}
@@ -531,10 +530,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream.clone(),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_not_null_array_with_id_postfix_upper_camel_case = generate_tokens_table_type_declaration_or_create_token_stream(&generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId));
+                                let ident_array_not_null_with_id_postfix_upper_camel_case = generate_tokens_table_type_declaration_or_create_token_stream(&generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId));
                                 quote::quote! {Self(
                                     match #value_snake_case {
-                                        Some(#value_snake_case) => Some(#ident_not_null_array_with_id_postfix_upper_camel_case::new(#value_snake_case)),
+                                        Some(#value_snake_case) => Some(#ident_array_not_null_with_id_postfix_upper_camel_case::new(#value_snake_case)),
                                         None => None
                                     }
 
@@ -2087,7 +2086,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let value_std_option_option_ident_with_id_read_only_ids_array_not_null_token_stream = wrap_into_value_declaration_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                    &naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&generate_ident_upper_camel_case(&IdentPattern::NotNullArrayWithId))
+                                    &naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId))
                                 ));
                                 quote::quote! {(#value_std_option_option_ident_with_id_read_only_ids_array_not_null_token_stream);}
                             }
