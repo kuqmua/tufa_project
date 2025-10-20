@@ -116,7 +116,7 @@ pub trait PostgresqlJsonTypeElementId {
         + schemars::JsonSchema
         + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         + error_occurence_lib::ToStdStringString;
-    type Inner;
+    type Inner: std::fmt::Debug + Clone + PartialEq;
     fn query_bind_string_as_postgresql_text_create_for_query(
         value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
