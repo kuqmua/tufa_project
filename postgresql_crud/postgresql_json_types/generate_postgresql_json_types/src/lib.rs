@@ -1146,19 +1146,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     quote::quote! {Self(#content_token_stream)}
                 });
-                let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = {
-                    let sqlx_types_json_type_field_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_origin_impl_new_value_type_token_stream);
-                    quote::quote! {
-                        impl sqlx::Type<sqlx::Postgres> for #ident_origin_upper_camel_case {
-                            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                <#sqlx_types_json_type_field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
-                            }
-                            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                                <#sqlx_types_json_type_field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_origin_upper_camel_case,
+                    &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_origin_impl_new_value_type_token_stream)
+                );
                 let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
                     &ident_origin_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
@@ -1301,18 +1292,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_create_for_query_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
                 );
-                let impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Type<sqlx::Postgres> for #ident_create_for_query_upper_camel_case {
-                            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                <#ident_origin_upper_camel_case as sqlx::Type<sqlx::Postgres>>::type_info()
-                            }
-                            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                                <#ident_origin_upper_camel_case as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_create_for_query_upper_camel_case,
+                    &ident_origin_upper_camel_case
+                );
                 let impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                     &ident_create_upper_camel_case,
                     &ident_create_for_query_upper_camel_case,
@@ -2044,18 +2027,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_update_for_query_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
                 );
-                let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = {
-                    quote::quote! {
-                        impl sqlx::Type<sqlx::Postgres> for #ident_update_for_query_upper_camel_case {
-                            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                                <#ident_origin_upper_camel_case as sqlx::Type<sqlx::Postgres>>::type_info()
-                            }
-                            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                                <#ident_origin_upper_camel_case as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_update_for_query_upper_camel_case,
+                    &ident_origin_upper_camel_case
+                );
                 quote::quote!{
                     #ident_update_for_query_token_stream
                     #impl_ident_update_for_query_token_stream

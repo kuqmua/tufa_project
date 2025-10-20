@@ -4280,16 +4280,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_read_upper_camel_case,
                     &quote::quote!{Ok(#ident_read_only_ids_upper_camel_case(#value_snake_case))}
                 );
-                let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = quote::quote! {
-                    impl sqlx::Type<sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
-                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                            <#ident_read_upper_camel_case as sqlx::Type<sqlx::Postgres>>::type_info()
-                        }
-                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                            <#ident_read_upper_camel_case as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                        }
-                    }
-                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_only_ids_upper_camel_case,
+                    &ident_read_upper_camel_case
+                );
                 quote::quote! {
                     #ident_read_only_ids_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream

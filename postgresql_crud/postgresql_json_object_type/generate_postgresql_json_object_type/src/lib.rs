@@ -238,9 +238,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_display(&uuid_uuid_as_not_null_jsonb_string_upper_camel_case);
                 quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case}
             };
-            let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream = quote::quote!{
-                <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonType>
-            };
             let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream = quote::quote!{
                 <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonType>::Update
             };
@@ -2011,16 +2008,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
             };
             let generate_impl_sqlx_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-                quote::quote! {
-                    impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
-                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                            <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-                        }
-                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                            <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-                        }
-                    }
-                }
+                postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_token_stream,
+                    &quote::quote!{sqlx::types::Json<Self>}
+                )
             };
             let generate_fields_read_only_ids_to_option_value_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId, parameters_token_stream: &dyn quote::ToTokens|{
                 let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
