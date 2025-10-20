@@ -147,6 +147,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let create_snake_case = naming::CreateSnakeCase;
             let update_snake_case = naming::UpdateSnakeCase;
             let delete_snake_case = naming::DeleteSnakeCase;
+            let value_upper_camel_case = naming::ValueUpperCamelCase;
             let value_snake_case = naming::ValueSnakeCase;
             let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
@@ -213,13 +214,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     <#ident_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
                 }
             };
-            let value_upper_camel_case = naming::ValueUpperCamelCase;
-            //todo reuse
+            let import_path_value_token_stream = quote::quote!{#import_path::#value_upper_camel_case};
             let wrap_into_value_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{#import_path::#value_upper_camel_case<#ident_token_stream>}
+                quote::quote!{#import_path_value_token_stream<#ident_token_stream>}
             };
             let wrap_into_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{#import_path::#value_upper_camel_case { #value_snake_case: #content_token_stream }}
+                quote::quote!{#import_path_value_token_stream { #value_snake_case: #content_token_stream }}
             };
 
             let syn_derive_input_ident = &syn_derive_input.ident;
