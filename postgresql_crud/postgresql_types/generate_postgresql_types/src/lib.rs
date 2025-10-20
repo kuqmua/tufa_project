@@ -4275,16 +4275,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub struct #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case);
                 };
-                let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = quote::quote! {
-                    impl sqlx::Decode<'_, sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
-                        fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                            match <#ident_read_upper_camel_case as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                                Ok(#value_snake_case) => Ok(#ident_read_only_ids_upper_camel_case(#value_snake_case)),
-                                Err(#error_snake_case) => Err(#error_snake_case),
-                            }
-                        }
-                    }
-                };
+                let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_only_ids_upper_camel_case,
+                    &ident_read_upper_camel_case,
+                    &quote::quote!{Ok(#ident_read_only_ids_upper_camel_case(#value_snake_case))}
+                );
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = quote::quote! {
                     impl sqlx::Type<sqlx::Postgres> for #ident_read_only_ids_upper_camel_case {
                         fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {

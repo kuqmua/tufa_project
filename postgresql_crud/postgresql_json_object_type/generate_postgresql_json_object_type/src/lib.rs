@@ -2004,16 +2004,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 quote::quote! {{#(#content_token_stream),*}}
             };
             let generate_impl_sqlx_decode_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-                quote::quote! {
-                    impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
-                        fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-                            match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                                Ok(#value_snake_case) => Ok(#value_snake_case.0),
-                                Err(#error_snake_case) => Err(#error_snake_case),
-                            }
-                        }
-                    }
-                }
+                postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                    &ident_token_stream,
+                    &quote::quote!{sqlx::types::Json<Self>},
+                    &quote::quote!{Ok(#value_snake_case.0)}
+                )
             };
             let generate_impl_sqlx_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
