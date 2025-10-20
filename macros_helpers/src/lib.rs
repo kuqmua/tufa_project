@@ -8,6 +8,7 @@ mod generate_impl_new_for_ident_token_stream;
 pub mod generate_impl_std_convert_from_token_stream;
 pub mod generate_impl_std_convert_try_from_token_stream;
 mod generate_impl_std_fmt_display_token_stream;
+pub mod generate_impl_try_new_for_ident_token_stream;
 pub mod generate_pub_type_alias_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod generate_std_default_default_token_stream;
