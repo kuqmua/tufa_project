@@ -169,7 +169,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let update_for_query_vec_snake_case = naming::UpdateForQueryVecSnakeCase;
     let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValueReadOnlyIdsReturnedFromCreateOneSnakeCase;
-    let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase; //here
+    let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase;
     let common_read_only_ids_returned_from_create_one_snake_case = naming::CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
     let update_for_query_snake_case = naming::UpdateForQuerySnakeCase;
@@ -857,37 +857,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_ident_where_many_token_stream = {
-            let pub_fn_try_new_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_pub_try_new_token_stream(
-                &fields_declaration_token_stream,
-                &ident_where_many_upper_camel_case,
-                &ident_where_many_try_new_error_named_upper_camel_case,
-                &{
-                    //here
-                    let generate_fields_token_stream = |should_add_borrow: ShouldAddBorrow| {
-                        generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                            let field_ident = &element.field_ident;
-                            quote::quote! {#should_add_borrow #field_ident}
-                        })
-                    };
-                    let fields_token_stream = generate_fields_token_stream(ShouldAddBorrow::True);
-                    let fields_inialization_token_stream = generate_fields_token_stream(ShouldAddBorrow::False);
-                    quote::quote!{
-                        if let (#fields_named_with_comma_none_token_stream) = (#fields_token_stream) {
-                            return Err(#ident_where_many_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                        Ok(Self {#fields_inialization_token_stream})
+        let impl_ident_where_many_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
+            &ident_where_many_upper_camel_case,
+            &fields_declaration_token_stream,
+            &ident_where_many_upper_camel_case,
+            &ident_where_many_try_new_error_named_upper_camel_case,
+            &{
+                let generate_fields_token_stream = |should_add_borrow: ShouldAddBorrow| {
+                    generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                        let field_ident = &element.field_ident;
+                        quote::quote! {#should_add_borrow #field_ident}
+                    })
+                };
+                let fields_token_stream = generate_fields_token_stream(ShouldAddBorrow::True);
+                let fields_inialization_token_stream = generate_fields_token_stream(ShouldAddBorrow::False);
+                quote::quote!{
+                    if let (#fields_named_with_comma_none_token_stream) = (#fields_token_stream) {
+                        return Err(#ident_where_many_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
-                }
-            );
-            quote::quote! {
-                impl #ident_where_many_upper_camel_case {
-                    #pub_fn_try_new_token_stream
+                    Ok(Self {#fields_inialization_token_stream})
                 }
             }
-        };
+        );
         let impl_serde_deserialize_for_ident_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_where_many_upper_camel_case, fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|_: &syn::Ident, syn_type: &syn::Type| {
             let syn_type_as_postgresql_type_where_element_token_stream = generate_as_postgresql_type_where_element_token_stream(&syn_type);
             postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_where_element_token_stream>})
@@ -1454,42 +1447,36 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_ident_update_token_stream = {
-            let pub_fn_try_new_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_pub_try_new_token_stream(
-                &fields_declaration_token_stream,
-                &ident_update_upper_camel_case,
-                &ident_update_try_new_error_named_upper_camel_case,
-                &{
-                    let (left_token_stream, right_token_stream) = {
-                        let maybe_wrap_into_braces_handle_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::maybe_wrap_into_braces_token_stream(content_token_stream, fields_len_without_primary_key > 1);
-                        (
-                            maybe_wrap_into_braces_handle_token_stream(&fields_named_without_primary_key_with_comma_none_token_stream),
-                            maybe_wrap_into_braces_handle_token_stream(&generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                                let field_ident = &element.field_ident;
-                                quote::quote! {&#field_ident}
-                            })),
-                        )
-                    };
-                    let fields_inialization_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                        let field_ident = &element.field_ident;
-                        quote::quote! {#field_ident}
-                    });
-                    quote::quote! {
-                        if let #left_token_stream = #right_token_stream {
-                            return Err(#ident_update_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!(),
-                            });
-                        }
-                        Ok(Self {#fields_inialization_token_stream})
+        let impl_ident_update_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
+            &ident_update_upper_camel_case,
+            &fields_declaration_token_stream,
+            &ident_update_upper_camel_case,
+            &ident_update_try_new_error_named_upper_camel_case,
+            &{
+                let (left_token_stream, right_token_stream) = {
+                    let maybe_wrap_into_braces_handle_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::maybe_wrap_into_braces_token_stream(content_token_stream, fields_len_without_primary_key > 1);
+                    (
+                        maybe_wrap_into_braces_handle_token_stream(&fields_named_without_primary_key_with_comma_none_token_stream),
+                        maybe_wrap_into_braces_handle_token_stream(&generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                            let field_ident = &element.field_ident;
+                            quote::quote! {&#field_ident}
+                        })),
+                    )
+                };
+                let fields_inialization_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                    let field_ident = &element.field_ident;
+                    quote::quote! {#field_ident}
+                });
+                quote::quote! {
+                    if let #left_token_stream = #right_token_stream {
+                        return Err(#ident_update_try_new_error_named_upper_camel_case::#no_fields_provided_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
                     }
-                }
-            );
-            quote::quote! {
-                impl #ident_update_upper_camel_case {
-                    #pub_fn_try_new_token_stream
+                    Ok(Self {#fields_inialization_token_stream})
                 }
             }
-        };
+        );
         let impl_serde_deserialize_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_update_upper_camel_case, fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
             if syn_ident == primary_key_field_ident {
                 quote::quote! {#primary_key_field_type_update_token_stream}
