@@ -15,7 +15,7 @@ pub trait PostgresqlType {
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(column: &std::primitive::str) -> std::string::String;
-    type ReadInner;
+    type ReadInner: std::fmt::Debug + Clone + PartialEq;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize;
@@ -60,7 +60,7 @@ pub trait PostgresqlJsonType {
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
-    type ReadInner;
+    type ReadInner: std::fmt::Debug + Clone + PartialEq;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type UpdateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize + std::convert::From<Self::Update>;
