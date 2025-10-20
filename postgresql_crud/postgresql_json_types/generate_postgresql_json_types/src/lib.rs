@@ -2048,6 +2048,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_update_for_query_upper_camel_case,
                     &quote::quote!{Self(#value_snake_case.0)}
                 );
+                //its only for primitive json types
                 let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = {
                     quote::quote! {
                         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_update_for_query_upper_camel_case {
