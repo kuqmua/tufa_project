@@ -714,6 +714,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(&content_token_stream, &into_inner_content_token_stream),
                 }
             };
+            let generate_pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_impl_new_self_token_stream = |content_token_stream: &dyn quote::ToTokens|macros_helpers::generate_pub_new_token_stream(
+                &quote::quote!{#value_snake_case: #ident_origin_impl_new_value_type_token_stream},
+                &content_token_stream
+            );
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
@@ -888,13 +892,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let ident_origin_impl_new_self_content_token_stream = {
                     let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {match value {
-                            Some(value) => Some(#type_token_stream::new(value)),
+                        quote::quote! {match #value_snake_case {
+                            Some(#value_snake_case) => Some(#type_token_stream::#new_snake_case(#value_snake_case)),
                             None => None
                         }}
                     };
                     let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(|#element_snake_case|#type_token_stream::#new_snake_case(#element_snake_case)).collect()},
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
                     };
                     match &postgresql_json_type_pattern {
@@ -955,13 +959,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_origin_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_impl_new_self_content_token_stream)
-                            }
-                        }
-                    };
+                    let pub_fn_new_token_stream = generate_pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_impl_new_self_token_stream(
+                        &quote::quote!{Self(#ident_origin_impl_new_self_content_token_stream)}
+                    );
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_token_stream
@@ -1173,6 +1173,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
                 }
             };
+            let pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream = generate_pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_impl_new_self_token_stream(
+                &quote::quote!{Self(#ident_origin_upper_camel_case::new(#value_snake_case))}
+            );
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_token_stream = {
@@ -1190,16 +1193,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_table_type_declaration_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_table_type_declaration_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };
@@ -1229,16 +1225,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_create_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_create_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };
@@ -1275,16 +1264,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_create_for_query_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_create_for_query_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };
@@ -1803,14 +1785,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
                 };
                 let impl_ident_read_token_stream = {
-                    let pub_fn_new_token_stream = quote::quote! {
-                        pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                            Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                        }
-                    };
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };
@@ -1953,16 +1930,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_update_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_update_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };
@@ -2004,16 +1974,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let impl_ident_update_for_query_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        quote::quote! {
-                            pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_update_for_query_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_value_ident_origin_impl_new_value_type_self_ident_origin_new_value_token_stream
                         }
                     }
                 };

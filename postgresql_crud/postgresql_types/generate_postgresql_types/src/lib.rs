@@ -2317,6 +2317,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {sqlx::types::time::Time::from_hms_micro(#content_token_stream).unwrap()}
             };
+            let generate_pub_new_value_ident_inner_type_token_stream = |content_token_stream: &dyn quote::ToTokens|macros_helpers::generate_pub_new_token_stream(
+                &value_ident_inner_type_token_stream,
+                &content_token_stream,
+            );
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
@@ -2906,45 +2910,43 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         } else {
-                            let content_token_stream = {
-                                let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                                    quote::quote! {match value {
-                                        Some(value) => Some(#type_token_stream::#new_snake_case(value)),
-                                        None => None
-                                    }}
-                                };
-                                let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::#new_snake_case(element)).collect()},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
-                                };
-                                match &postgresql_type_pattern {
-                                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                            if let Ok(ref value) = postgresql_type_range_try_from_postgresql_type {
-                                                generate_pg_range_conversion_token_stream(&value_snake_case, &{
-                                                    let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
-                                                    quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value)}
-                                                })
-                                            } else {
-                                                quote::quote! {#value_snake_case}
+                            generate_pub_new_value_ident_inner_type_token_stream(&{
+                                let content_token_stream = {
+                                    let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                                        quote::quote! {match value {
+                                            Some(value) => Some(#type_token_stream::#new_snake_case(value)),
+                                            None => None
+                                        }}
+                                    };
+                                    let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::#new_snake_case(element)).collect()},
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
+                                    };
+                                    match &postgresql_type_pattern {
+                                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                                if let Ok(ref value) = postgresql_type_range_try_from_postgresql_type {
+                                                    generate_pg_range_conversion_token_stream(&value_snake_case, &{
+                                                        let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
+                                                        quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value)}
+                                                    })
+                                                } else {
+                                                    quote::quote! {#value_snake_case}
+                                                }
                                             }
-                                        }
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
-                                    },
-                                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
-                                        let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
-                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                        };
-                                        generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
-                                    }),
-                                }
-                            };
-                            quote::quote! {
-                                pub fn new(#value_ident_inner_type_token_stream) -> Self {
-                                    Self(#content_token_stream)
-                                }
-                            }
+                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                                        },
+                                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
+                                            let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
+                                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                                            };
+                                            generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
+                                        }),
+                                    }
+                                };
+                                quote::quote!{Self(#content_token_stream)}
+                            })
                         }
                     };
                     let maybe_fn_new_or_try_new_for_deserialize_token = match &postgresql_type_pattern {
@@ -3679,6 +3681,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream
                 }
             };
+            let pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_new_value_ident_inner_type_token_stream(
+                &quote::quote!{Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))}
+            );
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
@@ -3705,23 +3710,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let impl_ident_create_token_stream = {
-                        let pub_fn_new_or_try_new_token_stream = {
-                            if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                quote::quote! {
-                                    pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
-                                        match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
-                                            Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                                            Err(#error_snake_case) => Err(#error_snake_case)
-                                        }
-                                    }
-                                }
-                            } else {
-                                quote::quote! {
-                                    pub fn new(#value_ident_inner_type_token_stream) -> Self {
-                                        Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                        let pub_fn_new_or_try_new_token_stream: &dyn quote::ToTokens = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                            &quote::quote! {
+                                pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                    match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
+                                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                        Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 }
                             }
+                        } else {
+                            &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                         };
                         quote::quote! {
                             impl #ident_create_upper_camel_case {
@@ -4192,8 +4191,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_ident_read_token_stream = {
-                    let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                        quote::quote! {
+                    let pub_fn_new_or_try_new_token_stream: &dyn quote::ToTokens = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                        &quote::quote! {
                             pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
                                 match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
                                     Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
@@ -4202,11 +4201,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     } else {
-                        quote::quote! {
-                            pub fn new(#value_ident_inner_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))
-                            }
-                        }
+                        &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                     };
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
@@ -4311,23 +4306,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_ident_update_token_stream = {
-                    let pub_fn_new_or_try_new_token_stream = {
-                        if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                            quote::quote! {
-                                pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
-                                    match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
-                                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
-                                        Err(#error_snake_case) => Err(#error_snake_case)
-                                    }
-                                }
-                            }
-                        } else {
-                            quote::quote! {
-                                pub fn new(#value_ident_inner_type_token_stream) -> Self {
-                                    Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                    let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                        &quote::quote! {
+                            pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
+                                    Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                    Err(#error_snake_case) => Err(#error_snake_case)
                                 }
                             }
                         }
+                    } else {
+                        &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                     };
                     quote::quote! {
                         impl #ident_update_upper_camel_case {
