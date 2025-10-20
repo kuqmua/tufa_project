@@ -683,14 +683,14 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     }
 }
 
-pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+pub fn generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
+    ident_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
     quote::quote! {
-        impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
-            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-               <#type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
-            }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                <#type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        impl sqlx::Encode<'_, sqlx::Postgres> for #ident_token_stream {
+            fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+                sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#content_token_stream, buf)
             }
         }
     }
@@ -708,6 +708,19 @@ pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(ident_toke
         }
     }
 }
+pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {
+        impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
+            fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+               <#type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
+            }
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                <#type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+            }
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub enum CreateQueryPartValueUnderscore {
     True,

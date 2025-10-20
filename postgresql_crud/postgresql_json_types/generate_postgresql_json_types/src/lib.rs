@@ -1159,7 +1159,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = macros_helpers::generate_impl_sqlx_encode_token_stream::generate_impl_sqlx_encode_token_stream(
+                let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
                     &ident_origin_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
                 );
@@ -1297,7 +1297,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_sqlx_encode_token_stream::generate_impl_sqlx_encode_token_stream(
+                let impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
                     &ident_create_for_query_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
                 );
@@ -2040,7 +2040,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &quote::quote!{Self(#value_snake_case.0)}
                 );
                 //its only for primitive json types
-                let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_sqlx_encode_token_stream::generate_impl_sqlx_encode_token_stream(
+                let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
                     &ident_update_for_query_upper_camel_case,
                     &quote::quote!{sqlx::types::Json(&#self_snake_case.0)}
                 );
