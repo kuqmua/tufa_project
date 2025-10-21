@@ -777,11 +777,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             quote::quote! {Self #content_token_stream}
                         }
                     );
+                    let impl_create_for_query_alias_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_create_for_query_alias_for_ident_create_for_query_token_stream(
+                        &import_path,
+                        &ident,
+                    );
                     quote::quote! {
                         #ident_create_for_query_token_stream
                         #impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream
                         #impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream
                         #impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream
+                        #impl_create_for_query_alias_for_ident_create_for_query_token_stream
                     }
                 };
                 let maybe_ident_with_id_standart_not_null_create_for_query_token_stream = if is_standart_not_null {

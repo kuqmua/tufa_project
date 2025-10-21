@@ -1,5 +1,6 @@
 pub trait TableTypeDeclarationAlias: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {}
 pub trait CreateAlias: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {}
+pub trait CreateForQueryAlias: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> {}
 pub trait SelectAlias: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {}
 
 pub trait PostgresqlType {
@@ -39,7 +40,7 @@ pub trait PostgresqlType {
 pub trait PostgresqlJsonType {
     type TableTypeDeclaration: TableTypeDeclarationAlias + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema;
     type Create: CreateAlias + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema;
-    type CreateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + std::convert::From<Self::Create>;
+    type CreateForQuery: CreateForQueryAlias + std::convert::From<Self::Create>;
     type Select: SelectAlias + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
@@ -104,12 +105,7 @@ pub trait PostgresqlTypeNotPrimaryKey {
 
 pub trait PostgresqlJsonTypeElementId {
     type PostgresqlJsonType: crate::PostgresqlJsonType;
-    type CreateForQuery: std::fmt::Debug
-        + Clone
-        + PartialEq
-        + serde::Serialize
-        + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-        + sqlx::Type<sqlx::Postgres>
+    type CreateForQuery: CreateForQueryAlias
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>;
     type Update: std::fmt::Debug
