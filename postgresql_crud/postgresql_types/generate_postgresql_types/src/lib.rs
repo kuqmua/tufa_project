@@ -3589,12 +3589,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_origin_upper_camel_case,
                     &quote::quote!{Ok(Self(#value_snake_case))}
                 );
+                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = quote::quote!{
+                    impl postgresql_crud_common::TypeDeclarationAlias for #ident_table_type_declaration_upper_camel_case {}
+                };
                 quote::quote!{
                     #ident_table_type_declaration_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream
+                    #impl_type_declaration_alias_for_ident_table_type_declaration_token_stream
                 }
             };
             let pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_new_value_ident_inner_type_token_stream(
