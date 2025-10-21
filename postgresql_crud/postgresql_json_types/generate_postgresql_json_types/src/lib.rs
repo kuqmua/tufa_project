@@ -450,7 +450,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let none_upper_camel_case = naming::NoneUpperCamelCase;
             let new_snake_case = naming::NewSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
-            let element_upper_camel_case = naming::ElementUpperCamelCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
             let read_snake_case = naming::ReadSnakeCase;
@@ -2190,7 +2189,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {
                 let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
-                    quote::quote! {<#self_upper_camel_case::#element_upper_camel_case
+                    quote::quote! {<#self_upper_camel_case::#postgresql_json_type_upper_camel_case
                         as
                         #postgresql_crud_macros_common_import_path_postgresql_crud_common::#postgresql_json_type_upper_camel_case
                     >::#read_or_update_upper_camel_case::#new_snake_case(#value_snake_case)}

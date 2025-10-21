@@ -878,7 +878,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let try_new_snake_case = naming::TryNewSnakeCase;
             let try_new_for_deserialize_snake_case = naming::TryNewForDeserializeSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
-            let element_upper_camel_case = naming::ElementUpperCamelCase;
             let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
             let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
             let create_vec_snake_case = naming::CreateVecSnakeCase;
@@ -954,7 +953,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident);
             let ident_standart_not_null_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_standart_nullable_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_nullable_upper_camel_case);
-            let self_element_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&quote::quote!{Self::Element});
+            let self_postgresql_type_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&quote::quote!{Self::#postgresql_type_upper_camel_case});
 
             let ident_standart_not_null_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_standart_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_nullable_upper_camel_case);
@@ -4932,7 +4931,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     } else {
                         quote::quote! {#new_snake_case(#value_snake_case)}
                     };
-                    quote::quote! {<#self_upper_camel_case::#element_upper_camel_case
+                    quote::quote! {<#self_upper_camel_case::#postgresql_type_upper_camel_case
                         as
                     #import_path::#postgresql_type_upper_camel_case>::#read_or_update_upper_camel_case:: #content_token_stream}
                 };
@@ -5462,9 +5461,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         } else {
                             &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                         };
-                        quote::quote!{Some(#import_path::Value { #value_snake_case: #self_element_as_postgresql_type_token_stream::normalize(#content_token_stream) })}
+                        quote::quote!{Some(#import_path::Value { #value_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream) })}
                     },
-                    &quote::quote!{#self_element_as_postgresql_type_token_stream::normalize(match #option_update_snake_case {
+                    &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::normalize(match #option_update_snake_case {
                         Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.0),
                         None => #read_snake_case
                     })},
@@ -5557,7 +5556,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
                         };
                         quote::quote! {Some(#import_path::Value {
-                            #value_snake_case: #self_element_as_postgresql_type_token_stream::normalize(#content_token_stream)
+                            #value_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)
                         })}
                     }
                 )
