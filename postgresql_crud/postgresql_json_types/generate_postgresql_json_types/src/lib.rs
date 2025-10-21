@@ -1322,10 +1322,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_postgresql_json_type_ident_select_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(&ident_select_upper_camel_case, &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize));
+                let impl_select_alias_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_select_alias_for_ident_select_token_stream(
+                    &import_path,
+                    &ident,
+                );
                 quote::quote! {
                     #ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_postgresql_json_type_ident_select_token_stream
+                    #impl_select_alias_for_ident_select_token_stream
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);

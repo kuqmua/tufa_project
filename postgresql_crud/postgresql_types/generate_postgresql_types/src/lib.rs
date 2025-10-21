@@ -3738,10 +3738,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         )
                     )
                 };
+                let impl_select_alias_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_select_alias_for_ident_select_token_stream(
+                    &import_path,
+                    &ident,
+                );
                 quote::quote! {
                     #pub_struct_ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
+                    #impl_select_alias_for_ident_select_token_stream
                 }
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);

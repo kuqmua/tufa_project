@@ -59,6 +59,13 @@ pub fn generate_impl_create_alias_for_ident_create_token_stream(
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     quote::quote!{impl #import_path::CreateAlias for #ident_create_upper_camel_case {}}
 }
+pub fn generate_impl_select_alias_for_ident_select_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+    quote::quote!{impl #import_path::SelectAlias for #ident_select_upper_camel_case {}}
+}
 
 pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,

@@ -1266,6 +1266,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 } else {
                     proc_macro2::TokenStream::new()
                 };
+                let impl_select_alias_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_select_alias_for_ident_select_token_stream(
+                    &import_path,
+                    &ident,
+                );
                 quote::quote! {
                     #ident_select_token_stream
                     #impl_ident_select_token_stream
@@ -1275,6 +1279,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_ident_select_token_stream
                     #maybe_ident_select_element_token_stream
                     #maybe_ident_with_id_standart_not_null_select_token_stream
+                    #impl_select_alias_for_ident_select_token_stream
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
