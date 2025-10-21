@@ -73,6 +73,13 @@ pub fn generate_impl_select_alias_for_ident_select_token_stream(
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     quote::quote!{impl #import_path::SelectAlias for #ident_select_upper_camel_case {}}
 }
+pub fn generate_impl_where_element_alias_for_ident_where_element_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+    quote::quote!{impl #import_path::WhereElementAlias for #ident_where_element_upper_camel_case {}}
+}
 
 pub fn generate_postgresql_type_where_element_token_stream(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
@@ -160,11 +167,16 @@ pub fn generate_postgresql_type_where_element_token_stream(
         });
         quote::quote! {vec![#(#variants_token_stream),*]}
     });
+    let impl_where_element_alias_for_ident_where_element_token_stream = generate_impl_where_element_alias_for_ident_where_element_token_stream(
+        &ImportPath::PostgresqlCrudCommon,
+        &prefix,
+    );
     quote::quote! {
         #postgresql_type_tokens_where_element_token_stream
         #impl_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream
         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream
         #impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream
+        #impl_where_element_alias_for_ident_where_element_token_stream
     }
 }
 

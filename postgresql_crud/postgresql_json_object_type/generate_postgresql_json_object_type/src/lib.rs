@@ -1610,12 +1610,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     } else {
                         proc_macro2::TokenStream::new()
                     };
+                    let maybe_impl_where_element_alias_for_ident_where_element_token_stream = match &not_null_or_nullable {
+                        NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_where_element_alias_for_ident_where_element_token_stream(
+                            &import_path,
+                            &ident,
+                        ),
+                        NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                    };
                     quote::quote! {
                         #maybe_ident_where_element_token_stream
                         #maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream
                         #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream
                         #maybe_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
                         #maybe_ident_with_id_standart_not_null_where_element_token_stream
+                        #maybe_impl_where_element_alias_for_ident_where_element_token_stream
                     }
                 }
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
