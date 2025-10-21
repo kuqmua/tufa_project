@@ -613,20 +613,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration);
-                let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
-                    &ident_table_type_declaration_upper_camel_case,
-                    postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
-                    &proc_macro2::TokenStream::new(),
-                    &{
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
-                        quote::quote! {
-                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).unwrap())
-                        }
-                    }
-                );
                 quote::quote! {
                     #ident_table_type_declaration_common_token_stream
-                    #impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
                 }
             };
             let generate_type_as_postgresql_json_type_create_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create);
@@ -4205,6 +4193,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
+                    postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
+                    &{
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
+                        quote::quote! {
+                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).unwrap())
+                        }
+                    },
                     &ident_create_upper_camel_case,
                     &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                     &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,

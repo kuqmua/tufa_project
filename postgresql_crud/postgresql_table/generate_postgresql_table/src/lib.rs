@@ -169,7 +169,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let update_for_query_vec_snake_case = naming::UpdateForQueryVecSnakeCase;
     let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValueReadOnlyIdsReturnedFromCreateOneSnakeCase;
-    let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase;
     let common_read_only_ids_returned_from_create_one_snake_case = naming::CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
     let update_for_query_snake_case = naming::UpdateForQuerySnakeCase;
@@ -177,6 +176,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let create_snake_case = naming::CreateSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -387,9 +387,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
                     let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                    let field_type_postgresql_type_table_type_declaration_token_stream = generate_as_postgresql_type_table_type_declaration_token_stream(&field_type);
+                    let field_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
                     quote::quote! {
-                        #field_type_postgresql_type_table_type_declaration_token_stream::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
+                        #field_type_postgresql_type_token_stream #create_table_column_query_part_snake_case(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                     }
                 };
                 let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(primary_key_field_type, &primary_key_field.field_ident, true)];

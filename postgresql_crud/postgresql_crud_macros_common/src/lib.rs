@@ -829,6 +829,8 @@ pub fn generate_impl_postgresql_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_table_type_declaration_upper_camel_case: &dyn quote::ToTokens,
+    is_primary_key_underscore: IsPrimaryKeyUnderscore,
+    create_table_column_query_part_token_stream: &dyn quote::ToTokens,
     ident_create_upper_camel_case: &dyn quote::ToTokens,
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
     create_query_part_increment_underscore: &CreateQueryPartIncrementUnderscore,
@@ -861,6 +863,7 @@ pub fn generate_impl_postgresql_type_token_stream(
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
+    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
@@ -887,9 +890,14 @@ pub fn generate_impl_postgresql_type_token_stream(
     let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
     let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
+    let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
+    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #ident_table_type_declaration_upper_camel_case;
+            fn #create_table_column_query_part_snake_case(#column_snake_case: &dyn #std_fmt_display_token_stream, #is_primary_key_underscore: #std_primitive_bool_token_stream) -> impl #std_fmt_display_token_stream {
+                #create_table_column_query_part_token_stream
+            }
             type #create_upper_camel_case = #ident_create_upper_camel_case;
             fn #create_query_part_snake_case(
                 #create_query_part_value_underscore: &Self::#create_upper_camel_case,
@@ -1176,22 +1184,6 @@ impl quote::ToTokens for IsPrimaryKeyUnderscore {
         match &self {
             Self::True => quote::quote! {_}.to_tokens(tokens),
             Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
-        }
-    }
-}
-pub fn generate_create_table_column_query_part_token_stream(ident: &dyn quote::ToTokens, is_primary_key_underscore: IsPrimaryKeyUnderscore, maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
-    let column_snake_case = naming::ColumnSnakeCase;
-    let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
-    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
-    quote::quote! {
-        impl #ident {
-            pub fn #create_table_column_query_part_snake_case(
-                #column_snake_case: &dyn #std_fmt_display_token_stream,
-                #is_primary_key_underscore: #std_primitive_bool_token_stream #maybe_fixed_length_parameter_token_stream
-            ) -> impl #std_fmt_display_token_stream {
-                #content_token_stream
-            }
         }
     }
 }

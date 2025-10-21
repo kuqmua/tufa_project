@@ -840,8 +840,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let postgresql_type_range_try_from_postgresql_type = PostgresqlTypeRange::try_from(postgresql_type);
             let postgresql_type_range_try_from_postgresql_type_is_ok = postgresql_type_range_try_from_postgresql_type.is_ok();
 
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-
             let column_snake_case = naming::ColumnSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
             let value_snake_case = naming::ValueSnakeCase;
@@ -3575,86 +3573,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         pub struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
                     }
                 };
-                let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
-                    &ident_table_type_declaration_upper_camel_case,
-                    match &can_be_primary_key {
-                        CanBePrimaryKey::True => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::False,
-                        CanBePrimaryKey::False => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True
-                    },
-                    &proc_macro2_token_stream_new,
-                    &{
-                        let postgresql_query_type = match &postgresql_type {
-                            PostgresqlType::StdPrimitiveI16AsInt2 => "int2",
-                            PostgresqlType::StdPrimitiveI32AsInt4 => "int4",
-                            PostgresqlType::StdPrimitiveI64AsInt8 => "int8",
-                            PostgresqlType::StdPrimitiveF32AsFloat4 => "float4",
-                            PostgresqlType::StdPrimitiveF64AsFloat8 => "float8",
-                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => "smallserial",
-                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => "serial",
-                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => "bigserial",
-                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => "money",
-                            PostgresqlType::StdPrimitiveBoolAsBool => "bool",
-                            PostgresqlType::StdStringStringAsText => "text",
-                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => "bytea",
-                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => "time",
-                            PostgresqlType::SqlxTypesTimeTimeAsTime => "time",
-                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => "interval",
-                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => "date",
-                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => "timestamp",
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => "timestamptz",
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => "uuid",
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => "uuid",
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => "inet",
-                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => "macaddr",
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => "int4range",
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => "int8range",
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => "daterange",
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => "tsrange",
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
-                        };
-                        let maybe_array_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => "".to_string(),
-                            PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
-                        };
-                        let maybe_constraint_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => "".to_string(),
-                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
-                            },
-                        };
-                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
-                        let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
-                        let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
-                        let space_additional_parameter = " {}";
-                        match (&not_null_or_nullable, &can_be_primary_key) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
-                                quote::quote! {
-                                    format!(#format_handle_token_stream)
-                                }
-                            }
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::True) => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type_not_null}{space_additional_parameter}"));
-                                quote::quote! {
-                                    format!(#format_handle_token_stream, #maybe_primary_key_is_primary_key_token_stream)
-                                }
-                            }
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::False) => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type);
-                                quote::quote! {
-                                    format!(#format_handle_token_stream)
-                                }
-                            }
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::True) => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type}{space_additional_parameter}"));
-                                quote::quote! {
-                                    format!(#format_handle_token_stream, #maybe_primary_key_is_primary_key_token_stream)
-                                }
-                            }
-                        }
-                    },
-                );
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_table_type_declaration_upper_camel_case,
                     &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
@@ -3674,7 +3592,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 );
                 quote::quote!{
                     #ident_table_type_declaration_token_stream
-                    #impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
@@ -4457,6 +4374,82 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &import_path,
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
+                    match &can_be_primary_key {
+                        CanBePrimaryKey::True => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::False,
+                        CanBePrimaryKey::False => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True
+                    },
+                    &{
+                        let postgresql_query_type = match &postgresql_type {
+                            PostgresqlType::StdPrimitiveI16AsInt2 => "int2",
+                            PostgresqlType::StdPrimitiveI32AsInt4 => "int4",
+                            PostgresqlType::StdPrimitiveI64AsInt8 => "int8",
+                            PostgresqlType::StdPrimitiveF32AsFloat4 => "float4",
+                            PostgresqlType::StdPrimitiveF64AsFloat8 => "float8",
+                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => "smallserial",
+                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => "serial",
+                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => "bigserial",
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => "money",
+                            PostgresqlType::StdPrimitiveBoolAsBool => "bool",
+                            PostgresqlType::StdStringStringAsText => "text",
+                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => "bytea",
+                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => "time",
+                            PostgresqlType::SqlxTypesTimeTimeAsTime => "time",
+                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => "interval",
+                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => "date",
+                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => "timestamp",
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => "timestamptz",
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => "uuid",
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => "uuid",
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => "inet",
+                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => "macaddr",
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => "int4range",
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => "int8range",
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => "daterange",
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => "tsrange",
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
+                        };
+                        let maybe_array_part = match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => "".to_string(),
+                            PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
+                        };
+                        let maybe_constraint_part = match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => "".to_string(),
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
+                            },
+                        };
+                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
+                        let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
+                        let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
+                        let space_additional_parameter = " {}";
+                        match (&not_null_or_nullable, &can_be_primary_key) {
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
+                                quote::quote! {
+                                    format!(#format_handle_token_stream)
+                                }
+                            }
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::True) => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type_not_null}{space_additional_parameter}"));
+                                quote::quote! {
+                                    format!(#format_handle_token_stream, #maybe_primary_key_is_primary_key_token_stream)
+                                }
+                            }
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::False) => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type);
+                                quote::quote! {
+                                    format!(#format_handle_token_stream)
+                                }
+                            }
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::True) => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type}{space_additional_parameter}"));
+                                quote::quote! {
+                                    format!(#format_handle_token_stream, #maybe_primary_key_is_primary_key_token_stream)
+                                }
+                            }
+                        }
+                    },
                     &ident_create_upper_camel_case,
                     &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                     &match &element.postgresql_type {
