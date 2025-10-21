@@ -1198,20 +1198,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_create_upper_camel_case,
                     &quote::quote!{Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
                 );
-                let impl_std_convert_into_ident_read_inner_for_ident_create_token_stream = {
-                    quote::quote! {
-                        impl std::convert::Into<#ident_read_inner_upper_camel_case> for #ident_create_upper_camel_case {
-                            fn into(self) -> #ident_read_inner_upper_camel_case {
-                                self.0.into()
-                            }
-                        }
-                    }
-                };
                 quote::quote!{
                     #ident_create_token_stream
                     #impl_ident_create_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
-                    #impl_std_convert_into_ident_read_inner_for_ident_create_token_stream
                 }
             };
             let ident_create_for_query_token_stream = {
@@ -2585,8 +2575,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let generate_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
                             let (new_content_token_stream, maybe_acc_push_none_token_stream) = match &&not_null_or_nullable {
-                                NotNullOrNullable::NotNull => (quote::quote! {vec![#element_snake_case.into()]}, proc_macro2::TokenStream::new()),
-                                NotNullOrNullable::Nullable => (quote::quote! {Some(#element_snake_case.into())}, quote::quote! {#acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));}),
+                                NotNullOrNullable::NotNull => (quote::quote! {vec![#element_snake_case.0.into()]}, proc_macro2::TokenStream::new()),
+                                NotNullOrNullable::Nullable => (quote::quote! {Some(#element_snake_case.0.into())}, quote::quote! {#acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(None));}),
                             };
                             quote::quote! {
                                 let mut #acc_snake_case = vec![];
