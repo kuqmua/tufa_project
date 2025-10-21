@@ -1166,9 +1166,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_table_type_declaration_upper_camel_case,
                     &quote::quote!{Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
                 );
-                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = quote::quote!{
-                    impl postgresql_crud_common::TypeDeclarationAlias for #ident_table_type_declaration_upper_camel_case {}
-                };
+                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_type_declaration_alias_for_ident_table_type_declaration_token_stream(
+                    &import_path,
+                    &ident,
+                );
                 quote::quote!{
                     #ident_table_type_declaration_token_stream
                     #impl_ident_table_type_declaration_token_stream
