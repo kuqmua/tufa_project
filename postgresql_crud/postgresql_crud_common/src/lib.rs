@@ -36,7 +36,7 @@ pub trait PostgresqlJsonType {
     type TableTypeDeclaration: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type CreateForQuery: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + std::convert::From<Self::Create>;
-    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
         value: &Self::Select,
@@ -159,6 +159,7 @@ pub trait PostgresqlTypeTestCases {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: crate::PostgresqlJsonType;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     fn read_inner_vec_vec(read_only_ids: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
     fn read_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
     fn update_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update;

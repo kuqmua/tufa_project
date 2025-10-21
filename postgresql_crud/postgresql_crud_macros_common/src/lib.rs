@@ -1105,14 +1105,17 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let create_vec_snake_case = naming::CreateVecSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
+    let select_upper_camel_case = naming::SelectUpperCamelCase;
     let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let read_from_previous_read_unwraped_merged_with_update_snake_case = naming::ReadFromPreviousReadUnwrapedMergedWithUpdateSnakeCase;
     let self_postgresql_json_type_as_postgresql_json_type_token_stream = quote::quote! {<#self_upper_camel_case::#postgresql_json_type_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>};
+    let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #postgresql_json_type_upper_camel_case = #self_upper_camel_case;
+            type #select_upper_camel_case = #ident_select_upper_camel_case;
             fn #read_inner_vec_vec_snake_case(
                 #read_only_ids_snake_case: &#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
             ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
