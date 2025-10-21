@@ -614,13 +614,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration);
-                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_type_declaration_alias_for_ident_table_type_declaration_token_stream(
+                let impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream(
                     &import_path,
                     &ident,
                 );
                 quote::quote! {
                     #ident_table_type_declaration_common_token_stream
-                    #impl_type_declaration_alias_for_ident_table_type_declaration_token_stream
+                    #impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream
                 }
             };
             let generate_type_as_postgresql_json_type_create_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create);
@@ -648,6 +648,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_create_upper_camel_case,
                     &quote::quote!{sqlx::types::Json<#ident_create_upper_camel_case>}
                 );
+                let impl_create_alias_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_create_alias_for_ident_create_token_stream(
+                    &import_path,
+                    &ident,
+                );
                 quote::quote! {
                     #ident_create_common_token_stream
                     #impl_std_fmt_display_for_ident_create_token_stream
@@ -655,6 +659,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #maybe_ident_with_id_create_standart_not_null_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
+                    #impl_create_alias_for_ident_create_token_stream
                 }
             };
             let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);

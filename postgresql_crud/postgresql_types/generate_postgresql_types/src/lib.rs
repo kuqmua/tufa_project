@@ -3589,7 +3589,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_origin_upper_camel_case,
                     &quote::quote!{Ok(Self(#value_snake_case))}
                 );
-                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_type_declaration_alias_for_ident_table_type_declaration_token_stream(
+                let impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream(
                     &import_path,
                     &ident,
                 );
@@ -3599,7 +3599,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream
-                    #impl_type_declaration_alias_for_ident_table_type_declaration_token_stream
+                    #impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream
                 }
             };
             let pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_new_value_ident_inner_type_token_stream(
@@ -3608,13 +3608,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+            //todo refactor
             let ident_create_token_stream = match &can_be_primary_key {
                 CanBePrimaryKey::True => {
                     let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False);
                     let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
+                    let impl_create_alias_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_create_alias_for_ident_create_token_stream(
+                        &import_path,
+                        &ident,
+                    );
                     quote::quote! {
                         #ident_create_token_stream
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
+                        #impl_create_alias_for_ident_create_token_stream
                     }
                 },
                 CanBePrimaryKey::False => {
@@ -3661,12 +3667,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &ident_create_upper_camel_case,
                         &ident_origin_upper_camel_case
                     );
+                    let impl_create_alias_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_create_alias_for_ident_create_token_stream(
+                        &import_path,
+                        &ident,
+                    );
                     quote::quote! {
                         #ident_create_token_stream
                         #impl_ident_create_token_stream
                         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
                         #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
                         #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
+                        #impl_create_alias_for_ident_create_token_stream
                     }
                 }
             };

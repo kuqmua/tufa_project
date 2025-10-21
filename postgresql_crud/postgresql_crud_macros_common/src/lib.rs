@@ -45,12 +45,19 @@ impl std::default::Default for NotNullOrNullable {
     }
 }
 
-pub fn generate_impl_type_declaration_alias_for_ident_table_type_declaration_token_stream(
+pub fn generate_impl_table_type_declaration_alias_for_ident_table_type_declaration_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
-    quote::quote!{impl #import_path::TypeDeclarationAlias for #ident_table_type_declaration_upper_camel_case {}}
+    quote::quote!{impl #import_path::TableTypeDeclarationAlias for #ident_table_type_declaration_upper_camel_case {}}
+}
+pub fn generate_impl_create_alias_for_ident_create_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+    quote::quote!{impl #import_path::CreateAlias for #ident_create_upper_camel_case {}}
 }
 
 pub fn generate_postgresql_type_where_element_token_stream(
