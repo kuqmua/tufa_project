@@ -614,8 +614,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration);
+                let impl_type_declaration_alias_for_ident_table_type_declaration_token_stream = quote::quote!{
+                    impl postgresql_crud::TypeDeclarationAlias for #ident_table_type_declaration_upper_camel_case {}
+                };
                 quote::quote! {
                     #ident_table_type_declaration_common_token_stream
+                    #impl_type_declaration_alias_for_ident_table_type_declaration_token_stream
                 }
             };
             let generate_type_as_postgresql_json_type_create_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create);
