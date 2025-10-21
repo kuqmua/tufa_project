@@ -993,6 +993,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let value_snake_case = naming::ValueSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let self_upper_camel_case = naming::SelfUpperCamelCase;
+    let select_upper_camel_case = naming::SelectUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_snake_case = naming::ReadSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
@@ -1010,10 +1011,12 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let create_snake_case = naming::CreateSnakeCase;
     let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
     let self_postgresql_type_as_postgresql_type_token_stream = quote::quote! {<#self_upper_camel_case::#postgresql_type_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>};
+    let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
             type #postgresql_type_upper_camel_case = #self_upper_camel_case;
+            type #select_upper_camel_case = #ident_select_upper_camel_case;
             fn #read_inner_vec_vec_snake_case(
                 #read_only_ids_snake_case: &#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
             ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#read_inner_upper_camel_case>> {
