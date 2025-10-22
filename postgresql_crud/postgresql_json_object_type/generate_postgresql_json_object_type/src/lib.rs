@@ -2766,7 +2766,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_update_for_query_token_stream = {
                 let ident_update_for_query_token_stream = {
-                    //todo maybe reuse
                     let generate_ident_update_for_query_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         generate_debug_clone_partialeq_serialize_pub_struct_token_stream(
                             &ident_update_for_query_upper_camel_case,
@@ -3246,44 +3245,44 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_update_delete_create_array_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
                     quote::quote! {
                         let update_query_part_acc = {
-                            if value.update.is_empty() {
-                                std::string::String::from("elem")
+                            if #value_snake_case.#update_snake_case.is_empty() {
+                                #std_string_string_token_stream::from("elem")
                             } else {
-                                let mut update_query_part_acc = std::string::String::default();
-                                for element_handle in value.update.to_vec() {
+                                let mut #acc_snake_case = #std_string_string_token_stream::default();
+                                for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
                                     //todo reuse
                                     let ident_with_id_handle = {
-                                        let id_increment = match increment.checked_add(1) {
-                                            Some(value) => {
-                                                *increment = value.clone();
-                                                value
+                                        let id_increment = match #increment_snake_case.checked_add(1) {
+                                            Some(#value_snake_case) => {
+                                                *#increment_snake_case = #value_snake_case.clone();
+                                                #value_snake_case
                                             }
                                             None => {
                                                 return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                                             }
                                         };
                                         match #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
-                                            &element_handle.fields,
+                                            &#element_snake_case.fields,
                                             &"",
                                             &"elem",
                                             &"",
-                                            increment
+                                            #increment_snake_case
                                         ) {
-                                            Ok(value) => Ok(format!("when elem->>'id' = ${id_increment} then {value} ")),
-                                            Err(error) => Err(error)
+                                            Ok(#value_snake_case) => Ok(format!("when elem->>'id' = ${id_increment} then {value} ")),
+                                            Err(#error_snake_case) => Err(#error_snake_case)
                                         }
                                     };
                                     match ident_with_id_handle {
-                                        Ok(value) => {
-                                            update_query_part_acc.push_str(&value);
+                                        Ok(#value_snake_case) => {
+                                            #acc_snake_case.push_str(&#value_snake_case);
                                         }
-                                        Err(error) => {
-                                            return Err(error);
+                                        Err(#error_snake_case) => {
+                                            return Err(#error_snake_case);
                                         }
                                     }
                                 }
-                                let _ = update_query_part_acc.pop();
-                                format!("case {update_query_part_acc} else elem end")
+                                let _ = #acc_snake_case.pop();
+                                format!("case {acc} else elem end")
                             }
                         };
                         let delete_query_part_acc = {
