@@ -59,14 +59,13 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
     pub fn query_part_one_by_one(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         for _ in self.to_vec() {
-            match increment.checked_add(1) {
-                Some(value) => {
-                    *increment = value;
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+                Ok(value) => {
                     acc.push_str(&format!("${value},"));
-                }
-                None => {
-                    return Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-                }
+                },
+                Err(error) => {
+                    return Err(error);
+                },
             }
         }
         let _ = acc.pop();
@@ -166,12 +165,11 @@ where
     T: serde::Serialize + 'a,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                Ok(format!("${value}"))
-            }
-            None => Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => Ok(format!("${value}")),
+            Err(error) => {
+                return Err(error);
+            },
         }
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -712,23 +710,17 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
 }
 impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for Between<T> {
     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        let start_increment = match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                value
-            }
-            None => {
-                return Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
+        let start_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            },
         };
-        let end_increment = match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                value
-            }
-            None => {
-                return Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-            }
+        let end_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            },
         };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
@@ -883,19 +875,18 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
             Variant::MinusOne => self.0.len().saturating_sub(1),
         };
         for _ in 0..current_len {
-            match increment.checked_add(1) {
-                Some(value) => {
-                    *increment = value;
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+                Ok(value) => {
                     acc.push_str(&match &postgresql_type_or_postgresql_json_type {
                         PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[${value}]"),
                         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
                             format!("->${value}")
                         }
                     });
-                }
-                None => {
-                    return Err(postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-                }
+                },
+                Err(error) => {
+                    return Err(error);
+                },
             }
         }
         Ok(acc)

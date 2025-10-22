@@ -588,22 +588,16 @@ impl PaginationBase {
 }
 impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationBase {
     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-        let limit_increment = match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                value
-            }
-            None => {
-                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+        let limit_increment = match increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
             }
         };
-        let offset_increment = match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                value
-            }
-            None => {
-                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+        let offset_increment = match increment_checked_add_one_returning_increment(increment) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
             }
         };
         Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
@@ -1164,5 +1158,16 @@ impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
 impl std::default::Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn default() -> Self {
         Self(Value{ value: None })
+    }
+}
+pub fn increment_checked_add_one_returning_increment(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, crate::QueryPartErrorNamed> {
+    match increment.checked_add(1) {
+        Some(value) => {
+            *increment = value;
+            Ok(value)
+        }
+        None => Err(crate::QueryPartErrorNamed::CheckedAdd {
+            code_occurence: error_occurence_lib::code_occurence!()
+        })
     }
 }

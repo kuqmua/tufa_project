@@ -262,7 +262,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
         quote::quote! {#as_postgresql_type_token_stream #tokens}
     };
-    let generate_as_postgresql_type_table_type_declaration_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::TableTypeDeclarationUpperCamelCase);
+    // let generate_as_postgresql_type_table_type_declaration_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::TableTypeDeclarationUpperCamelCase);
     // let primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream = generate_as_postgresql_type_table_type_declaration_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_create_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::CreateUpperCamelCase);
     let generate_as_postgresql_type_select_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::SelectUpperCamelCase);

@@ -3,6 +3,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
+    let increment_snake_case = naming::IncrementSnakeCase;
+    let error_snake_case = naming::ErrorSnakeCase;
+    let acc_snake_case = naming::AccSnakeCase;
     let dimensions_snake_case = naming::DimensionsSnakeCase;
     let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
     let t_token_stream = quote::quote! {T};
@@ -46,15 +49,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-    let postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream();
     let generate_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
-            match increment.checked_add(1) {
-                Some(value) => {
-                    *increment = value;
-                    Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                }
-                None => Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream),
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment)),
+                Err(#error_snake_case) => Err(#error_snake_case),
             }
         }
     };
@@ -169,20 +168,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let should_add_declaration_of_struct_ident_generic_false = ShouldAddDeclarationOfStructIdentGeneric::False;
     let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: None };
-    fn generate_match_increment_checked_add_one_initialization_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-        let postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream();
-        quote::quote! {
-            let #ident_token_stream = match increment.checked_add(1) {
-                Some(value) => {
-                    *increment = value;
-                    value
-                }
-                None => {
-                    return Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream);
-                },
-            };
-        }
-    }
+    let generate_match_increment_checked_add_one_initialization_token_stream = |ident_token_stream: &dyn quote::ToTokens| quote::quote! {
+        let #ident_token_stream = match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+            Ok(#value_snake_case) => #value_snake_case,
+            Err(#error_snake_case) => {
+                return Err(#error_snake_case);
+            },
+        };
+    };
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone = ShouldAddDeclarationOfStructIdentGeneric::True {
         maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone}),
     };
@@ -453,28 +446,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
-                                let value = {
-                                    let mut acc = std::string::String::default();
-                                    for _ in self.value.to_vec() {
-                                        match increment.checked_add(1) {
-                                            Some(value) => {
-                                                *increment = value;
-                                                acc.push_str(&format!("${},", value));
-                                            }
-                                            None => {
-                                                return Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream);
-                                            }
+                                let #value_snake_case = {
+                                    let mut #acc_snake_case = std::string::String::default();
+                                    for _ in self.#value_snake_case.to_vec() {
+                                        match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                            Ok(#value_snake_case) => {
+                                                #acc_snake_case.push_str(&format!("${},", #value_snake_case));
+                                            },
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
+                                            },
                                         }
                                     }
-                                    let _ = acc.pop();
-                                    acc
+                                    let _ = #acc_snake_case.pop();
+                                    #acc_snake_case
                                 };
                                 Ok(format!(
                                     #format_handle_token_stream,
                                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     column,
                                     #maybe_additional_parameters_token_stream
-                                    value
+                                    #value_snake_case
                                 ))
                             }
                         },

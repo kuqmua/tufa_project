@@ -985,15 +985,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &#value_snake_case.0.0
                             }
                             fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {
-                                match #increment_snake_case.checked_add(1) {
-                                    Some(#value_snake_case) => {
-                                        *#increment_snake_case = #value_snake_case;
-                                        Ok(#value_snake_case)
-                                    }
-                                    None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {
-                                        code_occurence: error_occurence_lib::code_occurence!()
-                                    })
-                                }
+                                postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case)
                             }
                         }
                     }
@@ -2150,12 +2142,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
                         quote::quote! {
-                            match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    Ok(format!(#format_handle_token_stream))
-                                }
-                                None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                                Err(#error_snake_case) => Err(#error_snake_case),
                             }
                         }
                     },
