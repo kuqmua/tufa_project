@@ -3250,15 +3250,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             } else {
                                 let mut #acc_snake_case = #std_string_string_token_stream::default();
                                 for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
-                                    //todo reuse
                                     let ident_with_id_handle = {
-                                        let id_increment = match #increment_snake_case.checked_add(1) {
-                                            Some(#value_snake_case) => {
-                                                *#increment_snake_case = #value_snake_case.clone();
-                                                #value_snake_case
-                                            }
-                                            None => {
-                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                        let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                            Ok(#value_snake_case) => #value_snake_case,
+                                            Err(#error_snake_case) => {
+                                                return Err(#error_snake_case);
                                             }
                                         };
                                         match #ident_standart_not_null_as_postgresql_json_type_token_stream::#update_query_part_snake_case(
@@ -3286,39 +3282,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         };
                         let delete_query_part_acc = {
-                            let mut delete_query_part_acc = std::string::String::default();
-                            for _ in &value.delete {
-                                match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
-                                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                            let mut #acc_snake_case = std::string::String::default();
+                            for _ in &#value_snake_case.#delete_snake_case {
+                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Err(#error_snake_case) => {
+                                        return Err(#error_snake_case);
                                     }
-                                    None => {
-                                        return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                    }
-                                }
+                                };
+                                let maybe_space_and_space = if #acc_snake_case.is_empty() { "" } else { " and " };
+                                #acc_snake_case.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                             }
-                            delete_query_part_acc
+                            #acc_snake_case
                         };
                         let create_query_part_acc = {
-                            let mut create_query_part_acc = std::string::String::default();
-                            for element in &value.create {
-                                match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        create_query_part_acc.push_str(&format!("${increment},"));
+                            let mut #acc_snake_case = std::string::String::default();
+                            for _ in &#value_snake_case.#create_snake_case {
+                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Err(#error_snake_case) => {
+                                        return Err(#error_snake_case);
                                     }
-                                    None => {
-                                        return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                    },
-                                }
+                                };
+                                #acc_snake_case.push_str(&format!("${increment},"));
                             }
-                            let _ = create_query_part_acc.pop();
-                            create_query_part_acc
+                            let _ = #acc_snake_case.pop();
+                            #acc_snake_case
                         };
-                        let maybe_where = if value.delete.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
-                        let maybe_jsonb_build_array = if value.create.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
+                        let maybe_where = if #value_snake_case.#delete_snake_case.is_empty() {
+                            #std_string_string_token_stream::default()
+                        } else {
+                            format!(" where {delete_query_part_acc}")
+                        };
+                        let maybe_jsonb_build_array = if #value_snake_case.#create_snake_case.is_empty() {
+                            #std_string_string_token_stream::default()
+                        } else {
+                            format!(" || jsonb_build_array({create_query_part_acc})")
+                        };
                         Ok (format!(#format_handle_token_stream))
                     }
                 };
