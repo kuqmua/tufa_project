@@ -139,6 +139,7 @@ pub trait PostgresqlJsonTypeElementId {
         std::string::String
     >;
     fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery) -> &'a Self::Inner;
+    fn increment_checked_add_one(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, crate::QueryPartErrorNamed>;
 }
 
 #[cfg(feature = "test-utils")]

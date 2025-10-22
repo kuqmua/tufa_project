@@ -468,6 +468,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let self_snake_case = naming::SelfSnakeCase;
 
             let std_string_string_token_stream = token_patterns::StdStringString;
+            let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -982,6 +983,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             #query_bind_string_as_postgresql_text_update_for_query_token_stream
                             fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::Inner {
                                 &#value_snake_case.0.0
+                            }
+                            fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {
+                                match #increment_snake_case.checked_add(1) {
+                                    Some(#value_snake_case) => {
+                                        *#increment_snake_case = #value_snake_case;
+                                        Ok(#value_snake_case)
+                                    }
+                                    None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    })
+                                }
                             }
                         }
                     }
