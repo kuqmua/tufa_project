@@ -997,7 +997,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_origin_upper_camel_case,
                     &quote::quote!{#value_snake_case.0}
                 );
-                //todo maybe not need or move into trait
                 let impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream = {
                     let content_token_stream = generate_into_inner_content_token_stream(&quote::quote! {self.0});
                     quote::quote! {
@@ -1999,7 +1998,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let impl_postgresql_json_type_for_ident_token_stream = {
-                let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
@@ -2009,12 +2007,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
                 {
                     quote::quote! {
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                Ok(format!("'{field_ident}',jsonb_build_object('value',${increment}),"))
-                            }
-                            None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                        match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                            Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value}),")),
+                            Err(#error_snake_case) => Err(#error_snake_case),
                         }
                     }
                 } else {

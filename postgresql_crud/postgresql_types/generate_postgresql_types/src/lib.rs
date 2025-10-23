@@ -854,7 +854,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let days_snake_case = naming::DaysSnakeCase;
             let microseconds_snake_case = naming::MicrosecondsSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
@@ -4147,21 +4146,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
                         &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
-                        &{
-                            let postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream();
-                            quote::quote! {
-                                match #increment_snake_case.checked_add(1) {
-                                    Some(value) => {
-                                        *#increment_snake_case = value;
-                                        Ok(format!("({} = ${})", column, #increment_snake_case))
-                                    },
-                                    None => Err(#postgresql_crud_common_query_part_error_named_checked_add_initialization_token_stream)
-                                }
+                        &quote::quote! {
+                            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                Ok(#value_snake_case) => Ok(format!("({column} = ${value})")),
+                                Err(#error_snake_case) => Err(#error_snake_case)
                             }
                         },
                         &postgresql_crud_macros_common::IsQueryBindMutable::True,
                         &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
-                        &import_path, //meeow
+                        &import_path,
                     )
                 }
                 else {
@@ -4298,25 +4291,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"default"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
-                let typical_query_part_token_stream = {
-                    let acc_snake_case = naming::AccSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
-                    let postgresql_crud_common_query_part_error_named_token_stream = postgresql_crud_macros_common::postgresql_crud_common_query_part_error_named_token_stream();
-                    quote::quote! {
-                        let mut #acc_snake_case = std::string::String::default();
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                #acc_snake_case.push_str(&format!(#format_handle_token_stream));
-                            }
-                            None => {
-                                return Err(#postgresql_crud_common_query_part_error_named_token_stream::#checked_add_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            }
+                let typical_query_part_token_stream = quote::quote! {
+                    let mut #acc_snake_case = std::string::String::default();
+                    match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                        Ok(#value_snake_case) => {
+                            #acc_snake_case.push_str(&format!("${value}"));
+                        },
+                        Err(#error_snake_case) => {
+                            return Err(#error_snake_case);
                         }
-                        Ok(#acc_snake_case)
                     }
+                    Ok(#acc_snake_case)
                 };
                 let ok_query_token_stream = quote::quote!{Ok(#query_snake_case)};
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);

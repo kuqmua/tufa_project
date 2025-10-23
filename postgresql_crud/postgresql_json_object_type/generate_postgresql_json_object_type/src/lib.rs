@@ -154,7 +154,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
             let increment_snake_case = naming::IncrementSnakeCase;
             let query_snake_case = naming::QuerySnakeCase;
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let id_snake_case = naming::IdSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
@@ -199,11 +198,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let import_path_query_part_error_named_token_stream = {
                 let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
                 quote::quote! {#import_path::#query_part_error_named_upper_camel_case}
-            };
-            let import_path_query_part_error_named_checked_add_initialization_token_stream = quote::quote! {
-                #import_path_query_part_error_named_token_stream::#checked_add_upper_camel_case {
-                    code_occurence: error_occurence_lib::code_occurence!()
-                }
             };
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
@@ -3005,25 +2999,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             {
                                                 let mut #acc_snake_case = std::string::String::new();
                                                 for _ in self.#update_snake_case.to_vec() {
-                                                    match #increment_snake_case.checked_add(1) {
-                                                        Some(#value_snake_case) => {
-                                                            *#increment_snake_case = #value_snake_case;
-                                                            #acc_snake_case.push_str(&format!("${increment},"));
-                                                        }
-                                                        None => {
-                                                            return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                                        }
+                                                    match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                                        Ok(#value_snake_case) => {
+                                                             #acc_snake_case.push_str(&format!("${value},"));
+                                                        },
+                                                        Err(#error_snake_case) => {
+                                                            return Err(#error_snake_case);
+                                                        },
                                                     }
                                                 }
                                                 for #element_snake_case in &self.create {
-                                                    match #increment_snake_case.checked_add(1) {
-                                                        Some(#value_snake_case) => {
-                                                            *#increment_snake_case = #value_snake_case;
-                                                            #acc_snake_case.push_str(&format!("${increment},"));
-                                                        }
-                                                        None => {
-                                                            return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                                        }
+                                                    match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                                        Ok(#value_snake_case) => {
+                                                             #acc_snake_case.push_str(&format!("${value},"));
+                                                        },
+                                                        Err(#error_snake_case) => {
+                                                            return Err(#error_snake_case);
+                                                        },
                                                     }
                                                 }
                                                 let _ = #acc_snake_case.pop();
@@ -3218,8 +3210,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let postgresql_type_or_postgresql_json_type_postgresql_json_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType;
                 let generate_update_query_part_standart_nullable_token_stream = |postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType|{
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_type_or_postgresql_json_type {
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"),
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => format!("${{{increment_snake_case}}}"),
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{value_snake_case}}})"),
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => format!("${{{value_snake_case}}}"),
                     });
                     quote::quote! {
                         match &#value_snake_case.0 {
@@ -3230,14 +3222,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 jsonb_set_path,
                                 increment,
                             ),
-                            None => {
-                                match #increment_snake_case.checked_add(1) {
-                                    Some(#value_snake_case) => {
-                                        *#increment_snake_case = #value_snake_case;
-                                        Ok(format!(#format_handle_token_stream))
-                                    },
-                                    None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream)
-                                }
+                            None => match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                                Err(#error_snake_case) => Err(#error_snake_case),
                             }
                         }
                     }
@@ -3983,14 +3970,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         {
                                             let mut #acc_snake_case = std::string::String::new();
                                             for _ in &#value_snake_case.0 {
-                                                match #increment_snake_case.checked_add(1) {
-                                                    Some(#value_snake_case) => {
-                                                        *#increment_snake_case = #value_snake_case;
-                                                        #acc_snake_case.push_str(&format!("${increment},"));
-                                                    }
-                                                    None => {
-                                                        return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                                    }
+                                                match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                                    Ok(#value_snake_case) => {
+                                                        #acc_snake_case.push_str(&format!("${value},"));
+                                                    },
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#error_snake_case);
+                                                    },
                                                 }
                                             }
                                             let _ = #acc_snake_case.pop();
@@ -4042,14 +4028,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 {
                                                     let mut #acc_snake_case = std::string::String::new();
                                                     for _ in &#value_snake_case.0 {
-                                                        match #increment_snake_case.checked_add(1) {
-                                                            Some(#value_snake_case) => {
-                                                                *#increment_snake_case = #value_snake_case;
-                                                                #acc_snake_case.push_str(&format!("${increment},"));
-                                                            }
-                                                            None => {
-                                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
-                                                            }
+                                                        match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                                            Ok(#value_snake_case) => {
+                                                                #acc_snake_case.push_str(&format!("${value},"));
+                                                            },
+                                                            Err(#error_snake_case) => {
+                                                                return Err(#error_snake_case);
+                                                            },
                                                         }
                                                     }
                                                     let _ = #acc_snake_case.pop();
@@ -4190,12 +4175,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
                     &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     &quote::quote!{
-                        match #increment_snake_case.checked_add(1) {
-                            Some(#value_snake_case) => {
-                                *#increment_snake_case = #value_snake_case;
-                                Ok(format!("${increment}"))
-                            }
-                            None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
+                        match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                            Ok(#value_snake_case) => Ok(format!("${value}")),
+                            Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
                     &postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
@@ -4250,13 +4232,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Some(#value_snake_case) => {
                                             #content_token_stream
                                         },
-                                        None => match #increment_snake_case.checked_add(1) {
-                                            Some(#value_snake_case) => {
-                                                *#increment_snake_case = #value_snake_case;
-                                                Ok(format!("${increment}"))
-                                            }
-                                            None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
-                                        },
+                                        None => match postgresql_crud::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                                            Ok(#value_snake_case) => Ok(format!("${value}")),
+                                            Err(#error_snake_case) => Err(#error_snake_case)
+                                        }
                                     }
                                 }
                             },
