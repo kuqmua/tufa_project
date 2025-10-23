@@ -8926,3 +8926,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!("All");
 //         // }
 //     ]
 // });
+
+fn ok_field_ident_jsonb_build_object_value(field_ident: &std::primitive::str) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))
+}

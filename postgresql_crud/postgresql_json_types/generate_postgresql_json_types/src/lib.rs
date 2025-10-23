@@ -2001,7 +2001,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
-                //todo maybe reuse it in a function(not in the proc macro)
                 let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                     && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                     && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
@@ -2013,7 +2012,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 } else {
-                    quote::quote! {Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))}
+                    quote::quote! {ok_field_ident_jsonb_build_object_value(&field_ident)}
                 };
                 let select_only_created_or_updated_ids_query_bind_token_stream = if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                     && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
