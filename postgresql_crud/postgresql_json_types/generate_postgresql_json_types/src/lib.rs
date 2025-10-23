@@ -2413,13 +2413,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let none_token_stream = quote::quote! {None};
                         let content_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
-                            //todo remove useless .clone()
                             let generate_update_to_read_only_ids_token_stream = |ident_token_stream: &dyn quote::ToTokens, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                                 let ident_update_token_stream = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_token_stream);
                                 let content_token_stream = {
                                     let content_token_stream = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#element_snake_case},
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{#value_snake_case.into()}
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#element_snake_case.clone()},
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{#value_snake_case.clone().into()}
                                     };
                                     quote::quote!{&#ident_update_token_stream(#content_token_stream)}
                                 };
@@ -2431,16 +2430,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     >::update_to_read_only_ids(&#content_token_stream).0.#value_snake_case
                                 }
                             };
-                            let generate_iter_or_match_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                    value.0.clone().0.into_iter().map(|element|#content_token_stream).collect()
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    match value.0.clone().0 {
-                                        Some(value) => Some(#content_token_stream),
-                                        None => None
-                                    }
-                                },
+                            let generate_iter_or_match_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| {
+                                let value_zero_zero_token_stream = quote::quote! {#value_snake_case.0.0};
+                                match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                        #value_zero_zero_token_stream.iter().map(|#element_snake_case|#content_token_stream).collect()
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                        match &#value_zero_zero_token_stream {
+                                            Some(#value_snake_case) => Some(#content_token_stream),
+                                            None => None
+                                        }
+                                    },
+                                }
                             };
                             match &element.postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
