@@ -500,6 +500,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
             let self_snake_case = naming::SelfSnakeCase;
+            let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
 
             let std_string_string_token_stream = token_patterns::StdStringString;
             let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
@@ -2178,10 +2179,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         type PostgresqlJsonType = #ident;
                         type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
                         type #update_upper_camel_case = #ident_update_upper_camel_case;
-                        type Inner = #field_type_handle;
+                        type #read_inner_upper_camel_case = #field_type_handle;
                         #query_bind_string_as_postgresql_text_create_for_query_token_stream
                         #query_bind_string_as_postgresql_text_update_for_query_token_stream
-                        fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::Inner {
+                        fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::#read_inner_upper_camel_case {
                             &#value_snake_case.0.0
                         }
                         fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {

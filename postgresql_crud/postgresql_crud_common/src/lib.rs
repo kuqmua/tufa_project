@@ -123,7 +123,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + error_occurence_lib::ToStdStringString;
-    type Inner: ReadInnerAlias;
+    type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_postgresql_text_create_for_query(
         value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
@@ -138,7 +138,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery) -> &'a Self::Inner;
+    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery) -> &'a Self::ReadInner;
     fn increment_checked_add_one(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, crate::QueryPartErrorNamed>;
 }
 
