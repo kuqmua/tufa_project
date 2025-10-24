@@ -117,7 +117,7 @@ pub trait PostgresqlTypeNotPrimaryKey {
     type Create: CreateAlias + SqlxEncodePostgresSqlxTypePostgresAlias;
 }
 
-pub trait PostgresqlJsonTypeElementId {
+pub trait PostgresqlJsonTypeObjectVecElementId {
     type PostgresqlJsonType: crate::PostgresqlJsonType;
     type CreateForQuery: CreateForQueryAlias
         + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>

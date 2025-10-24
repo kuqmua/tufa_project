@@ -2132,7 +2132,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &select_only_created_or_updated_ids_query_bind_token_stream,
                 )
             };
-            let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+            let maybe_impl_postgresql_json_type_object_vec_element_id_for_ident_origin_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                 let (
                     query_bind_string_as_postgresql_text_create_for_query_token_stream,
                     query_bind_string_as_postgresql_text_update_for_query_token_stream
@@ -2174,7 +2174,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     )
                 };
                 quote::quote! {
-                    impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
+                    impl postgresql_crud_common::PostgresqlJsonTypeObjectVecElementId for #ident {
                         type PostgresqlJsonType = #ident;
                         type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
                         type #update_upper_camel_case = #ident_update_upper_camel_case;
@@ -2730,7 +2730,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_update_token_stream
                 #ident_update_for_query_token_stream
                 #impl_postgresql_json_type_for_ident_token_stream
-                #maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream
+                #maybe_impl_postgresql_json_type_object_vec_element_id_for_ident_origin_token_stream
                 #impl_postgresql_json_type_test_cases_for_ident_token_stream
             };
             (

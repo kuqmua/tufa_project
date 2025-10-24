@@ -243,8 +243,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream = quote::quote!{
                 <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonType>::Update
             };
-            let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream = quote::quote!{
-                <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeElementId>
+            let uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream = quote::quote!{
+                <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeObjectVecElementId>
             };
             let id_syn_field = syn::Field {
                 attrs: vec![],
@@ -2396,7 +2396,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_delete_array_upper_camel_case {
                                                                 #error_snake_case: format!(
                                                                     #not_unique_id_in_json_delete_array_double_quotes_token_stream,
-                                                                    #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::get_inner(
+                                                                    #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(
                                                                         //// &#element_snake_case
                                                                         &#element_snake_case.clone().into()
                                                                     )
@@ -2419,7 +2419,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
                                                             #error_snake_case: format!(
                                                                 #not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream,
-                                                                #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::get_inner(
+                                                                #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(
                                                                     //// &#element_snake_case
                                                                     &element.clone().into()
                                                                 )
@@ -3246,7 +3246,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let mut #acc_snake_case = #std_string_string_token_stream::default();
                                 for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
                                     let ident_with_id_handle = {
-                                        let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                        let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                             Ok(#value_snake_case) => #value_snake_case,
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -3279,7 +3279,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let delete_query_part_acc = {
                             let mut #acc_snake_case = std::string::String::default();
                             for _ in &#value_snake_case.#delete_snake_case {
-                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -3293,7 +3293,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let create_query_part_acc = {
                             let mut #acc_snake_case = std::string::String::default();
                             for _ in &#value_snake_case.#create_snake_case {
-                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
+                                let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -3634,7 +3634,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                 for #element_snake_case in #value_snake_case.#update_snake_case.into_vec() {
-                                    match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
+                                    match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                         #element_snake_case.#id_snake_case,
                                         #query_snake_case
                                     ) {
@@ -3658,7 +3658,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                                 for #element_snake_case in #value_snake_case.delete {
-                                    match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
+                                    match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                         #element_snake_case,
                                         #query_snake_case
                                     ) {
@@ -3803,7 +3803,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#select_only_created_ids_query_bind_content_token_stream)*
                                     }
                                     for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::query_bind_string_as_postgresql_text_update_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
@@ -3816,7 +3816,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     }
                                     for #element_snake_case in &#value_snake_case.#create_snake_case {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
@@ -4135,7 +4135,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#content_token_stream)*
                                     }
                                     for #element_snake_case in &#value_snake_case.0 {
-                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
+                                        match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::query_bind_string_as_postgresql_text_create_for_query(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
@@ -5014,7 +5014,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         let mut option_read_element = None;
                                                         for read_element in &#read_snake_case.0 {
                                                             if 
-                                                                *#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_element_id_token_stream::get_inner(&update_element.#id_snake_case.clone().into())
+                                                                *#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(&update_element.#id_snake_case.clone().into())
                                                                 ==
                                                                 <#uuid_uuid_as_not_null_jsonb_string_token_stream as postgresql_crud::PostgresqlJsonType>::into_inner(
                                                                     read_element.#id_snake_case.clone().expect("error df2413fe-e703-451b-ab75-add67da716f7").#value_snake_case
