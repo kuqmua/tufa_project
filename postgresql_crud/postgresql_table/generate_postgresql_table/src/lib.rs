@@ -1640,7 +1640,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let primary_key_field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&primary_key_field_type);
                 let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
                     let field_ident = &element.field_ident;
-                    let content_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
+                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
                         &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                         &{
                             let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
@@ -1651,7 +1651,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                     quote::quote! {
                         #field_ident: match #value_snake_case.#field_ident {
-                            Some(#value_snake_case) => Some(#content_token_stream),
+                            Some(#value_snake_case) => Some(#value_initialization_token_stream),
                             None => None
                         }
                     }

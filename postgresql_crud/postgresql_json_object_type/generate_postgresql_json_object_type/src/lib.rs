@@ -4813,7 +4813,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                         &{
-                            let content_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
+                            let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
                                 &import_path,
                                 &match &element.postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -4908,7 +4908,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     },
                                 }
                             );
-                            quote::quote!{Some(#content_token_stream)}
+                            quote::quote!{Some(#value_initialization_token_stream)}
                         },
                         &{
                             let fields_initialization_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4935,7 +4935,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     });
-                                    let content_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
+                                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
                                         &import_path,
                                         &{
                                             let field_type = &element.ty;
@@ -4948,7 +4948,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }
                                         }
                                     );
-                                    quote::quote! {#field_ident: Some(#content_token_stream)}
+                                    quote::quote! {#field_ident: Some(#value_initialization_token_stream)}
                                 });
                                 quote::quote!{#(#token_stream),*}
                             };
@@ -5191,7 +5191,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                         &{
-                            let content_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
+                            let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
                                 &import_path,
                                 &match &element.postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -5302,7 +5302,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     },
                                 }
                             );
-                            quote::quote!{Some(#content_token_stream)}
+                            quote::quote!{Some(#value_initialization_token_stream)}
                         },
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
