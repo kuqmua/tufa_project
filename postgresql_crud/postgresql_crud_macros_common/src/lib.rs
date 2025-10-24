@@ -1531,3 +1531,8 @@ pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
     DefaultSomeOneWithMaxPageSize
 }
+
+pub fn generate_value_initialization_token_stream(import_path: &ImportPath, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    let value_snake_case = naming::ValueSnakeCase;
+    quote::quote!{#import_path::Value { #value_snake_case: #content_token_stream }}
+}
