@@ -474,6 +474,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
 
+            let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                postgresql_crud_macros_common::generate_value_initialization_token_stream(
+                    &import_path,
+                    &content_token_stream
+                )
+            };
+
             let generate_ident_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
                 let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -2392,9 +2399,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                     &{
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &import_path,
-                                &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
+                            &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                                 && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                                 && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
                             {
@@ -2416,8 +2422,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let none_token_stream = quote::quote! {None};
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &import_path,
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                             &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                                 let generate_update_to_read_only_ids_token_stream = |ident_token_stream: &dyn quote::ToTokens, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                                     let ident_update_token_stream = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_token_stream);
@@ -2564,8 +2569,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {#ident_read_only_ids_upper_camel_case(#value_initialization_token_stream)}
                     },
                     &{
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &import_path,
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                             &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                                 && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                                 && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
@@ -2695,8 +2699,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     &{
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &import_path,
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                             &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern
                                 && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable
                                 && let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type

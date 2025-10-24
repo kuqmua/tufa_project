@@ -199,6 +199,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let std_string_string = token_patterns::StdStringString;
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let std_string_string_token_stream = token_patterns::StdStringString;
+
+    let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
+
     // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -493,8 +496,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case<#content_token_stream>}
     };
-    let generate_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-        quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
+    let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+        postgresql_crud_macros_common::generate_value_initialization_token_stream(
+            &import_path,
+            &content_token_stream
+        )
     };
     let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream =
         |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &proc_macro2::TokenStream::new(), &content_token_stream);
@@ -1183,7 +1189,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 });
                 let assignment_variant_primary_key_token_stream = {
                     let primary_key_field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
-                    let value_initialization_token_stream = generate_value_initialization_token_stream(&value_snake_case);
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&value_snake_case);
                     quote::quote! {
                         #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
                             #primary_key_field_type_as_postgresql_type_read_upper_camel_case,
@@ -1207,7 +1213,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_ident = &element.field_ident;
                         let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                        let value_initialization_token_stream = generate_value_initialization_token_stream(&value_snake_case);
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&value_snake_case);
                         let element_syn_field_ty_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&element.syn_field.ty);
                         quote::quote! {
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
@@ -1640,15 +1646,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let primary_key_field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&primary_key_field_type);
                 let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
                     let field_ident = &element.field_ident;
-                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                        &{
-                            let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
-                            quote::quote!{
-                                #field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
-                            }
-                        }
-                    );
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
+                        let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
+                        quote::quote!{
+                            #field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
+                       }
+                    });
                     quote::quote! {
                         #field_ident: match #value_snake_case.#field_ident {
                             Some(#value_snake_case) => Some(#value_initialization_token_stream),
@@ -4236,8 +4239,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         )
                     }
                 });
-                let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                     &primary_key_field_type_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
                 );
                 quote::quote! {
@@ -4505,8 +4507,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
                     let current_field_type = &element.syn_field.ty;
-                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                         &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                     );
                     quote::quote! {
@@ -4529,10 +4530,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let ident_update_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
                     if field_ident == current_field_ident {
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                            &quote::quote!{#update_snake_case.clone()}
-                        );
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                            #update_snake_case.clone()
+                        });
                         quote::quote! {Some(#value_initialization_token_stream)}
                     } else {
                         none_token_stream.clone()
@@ -4541,20 +4541,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let ident_read_fields_initialization_without_primary_key_after_update_one_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
                     if field_ident == current_field_ident {
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                            &{
-                                let current_field_type = &element.syn_field.ty;
-                                quote::quote!{
-                                    <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
-                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                            &read_only_ids_current_element.#current_field_ident.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
-                                        ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
-                                        Some(#update_snake_case.clone())
-                                    )
-                                }
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
+                            let current_field_type = &element.syn_field.ty;
+                            quote::quote!{
+                                <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_from_previous_read_unwraped_merged_with_update(
+                                    <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        &read_only_ids_current_element.#current_field_ident.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
+                                    ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
+                                    Some(#update_snake_case.clone())
+                                )
                             }
-                        );
+                        });
                         quote::quote! {
                             #current_field_ident: Some(#value_initialization_token_stream)
                         }
@@ -4565,8 +4562,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 });
                 let expected_read_many_token_stream = if is_fields_without_primary_key_len_more_than_one {
-                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                         &primary_key_field_type_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
                     );
                     quote::quote! {
@@ -4581,8 +4577,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
                 else {
-                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                         &primary_key_field_type_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
                     );
                     quote::quote! {
@@ -4881,8 +4876,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
                     let current_field_type = &element.syn_field.ty;
-                    let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                         &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                     );
                     quote::quote! {
@@ -4905,8 +4899,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let ident_update_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
                     let current_field_ident = &element.field_ident;
                     if field_ident == current_field_ident {
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                             &quote::quote!{#update_snake_case.clone()}
                         );
                         quote::quote! {Some(#value_initialization_token_stream)}
@@ -4918,25 +4911,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let current_field_ident = &element.field_ident;
                     let current_field_type = &element.syn_field.ty;
                     if field_ident == current_field_ident {
-                        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                            &quote::quote!{
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                            <
+                                #current_field_type
+                                as
+                                postgresql_crud::PostgresqlTypeTestCases
+                            >::read_from_previous_read_unwraped_merged_with_update(
                                 <
                                     #current_field_type
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
-                                >::read_from_previous_read_unwraped_merged_with_update(
-                                    <
-                                        #current_field_type
-                                        as
-                                        postgresql_crud::PostgresqlTypeTestCases
-                                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                        &read_only_ids_current_element.#current_field_ident.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
-                                    ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
-                                    Some(#update_snake_case.clone())
-                                )
-                            }
-                        );
+                                >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                    &read_only_ids_current_element.#current_field_ident.clone().expect("error 4f19d0d2-a23f-4b77-a2bc-c7b04db7a129")
+                                ).expect("error c7685b19-9bca-47bc-a3a5-8fc543b174a5").#value_snake_case,
+                                Some(#update_snake_case.clone())
+                            )
+                        });
                         quote::quote! {
                             #current_field_ident: Some(#value_initialization_token_stream)
                         }
@@ -4946,8 +4936,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     }
                 });
-                let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                     &primary_key_field_type_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
                 );
                 quote::quote! {
@@ -5301,8 +5290,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     )
                 }
             });
-            let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-                &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                 &primary_key_field_type_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
             );
             quote::quote!{{
@@ -5397,8 +5385,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }}
         };
-        let value_initialization_token_stream = postgresql_crud_macros_common::generate_value_initialization_token_stream(
-            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
             &primary_key_field_type_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
         );
         quote::quote! {
