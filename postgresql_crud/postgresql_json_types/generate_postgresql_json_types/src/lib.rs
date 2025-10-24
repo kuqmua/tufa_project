@@ -2179,7 +2179,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         type PostgresqlJsonType = #ident;
                         type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
                         type #update_upper_camel_case = #ident_update_upper_camel_case;
-                        type #read_inner_upper_camel_case = #field_type_handle;
+                        type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;
                         #query_bind_string_as_postgresql_text_create_for_query_token_stream
                         #query_bind_string_as_postgresql_text_update_for_query_token_stream
                         fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::#read_inner_upper_camel_case {
