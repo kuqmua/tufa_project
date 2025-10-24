@@ -1601,27 +1601,27 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                     let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
                     quote::quote! {
-                        if let Some(value) = &self.#field_ident {
-                            acc.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_updated_ids_query_part_snake_case(
-                                &value.value,
+                        if let Some(#value_snake_case) = &self.#field_ident {
+                            #acc_snake_case.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_updated_ids_query_part_snake_case(
+                                &#value_snake_case.#value_snake_case,
                                 #field_ident_double_quotes_token_stream,
                                 increment,
                             ){
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
+                                Ok(#value_snake_case) => #value_snake_case,
+                                Err(#error_snake_case) => {
+                                    return Err(#error_snake_case);
                                 }
                             });
                         }
                     }
                 });
                 quote::quote! {
-                    fn #select_only_updated_ids_query_part_snake_case(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                        let mut acc = std::string::String::new();
+                    fn #select_only_updated_ids_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, postgresql_crud::QueryPartErrorNamed> {
+                        let mut #acc_snake_case = std::string::String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
-                        let _ = acc.pop();
-                        Ok(acc)
+                        let _ = #acc_snake_case.pop();
+                        Ok(#acc_snake_case)
                     }
                 }
             };
