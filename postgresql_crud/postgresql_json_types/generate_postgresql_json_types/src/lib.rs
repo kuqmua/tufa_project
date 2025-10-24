@@ -441,7 +441,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
 
             let rust_type_name = RustTypeName::from(postgresql_json_type);
             let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
-
+            enum IsStandartNotNull {
+                True,
+                False
+            }
             let is_standart_not_null = if let (
                 PostgresqlJsonTypePattern::Standart,
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
@@ -449,11 +452,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 &postgresql_json_type_pattern,
                 &not_null_or_nullable
             ) {
-                true
+                IsStandartNotNull::True
             }
             else {
-                false
+                IsStandartNotNull::False
             };
+            enum IsStandartNotNullUuid {
+                True,
+                False
+            }
             let is_standart_not_null_uuid = if let (
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 PostgresqlJsonTypePattern::Standart,
@@ -463,10 +470,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 &postgresql_json_type_pattern,
                 &postgresql_json_type,
             ) {
-                true
+                IsStandartNotNullUuid::True
             }
             else {
-                false
+                IsStandartNotNullUuid::False
             };
 
             let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
@@ -783,7 +790,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     min_length: Some(36),
                     pattern: None,
                 }))};
-                let schemars_json_schema = if is_standart_not_null {
+                let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
                     let schema_object_token_stream_integer = SchemaObjectTokenStream {
                         metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
                         instance_type: &instance_type_number_token_stream,
@@ -826,7 +833,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } else {
                     SchemarsJsonSchema::Derive
                 };
-                let (serde_serialize, serde_deserialize) = if is_standart_not_null {
+                let (serde_serialize, serde_deserialize) = if let IsStandartNotNull::True = &is_standart_not_null {
                     let serde_serialize = match &postgresql_json_type {
                         PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                         | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -966,7 +973,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if is_standart_not_null_uuid {
+                let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     let (
                         query_bind_string_as_postgresql_text_create_for_query_token_stream,
                         query_bind_string_as_postgresql_text_update_for_query_token_stream
@@ -1090,7 +1097,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                 };
-                let maybe_impl_is_string_empty_for_ident_origin_token_stream = if is_standart_not_null {
+                let maybe_impl_is_string_empty_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
                     match &postgresql_json_type {
                         PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                         | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -1273,7 +1280,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_create_for_query_upper_camel_case,
                     &quote::quote!{Self(#value_snake_case.0)}
                 );
-                let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream = if is_standart_not_null_uuid {
+                let maybe_impl_std_convert_from_ident_update_for_ident_create_for_query_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                         &ident_update_upper_camel_case,
                         &ident_create_for_query_upper_camel_case,
@@ -1961,7 +1968,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream = if is_standart_not_null_uuid {
+                let impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                         &proc_macro2::TokenStream::new(),
                         &ident_update_upper_camel_case,
@@ -2029,7 +2036,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
-                let select_only_created_or_updated_ids_query_part_token_stream = if is_standart_not_null_uuid {
+                let select_only_created_or_updated_ids_query_part_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     quote::quote! {
                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                             Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value}),")),
@@ -2039,7 +2046,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } else {
                     quote::quote! {ok_field_ident_jsonb_build_object_value(&field_ident)}
                 };
-                let select_only_created_or_updated_ids_query_bind_token_stream = if is_standart_not_null_uuid {
+                let select_only_created_or_updated_ids_query_bind_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     quote::quote! {
                         if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case) {
                             return Err(#error_snake_case.to_string());
@@ -2142,7 +2149,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
                     &ident_read_only_ids_upper_camel_case,
-                    &if is_standart_not_null_uuid {
+                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                         quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
                     } else {
                         quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
@@ -2171,14 +2178,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Ok(query)
                     },
                     &select_only_created_or_updated_ids_query_part_token_stream,
-                    &if is_standart_not_null_uuid {
+                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                         postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True
                     } else {
                         postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False
                     },
                     &select_only_created_or_updated_ids_query_bind_token_stream,
                     &select_only_created_or_updated_ids_query_part_token_stream,
-                    &if is_standart_not_null_uuid {
+                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                         postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True
                     } else {
                         postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False
@@ -2406,7 +2413,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                     &{
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
-                            &if is_standart_not_null_uuid {
+                            &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                                 quote::quote!{#value_snake_case.0.#value_snake_case}
                             } else {
                                 quote::quote!{
@@ -2573,7 +2580,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &{
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
-                            &if is_standart_not_null_uuid {
+                            &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                                 quote::quote! {#ident_read_upper_camel_case::new(#value_snake_case.0.#value_snake_case)}
                             } else {
                                 quote::quote! {#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
@@ -2700,7 +2707,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &{
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
-                            &if is_standart_not_null_uuid {
+                            &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                                 quote::quote! {#ident_read_upper_camel_case(#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case))}
                             } else {
                                 quote::quote! {#ident_read_upper_camel_case(#create_snake_case.into())}
