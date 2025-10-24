@@ -973,66 +973,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
-                    let (
-                        query_bind_string_as_postgresql_text_create_for_query_token_stream,
-                        query_bind_string_as_postgresql_text_update_for_query_token_stream
-                    ) = {
-                        enum CreateForQueryOrUpdateForQuery {
-                            CreateForQuery,
-                            UpdateForQuery
-                        }
-                        let generate_query_bind_string_as_postgresql_text_token_stream = |create_for_query_or_update_for_query: &CreateForQueryOrUpdateForQuery|{
-                            let name_token_stream = format!(
-                                "query_bind_string_as_postgresql_text_{}_for_query",
-                                match &create_for_query_or_update_for_query {
-                                    CreateForQueryOrUpdateForQuery::CreateForQuery => "create",
-                                    CreateForQueryOrUpdateForQuery::UpdateForQuery => "update",
-                                }
-                            ).parse::<proc_macro2::TokenStream>().unwrap();
-                            let type_token_stream: &dyn quote::ToTokens = match &create_for_query_or_update_for_query {
-                                CreateForQueryOrUpdateForQuery::CreateForQuery => &create_for_query_upper_camel_case,
-                                CreateForQueryOrUpdateForQuery::UpdateForQuery => &update_for_query_upper_camel_case,
-                            };
-                            quote::quote! {
-                                fn #name_token_stream(
-                                    #value_snake_case: <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#type_token_stream,
-                                    mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-                                ) -> Result<
-                                    sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                                    #std_string_string_token_stream
-                                > {
-                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.0.to_string()) {
-                                        return Err(#error_snake_case.to_string())
-                                    }
-                                    Ok(#query_snake_case)
-                                }
-                            }
-                        };
-                        (
-                            generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::CreateForQuery),
-                            generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::UpdateForQuery)
-                        )
-                    };
-                    quote::quote! {
-                        impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
-                            type PostgresqlJsonType = #ident;
-                            type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
-                            type #update_upper_camel_case = #ident_update_upper_camel_case;
-                            type Inner = #field_type_handle;
-                            #query_bind_string_as_postgresql_text_create_for_query_token_stream
-                            #query_bind_string_as_postgresql_text_update_for_query_token_stream
-                            fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::Inner {
-                                &#value_snake_case.0.0
-                            }
-                            fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {
-                                postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case)
-                            }
-                        }
-                    }
-                } else {
-                    proc_macro2::TokenStream::new()
-                };
                 let impl_std_convert_from_ident_create_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                     &ident_create_upper_camel_case,
                     &ident_origin_upper_camel_case,
@@ -1164,7 +1104,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 quote::quote! {
                     #ident_origin_token_stream
                     #impl_ident_origin_token_stream
-                    #maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream
                     #impl_std_convert_from_ident_create_for_ident_origin_token_stream
                     #impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream
                     #impl_std_convert_from_ident_update_for_ident_origin_token_stream
@@ -2193,6 +2132,66 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &select_only_created_or_updated_ids_query_bind_token_stream,
                 )
             };
+            let maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                let (
+                    query_bind_string_as_postgresql_text_create_for_query_token_stream,
+                    query_bind_string_as_postgresql_text_update_for_query_token_stream
+                ) = {
+                    enum CreateForQueryOrUpdateForQuery {
+                        CreateForQuery,
+                        UpdateForQuery
+                    }
+                    let generate_query_bind_string_as_postgresql_text_token_stream = |create_for_query_or_update_for_query: &CreateForQueryOrUpdateForQuery|{
+                        let name_token_stream = format!(
+                            "query_bind_string_as_postgresql_text_{}_for_query",
+                            match &create_for_query_or_update_for_query {
+                                CreateForQueryOrUpdateForQuery::CreateForQuery => "create",
+                                CreateForQueryOrUpdateForQuery::UpdateForQuery => "update",
+                            }
+                        ).parse::<proc_macro2::TokenStream>().unwrap();
+                        let type_token_stream: &dyn quote::ToTokens = match &create_for_query_or_update_for_query {
+                            CreateForQueryOrUpdateForQuery::CreateForQuery => &create_for_query_upper_camel_case,
+                            CreateForQueryOrUpdateForQuery::UpdateForQuery => &update_for_query_upper_camel_case,
+                        };
+                        quote::quote! {
+                            fn #name_token_stream(
+                                #value_snake_case: <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#type_token_stream,
+                                mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                            ) -> Result<
+                                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                                #std_string_string_token_stream
+                            > {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case.0.0.to_string()) {
+                                    return Err(#error_snake_case.to_string())
+                                }
+                                Ok(#query_snake_case)
+                            }
+                        }
+                    };
+                    (
+                        generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::CreateForQuery),
+                        generate_query_bind_string_as_postgresql_text_token_stream(&CreateForQueryOrUpdateForQuery::UpdateForQuery)
+                    )
+                };
+                quote::quote! {
+                    impl postgresql_crud_common::PostgresqlJsonTypeElementId for #ident {
+                        type PostgresqlJsonType = #ident;
+                        type #create_for_query_upper_camel_case = #ident_create_for_query_upper_camel_case;
+                        type #update_upper_camel_case = #ident_update_upper_camel_case;
+                        type Inner = #field_type_handle;
+                        #query_bind_string_as_postgresql_text_create_for_query_token_stream
+                        #query_bind_string_as_postgresql_text_update_for_query_token_stream
+                        fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as postgresql_crud_common::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::Inner {
+                            &#value_snake_case.0.0
+                        }
+                        fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {
+                            postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case)
+                        }
+                    }
+                }
+            } else {
+                proc_macro2::TokenStream::new()
+            };
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {
                 let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
@@ -2731,6 +2730,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_update_token_stream
                 #ident_update_for_query_token_stream
                 #impl_postgresql_json_type_for_ident_token_stream
+                #maybe_impl_postgresql_json_type_element_id_for_ident_origin_token_stream
                 #impl_postgresql_json_type_test_cases_for_ident_token_stream
             };
             (
