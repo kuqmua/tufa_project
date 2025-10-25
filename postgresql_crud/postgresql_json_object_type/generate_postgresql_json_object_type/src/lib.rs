@@ -4283,7 +4283,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let fields_last_initialization_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4437,7 +4437,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         },
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Read);
@@ -4531,7 +4531,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         },
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let self_element_as_postgresql_type_update_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Update);
@@ -4611,7 +4611,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         },
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_false, &value_snake_case),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -4681,7 +4681,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         },
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let fields_initialization_content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4817,7 +4817,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                         &{
-                            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&match &element.postgresql_json_object_type_pattern {
+                            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -4976,7 +4976,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             };
                             match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_object_type_pattern {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => {
                                         let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&|content_token_stream: &dyn quote::ToTokens|{
                                             quote::quote!{
@@ -5043,10 +5043,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     },
                                 },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_option_token_stream(&element.postgresql_json_object_type_pattern)
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_option_token_stream(&postgresql_json_object_type_pattern)
                             }
                         },
-                        &match &element.postgresql_json_object_type_pattern {
+                        &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
@@ -5189,7 +5189,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                         &{
-                            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&match &element.postgresql_json_object_type_pattern {
+                            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
