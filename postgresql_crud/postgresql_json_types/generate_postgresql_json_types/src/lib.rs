@@ -1,7 +1,6 @@
 #[proc_macro]
 pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI8,
@@ -438,7 +437,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let postgresql_json_type = &element.postgresql_json_type;
             let not_null_or_nullable = &element.not_null_or_nullable;
             let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
-
             let rust_type_name = RustTypeName::from(postgresql_json_type);
             let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
             enum IsStandartNotNull {
@@ -475,9 +473,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             else {
                 IsStandartNotNullUuid::False
             };
-
-            let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-
             let value_snake_case = naming::ValueSnakeCase;
             let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
@@ -504,6 +499,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
 
             let std_string_string_token_stream = token_patterns::StdStringString;
             let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+            let std_primitive_f64_token_stream = token_patterns::StdPrimitiveF64;
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -515,7 +511,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &content_token_stream
                 )
             };
-
             let generate_ident_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
                 let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -580,20 +575,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-            let ident_read_inner_standart_not_null_alias_token_stream = match &postgresql_json_type {
-                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote! {std::primitive::i8},
-                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote! {std::primitive::i16},
-                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote! {std::primitive::i32},
-                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => quote::quote! {std::primitive::i64},
-                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => quote::quote! {std::primitive::u8},
-                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => quote::quote! {std::primitive::u16},
-                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => quote::quote! {std::primitive::u32},
-                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => quote::quote! {std::primitive::u64},
-                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => quote::quote! {std::primitive::f32},
-                PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => quote::quote! {std::primitive::f64},
-                PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote! {std::primitive::bool},
-                PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {std::string::String},
-                PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid::Uuid},
+            let ident_read_inner_standart_not_null_alias_token_stream = {
+                let content_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => &quote::quote! {std::primitive::i8},
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => &quote::quote! {std::primitive::i16},
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => &quote::quote! {std::primitive::i32},
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => &quote::quote! {std::primitive::i64},
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => &quote::quote! {std::primitive::u8},
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => &quote::quote! {std::primitive::u16},
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => &quote::quote! {std::primitive::u32},
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => &quote::quote! {std::primitive::u64},
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => &quote::quote! {std::primitive::f32},
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => &std_primitive_f64_token_stream,
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => &quote::quote! {std::primitive::bool},
+                    PostgresqlJsonType::StdStringStringAsJsonbString => &quote::quote! {std::string::String},
+                    PostgresqlJsonType::UuidUuidAsJsonbString => &quote::quote! {uuid::Uuid},
+                };
+                quote::quote!{#content_token_stream}
             };
             let generate_current_ident_origin_non_wrapping = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
             let generate_into_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -665,6 +663,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
                 let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
+                //todo json schema logic
                 let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
                     Some(Box::new(schemars::schema::Metadata {
                         id: None,
@@ -716,9 +715,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let number_token_stream = quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
                     multiple_of: None,
-                    maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as std::primitive::f64),
+                    maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
                     exclusive_maximum: None,
-                    minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as std::primitive::f64),
+                    minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
                     exclusive_minimum: None,
                 }))};
                 let string_token_stream = quote::quote! {Some(Box::new(schemars::schema::StringValidation {
@@ -815,7 +814,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     let maybe_derive_schemars_json_schema_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
                         SchemarsJsonSchema::Derive => &quote::quote! {schemars::JsonSchema,},
-                        SchemarsJsonSchema::Impl(_) => &proc_macro2_token_stream_new,
+                        SchemarsJsonSchema::Impl(_) => &proc_macro2::TokenStream::new(),
                     };
                     let content_token_stream: &dyn quote::ToTokens = {
                         let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
@@ -995,7 +994,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &quote::quote!{#value_snake_case.0}
                 );
                 let maybe_impl_schemars_json_schema_for_ident_origin_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
-                    SchemarsJsonSchema::Derive => &proc_macro2_token_stream_new,
+                    SchemarsJsonSchema::Derive => &proc_macro2::TokenStream::new(),
                     SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
                         let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgresql_crud::postgersql_json_type::{ident_origin_upper_camel_case}"));
                         let metadata_token_stream = &schema_object_token_stream.metadata;

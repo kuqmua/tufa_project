@@ -310,6 +310,20 @@ impl quote::ToTokens for StdPrimitiveI64 {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveF32;
+impl quote::ToTokens for StdPrimitiveF32 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::f32}.to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct StdPrimitiveF64;
+impl quote::ToTokens for StdPrimitiveF64 {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {std::primitive::f64}.to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
 pub struct StdFmtDisplay;
 impl quote::ToTokens for StdFmtDisplay {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
