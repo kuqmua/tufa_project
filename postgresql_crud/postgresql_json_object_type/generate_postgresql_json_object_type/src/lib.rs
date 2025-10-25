@@ -5038,9 +5038,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_option_token_stream(&postgresql_json_object_type_pattern)
                             }
                         },
-                        &match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                        &match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => {
                                     let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -5073,18 +5073,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#content_token_stream)*
                                         #acc_snake_case
                                     }
-                                }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    let mut #acc_snake_case = vec![];
-                                    for #element_snake_case in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                        #acc_snake_case.push(<#ident_standart_nullable_upper_camel_case as #import_path::PostgresqlJsonType>::Create::new(Some(#element_snake_case)));
-                                    }
-                                    #acc_snake_case.push(<#ident_standart_nullable_upper_camel_case as #import_path::PostgresqlJsonType>::Create::new(None));
-                                    #acc_snake_case
-                                }
-                            },
-                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => {
                                     //todo reuse
                                     let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -5165,18 +5155,38 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #(#content_token_stream)*
                                         #acc_snake_case
                                     }
-                                }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote! {
-                                        let mut #acc_snake_case = vec![];
-                                        for #element_snake_case in #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                            #acc_snake_case.push(<#ident_array_nullable_upper_camel_case as #import_path::PostgresqlJsonType>::Create::new(Some(#element_snake_case.0)));
-                                        }
-                                        #acc_snake_case.push(<#ident_array_nullable_upper_camel_case as #import_path::PostgresqlJsonType>::Create::new(None));
-                                        #acc_snake_case
-                                    }
-                                }
+                                },
                             },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let (
+                                    current_ident_not_null_as_postgresql_json_type_test_cases_token_stream,
+                                    current_ident_not_null,
+                                    content_token_stream
+                                ): (
+                                    &dyn quote::ToTokens,
+                                    &dyn quote::ToTokens,
+                                    &dyn quote::ToTokens
+                                ) = match &postgresql_json_object_type_pattern {
+                                    PostgresqlJsonObjectTypePattern::Standart => (
+                                        &ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream,
+                                        &ident_standart_nullable_upper_camel_case,
+                                        &proc_macro2::TokenStream::new()
+                                    ),
+                                    PostgresqlJsonObjectTypePattern::Array => (
+                                        &ident_array_not_null_as_postgresql_json_type_test_cases_token_stream,
+                                        &ident_array_nullable_upper_camel_case,
+                                        &quote::quote!{.0}
+                                    ),
+                                };
+                                quote::quote! {
+                                    let mut #acc_snake_case = vec![];
+                                    for #element_snake_case in #current_ident_not_null_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
+                                        #acc_snake_case.push(<#current_ident_not_null as #import_path::PostgresqlJsonType>::Create::new(Some(#element_snake_case #content_token_stream)));
+                                    }
+                                    #acc_snake_case.push(<#current_ident_not_null as #import_path::PostgresqlJsonType>::Create::new(None));
+                                    #acc_snake_case
+                                }
+                            }
                         },
                         &{
                             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
