@@ -261,8 +261,8 @@ impl quote::ToTokens for StdPrimitiveU8 {
     }
 }
 #[derive(Debug, Clone, Copy)]
-pub struct StdPrimitiveIU6;
-impl quote::ToTokens for StdPrimitiveIU6 {
+pub struct StdPrimitiveU16;
+impl quote::ToTokens for StdPrimitiveU16 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote::quote! {std::primitive::u16}.to_tokens(tokens);
     }
@@ -321,6 +321,13 @@ pub struct StdPrimitiveF64;
 impl quote::ToTokens for StdPrimitiveF64 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         quote::quote! {std::primitive::f64}.to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
+pub struct UuidUuid;
+impl quote::ToTokens for UuidUuid {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {uuid::Uuid}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
