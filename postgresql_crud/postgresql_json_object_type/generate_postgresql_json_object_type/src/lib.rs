@@ -990,8 +990,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &self,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
                                 column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-                            ) -> std::string::String {
-                                let mut #acc_snake_case = std::string::String::default();
+                            ) -> #std_string_string_token_stream {
+                                let mut #acc_snake_case = #std_string_string_token_stream::default();
                                 #select_query_part_for_loop_token_stream
                                 let _ = #acc_snake_case.pop();
                                 let _ = #acc_snake_case.pop();
@@ -1041,7 +1041,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     ));
                                     quote::quote! {
                                         let #ident_with_id_standart_not_null_select_snake_case = {
-                                            let mut #acc_snake_case = std::string::String::default();
+                                            let mut #acc_snake_case = #std_string_string_token_stream::default();
                                             #select_query_part_for_loop_token_stream
                                             let _ = #acc_snake_case.pop();
                                             let _ = #acc_snake_case.pop();
@@ -1437,7 +1437,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {Self::#element_ident_upper_camel_case(value) => generate_element_query(value, &#element_ident_double_quotes_token_stream)}
                                     });
                                     quote::quote! {
-                                        let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, #import_path_query_part_error_named_token_stream> {
+                                        let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                                             let elem = "elem";
                                             let #value_snake_case = match #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
                                                 #value_snake_case,
@@ -2272,17 +2272,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                                 #ids_are_not_unique_uppper_camel_case {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    duplicate: std::string::String,
+                                    duplicate: #std_string_string_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                                 #not_unique_id_in_json_delete_array_upper_camel_case {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    error: std::string::String,
+                                    error: #std_string_string_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                                 #not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    error: std::string::String,
+                                    error: #std_string_string_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             }
@@ -2864,7 +2864,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         }
                                     });
                                     quote::quote!{
-                                        let mut #acc_snake_case = std::string::String::default();
+                                        let mut #acc_snake_case = #std_string_string_token_stream::default();
                                         for #element_snake_case in self.0.to_vec() {
                                             match &#element_snake_case {
                                                 #(#match_variants_token_stream),*
@@ -2905,7 +2905,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote!{
                                         Ok(match &self.0 {
                                             Some(#value_snake_case) => {
-                                                let mut #acc_snake_case = std::string::String::default();
+                                                let mut #acc_snake_case = #std_string_string_token_stream::default();
                                                 for #element_snake_case in #value_snake_case.0.to_vec() {
                                                     match &#element_snake_case {
                                                         #(#match_content_token_stream),*
@@ -2973,7 +2973,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Ok(format!(
                                             "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
                                             {
-                                                let mut #acc_snake_case = std::string::String::new();
+                                                let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                 for #element_snake_case in self.#update_snake_case.to_vec() {
                                                     //todo maybe wrong for multiple updates by id?
                                                     let mut current_acc = #std_string_string_token_stream::new();
@@ -3009,7 +3009,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             },
                                             column_name_and_maybe_field_getter,
                                             {
-                                                let mut #acc_snake_case = std::string::String::new();
+                                                let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                 for _ in self.#update_snake_case.to_vec() {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                         Ok(#value_snake_case) => {
@@ -3020,7 +3020,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         },
                                                     }
                                                 }
-                                                for #element_snake_case in &self.create {
+                                                for #element_snake_case in &self.#create_snake_case {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                         Ok(#value_snake_case) => {
                                                              #acc_snake_case.push_str(&format!("${value},"));
@@ -3061,7 +3061,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &self,
                                 column_name_and_maybe_field_getter: &std::primitive::str,
                                 #increment_snake_case: &mut std::primitive::u64
-                            ) -> Result<std::string::String, #import_path_query_part_error_named_token_stream> {
+                            ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                                 #content_token_stream
                             }
                         }
@@ -3088,15 +3088,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{
-                                    Self {
-                                        create: #value_snake_case.create.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
-                                            #element_snake_case
-                                        )).collect(),
-                                        update: #import_path::UniqueVec::from_t1_impl_from_t2(#value_snake_case.update),
-                                        delete: #value_snake_case.delete.into_iter().map(|#element_snake_case|#element_snake_case.into()).collect(),
-                                    }
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                Self {
+                                    #create_snake_case: #value_snake_case.#create_snake_case.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
+                                        #element_snake_case
+                                    )).collect(),
+                                    #update_snake_case: #import_path::UniqueVec::from_t1_impl_from_t2(#value_snake_case.#update_snake_case),
+                                    #delete_snake_case: #value_snake_case.#delete_snake_case.into_iter().map(|#element_snake_case|#element_snake_case.into()).collect(),
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -3274,7 +3272,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         };
                         let delete_query_part_acc = {
-                            let mut #acc_snake_case = std::string::String::default();
+                            let mut #acc_snake_case = #std_string_string_token_stream::default();
                             for _ in &#value_snake_case.#delete_snake_case {
                                 let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(#value_snake_case) => #value_snake_case,
@@ -3288,7 +3286,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #acc_snake_case
                         };
                         let create_query_part_acc = {
-                            let mut #acc_snake_case = std::string::String::default();
+                            let mut #acc_snake_case = #std_string_string_token_stream::default();
                             for _ in &#value_snake_case.#create_snake_case {
                                 let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
                                     Ok(#value_snake_case) => #value_snake_case,
@@ -3384,7 +3382,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 ));
                                 quote::quote! {
                                     let #ident_with_id_standart_not_null_select_snake_case = {
-                                        let mut #acc_snake_case = std::string::String::default();
+                                        let mut #acc_snake_case = #std_string_string_token_stream::default();
                                         #select_query_part_for_loop_token_stream
                                         let _ = #acc_snake_case.pop();
                                         let _ = #acc_snake_case.pop();
@@ -3449,7 +3447,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             });
                             quote::quote! {
-                                let mut #acc_snake_case = std::string::String::default();
+                                let mut #acc_snake_case = #std_string_string_token_stream::default();
                                 #(#acc_push_token_stream)*
                                 let _ = #acc_snake_case.pop();
                                 let _ = #acc_snake_case.pop();
@@ -3843,8 +3841,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         },
                     },
-
-                    //todo maybe reuse impls
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -3878,7 +3874,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Ok(format!(
                                         "'{field_ident}',jsonb_build_object('value',{}),",
                                         {
-                                            let mut #acc_snake_case = std::string::String::new();
+                                            let mut #acc_snake_case = #std_string_string_token_stream::new();
                                             #(#content_token_stream)*
                                             let _ = #acc_snake_case.pop();
                                             let _ = #acc_snake_case.pop();
@@ -3921,7 +3917,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(#value_snake_case) => format!(
                                                 "jsonb_build_object('value',{})",
                                                 {
-                                                    let mut #acc_snake_case = std::string::String::new();
+                                                    let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                     #(#content_token_stream)*
                                                     let _ = #acc_snake_case.pop();
                                                     let _ = #acc_snake_case.pop();
@@ -3963,7 +3959,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Ok(format!(
                                         "'{field_ident}',jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))),",
                                         {
-                                            let mut #acc_snake_case = std::string::String::new();
+                                            let mut #acc_snake_case = #std_string_string_token_stream::new();
                                             for #element_snake_case in &#value_snake_case.0 {
                                                 #(#content_token_stream)*
                                             }
@@ -3973,7 +3969,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         },
                                         &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                                         {
-                                            let mut #acc_snake_case = std::string::String::new();
+                                            let mut #acc_snake_case = #std_string_string_token_stream::new();
                                             for _ in &#value_snake_case.0 {
                                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                     Ok(#value_snake_case) => {
@@ -4021,7 +4017,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(#value_snake_case) => format!(
                                                 "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({})))",
                                                 {
-                                                    let mut #acc_snake_case = std::string::String::new();
+                                                    let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                     for #element_snake_case in &#value_snake_case.0 {
                                                         #(#content_token_stream)*
                                                     }
@@ -4031,7 +4027,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 },
                                                 &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                                                 {
-                                                    let mut #acc_snake_case = std::string::String::new();
+                                                    let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                     for _ in &#value_snake_case.0 {
                                                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                             Ok(#value_snake_case) => {
