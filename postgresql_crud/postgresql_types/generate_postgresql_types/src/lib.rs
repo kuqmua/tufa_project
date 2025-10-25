@@ -3614,18 +3614,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
-            //todo refactor
-            let ident_create_token_stream = match &can_be_primary_key {
-                CanBePrimaryKey::True => {
-                    let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False);
-                    let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
-                    quote::quote! {
-                        #ident_create_token_stream
-                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
-                    }
-                },
-                CanBePrimaryKey::False => {
-                    let ident_create_token_stream = {
+            let ident_create_token_stream = {
+                let ident_create_token_stream = match &can_be_primary_key {
+                    CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False),
+                    CanBePrimaryKey::False => {
                         quote::quote! {
                             #[derive(
                                 Debug,
@@ -3636,8 +3628,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )]
                             pub struct #ident_create_upper_camel_case(#ident_origin_upper_camel_case);
                         }
-                    };
-                    let impl_ident_create_token_stream = {
+                    }
+                };
+                let maybe_impl_ident_create_token_stream = match &can_be_primary_key {
+                    CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                    CanBePrimaryKey::False => {
                         let pub_fn_new_or_try_new_token_stream: &dyn quote::ToTokens = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                             &quote::quote! {
                                 pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
@@ -3655,26 +3650,38 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #pub_fn_new_or_try_new_token_stream
                             }
                         }
-                    };
-                    let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_create_upper_camel_case,
-                        &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
-                    );
-                    let impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
+                    }
+                };
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_create_upper_camel_case,
+                    &{
+                        let content_token_stream: &dyn quote::ToTokens = match &can_be_primary_key {
+                            CanBePrimaryKey::True => &core_default_default_default_token_stream,
+                            CanBePrimaryKey::False => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        };
+                        quote::quote! {Self(#content_token_stream)}
+                    }
+                );
+                let maybe_impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream = match &can_be_primary_key {
+                    CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                    CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
                         &ident_create_upper_camel_case,
                         &quote::quote!{#self_snake_case.0}
-                    );
-                    let impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    )
+                };
+                let maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream = match &can_be_primary_key {
+                    CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
+                    CanBePrimaryKey::False => postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                         &ident_create_upper_camel_case,
                         &ident_origin_upper_camel_case
-                    );
-                    quote::quote! {
-                        #ident_create_token_stream
-                        #impl_ident_create_token_stream
-                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
-                        #impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
-                        #impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
-                    }
+                    )
+                };
+                quote::quote! {
+                    #ident_create_token_stream
+                    #maybe_impl_ident_create_token_stream
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
+                    #maybe_impl_sqlx_encode_sqlx_postgres_for_ident_create_token_stream
+                    #maybe_impl_sqlx_type_sqlx_postgres_for_ident_create_token_stream
                 }
             };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
