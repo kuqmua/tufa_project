@@ -4162,7 +4162,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
                         &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
                         &quote::quote! {
-                            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                            match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                 Ok(#value_snake_case) => Ok(format!("({column} = ${value})")),
                                 Err(#error_snake_case) => Err(#error_snake_case)
                             }
@@ -4305,7 +4305,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
                 let typical_query_part_token_stream = quote::quote! {
                     let mut #acc_snake_case = std::string::String::default();
-                    match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                    match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                         Ok(#value_snake_case) => {
                             #acc_snake_case.push_str(&format!("${value}"));
                         },
@@ -4446,93 +4446,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &ident_create_upper_camel_case,
                     &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::True,
-                    &match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
+                    &match &can_be_primary_key {
+                        CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::True,
+                        CanBePrimaryKey::False => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     },
                     &query_part_create_token_stream,
-                    &match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
+                    &match &can_be_primary_key {
+                        CanBePrimaryKey::True => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::True,
+                        CanBePrimaryKey::False => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                     },
-                    &match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
+                    &match &can_be_primary_key {
+                        CanBePrimaryKey::True => postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
+                        CanBePrimaryKey::False => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     },
                     &bind_value_to_query_create_token_stream,
                     &ident_select_upper_camel_case,
@@ -5132,8 +5057,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => {
                             let min_token_stream = quote::quote!{MIN};
                             let max_token_stream = quote::quote!{MAX};
-                            let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
-                            let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
                             let std_primitive_i32_min_token_stream = quote::quote! {#std_primitive_i32_token_stream::#min_token_stream};
                             let std_primitive_i32_max_token_stream = quote::quote! {#std_primitive_i32_token_stream::#max_token_stream};
                             let generate_sqlx_postgres_types_pg_interval_token_stream = |
