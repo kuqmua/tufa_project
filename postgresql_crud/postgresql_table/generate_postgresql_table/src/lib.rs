@@ -3992,16 +3992,41 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 >::Update::from(#method_call_token_stream)
             }
         };
-        let ident_read_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-            let current_field_ident = &element.field_ident;
-            let current_field_type = &element.syn_field.ty;
-            quote::quote! {
-                #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                    #read_only_ids_snake_case.#current_field_ident.expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"),
-                    #create_snake_case.#current_field_ident
+        let (
+            field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream,
+            field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_from_try_create_one_ident_create_token_stream,
+            field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_create_token_stream,
+        ) = {
+            let generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_token_stream = |
+                read_only_ids_content_token_stream: &dyn quote::ToTokens,
+                create_content_token_stream: &dyn quote::ToTokens
+            |{
+                generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                    let current_field_ident = &element.field_ident;
+                    let current_field_type = &element.syn_field.ty;
+                    quote::quote! {
+                        #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
+                            #read_only_ids_content_token_stream.#current_field_ident.expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"),
+                            #create_content_token_stream.#current_field_ident
+                        )
+                    }
+                })
+            };
+            (
+                generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+                    &read_only_ids_snake_case,
+                    &create_snake_case
+                ),
+                generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+                    &quote::quote!{read_only_ids_from_try_create_one},
+                    &quote::quote!{ident_create}
+                ),
+                generate_field_ident_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+                    &quote::quote!{read_only_ids_returned_from_create_one},
+                    &quote::quote!{ident_create_default}
                 )
-            }
-        });
+            )
+        };
         let std_option_option_ident_where_many_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let current_field_ident = &element.field_ident;
             quote::quote! {
@@ -4058,7 +4083,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                                 &read_only_ids.#primary_key_field_ident
                                             ),
-                                            #ident_read_content_token_stream
+                                            #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
                                         });
                                     }
                                     #acc_snake_case.sort_by(|a, b| {
@@ -4229,16 +4254,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     }
                 });
-                let ident_read_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let current_field_ident = &element.field_ident;
-                    let current_field_type = &element.syn_field.ty;
-                    quote::quote! {
-                        #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                            read_only_ids_from_try_create_one.#current_field_ident.expect("error 23a79f15-caae-4673-844c-fa4366adf267"),
-                            ident_create.#current_field_ident
-                        )
-                    }
-                });
                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                     &primary_key_field_type_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
                 );
@@ -4256,7 +4271,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             assert_eq!(
                                 super::#ident_read_upper_camel_case {
                                     #primary_key_field_ident: Some(#value_initialization_token_stream),
-                                    #ident_read_content_token_stream
+                                    #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_from_try_create_one_ident_create_token_stream
                                 },
                                 super::#ident::try_read_one(
                                     &url_cloned,
@@ -4338,16 +4353,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         //todo read_many
         let read_many_token_stream = {
-            let ident_read_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let current_field_ident = &element.field_ident;
-                let current_field_type = &element.syn_field.ty;
-                quote::quote! {
-                    #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                        #read_only_ids_snake_case.#current_field_ident.expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"),
-                        #create_snake_case.#current_field_ident
-                    )
-                }
-            });
             quote::quote!{{
                 let generate_test_read_many_by_non_existent_primary_keys = async |length: std::primitive::usize|{
                     match super::#ident::try_read_many(
@@ -4402,7 +4407,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 generate_test_read_many_by_non_existent_primary_keys(1).await;
                 generate_test_read_many_by_non_existent_primary_keys(2).await;
-                /////////////////
                 let generate_test_read_many_by_equal_to_created_primary_keys = async |length: std::primitive::usize| {
                     let ident_create_vec = {
                         let mut #acc_snake_case = vec![];
@@ -4434,7 +4438,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                         &read_only_ids.#primary_key_field_ident
                                     ),
-                                    #ident_read_content_token_stream
+                                    #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
                                 });
                             }
                             #acc_snake_case.sort_by(|a, b| {
@@ -5476,16 +5480,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }}
         };
         let delete_one_token_stream = {
-            let ident_read_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let current_field_ident = &element.field_ident;
-                let current_field_type = &element.syn_field.ty;
-                quote::quote! {
-                    #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                        read_only_ids_returned_from_create_one.#current_field_ident.expect("error eb1fcdfb-7126-49f2-aed8-2ed377b19241"),
-                        ident_create_default.#current_field_ident
-                    )
-                }
-            });
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                 &primary_key_field_type_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
             );
@@ -5527,7 +5521,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 assert_eq!(
                     super::#ident_read_upper_camel_case {
                         #primary_key_field_ident: Some(#value_initialization_token_stream),
-                        #ident_read_content_token_stream
+                        #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_create_token_stream
                     },
                     super::#ident::try_read_one(
                         &url,
