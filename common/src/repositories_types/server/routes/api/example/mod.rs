@@ -1663,8 +1663,6 @@ mod example_tests {
                         generate_test_read_many_by_equal_to_created_primary_keys(1).await;
                         generate_test_read_many_by_equal_to_created_primary_keys(2).await;
                         /////////here
-                        let url_cloned = url.clone();
-                        let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
                                 let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
