@@ -4033,6 +4033,83 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #current_field_ident: None
             }
         });
+        let common_read_only_ids_returned_from_create_one_token_stream = {
+            let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
+                &primary_key_field_type_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
+            );
+            quote::quote!{
+                let #common_read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
+                    &#url_snake_case,
+                    super::#ident_create_one_parameters_upper_camel_case {
+                        #payload_snake_case: #ident_create_default_snake_case.clone()
+                    }
+                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(#value_initialization_token_stream);
+                assert_eq!(
+                    super::#ident_read_upper_camel_case {
+                        #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
+                        #fields_none_initialization_token_stream
+                    },
+                    super::#ident::try_read_one(
+                        &#url_snake_case,
+                        super::#ident_read_one_parameters_upper_camel_case {
+                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                #primary_key_field_ident: #primary_key_field_type_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
+                                #select_snake_case: #select_primary_key_snake_case.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
+                    "error 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
+                );
+                let read_only_ids_from_try_delete_one = super::#ident::try_delete_one(
+                    &url,
+                    super::#ident_delete_one_parameters_upper_camel_case {
+                        payload: super::#ident_delete_one_payload_upper_camel_case {
+                            #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
+                                common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
+                            )
+                        }
+                    }
+                ).await.expect("error 006b18e9-c965-45ee-afc0-a4f6b850ed06");
+                assert_eq!(
+                    read_only_ids_from_try_delete_one,
+                    <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
+                        common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
+                    ),
+                    "error 26e2058b-4bc1-42da-8f35-0ab993904de5"
+                );
+                if let Err(#error_snake_case) = super::#ident::try_read_one(
+                    &url,
+                    super::#ident_read_one_parameters_upper_camel_case {
+                        payload: super::#ident_read_one_payload_upper_camel_case {
+                            #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
+                                common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
+                            ),
+                            select: select_default_all_with_max_page_size.clone()
+                        }
+                    }
+                ).await {
+                    if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                        read_one_error_named_with_serialize_deserialize,
+                        code_occurence: _
+                    } = error {
+                        if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = read_one_error_named_with_serialize_deserialize {
+                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
+                                panic!("error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
+                            }
+                        } else {
+                            panic!("error 0ad0117b-a2e0-4629-99d0-71935cd93d15");
+                        }
+                    } else {
+                        panic!("error c6695392-4b5f-4482-86aa-b2f19c33a746")
+                    }
+                } else {
+                    panic!("error 67e43b7a-d3ec-4a3b-a3f1-8c11499fd090")
+                }
+            }
+        };
         let create_many_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                 let field_ident = &element.field_ident;
@@ -5585,9 +5662,32 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }}
         };
-        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
-            &primary_key_field_type_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
-        );
+        let last_read_many_token_stream = {
+            quote::quote! {
+                let try_read_many_data = super::#ident::try_read_many(
+                    &url,
+                    super::#ident_read_many_parameters_upper_camel_case {
+                        payload: super::#ident_read_many_payload_upper_camel_case {
+                            where_many: super::#std_option_option_ident_where_many_upper_camel_case(None),
+                            select: select_default_all_with_max_page_size.clone(),
+                            order_by: postgresql_crud::OrderBy {
+                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
+                                ),
+                                order: Some(postgresql_crud::Order::Asc),
+                            },
+                            pagination: postgresql_crud::PaginationStartsWithZero::try_new(
+                                10000,
+                                0
+                            ).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
+                        },
+                    },
+                )
+                .await
+                .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                println!("try_read_many result len {}", try_read_many_data.len());
+            }
+        };
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -5598,139 +5698,94 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #[test]
                 fn test_crud() {
                     std::thread::Builder::new()
-                        .stack_size(16 * 1024 * 1024)
-                        .spawn(|| {
-                            tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
-                                tracing_subscriber::fmt::init();
-                                let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
-                                static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
-                                let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
-                                let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new()
-                                .max_connections(50)
-                                .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case)))
-                                .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
-                                let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
-                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
-                                    let #query_snake_case = #drop_table_if_exists_ident_double_quotes_token_stream;
-                                    println!("{query}");
-                                    let #underscore_unused_token_stream = sqlx::query(#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
-                                }
-                                drop_table_if_exists(&#postgres_pool_snake_case).await;
-                                let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
-                                let #underscore_unused_token_stream = tokio::spawn(async move {
-                                    super::#ident::prepare_postgresql(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
-                                    let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
-                                        #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
-                                        #config_snake_case: &#config_snake_case,
-                                        project_git_info: &git_info::PROJECT_GIT_INFO,
-                                    });
-                                    axum::serve(
-                                        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"),
-                                        axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
-                                    )
-                                    .await
-                                    .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+                    .stack_size(16 * 1024 * 1024)
+                    .spawn(|| {
+                        tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
+                            tracing_subscriber::fmt::init();
+                            let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
+                            static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
+                            let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().expect("error d7a6ef78-c306-40e7-b560-297ce4e8a8d1"));
+                            let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new()
+                            .max_connections(50)
+                            .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case)))
+                            .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
+                            let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
+                            async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
+                                let #query_snake_case = #drop_table_if_exists_ident_double_quotes_token_stream;
+                                println!("{query}");
+                                let #underscore_unused_token_stream = sqlx::query(#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
+                            }
+                            drop_table_if_exists(&#postgres_pool_snake_case).await;
+                            let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
+                            let #underscore_unused_token_stream = tokio::spawn(async move {
+                                super::#ident::prepare_postgresql(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
+                                let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
+                                    #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
+                                    #config_snake_case: &#config_snake_case,
+                                    project_git_info: &git_info::PROJECT_GIT_INFO,
                                 });
-                                tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
-                                let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                    super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                        #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
-                                    )
-                                ])
-                                .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                                // let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |
-                                //     mut #value_snake_case: #std_vec_vec_ident_read_token_stream
-                                // | -> #std_vec_vec_ident_read_token_stream {
-                                //     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
-                                //     #value_snake_case
-                                // };
-                                let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
-                                    #ident_create_default_fields_initialization_without_primary_key_token_stream
-                                };
-                                let #common_read_only_ids_returned_from_create_one_snake_case = super::#ident::try_create_one(
-                                    &#url_snake_case,
-                                    super::#ident_create_one_parameters_upper_camel_case {
-                                        #payload_snake_case: #ident_create_default_snake_case.clone()
-                                    }
-                                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                                let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(#value_initialization_token_stream);
-                                assert_eq!(
-                                    super::#ident_read_upper_camel_case {
-                                        #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
-                                        #fields_none_initialization_token_stream
-                                    },
-                                    super::#ident::try_read_one(
-                                        &#url_snake_case,
-                                        super::#ident_read_one_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                                #primary_key_field_ident: #primary_key_field_type_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
-                                                #select_snake_case: #select_primary_key_snake_case.clone(),
-                                            },
-                                        },
-                                    )
-                                    .await
-                                    .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
-                                    "error 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
-                                );
-                                #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
-                                let start = std::time::Instant::now();
-                                #create_many_token_stream
-                                let create_many_elapsed = start.elapsed();
-                                #create_one_token_stream
-                                let create_one_elapsed = start.elapsed();
-                                #read_many_token_stream
-                                let read_many_elapsed = start.elapsed();
-                                #read_one_token_stream
-                                let read_one_elapsed = start.elapsed();
-                                #update_many_token_stream
-                                let update_many_elapsed = start.elapsed();
-                                #update_one_token_stream
-                                let update_one_elapsed = start.elapsed();
-                                #delete_many_token_stream
-                                let delete_many_elapsed = start.elapsed();
-                                #delete_one_token_stream
-                                let delete_one_elapsed = start.elapsed();
-                                println!(
-                                    "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                                    create_many_elapsed,
-                                    create_one_elapsed,
-                                    read_many_elapsed,
-                                    read_one_elapsed,
-                                    update_many_elapsed,
-                                    update_one_elapsed,
-                                    delete_many_elapsed,
-                                    delete_one_elapsed
-                                );
-                                let try_read_many_data = super::#ident::try_read_many(
-                                    &url,
-                                    super::#ident_read_many_parameters_upper_camel_case {
-                                        payload: super::#ident_read_many_payload_upper_camel_case {
-                                            where_many: super::#std_option_option_ident_where_many_upper_camel_case(None),
-                                            select: select_default_all_with_max_page_size.clone(),
-                                            order_by: postgresql_crud::OrderBy {
-                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
-                                                ),
-                                                order: Some(postgresql_crud::Order::Asc),
-                                            },
-                                            pagination: postgresql_crud::PaginationStartsWithZero::try_new(
-                                                10000,
-                                                0
-                                            ).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
-                                        },
-                                    },
+                                axum::serve(
+                                    tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"),
+                                    axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
                                 )
                                 .await
-                                .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                println!("try_read_many result len {}", try_read_many_data.len());
-                                drop_table_if_exists(&#postgres_pool_snake_case).await;
+                                .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                             });
-                        })
-                        .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
-                        .join()
-                        .unwrap_or_else(|error|{
-                            panic!("error b2f21a5f-d9ce-435c-809f-bd40741c8795 {error:#?}");
+                            tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+                            let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                                super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
+                                )
+                            ])
+                            .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
+                            // let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |
+                            //     mut #value_snake_case: #std_vec_vec_ident_read_token_stream
+                            // | -> #std_vec_vec_ident_read_token_stream {
+                            //     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").#value_snake_case);
+                            //     #value_snake_case
+                            // };
+                            let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
+                                #ident_create_default_fields_initialization_without_primary_key_token_stream
+                            };
+                            #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
+                            #common_read_only_ids_returned_from_create_one_token_stream
+                            let start = std::time::Instant::now();
+                            #create_many_token_stream
+                            let create_many_elapsed = start.elapsed();
+                            #create_one_token_stream
+                            let create_one_elapsed = start.elapsed();
+                            #read_many_token_stream
+                            let read_many_elapsed = start.elapsed();
+                            #read_one_token_stream
+                            let read_one_elapsed = start.elapsed();
+                            #update_many_token_stream
+                            let update_many_elapsed = start.elapsed();
+                            #update_one_token_stream
+                            let update_one_elapsed = start.elapsed();
+                            #delete_many_token_stream
+                            let delete_many_elapsed = start.elapsed();
+                            #delete_one_token_stream
+                            let delete_one_elapsed = start.elapsed();
+                            println!(
+                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                                create_many_elapsed,
+                                create_one_elapsed,
+                                read_many_elapsed,
+                                read_one_elapsed,
+                                update_many_elapsed,
+                                update_one_elapsed,
+                                delete_many_elapsed,
+                                delete_one_elapsed
+                            );
+                            #last_read_many_token_stream
+                            drop_table_if_exists(&#postgres_pool_snake_case).await;
                         });
+                    })
+                    .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
+                    .join()
+                    .unwrap_or_else(|error|{
+                        panic!("error b2f21a5f-d9ce-435c-809f-bd40741c8795 {error:#?}");
+                    });
                 }
             }
         }
