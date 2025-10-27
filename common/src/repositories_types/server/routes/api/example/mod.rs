@@ -37,7 +37,7 @@ pub struct Example {
 
     pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
-    // // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+    // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
     // // pub column_4: postgresql_crud::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
     // // pub column_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2,
