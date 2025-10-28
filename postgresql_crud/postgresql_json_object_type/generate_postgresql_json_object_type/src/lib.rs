@@ -5294,6 +5294,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             });
                             quote::quote!{Some(#value_initialization_token_stream)}
                         },
+                        &{
+                            quote::quote!{vec![]}
+                        }
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,

@@ -2725,6 +2725,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         );
                         quote::quote! {Some(#value_initialization_token_stream)}
                     },
+                    &{
+                        quote::quote!{vec![]}
+                    }
                 )
             };
             let generated = quote::quote! {
