@@ -2651,10 +2651,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         };
                         quote::quote! {
-                            <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|#element_snake_case|(
-                                #element_snake_case.clone(),
-                                #content_token_stream
-                            )).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>()
+                            // <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|#element_snake_case|(
+                            //     #element_snake_case.clone(),
+                            //     #content_token_stream
+                            // )).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>()
+                            todo!()
                         }
                     },
                 )

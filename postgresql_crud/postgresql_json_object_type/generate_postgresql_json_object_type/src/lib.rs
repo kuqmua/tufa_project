@@ -5316,24 +5316,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             // for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
                                             //     acc.push(element);
                                             // }
-                                            vec![]
+                                            todo!()
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
-                                            vec![]
+                                            todo!()
                                         }
                                     }
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         quote::quote! {
-                                            vec![]
+                                            todo!()
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         quote::quote! {
-                                            vec![]
+                                            todo!()
                                         }
                                     }
                                 },

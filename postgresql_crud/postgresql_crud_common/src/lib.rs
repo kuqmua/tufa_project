@@ -193,7 +193,10 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
     ) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read>>;
-    fn create_and_where_element_equal_vec() -> std::vec::Vec<(<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create, <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement)>;
+    fn read_only_ids_merged_with_create_into_where_element_equal(
+        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
+    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {
