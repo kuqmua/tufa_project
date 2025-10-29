@@ -481,6 +481,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let self_snake_case = naming::SelfSnakeCase;
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
+            let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
 
             let std_primitive_i8_token_stream = token_patterns::StdPrimitiveI8;
             let std_primitive_i16_token_stream = token_patterns::StdPrimitiveI16;
@@ -2599,15 +2600,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     &{
-                        quote::quote!{
-                            todo!()
-                        }
+                        let content_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                            quote::quote! {#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case)}
+                        } else {
+                            quote::quote! {#create_snake_case.into()}
+                        };
+                        quote::quote! {#ident_read_upper_camel_case(#content_token_stream)}
                     },
                     &{
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
-                            quote::quote! {#ident_read_upper_camel_case(#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case))}
-                        } else {
-                            quote::quote! {#ident_read_upper_camel_case(#create_snake_case.into())}
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                            <#ident as postgresql_crud_common::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
+                                #read_only_ids_snake_case,
+                                #create_snake_case
+                            )
                         });
                         quote::quote! {Some(#value_initialization_token_stream)}
                     },
