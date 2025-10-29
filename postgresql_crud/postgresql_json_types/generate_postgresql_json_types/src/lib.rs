@@ -2623,7 +2623,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #value_snake_case: #content_token_stream
                             }
                         };
-                        match &not_null_or_nullable {
+                        let content_token_stream = match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_read_upper_camel_case::new(#create_snake_case.0.into())});
                                 quote::quote! {#ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
@@ -2647,7 +2647,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 }
                             }
-                        }
+                        };
+                        quote::quote!{vec![#content_token_stream]}
                     },
                 )
             };
