@@ -1301,6 +1301,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                             pub enum #ident_token_stream {
+                                //todo maybe add Equal(postgresql_crud::PostgresqlJsonTypeWhereElementEqual<AnimalAsNotNullJsonbObjectRead>),?
                                  #content_token_stream
                             }
                         }
