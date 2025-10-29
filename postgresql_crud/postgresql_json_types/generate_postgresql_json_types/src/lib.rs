@@ -2741,9 +2741,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     quote::quote!{
-                                        let f = <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|element|{
-                                            let element_cloned = element.clone();
-                                            (
+                                        let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
+                                        for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            acc.push((
                                                 element.clone(),
                                                 #ident_where_element_upper_camel_case::Equal(
                                                     where_element_filters::PostgresqlJsonTypeWhereElementEqual {
@@ -2751,15 +2751,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         value: #ident_read_upper_camel_case::new(element.clone().0.into()),
                                                     }
                                                 )
-                                            )
-                                        }).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>();
+                                            ));
+                                        }
                                     }
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote!{
-                                        let f = <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|element|{
-                                            let element_cloned = element.clone();
-                                            (
+                                        let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
+                                        for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            acc.push((
                                                 element.clone(),
                                                 match element.clone().0.0 {
                                                     Some(value) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
@@ -2774,8 +2774,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                     ),
                                                     None => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(None),
                                                 }
-                                            )
-                                        }).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>();
+                                            ));
+                                        }
                                     }
                                 },
                             },
