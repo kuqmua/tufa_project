@@ -5295,7 +5295,41 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             quote::quote!{Some(#value_initialization_token_stream)}
                         },
                         &{
-                            quote::quote!{vec![]}
+                            match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        quote::quote! {
+                                            // <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|#element_snake_case|(
+                                            //     #element_snake_case.clone(),
+                                            //     #content_token_stream
+                                            // )).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>()
+                                            
+                                            // let mut acc = vec![];
+                                            // for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            //     acc.push(element);
+                                            // }
+                                            vec![]
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            vec![]
+                                        }
+                                    }
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        quote::quote! {
+                                            vec![]
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        quote::quote! {
+                                            vec![]
+                                        }
+                                    }
+                                },
+                            }
                         }
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
