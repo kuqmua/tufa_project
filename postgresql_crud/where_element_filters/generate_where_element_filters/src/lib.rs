@@ -782,8 +782,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //             "GeneratePostgresqlTypeWhereElementFilter",
             //             &generated,
+            //             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
             //         );
-            //         proc_macro2::TokenStream::new()
+            //         proc_macro2::TokenStream::new(),
             //     },
             //     _ => generated
             // }
@@ -1244,6 +1245,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             //         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //         //     "GeneratePostgresqlTypeWhereElementFilter",
             //         //     &generated,
+            //         //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
             //         // );
             //         proc_macro2::TokenStream::new()
             //     },
@@ -1261,6 +1263,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //         "GeneratePostgresqlTypeWhereElementFilter",
         //         &generated,
+        //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
         //     );
         // }
         generated
@@ -1272,6 +1275,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlTypeWhereElementFilters",
     //     &generated,
+    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     // );
     generated.into()
 }

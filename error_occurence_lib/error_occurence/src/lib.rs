@@ -412,6 +412,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         &"ErrorOccurence",
     //         &generated,
+    //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     //     );
     // }
     generated.into()

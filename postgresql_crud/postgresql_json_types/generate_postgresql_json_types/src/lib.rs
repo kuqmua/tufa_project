@@ -2696,6 +2696,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //         "GeneratePostgresqlJsonTypesExample",
     //         &example_token_stream,
+    //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     //     );
     // }
     let generated = {
@@ -2707,7 +2708,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlJsonTypes",
-    //     &generated
+    //     &generated,
+    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     // );
     generated.into()
 }

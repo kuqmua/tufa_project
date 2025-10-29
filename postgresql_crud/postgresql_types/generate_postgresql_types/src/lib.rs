@@ -5545,6 +5545,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #(#columns_token_stream)*
                 }
             },
+            &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
         );
     }
     let generated = {
@@ -5554,6 +5555,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlTypes",
     //     &generated,
+    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     // );
     generated.into()
 }

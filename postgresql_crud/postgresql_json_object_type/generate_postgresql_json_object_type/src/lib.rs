@@ -5405,6 +5405,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //             "GeneratePostgresqlJsonObjectType",
             //             &generated,
+            //             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
             //         );
             //     }
             // }
@@ -5427,12 +5428,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #(#fields_token_stream)*
                 }
             },
+            &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
         );
     }
-    let generated = quote::quote! {#(#postgresql_json_object_type_array)*};
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlJsonObjectType",
-    //     &generated,
-    // );
+    let generated: proc_macro2::TokenStream = quote::quote! {#(#postgresql_json_object_type_array)*};
+    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        "GeneratePostgresqlJsonObjectType",
+        &generated,
+        &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    );
     generated.into()
 }
