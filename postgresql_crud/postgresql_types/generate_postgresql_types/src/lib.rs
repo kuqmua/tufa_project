@@ -886,6 +886,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let read_upper_camel_case = naming::ReadUpperCamelCase;
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
             let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
+            let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -5453,15 +5454,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &{
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
-                            let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                                quote::quote! {#read_only_ids_snake_case.0}
-                            } else {
-                                quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
-                            };
-                            quote::quote!{
-                                #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)
-                            }
+                        let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                            quote::quote! {#read_only_ids_snake_case.0}
+                        } else {
+                            quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
+                        };
+                        quote::quote!{
+                            #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)
+                        }
+                    },
+                    &{
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                            <#ident as #import_path::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
+                                #read_only_ids_snake_case,
+                                #create_snake_case
+                            )
                         });
                         quote::quote! {Some(#value_initialization_token_stream)}
                     }

@@ -158,6 +158,10 @@ pub trait PostgresqlTypeTestCases {
         option_update: std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::Update>,
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
     fn create_vec() -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::Create>;
+    fn read_only_ids_merged_with_create_into_read(
+        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
     fn read_only_ids_merged_with_create_into_option_value_read(
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
