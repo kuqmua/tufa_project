@@ -2617,45 +2617,36 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {Some(#value_initialization_token_stream)}
                     },
                     &{
-                        let content_token_stream = {
-                            let generate_equal_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
-                                where_element_filters::PostgresqlJsonTypeWhereElementEqual {
-                                    logical_operator: #import_path::LogicalOperator::Or,
-                                    #value_snake_case: #content_token_stream
-                                }
-                            };
-                            match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_read_upper_camel_case::new(#element_snake_case.clone().0.into())});
-                                    quote::quote! {#ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let current_ident = generate_ident_token_stream(
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &postgresql_json_type_pattern
-                                    );
-                                    let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
-                                    let current_ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident);
-                                    let equal_token_stream = generate_equal_token_stream(&quote::quote!{#current_ident_read_upper_camel_case::new(#value_snake_case.into())});
-                                    quote::quote! {
-                                        match #element_snake_case.clone().0.0 {
-                                            Some(#value_snake_case) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
-                                                postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
-                                                    vec![#current_ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)]
-                                                ).expect("error 88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
-                                            ),
-                                            None => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(None),
-                                        }
+                        let generate_equal_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
+                            where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                logical_operator: #import_path::LogicalOperator::Or,
+                                #value_snake_case: #content_token_stream
+                            }
+                        };
+                        match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_read_upper_camel_case::new(#create_snake_case.0.into())});
+                                quote::quote! {#ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let current_ident = generate_ident_token_stream(
+                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    &postgresql_json_type_pattern
+                                );
+                                let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
+                                let current_ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident);
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#current_ident_read_upper_camel_case::new(#value_snake_case.into())});
+                                quote::quote! {
+                                    match #create_snake_case.0.0 {
+                                        Some(#value_snake_case) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                            postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
+                                                vec![#current_ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)]
+                                            ).expect("error 88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
+                                        ),
+                                        None => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(None),
                                     }
                                 }
                             }
-                        };
-                        quote::quote! {
-                            // <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|#element_snake_case|(
-                            //     #element_snake_case.clone(),
-                            //     #content_token_stream
-                            // )).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>()
-                            todo!()
                         }
                     },
                 )
