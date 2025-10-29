@@ -5192,6 +5192,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         },
                         &{
+                            quote::quote!{
+                                todo!()
+                            }
+                        },
+                        &{
                             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
                                 let generate_nullable_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                                     let current_ident_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_token_stream);

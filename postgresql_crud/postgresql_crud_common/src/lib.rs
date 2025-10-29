@@ -181,6 +181,10 @@ pub trait PostgresqlJsonTypeTestCases {
         option_update: std::option::Option<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
     fn create_vec() -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>;
+    fn read_only_ids_merged_with_create_into_read(
+        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
+    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
     fn read_only_ids_merged_with_create_into_option_value_read(
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
