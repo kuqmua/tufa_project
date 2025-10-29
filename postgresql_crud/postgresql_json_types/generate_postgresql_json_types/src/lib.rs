@@ -1249,7 +1249,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_standart_not_null_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
@@ -1655,7 +1654,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             // println!("{ident_where_element_token_stream}");
             //exists because need to implement .into_inner() for fields (only for read subtype)
-            let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_token_stream = {
                 //todo maybe add some derive\impl to trait
                 let ident_read_token_stream = quote::quote! {
@@ -2628,6 +2626,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 }
                                 NotNullOrNullable::Nullable => {
+                                    let current_ident = generate_ident_token_stream(&NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+                                    let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
+                                    let current_ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident);
                                     quote::quote! {
                                         let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
                                         for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
@@ -2637,9 +2638,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                     Some(value) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
                                                         postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
                                                             vec![
-                                                                #ident_standart_not_null_where_element_upper_camel_case::Equal(where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                                                #current_ident_where_element_upper_camel_case::Equal(where_element_filters::PostgresqlJsonTypeWhereElementEqual {
                                                                     logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                                                    value: #ident_standart_not_null_read_upper_camel_case::new(value.0),
+                                                                    value: #current_ident_read_upper_camel_case::new(value.into()),
                                                                 })
                                                             ]
                                                         ).expect("error 88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
@@ -2653,13 +2654,64 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                    quote::quote! {}
+                                    quote::quote! {
+                                        let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
+                                        for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            acc.push((
+                                                element.clone(),
+                                                #ident_where_element_upper_camel_case::Equal(
+                                                    where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        value: #ident_read_upper_camel_case::new(element.clone().0.into()),
+                                                    }
+                                                )
+                                            ));
+                                        }
+                                    }
                                 },
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                    quote::quote! {}
+                                    quote::quote! {
+                                        let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
+                                        for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            acc.push((
+                                                element.clone(),
+                                                #ident_where_element_upper_camel_case::Equal(
+                                                    where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        value: #ident_read_upper_camel_case::new(element.clone().0.into()),
+                                                    }
+                                                )
+                                            ));
+                                        }
+                                    }
                                 },
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                    quote::quote! {}
+                                    let current_ident = generate_ident_token_stream(&NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable::NotNull
+                                    });
+                                    let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
+                                    let current_ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident);
+                                    quote::quote! {
+                                        let mut acc: std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)> = vec![];
+                                        for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
+                                            acc.push((
+                                                element.clone(),
+                                                match element.clone().0.0 {
+                                                    Some(value) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                                        postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
+                                                            vec![
+                                                                #current_ident_where_element_upper_camel_case::Equal(where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                                                    logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                                                    value: #current_ident_read_upper_camel_case::new(value.into()),
+                                                                })
+                                                            ]
+                                                        ).expect("error 88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
+                                                    ),
+                                                    None => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(None),
+                                                }
+                                            ));
+                                        }
+                                    }
                                 },
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
                                     quote::quote! {}
