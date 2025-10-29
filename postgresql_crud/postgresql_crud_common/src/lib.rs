@@ -166,6 +166,10 @@ pub trait PostgresqlTypeTestCases {
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::option::Option<crate::Value<<Self::PostgresqlType as crate::PostgresqlType>::Read>>;
+    fn read_only_ids_merged_with_create_into_where_element_equal(
+        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::WhereElement;
 }
 
 #[cfg(feature = "test-utils")]
