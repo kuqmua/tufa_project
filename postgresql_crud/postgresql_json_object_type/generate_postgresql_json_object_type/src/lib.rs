@@ -5069,9 +5069,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         quote::quote! {
                                             for #element_snake_case in #field_type_type_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                                #acc_snake_case.push(#ident_standart_not_null_as_postgresql_json_type_create_token_stream::new(
+                                                let #value_snake_case = #ident_standart_not_null_as_postgresql_json_type_create_token_stream::new(
                                                     #(#parameters_token_stream),*
-                                                ));
+                                                );
+                                                if !#acc_snake_case.contains(&#value_snake_case) {
+                                                    #acc_snake_case.push(#value_snake_case);
+                                                }
                                             }
                                         }
                                     });
@@ -5144,13 +5147,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #(#parameters_token_stream),*
                                                     ));
                                                 }
-                                                #acc_snake_case.push(#ident_create_upper_camel_case::new(inner_acc));
+                                                {
+                                                    let #value_snake_case = #ident_create_upper_camel_case::new(inner_acc);
+                                                    if !#acc_snake_case.contains(&#value_snake_case) {
+                                                        #acc_snake_case.push(#value_snake_case);
+                                                    }
+                                                }
                                                 if let Some(#value_snake_case) = option_additional {
                                                     if has_len_more_than_one {
-                                                        #acc_snake_case.push(#value_snake_case.0);
+                                                        let #value_snake_case = #value_snake_case.0;
+                                                        if !#acc_snake_case.contains(&#value_snake_case) {
+                                                            #acc_snake_case.push(#value_snake_case);
+                                                        }
                                                     }
                                                     if !has_len_more_than_one {
-                                                        #acc_snake_case.push(#value_snake_case.1);
+                                                        let #value_snake_case = #value_snake_case.1;
+                                                        if !#acc_snake_case.contains(&#value_snake_case) {
+                                                            #acc_snake_case.push(#value_snake_case);
+                                                        }
                                                     }
                                                 }
                                             }
@@ -5188,9 +5202,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote! {
                                     let mut #acc_snake_case = vec![];
                                     for #element_snake_case in #current_ident_not_null_as_postgresql_json_type_test_cases_token_stream::#create_vec_snake_case() {
-                                        #acc_snake_case.push(#current_ident_not_null_as_import_path_postgresql_json_type_token_stream::Create::new(Some(#element_snake_case #content_token_stream)));
+                                        let #value_snake_case = #current_ident_not_null_as_import_path_postgresql_json_type_token_stream::Create::new(Some(#element_snake_case #content_token_stream));
+                                        if !#acc_snake_case.contains(&#value_snake_case) {
+                                            #acc_snake_case.push(#value_snake_case);
+                                        }
                                     }
-                                    #acc_snake_case.push(#current_ident_not_null_as_import_path_postgresql_json_type_token_stream::Create::new(None));
+                                    {
+                                        let #value_snake_case = #current_ident_not_null_as_import_path_postgresql_json_type_token_stream::Create::new(None);
+                                        if !#acc_snake_case.contains(&#value_snake_case) {
+                                            #acc_snake_case.push(#value_snake_case);
+                                        }
+                                    }
                                     #acc_snake_case
                                 }
                             }
@@ -5313,7 +5335,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {
                                             #ident_where_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(
                                                 #import_path::PostgresqlTypeWhere::try_new(
-                                                    #import_path::LogicalOperator::Or,
+                                                    #import_path::LogicalOperator::And,
                                                     #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_snake_case(
                                                         #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                         #create_snake_case.#field_ident
@@ -5357,7 +5379,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {vec![
                                         #ident_where_element_upper_camel_case::#equal_upper_camel_case(
                                             #import_path::PostgresqlJsonTypeWhereElementEqual {
-                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                logical_operator: #import_path::LogicalOperator::And,
                                                 #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                     let mut #acc_snake_case = vec![];
                                                     for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
