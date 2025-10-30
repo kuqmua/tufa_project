@@ -5315,8 +5315,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                             quote::quote! {
                                                 #ident_where_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(
-                                                    postgresql_crud::PostgresqlTypeWhere::try_new(
-                                                        postgresql_crud::LogicalOperator::Or,
+                                                    #import_path::PostgresqlTypeWhere::try_new(
+                                                        #import_path::LogicalOperator::Or,
                                                         #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_snake_case(
                                                             #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                             #create_snake_case.#field_ident
@@ -5328,25 +5328,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         quote::quote! {vec![#(#elements_token_stream),*]}
                                     }
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        quote::quote! {
-                                            vec![
-                                                postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                    match (read_only_ids.0.value, create.0) {
-                                                        (Some(read_only_ids_value), Some(create_value)) => Some(postgresql_crud::NotEmptyUniqueEnumVec::try_new(
-                                                            <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                                read_only_ids_value,
-                                                                create_value
-                                                            )
-                                                        ).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
-                                                        (Some(read_only_ids_value), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
-                                                        (None, Some(create_value)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
-                                                        (None, None) => None,
-                                                    }
-                                                )
-                                            ]
-                                        }
-                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {vec![
+                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                            match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(
+                                                    #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_snake_case(
+                                                        #read_only_ids_snake_case,
+                                                        #create_snake_case
+                                                    )
+                                                ).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
+                                                (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
+                                                (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
+                                                (None, None) => None,
+                                            }
+                                        )
+                                    ]}
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
