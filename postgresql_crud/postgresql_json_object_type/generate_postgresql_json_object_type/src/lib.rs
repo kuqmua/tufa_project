@@ -5308,16 +5308,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         quote::quote! {
-                                            // <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec().into_iter().map(|#element_snake_case|(
-                                            //     #element_snake_case.clone(),
-                                            //     #content_token_stream
-                                            // )).collect::<std::vec::Vec<(#ident_create_upper_camel_case, #ident_where_element_upper_camel_case)>>()
-                                            
-                                            // let mut acc = vec![];
-                                            // for element in <#ident as #import_path::PostgresqlJsonTypeTestCases>::create_vec() {
-                                            //     acc.push(element);
-                                            // }
-                                            todo!()
+                                            vec![
+                                                AnimalAsNotNullJsonbObjectWhereElement::Field0(
+                                                    postgresql_crud::PostgresqlTypeWhere::try_new(
+                                                        postgresql_crud::LogicalOperator::Or,
+                                                        <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
+                                                            read_only_ids.0.value.field_0,
+                                                            create.field_0
+                                                        )
+                                                    )
+                                                    .expect("error edacf099-3f54-41ab-980d-e1d8760e216f"),
+                                                ),
+                                                AnimalAsNotNullJsonbObjectWhereElement::Field1(
+                                                    postgresql_crud::PostgresqlTypeWhere::try_new(
+                                                        postgresql_crud::LogicalOperator::Or,
+                                                        <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
+                                                            read_only_ids.0.value.field_1,
+                                                            create.field_1
+                                                        )
+                                                    )
+                                                    .expect("error edacf099-3f54-41ab-980d-e1d8760e216f"),
+                                                ),
+                                            ]
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
