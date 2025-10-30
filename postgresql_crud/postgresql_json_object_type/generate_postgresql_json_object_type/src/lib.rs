@@ -5208,12 +5208,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     ).expect("error 56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
                                                 )
                                             },
-                                            (Some(_), None) => {
-                                                panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6")
-                                            },
-                                            (None, Some(_)) => {
-                                                panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799")
-                                            },
+                                            (Some(_), None) => panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6"),
+                                            (None, Some(_)) => panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799"),
                                             (None, None) => None,
                                         }
                                     )
@@ -5363,22 +5359,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let generate_nullable_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                                 let current_ident_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_token_stream);
                                 quote::quote! {
-                                    #ident_read_upper_camel_case::new(
+                                    #ident_table_type_declaration_upper_camel_case::new(
                                         match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
                                             (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => {
                                                 Some(
-                                                    #current_ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                    #current_ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                                                         #read_only_ids_snake_case,
                                                         #create_snake_case
-                                                    ).expect("error 56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
+                                                    )
                                                 )
                                             },
-                                            (Some(_), None) => {
-                                                panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6")
-                                            },
-                                            (None, Some(_)) => {
-                                                panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799")
-                                            },
+                                            (Some(_), None) => panic!("error 9349dcd5-3ed3-4157-b1ef-14c51d55262f"),
+                                            (None, Some(_)) => panic!("error 45f8e70a-ffca-41b6-ac70-96f101ac3c80"),
                                             (None, None) => None,
                                         }
                                     )
