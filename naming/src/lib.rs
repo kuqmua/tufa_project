@@ -676,7 +676,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "type", "read"],
     ["postgresql", "type", "not", "primary", "key"],
     ["read", "only", "ids", "merged", "with", "create", "into", "where", "element", "equal"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "read"]
+    ["read", "only", "ids", "merged", "with", "create", "into", "read"],
+    ["read", "only", "ids", "merged", "with", "create", "into", "table", "type", "declaration"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
