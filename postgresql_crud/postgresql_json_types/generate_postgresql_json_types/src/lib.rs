@@ -1101,6 +1101,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
+                            PartialOrd,//maybe add it to the trait?
                             serde::Serialize,
                             serde::Deserialize,
                             utoipa::ToSchema,
@@ -1118,10 +1119,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
+                //todo maybe add to trait?
+                let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
+                    &ident_table_type_declaration_upper_camel_case,
+                    &quote::quote! {&#self_snake_case.0}
+                );
+                //todo maybe add to trait?
+                let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_table_type_declaration_upper_camel_case,
+                    &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_read_inner_upper_camel_case)
+                );
                 quote::quote! {
                     #ident_table_type_declaration_token_stream
                     #impl_ident_table_type_declaration_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
+                    #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                 }
             };
             let ident_create_token_stream = {
@@ -1280,20 +1293,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(postgresql_json_type);
-                        let common_postgresql_json_type_filters = vec![postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { ident: quote::quote! {#ident_read_upper_camel_case} }];
-                        let ident_read_upper_camel_case_token_stream = quote::quote! {#ident_read_upper_camel_case};
+                        let common_postgresql_json_type_filters = vec![postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { ident: quote::quote! {#ident_table_type_declaration_upper_camel_case} }];
+                        let ident_table_type_declaration_upper_camel_case_token_stream = quote::quote! {#ident_table_type_declaration_upper_camel_case};
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => {
                                 let common_standart_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In { ident: ident_read_upper_camel_case_token_stream.clone() });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut vec = common_standart_postgresql_json_type_filters.clone();
-                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan { ident: ident_read_upper_camel_case_token_stream.clone() });
-                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between { ident: ident_read_upper_camel_case_token_stream.clone() });
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
                                         vec
                                     }
                                     PostgresqlJsonTypeSpecific::Bool => common_standart_postgresql_json_type_filters,
@@ -1305,28 +1318,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             }
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                let array_dimension1_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension1_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension1_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec
                                 };
@@ -1334,16 +1347,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneGreaterThan {
-                                            ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneBetween {
-                                            ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
-                                            ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
-                                            ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters
                                     }
@@ -1358,43 +1371,43 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             }
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
-                                let array_dimension1_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension1_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension2_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension2_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension2_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension2_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoOverlapsWithArray {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec
                                 };
@@ -1402,16 +1415,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension2_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoGreaterThan {
-                                            ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoBetween {
-                                            ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
-                                            ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-                                            ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters
                                     }
@@ -1430,7 +1443,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                             } => {
-                                let array_dimension1_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension1_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension1_not_null_or_nullable,
                                         &PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -1440,24 +1453,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     ));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension2_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension2_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension2_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable }));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension3_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension3_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension3_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension3_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeEqual {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
@@ -1466,28 +1479,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsAllElementsOfArray {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeOverlapsWithArray {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec
                                 };
@@ -1495,16 +1508,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension3_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeGreaterThan {
-                                            ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeBetween {
-                                            ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
-                                            ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-                                            ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters
                                     }
@@ -1524,7 +1537,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable,
                             } => {
-                                let array_dimension1_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension1_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension1_not_null_or_nullable,
                                         &PostgresqlJsonTypePattern::ArrayDimension3 {
@@ -1535,7 +1548,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     ));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension2_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension2_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension2_not_null_or_nullable,
                                         &PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -1545,27 +1558,27 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     ));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension3_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension3_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension3_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable }));
                                     quote::quote! {#value}
                                 };
-                                let array_dimension4_inner_element_ident_read_upper_camel_case = {
+                                let array_dimension4_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension4_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension4_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeEqual {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {
-                                        ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
@@ -1576,34 +1589,34 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsAllElementsOfArray {
-                                        ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
-                                        ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
-                                        ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
-                                        ident: array_dimension1_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
-                                        ident: array_dimension2_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn {
-                                        ident: array_dimension3_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourIn {
-                                        ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                     });
                                     vec
                                 };
@@ -1611,16 +1624,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension4_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
-                                            ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourBetween {
-                                            ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
-                                            ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-                                            ident: array_dimension4_inner_element_ident_read_upper_camel_case.clone(),
+                                            ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters
                                     }
@@ -2625,7 +2638,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                         let content_token_stream = match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_read_upper_camel_case::new(#create_snake_case.0.into())});
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.into())});
                                 quote::quote! {#ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -2634,8 +2647,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &postgresql_json_type_pattern
                                 );
                                 let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
-                                let current_ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident);
-                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#current_ident_read_upper_camel_case::new(#value_snake_case.into())});
+                                let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#current_ident_table_type_declaration_upper_camel_case::new(#value_snake_case.into())});
                                 quote::quote! {
                                     match #create_snake_case.0.0 {
                                         Some(#value_snake_case) => postgresql_crud_common::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
