@@ -294,7 +294,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_as_import_path_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident);
             let ident_standart_not_null_as_import_path_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_array_not_null_as_import_path_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_array_not_null_upper_camel_case);
-            //here
+
             let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
             let uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote!{#import_path::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
             let uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case = {
@@ -428,6 +428,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_type_as_postgresql_json_type_token_stream(&field.ty);
             let generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:?}")});
+            let ident_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&ident, &postgresql_json_type_subtype_table_type_declaration);
             enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
                 TableTypeDeclaration,
                 Create,
@@ -1282,7 +1283,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_where_element_token_stream = match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                     use postgresql_crud_macros_common::NotNullOrNullable;
-                    let generate_ident_where_element_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
+                    let generate_ident_where_element_field_variants_token_stream = |is_standart_with_id: &IsStandartWithId| {
                         let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                             let field_ident_stringified = element
                                 .ident
@@ -1305,21 +1306,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                             pub enum #ident_token_stream {
-                                //todo maybe add Equal(postgresql_crud::PostgresqlJsonTypeWhereElementEqual<AnimalAsNotNullJsonbObjectRead>),?
                                 #content_token_stream
                             }
                         }
                     };
                     let maybe_ident_where_element_token_stream = {
-                        let generate_ident_where_element_wrapper_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_ident_where_element_token_stream(&ident_where_element_upper_camel_case, &content_token_stream);
+                        let generate_ident_where_element_wrapper_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_ident_where_element_token_stream(
+                            &ident_where_element_upper_camel_case,
+                            &content_token_stream
+                        );
+                        let equal_token_stream = quote::quote! {
+                            #equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
+                        };
                         match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
-                                PostgresqlJsonObjectTypePattern::Standart => generate_ident_where_element_wrapper_token_stream(&generate_ident_where_element_content_token_stream(&is_standart_with_id_false)),
+                                PostgresqlJsonObjectTypePattern::Standart => generate_ident_where_element_wrapper_token_stream(&{
+                                    let ident_where_element_field_variants_token_stream = generate_ident_where_element_field_variants_token_stream(&is_standart_with_id_false);
+                                    //todo maybe add Equal(postgresql_crud::PostgresqlJsonTypeWhereElementEqual<AnimalAsNotNullJsonbObjectRead>),?
+                                    quote::quote!{
+                                        #ident_where_element_field_variants_token_stream,
+                                        #equal_token_stream
+                                    }
+                                }),
                                 PostgresqlJsonObjectTypePattern::Array => generate_ident_where_element_wrapper_token_stream(&{
-                                    let ident_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&ident, &postgresql_json_type_subtype_table_type_declaration);
-                                    let equal_token_stream = quote::quote! {
-                                        Equal(#import_path::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
-                                    };
                                     let dimension_one_equal_token_stream = quote::quote! {
                                         DimensionOneEqual(#import_path::PostgresqlJsonTypeWhereElementDimensionOneEqual<#ident_with_id_standart_not_null_table_type_declaration_upper_camel_case>),
                                     };
@@ -1582,7 +1591,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }),
                     };
                     let maybe_ident_with_id_standart_not_null_where_element_token_stream = if is_standart_not_null {
-                        let ident_with_id_standart_not_null_where_element_token_stream = generate_ident_where_element_token_stream(&ident_with_id_standart_not_null_where_element_upper_camel_case, &generate_ident_where_element_content_token_stream(&is_standart_with_id_true));
+                        let ident_with_id_standart_not_null_where_element_token_stream = generate_ident_where_element_token_stream(
+                            &ident_with_id_standart_not_null_where_element_upper_camel_case,
+                            &{
+                                let ident_where_element_field_variants_token_stream = generate_ident_where_element_field_variants_token_stream(&is_standart_with_id_true);
+                                // todo
+                                // let equal_token_stream = quote::quote!{
+                                //     #equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereElementEqual<#ident_with_id_table_type_declaration_upper_camel_case>)
+                                // };
+                                quote::quote!{
+                                    #ident_where_element_field_variants_token_stream,
+                                    // #equal_token_stream
+                                }
+                            }
+                        );
                         let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_standart_not_null_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
                             &ident_with_id_standart_not_null_where_element_upper_camel_case,
                             &generate_where_filter_query_part_content_standart_not_null_token_stream(&is_standart_with_id_true),
