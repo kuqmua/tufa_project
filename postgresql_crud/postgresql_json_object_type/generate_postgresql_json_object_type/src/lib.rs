@@ -5407,7 +5407,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let generate_parameter_token_stream = |field_type: &dyn quote::ToTokens, field_ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                             quote::quote! {
-                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                                                     #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #content_token_stream,
                                                 )
@@ -5429,17 +5429,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             )
                                         });
                                         quote::quote! {
-                                            #ident_read_upper_camel_case::new({
-                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 90d33ddd-e08d-488c-8577-c75febe97301");
+                                            #ident_table_type_declaration_upper_camel_case::new({
+                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 7776a146-06a8-4972-8e16-371d41ee164c");
                                                 let mut #acc_snake_case = vec![];
                                                 for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
                                                     #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                                     #ident_with_id_standart_not_null_create_upper_camel_case,
                                                 )>>() {
-                                                    #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
+                                                    #acc_snake_case.push(#ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
-                                                    ).expect("error 1330ac8d-ebf2-4c79-b25e-6394d58de927"));
+                                                    ));
                                                 }
                                                 #acc_snake_case
                                             })
