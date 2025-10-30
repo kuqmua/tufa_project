@@ -178,6 +178,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
+    let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -4689,7 +4690,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     generate_test_read_many_by_equal_to_created_primary_keys(2).await;
                 }
             };
-            // todo
             let test_read_many_by_equal_one_column_value = {
                 //todo fix test fail if 3 columns in the table
                 let update_many_only_one_column_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -4702,21 +4702,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         if field_ident == current_field_ident {
                             quote::quote! {
                                 Some(
-                                    postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, {
-                                        vec![
-                                            <#current_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
-                                                postgresql_crud::PostgresqlTypeWhereElementEqual {
-                                                    logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                    #value_snake_case: 
-                                                    //todo create to read conversion - maybe using different PostgresqlJsonTypeTestCases method
-                                                    <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                                                        read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
-                                                        ident_create.#current_field_ident.clone()
-                                                    ).unwrap().#value_snake_case
-                                                }
-                                            )
-                                        ]
-                                    })
+                                    postgresql_crud::PostgresqlTypeWhere::try_new(
+                                        postgresql_crud::LogicalOperator::Or,
+                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_where_element_equal_snake_case(
+                                            read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
+                                            ident_create.#current_field_ident.clone()
+                                        )
+                                    )
                                     .expect("error c10cf3d9-f531-442a-99f0-f36c80fee4b1"),
                                 )
                             }
@@ -4724,7 +4716,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             quote::quote! {None}
                         }
                     });
-                    //
                     quote::quote!{
                         for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::create_vec() {
                             let url_cloned = url.clone();
@@ -6036,7 +6027,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
