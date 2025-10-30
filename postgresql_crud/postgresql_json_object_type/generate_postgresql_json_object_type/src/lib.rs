@@ -5360,10 +5360,106 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         },
                         &{
-                            quote::quote!{
-                                todo!()
+                            let generate_nullable_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                                let current_ident_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_token_stream);
+                                quote::quote! {
+                                    #ident_read_upper_camel_case::new(
+                                        match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => {
+                                                Some(
+                                                    #current_ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                        #read_only_ids_snake_case,
+                                                        #create_snake_case
+                                                    ).expect("error 56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
+                                                )
+                                            },
+                                            (Some(_), None) => {
+                                                panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6")
+                                            },
+                                            (None, Some(_)) => {
+                                                panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799")
+                                            },
+                                            (None, None) => None,
+                                        }
+                                    )
+                                }
+                            };
+                            match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                            quote::quote! {
+                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
+                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    #create_snake_case.#field_ident
+                                                )
+                                            }
+                                        });
+                                        quote::quote! {
+                                            #ident_table_type_declaration_upper_camel_case::new(
+                                                #(#parameters_token_stream),*
+                                            )
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                        &ident_standart_not_null_upper_camel_case,
+                                        &proc_macro2::TokenStream::new()
+                                    )
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let generate_parameter_token_stream = |field_type: &dyn quote::ToTokens, field_ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                                            let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
+                                            quote::quote! {
+                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                    #content_token_stream,
+                                                )
+                                            }
+                                        };
+                                        let id_parameter_token_stream = generate_parameter_token_stream(
+                                            &uuid_uuid_as_not_null_jsonb_string_token_stream,
+                                            &id_snake_case,
+                                            &import_path_default_but_option_is_always_some_call_token_stream
+                                        );
+                                        let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element|{
+                                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            });
+                                            generate_parameter_token_stream(
+                                                &element.ty,
+                                                &field_ident,
+                                                &quote::quote! {#create_snake_case.#field_ident}
+                                            )
+                                        });
+                                        quote::quote! {
+                                            #ident_read_upper_camel_case::new({
+                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 90d33ddd-e08d-488c-8577-c75febe97301");
+                                                let mut #acc_snake_case = vec![];
+                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
+                                                    #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
+                                                    #ident_with_id_standart_not_null_create_upper_camel_case,
+                                                )>>() {
+                                                    #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
+                                                        #id_parameter_token_stream,
+                                                        #(#parameters_token_stream),*
+                                                    ).expect("error 1330ac8d-ebf2-4c79-b25e-6394d58de927"));
+                                                }
+                                                #acc_snake_case
+                                            })
+                                        }
+                                    }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                        &ident_array_not_null_upper_camel_case,
+                                        &quote::quote!{.0}
+                                    )
+                                },
                             }
-                        }
+                        },
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,
