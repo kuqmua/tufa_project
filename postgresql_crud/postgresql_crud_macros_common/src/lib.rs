@@ -1609,3 +1609,24 @@ pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields
 }
+pub enum EqualOperatorHandle {
+    Equal,
+    Is
+}
+pub fn generate_postgresql_equal_operator_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+    equal_operator_handle: &EqualOperatorHandle
+) -> proc_macro2::TokenStream {
+    let content_token_stream = match &equal_operator_handle {
+        EqualOperatorHandle::Equal => quote::quote!{Equal},
+        EqualOperatorHandle::Is => quote::quote!{Is},
+    };
+    quote::quote!{
+        impl #import_path::PostgresqlEqualOperator for #ident {
+            fn operator() -> #import_path::EqualOperator {
+                #import_path::EqualOperator::
+            }
+        }
+    }
+}
