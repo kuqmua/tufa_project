@@ -5169,6 +5169,85 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &import_path,
                     &ident_inner_type_token_stream,
                     &ident,
+                    &{
+                        let generate_acc_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
+                            let (
+                                new_or_try_new_content_token_stream,
+                                maybe_acc_push_none_token_stream
+                            ) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (
+                                    quote::quote!{try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
+                                    proc_macro2::TokenStream::new()
+                                ),
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (
+                                    quote::quote!{new(vec![#element_snake_case.0.into()])},
+                                    proc_macro2::TokenStream::new()
+                                ),
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
+                                    quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
+                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
+                                ),
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
+                                    quote::quote!{new(Some(#element_snake_case.0.into()))},
+                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
+                                ),
+                            };
+                            let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
+                            quote::quote! {
+                                let mut #acc_snake_case = vec![];
+                                for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#create_vec_snake_case() {
+                                    #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
+                                }
+                                #maybe_acc_push_none_token_stream
+                                #acc_snake_case
+                            }
+                        };
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
+                                    CanBePrimaryKey::True => quote::quote!{vec![]},
+                                    CanBePrimaryKey::False => {
+                                        let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
+                                        let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                            quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
+                                        }
+                                        else {
+                                            quote::quote!{new(#element_snake_case)}
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream.into_iter().map(|#element_snake_case|
+                                                #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
+                                            ).collect()
+                                        }
+                                    },
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_acc_content_token_stream(
+                                    &not_null_or_nullable,
+                                    &generate_ident_token_stream(
+                                        &postgresql_type,
+                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                        &PostgresqlTypePattern::Standart,
+                                    )
+                                )
+                            },
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_token_stream(
+                                &not_null_or_nullable,
+                                &generate_ident_token_stream(
+                                    &postgresql_type,
+                                    &match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    },
+                                    &match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
+                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
+                                        },
+                                    },
+                                )
+                            )
+                        }
+                    },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -5374,85 +5453,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.0),
                         None => #read_snake_case
                     })},
-                    &{
-                        let generate_acc_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
-                            let (
-                                new_or_try_new_content_token_stream,
-                                maybe_acc_push_none_token_stream
-                            ) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (
-                                    quote::quote!{try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
-                                    proc_macro2::TokenStream::new()
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (
-                                    quote::quote!{new(vec![#element_snake_case.0.into()])},
-                                    proc_macro2::TokenStream::new()
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
-                                    quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
-                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
-                                    quote::quote!{new(Some(#element_snake_case.0.into()))},
-                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
-                                ),
-                            };
-                            let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
-                            quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#create_vec_snake_case() {
-                                    #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
-                                }
-                                #maybe_acc_push_none_token_stream
-                                #acc_snake_case
-                            }
-                        };
-                        match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
-                                    CanBePrimaryKey::True => quote::quote!{vec![]},
-                                    CanBePrimaryKey::False => {
-                                        let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
-                                        let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                            quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                                        }
-                                        else {
-                                            quote::quote!{new(#element_snake_case)}
-                                        };
-                                        quote::quote!{
-                                            #content_token_stream.into_iter().map(|#element_snake_case|
-                                                #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
-                                            ).collect()
-                                        }
-                                    },
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart,
-                                    )
-                                )
-                            },
-                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_token_stream(
-                                &not_null_or_nullable,
-                                &generate_ident_token_stream(
-                                    &postgresql_type,
-                                    &match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    },
-                                    &match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
-                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
-                                        },
-                                    },
-                                )
-                            )
-                        }
-                    },
                     &{
                         let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                             quote::quote! {#read_only_ids_snake_case.0}

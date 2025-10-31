@@ -146,6 +146,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: crate::PostgresqlType;
     type Select: SelectAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    fn create_vec() -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::Create>;
     fn read_inner_vec_vec(read_only_ids: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::ReadInner>>;
     fn read_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
     fn update_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
@@ -157,7 +158,6 @@ pub trait PostgresqlTypeTestCases {
         read: <Self::PostgresqlType as crate::PostgresqlType>::Read,
         option_update: std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::Update>,
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
-    fn create_vec() -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::Create>;
     fn read_only_ids_merged_with_create_into_read(
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
@@ -180,6 +180,7 @@ pub trait PostgresqlTypeTestCases {
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: crate::PostgresqlJsonType;
     type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    fn create_vec() -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>;
     fn read_inner_vec_vec(read_only_ids: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
     fn read_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
     fn update_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update;
@@ -192,7 +193,6 @@ pub trait PostgresqlJsonTypeTestCases {
         read: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read,
         option_update: std::option::Option<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
-    fn create_vec() -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>;
     fn read_only_ids_merged_with_create_into_read(
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
