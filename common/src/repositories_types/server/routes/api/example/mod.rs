@@ -193,11 +193,11 @@ pub struct Example {
     {
         "Concrete":
         // [
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Standart",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
             // ,
             // {
             //     "not_null_or_nullable": "Nullable",
@@ -211,11 +211,11 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Array",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
         // ]
     }
 }]
@@ -1250,3 +1250,5 @@ pub struct Animal {
 //     // pub field_9: postgresql_crud::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
 //     // pub field_10: postgresql_crud::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
 // }
+
+/////////////

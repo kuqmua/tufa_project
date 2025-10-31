@@ -1316,18 +1316,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     };
-                    let (
-                        equal_variant_ident_token_stream,
-                        equal_variant_token_ident_with_id_standart_not_null_stream
-                    ) = {
-                        let generate_equal_variant_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                            quote::quote! {#equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereElementEqual<#content_token_stream>)}
-                        };
-                        (
-                            generate_equal_variant_token_stream(&ident_as_postgresql_json_type_table_type_declaration_token_stream),
-                            generate_equal_variant_token_stream(&ident_with_id_standart_not_null_table_type_declaration_upper_camel_case)
-                        )
-                    };
+                    let equal_variant_ident_token_stream = quote::quote! {#equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>)};
                     let equal_variant_query_part_token_stream = quote::quote!{
                         #self_upper_camel_case::#equal_upper_camel_case(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::query_part(
                             #value_snake_case,
@@ -1637,7 +1626,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let ident_where_element_field_variants_token_stream = generate_ident_where_element_field_variants_token_stream(&is_standart_with_id_true);
                                 quote::quote!{
                                     #ident_where_element_field_variants_token_stream,
-                                    #equal_variant_token_ident_with_id_standart_not_null_stream
                                 }
                             }
                         );
@@ -1648,7 +1636,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{
                                     match &self {
                                         #fields_content_token_stream,
-                                        #equal_variant_query_part_token_stream,
                                     }
                                 }
                             },
@@ -1658,7 +1645,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{
                                     match self {
                                         #fields_content_token_stream,
-                                        #equal_variant_query_bind_token_stream,
                                     }
                                 }
                             },
