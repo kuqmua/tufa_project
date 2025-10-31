@@ -176,7 +176,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecOfReadInnerSnakeCase;
             let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
             let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
-            let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
+            let read_only_ids_into_option_value_read_inner_snake_case = naming::ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
             let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
             let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
             let select_only_created_ids_query_part_snake_case = naming::SelectOnlyCreatedIdsQueryPartSnakeCase;
@@ -2077,7 +2077,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &quote::quote!{sqlx::types::Json<Self>}
                 )
             };
-            let generate_fields_read_only_ids_to_option_value_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId, parameters_token_stream: &dyn quote::ToTokens|{
+            let generate_fields_read_only_ids_into_option_value_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId, parameters_token_stream: &dyn quote::ToTokens|{
                 let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                     IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
                     IsStandartWithId::False => &ident_standart_not_null_read_inner_upper_camel_case
@@ -2097,7 +2097,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{#field_type_as_postgresql_json_type_token_stream::into_inner(#default_but_option_is_always_some_call_token_stream)}
                     });
                     quote::quote! {
-                        #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                        #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(
                             #parameters_token_stream.0.#value_snake_case.#field_ident
                         ) {
                             Some(#value_snake_case) => Some(#value_snake_case),
@@ -4528,7 +4528,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_last_snake_case = naming::parameter::SelfLastSnakeCase::from_display(&field_ident);
                                         let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         quote::quote! {
-                                            let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                            let mut #field_ident_last_snake_case = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(
                                                 read_only_ids.0.value.#field_ident.clone()
                                             );
                                         }
@@ -4622,7 +4622,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             } else {
                                                 let current_field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                                 quote::quote! {
-                                                    #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                                    #current_field_ident: #current_field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(
                                                         element0.0.#value_snake_case.#current_field_ident.clone()
                                                     )
                                                 }
@@ -4848,11 +4848,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_fields_read_only_ids_to_option_value_read_inner_token_stream(&is_standart_with_id_false, &value_snake_case),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_fields_read_only_ids_into_option_value_read_inner_token_stream(&is_standart_with_id_false, &value_snake_case),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         match #value_snake_case.0.#value_snake_case {
-                                            Some(#value_snake_case) => match #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(#value_snake_case) {
+                                            Some(#value_snake_case) => match #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(#value_snake_case) {
                                                 Some(#value_snake_case) => Some(#value_snake_case.#value_snake_case),
                                                 None => None //none or struct where all fields are none
                                             },
@@ -4880,7 +4880,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 quote::quote!{#field_type_as_postgresql_json_type_token_stream::into_inner(#default_but_option_is_always_some_call_token_stream)}
                                             });
                                             quote::quote! {
-                                                #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                                #field_ident: match #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(
                                                     #element_snake_case.0.#value_snake_case.#field_ident
                                                 ) {
                                                     Some(#value_snake_case) => Some(#value_snake_case),
@@ -4903,7 +4903,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         match #value_snake_case.0.#value_snake_case {
-                                            Some(#value_snake_case) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_inner_snake_case(
+                                            Some(#value_snake_case) => match #ident_array_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_into_option_value_read_inner_snake_case(
                                                 #value_snake_case
                                             ) {
                                                 Some(#value_snake_case) => Some(#value_snake_case.#value_snake_case),
