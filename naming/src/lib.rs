@@ -682,7 +682,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["read", "inner", "into", "update", "with", "new", "or", "try", "new", "unwraped"],
     ["read", "only", "ids", "to", "two", "dimensional", "vec", "of", "read", "inner"],
     ["read", "only", "ids", "into", "option", "value", "read", "inner"],
-    ["previous", "read", "merged", "with", "option", "update", "into", "read"]
+    ["previous", "read", "merged", "with", "option", "update", "into", "read"],
+    ["read", "only", "ids", "merged", "with", "create", "into", "where", "element", "equal", "using", "fields"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
