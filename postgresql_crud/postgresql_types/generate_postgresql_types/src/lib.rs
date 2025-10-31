@@ -4839,7 +4839,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {
-                let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
+                let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                     let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {#try_new_snake_case(#value_snake_case).unwrap()}
@@ -5425,8 +5425,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         }
                     },
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
+                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
+                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                     &if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                         quote::quote! {
                             #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0.clone()))//todo its not correct. must be only for primary key but it for all types what van be primary key

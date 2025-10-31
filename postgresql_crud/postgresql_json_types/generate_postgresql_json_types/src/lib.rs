@@ -2142,7 +2142,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 proc_macro2::TokenStream::new()
             };
             let impl_postgresql_json_type_test_cases_for_ident_token_stream = {
-                let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
+                let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                     quote::quote! {<#self_upper_camel_case::#postgresql_json_type_upper_camel_case
                         as
@@ -2444,8 +2444,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![]},
                         }
                     },
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
+                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
+                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                     &{
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                             quote::quote! {#value_snake_case.0.#value_snake_case}

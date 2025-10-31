@@ -5204,7 +5204,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #field_type
                                         as
                                         postgresql_crud::PostgresqlTypeTestCases
-                                    >::update_new_or_try_new_unwraped_for_test({
+                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
                                         let mut local_increment = 0;
                                         let mut option_test_case = None;
                                         for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(
@@ -5549,7 +5549,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #field_type
                                         as
                                         postgresql_crud::PostgresqlTypeTestCases
-                                    >::update_new_or_try_new_unwraped_for_test({
+                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
                                         let mut local_increment = 0;
                                         let mut option_test_case = None;
                                         for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_inner_vec_vec(

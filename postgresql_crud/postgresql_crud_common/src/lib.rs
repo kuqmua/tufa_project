@@ -149,7 +149,7 @@ pub trait PostgresqlTypeTestCases {
     fn create_vec() -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::Create>;
     fn read_inner_vec_vec(read_only_ids: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
-    fn update_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
+    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
     fn update_to_read_only_ids(value: &<Self::PostgresqlType as crate::PostgresqlType>::Update) -> <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
@@ -183,7 +183,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_vec() -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>;
     fn read_inner_vec_vec(read_only_ids: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
-    fn update_new_or_try_new_unwraped_for_test(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update;
+    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update;
     fn read_only_ids_to_option_value_read_inner(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
     fn update_to_read_only_ids(value: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
