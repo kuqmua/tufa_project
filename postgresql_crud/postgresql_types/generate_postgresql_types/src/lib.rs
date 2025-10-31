@@ -5164,6 +5164,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ),
                     }
                 };
+                let read_only_ids_merged_with_create_into_where_element_equal_common_token_stream = {
+                    quote::quote!{
+                        todo!()
+                    }
+                };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &import_path,
@@ -5480,16 +5485,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         quote::quote!{#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
                     },
-                    &{
-                        quote::quote!{
-                            todo!()
-                        }
-                    },
-                    &{
-                        quote::quote!{
-                            todo!()
-                        }
-                    },
+                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
+                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
