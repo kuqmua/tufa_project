@@ -4347,14 +4347,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             read_only_ids_merged_with_create_into_where_element_equal_token_stream,
                             read_only_ids_merged_with_create_into_where_element_equal_using_fields_token_stream
                         ) = {
-                            enum EqualOrEqualUsingFields {
-                                Equal,
-                                EqualUsingFields
-                            }
-                            let generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream = |equal_or_equal_using_fields: &EqualOrEqualUsingFields|match &not_null_or_nullable {
+                            let generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream = |equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields|match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => match &equal_or_equal_using_fields {
-                                        EqualOrEqualUsingFields::Equal => {
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => {
                                             let parameters_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -4380,7 +4376,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 ]
                                             }
                                         },
-                                        EqualOrEqualUsingFields::EqualUsingFields => {
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => {
                                             let elements_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
                                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -4479,8 +4475,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             };
                             (
-                                generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(&EqualOrEqualUsingFields::Equal),
-                                generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(&EqualOrEqualUsingFields::EqualUsingFields)
+                                generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(&postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal),
+                                generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(&postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields)
                             )
                         };
                         postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(

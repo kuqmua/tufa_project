@@ -1604,3 +1604,8 @@ pub fn generate_value_initialization_token_stream(import_path: &ImportPath, cont
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote!{#import_path::Value { #value_snake_case: #content_token_stream }}
 }
+
+pub enum EqualOrEqualUsingFields {
+    Equal,
+    EqualUsingFields
+}
