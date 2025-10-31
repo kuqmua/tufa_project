@@ -4483,7 +4483,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(&EqualOrEqualUsingFields::EqualUsingFields)
                             )
                         };
-                        
                         postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                             &cfg_feature_test_utils,
                             &import_path,
