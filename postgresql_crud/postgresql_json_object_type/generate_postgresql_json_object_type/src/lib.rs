@@ -188,7 +188,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
             let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
-            let read_from_previous_read_unwraped_merged_with_update_snake_case = naming::ReadFromPreviousReadUnwrapedMergedWithUpdateSnakeCase;
+            let previous_read_merged_with_option_update_into_read_snake_case = naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
             let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
             let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
             let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
@@ -5171,7 +5171,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let content_token_stream = function(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         quote::quote!{
-                                            #field_type_as_postgresql_json_type_test_cases_token_stream::read_from_previous_read_unwraped_merged_with_update(
+                                            #field_type_as_postgresql_json_type_test_cases_token_stream::previous_read_merged_with_option_update_into_read(
                                                 #content_token_stream,
                                                 #field_ident
                                             )
@@ -5191,7 +5191,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Some(#value_snake_case) => #ident_read_upper_camel_case(
                                             match #value_snake_case.0 {
                                                 Some(#value_snake_case) => Some(
-                                                    #current_ident_as_postgresql_json_type_test_cases_token_stream::read_from_previous_read_unwraped_merged_with_update(
+                                                    #current_ident_as_postgresql_json_type_test_cases_token_stream::previous_read_merged_with_option_update_into_read(
                                                         match #read_snake_case.0 {
                                                             Some(#value_snake_case) => #value_snake_case,
                                                             None => #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
@@ -5617,7 +5617,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(#value_snake_case)},
-                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_from_previous_read_unwraped_merged_with_update_snake_case(#read_snake_case, #option_update_snake_case)},
+                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#previous_read_merged_with_option_update_into_read_snake_case(#read_snake_case, #option_update_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_read_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case

@@ -154,7 +154,7 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> std::option::Option<crate::Value<<Self::PostgresqlType as crate::PostgresqlType>::Read>>;
-    fn read_from_previous_read_unwraped_merged_with_update(
+    fn previous_read_merged_with_option_update_into_read(
         read: <Self::PostgresqlType as crate::PostgresqlType>::Read,
         option_update: std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::Update>,
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
@@ -189,7 +189,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds
     ) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read>>;
-    fn read_from_previous_read_unwraped_merged_with_update(
+    fn previous_read_merged_with_option_update_into_read(
         read: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read,
         option_update: std::option::Option<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>,
     ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
