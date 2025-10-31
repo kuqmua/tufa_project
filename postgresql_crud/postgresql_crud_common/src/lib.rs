@@ -1219,5 +1219,13 @@ impl EqualOperator {
     }
 }
 pub trait PostgresqlEqualOperator {
-    fn operator() -> EqualOperator;
+    fn operator(&self) -> EqualOperator;
+}
+impl<T> PostgresqlEqualOperator for T
+where
+    T: PostgresqlJsonType
+{
+    fn operator(&self) -> EqualOperator {
+        EqualOperator::Equal
+    }
 }

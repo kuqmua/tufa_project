@@ -5516,6 +5516,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             else {
                 postgresql_crud_macros_common::generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(&import_path, &ident)
             };
+            let impl_postgresql_equal_operator_for_ident_token_stream = {
+                let equal_token_stream = quote::quote!{Equal};
+                let is_token_stream = quote::quote!{Is};
+                let variant_token_stream = equal_token_stream;//todo
+                quote::quote!{
+                    impl #import_path::PostgresqlEqualOperator for #ident {
+                        fn operator(&self) -> #import_path::EqualOperator {
+                            #import_path::EqualOperator::#variant_token_stream
+                        }
+                    }
+                }
+            };
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
@@ -5532,6 +5544,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_postgresql_type_test_cases_for_ident_token_stream
                 #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 #maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream
+                #impl_postgresql_equal_operator_for_ident_token_stream
             };
             (
                 {
