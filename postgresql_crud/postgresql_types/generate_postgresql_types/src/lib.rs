@@ -5473,18 +5473,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {Some(#value_initialization_token_stream)}
                     },
                     &{
-                        quote::quote!{
-                            todo!()
-                        }
-                    },
-                    &{
                         let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                             quote::quote! {#read_only_ids_snake_case.0.0}
                         } else {
                             quote::quote!{#create_snake_case.0}
                         };
                         quote::quote!{#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
-                    }
+                    },
+                    &{
+                        quote::quote!{
+                            todo!()
+                        }
+                    },
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {

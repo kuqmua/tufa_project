@@ -2630,6 +2630,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {Some(#value_initialization_token_stream)}
                     },
                     &{
+                        let content_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                            quote::quote! {#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case)}
+                        } else {
+                            quote::quote! {#create_snake_case.into()}
+                        };
+                        quote::quote! {#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
+                    },
+                    &{
                         let generate_equal_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
                             where_element_filters::PostgresqlJsonTypeWhereElementEqual {
                                 logical_operator: #import_path::LogicalOperator::Or,
@@ -2662,14 +2670,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         };
                         quote::quote!{vec![#content_token_stream]}
-                    },
-                    &{
-                        let content_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
-                            quote::quote! {#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case)}
-                        } else {
-                            quote::quote! {#create_snake_case.into()}
-                        };
-                        quote::quote! {#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
                     },
                 )
             };

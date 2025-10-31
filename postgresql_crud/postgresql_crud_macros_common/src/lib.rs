@@ -987,8 +987,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     previous_read_merged_with_option_update_into_read_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_read_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_option_value_read_token_stream: &dyn quote::ToTokens,
-    read_only_ids_merged_with_create_into_where_element_equal_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_table_type_declaration_token_stream: &dyn quote::ToTokens,
+    read_only_ids_merged_with_create_into_where_element_equal_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
@@ -1067,17 +1067,17 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case>> {
                 #read_only_ids_merged_with_create_into_option_value_read_token_stream
             }
-            fn #read_only_ids_merged_with_create_into_where_element_equal_snake_case(
-                #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
-                #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case> {
-                #read_only_ids_merged_with_create_into_where_element_equal_token_stream
-            }
             fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                 #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
             ) -> #self_postgresql_type_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
                 #read_only_ids_merged_with_create_into_table_type_declaration_token_stream
+            }
+            fn #read_only_ids_merged_with_create_into_where_element_equal_snake_case(
+                #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
+                #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
+            ) -> std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case> {
+                #read_only_ids_merged_with_create_into_where_element_equal_token_stream
             }
         }
     }
@@ -1114,8 +1114,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     previous_read_merged_with_option_update_into_read_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_read_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_option_value_read_token_stream: &dyn quote::ToTokens,
-    read_only_ids_merged_with_create_into_where_element_equal_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_table_type_declaration_token_stream: &dyn quote::ToTokens,
+    read_only_ids_merged_with_create_into_where_element_equal_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -1204,17 +1204,17 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case>> {
                 #read_only_ids_merged_with_create_into_option_value_read_token_stream
             }
-            fn #read_only_ids_merged_with_create_into_where_element_equal_snake_case(
-                #read_only_ids_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
-                #create_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
-            ) -> std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case> {
-                #read_only_ids_merged_with_create_into_where_element_equal_token_stream
-            }
             fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                 #read_only_ids_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
                 #create_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
             ) -> #self_postgresql_json_type_as_postgresql_json_type_token_stream::#table_type_declaration_upper_camel_case {
                 #read_only_ids_merged_with_create_into_table_type_declaration_token_stream
+            }
+            fn #read_only_ids_merged_with_create_into_where_element_equal_snake_case(
+                #read_only_ids_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
+                #create_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
+            ) -> std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case> {
+                #read_only_ids_merged_with_create_into_where_element_equal_token_stream
             }
         }
     }
