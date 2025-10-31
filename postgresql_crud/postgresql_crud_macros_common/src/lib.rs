@@ -980,7 +980,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     ident: &dyn quote::ToTokens,
     create_vec_token_stream: &dyn quote::ToTokens,
     read_inner_vec_vec_content_token_stream: &dyn quote::ToTokens,
-    read_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+    read_inner_into_read_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     update_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
     update_to_read_only_ids_token_stream: &dyn quote::ToTokens,
     read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream: &dyn quote::ToTokens,
@@ -1005,7 +1005,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
     let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
-    let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
+    let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
     let update_new_or_try_new_unwraped_for_test_snake_case = naming::UpdateNewOrTryNewUnwrapedForTestSnakeCase;
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let read_from_previous_read_unwraped_merged_with_update_snake_case = naming::ReadFromPreviousReadUnwrapedMergedWithUpdateSnakeCase;
@@ -1033,8 +1033,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#read_inner_upper_camel_case>> {
                 #read_inner_vec_vec_content_token_stream
             }
-            fn #read_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #type_token_stream) -> #self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case {
-                #read_new_or_try_new_unwraped_for_test_token_stream
+            fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case: #type_token_stream) -> #self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case {
+                #read_inner_into_read_with_new_or_try_new_unwraped_token_stream
             }
             fn #update_new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #type_token_stream) -> #self_postgresql_type_as_postgresql_type_token_stream::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
@@ -1106,7 +1106,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     ident: &dyn quote::ToTokens,
     create_vec_token_stream: &dyn quote::ToTokens,
     read_inner_vec_vec_content_token_stream: &dyn quote::ToTokens,
-    read_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+    read_inner_into_read_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     update_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
     read_only_ids_to_option_value_read_inner_token_stream: &dyn quote::ToTokens,
     update_to_read_only_ids_token_stream: &dyn quote::ToTokens,
@@ -1130,7 +1130,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let read_inner_vec_vec_snake_case = naming::ReadInnerVecVecSnakeCase;
-    let read_new_or_try_new_unwraped_for_test_snake_case = naming::ReadNewOrTryNewUnwrapedForTestSnakeCase;
+    let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
     let update_new_or_try_new_unwraped_for_test_snake_case = naming::UpdateNewOrTryNewUnwrapedForTestSnakeCase;
     let read_only_ids_to_option_value_read_inner_snake_case = naming::ReadOnlyIdsToOptionValueReadInnerSnakeCase;
     let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
@@ -1161,10 +1161,10 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
                 #read_inner_vec_vec_content_token_stream
             }
-            fn #read_new_or_try_new_unwraped_for_test_snake_case(
+            fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(
                 #value_snake_case: #type_token_stream
             ) -> #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case {
-                #read_new_or_try_new_unwraped_for_test_token_stream
+                #read_inner_into_read_with_new_or_try_new_unwraped_token_stream
             }
             fn #update_new_or_try_new_unwraped_for_test_snake_case(
                 #value_snake_case: #type_token_stream
