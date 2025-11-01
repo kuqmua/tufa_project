@@ -1043,7 +1043,9 @@ impl<
                 return Err(error);
             }
         };
-        Ok(format!("{}({} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, value))
+        //here
+        let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value).to_query_str();
+        Ok(format!("{}({} {operator} ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, value))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
         if let Err(error) = query.try_bind(self.value) {
