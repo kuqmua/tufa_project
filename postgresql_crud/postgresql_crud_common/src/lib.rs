@@ -104,14 +104,13 @@ pub trait PostgresqlJsonType {
 pub trait PostgresqlTypePrimaryKey {
     type PostgresqlType: crate::PostgresqlType;
     type TableTypeDeclaration: TableTypeDeclarationAlias + PartialOrd;
-    //todo rename
-    fn into_table_type_declaration(
+    fn read_only_ids_into_table_type_declaration(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
-    fn into_read(
+    fn read_only_ids_into_read(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
-    fn into_update(
+    fn read_only_ids_into_update(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
     fn read_into_table_type_declaration(

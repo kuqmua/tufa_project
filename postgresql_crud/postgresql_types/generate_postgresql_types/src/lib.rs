@@ -887,6 +887,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
             let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
             let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
+            let read_only_ids_into_table_type_declaration_snake_case = naming::ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
+            let read_only_ids_into_read_snake_case = naming::ReadOnlyIdsIntoReadSnakeCase;
+            let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
+            let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -5520,16 +5524,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
                         type #postgresql_type_upper_camel_case = #ident_standart_not_null_upper_camel_case;
                         type #table_type_declaration_upper_camel_case = #ident_standart_not_null_table_type_declaration_upper_camel_case;
-                        fn into_table_type_declaration(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
+                        fn #read_only_ids_into_table_type_declaration_snake_case(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
                             #ident_table_type_declaration_upper_camel_case(#value_snake_case.0.0)
                         }
-                        fn into_read(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#read_upper_camel_case {
+                        fn #read_only_ids_into_read_snake_case(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#read_upper_camel_case {
                             #value_snake_case.0
                         }
-                        fn into_update(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#update_upper_camel_case {
+                        fn #read_only_ids_into_update_snake_case(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#update_upper_camel_case {
                             #ident_update_upper_camel_case(#value_snake_case.0.0)
                         }
-                        fn read_into_table_type_declaration(
+                        fn #read_into_table_type_declaration_snake_case(
                             #value_snake_case: #self_as_postgresql_type_token_stream::#read_upper_camel_case
                         ) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
                             #ident_table_type_declaration_upper_camel_case(#value_snake_case.0)
