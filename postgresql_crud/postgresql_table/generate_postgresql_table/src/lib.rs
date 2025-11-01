@@ -3955,6 +3955,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 ]).expect(#warning_message_double_quote_token_stream);
             }
         };
+        let generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream = |
+            method_token_stream: &dyn quote::ToTokens,
+            parameters_token_stream: &dyn quote::ToTokens
+        |quote::quote!{
+            <
+                #primary_key_field_type
+                as
+                postgresql_crud::PostgresqlTypePrimaryKey
+            >::#method_token_stream(
+                #parameters_token_stream
+            )
+        };
+        let primary_key_field_type_read_only_ids_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream = generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(
+            &read_only_ids_into_table_type_declaration_snake_case,
+            &quote::quote!{#element_snake_case.#primary_key_field_ident.clone()}
+        );
+        let primary_key_field_type_read_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream = generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(
+            &read_into_table_type_declaration_snake_case,
+            &element_snake_case
+        );
         enum PostgresqlTypePrimaryKeyReadOnlyIdsMethod {
             ReadOnlyIdsIntoTableTypeDeclaration,
             ReadOnlyIdsIntoRead,
@@ -3964,18 +3984,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             postgresql_type_primary_key_read_only_ids_method: &PostgresqlTypePrimaryKeyReadOnlyIdsMethod,
             content_token_stream: &dyn quote::ToTokens
         |{
-            let method_token_stream: &dyn quote::ToTokens = match &postgresql_type_primary_key_read_only_ids_method {
-                PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoTableTypeDeclaration => &read_only_ids_into_table_type_declaration_snake_case,
-                PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoRead => &read_only_ids_into_read_snake_case,
-                PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoUpdate => &read_only_ids_into_update_snake_case,
-            };
-            quote::quote!{
-                <
-                    #primary_key_field_type
-                    as
-                    postgresql_crud::PostgresqlTypePrimaryKey
-                >::#method_token_stream(#content_token_stream)
-            }
+            generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(
+                match &postgresql_type_primary_key_read_only_ids_method {
+                    PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoTableTypeDeclaration => &read_only_ids_into_table_type_declaration_snake_case,
+                    PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoRead => &read_only_ids_into_read_snake_case,
+                    PostgresqlTypePrimaryKeyReadOnlyIdsMethod::ReadOnlyIdsIntoUpdate => &read_only_ids_into_update_snake_case,
+                },
+                &content_token_stream
+            )
         };
         let (
             primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream,
@@ -3994,6 +4010,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{read_only_ids_current_element.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{#common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone()}),
+                //
+
+                //
             )
         };
         let primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream = {
@@ -4102,26 +4121,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &url,
                     super::#ident_delete_one_parameters_upper_camel_case {
                         payload: super::#ident_delete_one_payload_upper_camel_case {
-                            #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                            )
+                            #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
                         }
                     }
                 ).await.expect("error 006b18e9-c965-45ee-afc0-a4f6b850ed06");
                 assert_eq!(
                     read_only_ids_from_try_delete_one,
-                    <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                        common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                    ),
+                    #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
                     "error 26e2058b-4bc1-42da-8f35-0ab993904de5"
                 );
                 if let Err(#error_snake_case) = super::#ident::try_read_one(
                     &url,
                     super::#ident_read_one_parameters_upper_camel_case {
                         payload: super::#ident_read_one_payload_upper_camel_case {
-                            #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                common_read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                            ),
+                            #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
                             select: select_default_all_with_max_page_size.clone()
                         }
                     }
@@ -4569,9 +4582,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                     value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                         <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                            <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                                                                #element_snake_case.#primary_key_field_ident.clone()
-                                                                            )
+                                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
                                                                         )
                                                                     )
                                                                 }
@@ -4615,9 +4626,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                 #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                        <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                                                            #element_snake_case.#primary_key_field_ident.clone()
-                                                                        )
+                                                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
                                                                     )
                                                                 )
                                                             }
@@ -4640,9 +4649,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         assert_eq!(
                             read_only_ids_from_try_delete_many,
                             {
-                                let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case| <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                    #element_snake_case.#primary_key_field_ident.clone()
-                                )).collect::<std::vec::Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
+                                let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case|
+                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                ).collect::<std::vec::Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                                 #acc_snake_case.sort_by(|a, b| a.cmp(&b));
                                 #acc_snake_case
                             },
@@ -4794,9 +4803,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                         #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                                <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                                                                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                                                                                )
+                                                                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
                                                                             )
                                                                         )
                                                                     })
@@ -4816,11 +4823,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     };
                                     assert_eq!(
                                         read_only_ids_from_try_delete_many,
-                                        vec![
-                                            <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                                read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                                            )
-                                        ],
+                                        vec![#primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream],
                                         "error 9fc29fa5-caba-403d-99da-ca9107d0c2e9"
                                     );
                                     match super::#ident::try_read_many(
@@ -4837,9 +4840,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                         #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                                <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_read_snake_case(
-                                                                                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
-                                                                                )
+                                                                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
                                                                             )
                                                                         )
                                                                     })
@@ -5714,9 +5715,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::#read_only_ids_into_table_type_declaration_snake_case(
-                                                                    #element_snake_case.#primary_key_field_ident.clone()
-                                                                ).into()
+                                                                #value_snake_case: #primary_key_field_type_read_only_ids_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream.into()
                                                             }
                                                         )
                                                     );
@@ -5754,13 +5753,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: <
-                                                                    #primary_key_field_type
-                                                                    as
-                                                                    postgresql_crud::PostgresqlTypePrimaryKey
-                                                                >::#read_into_table_type_declaration_snake_case(
-                                                                    #element_snake_case
-                                                                )
+                                                                #value_snake_case: #primary_key_field_type_read_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream
                                                             }
                                                         ));
                                                     }
