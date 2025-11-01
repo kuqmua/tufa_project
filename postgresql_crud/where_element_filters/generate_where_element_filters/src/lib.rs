@@ -708,7 +708,78 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     )
                 };
                 match &filter {
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&postgresql_type_pattern_handle_standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => {
+                        //here
+                        // let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |
+                        //     postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
+                        //     generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String
+                        // | 
+                        {
+                            let (
+                                maybe_dimensions_declaration_token_stream,
+                                maybe_dimensions_default_initialization_token_stream,
+                                maybe_dimensions_indexes_initialization_token_stream,
+                                postgresql_type_kind,
+                                maybe_additional_parameters_token_stream,
+                                maybe_dimensions_query_bind_content_token_stream
+                            ) = generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle_standart);
+                            (
+                                // should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
+                                ShouldAddDeclarationOfStructIdentGeneric::True {
+                                    maybe_additional_traits_token_stream: Some(quote::quote! {
+                                        sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>
+                                        //here
+                                        +
+                                        postgresql_crud_common::PostgresqlTypeEqualOperator
+                                    }),
+                                },
+                                generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
+                                generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                                postgresql_crud_macros_common::IncrementParameterUnderscore::False,
+                                {
+                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                                        // &generate_format_handle_stringified(&postgresql_type_kind)
+                                        &{
+                                            let generate_format_handle_stringified = |postgresql_type_kind: &PostgresqlTypeKind|format!(
+                                                "{{}}({{}}{} {{operator}} ${{}})",//here
+                                                postgresql_type_kind.format_argument()
+                                            );
+                                            generate_format_handle_stringified(&postgresql_type_kind)
+                                        }
+                                    );
+                                    quote::quote! {
+                                        #maybe_dimensions_indexes_initialization_token_stream
+                                        #value_match_increment_checked_add_one_initialization_token_stream
+                                        //here
+                                        let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.#value_snake_case).to_query_str();
+                                        //
+                                        Ok(format!(
+                                            #format_handle_token_stream,
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            #maybe_additional_parameters_token_stream
+                                            #value_snake_case
+                                        ))
+                                    }
+                                },
+                                is_query_bind_mutable_true.clone(),
+                                quote::quote! {
+                                    #maybe_dimensions_query_bind_content_token_stream
+                                    #query_bind_one_value_token_stream
+                                },
+                            )
+                        }
+                        // ;
+                        // generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream(
+                        //     &postgresql_type_pattern_handle_standart,
+                        //     &|postgresql_type_kind: &PostgresqlTypeKind|format!(
+                        //         "{{}}({{}}{} = ${{}})",
+                        //         postgresql_type_kind.format_argument()
+                        //     )
+                        // )
+                        // generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle_standart, &"=")
+                        // generate_equal_token_stream(&postgresql_type_pattern_handle_standart)
+                    },
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&postgresql_type_pattern_handle_array_dimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => generate_greater_than_token_stream(&postgresql_type_pattern_handle_standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => generate_greater_than_token_stream(&postgresql_type_pattern_handle_array_dimension1),
