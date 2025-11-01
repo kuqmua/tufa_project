@@ -1609,3 +1609,36 @@ pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields
 }
+
+pub enum EqualOperatorHandle {
+    Equal,
+    Is
+}
+impl EqualOperatorHandle {
+    pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
+        let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
+        let content_token_stream = match &self {
+            Self::Equal => quote::quote!{Equal},
+            Self::Is => quote::quote!{Is},
+        };
+        quote::quote!{#import_path::#equal_operator_upper_camel_case::#content_token_stream}
+    }
+}
+pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
+    let postgresql_type_equal_operator_upper_camel_case = naming::PostgresqlTypeEqualOperatorUpperCamelCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
+    let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
+    quote::quote!{
+        impl #import_path::#postgresql_type_equal_operator_upper_camel_case for #ident {
+            fn operator(&self) -> #import_path::#equal_operator_upper_camel_case {
+                #content_token_stream
+            }
+        }
+    }
+}

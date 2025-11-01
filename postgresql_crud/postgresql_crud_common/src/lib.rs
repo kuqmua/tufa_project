@@ -104,12 +104,19 @@ pub trait PostgresqlJsonType {
 pub trait PostgresqlTypePrimaryKey {
     type PostgresqlType: crate::PostgresqlType;
     type TableTypeDeclaration: TableTypeDeclarationAlias + PartialOrd;
+    //todo rename
+    fn into_table_type_declaration(
+        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
     fn into_read(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
     fn into_update(
         value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
     ) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
+    fn read_into_table_type_declaration(
+        value: <Self::PostgresqlType as crate::PostgresqlType>::Read
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
 }
 
 pub trait PostgresqlTypeNotPrimaryKey {
@@ -1218,14 +1225,6 @@ impl EqualOperator {
         }
     }
 }
-pub trait PostgresqlEqualOperator {
+pub trait PostgresqlTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
-}
-impl<T> PostgresqlEqualOperator for T
-where
-    T: PostgresqlJsonType
-{
-    fn operator(&self) -> EqualOperator {
-        EqualOperator::Equal
-    }
 }

@@ -3584,6 +3584,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         pub struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
                     }
                 };
+                let impl_ident_table_type_declaration_token_stream = {
+                    let pub_fn_new_or_try_new_token_stream = if let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type {
+                        quote::quote! {
+                            pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
+                                    Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                    Err(#error_snake_case) => Err(#error_snake_case)
+                                }
+                            }
+                        }
+                    } else {
+                        generate_pub_new_value_ident_inner_type_token_stream(&quote::quote!{
+                            Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                        })
+                    };
+                    quote::quote!{
+                        impl #ident_table_type_declaration_upper_camel_case {
+                            #pub_fn_new_or_try_new_token_stream
+                        }
+                    }
+                };
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_table_type_declaration_upper_camel_case,
                     &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
@@ -3603,6 +3624,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 );
                 quote::quote!{
                     #ident_table_type_declaration_token_stream
+                    #impl_ident_table_type_declaration_token_stream
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
@@ -3752,7 +3774,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
-                    let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote::quote! {#ident_read_upper_camel_case} }];//here
+                    let common_postgresql_type_filters = vec![postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: quote::quote! {#ident_table_type_declaration_upper_camel_case} }];
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
@@ -5498,11 +5520,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
                         type #postgresql_type_upper_camel_case = #ident_standart_not_null_upper_camel_case;
                         type #table_type_declaration_upper_camel_case = #ident_standart_not_null_table_type_declaration_upper_camel_case;
+                        fn into_table_type_declaration(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
+                            #ident_table_type_declaration_upper_camel_case(#value_snake_case.0.0)
+                        }
                         fn into_read(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#read_upper_camel_case {
                             #value_snake_case.0
                         }
                         fn into_update(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#update_upper_camel_case {
                             #ident_update_upper_camel_case(#value_snake_case.0.0)
+                        }
+                        fn read_into_table_type_declaration(
+                            #value_snake_case: #self_as_postgresql_type_token_stream::#read_upper_camel_case
+                        ) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
+                            #ident_table_type_declaration_upper_camel_case(#value_snake_case.0)
                         }
                     }
                 }
@@ -5516,18 +5546,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             else {
                 postgresql_crud_macros_common::generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(&import_path, &ident)
             };
-            let impl_postgresql_equal_operator_for_ident_token_stream = {
-                let equal_token_stream = quote::quote!{Equal};
-                let is_token_stream = quote::quote!{Is};
-                let variant_token_stream = equal_token_stream;//todo
-                quote::quote!{
-                    impl #import_path::PostgresqlEqualOperator for #ident {
-                        fn operator(&self) -> #import_path::EqualOperator {
-                            #import_path::EqualOperator::#variant_token_stream
-                        }
-                    }
+            let impl_postgresql_type_equal_operator_for_ident_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
+                &import_path,
+                &ident_table_type_declaration_upper_camel_case,
+                &{
+                    postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path)//todo
                 }
-            };
+            );
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
@@ -5544,7 +5569,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_postgresql_type_test_cases_for_ident_token_stream
                 #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 #maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream
-                #impl_postgresql_equal_operator_for_ident_token_stream
+                #impl_postgresql_type_equal_operator_for_ident_token_stream
             };
             (
                 {

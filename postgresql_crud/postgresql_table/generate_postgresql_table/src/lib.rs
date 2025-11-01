@@ -260,6 +260,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_where_element_token_stream = naming::parameter::SelfWhereElementUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     //todo must remove this and use trait type instead
     let primary_key_field_type_read_token_stream = naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    let primary_key_field_type_table_type_declaration_token_stream = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let generate_as_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens| {
         quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
@@ -4214,7 +4215,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                     //todo must use trait type instead
-                                                                    #value_snake_case: #primary_key_field_type_read_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                         #primary_key_field_type_into_read_element_primary_key_field_ident_clone_token_stream
                                                                     )),
                                                                 }));
@@ -4253,7 +4254,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         for #element_snake_case in &read_only_ids_from_try_create_many {
                                                             #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: #primary_key_field_type_read_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                     #primary_key_field_type_into_read_element_primary_key_field_ident_clone_token_stream
                                                                 )),
                                                             }));
@@ -4292,7 +4293,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         for #element_snake_case in &read_only_ids_from_try_delete_many {
                                                             #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: #primary_key_field_type_read_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(#element_snake_case.clone())),
+                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(#element_snake_case.clone())),
                                                             }));
                                                         }
                                                         #acc_snake_case
@@ -4463,7 +4464,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                             #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                                 postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                    #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                         uuid::Uuid::new_v4()
                                                                     )
                                                                 }
@@ -4560,7 +4561,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                             #acc_snake_case.push(<#primary_key_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                                                                 postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                    value: #primary_key_field_type_read_token_stream::new(
+                                                                    value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                         <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
                                                                                 #element_snake_case.#primary_key_field_ident.clone()
@@ -4606,7 +4607,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
                                                                             #element_snake_case.#primary_key_field_ident.clone()
@@ -4653,7 +4654,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     for element in &read_only_ids_from_try_delete_many {
                                                         #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                 <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(#element_snake_case.clone())
                                                             )
                                                         }));
@@ -4785,7 +4786,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 vec![
                                                                     #primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                                 <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
                                                                                     read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
@@ -4828,7 +4829,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 vec![
                                                                     #primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                                 <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_read(
                                                                                     read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()
@@ -4949,7 +4950,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         let mut #acc_snake_case = vec![];
                                                         #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            value: #primary_key_field_type_read_token_stream::new(
+                                                            value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                 #primary_key_field_type_as_postgresql_type_token_stream into_inner(
                                                                     #primary_key_field_type_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
                                                                 )
@@ -5171,7 +5172,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                         #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(
                                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                                #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                                         #primary_key_field_type_into_read_element_primary_key_field_ident_clone_token_stream
                                                                                     )
@@ -5281,7 +5282,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                     let mut #acc_snake_case = vec![];
                                                                     #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        #value_snake_case: #primary_key_field_type_read_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                             #primary_key_field_type_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
                                                                         )),
                                                                     }));
@@ -5516,7 +5517,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                         #acc_snake_case.push(#primary_key_field_type_where_element_token_stream::Equal(
                                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                                #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
                                                                                         #primary_key_field_type_into_read_element_primary_key_field_ident_clone_token_stream
                                                                                     )
@@ -5655,7 +5656,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                         postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            #value_snake_case: #primary_key_field_type_read_token_stream::new(
+                                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                 uuid::Uuid::new_v4()
                                                             )
                                                         }
@@ -5707,7 +5708,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: #primary_key_field_type_into_read_element_primary_key_field_ident_clone_token_stream.into()
+                                                                #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::into_table_type_declaration(
+                                                                    #element_snake_case.#primary_key_field_ident.clone()
+                                                                ).into()
                                                             }
                                                         )
                                                     );
@@ -5745,7 +5748,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                                             postgresql_crud::PostgresqlTypeWhereElementEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                #value_snake_case: #element_snake_case.into()
+                                                                #value_snake_case: <
+                                                                    #primary_key_field_type
+                                                                    as
+                                                                    postgresql_crud::PostgresqlTypePrimaryKey
+                                                                >::read_into_table_type_declaration(
+                                                                    #element_snake_case
+                                                                )
                                                             }
                                                         ));
                                                     }
