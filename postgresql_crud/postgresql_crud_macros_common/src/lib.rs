@@ -1630,9 +1630,6 @@ pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
     content_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
     let postgresql_type_equal_operator_upper_camel_case = naming::PostgresqlTypeEqualOperatorUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
-    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
     quote::quote!{
         impl #import_path::#postgresql_type_equal_operator_upper_camel_case for #ident {
