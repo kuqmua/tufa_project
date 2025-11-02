@@ -5210,10 +5210,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ]
                             }
                         }
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote! {
-                                todo!()
-                            }
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            vec![
+                                #ident_where_element_upper_camel_case::#equal_upper_camel_case(
+                                    where_element_filters::PostgresqlTypeWhereElementEqual {
+                                        logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                        value: #ident_table_type_declaration_upper_camel_case(#create_snake_case.0),
+                                    }
+                                )
+                            ]
                         }
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
@@ -5594,8 +5599,49 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let impl_postgresql_type_equal_operator_for_ident_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
                 &import_path,
                 &ident_table_type_declaration_upper_camel_case,
+                //todo
                 &{
-                    postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path)//todo
+                    let equal_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path);
+                    let is_null_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
+                    match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                if self.0.0.is_some() {
+                                    #equal_token_stream
+                                }
+                                else {
+                                    #is_null_token_stream
+                                }
+                            }
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                            },
+                        }
+                    }
                 }
             );
             let generated = quote::quote! {
