@@ -1002,5 +1002,3 @@ impl<T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlways
         Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
     }
 }
-
-///////////

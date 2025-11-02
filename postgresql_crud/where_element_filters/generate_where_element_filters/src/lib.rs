@@ -749,23 +749,39 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     );
                                     quote::quote! {
                                         #maybe_dimensions_indexes_initialization_token_stream
-                                        #value_match_increment_checked_add_one_initialization_token_stream
+                                        // #value_match_increment_checked_add_one_initialization_token_stream
+                                        // let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.#value_snake_case).to_query_str();
+                                        // Ok(format!(
+                                        //     #format_handle_token_stream,
+                                        //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                        //     column,
+                                        //     #maybe_additional_parameters_token_stream
+                                        //     #value_snake_case
+                                        // ))
                                         //here
-                                        let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.#value_snake_case).to_query_str();
-                                        //
-                                        Ok(format!(
-                                            #format_handle_token_stream,
-                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                            column,
-                                            #maybe_additional_parameters_token_stream
-                                            #value_snake_case
-                                        ))
+                                        let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value);
+                                        let operator_query_str = operator.to_query_str();
+                                        let content = match operator {
+                                            postgresql_crud_common::EqualOperator::Equal => {
+                                                #value_match_increment_checked_add_one_initialization_token_stream
+                                                format!("{operator_query_str} ${value}")
+                                            },
+                                            postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                        };
+                                        Ok(format!("{}({} {content})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
                                     }
                                 },
                                 is_query_bind_mutable_true.clone(),
                                 quote::quote! {
                                     #maybe_dimensions_query_bind_content_token_stream
-                                    #query_bind_one_value_token_stream
+                                    // #query_bind_one_value_token_stream
+                                    //here
+                                    if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value) {
+                                        if let Err(error) = query.try_bind(self.value) {
+                                            return Err(error.to_string());
+                                        }
+                                    }
+                                    Ok(query)
                                 },
                             )
                         }
