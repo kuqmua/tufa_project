@@ -5234,11 +5234,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             },
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote! {
-                                todo!()
-                            }
-                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                        }
                     }
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
@@ -5617,11 +5624,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    quote::quote!{
-                                        todo!()
-                                    }
-                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote!{
                                         todo!()
