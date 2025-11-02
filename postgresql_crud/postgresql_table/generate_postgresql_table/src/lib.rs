@@ -6016,7 +6016,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlTable",
     //     &ident_tests_token_stream,
-    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::False
     // );
     // }
     let common_token_stream = quote::quote! {

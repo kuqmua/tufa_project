@@ -5233,10 +5233,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     )
                                 ]
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote! {
-                                    todo!()
-                                }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                vec![
+                                    #ident_where_element_upper_camel_case::Equal(
+                                        where_element_filters::PostgresqlTypeWhereElementEqual {
+                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                            #value_snake_case: #ident_table_type_declaration_upper_camel_case(#create_snake_case.0),
+                                        }
+                                    )
+                                ]
                             },
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
@@ -5636,9 +5641,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote!{
-                                        todo!()
-                                    }
+                                    //todo thats not actually usefull coz nullable array comparison has different logic. need to refactor EqualOperatorHandle enum 
+                                    equal_token_stream
                                 },
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
