@@ -5217,7 +5217,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_inner_type_token_stream,
                     &ident,
                     &{
-                        let generate_acc_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
+                        let generate_acc_content_token_stream = |
+                            not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                            ident_token_stream: &dyn quote::ToTokens,
+                            additonal_content_token_stream: &dyn quote::ToTokens,
+                        | {
                             let (
                                 new_or_try_new_content_token_stream,
                                 maybe_acc_push_none_token_stream
@@ -5246,6 +5250,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
                                 }
                                 #maybe_acc_push_none_token_stream
+                                #additonal_content_token_stream
                                 #acc_snake_case
                             }
                         };
@@ -5274,7 +5279,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &postgresql_type,
                                         &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                         &PostgresqlTypePattern::Standart,
-                                    )
+                                    ),
+                                    &proc_macro2::TokenStream::new()
                                 )
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_token_stream(
@@ -5291,7 +5297,49 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
                                         },
                                     },
-                                )
+                                ),
+                                &match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let content_token_stream: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_as_postgresql_type_test_cases_token_stream,
+                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgresql_type_test_cases_token_stream,
+                                        };
+                                        let (
+                                            first_token_stream,
+                                            second_token_stream,
+                                            third_token_stream
+                                        ) = {
+                                            let generate_new_or_try_new_token_stream = |content_token_stream: &dyn quote::ToTokens|if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                                quote::quote!{try_new(#content_token_stream).expect("error 75ad9383-b257-4a0b-bd8d-c931950bf745")}
+                                            }
+                                            else {
+                                                quote::quote!{new(#content_token_stream)}
+                                            };
+                                            let generate_vec_value_clone_zero_into_number_token_stream = |value: std::primitive::usize|{
+                                                let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().unwrap();
+                                                quote::quote!{vec![#value_snake_case.clone().0.into(); #number_token_stream]}
+                                            };
+                                            (
+                                                generate_new_or_try_new_token_stream(&quote::quote!{
+                                                    #content_token_stream::create_vec()
+                                                    .into_iter()
+                                                    .map(|#element_snake_case|#element_snake_case.0.into())
+                                                    .collect()
+                                                }),
+                                                generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(2)),
+                                                generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(1000))
+                                            )
+                                        };
+                                        quote::quote!{
+                                            #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
+                                            if let Some(#value_snake_case) = #content_token_stream::create_vec().get(0) {
+                                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
+                                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
+                                            }
+                                        }
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                                }
                             )
                         }
                     },
