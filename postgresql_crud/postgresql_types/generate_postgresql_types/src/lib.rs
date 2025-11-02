@@ -5215,7 +5215,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #ident_where_element_upper_camel_case::#equal_upper_camel_case(
                                     where_element_filters::PostgresqlTypeWhereElementEqual {
                                         logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                        value: #ident_table_type_declaration_upper_camel_case(#create_snake_case.0),
+                                        #value_snake_case: #ident_table_type_declaration_upper_camel_case(#create_snake_case.0),
                                     }
                                 )
                             ]
@@ -5223,10 +5223,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote! {
-                                    todo!()
-                                }
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                vec![
+                                    #ident_where_element_upper_camel_case::Equal(
+                                        where_element_filters::PostgresqlTypeWhereElementEqual {
+                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                            #value_snake_case: #ident_table_type_declaration_upper_camel_case(#create_snake_case.0),
+                                        }
+                                    )
+                                ]
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote! {
