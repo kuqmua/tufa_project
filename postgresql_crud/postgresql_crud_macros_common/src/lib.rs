@@ -1612,14 +1612,14 @@ pub enum EqualOrEqualUsingFields {
 
 pub enum EqualOperatorHandle {
     Equal,
-    Is
+    IsNull
 }
 impl EqualOperatorHandle {
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
         let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
         let content_token_stream = match &self {
             Self::Equal => quote::quote!{Equal},
-            Self::Is => quote::quote!{Is},
+            Self::IsNull => quote::quote!{IsNull},
         };
         quote::quote!{#import_path::#equal_operator_upper_camel_case::#content_token_stream}
     }

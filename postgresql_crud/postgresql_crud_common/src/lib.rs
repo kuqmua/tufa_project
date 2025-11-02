@@ -1214,13 +1214,13 @@ pub fn increment_checked_add_one_returning_increment(increment: &mut std::primit
 
 pub enum EqualOperator {
     Equal,
-    Is
+    IsNull
 }
 impl EqualOperator {
     pub fn to_query_str(&self) -> &'static std::primitive::str {
         match &self {
             Self::Equal => "=",
-            Self::Is => "is",
+            Self::IsNull => "is null",
         }
     }
 }

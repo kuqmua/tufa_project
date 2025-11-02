@@ -2127,7 +2127,7 @@ impl postgresql_crud_common::PostgresqlTypeEqualOperator for OptionStdPrimitiveI
             postgresql_crud_common::EqualOperator::Equal
         }
         else {
-            postgresql_crud_common::EqualOperator::Is
+            postgresql_crud_common::EqualOperator::IsNull
         }
     }
 }
