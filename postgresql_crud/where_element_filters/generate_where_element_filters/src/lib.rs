@@ -11,23 +11,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let acc_snake_case = naming::AccSnakeCase;
     let dimensions_snake_case = naming::DimensionsSnakeCase;
     let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
+    let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
     let t_token_stream = quote::quote! {T};
     let t_annotation_generic_token_stream = quote::quote! {<#t_token_stream>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-    //todo reuse ?
-    fn generate_core_default_default_default_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {::core::default::Default::default()}
-    }
-    let core_default_default_default_token_stream = generate_core_default_default_default_token_stream();
-    fn generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {
-            postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-        }
-    }
-    let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-    // let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = quote::quote!{
-    //     crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-    // };
+    let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let pub_value_t_token_stream = quote::quote! {pub #value_snake_case: T};
     //todo rewrite it as UniqueVec
     fn generate_unsigned_part_of_std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
@@ -46,11 +36,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         False,
     }
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
-        #value_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+        #value_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let generate_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
-            match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
+            match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                 Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case)),
                 Err(#error_snake_case) => Err(#error_snake_case),
             }
@@ -69,7 +59,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         quote::quote! {
             #[derive(Debug, Clone, PartialEq, serde::Serialize, #maybe_derive_serde_deserialize_token_stream schemars::JsonSchema)]
             pub struct #ident #maybe_declaration_of_struct_ident_generic_token_stream {
-                #maybe_pub_token_stream logical_operator: postgresql_crud_common::LogicalOperator,
+                #maybe_pub_token_stream logical_operator: #import_path::LogicalOperator,
                 #struct_additional_fields_token_stream
             }
         }
@@ -78,8 +68,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => match &maybe_additional_traits_token_stream {
-                    Some(value) => quote::quote! {<T: #value + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
-                    None => quote::quote! {<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
+                    Some(value) => quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
+                    None => quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
                 },
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
             },
@@ -91,7 +81,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             },
             &quote::quote! {
                 Self {
-                    logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    logical_operator: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                 }
             },
@@ -148,7 +138,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         pub value: crate::RegexRegex
     };
     let regular_expression_case_and_value_default_initialization_token_stream = quote::quote! {
-        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+        regular_expression_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
     let if_let_err_query_try_bind_self_value_to_string_token_stream = quote::quote! {
@@ -277,7 +267,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let value_match_self_value_query_part_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(&value_snake_case, &value_snake_case, &quote::quote! {query_part});
     let dimensions_default_initialization_token_stream = quote::quote! {
-        #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+        #dimensions_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let dimensions_default_initialization_comma_token_stream = quote::quote! {#dimensions_default_initialization_token_stream,};
     let query_self_dimensions_query_bind_query_token_stream = quote::quote! {
@@ -361,11 +351,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 is_query_bind_mutable,
                 query_bind_content_token_stream
             ) = {
+                let sqlx_type_postgresq_encode_token_stream = quote::quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>};
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
-                    maybe_additional_traits_token_stream: Some(quote::quote! {sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
+                    maybe_additional_traits_token_stream: Some(sqlx_type_postgresq_encode_token_stream.clone()),
                 };
                 let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
-                    maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
+                    maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + Clone + #sqlx_type_postgresq_encode_token_stream}),
                 };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub #value_snake_case: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType);
@@ -593,7 +584,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                         quote::quote! {
                             #maybe_dimensions_default_initialization_token_stream
-                            encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            encode_format: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                             encoded_string_representation: #core_default_default_default_token_stream
                         },
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
@@ -708,88 +699,43 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => {
-                        //here
-                        // let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |
-                        //     postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                        //     generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String
-                        // | 
-                        {
-                            let (
-                                maybe_dimensions_declaration_token_stream,
-                                maybe_dimensions_default_initialization_token_stream,
-                                maybe_dimensions_indexes_initialization_token_stream,
-                                postgresql_type_kind,
-                                maybe_additional_parameters_token_stream,
-                                maybe_dimensions_query_bind_content_token_stream
-                            ) = generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle_standart);
-                            (
-                                // should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                                ShouldAddDeclarationOfStructIdentGeneric::True {
-                                    maybe_additional_traits_token_stream: Some(quote::quote! {
-                                        sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                                        //here
-                                        +
-                                        postgresql_crud_common::PostgresqlTypeEqualOperator
-                                    }),
-                                },
-                                generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                                generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
-                                postgresql_crud_macros_common::IncrementParameterUnderscore::False,
-                                {
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                        // &generate_format_handle_stringified(&postgresql_type_kind)
-                                        &{
-                                            let generate_format_handle_stringified = |postgresql_type_kind: &PostgresqlTypeKind|format!(
-                                                "{{}}({{}}{} {{operator}} ${{}})",//here
-                                                postgresql_type_kind.format_argument()
-                                            );
-                                            generate_format_handle_stringified(&postgresql_type_kind)
-                                        }
-                                    );
-                                    quote::quote! {
-                                        #maybe_dimensions_indexes_initialization_token_stream
-                                        // #value_match_increment_checked_add_one_initialization_token_stream
-                                        // let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.#value_snake_case).to_query_str();
-                                        // Ok(format!(
-                                        //     #format_handle_token_stream,
-                                        //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                        //     column,
-                                        //     #maybe_additional_parameters_token_stream
-                                        //     #value_snake_case
-                                        // ))
-                                        //here
-                                        let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value);
-                                        let operator_query_str = operator.to_query_str();
-                                        let content = match operator {
-                                            postgresql_crud_common::EqualOperator::Equal => {
-                                                #value_match_increment_checked_add_one_initialization_token_stream
-                                                format!("{operator_query_str} ${value}")
-                                            },
-                                            postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
-                                        };
-                                        Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
-                                    }
-                                },
-                                is_query_bind_mutable_true.clone(),
-                                quote::quote! {
-                                    #maybe_dimensions_query_bind_content_token_stream
-                                    if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
-                                        #if_let_err_query_try_bind_self_value_token_stream
-                                    }
-                                    Ok(#query_snake_case)
-                                },
-                            )
-                        }
-                        // ;
-                        // generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream(
-                        //     &postgresql_type_pattern_handle_standart,
-                        //     &|postgresql_type_kind: &PostgresqlTypeKind|format!(
-                        //         "{{}}({{}}{} = ${{}})",
-                        //         postgresql_type_kind.format_argument()
-                        //     )
-                        // )
-                        // generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle_standart, &"=")
-                        // generate_equal_token_stream(&postgresql_type_pattern_handle_standart)
+                        let (
+                            maybe_dimensions_declaration_token_stream,
+                            maybe_dimensions_default_initialization_token_stream,
+                            maybe_dimensions_indexes_initialization_token_stream,
+                            _,
+                            _,
+                            maybe_dimensions_query_bind_content_token_stream
+                        ) = generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle_standart);
+                        (
+                            ShouldAddDeclarationOfStructIdentGeneric::True {
+                                maybe_additional_traits_token_stream: Some(quote::quote! {#sqlx_type_postgresq_encode_token_stream + postgresql_crud_common::PostgresqlTypeEqualOperator}),
+                            },
+                            generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
+                            generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                            postgresql_crud_macros_common::IncrementParameterUnderscore::False,
+                            quote::quote! {
+                                #maybe_dimensions_indexes_initialization_token_stream
+                                let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case);
+                                let operator_query_str = operator.to_query_str();
+                                let content = match operator {
+                                    postgresql_crud_common::EqualOperator::Equal => {
+                                        #value_match_increment_checked_add_one_initialization_token_stream
+                                        format!("{operator_query_str} ${value}")
+                                    },
+                                    postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
+                                };
+                                Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
+                            },
+                            is_query_bind_mutable_true.clone(),
+                            quote::quote! {
+                                #maybe_dimensions_query_bind_content_token_stream
+                                if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
+                                    #if_let_err_query_try_bind_self_value_token_stream
+                                }
+                                Ok(#query_snake_case)
+                            },
+                        )
                     },
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&postgresql_type_pattern_handle_array_dimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => generate_greater_than_token_stream(&postgresql_type_pattern_handle_standart),

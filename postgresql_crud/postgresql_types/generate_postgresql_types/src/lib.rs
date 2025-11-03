@@ -3590,7 +3590,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_ident_table_type_declaration_token_stream = {
-                    let pub_fn_new_or_try_new_token_stream = if let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type {
+                    let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {
                             pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
                                 match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
