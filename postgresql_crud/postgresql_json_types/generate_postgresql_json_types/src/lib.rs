@@ -467,7 +467,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let query_snake_case = naming::QuerySnakeCase;
             let read_snake_case = naming::ReadSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
-            let create_vec_snake_case = naming::CreateVecSnakeCase;
+            let vec_create_snake_case = naming::VecCreateSnakeCase;
             let option_update_snake_case = naming::OptionUpdateSnakeCase;
             let read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecOfReadInnerSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
@@ -2241,7 +2241,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             quote::quote! {
                                 let mut #acc_snake_case = vec![];
-                                for #element_snake_case in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#create_vec_snake_case() {
+                                for #element_snake_case in <#ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#vec_create_snake_case() {
                                     #acc_snake_case.push(<#ident as postgresql_crud_common::PostgresqlJsonType>::Create::new(#new_content_token_stream));
                                 }
                                 #maybe_acc_push_none_token_stream

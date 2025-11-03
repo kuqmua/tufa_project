@@ -879,7 +879,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
             let read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecOfReadInnerSnakeCase;
-            let create_vec_snake_case = naming::CreateVecSnakeCase;
+            let vec_create_snake_case = naming::VecCreateSnakeCase;
             let create_snake_case = naming::CreateSnakeCase;
             let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;
             let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
@@ -5246,7 +5246,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
                             quote::quote! {
                                 let mut #acc_snake_case = vec![];
-                                for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#create_vec_snake_case() {
+                                for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#vec_create_snake_case() {
                                     #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
                                 }
                                 #maybe_acc_push_none_token_stream
@@ -5321,7 +5321,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             };
                                             (
                                                 generate_new_or_try_new_token_stream(&quote::quote!{
-                                                    #content_token_stream::create_vec()
+                                                    #content_token_stream::vec_create()
                                                     .into_iter()
                                                     .map(|#element_snake_case|#element_snake_case.0.into())
                                                     .collect()
@@ -5332,7 +5332,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         };
                                         quote::quote!{
                                             #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                            if let Some(#value_snake_case) = #content_token_stream::create_vec().get(0) {
+                                            if let Some(#value_snake_case) = #content_token_stream::vec_create().get(0) {
                                                 #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
                                                 #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
                                             }
