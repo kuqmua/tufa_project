@@ -3,6 +3,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
+    let column_snake_case = naming::ColumnSnakeCase;
+    let self_snake_case = naming::SelfSnakeCase;
+    let element_snake_case = naming::ElementSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let error_snake_case = naming::ErrorSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
@@ -25,7 +28,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     // let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = quote::quote!{
     //     crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     // };
-    let pub_value_t_token_stream = quote::quote! {pub value: T};
+    let pub_value_t_token_stream = quote::quote! {pub #value_snake_case: T};
     //todo rewrite it as UniqueVec
     fn generate_unsigned_part_of_std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
         quote::quote! {crate::UnsignedPartOfStdPrimitiveI32}
@@ -35,24 +38,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         quote::quote! {crate::NotZeroUnsignedPartOfStdPrimitiveI32}
     }
     let not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_not_zero_unsigned_part_of_std_primitive_i32_token_stream();
-    let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {value: #not_zero_unsigned_part_of_std_primitive_i32_token_stream};
+    let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_token_stream};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream};
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True { maybe_additional_traits_token_stream: std::option::Option<proc_macro2::TokenStream> },
         False,
     }
-    fn generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
-        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-        quote::quote! {
-            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-        }
-    }
-    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
+        #value_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+    };
     let generate_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment)),
+                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case)),
                 Err(#error_snake_case) => Err(#error_snake_case),
             }
         }
@@ -90,12 +89,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: _ } => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
-            &{
-                quote::quote! {
-                    Self {
-                        logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                    }
+            &quote::quote! {
+                Self {
+                    logical_operator: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                 }
             },
         )
@@ -154,17 +151,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
-    let query_equals_query_self_value_to_string_token_stream = quote::quote! {
-        if let Err(error) = query.try_bind(self.value.to_string()) {
-            return Err(error.to_string());
+    let if_let_err_query_try_bind_self_value_to_string_token_stream = quote::quote! {
+        if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case.to_string()) {
+            return Err(#error_snake_case.to_string());
         }
-        Ok(query)
+        Ok(#query_snake_case)
+    };
+    let if_let_err_query_try_bind_self_value_token_stream = quote::quote! {
+        if let Err(#error_snake_case) = #query_snake_case.try_bind(#self_snake_case.#value_snake_case) {
+            return Err(#error_snake_case.to_string());
+        }
     };
     let query_bind_one_value_token_stream = quote::quote! {
-        if let Err(error) = query.try_bind(self.value) {
-            return Err(error.to_string());
-        }
-        Ok(query)
+        #if_let_err_query_try_bind_self_value_token_stream
+        Ok(#query_snake_case)
     };
     let should_add_declaration_of_struct_ident_generic_false = ShouldAddDeclarationOfStructIdentGeneric::False;
     let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: None };
@@ -189,22 +189,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         }),
     };
-    let value_between_t_token_stream = quote::quote! {value: crate::Between<T>};
+    let value_between_t_token_stream = quote::quote! {#value_snake_case: crate::Between<T>};
     let pub_value_between_t_token_stream = quote::quote! {pub #value_between_t_token_stream};
-    fn generate_query_self_value_query_bind_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {
-            match self.value.query_bind(query) {
-                Ok(value) => {
-                    query = value;
-                },
-                Err(error) => {
-                    return Err(error);
-                }
+    let query_self_value_query_bind_token_stream = quote::quote! {
+        match #self_snake_case.#value_snake_case.query_bind(#query_snake_case) {
+            Ok(#value_snake_case) => {
+                #query_snake_case = #value_snake_case;
+            },
+            Err(#error_snake_case) => {
+                return Err(#error_snake_case);
             }
-            Ok(query)
         }
-    }
-    let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
+        Ok(#query_snake_case)
+    };
     #[derive(Clone)]
     enum PostgresqlTypePatternHandle {
         Standart,
@@ -265,16 +262,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let generate_pub_dimensions_bounded_vec_token_stream = |vec_length_token_stream: &dyn quote::ToTokens, kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
         quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_token_stream>}
     };
-    let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote! {value});
-    let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream = |ident_token_stream: &dyn quote::ToTokens, field_token_stream: &dyn quote::ToTokens, function_token_stream: &dyn quote::ToTokens| {
-        quote::quote! {
-            let #ident_token_stream = match self.#field_token_stream.#function_token_stream(increment, column, is_need_to_add_logical_operator) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
-            };
-        }
+    let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&value_snake_case);
+    let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream = |
+        ident_token_stream: &dyn quote::ToTokens,
+        field_token_stream: &dyn quote::ToTokens,
+        function_token_stream: &dyn quote::ToTokens
+    |quote::quote! {
+        let #ident_token_stream = match self.#field_token_stream.#function_token_stream(#increment_snake_case, #column_snake_case, is_need_to_add_logical_operator) {
+            Ok(#value_snake_case) => #value_snake_case,
+            Err(#error_snake_case) => {
+                return Err(#error_snake_case);
+            }
+        };
     };
     let value_match_self_value_query_part_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(&value_snake_case, &value_snake_case, &quote::quote! {query_part});
     let dimensions_default_initialization_token_stream = quote::quote! {
@@ -282,12 +281,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let dimensions_default_initialization_comma_token_stream = quote::quote! {#dimensions_default_initialization_token_stream,};
     let query_self_dimensions_query_bind_query_token_stream = quote::quote! {
-        match self.#dimensions_snake_case.query_bind(query) {
-            Ok(value) => {
-                query = value;
+        match #self_snake_case.#dimensions_snake_case.query_bind(#query_snake_case) {
+            Ok(#value_snake_case) => {
+                #query_snake_case = #value_snake_case;
             }
-            Err(error) => {
-                return Err(error);
+            Err(#error_snake_case) => {
+                return Err(#error_snake_case);
             }
         }
     };
@@ -368,7 +367,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
                 };
-                let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
+                let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub #value_snake_case: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType);
                 let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String| {
                     let (maybe_dimensions_declaration_token_stream, maybe_dimensions_default_initialization_token_stream, maybe_dimensions_indexes_initialization_token_stream, postgresql_type_kind, maybe_additional_parameters_token_stream, maybe_dimensions_query_bind_content_token_stream) = generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle);
@@ -384,10 +383,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_increment_checked_add_one_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    value
+                                    #value_snake_case
                                 ))
                             }
                         },
@@ -418,10 +417,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_self_value_query_part_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    value
+                                    #value_snake_case
                                 ))
                             }
                         },
@@ -448,7 +447,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let #value_snake_case = {
                                     let mut #acc_snake_case = std::string::String::default();
-                                    for _ in self.#value_snake_case.to_vec() {
+                                    for _ in #self_snake_case.#value_snake_case.to_vec() {
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                             Ok(#value_snake_case) => {
                                                 #acc_snake_case.push_str(&format!("${},", #value_snake_case));
@@ -463,8 +462,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 };
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
                                     #value_snake_case
                                 ))
@@ -473,12 +472,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         is_query_bind_mutable_true.clone(),
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            for element in self.value.into_vec() {
-                                if let Err(error) = query.try_bind(element) {
-                                    return Err(error.to_string());
+                            for #element_snake_case in #self_snake_case.#value_snake_case.into_vec() {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#element_snake_case) {
+                                    return Err(#error_snake_case.to_string());
                                 }
                             }
-                            Ok(query)
+                            Ok(#query_snake_case)
                         },
                     )
                 };
@@ -502,18 +501,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_increment_checked_add_one_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    self.regular_expression_case.postgreql_syntax(),
-                                    value
+                                    #self_snake_case.regular_expression_case.postgreql_syntax(),
+                                    #value_snake_case
                                 ))
                             }
                         },
                         is_query_bind_mutable_true.clone(),
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            #query_equals_query_self_value_to_string_token_stream
+                            #if_let_err_query_try_bind_self_value_to_string_token_stream
                         },
                     )
                 };
@@ -531,10 +530,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_increment_checked_add_one_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    value
+                                    #value_snake_case
                                 ))
                             }
                         },
@@ -561,8 +560,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
                                 ))
                             }
@@ -605,21 +604,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_increment_checked_add_one_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    &self.encode_format,
-                                    value
+                                    &#self_snake_case.encode_format,
+                                    #value_snake_case
                                 ))
                             }
                         },
                         is_query_bind_mutable_true.clone(),
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            if let Err(error) = query.try_bind(self.encoded_string_representation) {
-                                return Err(error.to_string());
+                            if let Err(#error_snake_case) = #query_snake_case.try_bind(self.encoded_string_representation) {
+                                return Err(#error_snake_case.to_string());
                             }
-                            Ok(query)
+                            Ok(#query_snake_case)
                         },
                     )
                 };
@@ -664,19 +663,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 dimensions_indexes2,
                             },
                             quote::quote! {
-                                match self.#dimensions_snake_case.clone().query_bind(query) {
-                                    Ok(value) => {
-                                        query = value;
+                                match #self_snake_case.#dimensions_snake_case.clone().query_bind(#query_snake_case) {
+                                    Ok(#value_snake_case) => {
+                                        #query_snake_case = #value_snake_case;
                                     },
-                                    Err(error) => {
-                                        return Err(error);
+                                    Err(#error_snake_case) => {
+                                        return Err(#error_snake_case);
                                     }
                                 }
                                 #query_self_dimensions_query_bind_query_token_stream
                             },
                         )
                     } else {
-                        (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote::quote! {column,}, proc_macro2::TokenStream::new())
+                        (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, quote::quote! {#column_snake_case,}, proc_macro2::TokenStream::new())
                     };
                     (
                         ShouldAddDeclarationOfStructIdentGeneric::False,
@@ -693,10 +692,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #value_match_increment_checked_add_one_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
+                                    &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    #column_snake_case,
                                     #maybe_additional_parameters_token_stream
-                                    value
+                                    #value_snake_case
                                 ))
                             }
                         },
@@ -768,20 +767,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                             },
                                             postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
                                         };
-                                        Ok(format!("{}({} {content})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
+                                        Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
                                     }
                                 },
                                 is_query_bind_mutable_true.clone(),
                                 quote::quote! {
                                     #maybe_dimensions_query_bind_content_token_stream
-                                    // #query_bind_one_value_token_stream
-                                    //here
-                                    if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value) {
-                                        if let Err(error) = query.try_bind(self.value) {
-                                            return Err(error.to_string());
-                                        }
+                                    if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
+                                        #if_let_err_query_try_bind_self_value_token_stream
                                     }
-                                    Ok(query)
+                                    Ok(#query_snake_case)
                                 },
                             )
                         }
@@ -888,13 +883,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream = quote::quote! {
-                pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                pub #value_snake_case: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
             };
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
-                if let Err(error) = query.try_bind(sqlx::types::Json(self.value)) {
-                    return Err(error.to_string());
+                if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_snake_case.#value_snake_case)) {
+                    return Err(#error_snake_case.to_string());
                 }
-                Ok(query)
+                Ok(#query_snake_case)
             };
             let generate_postgresql_json_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType);
             let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String| {
@@ -916,10 +911,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
@@ -939,11 +934,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     quote::quote! {
                         #maybe_dimensions_declaration_token_stream
-                        pub value: #unsigned_part_of_std_primitive_i32_token_stream
+                        pub #value_snake_case: #unsigned_part_of_std_primitive_i32_token_stream
                     },
                     quote::quote! {
                         #maybe_dimensions_default_initialization_token_stream
-                        value: #core_default_default_default_token_stream
+                        #value_snake_case: #core_default_default_default_token_stream
                     },
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{}) {operation} ${{}})", postgresql_type_kind.format_argument()));
@@ -952,10 +947,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
@@ -969,10 +964,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_length_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream(postgresql_type_pattern_handle, &"=");
             let generate_length_more_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream(postgresql_type_pattern_handle, &">");
             let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream(postgresql_type_pattern_handle, &">");
-            let generate_contains_element_greater_than_token_stream =
-                |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(postgresql_type_pattern_handle, &|postgresql_type_kind: &PostgresqlTypeKind| format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))", postgresql_type_kind.format_argument()));
-            let generate_all_elements_greater_than_token_stream =
-                |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(postgresql_type_pattern_handle, &|postgresql_type_kind: &PostgresqlTypeKind| format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))", postgresql_type_kind.format_argument()));
+            let generate_contains_element_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                postgresql_type_pattern_handle,
+                &|postgresql_type_kind: &PostgresqlTypeKind|format!(
+                    "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
+                    postgresql_type_kind.format_argument()
+                )
+            );
+            let generate_all_elements_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                postgresql_type_pattern_handle,
+                &|postgresql_type_kind: &PostgresqlTypeKind| format!(
+                    "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
+                    postgresql_type_kind.format_argument()
+                )
+            );
             let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (maybe_dimensions_declaration_token_stream, maybe_dimensions_default_initialization_token_stream, maybe_dimensions_indexes_initialization_token_stream, postgresql_type_kind, maybe_additional_parameters_token_stream, maybe_dimensions_query_bind_content_token_stream) = generate_postgresql_json_type_dimensions_helpers(postgresql_type_pattern_handle);
                 (
@@ -989,10 +994,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
@@ -1020,25 +1025,25 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
-                        match self.value.query_bind_one_by_one(query) {
-                            Ok(value) => {
-                                query = value;
+                        match #self_snake_case.#value_snake_case.query_bind_one_by_one(#query_snake_case) {
+                            Ok(#value_snake_case) => {
+                                #query_snake_case = #value_snake_case;
                             }
-                            Err(error) => {
-                                return Err(error);
+                            Err(#error_snake_case) => {
+                                return Err(#error_snake_case);
                             }
                         }
-                        Ok(query)
+                        Ok(#query_snake_case)
                     },
                 )
             };
@@ -1088,18 +1093,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                self.regular_expression_case.postgreql_syntax(),
-                                value
+                                #self_snake_case.regular_expression_case.postgreql_syntax(),
+                                #value_snake_case
                             ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
-                        #query_equals_query_self_value_to_string_token_stream
+                        #if_let_err_query_try_bind_self_value_to_string_token_stream
                     },
                 )
             };
@@ -1122,18 +1127,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                self.regular_expression_case.postgreql_syntax(),
-                                value
+                                #self_snake_case.regular_expression_case.postgreql_syntax(),
+                                #value_snake_case
                             ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
-                        #query_equals_query_self_value_to_string_token_stream
+                        #if_let_err_query_try_bind_self_value_to_string_token_stream
                     },
                 )
             };
@@ -1156,18 +1161,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                self.regular_expression_case.postgreql_syntax(),
-                                value
+                                #self_snake_case.regular_expression_case.postgreql_syntax(),
+                                #value_snake_case
                             ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
-                        #query_equals_query_self_value_to_string_token_stream
+                        #if_let_err_query_try_bind_self_value_to_string_token_stream
                     },
                 )
             };
@@ -1190,10 +1195,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_self_value_query_part_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
@@ -1223,10 +1228,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_match_self_value_query_part_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
+                                &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                #column_snake_case,
                                 #maybe_additional_parameters_token_stream
-                                value
+                                #value_snake_case
                             ))
                         }
                     },
