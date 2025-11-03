@@ -186,6 +186,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_into_read_snake_case = naming::ReadOnlyIdsIntoReadSnakeCase;
     let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
     let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
+    let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
+    let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
     let error_2_token_stream = token_patterns::Error2;
@@ -212,6 +214,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
+    let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
@@ -365,12 +368,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 },
             }
         };
-        let pub_fn_table_token_stream = {
-            let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
-            quote::quote! {
-                pub fn #table_name_snake_case() -> &'static str {
-                    #ident_snake_case_double_quotes_token_stream
-                }
+        let pub_fn_table_token_stream = quote::quote! {
+            pub fn #table_name_snake_case() -> &'static str {
+                #ident_snake_case_double_quotes_token_stream
             }
         };
         let fn_primary_key_token_stream = {
@@ -381,7 +381,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let pub_async_fn_prepare_postgresql_token_stream = {
+        let pub_async_fn_prepare_postgresql_table_token_stream = {
             let prepare_postgresql_double_quotes_token_stream = {
                 let acc = {
                     let mut acc = std::string::String::new();
@@ -391,7 +391,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let _: Option<char> = acc.pop();
                     acc
                 };
-                generate_quotes::double_quotes_token_stream(&format!("create table if not exists {ident_snake_case_stringified} ({acc})"))
+                generate_quotes::double_quotes_token_stream(&format!("create table if not exists {{table}} ({acc})"))
             };
             let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
@@ -409,7 +409,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 acc
             };
             quote::quote! {
-                pub async fn prepare_postgresql(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
                     // println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
@@ -439,6 +439,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                     Ok(())
                 }
+            }
+        };
+        let pub_async_fn_prepare_postgresql_token_stream = quote::quote! {
+            pub async fn #prepare_postgresql_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                #ident::#prepare_postgresql_table_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await
             }
         };
         let pub_fn_allow_methods_token_stream = {
@@ -487,6 +492,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             impl #ident {
                 #pub_fn_table_token_stream
                 #fn_primary_key_token_stream
+                #pub_async_fn_prepare_postgresql_table_token_stream
                 #pub_async_fn_prepare_postgresql_token_stream
                 #pub_fn_allow_methods_token_stream
                 #fn_generate_select_query_part_token_stream
