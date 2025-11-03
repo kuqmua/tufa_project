@@ -966,3 +966,4 @@ needless_character_iteration = { level = "deny", priority = 0 }
 needless_maybe_sized = { level = "deny", priority = 0 }
 renamed_function_params = { level = "allow", priority = 0 }
 while_float = { level = "deny", priority = 0 }
+fallable_impl_from = { level = "deny", priority = 0 }

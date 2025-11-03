@@ -180,7 +180,7 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_where_element_equal(
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>;
+    ) -> <Self::PostgresqlType as crate::PostgresqlType>::WhereElement;
     fn read_only_ids_merged_with_create_into_where_element_equal_using_fields(
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
@@ -224,7 +224,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_where_element_equal(
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement>;
+    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement;
     fn read_only_ids_merged_with_create_into_where_element_equal_using_fields(
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create

@@ -5192,7 +5192,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 //todo maybe it into function (not in proc macro)
-                let read_only_ids_merged_with_create_into_where_element_equal_common_token_stream = {
+                let read_only_ids_merged_with_create_into_where_element_equal_token_stream = {
                     let content_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
                         let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
                         let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key
@@ -5203,13 +5203,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {#create_snake_case.0}
                     };
                     quote::quote! {
-                        vec![
-                            #ident_where_element_upper_camel_case::#equal_upper_camel_case(where_element_filters::PostgresqlTypeWhereElementEqual {
-                                logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                #value_snake_case: #ident_table_type_declaration_upper_camel_case(#content_token_stream),
-                            })
-                        ]
+                        #ident_where_element_upper_camel_case::#equal_upper_camel_case(where_element_filters::PostgresqlTypeWhereElementEqual {
+                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                            #value_snake_case: #ident_table_type_declaration_upper_camel_case(#content_token_stream),
+                        })
                     }
+                };
+                let read_only_ids_merged_with_create_into_where_element_equal_using_fields_token_stream = quote::quote! {
+                    vec![#read_only_ids_merged_with_create_into_where_element_equal_token_stream]
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
@@ -5575,8 +5576,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         quote::quote!{#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
                     },
-                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
-                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
+                    &read_only_ids_merged_with_create_into_where_element_equal_token_stream,
+                    &read_only_ids_merged_with_create_into_where_element_equal_using_fields_token_stream,
                     &quote::quote!{None}
                 )
             };
