@@ -878,7 +878,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let try_new_for_deserialize_snake_case = naming::TryNewForDeserializeSnakeCase;
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-            let read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecOfReadInnerSnakeCase;
+            let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
             let vec_create_snake_case = naming::VecCreateSnakeCase;
             let create_snake_case = naming::CreateSnakeCase;
             let to_std_string_string_snake_case = naming::ToStdStringStringSnakeCase;
@@ -4882,7 +4882,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     False
                 }
                 let generate_standart_not_null_test_case_handle_token_stream = |is_need_to_use_into: &IsNeedToUseInto|{
-                    let generate_range_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream = |
+                    let generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = |
                         min_token_stream: &dyn quote::ToTokens,
                         negative_less_typical_token_stream: &dyn quote::ToTokens,
                         negative_more_typical_token_stream: &dyn quote::ToTokens,
@@ -4956,9 +4956,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ]
                         }
                     };
-                    let generate_int_pgrange_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream = |int_range_type: &IntRangeType| {
+                    let generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = |int_range_type: &IntRangeType| {
                         let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(int_range_type);
-                        generate_range_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(&quote::quote! {#range_inner_type_token_stream::MIN}, &quote::quote! {-20}, &quote::quote! {-10}, &quote::quote! {0}, &quote::quote! {10}, &quote::quote! {20}, &quote::quote! {#range_inner_type_token_stream::MAX - 1})
+                        generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&quote::quote! {#range_inner_type_token_stream::MIN}, &quote::quote! {-20}, &quote::quote! {-10}, &quote::quote! {0}, &quote::quote! {10}, &quote::quote! {20}, &quote::quote! {#range_inner_type_token_stream::MAX - 1})
                     };
                     let empty_vec_token_stream = quote::quote! {vec![]};
                     let (sqlx_types_chrono_naive_time_min_token_stream, sqlx_types_chrono_naive_time_ten_token_stream, sqlx_types_chrono_naive_time_twenty_token_stream, sqlx_types_chrono_naive_time_max_token_stream) = {
@@ -5160,9 +5160,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             sqlx::types::mac_address::MacAddress::#new_snake_case([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                             sqlx::types::mac_address::MacAddress::#new_snake_case([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                         ]},
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_range_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
                             &sqlx_types_chrono_naive_date_min_token_stream,
                             &sqlx_types_chrono_naive_date_negative_less_typical_token_stream,
                             &sqlx_types_chrono_naive_date_negative_more_typical_token_stream,
@@ -5171,7 +5171,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
                             &quote::quote! {#sqlx_types_chrono_naive_date_max_token_stream.pred_opt().unwrap()},
                         ),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_range_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
                             &sqlx_types_chrono_naive_date_time_min_token_stream,
                             &sqlx_types_chrono_naive_date_time_negative_less_typical_token_stream,
                             &sqlx_types_chrono_naive_date_time_negative_more_typical_token_stream,
@@ -5180,7 +5180,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &sqlx_types_chrono_naive_date_time_positive_more_typical_token_stream,
                             &sqlx_types_chrono_naive_date_time_max_token_stream,
                         ),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_range_read_only_ids_to_two_dimensional_vec_of_read_inner_token_stream(
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_min_token_stream,
                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_less_typical_token_stream,
                             &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_negative_more_typical_token_stream,
@@ -5351,7 +5351,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 let mut #acc_snake_case = vec![];
-                                for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case(&#read_only_ids_snake_case) {
+                                for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case) {
                                     for element1 in element0 {
                                         #acc_snake_case.push(vec![Some(element1)]);
                                     }
@@ -5365,10 +5365,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
-                                        let read_only_ids_to_two_dimensional_vec_of_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case(&#read_only_ids_snake_case);
+                                        let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                         let option_additional = {
                                             let mut option_additional = None;
-                                            for element0 in &read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                            for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
                                                 if option_additional.is_some() {
                                                     break;
                                                 }
@@ -5385,7 +5385,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         };
                                         let has_len_more_than_one = {
                                             let mut has_len_more_than_one = false;
-                                            for #element_snake_case in &read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                            for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
                                                 if #element_snake_case.len() > 1 {
                                                     has_len_more_than_one = true;
                                                     break;
@@ -5393,7 +5393,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             has_len_more_than_one
                                         };
-                                        for #element_snake_case in read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                        for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
                                             #acc_snake_case.push(vec![#element_snake_case]);
                                         }
                                         if let Some(#value_snake_case) = option_additional {
@@ -5410,10 +5410,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
-                                        let read_only_ids_to_two_dimensional_vec_of_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case(&#read_only_ids_snake_case);
+                                        let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                         let option_additional = {
                                             let mut option_additional = None;
-                                            for element0 in &read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                            for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
                                                 if option_additional.is_some() {
                                                     break;
                                                 }
@@ -5428,10 +5428,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             option_additional
                                         };
-                                        let has_len_more_than_one = read_only_ids_to_two_dimensional_vec_of_read_inner.len() > 1;
+                                        let has_len_more_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
                                         #acc_snake_case.push({
                                             let mut #acc_snake_case = vec![];
-                                            for element0 in read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                            for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                                 for element1 in element0 {
                                                     #acc_snake_case.push(element1);
                                                 }
@@ -5457,10 +5457,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 quote::quote! {
                                     let mut #acc_snake_case = vec![];
-                                    let read_only_ids_to_two_dimensional_vec_of_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_of_read_inner_snake_case(&#read_only_ids_snake_case);
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                     let option_additional = {
                                         let mut option_additional = None;
-                                        for element0 in &read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
                                             if option_additional.is_some() {
                                                 break;
                                             }
@@ -5485,7 +5485,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     };
                                     let has_len_more_than_one = {
                                         let mut has_len_more_than_one = false;
-                                        for element0 in &read_only_ids_to_two_dimensional_vec_of_read_inner {
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
                                             for element1 in element0 {
                                                 if element1.len() > 1 {
                                                     has_len_more_than_one = true;
@@ -5497,7 +5497,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     };
                                     #acc_snake_case.push(vec![Some({
                                         let mut #acc_snake_case = vec![];
-                                        for element0 in read_only_ids_to_two_dimensional_vec_of_read_inner.clone() {
+                                        for element0 in read_only_ids_to_two_dimensional_vec_read_inner.clone() {
                                             for element1 in element0 {
                                                 for element2 in element1 {
                                                     #acc_snake_case.push(element2);
