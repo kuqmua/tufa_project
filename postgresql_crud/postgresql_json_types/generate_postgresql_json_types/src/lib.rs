@@ -2701,7 +2701,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
                     },
                     &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
-                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream
+                    &read_only_ids_merged_with_create_into_where_element_equal_common_token_stream,
+                    &quote::quote!{
+                        todo!()
+                    }
                 )
             };
             let generated = quote::quote! {
