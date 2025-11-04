@@ -186,39 +186,39 @@ pub struct Example {
 }
 
 #[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
+    // , postgresql_crud::GeneratePostgresqlJsonObjectType
 )] //
-#[postgresql_crud::postgresql_json_object_type_pattern{
-    // "All"
-    {
-        "Concrete":
-        // [
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Standart",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
-            // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-        // ]
-    }
-}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{
+//     // "All"
+//     {
+//         "Concrete":
+//         // [
+//             {
+//                 "not_null_or_nullable": "NotNull",
+//                 "postgresql_json_object_type_pattern": "Standart",
+//                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             }
+//             // ,
+//             // {
+//             //     "not_null_or_nullable": "Nullable",
+//             //     "postgresql_json_object_type_pattern": "Standart",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             // {
+//             //     "not_null_or_nullable": "NotNull",
+//             //     "postgresql_json_object_type_pattern": "Array",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             // {
+//             //     "not_null_or_nullable": "Nullable",
+//             //     "postgresql_json_object_type_pattern": "Array",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//         // ]
+//     }
+// }]
 pub struct Animal {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
