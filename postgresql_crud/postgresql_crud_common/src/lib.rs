@@ -185,11 +185,11 @@ pub trait PostgresqlTypeTestCases {
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>;
-    //here
+    //todo must different name for PostgresqlTypeTestCases and PostgresqlJsonTypeTestCases
     fn read_only_ids_merged_with_create_into_where_element_equal_to_json_field(
         read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>;
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
 }
 
 #[cfg(feature = "test-utils")]
@@ -233,7 +233,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_where_element_equal_to_json_field(
         read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> std::option::Option<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement>;
+    ) -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement>;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {

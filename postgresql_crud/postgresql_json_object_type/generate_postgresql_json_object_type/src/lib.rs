@@ -4479,10 +4479,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {
                                             #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                                 match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                                                    (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(
-                                                        //here
-                                                        #content_token_stream
-                                                    ).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
+                                                    (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
                                                     (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
                                                     (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                                     (None, None) => None,
@@ -5642,9 +5639,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             &read_only_ids_merged_with_create_into_where_element_equal_token_stream,
                             &read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream,
-                            &quote::quote!{
-                                todo!()
-                            }
+                            &quote::quote!{todo!()}
                         )
                     },
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
@@ -5679,10 +5674,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )},
-                        &quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_to_json_field_snake_case(
+                        &quote::quote!{Some(#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_to_json_field_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
-                        )}
+                        ))}
                     ),
                 )
             };
