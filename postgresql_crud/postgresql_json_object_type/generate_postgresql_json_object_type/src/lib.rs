@@ -191,7 +191,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let previous_read_merged_with_option_update_into_read_snake_case = naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
             let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
             let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
-            let read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualUsingFieldsSnakeCase;
+            let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
             let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualToJsonFieldSnakeCase;
             let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -4346,7 +4346,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     {
                         let (
                             read_only_ids_merged_with_create_into_where_element_equal_token_stream,
-                            read_only_ids_merged_with_create_into_where_element_equal_using_fields_token_stream
+                            read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
                         ) = {
                             //todo different methods
                             let generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream = |equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields|{
@@ -4388,7 +4388,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #ident_where_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(
                                                             #import_path::PostgresqlTypeWhere::try_new(
                                                                 #import_path::LogicalOperator::And,
-                                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case(
+                                                                #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
                                                                     #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                                     #create_snake_case.#field_ident
                                                                 )
@@ -4469,7 +4469,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     ]
                                                 },
                                                 postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote! {
-                                                    #ident_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case(
+                                                    #ident_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
                                                         #read_only_ids_snake_case,
                                                         #create_snake_case
                                                     )
@@ -5641,7 +5641,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             &read_only_ids_merged_with_create_into_where_element_equal_token_stream,
-                            &read_only_ids_merged_with_create_into_where_element_equal_using_fields_token_stream,
+                            &read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream,
                             &quote::quote!{
                                 todo!()
                             }
@@ -5675,7 +5675,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )},
-                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case(
+                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )},

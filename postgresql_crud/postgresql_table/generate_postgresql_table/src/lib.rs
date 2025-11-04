@@ -179,7 +179,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
     let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualUsingFieldsSnakeCase;
+    let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let read_only_ids_into_table_type_declaration_snake_case = naming::ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
@@ -4715,7 +4715,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             let content_token_stream = generate_token_stream(&read_only_ids_merged_with_create_into_where_element_equal_snake_case);
                                             quote::quote! {vec![#content_token_stream]}
                                         },
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => generate_token_stream(&read_only_ids_merged_with_create_into_where_element_equal_using_fields_snake_case)
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => generate_token_stream(&read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case)
                                     }
                                 };
                                 quote::quote! {
