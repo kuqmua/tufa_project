@@ -423,11 +423,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream = {
                             let content_token_stream = {
                                 let generate_token_stream = |
-                                    field_ident_upper_camel_case: &dyn quote::ToTokens,
                                     field_type: &dyn quote::ToTokens,
                                     field_ident: &dyn quote::ToTokens,
                                     second_argument_token_stream: &dyn quote::ToTokens,
                                 |{
+                                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_element_upper_camel_case::#field_ident_upper_camel_case(
@@ -443,7 +443,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 let id_token_stream = generate_token_stream(
-                                    &id_upper_camel_case,
                                     &uuid_uuid_as_not_null_jsonb_string_token_stream,
                                     &id_snake_case,
                                     &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -453,7 +452,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     });
                                     generate_token_stream(
-                                        &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident),
                                         &element.ty,
                                         &field_ident,
                                         &quote::quote!{#create_snake_case.#field_ident}
@@ -479,11 +477,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_token_stream = {
                             let content_token_stream = {
                                 let generate_token_stream = |
-                                    field_ident_upper_camel_case: &dyn quote::ToTokens,
                                     field_type: &dyn quote::ToTokens,
                                     field_ident: &dyn quote::ToTokens,
                                     second_argument_token_stream: &dyn quote::ToTokens,
                                 |{
+                                    let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #acc_snake_case.push(#ident_with_id_standart_not_null_where_element_upper_camel_case::#field_ident_upper_camel_case(
@@ -499,7 +497,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 let id_token_stream = generate_token_stream(
-                                    &id_upper_camel_case,
                                     &uuid_uuid_as_not_null_jsonb_string_token_stream,
                                     &id_snake_case,
                                     &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -509,7 +506,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     });
                                     generate_token_stream(
-                                        &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident),
                                         &element.ty,
                                         &field_ident,
                                         &quote::quote!{#create_snake_case.#field_ident}
