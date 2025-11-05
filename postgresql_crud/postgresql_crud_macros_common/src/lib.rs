@@ -1083,7 +1083,7 @@ fn generate_read_only_ids_merged_with_create_into_where_element_equal_to_json_fi
         }
     }
 }
-pub fn generate_read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_token_stream(
+pub fn generate_read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_token_stream(
     read_only_ids_token_stream: &dyn quote::ToTokens,
     create_token_stream: &dyn quote::ToTokens,
     where_element_token_stream: &dyn quote::ToTokens,
@@ -1335,7 +1335,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case},
         &read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream,
     );
-    let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_token_stream(
+    let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_content_token_stream = generate_read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case},
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case},

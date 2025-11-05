@@ -460,7 +460,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         );
-                        let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_token_stream = postgresql_crud_macros_common::generate_read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_token_stream(
+                        let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_token_stream = postgresql_crud_macros_common::generate_read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_token_stream(
                             &ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                             &ident_with_id_standart_not_null_create_upper_camel_case,
                             &ident_with_id_standart_not_null_where_element_upper_camel_case,
