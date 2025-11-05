@@ -373,14 +373,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let read_only_ids_merged_with_create_into_where_element_equal_token_stream = {
                             let content_token_stream = {
                                 let generate_token_stream = |
-                                    field_type_token_stream: &dyn quote::ToTokens,
-                                    field_ident_token_stream: &dyn quote::ToTokens,
+                                    field_type: &dyn quote::ToTokens,
+                                    field_ident: &dyn quote::ToTokens,
                                     second_argument_token_stream: &dyn quote::ToTokens,
                                 |{
-                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type_token_stream);
+                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                            #read_only_ids_snake_case.0.#value_snake_case.#field_ident_token_stream,
+                                            #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                             #second_argument_token_stream
                                         )
                                     }
@@ -424,17 +424,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let content_token_stream = {
                                 let generate_token_stream = |
                                     field_ident_upper_camel_case: &dyn quote::ToTokens,
-                                    field_type_token_stream: &dyn quote::ToTokens,
-                                    field_ident_snake_case: &dyn quote::ToTokens,
+                                    field_type: &dyn quote::ToTokens,
+                                    field_ident: &dyn quote::ToTokens,
                                     second_argument_token_stream: &dyn quote::ToTokens,
                                 |{
-                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type_token_stream);
+                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_element_upper_camel_case::#field_ident_upper_camel_case(
                                             postgresql_crud::PostgresqlTypeWhere::try_new(
                                                 postgresql_crud::LogicalOperator::And,
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident_snake_case,
+                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #second_argument_token_stream
                                                 ),
                                             )
@@ -480,17 +480,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let content_token_stream = {
                                 let generate_token_stream = |
                                     field_ident_upper_camel_case: &dyn quote::ToTokens,
-                                    field_type_token_stream: &dyn quote::ToTokens,
-                                    field_ident_snake_case: &dyn quote::ToTokens,
+                                    field_type: &dyn quote::ToTokens,
+                                    field_ident: &dyn quote::ToTokens,
                                     second_argument_token_stream: &dyn quote::ToTokens,
                                 |{
-                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type_token_stream);
+                                    let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #acc_snake_case.push(#ident_with_id_standart_not_null_where_element_upper_camel_case::#field_ident_upper_camel_case(
                                             #import_path::PostgresqlTypeWhere::try_new(
                                                 #import_path::LogicalOperator::Or,
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_element_equal_to_json_field_snake_case(
-                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident_snake_case,
+                                                    #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #second_argument_token_stream
                                                 ),
                                             )
