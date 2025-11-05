@@ -599,6 +599,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             }
             let self_value_token_stream = quote::quote! {Self(#value_snake_case)};
+            let postgresql_type_where_filter_query_bind_value_query_token_stream = quote::quote!{#import_path::PostgresqlTypeWhereFilter::query_bind(#value_snake_case, #query_snake_case)};
 
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
@@ -1480,10 +1481,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         )
                     };
                     let equal_variant_query_bind_token_stream = quote::quote!{
-                        #self_upper_camel_case::#equal_upper_camel_case(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::query_bind(
-                            #value_snake_case,
-                            #query_snake_case
-                        )
+                        #self_upper_camel_case::#equal_upper_camel_case(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream
                     };
                     let maybe_ident_where_element_token_stream = {
                         let generate_ident_where_element_wrapper_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_ident_where_element_token_stream(
@@ -1579,7 +1577,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 .to_string();
                             let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
                             quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query)
+                                Self::#field_ident_upper_camel_case_token_stream(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream
                             }
                         });
                         quote::quote! {#(#query_bind_variants_token_stream),*}
@@ -1706,18 +1704,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &{
                                     let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
-                                        quote::quote! {Self::#element_ident_upper_camel_case(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query)}
+                                        quote::quote! {Self::#element_ident_upper_camel_case(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream}
                                     });
                                     quote::quote! {
                                         match self {
-                                            Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::LengthEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::LengthMoreThan(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::In(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::DimensionOneIn(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::ContainsAllElementsOfArray(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                            Self::OverlapsWithArray(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                            Self::Equal(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::DimensionOneEqual(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::LengthEqual(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::LengthMoreThan(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::In(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::DimensionOneIn(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::ContainsAllElementsOfArray(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
+                                            Self::OverlapsWithArray(#value_snake_case) => #postgresql_type_where_filter_query_bind_value_query_token_stream,
                                             #(#element_filters_token_stream),*
                                         }
                                     }
