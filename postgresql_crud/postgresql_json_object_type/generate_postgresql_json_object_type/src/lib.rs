@@ -460,9 +460,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         );
-                        //todo maybe reuse here and in the trait function gen logic?
-                        let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_token_stream = {
-                            let content_token_stream = {
+                        let read_only_ids_merged_with_create_into_where_element_equal_to_json_field_token_stream = postgresql_crud_macros_common::generate_read_only_ids_merged_with_create_into_where_element_equal_to_json_field_postgresql_json_type_token_stream(
+                            &ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
+                            &ident_with_id_standart_not_null_create_upper_camel_case,
+                            &ident_with_id_standart_not_null_where_element_upper_camel_case,
+                            &{
                                 let generate_token_stream = |
                                     field_ident: &dyn quote::ToTokens,
                                     field_type: &dyn quote::ToTokens,
@@ -504,16 +506,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     #(#content_token_stream)*
                                     #acc_snake_case
                                 }
-                            };
-                            quote::quote!{
-                                fn #read_only_ids_merged_with_create_into_where_element_equal_to_json_field_snake_case(
-                                    #read_only_ids_snake_case: #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
-                                    #create_snake_case: #ident_with_id_standart_not_null_create_upper_camel_case
-                                ) -> std::vec::Vec<#ident_with_id_standart_not_null_where_element_upper_camel_case> {
-                                    #content_token_stream
-                                }
-                            }
-                        };
+                            },
+                        );
                         quote::quote! {
                             #[cfg(feature = "test-utils")]
                             impl #ident_with_id_standart_not_null_upper_camel_case {
