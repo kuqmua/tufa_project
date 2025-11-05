@@ -5859,8 +5859,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{todo!()},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{todo!()}
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                        #ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
+                                            #read_only_ids_snake_case,
+                                            #create_snake_case
+                                        )
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                        #ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
+                                            #read_only_ids_snake_case,
+                                            #create_snake_case
+                                        )
+                                    }
                                 },
                             }
                         )
