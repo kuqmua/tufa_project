@@ -4691,12 +4691,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     generate_test_read_many_by_equal_to_created_primary_keys(2).await;
                 }
             };
+            let generate_for_each_concurrent_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
+                futures::StreamExt::for_each_concurrent(
+                    futures::stream::iter({
+                        let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                        #content_token_stream
+                        #acc_snake_case
+                    }),
+                    1,//todo if it was more than 1 - test will not pass coz potential duplicates in table
+                    |fut| async move {
+                        fut.await;
+                    },
+                )
+                .await;
+            };
             let (
                 read_only_ids_merged_with_create_into_where_element_equal,
                 read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields
             ) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields|{
-                    let update_many_only_one_column_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                    generate_for_each_concurrent_one_token_stream(&generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.syn_field.ty;
                         let ident_create_content_token_stream = generate_ident_create_content_token_stream(&field_ident);
@@ -4867,21 +4881,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }));
                             }
                         }
-                    });
-                    quote::quote!{
-                        futures::StreamExt::for_each_concurrent(
-                            futures::stream::iter({
-                                let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                                #update_many_only_one_column_tests_token_stream
-                                #acc_snake_case
-                            }),
-                            1,//todo if it was more than 1 - test will not pass coz potential duplicates in table
-                            |fut| async move {
-                                fut.await;
-                            },
-                        )
-                        .await;
-                    }
+                    }))
                 };
                 (
                     generate_test_read_many_by_equal_one_column_value_token_stream(&postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal),
@@ -4889,7 +4889,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             };
             let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field = {
-                let update_many_only_one_column_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                generate_for_each_concurrent_one_token_stream(&generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.syn_field.ty;
                     let ident_create_content_token_stream = generate_ident_create_content_token_stream(&field_ident);
@@ -5051,21 +5051,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }));
                         }
                     }
-                });
-                quote::quote!{
-                    futures::StreamExt::for_each_concurrent(
-                        futures::stream::iter({
-                            let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                            #update_many_only_one_column_tests_token_stream
-                            #acc_snake_case
-                        }),
-                        1,//todo if it was more than 1 - test will not pass coz potential duplicates in table
-                        |fut| async move {
-                            fut.await;
-                        },
-                    )
-                    .await;
-                }
+                }))
             };
             quote::quote!{{
                 #test_read_many_by_non_existent_primary_keys_token_stream
