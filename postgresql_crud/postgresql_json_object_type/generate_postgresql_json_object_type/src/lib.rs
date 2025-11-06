@@ -5906,9 +5906,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         },
                                         (Some(_), None) => panic!("error b4507b4c-5282-4d91-9a50-190b2d789849"),
                                         (None, Some(_)) => panic!("error 8f458c1d-a286-404f-b3b7-cd8f7b4c8bed"),
-                                        (None, None) => (),
+                                        (None, None) => {
+                                            #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None));
+                                        },
                                     }
-                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None));
                                     #acc_snake_case
                                 }
                             },
