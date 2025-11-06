@@ -5579,7 +5579,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &read_only_ids_merged_with_create_into_where_element_equal_token_stream,
                     &read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream,
                     &quote::quote!{None},
-                    &quote::quote!{todo!()}
+                    &match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => quote::quote!{None},
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                quote::quote! {
+                                    todo!()
+                                }
+                            },
+                        }
+                    },
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
