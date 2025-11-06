@@ -5578,7 +5578,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &read_only_ids_merged_with_create_into_where_element_equal_token_stream,
                     &read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream,
-                    &quote::quote!{None}
+                    &quote::quote!{None},
+                    &quote::quote!{todo!()}
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {

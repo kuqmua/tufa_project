@@ -5956,7 +5956,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &quote::quote!{Some(#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
-                        ))}
+                        ))},
+                        &quote::quote!{None}
                     ),
                 )
             };
