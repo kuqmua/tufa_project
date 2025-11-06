@@ -5866,18 +5866,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                         quote::quote! {
-                                            #acc_snake_case.push(
-                                                #ident_where_element_upper_camel_case::#field_ident_upper_camel_case(
-                                                    #import_path::PostgresqlTypeWhere::try_new(
-                                                        #import_path::LogicalOperator::Or,
-                                                        #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_snake_case(
-                                                            #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
-                                                            #create_snake_case.#field_ident
+                                            for #element_snake_case in #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_snake_case(
+                                                #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                #create_snake_case.#field_ident
+                                            ) {
+                                                #acc_snake_case.push(
+                                                    #ident_where_element_upper_camel_case::#field_ident_upper_camel_case(
+                                                        #import_path::PostgresqlTypeWhere::try_new(
+                                                            #import_path::LogicalOperator::Or,
+                                                            vec![#element_snake_case],
                                                         )
+                                                        .expect("error 0c6ccad1-6ffc-451f-9b16-0731010fee9f"),
                                                     )
-                                                    .expect("error 0c6ccad1-6ffc-451f-9b16-0731010fee9f")
-                                                )
-                                            );
+                                                );
+                                            }
                                         }
                                     });
                                     quote::quote!{
