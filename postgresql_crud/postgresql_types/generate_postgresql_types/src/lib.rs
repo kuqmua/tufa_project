@@ -980,7 +980,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let generate_ident_standart_not_null_origin_token_stream = |postgresql_type: &PostgresqlType| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(postgresql_type));
             let ident_standart_not_null_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(postgresql_type);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-            let ident_standart_not_null_or_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
+            let ident_standart_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
 
             let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
             let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
@@ -3640,7 +3640,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &quote::quote!{Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))}
             );
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-            let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_create_token_stream = {
                 let ident_create_token_stream = match &can_be_primary_key {
@@ -3942,9 +3941,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                            let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = match &postgresql_type.can_be_nullable() {
-                                CanBeNullable::True => quote::quote! {#ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case},
-                                CanBeNullable::False => quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
+                            let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = {
+                                let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
+                                    CanBeNullable::True => {
+                                        let value = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
+                                        quote::quote!{#value}
+                                    },
+                                    CanBeNullable::False => quote::quote!{#ident_standart_not_null_upper_camel_case},
+                                });
+                                quote::quote!{#value}
                             };
                             let dimension_one_greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan {
                                 ident: quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case},
@@ -3968,7 +3973,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
-                                    ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case.clone(),
+                                    ident: {
+                                        let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
+                                        quote::quote!{#value}
+                                    }
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual);
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan);
@@ -5606,10 +5614,29 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #acc_snake_case
                                 })
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
-                                quote::quote! {
-                                    todo!()
-                                }
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
+                                Some({
+                                    let mut #acc_snake_case = vec![];
+                                    for (i, #element_snake_case) in #create_snake_case.0.0.iter().enumerate() {
+                                        let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
+                                        #acc_snake_case.push(
+                                            #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
+                                                    logical_operator: #import_path::LogicalOperator::Or,
+                                                    dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                        vec![
+                                                            where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
+                                                            ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
+                                                        ]
+                                                    ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
+                                                    #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case.clone()),
+                                                }
+                                            )
+                                        );
+                                    }
+                                    #acc_snake_case
+                                })
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
                                 quote::quote! {
