@@ -1750,10 +1750,10 @@ impl postgresql_crud_common::PostgresqlTypeTestCases for VecOfStdPrimitiveI16AsN
     fn read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field(read_only_ids: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::Create) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::WhereElement>> {
         None
     }
-    fn read_only_ids_merged_with_create_into_postgresql_type_where_element_dimension_one_equal(
+    fn read_only_ids_merged_with_create_into_postgresql_type_option_vec_where_element_dimension_one_equal(
         read_only_ids: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::Create
-    ) -> std::option::Option<<Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::WhereElement> {
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::WhereElement>> {
         //here
         //
         //
@@ -1772,19 +1772,31 @@ impl postgresql_crud_common::PostgresqlTypeTestCases for VecOfStdPrimitiveI16AsN
 //     }
 // }
 // pub struct BoundedStdVecVec<T, const LENGTH: std::primitive::usize>(std::vec::Vec<T>);
-        Some(VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2WhereElement::DimensionOneEqual(
-            where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
-                logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                // dimensions: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, 1>,
-                dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                    vec![
-                        where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(1).expect("error 50108886-bef3-4324-8d27-5728c646530a")
-                    ]
-                ).expect("error d029ee78-1237-41a5-ab12-d55ba59e11e0"),
-                value: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration(create.0.0[0].clone()),
-                // ^^^^^^^^ expected `StdPrimitiveI16AsNotNullInt2Origin`, found `VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin`
+        Some({
+            let mut acc = vec![];
+            for (i, element) in create.0.0.iter().enumerate() {
+                let index = i.checked_add(1).expect("error 7e2d04f2-ebaa-4368-b999-71857775990a");
+                acc.push(
+                    VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2WhereElement::DimensionOneEqual(
+                        where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
+                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                            //// dimensions: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, 1>,
+                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                vec![
+                                    where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                        std::primitive::i32::try_from(index).expect("error 6e01b54b-3552-49f0-8e78-f682b89d99c3")
+                                    ).expect("error 50108886-bef3-4324-8d27-5728c646530a")
+                                ]
+                            ).expect("error d029ee78-1237-41a5-ab12-d55ba59e11e0"),
+                            value: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration(element.clone()),
+                            //// ^^^^^^^^ expected `StdPrimitiveI16AsNotNullInt2Origin`, found `VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin`
+                        }
+                    )
+                );
             }
-        ))
+            acc
+        })
+        // todo!()
     }
 }
 impl postgresql_crud_common::PostgresqlTypeNotPrimaryKey for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 {

@@ -4933,14 +4933,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             });
-            // let read_only_ids_merged_with_create_into_postgresql_type_where_element_dimension_one_equal_token_stream
+            // let read_only_ids_merged_with_create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
             quote::quote!{{
                 #test_read_many_by_non_existent_primary_keys_token_stream
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
                 #read_only_ids_merged_with_create_into_where_element_equal_token_stream
                 #read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
                 #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_type_where_element_dimension_one_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
             }}
         };
         let read_one_token_stream = {
