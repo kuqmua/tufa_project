@@ -1086,40 +1086,40 @@ impl<
 > postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhereElementDimensionOneEqual<T> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         //here
+        let dimensions_indexes = match self.dimensions.postgresql_type_query_part(increment, column, is_need_to_add_logical_operator) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            }
+        };
         let operator = <T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value);
         let operator_query_str = operator.to_query_str();
         let content = match operator {
             postgresql_crud_common::EqualOperator::Equal => {
-                let dimensions_indexes = match self.dimensions.postgresql_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(error);
-                    }
-                };
                 let value = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                     Ok(value) => value,
                     Err(error) => {
                         return Err(error);
                     }
                 };
-                format!("{dimensions_indexes} {operator_query_str} ${value}")
+                format!("{operator_query_str} ${value}")
             }
-            postgresql_crud_common::EqualOperator::IsNull => format!(" {operator_query_str}"),
+            postgresql_crud_common::EqualOperator::IsNull => operator_query_str.to_owned(),
         };
-        Ok(format!("{}({column}{content})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+        Ok(format!("{}({column}{dimensions_indexes} {content})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
 
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
         //here
-        if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value) {
-            match self.dimensions.query_bind(query) {
-                Ok(value) => {
-                    query = value;
-                }
-                Err(error) => {
-                    return Err(error);
-                }
+        match self.dimensions.query_bind(query) {
+            Ok(value) => {
+                query = value;
             }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&self.value) {
             if let Err(error) = query.try_bind(self.value) {
                 return Err(error.to_string());
             }
