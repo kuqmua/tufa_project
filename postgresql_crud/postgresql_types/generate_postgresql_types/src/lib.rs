@@ -5673,7 +5673,29 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
                                 quote::quote! {
-                                    todo!()
+                                    match #create_snake_case.0.0 {
+                                        Some(#value_snake_case) => Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for (i, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
+                                                let index = i.checked_add(1).expect("error 84a8fc22-e652-474d-a385-f5de3c9d2023");
+                                                #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                    where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                            vec![
+                                                                where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                    std::primitive::i32::try_from(index).expect("error 482c7b1e-9152-42e5-b509-e21e4249d799")
+                                                                ).expect("error 3aec00c3-3436-4be9-b46e-58eafec0c294")
+                                                            ]
+                                                        ).expect("error 6f5a6ccb-ac0d-431e-90da-11f7984647fa"),
+                                                        #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case)
+                                                    }
+                                                ));
+                                            }
+                                            #acc_snake_case
+                                        }),
+                                        None => None
+                                    }
                                 }
                             },
                         }
