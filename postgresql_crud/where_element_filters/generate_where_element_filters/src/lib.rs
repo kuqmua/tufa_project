@@ -389,7 +389,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     )
                 };
                 let generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream(postgresql_type_pattern_handle, &|postgresql_type_kind: &PostgresqlTypeKind| format!("{{}}({{}}{} {operator} ${{}})", postgresql_type_kind.format_argument()));
-                let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(postgresql_type_pattern_handle, &"=");
                 let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(postgresql_type_pattern_handle, &">");
                 let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     let (maybe_dimensions_declaration_token_stream, maybe_dimensions_default_initialization_token_stream, maybe_dimensions_indexes_initialization_token_stream, postgresql_type_kind, maybe_additional_parameters_token_stream, maybe_dimensions_query_bind_content_token_stream) = generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle);
