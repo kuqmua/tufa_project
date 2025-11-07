@@ -3940,7 +3940,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             }
                         }
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                             let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = {
                                 let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &postgresql_type.can_be_nullable() {
                                     CanBeNullable::True => {
@@ -3972,9 +3972,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
+                                //here
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
                                     ident: {
-                                        let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
+                                        let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &dimension1_not_null_or_nullable {
+                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_upper_camel_case,
+                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_upper_camel_case,
+                                        });
                                         quote::quote!{#value}
                                     }
                                 });
@@ -5614,33 +5618,57 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #acc_snake_case
                                 })
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
-                                Some({
-                                    let mut #acc_snake_case = vec![];
-                                    for (i, #element_snake_case) in #create_snake_case.0.0.iter().enumerate() {
-                                        let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
-                                        #acc_snake_case.push(
-                                            #ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
-                                                    logical_operator: #import_path::LogicalOperator::Or,
-                                                    dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                        vec![
-                                                            where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
-                                                            ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
-                                                        ]
-                                                    ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
-                                                    #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case.clone()),
-                                                }
-                                            )
-                                        );
-                                    }
-                                    #acc_snake_case
-                                })
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                quote::quote! {
+                                    Some({
+                                        let mut #acc_snake_case = vec![];
+                                        for (i, #element_snake_case) in #create_snake_case.0.0.iter().enumerate() {
+                                            let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
+                                            #acc_snake_case.push(
+                                                #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                    where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                            vec![
+                                                                where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                    std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
+                                                                ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
+                                                            ]
+                                                        ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
+                                                        #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case.clone()),
+                                                    }
+                                                )
+                                            );
+                                        }
+                                        #acc_snake_case
+                                    })
+                                }
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
                                 quote::quote! {
-                                    todo!()
+                                    match #create_snake_case.0.0 {
+                                        Some(#value_snake_case) => Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for (i, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
+                                                let index = i.checked_add(1).expect("error 84a8fc22-e652-474d-a385-f5de3c9d2023");
+                                                #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                    where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                            vec![
+                                                                where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                    std::primitive::i32::try_from(index).expect("error 482c7b1e-9152-42e5-b509-e21e4249d799")
+                                                                ).expect("error 3aec00c3-3436-4be9-b46e-58eafec0c294")
+                                                            ]
+                                                        ).expect("error 6f5a6ccb-ac0d-431e-90da-11f7984647fa"),
+                                                        #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case)
+                                                    }
+                                                ));
+                                            }
+                                            #acc_snake_case
+                                        }),
+                                        None => None
+                                    }
                                 }
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
