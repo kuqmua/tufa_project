@@ -3627,6 +3627,56 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_origin_upper_camel_case,
                     &quote::quote!{Ok(Self(#value_snake_case))}
                 );
+                //todo rewrite as dependency of PostgresqlType trait?
+                let impl_postgresql_type_equal_operator_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
+                    &import_path,
+                    &ident_table_type_declaration_upper_camel_case,
+                    //todo
+                    &{
+                        let equal_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path);
+                        let is_null_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    if self.0.0.is_some() {
+                                        #equal_token_stream
+                                    }
+                                    else {
+                                        #is_null_token_stream
+                                    }
+                                }
+                            },
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        //todo thats not actually usefull coz nullable array comparison has different logic. need to refactor EqualOperatorHandle enum 
+                                        equal_token_stream
+                                    },
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                        if self.0.0.is_some() {
+                                            #equal_token_stream
+                                        }
+                                        else {
+                                            #is_null_token_stream
+                                        }
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                        if self.0.0.is_some() {
+                                            #equal_token_stream
+                                        }
+                                        else {
+                                            #is_null_token_stream
+                                        }
+                                    }, 
+                                },
+                            }
+                        }
+                    }
+                );
                 quote::quote!{
                     #ident_table_type_declaration_token_stream
                     #impl_ident_table_type_declaration_token_stream
@@ -3634,6 +3684,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream
                     #impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream
+                    #impl_postgresql_type_equal_operator_for_ident_table_type_declaration_token_stream
                 }
             };
             let pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_new_value_ident_inner_type_token_stream(
@@ -5676,55 +5727,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             else {
                 postgresql_crud_macros_common::generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(&import_path, &ident)
             };
-            let impl_postgresql_type_equal_operator_for_ident_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
-                &import_path,
-                &ident_table_type_declaration_upper_camel_case,
-                //todo
-                &{
-                    let equal_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::Equal.to_tokens_path(&import_path);
-                    let is_null_token_stream = postgresql_crud_macros_common::EqualOperatorHandle::IsNull.to_tokens_path(&import_path);
-                    match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                if self.0.0.is_some() {
-                                    #equal_token_stream
-                                }
-                                else {
-                                    #is_null_token_stream
-                                }
-                            }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => equal_token_stream,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    //todo thats not actually usefull coz nullable array comparison has different logic. need to refactor EqualOperatorHandle enum 
-                                    equal_token_stream
-                                },
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                                    if self.0.0.is_some() {
-                                        #equal_token_stream
-                                    }
-                                    else {
-                                        #is_null_token_stream
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    if self.0.0.is_some() {
-                                        #equal_token_stream
-                                    }
-                                    else {
-                                        #is_null_token_stream
-                                    }
-                                }, 
-                            },
-                        }
-                    }
-                }
-            );
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
@@ -5741,7 +5743,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_postgresql_type_test_cases_for_ident_token_stream
                 #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 #maybe_impl_postgresql_type_not_primary_key_for_ident_token_stream
-                #impl_postgresql_type_equal_operator_for_ident_token_stream
             };
             (
                 {
