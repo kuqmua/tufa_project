@@ -5690,7 +5690,48 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     },
-                    &quote::quote!{todo!()},
+                    &match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => {
+                            enum IsNeedToImplGreaterThanTest {
+                                True,
+                                False
+                            }
+                            let is_need_to_impl_greater_than_test = match &postgresql_type {
+                                PostgresqlType::StdPrimitiveI16AsInt2 => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI32AsInt4 => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI64AsInt8 => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveF32AsFloat4 => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveF64AsFloat8 => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveBoolAsBool => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::StdStringStringAsText => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplGreaterThanTest::False,
+                            };
+                            match &is_need_to_impl_greater_than_test {
+                                IsNeedToImplGreaterThanTest::True => quote::quote!{None},//todo
+                                IsNeedToImplGreaterThanTest::False => quote::quote!{None},
+                            }
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 {..} => quote::quote!{None},
+                    },
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
