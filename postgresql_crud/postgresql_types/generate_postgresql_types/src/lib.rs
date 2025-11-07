@@ -5593,36 +5593,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &quote::quote!{None},
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => quote::quote!{None},
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                Some({
-                                    let mut #acc_snake_case = vec![];
-                                    for (i, #element_snake_case) in #create_snake_case.0.0.iter().enumerate() {
-                                        let index = i.checked_add(1).expect("error d69a5b02-cef0-45b7-8ef9-9d70f931c30d");
-                                        #acc_snake_case.push(
-                                            #ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
-                                                    logical_operator: #import_path::LogicalOperator::Or,
-                                                    dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                        vec![
-                                                            where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                std::primitive::i32::try_from(index).expect("error 2f2777c5-eac2-472e-a49e-6dfe385b574c")
-                                                            ).expect("error 44345e1a-f278-4423-96e2-227cc7b7de0f")
-                                                        ]
-                                                    ).expect("error 8a75c3ac-d09c-4092-9059-5d10291cff22"),
-                                                    #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case.clone()),
-                                                }
-                                            )
-                                        );
-                                    }
-                                    #acc_snake_case
-                                })
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                            let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_upper_camel_case,
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_upper_camel_case,
+                            };
+                            let some_token_stream = {
+                                let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote!{#create_snake_case.0.0},
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{#value_snake_case.0},
+                                };
                                 quote::quote! {
                                     Some({
                                         let mut #acc_snake_case = vec![];
-                                        for (i, #element_snake_case) in #create_snake_case.0.0.iter().enumerate() {
+                                        for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
                                             let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
                                             #acc_snake_case.push(
                                                 #ident_where_element_upper_camel_case::DimensionOneEqual(
@@ -5635,7 +5619,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
                                                             ]
                                                         ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
-                                                        #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case.clone()),
+                                                        #value_snake_case: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(#element_snake_case),
                                                     }
                                                 )
                                             );
@@ -5643,61 +5627,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         #acc_snake_case
                                     })
                                 }
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
-                                quote::quote! {
+                            };
+                            match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => some_token_stream,
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                     match #create_snake_case.0.0 {
-                                        Some(#value_snake_case) => Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for (i, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                let index = i.checked_add(1).expect("error 84a8fc22-e652-474d-a385-f5de3c9d2023");
-                                                #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                    where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
-                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                            vec![
-                                                                where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                    std::primitive::i32::try_from(index).expect("error 482c7b1e-9152-42e5-b509-e21e4249d799")
-                                                                ).expect("error 3aec00c3-3436-4be9-b46e-58eafec0c294")
-                                                            ]
-                                                        ).expect("error 6f5a6ccb-ac0d-431e-90da-11f7984647fa"),
-                                                        #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case)
-                                                    }
-                                                ));
-                                            }
-                                            #acc_snake_case
-                                        }),
+                                        Some(#value_snake_case) => #some_token_stream,
                                         None => None
                                     }
-                                }
-                            },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
-                                quote::quote! {
-                                    match #create_snake_case.0.0 {
-                                        Some(#value_snake_case) => Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for (i, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                let index = i.checked_add(1).expect("error 84a8fc22-e652-474d-a385-f5de3c9d2023");
-                                                #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                    where_element_filters::PostgresqlTypeWhereElementDimensionOneEqual {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
-                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                            vec![
-                                                                where_element_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                    std::primitive::i32::try_from(index).expect("error 482c7b1e-9152-42e5-b509-e21e4249d799")
-                                                                ).expect("error 3aec00c3-3436-4be9-b46e-58eafec0c294")
-                                                            ]
-                                                        ).expect("error 6f5a6ccb-ac0d-431e-90da-11f7984647fa"),
-                                                        #value_snake_case: #ident_standart_nullable_table_type_declaration_upper_camel_case(#element_snake_case)
-                                                    }
-                                                ));
-                                            }
-                                            #acc_snake_case
-                                        }),
-                                        None => None
-                                    }
-                                }
-                            },
+                                },
+                            }
                         }
                     },
                 )
