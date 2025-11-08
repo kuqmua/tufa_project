@@ -5737,14 +5737,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                                        Some(vec![
+                                        Some(
                                             #ident_where_element_upper_camel_case::GreaterThan(
                                                 where_element_filters::PostgresqlTypeWhereElementGreaterThan {
                                                     logical_operator: #import_path::LogicalOperator::Or,
                                                     #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
                                                 }
                                             )
-                                        ])
+                                        )
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                         todo!()
