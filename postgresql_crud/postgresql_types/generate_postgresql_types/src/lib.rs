@@ -5693,28 +5693,29 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             enum IsNeedToImplGreaterThanTest {
-                                True,
+                                TrueFromReadOnlyIds,
+                                TrueFromCreate,
                                 False
                             }
                             let is_need_to_impl_greater_than_test = match &postgresql_type {
-                                PostgresqlType::StdPrimitiveI16AsInt2 => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveI32AsInt4 => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveI64AsInt8 => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveF32AsFloat4 => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveF64AsFloat8 => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::True,
-                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => IsNeedToImplGreaterThanTest::True,
+                                PostgresqlType::StdPrimitiveI16AsInt2 => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::StdPrimitiveI32AsInt4 => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::StdPrimitiveI64AsInt8 => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::StdPrimitiveF32AsFloat4 => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::StdPrimitiveF64AsFloat8 => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::TrueFromReadOnlyIds,
+                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::TrueFromReadOnlyIds,
+                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => IsNeedToImplGreaterThanTest::TrueFromReadOnlyIds,
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => IsNeedToImplGreaterThanTest::False,//todo why no support?
                                 PostgresqlType::StdPrimitiveBoolAsBool => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::StdStringStringAsText => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplGreaterThanTest::TrueFromCreate,
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => IsNeedToImplGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplGreaterThanTest::TrueFromCreate,
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => IsNeedToImplGreaterThanTest::False,//todo why no support?
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => IsNeedToImplGreaterThanTest::False,
@@ -5725,8 +5726,34 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplGreaterThanTest::False,
                             };
+                            enum ReadOnlyIdsCreate {
+                                ReadOnlyIds,
+                                Create,
+                            }
+                            let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
+                                let content_token_stream = match &read_only_ids_create {
+                                    ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0.0},
+                                    ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0},
+                                };
+                                match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                        Some(vec![
+                                            #ident_where_element_upper_camel_case::GreaterThan(
+                                                where_element_filters::PostgresqlTypeWhereElementGreaterThan {
+                                                    logical_operator: #import_path::LogicalOperator::Or,
+                                                    #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
+                                                }
+                                            )
+                                        ])
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                        todo!()
+                                    },
+                                }
+                            };
                             match &is_need_to_impl_greater_than_test {
-                                IsNeedToImplGreaterThanTest::True => quote::quote!{None},//todo
+                                IsNeedToImplGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&ReadOnlyIdsCreate::ReadOnlyIds),
+                                IsNeedToImplGreaterThanTest::TrueFromCreate => generate_some_token_stream(&ReadOnlyIdsCreate::Create),
                                 IsNeedToImplGreaterThanTest::False => quote::quote!{None},
                             }
                         },
