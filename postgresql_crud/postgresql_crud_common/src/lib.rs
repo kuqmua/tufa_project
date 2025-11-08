@@ -193,7 +193,7 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_type_option_vec_where_element_dimension_one_equal(
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
-    fn create_into_postgresql_type_option_vec_where_element_greater_than(
+    fn read_only_ids_merged_with_create_into_postgresql_type_option_vec_where_element_greater_than(
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
 }
