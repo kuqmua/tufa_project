@@ -5731,24 +5731,42 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 Create,
                             }
                             let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
-                                let content_token_stream = match &read_only_ids_create {
-                                    ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0.0},
-                                    ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0},
-                                };
                                 match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                                        Some(
-                                            #ident_where_element_upper_camel_case::GreaterThan(
-                                                where_element_filters::PostgresqlTypeWhereElementGreaterThan {
-                                                    logical_operator: #import_path::LogicalOperator::Or,
-                                                    #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
-                                                }
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                        let content_token_stream = match &read_only_ids_create {
+                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0.0},
+                                            ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0},
+                                        };
+                                        quote::quote!{
+                                            Some(
+                                                #ident_where_element_upper_camel_case::GreaterThan(
+                                                    where_element_filters::PostgresqlTypeWhereElementGreaterThan {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
+                                                    }
+                                                )
                                             )
-                                        )
+                                        }
                                     },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                        todo!()
-                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        let content_token_stream = match &read_only_ids_create {
+                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0},
+                                            ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0.0},
+                                        };
+                                        quote::quote!{
+                                            match #content_token_stream {
+                                                Some(#value_snake_case) => Some(
+                                                    #ident_where_element_upper_camel_case::GreaterThan(
+                                                        where_element_filters::PostgresqlTypeWhereElementGreaterThan {
+                                                            logical_operator: #import_path::LogicalOperator::Or,
+                                                            #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
+                                                        }
+                                                    )
+                                                ),
+                                                None => None
+                                            }
+                                        }
+                                    }
                                 }
                             };
                             match &is_need_to_impl_greater_than_test {
