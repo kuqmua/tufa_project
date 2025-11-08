@@ -194,6 +194,7 @@ pub trait PostgresqlTypeTestCases {
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
     fn read_only_ids_merged_with_create_into_postgresql_type_option_vec_where_element_greater_than(
+        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as crate::PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
 }
