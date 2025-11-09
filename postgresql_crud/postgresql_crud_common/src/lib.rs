@@ -195,7 +195,7 @@ pub trait PostgresqlTypeTestCases {
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
     fn vec_greater_than_test() -> std::vec::Vec<GreaterThanTest<Self::PostgresqlType>>;
     fn read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than(
-        logical_operator: LogicalOperator,
+        greater_than_variant: GreaterThanVariant,
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         table_type_declaration: <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration,
     ) -> std::option::Option<<Self::PostgresqlType as PostgresqlType>::WhereElement>;

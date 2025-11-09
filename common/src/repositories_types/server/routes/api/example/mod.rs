@@ -2358,7 +2358,7 @@ mod example_tests {
                                         // )
                                         //here
                                         <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than(
-                                            element_variant.logical_operator(),
+                                            element_variant,
                                             read_only_ids_returned_from_create_one.column_0.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
                                             element_greater_than,
                                         )

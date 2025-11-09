@@ -1739,13 +1739,10 @@ impl postgresql_crud_common::PostgresqlTypeTestCases for StdPrimitiveI16AsNotNul
         ]
     }
     fn read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than(
-        // read_only_ids: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::ReadOnlyIds,
-        // create: <Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::Create
-        //
-        logical_operator: postgresql_crud_common::LogicalOperator,
+        //here
+        greater_than_variant: postgresql_crud_common::GreaterThanVariant,
         read_only_ids: postgresql_crud_common::NonPrimaryKeyPostgresqlTypeReadOnlyIds,
         table_type_declaration: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration,
-        //
     ) -> std::option::Option<<Self::PostgresqlType as postgresql_crud_common::PostgresqlType>::WhereElement> {
         // Some(StdPrimitiveI16AsNotNullInt2WhereElement::GreaterThan(where_element_filters::PostgresqlTypeWhereElementGreaterThan {
         //     logical_operator: postgresql_crud_common::LogicalOperator::Or,
@@ -1755,9 +1752,7 @@ impl postgresql_crud_common::PostgresqlTypeTestCases for StdPrimitiveI16AsNotNul
         //here
         Some(StdPrimitiveI16AsNotNullInt2WhereElement::GreaterThan(where_element_filters::PostgresqlTypeWhereElementGreaterThan {
             //here
-            logical_operator,
-            //here
-            // value: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration(create.0),
+            logical_operator: greater_than_variant.logical_operator(),
             value: table_type_declaration
         }))
     }
@@ -1766,23 +1761,3 @@ impl postgresql_crud_common::PostgresqlTypeNotPrimaryKey for StdPrimitiveI16AsNo
     type PostgresqlType = StdPrimitiveI16AsNotNullInt2;
     type Create = StdPrimitiveI16AsNotNullInt2Create;
 }
-
-
-// impl StdPrimitiveI16AsNotNullInt2 {
-//     //here
-//     pub fn read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than(
-//         //here
-//         logical_operator: postgresql_crud_common::LogicalOperator,
-//         read_only_ids: postgresql_crud_common::NonPrimaryKeyPostgresqlTypeReadOnlyIds,
-//         // create: StdPrimitiveI16AsNotNullInt2Create,
-//         table_type_declaration: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration,
-//     ) -> std::option::Option<StdPrimitiveI16AsNotNullInt2WhereElement> {
-//         Some(StdPrimitiveI16AsNotNullInt2WhereElement::GreaterThan(where_element_filters::PostgresqlTypeWhereElementGreaterThan {
-//             //here
-//             logical_operator,
-//             //here
-//             // value: StdPrimitiveI16AsNotNullInt2TableTypeDeclaration(create.0),
-//             value: table_type_declaration
-//         }))
-//     }
-// }

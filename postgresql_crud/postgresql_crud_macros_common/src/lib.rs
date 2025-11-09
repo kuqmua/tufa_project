@@ -1264,7 +1264,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 #vec_greater_than_test_token_stream
             }
             fn #read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than_snake_case(
-                logical_operator: #import_path::LogicalOperator,
+                greater_than_variant: #import_path::GreaterThanVariant,
                 #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
                 #table_type_declaration_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case,
             ) -> std::option::Option<#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case> {
