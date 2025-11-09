@@ -5691,100 +5691,152 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     },
-                    &match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                match &postgresql_type {
-                                    PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{
-                                        vec![
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::GreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32767),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32768),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::GreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(1),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(0),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::GreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32767),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32766),
-                                           },
-                                           //
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32768),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32767),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(0),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(1),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32766),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32767),
-                                           },
-                                           //
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32768),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32768),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(0),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(0),
-                                           },
-                                           #import_path::GreaterThanTest {
-                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
-                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32767),
-                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32767),
-                                           },
-                                        ]
-                                    },
-                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{todo!()},
-                                    PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{todo!()},
-                                    PostgresqlType::StdStringStringAsText => quote::quote!{todo!()},
-                                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{todo!()},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{todo!()},
+                    &{
+                        //todo reuse GreaterThanVariant and GreaterThanVariantHandle
+                        enum GreaterThanVariantHandle {
+                            GreaterThan,
+                            NotGreaterThan,
+                            EqualNotGreaterThan,
+                        }
+                        impl quote::ToTokens for GreaterThanVariantHandle {
+                            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                                match &self {
+                                    GreaterThanVariantHandle::GreaterThan => quote::quote!{GreaterThan},
+                                    GreaterThanVariantHandle::NotGreaterThan => quote::quote!{NotGreaterThan},
+                                    GreaterThanVariantHandle::EqualNotGreaterThan => quote::quote!{EqualNotGreaterThan},
+                                }.to_tokens(tokens);
+                            }
+                        }
+                        let greater_than = GreaterThanVariantHandle::GreaterThan;
+                        let not_greater_than = GreaterThanVariantHandle::NotGreaterThan;
+                        let equal_not_greater_than = GreaterThanVariantHandle::EqualNotGreaterThan;
+                        let generate_greater_than_test_token_stream = |
+                            greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                            create_token_stream: &dyn quote::ToTokens,
+                            greater_than_token_stream: &dyn quote::ToTokens,
+                        |quote::quote!{
+                            #import_path::GreaterThanTest {
+                                variant: #import_path::GreaterThanVariant::#greater_than_variant_token_stream,
+                                create: #ident_as_postgresql_type_token_stream::Create::new(#create_token_stream),
+                                greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::new(#greater_than_token_stream),
+                            }
+                        };
+                        let generate_int_token_stream = |
+                            min_token_stream: &dyn quote::ToTokens,
+                            min_plus_one_token_stream: &dyn quote::ToTokens,
+                            max_token_stream: &dyn quote::ToTokens,
+                            max_minus_one_token_stream: &dyn quote::ToTokens,
+                        |{
+                            let zero_token_stream = quote::quote!{0};
+                            let one_token_stream = quote::quote!{1};
+                            let greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                                &greater_than,
+                                &min_plus_one_token_stream,
+                                &min_token_stream
+                            );
+                            let greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                                &greater_than,
+                                &one_token_stream,
+                                &zero_token_stream
+                            );
+                            let greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                                &greater_than,
+                                &max_token_stream,
+                                &max_minus_one_token_stream
+                            );
+                            let not_greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                                &not_greater_than,
+                                &min_token_stream,
+                                &min_plus_one_token_stream
+                            );
+                            let not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                                &not_greater_than,
+                                &zero_token_stream,
+                                &one_token_stream
+                            );
+                            let not_greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                                &not_greater_than,
+                                &max_minus_one_token_stream,
+                                &max_token_stream
+                            );
+                            let equal_not_greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                                &equal_not_greater_than,
+                                &min_token_stream,
+                                &min_token_stream
+                            );
+                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                                &equal_not_greater_than,
+                                &zero_token_stream,
+                                &zero_token_stream
+                            );
+                            let equal_not_greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                                &equal_not_greater_than,
+                                &max_token_stream,
+                                &max_token_stream
+                            );
+                            quote::quote!{
+                                #greater_than_min_token_stream,
+                                #greater_than_zero_token_stream,
+                                #greater_than_max_token_stream,
+                                #not_greater_than_min_token_stream,
+                                #not_greater_than_zero_token_stream,
+                                #not_greater_than_max_token_stream,
+                                #equal_not_greater_than_min_token_stream,
+                                #equal_not_greater_than_zero_token_stream,
+                                #equal_not_greater_than_max_token_stream
+                            }
+                        };
+                        let content_token_stream = match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    match &postgresql_type {
+                                        PostgresqlType::StdPrimitiveI16AsInt2 => generate_int_token_stream(
+                                            &quote::quote!{std::primitive::i16::MIN},
+                                            &quote::quote!{std::primitive::i16::MIN + 1},
+                                            &quote::quote!{std::primitive::i16::MAX},
+                                            &quote::quote!{std::primitive::i16::MAX - 1}
+                                        ),
+                                        PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{todo!()},
+                                        PostgresqlType::StdStringStringAsText => quote::quote!{todo!()},
+                                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{todo!()},
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
                                 }
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                 quote::quote!{
                                     todo!()
                                 }
-                            }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                            quote::quote!{
-                                todo!()
-                            }
-                        },
+                            },
+                        };
+                        quote::quote!{vec![#content_token_stream]}
                     },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
