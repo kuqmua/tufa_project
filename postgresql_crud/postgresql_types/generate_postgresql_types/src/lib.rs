@@ -895,6 +895,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
 
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
+            let std_primitive_i16_token_stream = token_patterns::StdPrimitiveI16;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
@@ -5791,13 +5792,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     match &postgresql_type {
                                         PostgresqlType::StdPrimitiveI16AsInt2 => generate_int_token_stream(
-                                            &quote::quote!{std::primitive::i16::MIN},
-                                            &quote::quote!{std::primitive::i16::MIN + 1},
-                                            &quote::quote!{std::primitive::i16::MAX},
-                                            &quote::quote!{std::primitive::i16::MAX - 1}
+                                            &quote::quote!{#std_primitive_i16_token_stream::MIN},
+                                            &quote::quote!{#std_primitive_i16_token_stream::MIN + 1},
+                                            &quote::quote!{#std_primitive_i16_token_stream::MAX},
+                                            &quote::quote!{#std_primitive_i16_token_stream::MAX - 1}
                                         ),
-                                        PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{todo!()},
-                                        PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveI32AsInt4 => generate_int_token_stream(
+                                            &quote::quote!{#std_primitive_i32_token_stream::MIN},
+                                            &quote::quote!{#std_primitive_i32_token_stream::MIN + 1},
+                                            &quote::quote!{#std_primitive_i32_token_stream::MAX},
+                                            &quote::quote!{#std_primitive_i32_token_stream::MAX - 1}
+                                        ),
+                                        PostgresqlType::StdPrimitiveI64AsInt8 => generate_int_token_stream(
+                                            &quote::quote!{#std_primitive_i64_token_stream::MIN},
+                                            &quote::quote!{#std_primitive_i64_token_stream::MIN + 1},
+                                            &quote::quote!{#std_primitive_i64_token_stream::MAX},
+                                            &quote::quote!{#std_primitive_i64_token_stream::MAX - 1}
+                                        ),
                                         PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{todo!()},
                                         PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{todo!()},
                                         PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{todo!()},
