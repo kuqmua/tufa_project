@@ -8,7 +8,7 @@ macro_rules! trait_alias {
 trait_alias!(DebugClonePartialEqAlias = std::fmt::Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + serde::Serialize);
 trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> serde::Deserialize<'__>);
-trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
+trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
 trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
 
@@ -16,7 +16,7 @@ trait_alias!(TableTypeDeclarationAlias = DebugClonePartialEqSerializeDeserialize
 trait_alias!(CreateAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias);
 trait_alias!(CreateForQueryAlias = DebugClonePartialEqSerializeAlias + SqlxEncodePostgresSqlxTypePostgresAlias);
 trait_alias!(SelectAlias = DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias);
-trait_alias!(WhereElementAlias = DebugClonePartialEqSerializeDeserializeAlias + for<'__> crate::PostgresqlTypeWhereFilter<'__>);
+trait_alias!(WhereElementAlias = DebugClonePartialEqSerializeDeserializeAlias + for<'__> PostgresqlTypeWhereFilter<'__>);
 trait_alias!(ReadAlias = DebugClonePartialEqSerializeDeserializeAlias);
 trait_alias!(ReadOnlyIdsAlias = DebugClonePartialEqSerializeDeserializeAlias);
 trait_alias!(ReadInnerAlias = DebugClonePartialEqAlias);
@@ -28,7 +28,7 @@ pub trait PostgresqlType {
     type TableTypeDeclaration: TableTypeDeclarationAlias;
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display;
     type Create: CreateAlias;
-    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
@@ -45,12 +45,12 @@ pub trait PostgresqlType {
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias;
     type UpdateForQuery: UpdateForQueryAlias;
-    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
@@ -73,28 +73,28 @@ pub trait PostgresqlJsonType {
     ) -> std::string::String;
     type WhereElement: WhereElementAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
-    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     type UpdateForQuery: UpdateForQueryAlias + std::convert::From<Self::Update>;
-    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, QueryPartErrorNamed>;
     fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
@@ -102,149 +102,199 @@ pub trait PostgresqlJsonType {
 }
 
 pub trait PostgresqlTypePrimaryKey {
-    type PostgresqlType: crate::PostgresqlType;
+    type PostgresqlType: PostgresqlType;
     type TableTypeDeclaration: TableTypeDeclarationAlias + PartialOrd;
     fn read_only_ids_into_table_type_declaration(
-        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
+        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
     fn read_only_ids_into_read(
-        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
+        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_only_ids_into_update(
-        value: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
+        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
+    ) -> <Self::PostgresqlType as PostgresqlType>::Update;
     fn read_into_table_type_declaration(
-        value: <Self::PostgresqlType as crate::PostgresqlType>::Read
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
+        value: <Self::PostgresqlType as PostgresqlType>::Read
+    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
 }
 
 pub trait PostgresqlTypeNotPrimaryKey {
-    type PostgresqlType: crate::PostgresqlType;
+    type PostgresqlType: PostgresqlType;
     type Create: CreateAlias + SqlxEncodePostgresSqlxTypePostgresAlias;
 }
 
 pub trait PostgresqlJsonTypeObjectVecElementId {
-    type PostgresqlJsonType: crate::PostgresqlJsonType;
+    type PostgresqlJsonType: PostgresqlJsonType;
     type CreateForQuery: CreateForQueryAlias
-        + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>
-        + std::convert::From<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>;
+        + std::convert::From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>
+        + std::convert::From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + error_occurence_lib::ToStdStringString;
     type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_postgresql_text_create_for_query(
-        value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery,
+        value: <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
     fn query_bind_string_as_postgresql_text_update_for_query(
-        value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::UpdateForQuery,
+        value: <Self::PostgresqlJsonType as PostgresqlJsonType>::UpdateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::CreateForQuery) -> &'a Self::ReadInner;
-    fn increment_checked_add_one(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, crate::QueryPartErrorNamed>;
+    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery) -> &'a Self::ReadInner;
+    fn increment_checked_add_one(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, QueryPartErrorNamed>;
 }
 
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
-    type PostgresqlType: crate::PostgresqlType;
-    type Select: SelectAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
-    fn vec_create() -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::Create>;
-    fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::ReadInner>>;
-    fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
-    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as crate::PostgresqlType>::ReadInner) -> <Self::PostgresqlType as crate::PostgresqlType>::Update;
-    fn update_to_read_only_ids(value: &<Self::PostgresqlType as crate::PostgresqlType>::Update) -> <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds;
+    type PostgresqlType: PostgresqlType;
+    type Select: SelectAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    fn vec_create() -> std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>;
+    fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::ReadInner>>;
+    fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
+    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Update;
+    fn update_to_read_only_ids(value: &<Self::PostgresqlType as PostgresqlType>::Update) -> <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds
-    ) -> std::option::Option<crate::Value<<Self::PostgresqlType as crate::PostgresqlType>::Read>>;
+        value: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
+    ) -> std::option::Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
-        read: <Self::PostgresqlType as crate::PostgresqlType>::Read,
-        option_update: std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::Update>,
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
+        read: <Self::PostgresqlType as PostgresqlType>::Read,
+        option_update: std::option::Option<<Self::PostgresqlType as PostgresqlType>::Update>,
+    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_only_ids_merged_with_create_into_read(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::Read;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::option::Option<crate::Value<<Self::PostgresqlType as crate::PostgresqlType>::Read>>;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::option::Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type_declaration(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::TableTypeDeclaration;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
 
     fn read_only_ids_merged_with_create_into_where_element_equal(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as crate::PostgresqlType>::WhereElement;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> <Self::PostgresqlType as PostgresqlType>::WhereElement;
     fn read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>;
     fn read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
 
     fn create_into_postgresql_type_option_vec_where_element_dimension_one_equal(
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>>;
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
+    //
+    // fn vec_greater_than() -> std::vec::Vec<(
+    //     //here
+    //     LogicalOperator,
+    //     <Self::PostgresqlType as PostgresqlType>::Create
+    // )>;
+    //
+// [
+//     {
+//         "operator": "or",
+//         "create": -32767,
+//         "where_element": -32768,
+//     },
+//     {
+//         "operator": "or",
+//         "create": 1,
+//         "where_element": 0,
+//     },
+//     {
+//         "operator": "or",
+//         "create": 32766,
+//         "where_element": 32767,
+//     }
+// ]
+    //
     fn read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than(
-        read_only_ids: <Self::PostgresqlType as crate::PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as crate::PostgresqlType>::Create
-    ) -> std::option::Option<<Self::PostgresqlType as crate::PostgresqlType>::WhereElement>;
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::option::Option<<Self::PostgresqlType as PostgresqlType>::WhereElement>;
 }
+
+#[derive(Debug)]
+pub enum GreaterThanVariant {
+    GreaterThan,
+    NotGreaterThan,
+    EqualNotGreaterThan,
+}
+impl GreaterThanVariant {
+    pub fn logical_operator(&self) -> LogicalOperator {
+        match &self {
+            GreaterThanVariant::GreaterThan => LogicalOperator::Or,
+            GreaterThanVariant::NotGreaterThan => LogicalOperator::OrNot,
+            GreaterThanVariant::EqualNotGreaterThan => LogicalOperator::OrNot,
+        }
+    }
+}
+#[derive(Debug)]
+pub struct GreaterThanTest<T: PostgresqlType> {
+    pub variant: GreaterThanVariant,
+    pub create: <T as PostgresqlType>::Create,
+    pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
+}
+
+
+
 
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases {
-    type PostgresqlJsonType: crate::PostgresqlJsonType;
-    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
-    fn vec_create() -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create>;
-    fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
-    fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
-    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update;
-    fn read_only_ids_into_option_value_read_inner(value: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadInner>>;
-    fn update_to_read_only_ids(value: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds;
+    type PostgresqlJsonType: PostgresqlJsonType;
+    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    fn vec_create() -> std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>;
+    fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
+    fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
+    fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Update;
+    fn read_only_ids_into_option_value_read_inner(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
+    fn update_to_read_only_ids(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::Update) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds
-    ) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read>>;
+        value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds
+    ) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
-        read: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read,
-        option_update: std::option::Option<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Update>,
-    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
+        read: <Self::PostgresqlJsonType as PostgresqlJsonType>::Read,
+        option_update: std::option::Option<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>,
+    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
     fn read_only_ids_merged_with_create_into_read(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
     fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> std::option::Option<crate::Value<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Read>>;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type_declaration(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::TableTypeDeclaration;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::TableTypeDeclaration;
 
     fn read_only_ids_merged_with_create_into_where_element_equal(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::WhereElement;
     fn read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement>;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::WhereElement>;
     fn read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field(
-        read_only_ids: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as crate::PostgresqlJsonType>::Create
-    ) -> std::vec::Vec<<Self::PostgresqlJsonType as crate::PostgresqlJsonType>::WhereElement>;
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::WhereElement>;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
@@ -252,10 +302,10 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         match &self.0 {
@@ -275,19 +325,19 @@ where
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-impl<T> crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
+impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![
-            Self(Some(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
+            Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
         ]
     }
 }
@@ -359,7 +409,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    logical_operator: crate::LogicalOperator,
+    logical_operator: LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeWhereElement>,
 }
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -374,7 +424,7 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     },
 }
 impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    pub fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
+    pub fn try_new(logical_operator: LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
         if value.is_empty() {
             return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -471,7 +521,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
@@ -493,7 +543,7 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
+                    let mut __field0: _serde::__private::Option<LogicalOperator> = _serde::__private::None;
                     let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlTypeWhereElement>> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
@@ -501,7 +551,7 @@ const _: () = {
                                 if _serde::__private::Option::is_some(&__field0) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
                                 }
-                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<crate::LogicalOperator>(&mut __map)?);
+                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<LogicalOperator>(&mut __map)?);
                             }
                             __Field::__field1 => {
                                 if _serde::__private::Option::is_some(&__field1) {
@@ -542,12 +592,12 @@ const _: () = {
         }
     }
 };
-impl<'a, PostgresqlTypeWhereElement: crate::PostgresqlTypeWhereFilter<'a>> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+impl<'a, PostgresqlTypeWhereElement: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
-            match crate::PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+            match PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
                     acc.push_str(&format!("{value} "));
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -565,7 +615,7 @@ impl<'a, PostgresqlTypeWhereElement: crate::PostgresqlTypeWhereFilter<'a>> crate
         std::string::String
     > {
         for element in self.value {
-            match crate::PostgresqlTypeWhereFilter::query_bind(element, query) {
+            match PostgresqlTypeWhereFilter::query_bind(element, query) {
                 Ok(value) => {
                     query = value;
                 },
@@ -577,11 +627,11 @@ impl<'a, PostgresqlTypeWhereElement: crate::PostgresqlTypeWhereFilter<'a>> crate
         Ok(query)
     }
 }
-impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+impl<PostgresqlTypeWhereElement: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
 }
@@ -642,8 +692,8 @@ impl PaginationBase {
         self.offset.checked_add(self.limit).unwrap()
     }
 }
-impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationBase {
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(error) => {
@@ -866,8 +916,8 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         )
     }
 }
-impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -877,13 +927,13 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
         self.0.query_bind(query)
     }
 }
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
         Self(PaginationBase::new_unchecked(
@@ -1003,14 +1053,14 @@ const _: () = {
         }
     }
 };
-impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
 impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {
@@ -1036,7 +1086,7 @@ impl<T1> NotEmptyUniqueEnumVec<T1> {
 
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
@@ -1216,13 +1266,13 @@ impl std::default::Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
         Self(Value{ value: None })
     }
 }
-pub fn increment_checked_add_one_returning_increment(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, crate::QueryPartErrorNamed> {
+pub fn increment_checked_add_one_returning_increment(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, QueryPartErrorNamed> {
     match increment.checked_add(1) {
         Some(value) => {
             *increment = value;
             Ok(value)
         }
-        None => Err(crate::QueryPartErrorNamed::CheckedAdd {
+        None => Err(QueryPartErrorNamed::CheckedAdd {
             code_occurence: error_occurence_lib::code_occurence!()
         })
     }
