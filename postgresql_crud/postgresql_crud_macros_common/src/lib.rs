@@ -1127,6 +1127,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
+    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
+    let table_type_declaration_snake_case = naming::TableTypeDeclarationSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let self_upper_camel_case = naming::SelfUpperCamelCase;
     let select_upper_camel_case = naming::SelectUpperCamelCase;
@@ -1144,7 +1146,6 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let previous_read_merged_with_option_update_into_read_snake_case = naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
     let vec_create_snake_case = naming::VecCreateSnakeCase;
-    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
@@ -1263,8 +1264,9 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 #vec_greater_than_test_token_stream
             }
             fn #read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than_snake_case(
+                logical_operator: #import_path::LogicalOperator,
                 #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
-                #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
+                #table_type_declaration_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case,
             ) -> std::option::Option<#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case> {
                 #read_only_ids_merged_with_create_into_postgresql_type_option_where_element_greater_than_token_stream
             }
