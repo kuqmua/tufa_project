@@ -5690,9 +5690,100 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     },
-                    &quote::quote!{
-                        //todo
-                        vec![]
+                    &match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                match &postgresql_type {
+                                    PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{
+                                        vec![
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::GreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32767),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32768),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::GreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(1),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(0),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::GreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32767),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32766),
+                                           },
+                                           //
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32768),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32767),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(0),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(1),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::NotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32766),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32767),
+                                           },
+                                           //
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(-32768),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(-32768),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(0),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(0),
+                                           },
+                                           #import_path::GreaterThanTest {
+                                               variant: #import_path::GreaterThanVariant::EqualNotGreaterThan,
+                                               create: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::Create::new(32767),
+                                               greater_than: <StdPrimitiveI16AsNotNullInt2 as #import_path::PostgresqlType>::TableTypeDeclaration::new(32767),
+                                           },
+                                        ]
+                                    },
+                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{todo!()},
+                                    PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{todo!()},
+                                    PostgresqlType::StdStringStringAsText => quote::quote!{todo!()},
+                                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{todo!()},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{todo!()},
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                    todo!()
+                                }
+                            }
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                            quote::quote!{
+                                todo!()
+                            }
+                        },
                     },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
@@ -5737,19 +5828,32 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
                                 match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        let content_token_stream = match &read_only_ids_create {
-                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0.0},
-                                            ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0},
-                                        };
-                                        quote::quote!{
-                                            Some(
-                                                #ident_where_element_upper_camel_case::GreaterThan(
+                                        // let content_token_stream = match &read_only_ids_create {
+                                        //     ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0.0},
+                                        //     ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0},
+                                        // };
+                                        // quote::quote!{
+                                        //     Some(
+                                        //         #ident_where_element_upper_camel_case::GreaterThan(
+                                        //             where_element_filters::PostgresqlTypeWhereElementGreaterThan {
+                                        //                 logical_operator: #import_path::LogicalOperator::Or,
+                                        //                 #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
+                                        //             }
+                                        //         )
+                                        //     )
+                                        // }
+                                        match &read_only_ids_create {
+                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{
+                                                todo!()
+                                            },
+                                            ReadOnlyIdsCreate::Create => quote::quote!{
+                                                Some(#ident_where_element_upper_camel_case::GreaterThan(
                                                     where_element_filters::PostgresqlTypeWhereElementGreaterThan {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
-                                                        #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#content_token_stream),
+                                                        logical_operator: greater_than_variant.logical_operator(),
+                                                        value: table_type_declaration
                                                     }
-                                                )
-                                            )
+                                                ))
+                                            },
                                         }
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
@@ -5758,17 +5862,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             ReadOnlyIdsCreate::Create => quote::quote!{#create_snake_case.0.0},
                                         };
                                         quote::quote!{
-                                            match #content_token_stream {
-                                                Some(#value_snake_case) => Some(
-                                                    #ident_where_element_upper_camel_case::GreaterThan(
-                                                        where_element_filters::PostgresqlTypeWhereElementGreaterThan {
-                                                            logical_operator: #import_path::LogicalOperator::Or,
-                                                            #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
-                                                        }
-                                                    )
-                                                ),
-                                                None => None
-                                            }
+                                            // match #content_token_stream {
+                                            //     Some(#value_snake_case) => Some(
+                                            //         #ident_where_element_upper_camel_case::GreaterThan(
+                                            //             where_element_filters::PostgresqlTypeWhereElementGreaterThan {
+                                            //                 logical_operator: #import_path::LogicalOperator::Or,
+                                            //                 #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
+                                            //             }
+                                            //         )
+                                            //     ),
+                                            //     None => None
+                                            // }
+                                            todo!()
                                         }
                                     }
                                 }
