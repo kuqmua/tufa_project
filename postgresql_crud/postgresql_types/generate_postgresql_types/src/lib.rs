@@ -5690,6 +5690,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     },
+                    &quote::quote!{
+                        //todo
+                        vec![]
+                    },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             enum IsNeedToImplGreaterThanTest {

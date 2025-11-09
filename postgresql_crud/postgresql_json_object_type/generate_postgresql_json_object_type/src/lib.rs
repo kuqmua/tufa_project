@@ -5958,6 +5958,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #create_snake_case
                         ))},
                         &quote::quote!{None},
+                        &quote::quote!{vec![]},
                         &quote::quote!{None},
                     ),
                 )

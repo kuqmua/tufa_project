@@ -2331,9 +2331,9 @@ mod example_tests {
                                 let mut acc: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                                 //
                                 for element in 
-                                // <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::vec_create()
                                 //here
-                                postgresql_crud::StdPrimitiveI16AsNotNullInt2::vec_greater_than_test()
+                                // postgresql_crud::StdPrimitiveI16AsNotNullInt2::vec_greater_than_test()
+                                <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlTypeTestCases>::vec_greater_than_test()
                                 {
                                     println!("element {element:#?}");
                                     //here
