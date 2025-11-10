@@ -5271,7 +5271,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     quote::quote! {
                         #ident_where_element_upper_camel_case::#equal_upper_camel_case(where_element_filters::PostgresqlTypeWhereElementEqual {
-                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                            logical_operator: #import_path::LogicalOperator::Or,
                             #value_snake_case: #ident_table_type_declaration_upper_camel_case(#content_token_stream),
                         })
                     }
@@ -5963,16 +5963,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     };
                                     quote::quote!{vec![#content_token_stream]}
                                 },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote!{
-                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud_common::PostgresqlTypeTestCases>::vec_greater_than_test()
-                                        .into_iter().
-                                        map(|element|postgresql_crud_common::GreaterThanTest {
-                                            variant: element.variant,
-                                            create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(element.create.0))),
-                                            greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(element.greater_than.0))),
-                                        }).collect()
-                                    }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::vec_greater_than_test()
+                                    .into_iter().
+                                    map(|#element_snake_case|#import_path::GreaterThanTest {
+                                        variant: #element_snake_case.variant,
+                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.create.0))),
+                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.greater_than.0))),
+                                    }).collect()
                                 }
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
