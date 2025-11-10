@@ -5934,7 +5934,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).unwrap()},
                                         ),
                                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{todo!()},
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).unwrap()},//todo not sure about this values. maybe reuse
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
+                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).unwrap()},
+                                        ),
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{todo!()},
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{todo!()},
                                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{todo!()},

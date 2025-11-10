@@ -110,7 +110,7 @@ pub struct Example {
     // pub column_72: postgresql_crud::OptionVecOfSqlxPostgresTypesPgIntervalAsNullableArrayOfNotNullInterval,
     // pub column_73: postgresql_crud::VecOfOptionSqlxPostgresTypesPgIntervalAsNotNullArrayOfNullableInterval,
     // pub column_74: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgIntervalAsNullableArrayOfNullableInterval,
-    // pub column_75: postgresql_crud::SqlxTypesChronoNaiveDateAsNotNullDate,
+    pub column_75: postgresql_crud::SqlxTypesChronoNaiveDateAsNotNullDate,
     // pub column_76: postgresql_crud::OptionSqlxTypesChronoNaiveDateAsNullableDate,
     // pub column_77: postgresql_crud::VecOfSqlxTypesChronoNaiveDateAsNotNullArrayOfNotNullDate,
     // pub column_78: postgresql_crud::OptionVecOfSqlxTypesChronoNaiveDateAsNullableArrayOfNotNullDate,
