@@ -5725,68 +5725,68 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         let generate_number_token_stream = |
-                            min_token_stream: &dyn quote::ToTokens,
-                            min_plus_one_token_stream: &dyn quote::ToTokens,
+                            less_token_stream: &dyn quote::ToTokens,
+                            less_with_more_token_stream: &dyn quote::ToTokens,
                             zero_token_stream: &dyn quote::ToTokens,
                             one_token_stream: &dyn quote::ToTokens,
-                            max_token_stream: &dyn quote::ToTokens,
-                            max_minus_one_token_stream: &dyn quote::ToTokens,
+                            more_token_stream: &dyn quote::ToTokens,
+                            more_with_less_token_stream: &dyn quote::ToTokens,
                         |{
-                            let greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                            let greater_than_less_token_stream = generate_greater_than_test_token_stream(
                                 &greater_than,
-                                &min_plus_one_token_stream,
-                                &min_token_stream
+                                &less_with_more_token_stream,
+                                &less_token_stream
                             );
                             let greater_than_zero_token_stream = generate_greater_than_test_token_stream(
                                 &greater_than,
                                 &one_token_stream,
                                 &zero_token_stream
                             );
-                            let greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                            let greater_than_more_token_stream = generate_greater_than_test_token_stream(
                                 &greater_than,
-                                &max_token_stream,
-                                &max_minus_one_token_stream
+                                &more_token_stream,
+                                &more_with_less_token_stream
                             );
-                            let not_greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                            let not_greater_than_less_token_stream = generate_greater_than_test_token_stream(
                                 &not_greater_than,
-                                &min_token_stream,
-                                &min_plus_one_token_stream
+                                &less_token_stream,
+                                &less_with_more_token_stream
                             );
                             let not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
                                 &not_greater_than,
                                 &zero_token_stream,
                                 &one_token_stream
                             );
-                            let not_greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                            let not_greater_than_more_token_stream = generate_greater_than_test_token_stream(
                                 &not_greater_than,
-                                &max_minus_one_token_stream,
-                                &max_token_stream
+                                &more_with_less_token_stream,
+                                &more_token_stream
                             );
-                            let equal_not_greater_than_min_token_stream = generate_greater_than_test_token_stream(
+                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_token_stream(
                                 &equal_not_greater_than,
-                                &min_token_stream,
-                                &min_token_stream
+                                &less_token_stream,
+                                &less_token_stream
                             );
                             let equal_not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
                                 &equal_not_greater_than,
                                 &zero_token_stream,
                                 &zero_token_stream
                             );
-                            let equal_not_greater_than_max_token_stream = generate_greater_than_test_token_stream(
+                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_token_stream(
                                 &equal_not_greater_than,
-                                &max_token_stream,
-                                &max_token_stream
+                                &more_token_stream,
+                                &more_token_stream
                             );
                             quote::quote!{
-                                #greater_than_min_token_stream,
+                                #greater_than_less_token_stream,
                                 #greater_than_zero_token_stream,
-                                #greater_than_max_token_stream,
-                                #not_greater_than_min_token_stream,
+                                #greater_than_more_token_stream,
+                                #not_greater_than_less_token_stream,
                                 #not_greater_than_zero_token_stream,
-                                #not_greater_than_max_token_stream,
-                                #equal_not_greater_than_min_token_stream,
+                                #not_greater_than_more_token_stream,
+                                #equal_not_greater_than_less_token_stream,
                                 #equal_not_greater_than_zero_token_stream,
-                                #equal_not_greater_than_max_token_stream
+                                #equal_not_greater_than_more_token_stream
                             }
                         };
                         let content_token_stream = match &postgresql_type_pattern {
