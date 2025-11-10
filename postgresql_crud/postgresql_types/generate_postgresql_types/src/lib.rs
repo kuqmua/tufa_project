@@ -5924,7 +5924,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::StdPrimitiveBoolAsBool => proc_macro2::TokenStream::new(),
                                         PostgresqlType::StdStringStringAsText => proc_macro2::TokenStream::new(),
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
-                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap()},
+                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap()},
+                                        ),
                                         PostgresqlType::SqlxTypesTimeTimeAsTime => generate_greater_than_test_try_new_try_new_vec_token_stream(
                                             &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
                                             &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
@@ -5973,11 +5980,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }).collect()
                                 }
                             },
-                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                quote::quote!{
-                                    todo!()
-                                }
-                            },
+                            PostgresqlTypePattern::ArrayDimension1 {..} => quote::quote!{vec![]},
                         }
                     },
                     &match &postgresql_type_pattern {
@@ -6000,7 +6003,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::StdPrimitiveBoolAsBool => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::StdStringStringAsText => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => IsNeedToImplGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplGreaterThanTest::False,
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplGreaterThanTest::TrueFromCreate,
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplGreaterThanTest::TrueFromCreate,
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => IsNeedToImplGreaterThanTest::False,
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplGreaterThanTest::TrueFromCreate,
