@@ -899,6 +899,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+            let std_primitive_f32_token_stream = token_patterns::StdPrimitiveF32;
+            let std_primitive_f64_token_stream = token_patterns::StdPrimitiveF64;
             let std_string_string_token_stream = token_patterns::StdStringString;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
@@ -5722,14 +5724,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::new(#greater_than_token_stream),
                             }
                         };
-                        let generate_int_token_stream = |
+                        let generate_number_token_stream = |
                             min_token_stream: &dyn quote::ToTokens,
                             min_plus_one_token_stream: &dyn quote::ToTokens,
+                            zero_token_stream: &dyn quote::ToTokens,
+                            one_token_stream: &dyn quote::ToTokens,
                             max_token_stream: &dyn quote::ToTokens,
                             max_minus_one_token_stream: &dyn quote::ToTokens,
                         |{
-                            let zero_token_stream = quote::quote!{0};
-                            let one_token_stream = quote::quote!{1};
                             let greater_than_min_token_stream = generate_greater_than_test_token_stream(
                                 &greater_than,
                                 &min_plus_one_token_stream,
@@ -5791,26 +5793,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                     match &postgresql_type {
-                                        PostgresqlType::StdPrimitiveI16AsInt2 => generate_int_token_stream(
+                                        PostgresqlType::StdPrimitiveI16AsInt2 => generate_number_token_stream(
                                             &quote::quote!{#std_primitive_i16_token_stream::MIN},
                                             &quote::quote!{#std_primitive_i16_token_stream::MIN + 1},
+                                            &quote::quote!{0},
+                                            &quote::quote!{1},
                                             &quote::quote!{#std_primitive_i16_token_stream::MAX},
                                             &quote::quote!{#std_primitive_i16_token_stream::MAX - 1}
                                         ),
-                                        PostgresqlType::StdPrimitiveI32AsInt4 => generate_int_token_stream(
+                                        PostgresqlType::StdPrimitiveI32AsInt4 => generate_number_token_stream(
                                             &quote::quote!{#std_primitive_i32_token_stream::MIN},
                                             &quote::quote!{#std_primitive_i32_token_stream::MIN + 1},
+                                            &quote::quote!{0},
+                                            &quote::quote!{1},
                                             &quote::quote!{#std_primitive_i32_token_stream::MAX},
                                             &quote::quote!{#std_primitive_i32_token_stream::MAX - 1}
                                         ),
-                                        PostgresqlType::StdPrimitiveI64AsInt8 => generate_int_token_stream(
+                                        PostgresqlType::StdPrimitiveI64AsInt8 => generate_number_token_stream(
                                             &quote::quote!{#std_primitive_i64_token_stream::MIN},
                                             &quote::quote!{#std_primitive_i64_token_stream::MIN + 1},
+                                            &quote::quote!{0},
+                                            &quote::quote!{1},
                                             &quote::quote!{#std_primitive_i64_token_stream::MAX},
                                             &quote::quote!{#std_primitive_i64_token_stream::MAX - 1}
                                         ),
-                                        PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{todo!()},
-                                        PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{todo!()},
+                                        PostgresqlType::StdPrimitiveF32AsFloat4 => generate_number_token_stream(
+                                            &quote::quote!{#std_primitive_f32_token_stream::MIN},
+                                            &quote::quote!{#std_primitive_f32_token_stream::MIN.next_up()},
+                                            &quote::quote!{0.0},
+                                            &quote::quote!{1.0},
+                                            &quote::quote!{#std_primitive_f32_token_stream::MAX},
+                                            &quote::quote!{#std_primitive_f32_token_stream::MAX.next_down()}
+                                        ),
+                                        PostgresqlType::StdPrimitiveF64AsFloat8 => generate_number_token_stream(
+                                            //todo rust f64 != postgresql float8
+                                            &quote::quote!{-2.0},
+                                            &quote::quote!{-2.0 + 1.0},
+                                            &quote::quote!{0.0},
+                                            &quote::quote!{1.0},
+                                            &quote::quote!{2.0},
+                                            &quote::quote!{2.0 - 1.0}
+                                        ),
                                         PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{todo!()},
                                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{todo!()},
                                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{todo!()},
