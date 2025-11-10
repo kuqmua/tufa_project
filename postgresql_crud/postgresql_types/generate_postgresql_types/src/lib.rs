@@ -5715,15 +5715,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let equal_not_greater_than = GreaterThanVariantHandle::EqualNotGreaterThan;
                         let generate_greater_than_test_token_stream = |
                             greater_than_variant_token_stream: &GreaterThanVariantHandle,
-                            create_token_stream: &dyn quote::ToTokens,
-                            greater_than_token_stream: &dyn quote::ToTokens,
+                            create_content_token_stream: &dyn quote::ToTokens,
+                            table_type_declaration_content_token_stream: &dyn quote::ToTokens,
                         |quote::quote!{
                             #import_path::GreaterThanTest {
                                 variant: #import_path::GreaterThanVariant::#greater_than_variant_token_stream,
-                                create: #ident_as_postgresql_type_token_stream::Create::new(#create_token_stream),
-                                greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::new(#greater_than_token_stream),
+                                create: #ident_as_postgresql_type_token_stream::Create::#create_content_token_stream,
+                                greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::#table_type_declaration_content_token_stream,
                             }
                         };
+                        let generate_greater_than_test_new_token_stream = |
+                            greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                            create_token_stream: &dyn quote::ToTokens,
+                            greater_than_token_stream: &dyn quote::ToTokens,
+                        |generate_greater_than_test_token_stream(
+                            &greater_than_variant_token_stream,
+                            &quote::quote!{new(#create_token_stream)},
+                            &quote::quote!{new(#greater_than_token_stream)}
+                        );
                         let generate_number_token_stream = |
                             less_token_stream: &dyn quote::ToTokens,
                             less_with_more_token_stream: &dyn quote::ToTokens,
@@ -5732,47 +5741,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             more_token_stream: &dyn quote::ToTokens,
                             more_with_less_token_stream: &dyn quote::ToTokens,
                         |{
-                            let greater_than_less_token_stream = generate_greater_than_test_token_stream(
+                            let greater_than_less_token_stream = generate_greater_than_test_new_token_stream(
                                 &greater_than,
                                 &less_with_more_token_stream,
                                 &less_token_stream
                             );
-                            let greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                            let greater_than_zero_token_stream = generate_greater_than_test_new_token_stream(
                                 &greater_than,
                                 &one_token_stream,
                                 &zero_token_stream
                             );
-                            let greater_than_more_token_stream = generate_greater_than_test_token_stream(
+                            let greater_than_more_token_stream = generate_greater_than_test_new_token_stream(
                                 &greater_than,
                                 &more_token_stream,
                                 &more_with_less_token_stream
                             );
-                            let not_greater_than_less_token_stream = generate_greater_than_test_token_stream(
+                            let not_greater_than_less_token_stream = generate_greater_than_test_new_token_stream(
                                 &not_greater_than,
                                 &less_token_stream,
                                 &less_with_more_token_stream
                             );
-                            let not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                            let not_greater_than_zero_token_stream = generate_greater_than_test_new_token_stream(
                                 &not_greater_than,
                                 &zero_token_stream,
                                 &one_token_stream
                             );
-                            let not_greater_than_more_token_stream = generate_greater_than_test_token_stream(
+                            let not_greater_than_more_token_stream = generate_greater_than_test_new_token_stream(
                                 &not_greater_than,
                                 &more_with_less_token_stream,
                                 &more_token_stream
                             );
-                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_token_stream(
+                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_new_token_stream(
                                 &equal_not_greater_than,
                                 &less_token_stream,
                                 &less_token_stream
                             );
-                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_token_stream(
+                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_new_token_stream(
                                 &equal_not_greater_than,
                                 &zero_token_stream,
                                 &zero_token_stream
                             );
-                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_token_stream(
+                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_new_token_stream(
                                 &equal_not_greater_than,
                                 &more_token_stream,
                                 &more_token_stream
@@ -5842,7 +5851,81 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::StdStringStringAsText => quote::quote!{todo!()},
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{todo!()},
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{todo!()},
-                                        PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{todo!()},
+                                        PostgresqlType::SqlxTypesTimeTimeAsTime => {
+                                            let generate_greater_than_test_try_new_token_stream = |
+                                                greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                                                create_token_stream: &dyn quote::ToTokens,
+                                                greater_than_token_stream: &dyn quote::ToTokens,
+                                            |generate_greater_than_test_token_stream(
+                                                &greater_than_variant_token_stream,
+                                                &quote::quote!{try_new(#create_token_stream).expect("error 8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
+                                                &quote::quote!{try_new(#greater_than_token_stream).expect("error c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
+                                            );
+
+                                            let less_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()};
+                                            let less_with_more_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()};
+                                            let zero_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()};
+                                            let one_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()};
+                                            let more_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).unwrap()};
+                                            let more_with_less_token_stream = quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).unwrap()};
+
+                                            let greater_than_less_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &greater_than,
+                                                &less_with_more_token_stream,
+                                                &less_token_stream
+                                            );
+                                            let greater_than_zero_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &greater_than,
+                                                &one_token_stream,
+                                                &zero_token_stream
+                                            );
+                                            let greater_than_more_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &greater_than,
+                                                &more_token_stream,
+                                                &more_with_less_token_stream
+                                            );
+                                            let not_greater_than_less_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &not_greater_than,
+                                                &less_token_stream,
+                                                &less_with_more_token_stream
+                                            );
+                                            let not_greater_than_zero_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &not_greater_than,
+                                                &zero_token_stream,
+                                                &one_token_stream
+                                            );
+                                            let not_greater_than_more_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &not_greater_than,
+                                                &more_with_less_token_stream,
+                                                &more_token_stream
+                                            );
+                                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &equal_not_greater_than,
+                                                &less_token_stream,
+                                                &less_token_stream
+                                            );
+                                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &equal_not_greater_than,
+                                                &zero_token_stream,
+                                                &zero_token_stream
+                                            );
+                                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_try_new_token_stream(
+                                                &equal_not_greater_than,
+                                                &more_token_stream,
+                                                &more_token_stream
+                                            );
+                                            quote::quote!{
+                                                #greater_than_less_token_stream,
+                                                #greater_than_zero_token_stream,
+                                                #greater_than_more_token_stream,
+                                                #not_greater_than_less_token_stream,
+                                                #not_greater_than_zero_token_stream,
+                                                #not_greater_than_more_token_stream,
+                                                #equal_not_greater_than_less_token_stream,
+                                                #equal_not_greater_than_zero_token_stream,
+                                                #equal_not_greater_than_more_token_stream
+                                            }
+                                        },
                                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{todo!()},
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{todo!()},
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{todo!()},
