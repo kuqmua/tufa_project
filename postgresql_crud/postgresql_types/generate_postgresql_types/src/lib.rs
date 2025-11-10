@@ -5695,26 +5695,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &{
-                        //todo reuse GreaterThanVariant and GreaterThanVariantHandle
-                        enum GreaterThanVariantHandle {
-                            GreaterThan,
-                            NotGreaterThan,
-                            EqualNotGreaterThan,
-                        }
-                        impl quote::ToTokens for GreaterThanVariantHandle {
-                            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                                match &self {
-                                    GreaterThanVariantHandle::GreaterThan => quote::quote!{GreaterThan},
-                                    GreaterThanVariantHandle::NotGreaterThan => quote::quote!{NotGreaterThan},
-                                    GreaterThanVariantHandle::EqualNotGreaterThan => quote::quote!{EqualNotGreaterThan},
-                                }.to_tokens(tokens);
-                            }
-                        }
-                        let greater_than = GreaterThanVariantHandle::GreaterThan;
-                        let not_greater_than = GreaterThanVariantHandle::NotGreaterThan;
-                        let equal_not_greater_than = GreaterThanVariantHandle::EqualNotGreaterThan;
+                        let greater_than = postgresql_crud_common_and_macros_common::GreaterThanVariant::GreaterThan;
+                        let not_greater_than = postgresql_crud_common_and_macros_common::GreaterThanVariant::NotGreaterThan;
+                        let equal_not_greater_than = postgresql_crud_common_and_macros_common::GreaterThanVariant::EqualNotGreaterThan;
                         let generate_greater_than_test_token_stream = |
-                            greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::GreaterThanVariant,
                             create_content_token_stream: &dyn quote::ToTokens,
                             table_type_declaration_content_token_stream: &dyn quote::ToTokens,
                         |quote::quote!{
@@ -5725,7 +5710,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         let generate_greater_than_test_new_new_token_stream = |
-                            greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::GreaterThanVariant,
                             create_token_stream: &dyn quote::ToTokens,
                             greater_than_token_stream: &dyn quote::ToTokens,
                         |generate_greater_than_test_token_stream(
@@ -5734,7 +5719,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &quote::quote!{new(#greater_than_token_stream)}
                         );
                         let generate_greater_than_test_try_new_try_new_token_stream = |
-                            greater_than_variant_token_stream: &GreaterThanVariantHandle,
+                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::GreaterThanVariant,
                             create_token_stream: &dyn quote::ToTokens,
                             greater_than_token_stream: &dyn quote::ToTokens,
                         |generate_greater_than_test_token_stream(

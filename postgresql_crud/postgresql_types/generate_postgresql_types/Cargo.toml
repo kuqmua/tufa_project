@@ -19,6 +19,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 rayon = {version = "=1.10.0"}
 postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
+postgresql_crud_common_and_macros_common = {path = "../../postgresql_crud_common_and_macros_common"}
 constants = {path = "../../../constants"}
 enum_extension_lib = {path = "../../../enum_extension_lib"}
 generate_quotes = {path = "../../../generate_quotes"}

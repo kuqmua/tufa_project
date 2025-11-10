@@ -1,3 +1,5 @@
+pub use postgresql_crud_common_and_macros_common::*;
+
 macro_rules! trait_alias {
     ($name:ident = $($bounds:tt)+) => {
         pub trait $name: $($bounds)+ {}
@@ -8,7 +10,7 @@ macro_rules! trait_alias {
 trait_alias!(DebugClonePartialEqAlias = std::fmt::Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + serde::Serialize);
 trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> serde::Deserialize<'__>);
-trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
+trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
 trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
 
@@ -73,11 +75,11 @@ pub trait PostgresqlJsonType {
     ) -> std::string::String;
     type WhereElement: WhereElementAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
-    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(column_name_and_maybe_field_getter: &std::primitive::str) -> std::string::String;
     type ReadInner: ReadInnerAlias;
@@ -151,7 +153,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: PostgresqlType;
-    type Select: SelectAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: SelectAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     fn vec_create() -> std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
@@ -202,34 +204,16 @@ pub trait PostgresqlTypeTestCases {
 }
 
 #[derive(Debug)]
-pub enum GreaterThanVariant {
-    GreaterThan,
-    NotGreaterThan,
-    EqualNotGreaterThan,
-}
-impl GreaterThanVariant {
-    pub fn logical_operator(&self) -> LogicalOperator {
-        match &self {
-            GreaterThanVariant::GreaterThan => LogicalOperator::Or,
-            GreaterThanVariant::NotGreaterThan => LogicalOperator::OrNot,
-            GreaterThanVariant::EqualNotGreaterThan => LogicalOperator::OrNot,
-        }
-    }
-}
-#[derive(Debug)]
 pub struct GreaterThanTest<T: PostgresqlType> {
     pub variant: GreaterThanVariant,
     pub create: <T as PostgresqlType>::Create,
     pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
 }
 
-
-
-
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: PostgresqlJsonType;
-    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     fn vec_create() -> std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
@@ -279,10 +263,10 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         match &self.0 {
@@ -302,19 +286,19 @@ where
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
-impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
+impl<T> postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![
-            Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
+            Self(Some(postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
         ]
     }
 }
@@ -323,70 +307,14 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
     format!("jsonb_build_object('{field}',{value})||")
 }
 
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self;
-}
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self>;
-}
-pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self;
-}
-pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize: Sized {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size() -> std::vec::Vec<Self>;
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
-pub enum LogicalOperator {
-    And,
-    Or,
-    AndNot,
-    OrNot,
-}
-impl LogicalOperator {
-    pub fn to_query_part(&self, is_need_to_add_logical_operator: std::primitive::bool) -> std::string::String {
-        let not_space = format!("{} ", naming::NotSnakeCase);
-        if is_need_to_add_logical_operator {
-            let and_space = format!("{} ", naming::AndSnakeCase);
-            let or_space = format!("{} ", naming::OrSnakeCase);
-            match &self {
-                Self::And => and_space,
-                Self::Or => or_space,
-                Self::AndNot => format!("{and_space}{not_space}"),
-                Self::OrNot => format!("{or_space}{not_space}"),
-            }
-        } else {
-            match &self {
-                Self::And | Self::Or => std::string::String::default(),
-                Self::AndNot | Self::OrNot => not_space,
-            }
-        }
-    }
-}
-impl std::fmt::Display for LogicalOperator {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{self:?}")
-    }
-}
-impl Default for LogicalOperator {
-    fn default() -> Self {
-        Self::Or
-    }
-}
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOperator {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self::default()
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    logical_operator: LogicalOperator,
+    logical_operator: postgresql_crud_common_and_macros_common::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeWhereElement>,
 }
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -401,7 +329,7 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     },
 }
 impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    pub fn try_new(logical_operator: LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
+    pub fn try_new(logical_operator: postgresql_crud_common_and_macros_common::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
         if value.is_empty() {
             return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -498,7 +426,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<postgresql_crud_common_and_macros_common::LogicalOperator>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
@@ -520,7 +448,7 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: _serde::__private::Option<LogicalOperator> = _serde::__private::None;
+                    let mut __field0: _serde::__private::Option<postgresql_crud_common_and_macros_common::LogicalOperator> = _serde::__private::None;
                     let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlTypeWhereElement>> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
@@ -528,7 +456,7 @@ const _: () = {
                                 if _serde::__private::Option::is_some(&__field0) {
                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
                                 }
-                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<LogicalOperator>(&mut __map)?);
+                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<postgresql_crud_common_and_macros_common::LogicalOperator>(&mut __map)?);
                             }
                             __Field::__field1 => {
                                 if _serde::__private::Option::is_some(&__field1) {
@@ -604,11 +532,11 @@ impl<'a, PostgresqlTypeWhereElement: PostgresqlTypeWhereFilter<'a>> PostgresqlTy
         Ok(query)
     }
 }
-impl<PostgresqlTypeWhereElement: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+impl<PostgresqlTypeWhereElement: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
 }
@@ -633,7 +561,7 @@ impl Default for Order {
         Self::Asc
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
+impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self::default()
     }
@@ -904,13 +832,13 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
         self.0.query_bind(query)
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
+impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
+impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
         Self(PaginationBase::new_unchecked(
@@ -1030,14 +958,14 @@ const _: () = {
         }
     }
 };
-impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
+impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+        Self(postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
+impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
+        Self(postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
 impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {
@@ -1063,7 +991,7 @@ impl<T1> NotEmptyUniqueEnumVec<T1> {
 
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
