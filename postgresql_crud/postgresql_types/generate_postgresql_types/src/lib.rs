@@ -5872,10 +5872,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #equal_not_greater_than_more_token_stream
                             }
                         };
-                        let content_token_stream = match &postgresql_type_pattern {
+                        match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    match &postgresql_type {
+                                    let content_token_stream = match &postgresql_type {
                                         PostgresqlType::StdPrimitiveI16AsInt2 => generate_greater_than_test_new_new_vec_token_stream(
                                             &quote::quote!{#std_primitive_i16_token_stream::MIN},
                                             &quote::quote!{#std_primitive_i16_token_stream::MIN + 1},
@@ -5960,11 +5960,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                                    }
+                                    };
+                                    quote::quote!{vec![#content_token_stream]}
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote!{
-                                        todo!()
+                                        <#ident_standart_not_null_upper_camel_case as postgresql_crud_common::PostgresqlTypeTestCases>::vec_greater_than_test()
+                                        .into_iter().
+                                        map(|element|postgresql_crud_common::GreaterThanTest {
+                                            variant: element.variant,
+                                            create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(element.create.0))),
+                                            greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(element.greater_than.0))),
+                                        }).collect()
                                     }
                                 }
                             },
@@ -5973,8 +5980,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     todo!()
                                 }
                             },
-                        };
-                        quote::quote!{vec![#content_token_stream]}
+                        }
                     },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
@@ -6044,7 +6050,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 Some(#value_snake_case) => Some(
                                                     #ident_where_element_upper_camel_case::GreaterThan(
                                                         where_element_filters::PostgresqlTypeWhereElementGreaterThan {
-                                                            logical_operator: #import_path::LogicalOperator::Or,
+                                                            logical_operator: greater_than_variant.logical_operator(),
                                                             #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
                                                         }
                                                     )
