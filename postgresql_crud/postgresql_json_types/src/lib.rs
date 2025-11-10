@@ -9361,17 +9361,15 @@ impl postgresql_crud_common::PostgresqlJsonTypeTestCases for VecOfStdPrimitiveI8
 
 //here
 impl VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber {
-    fn read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
+    pub fn read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
         read_only_ids: VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberReadOnlyIds,//todo maybe rot need
         create: VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberCreate
     ) -> std::option::Option<std::vec::Vec<VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberWhereElement>> {
-        //here
         Some({
             let mut acc = vec![];
             for (index, element) in create.0.0.into_iter().enumerate() {
                 acc.push(
                     VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberWhereElement::DimensionOneEqual(
-                        // where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual<StdPrimitiveI8AsNotNullJsonbNumberOrigin>
                         where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
                             logical_operator: postgresql_crud_common::LogicalOperator::Or,
                             dimensions: where_element_filters::BoundedStdVecVec::try_from(
@@ -9388,6 +9386,5 @@ impl VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber {
             }
             acc
         })
-        // <VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber as postgresql_crud_common::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields(read_only_ids, create)
     }
 }
