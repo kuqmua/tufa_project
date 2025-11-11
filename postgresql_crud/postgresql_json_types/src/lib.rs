@@ -13,15 +13,15 @@ generate_postgresql_json_types::generate_postgresql_json_types!("All");
 //         //     "postgresql_json_type_pattern": "Standart"
 //         // }
 //         // ,
-//         {
-//             "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
-//             "not_null_or_nullable": "NotNull",
-//             "postgresql_json_type_pattern": {
-//                 "ArrayDimension1": {
-//                     "dimension1_not_null_or_nullable": "NotNull"
-//                 }
-//             }
-//         },
+//         // {
+//         //     "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
+//         //     "not_null_or_nullable": "NotNull",
+//         //     "postgresql_json_type_pattern": {
+//         //         "ArrayDimension1": {
+//         //             "dimension1_not_null_or_nullable": "NotNull"
+//         //         }
+//         //     }
+//         // },
 //         // {
 //         //     "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
 //         //     "not_null_or_nullable": "NotNull",
@@ -8240,22 +8240,23 @@ generate_postgresql_json_types::generate_postgresql_json_types!("All");
 //             "not_null_or_nullable": "NotNull",
 //             "postgresql_json_type_pattern": "Standart"
 //         }
-//         // ,
+//         ,
 //         // {
 //         //     "postgresql_json_type": "UuidUuidAsJsonbString",
 //         //     "not_null_or_nullable": "Nullable",
 //         //     "postgresql_json_type_pattern": "Standart"
 //         // }
 //         // ,
-//         // {
-//         //     "postgresql_json_type": "UuidUuidAsJsonbString",
-//         //     "not_null_or_nullable": "NotNull",
-//         //     "postgresql_json_type_pattern": {
-//         //         "ArrayDimension1": {
-//         //             "dimension1_not_null_or_nullable": "NotNull"
-//         //         }
-//         //     }
-//         // },
+//         {
+//             "postgresql_json_type": "UuidUuidAsJsonbString",
+//             "not_null_or_nullable": "NotNull",
+//             "postgresql_json_type_pattern": {
+//                 "ArrayDimension1": {
+//                     "dimension1_not_null_or_nullable": "NotNull"
+//                 }
+//             }
+//         }
+//         // ,
 //         // {
 //         //     "postgresql_json_type": "UuidUuidAsJsonbString",
 //         //     "not_null_or_nullable": "NotNull",
@@ -8931,4 +8932,4 @@ fn ok_field_ident_jsonb_build_object_value(field_ident: &std::primitive::str) ->
     Ok(format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),"))
 }
 
-////////
+//////

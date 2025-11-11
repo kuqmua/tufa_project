@@ -5075,7 +5075,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
                 #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
             }}
         };
         let read_one_token_stream = {
