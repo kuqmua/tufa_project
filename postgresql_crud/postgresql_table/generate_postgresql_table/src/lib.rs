@@ -5063,7 +5063,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         //         #assert_eq_token_stream
                         //     }
                         // }
-
                         if let Some(value) = #field_type::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
                             read_only_ids_returned_from_create_one.column_142.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
                             ident_create.column_142.clone(),
