@@ -2705,8 +2705,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => quote::quote!{None},
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                    quote::quote!{todo!()}
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                    Some({
+                                        let mut #acc_snake_case = vec![];
+                                        for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
+                                            #acc_snake_case.push(
+                                                #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                    where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                            vec![
+                                                                where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                    std::primitive::i32::try_from(index).expect("error f260692f-c7f6-443b-b3b7-8aaef10a7aad")
+                                                                ).expect("error ca7f6c87-b89f-493d-af4c-5ab6f174ef2f")
+                                                            ]
+                                                        ).expect("error facea094-4927-4827-9d4b-c5373f58bd59"),
+                                                        #value_snake_case: #element_snake_case,
+                                                    }
+                                                )
+                                            )
+                                        }
+                                        #acc_snake_case
+                                    })
                                 },
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
