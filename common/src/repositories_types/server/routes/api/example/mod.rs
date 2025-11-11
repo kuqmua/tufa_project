@@ -289,7 +289,7 @@ pub struct Animal {
 
     // pub field_62: postgresql_crud::StdPrimitiveI16AsNotNullJsonbNumber,
     // pub field_63: postgresql_crud::OptionStdPrimitiveI16AsNullableJsonbNumber,
-    // pub field_64: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullJsonbNumber,
+    pub field_64: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_65: postgresql_crud::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableJsonbNumber,
     // pub field_66: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullJsonbNumber,
     // pub field_67: postgresql_crud::OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableJsonbNumber,
