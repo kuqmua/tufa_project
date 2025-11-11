@@ -1252,36 +1252,3 @@ pub struct Animal {
 // }
 
 /////////
-
-
-//here
-impl AnimalAsNotNullJsonbObject {
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
-        read_only_ids: AnimalAsNotNullJsonbObjectReadOnlyIds,//todo maybe rot need
-        create: AnimalAsNotNullJsonbObjectCreate
-    ) -> std::option::Option<std::vec::Vec<AnimalAsNotNullJsonbObjectWhereElement>> {
-        Some({
-            let mut acc = vec![];
-            if let Some(value) = <postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
-                read_only_ids.0.value.field_2,
-                create.field_2
-            ) {
-                for element in value {
-                    acc.push(
-                        AnimalAsNotNullJsonbObjectWhereElement::Field2(
-                            postgresql_crud::PostgresqlTypeWhere::try_new(
-                                postgresql_crud::LogicalOperator::And,
-                                vec![
-                                    element
-                                ]
-                            ).expect("error 0c6ccad1-6ffc-451f-9b16-0731010fee9f")
-                        )
-                    );
-                }
-            }
-            acc
-        })
-    }
-}
-
-/////////////
