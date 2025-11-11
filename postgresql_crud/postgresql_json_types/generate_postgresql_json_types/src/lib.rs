@@ -2047,9 +2047,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
                     &ident_read_only_ids_upper_camel_case,
-                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                    &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                         quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
-                    } else {
+                    }
+                    else {
                         quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
                     },
                     &ident_read_inner_upper_camel_case,
@@ -2784,7 +2785,56 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::StdStringStringAsJsonbString => content_token_stream,
                             PostgresqlJsonType::UuidUuidAsJsonbString => match &postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => quote::quote!{None},
-                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => quote::quote!{todo!()},
+                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => 
+                                quote::quote!(todo!()),
+                                // match &not_null_or_nullable {
+                                //     NotNullOrNullable::NotNull => quote::quote!{
+                                //         Some({
+                                //             let mut #acc_snake_case = vec![];
+                                //             for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
+                                //                 #acc_snake_case.push(
+                                //                     #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                //                         where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                //                             logical_operator: #import_path::LogicalOperator::Or,
+                                //                             dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                //                                 vec![
+                                //                                     where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                //                                         std::primitive::i32::try_from(index).expect("error f260692f-c7f6-443b-b3b7-8aaef10a7aad")
+                                //                                     ).expect("error ca7f6c87-b89f-493d-af4c-5ab6f174ef2f")
+                                //                                 ]
+                                //                             ).expect("error facea094-4927-4827-9d4b-c5373f58bd59"),
+                                //                             #value_snake_case: #element_snake_case,
+                                //                         }
+                                //                     )
+                                //                 );
+                                //             }
+                                //             #acc_snake_case
+                                //         })
+                                //     },
+                                //     NotNullOrNullable::Nullable => {
+                                //         let current_ident = generate_ident_token_stream(
+                                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                //             &postgresql_json_type_pattern
+                                //         );
+                                //         let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
+                                //         let current_ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&current_ident);
+                                //         quote::quote!{
+                                //             match #create_snake_case.0.0 {
+                                //                 Some(#value_snake_case) => Some(vec![
+                                //                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                //                         #import_path::NotEmptyUniqueEnumVec::try_new(
+                                //                             <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
+                                //                                 #current_ident_read_only_ids_upper_camel_case(#import_path::Value {#value_snake_case: None}),
+                                //                                 #current_ident_create_upper_camel_case(#value_snake_case),
+                                //                             ).expect("error d86b5952-1cb5-4571-b1b1-c710345199b1")
+                                //                         ).expect("error a44e4221-8509-4a99-b2ee-6b54711039b4")
+                                //                     ))
+                                //                 ]),
+                                //                 None => None,
+                                //             }
+                                //         }
+                                //     }
+                                // },
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => quote::quote!{todo!()},
                                 PostgresqlJsonTypePattern::ArrayDimension3 {
                                     dimension1_not_null_or_nullable,
