@@ -2704,8 +2704,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => quote::quote!{None},
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                                let not_null_token_stream = quote::quote!{
                                     Some({
                                         let mut #acc_snake_case = vec![];
                                         for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
@@ -2727,10 +2727,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         }
                                         #acc_snake_case
                                     })
-                                },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                };
+                                match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_token_stream,
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_token_stream,
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                }
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => quote::quote!{todo!()},
                             PostgresqlJsonTypePattern::ArrayDimension3 {
