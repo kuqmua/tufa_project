@@ -5030,9 +5030,75 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
-            //
-            
-            //
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
+                &vec_create_snake_case,
+                &generate_ident_create_content_element_token_stream,
+                &|element: &SynFieldWrapper|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.syn_field.ty;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
+                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                            let current_field_ident = &element.field_ident;
+                            if field_ident == current_field_ident {
+                                quote::quote! {
+                                    Some(
+                                        #import_path::PostgresqlTypeWhere::try_new(
+                                            #import_path::LogicalOperator::Or,
+                                            vec![#element_snake_case]
+                                        )
+                                        .expect("error 7af7fbed-95ca-400d-8764-7988ab73cd84"),
+                                    )
+                                }
+                            } else {
+                                quote::quote! {None}
+                            }
+                        })
+                    );
+                    quote::quote!{
+                        // if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_snake_case(
+                        //     read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
+                        //     ident_create.#field_ident.clone()
+                        // ) {
+                        //     for #element_snake_case in #value_snake_case {
+                        //         #assert_eq_token_stream
+                        //     }
+                        // }
+
+                        if let Some(value) = #field_type::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
+                            read_only_ids_returned_from_create_one.column_142.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
+                            ident_create.column_142.clone(),
+                        ) {
+                            for element in value {
+                                assert_eq!(
+                                    vec![super::ExampleRead {
+                                        primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                                        column_142: <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids_returned_from_create_one.column_142.clone().expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"), ident_create.column_142.clone())
+                                    }],
+                                    super::Example::try_read_many(
+                                        &url_cloned,
+                                        super::ExampleReadManyParameters {
+                                            payload: super::ExampleReadManyPayload {
+                                                where_many: super::StdOptionOptionExampleWhereMany(Some(
+                                                    super::ExampleWhereMany::try_new(None, Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![element]).expect("error 7af7fbed-95ca-400d-8764-7988ab73cd84"),)).expect("error 80a91f82-aeda-4bea-9577-5297b8b3bfb9"),
+                                                )),
+                                                select: select_default_all_with_max_page_size_cloned.clone(),
+                                                order_by: postgresql_crud::OrderBy {
+                                                    column: super::ExampleSelect::PrimaryKeyColumn(<postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
+                                                    order: Some(postgresql_crud::Order::Asc)
+                                                },
+                                                pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error cc5e6038-77f0-499d-bbd6-cc3b45ebe2b6"),
+                                            }
+                                        }
+                                    )
+                                    .await
+                                    .expect("error 91dd4f87-4f0f-4f5a-a844-4161d78dbf4a"),
+                                    "error ee8d232d-98f2-4449-ad30-0e36ca2e7094"
+                                );
+                            }
+                        }
+                    }
+                }
+            );
             quote::quote!{{
                 #test_read_many_by_non_existent_primary_keys_token_stream
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
@@ -5041,6 +5107,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
                 #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
             }}
         };
         let read_one_token_stream = {
@@ -6183,7 +6250,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
