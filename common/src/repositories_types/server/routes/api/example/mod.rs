@@ -2582,13 +2582,13 @@ impl postgresql_crud::PostgresqlTypeNotPrimaryKey for AnimalAsNotNullJsonbObject
 
 //here
 impl AnimalAsNotNullJsonbObject {
-    fn read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
         read_only_ids: AnimalAsNotNullJsonbObjectReadOnlyIds,//todo maybe rot need
         create: AnimalAsNotNullJsonbObjectCreate
     ) -> std::option::Option<std::vec::Vec<AnimalAsNotNullJsonbObjectWhereElement>> {
         Some({
             let mut acc = vec![];
-            if let Some(value) = postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber::read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
+            if let Some(value) = postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
                 read_only_ids.0.value.field_2,
                 create.field_2
             ) {
@@ -3824,12 +3824,20 @@ mod example_tests {
                                     acc.push(futures::FutureExt::boxed(async move {
                                         let ident_create = super::ExampleCreate { column_142: element };
                                         let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters { payload: ident_create.clone() }).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
-                                        if let Some(value) = crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject::read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
+                                        if let Some(value) = crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
                                             read_only_ids_returned_from_create_one.column_142.clone().expect("error 2f7cdf57-72f7-4a1d-a1a1-8a7cbc5b90db"),
                                             ident_create.column_142.clone(),
                                         ) {
                                             for element in value {
-                                                let  payload = super::ExampleReadManyPayload {
+                                                assert_eq!(
+                                                    vec![super::ExampleRead {
+                                                        primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_returned_from_create_one.primary_key_column.clone()),
+                                                        column_142: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids_returned_from_create_one.column_142.clone().expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"), ident_create.column_142.clone())
+                                                    }],
+                                                    super::Example::try_read_many(
+                                                        &url_cloned,
+                                                        super::ExampleReadManyParameters {
+                                                            payload: super::ExampleReadManyPayload {
                                                                 where_many: super::StdOptionOptionExampleWhereMany(Some(
                                                                     super::ExampleWhereMany::try_new(None, Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![element]).expect("error 7af7fbed-95ca-400d-8764-7988ab73cd84"),)).expect("error 80a91f82-aeda-4bea-9577-5297b8b3bfb9"),
                                                                 )),
@@ -3839,17 +3847,7 @@ mod example_tests {
                                                                     order: Some(postgresql_crud::Order::Asc)
                                                                 },
                                                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error cc5e6038-77f0-499d-bbd6-cc3b45ebe2b6"),
-                                                            };
-                                                println!("{payload:#?}");
-                                                assert_eq!(
-                                                    vec![super::ExampleRead {
-                                                        primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&read_only_ids_returned_from_create_one.primary_key_column.clone()),
-                                                        column_142: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(read_only_ids_returned_from_create_one.column_142.clone().expect("error 88038e29-adc7-4e1c-ae5b-609c18831a1b"), ident_create.column_142.clone())
-                                                    }],
-                                                    super::Example::try_read_many(
-                                                        &url_cloned,
-                                                        super::ExampleReadManyParameters {
-                                                            payload: payload
+                                                            }
                                                         }
                                                     )
                                                     .await

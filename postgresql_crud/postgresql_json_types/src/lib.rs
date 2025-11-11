@@ -9361,7 +9361,7 @@ impl postgresql_crud_common::PostgresqlJsonTypeTestCases for VecOfStdPrimitiveI8
 
 //here
 impl VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber {
-    pub fn read_only_ids_merged_with_create_into_option_vec_where_element_dimension_one_equal(
+    pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
         read_only_ids: VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberReadOnlyIds,//todo maybe rot need
         create: VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberCreate
     ) -> std::option::Option<std::vec::Vec<VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberWhereElement>> {
