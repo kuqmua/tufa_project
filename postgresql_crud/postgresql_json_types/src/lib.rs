@@ -8241,12 +8241,12 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
             "postgresql_json_type_pattern": "Standart"
         }
         ,
-        // {
-        //     "postgresql_json_type": "UuidUuidAsJsonbString",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_json_type_pattern": "Standart"
-        // }
-        // ,
+        {
+            "postgresql_json_type": "UuidUuidAsJsonbString",
+            "not_null_or_nullable": "Nullable",
+            "postgresql_json_type_pattern": "Standart"
+        }
+        ,
         {
             "postgresql_json_type": "UuidUuidAsJsonbString",
             "not_null_or_nullable": "NotNull",
@@ -8256,16 +8256,16 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
                 }
             }
         }
-        // ,
-        // {
-        //     "postgresql_json_type": "UuidUuidAsJsonbString",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // }
+        ,
+        {
+            "postgresql_json_type": "UuidUuidAsJsonbString",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_json_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "Nullable"
+                }
+            }
+        }
         // ,
         // {
         //     "postgresql_json_type": "UuidUuidAsJsonbString",

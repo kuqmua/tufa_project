@@ -2809,7 +2809,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             #acc_snake_case
                                         })
                                     ),
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!(todo!()),
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!(
+                                        Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
+                                                #acc_snake_case.push(
+                                                    #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                        where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                            logical_operator: #import_path::LogicalOperator::Or,
+                                                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                                vec![
+                                                                    where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                        std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
+                                                                    ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
+                                                                ]
+                                                            ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
+                                                            #value_snake_case: OptionUuidUuidAsNullableJsonbStringOrigin::new(#element_snake_case),
+                                                        }
+                                                    )
+                                                );
+                                            }
+                                            #acc_snake_case
+                                        })
+                                    ),
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!(todo!()),
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!(todo!()),
                                 },
