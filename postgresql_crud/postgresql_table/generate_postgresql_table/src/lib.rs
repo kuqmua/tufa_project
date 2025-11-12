@@ -6141,34 +6141,34 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
                             let start = std::time::Instant::now();
-                            #create_many_token_stream
-                            let create_many_elapsed = start.elapsed();
-                            #create_one_token_stream
-                            let create_one_elapsed = start.elapsed();
-                            #read_many_token_stream
-                            let read_many_elapsed = start.elapsed();
-                            #read_one_token_stream
-                            let read_one_elapsed = start.elapsed();
+                            // #create_many_token_stream
+                            // let create_many_elapsed = start.elapsed();
+                            // #create_one_token_stream
+                            // let create_one_elapsed = start.elapsed();
+                            // #read_many_token_stream
+                            // let read_many_elapsed = start.elapsed();
+                            // #read_one_token_stream
+                            // let read_one_elapsed = start.elapsed();
                             #update_many_token_stream
                             let update_many_elapsed = start.elapsed();
-                            #update_one_token_stream
-                            let update_one_elapsed = start.elapsed();
-                            #delete_many_token_stream
-                            let delete_many_elapsed = start.elapsed();
-                            #delete_one_token_stream
-                            let delete_one_elapsed = start.elapsed();
-                            println!(
-                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                                create_many_elapsed,
-                                create_one_elapsed,
-                                read_many_elapsed,
-                                read_one_elapsed,
-                                update_many_elapsed,
-                                update_one_elapsed,
-                                delete_many_elapsed,
-                                delete_one_elapsed
-                            );
-                            #last_read_many_token_stream
+                            // #update_one_token_stream
+                            // let update_one_elapsed = start.elapsed();
+                            // #delete_many_token_stream
+                            // let delete_many_elapsed = start.elapsed();
+                            // #delete_one_token_stream
+                            // let delete_one_elapsed = start.elapsed();
+                            // println!(
+                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                            //     create_many_elapsed,
+                            //     create_one_elapsed,
+                            //     read_many_elapsed,
+                            //     read_one_elapsed,
+                            //     update_many_elapsed,
+                            //     update_one_elapsed,
+                            //     delete_many_elapsed,
+                            //     delete_one_elapsed
+                            // );
+                            // #last_read_many_token_stream
                             drop_table_if_exists(&#postgres_pool_snake_case).await;
                         });
                     })
@@ -6218,7 +6218,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

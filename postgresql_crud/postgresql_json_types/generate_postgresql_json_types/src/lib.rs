@@ -1934,7 +1934,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
                 let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
                 let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
-                let select_only_created_or_updated_ids_query_part_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                     quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                             Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value}),")),
@@ -1944,7 +1944,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } else {
                     quote::quote! {ok_field_ident_jsonb_build_object_value(&field_ident)}
                 };
-                let select_only_created_or_updated_ids_query_bind_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                let select_only_created_or_updated_ids_query_bind_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                     quote::quote! {
                         if let Err(#error_snake_case) = #query_snake_case.try_bind(#value_snake_case) {
                             return Err(#error_snake_case.to_string());
@@ -2077,14 +2077,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Ok(query)
                     },
                     &select_only_created_or_updated_ids_query_part_token_stream,
-                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                    &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                         postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::True
                     } else {
                         postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False
                     },
                     &select_only_created_or_updated_ids_query_bind_token_stream,
                     &select_only_created_or_updated_ids_query_part_token_stream,
-                    &if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                    &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                         postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::True
                     } else {
                         postgresql_crud_macros_common::IsSelectOnlyCreatedIdsQueryBindMutable::False
