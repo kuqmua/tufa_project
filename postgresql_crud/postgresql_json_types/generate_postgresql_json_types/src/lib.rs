@@ -2645,7 +2645,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote! {
                                         #ident_read_upper_camel_case(
                                             #ident_origin_upper_camel_case(
-                                                #value_snake_case.0.#value_snake_case.clone().into_iter().map(|element| OptionUuidUuidAsNullableJsonbStringOrigin(
+                                                #value_snake_case.0.#value_snake_case.clone().into_iter().map(|#element_snake_case| OptionUuidUuidAsNullableJsonbStringOrigin(
                                                     match #element_snake_case {
                                                         Some(#value_snake_case) => Some(UuidUuidAsNotNullJsonbStringOrigin(#value_snake_case)),
                                                         None => None
@@ -2656,9 +2656,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {
-                                        todo!()
+                                        #ident_read_upper_camel_case(#ident_origin_upper_camel_case(
+                                            match #value_snake_case.0.#value_snake_case.clone() {
+                                                Some(#value_snake_case) => Some(VecOfUuidUuidAsNotNullArrayOfNotNullJsonbStringOrigin::new(#value_snake_case)),
+                                                None => None
+                                            }
+                                        ))
                                     },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote! {
+                                        //
                                         todo!()
                                     },
                                 },
