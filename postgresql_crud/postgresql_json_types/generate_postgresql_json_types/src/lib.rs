@@ -2627,7 +2627,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             match &postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => quote::quote! {#ident_read_upper_camel_case::new(#value_snake_case.0.#value_snake_case)},
-                                    NotNullOrNullable::Nullable => quote::quote! {todo!()},
+                                    NotNullOrNullable::Nullable => quote::quote! {
+                                        #ident_read_upper_camel_case(#ident_origin_upper_camel_case(match &#value_snake_case.0.#value_snake_case {
+                                            Some(#value_snake_case) => Some(UuidUuidAsNotNullJsonbStringOrigin(*#value_snake_case)),//todo reuse UuidUuidAsNotNullJsonbString
+                                            None => None
+                                        }))
+                                    },//here
                                 },
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {
