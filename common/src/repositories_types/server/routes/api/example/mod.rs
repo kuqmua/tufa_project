@@ -972,7 +972,7 @@ pub struct Animal {
     // pub field_744: postgresql_crud::UuidUuidAsNotNullJsonbString,
     // pub field_745: postgresql_crud::OptionUuidUuidAsNullableJsonbString,
     pub field_746: postgresql_crud::VecOfUuidUuidAsNotNullArrayOfNotNullJsonbString,
-    // pub field_747: postgresql_crud::VecOfOptionUuidUuidAsNotNullArrayOfNullableJsonbString,
+    pub field_747: postgresql_crud::VecOfOptionUuidUuidAsNotNullArrayOfNullableJsonbString,
     // pub field_748: postgresql_crud::OptionVecOfUuidUuidAsNullableArrayOfNotNullJsonbString,
     // pub field_749: postgresql_crud::OptionVecOfOptionUuidUuidAsNullableArrayOfNullableJsonbString,
     // pub field_750: postgresql_crud::VecOfVecOfUuidUuidAsNotNullArrayOfNotNullArrayOfNotNullJsonbString,
