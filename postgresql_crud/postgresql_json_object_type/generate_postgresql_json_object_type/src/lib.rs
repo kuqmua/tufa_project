@@ -5956,9 +5956,35 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         })
                                     }
                                 }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote! {
-                                        todo!()
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                    match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                        (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
+                                            AnimalAsNotNullJsonbObject
+                                            #ident_standart_not_null_upper_camel_case
+                                            as
+                                            #import_path::PostgresqlJsonTypeTestCases
+                                        >::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
+                                            #read_only_ids_snake_case,
+                                            #create_snake_case
+                                        ) {
+                                            Some(#value_snake_case) => Some({
+                                                let mut #acc_snake_case = vec![];
+                                                for #element_snake_case in #value_snake_case {
+                                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                        Some(#import_path::NotEmptyUniqueEnumVec::try_new(
+                                                            vec![#element_snake_case]
+                                                        ).expect("error 19abbf5a-5961-4cdd-88e1-d37f62a8d346"))
+                                                    ));
+                                                }
+                                                #acc_snake_case
+                                            }),
+                                            None => None
+                                        },
+                                        (Some(_), None) => panic!("error 2993731c-8a9a-4822-8261-dc89e67dc73d"),
+                                        (None, Some(_)) => panic!("error 7e8b8fbf-59e2-4b68-90d4-c0bc3787cd91"),
+                                        (None, None) => Some(vec![
+                                            #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None)
+                                        ])
                                     }
                                 }
                             },
