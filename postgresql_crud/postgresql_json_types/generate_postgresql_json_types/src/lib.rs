@@ -2712,7 +2712,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             #acc_snake_case.push(
                                                 #ident_where_element_upper_camel_case::DimensionOneEqual(
                                                     where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
+                                                        logical_operator: #import_path::LogicalOperator::And,
                                                         dimensions: where_element_filters::BoundedStdVecVec::try_from(
                                                             vec![
                                                                 where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
@@ -2786,52 +2786,66 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::UuidUuidAsJsonbString => match &postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => quote::quote!{None},
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!(
-                                        Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
-                                                #acc_snake_case.push(
-                                                    #ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                        where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
-                                                            logical_operator: #import_path::LogicalOperator::Or,
-                                                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                                vec![
-                                                                    where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                        std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
-                                                                    ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
-                                                                ]
-                                                            ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
-                                                            #value_snake_case: UuidUuidAsNotNullJsonbStringOrigin::new(#element_snake_case),
-                                                        }
-                                                    )
-                                                );
-                                            }
-                                            #acc_snake_case
-                                        })
-                                    ),
-                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!(
-                                        Some({
-                                            let mut #acc_snake_case = vec![];
-                                            for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
-                                                #acc_snake_case.push(
-                                                    #ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                        where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
-                                                            logical_operator: #import_path::LogicalOperator::Or,
-                                                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                                vec![
-                                                                    where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                        std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
-                                                                    ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
-                                                                ]
-                                                            ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
-                                                            #value_snake_case: OptionUuidUuidAsNullableJsonbStringOrigin::new(#element_snake_case),
-                                                        }
-                                                    )
-                                                );
-                                            }
-                                            #acc_snake_case
-                                        })
-                                    ),
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                        let current_ident = generate_ident_token_stream(
+                                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                            &PostgresqlJsonTypePattern::Standart
+                                        );
+                                        let current_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&current_ident);
+                                        quote::quote!(
+                                            Some({
+                                                let mut #acc_snake_case = vec![];
+                                                for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
+                                                    #acc_snake_case.push(
+                                                        #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                            where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                                logical_operator: #import_path::LogicalOperator::And,
+                                                                dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                                    vec![
+                                                                        where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                            std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
+                                                                        ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
+                                                                    ]
+                                                                ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
+                                                                #value_snake_case: #current_ident_origin_upper_camel_case::new(#element_snake_case),
+                                                            }
+                                                        )
+                                                    );
+                                                }
+                                                #acc_snake_case
+                                            })
+                                        )
+                                    },
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                        let current_ident = generate_ident_token_stream(
+                                            &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                            &PostgresqlJsonTypePattern::Standart
+                                        );
+                                        let current_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&current_ident);
+                                        quote::quote!(
+                                            Some({
+                                                let mut #acc_snake_case = vec![];
+                                                for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
+                                                    #acc_snake_case.push(
+                                                        #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                            where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                                logical_operator: #import_path::LogicalOperator::And,
+                                                                dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                                    vec![
+                                                                        where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                            std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
+                                                                        ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
+                                                                    ]
+                                                                ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
+                                                                #value_snake_case: #current_ident_origin_upper_camel_case::new(#element_snake_case),
+                                                            }
+                                                        )
+                                                    );
+                                                }
+                                                #acc_snake_case
+                                            })
+                                        )
+                                    },
                                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
                                         let current_ident = generate_ident_token_stream(
                                             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,

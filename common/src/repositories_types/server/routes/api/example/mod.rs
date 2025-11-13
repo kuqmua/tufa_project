@@ -221,12 +221,12 @@ pub struct Example {
 }]
 pub struct Animal {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     
-    // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
-    // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
-    // pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
+    pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+    pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+    pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    pub field_5: postgresql_crud::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
 
     // pub field_6: postgresql_crud::VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub field_7: postgresql_crud::VecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
@@ -969,8 +969,8 @@ pub struct Animal {
     // pub field_741: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfVecOfOptionStdStringStringAsNullableArrayOfNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbString,
     // pub field_742: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfStdStringStringAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_743: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdStringStringAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
-    // pub field_744: postgresql_crud::UuidUuidAsNotNullJsonbString,
-    // pub field_745: postgresql_crud::OptionUuidUuidAsNullableJsonbString,
+    pub field_744: postgresql_crud::UuidUuidAsNotNullJsonbString,
+    pub field_745: postgresql_crud::OptionUuidUuidAsNullableJsonbString,
     pub field_746: postgresql_crud::VecOfUuidUuidAsNotNullArrayOfNotNullJsonbString,
     pub field_747: postgresql_crud::VecOfOptionUuidUuidAsNotNullArrayOfNullableJsonbString,
     pub field_748: postgresql_crud::OptionVecOfUuidUuidAsNullableArrayOfNotNullJsonbString,
