@@ -1130,15 +1130,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
                 //todo maybe add to trait?
-                let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
-                    &ident_table_type_declaration_upper_camel_case,
-                    &quote::quote! {&#self_snake_case.0}
-                );
+                let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {&#self_snake_case.0});
                 //todo maybe add to trait?
-                let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
-                    &ident_table_type_declaration_upper_camel_case,
-                    &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_read_inner_upper_camel_case)
-                );
+                let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_read_inner_upper_camel_case));
                 quote::quote! {
                     #ident_table_type_declaration_token_stream
                     #impl_ident_table_type_declaration_token_stream
@@ -1308,14 +1302,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypePattern::Standart => {
                                 let common_standart_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In {
+                                        ident: ident_table_type_declaration_upper_camel_case_token_stream.clone(),
+                                    });
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut vec = common_standart_postgresql_json_type_filters.clone();
-                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
-                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between { ident: ident_table_type_declaration_upper_camel_case_token_stream.clone() });
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
+                                            ident: ident_table_type_declaration_upper_camel_case_token_stream.clone(),
+                                        });
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {
+                                            ident: ident_table_type_declaration_upper_camel_case_token_stream.clone(),
+                                        });
                                         vec
                                     }
                                     PostgresqlJsonTypeSpecific::Bool => common_standart_postgresql_json_type_filters,
@@ -2049,8 +2049,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_read_only_ids_upper_camel_case,
                     &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                         quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
-                    }
-                    else {
+                    } else {
                         quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
                     },
                     &ident_read_inner_upper_camel_case,
@@ -2642,7 +2641,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {#ident_read_upper_camel_case(#content_token_stream)}
                     },
                     &{
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote! {
                             <#ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
                                 #read_only_ids_snake_case,
                                 #create_snake_case
@@ -2659,25 +2658,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
                     },
                     &{
-                        let generate_equal_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
-                            where_element_filters::PostgresqlJsonTypeWhereElementEqual {
-                                logical_operator: #import_path::LogicalOperator::Or,
-                                #value_snake_case: #content_token_stream
+                        let generate_equal_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+                            quote::quote! {
+                                where_element_filters::PostgresqlJsonTypeWhereElementEqual {
+                                    logical_operator: #import_path::LogicalOperator::Or,
+                                    #value_snake_case: #content_token_stream
+                                }
                             }
                         };
                         match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.into())});
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote! {#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.into())});
                                 quote::quote! {#ident_where_element_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
-                            },
+                            }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let current_ident = generate_ident_token_stream(
-                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    &postgresql_json_type_pattern
-                                );
+                                let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &postgresql_json_type_pattern);
                                 let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
                                 let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
-                                let equal_token_stream = generate_equal_token_stream(&quote::quote!{#current_ident_table_type_declaration_upper_camel_case::new(#value_snake_case.into())});
+                                let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(#value_snake_case.into())});
                                 quote::quote! {
                                     match #create_snake_case.0.0 {
                                         Some(#value_snake_case) => #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
@@ -2691,13 +2689,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                     },
-                    &quote::quote!{vec![
+                    &quote::quote! {vec![
                         <#ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_where_element_equal_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )
                     ]},
-                    &quote::quote!{<#ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
+                    &quote::quote! {<#ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case(
                         #read_only_ids_snake_case,
                         #create_snake_case
                     )},
@@ -2705,7 +2703,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let content_token_stream = {
                             let content_token_stream = match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote::quote!{
+                                NotNullOrNullable::NotNull => quote::quote! {
                                     Some({
                                         let mut #acc_snake_case = vec![];
                                         for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
@@ -2729,13 +2727,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     })
                                 },
                                 NotNullOrNullable::Nullable => {
-                                    let current_ident = generate_ident_token_stream(
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &postgresql_json_type_pattern
-                                    );
+                                    let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &postgresql_json_type_pattern);
                                     let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
                                     let current_ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&current_ident);
-                                    quote::quote!{
+                                    quote::quote! {
                                         match #create_snake_case.0.0 {
                                             Some(#value_snake_case) => Some(vec![
                                                 #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
@@ -2754,7 +2749,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             //todo maybe reuse this pattern with uuid
                             match &postgresql_json_type_pattern {
-                                PostgresqlJsonTypePattern::Standart => quote::quote!{None},
+                                PostgresqlJsonTypePattern::Standart => quote::quote! {None},
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => content_token_stream,
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => content_token_stream,
                                 PostgresqlJsonTypePattern::ArrayDimension3 {
@@ -2783,82 +2778,142 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => content_token_stream,
                             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => content_token_stream,
                             PostgresqlJsonType::StdStringStringAsJsonbString => content_token_stream,
-                            PostgresqlJsonType::UuidUuidAsJsonbString => match &postgresql_json_type_pattern {
-                                PostgresqlJsonTypePattern::Standart => quote::quote!{None},
-                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => {
-                                        let current_ident = generate_ident_token_stream(
+                            PostgresqlJsonType::UuidUuidAsJsonbString => {
+                                let generate_not_null_token_stream = |
+                                    not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                                    postgresql_json_type_pattern: &PostgresqlJsonTypePattern
+                                |{
+                                    let current_ident = generate_ident_token_stream(
+                                        &not_null_or_nullable,
+                                        &postgresql_json_type_pattern
+                                    );
+                                    let current_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&current_ident);
+                                    quote::quote!(
+                                        Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
+                                                #acc_snake_case.push(
+                                                    #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                        where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                            logical_operator: #import_path::LogicalOperator::And,
+                                                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                                vec![
+                                                                    where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                        std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
+                                                                    ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
+                                                                ]
+                                                            ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
+                                                            #value_snake_case: #current_ident_origin_upper_camel_case::new(#element_snake_case),
+                                                        }
+                                                    )
+                                                );
+                                            }
+                                            #acc_snake_case
+                                        })
+                                    )
+                                };
+                                let generate_nullable_token_stream = |
+                                    not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                                    postgresql_json_type_pattern: &PostgresqlJsonTypePattern
+                                |{
+                                    let current_ident = generate_ident_token_stream(
+                                        &not_null_or_nullable,
+                                        &postgresql_json_type_pattern
+                                    );
+                                    let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
+                                    quote::quote!(Some(vec![
+                                        match #read_only_ids_snake_case.0.#value_snake_case {
+                                            Some(#value_snake_case) => #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                                #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                    <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
+                                                        #current_ident_read_only_ids_upper_camel_case(#import_path::Value {#value_snake_case: #value_snake_case}),
+                                                        #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                    ).expect("error f710c474-35ab-4d01-8810-596f280bbaab")
+                                                )
+                                                .expect("error 05414930-9f98-4ae9-b925-3be906e95329"),
+                                            )),
+                                            None => #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None),
+                                        }
+                                    ]))
+                                };
+                                match &postgresql_json_type_pattern {
+                                    PostgresqlJsonTypePattern::Standart => quote::quote! {None},
+                                    PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
                                             &dimension1_not_null_or_nullable,
                                             &PostgresqlJsonTypePattern::Standart
-                                        );
-                                        let current_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&current_ident);
-                                        quote::quote!(
-                                            Some({
-                                                let mut #acc_snake_case = vec![];
-                                                for (index, #element_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().enumerate() {
-                                                    #acc_snake_case.push(
-                                                        #ident_where_element_upper_camel_case::DimensionOneEqual(
-                                                            where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual {
-                                                                logical_operator: #import_path::LogicalOperator::And,
-                                                                dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                                    vec![
-                                                                        where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                            std::primitive::i32::try_from(index).expect("error 5ba33744-be82-4152-935e-940daddc9715")
-                                                                        ).expect("error 42b4f5e0-64ba-4751-9508-4daeb482beca")
-                                                                    ]
-                                                                ).expect("error 757c25db-8178-4d34-b7e2-2b748cc1001a"),
-                                                                #value_snake_case: #current_ident_origin_upper_camel_case::new(#element_snake_case),
-                                                            }
-                                                        )
-                                                    );
-                                                }
-                                                #acc_snake_case
-                                            })
-                                        )
-                                    },
-                                    NotNullOrNullable::Nullable => {
-                                        let current_ident = generate_ident_token_stream(
-                                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                        ),
+                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                            &NotNullOrNullable::NotNull,
                                             &PostgresqlJsonTypePattern::ArrayDimension1 {
                                                 dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
                                             }
-                                        );
-                                        let current_ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&current_ident);
-                                        quote::quote!(
-                                            Some(
-                                                vec![
-                                                    match #read_only_ids_snake_case.0.#value_snake_case {
-                                                        Some(#value_snake_case) => #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
-                                                            #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                                <#current_ident as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
-                                                                    #current_ident_read_only_ids_upper_camel_case(#import_path::Value {#value_snake_case: #value_snake_case}),
-                                                                    #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                                ).expect("error f710c474-35ab-4d01-8810-596f280bbaab")
-                                                            )
-                                                            .expect("error 05414930-9f98-4ae9-b925-3be906e95329"),
-                                                        )),
-                                                        None => #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None),
-                                                    }
-                                                ]
-                                            )
                                         )
-                                    }
-                                },
-                                PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => quote::quote!{todo!()},
-                                PostgresqlJsonTypePattern::ArrayDimension3 {
-                                    dimension1_not_null_or_nullable,
-                                    dimension2_not_null_or_nullable,
-                                    dimension3_not_null_or_nullable,
-                                } => quote::quote!{todo!()},
-                                PostgresqlJsonTypePattern::ArrayDimension4 {
-                                    dimension1_not_null_or_nullable,
-                                    dimension2_not_null_or_nullable,
-                                    dimension3_not_null_or_nullable,
-                                    dimension4_not_null_or_nullable,
-                                } => quote::quote!{todo!()},
+                                    },
+                                    PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                                dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone()
+                                            }
+                                        ),
+                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                            &NotNullOrNullable::NotNull,
+                                            &PostgresqlJsonTypePattern::ArrayDimension2 {
+                                                dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                                                dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone()
+                                            }
+                                        )
+                                    },
+                                    PostgresqlJsonTypePattern::ArrayDimension3 {
+                                        dimension1_not_null_or_nullable,
+                                        dimension2_not_null_or_nullable,
+                                        dimension3_not_null_or_nullable,
+                                    } => match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &PostgresqlJsonTypePattern::ArrayDimension2 {
+                                                dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                                dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
+                                            }
+                                        ),
+                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                            &NotNullOrNullable::NotNull,
+                                            &PostgresqlJsonTypePattern::ArrayDimension3 {
+                                                dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                                                dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                                dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
+                                            }
+                                        )
+                                    },
+                                    PostgresqlJsonTypePattern::ArrayDimension4 {
+                                        dimension1_not_null_or_nullable,
+                                        dimension2_not_null_or_nullable,
+                                        dimension3_not_null_or_nullable,
+                                        dimension4_not_null_or_nullable,
+                                    } => match &not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &PostgresqlJsonTypePattern::ArrayDimension3 {
+                                                dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                                dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                                dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                            }
+                                        ),
+                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                            &NotNullOrNullable::NotNull,
+                                            &PostgresqlJsonTypePattern::ArrayDimension4 {
+                                                dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                                                dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                                dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                                dimension4_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                            }
+                                        )
+                                    },
+                                }
                             },
                         }
-                    }
+                    },
                 )
             };
             let generated = quote::quote! {
