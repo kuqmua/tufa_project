@@ -5360,7 +5360,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #current_ident_as_postgresql_json_type_test_cases_token_stream::previous_read_merged_with_option_update_into_read(
                                                         match #read_snake_case.0 {
                                                             Some(#value_snake_case) => #value_snake_case,
-                                                            None => #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                                            None => #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                                                         },
                                                         Some(#value_snake_case),
                                                     )
@@ -5990,8 +5990,52 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream = get_vec_syn_field(&is_standart_with_id_false).iter().map(|element| {
+                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                        });
+                                        let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
+                                        quote::quote! {
+                                            #field_type_as_postgresql_json_type_test_cases_token_stream::read_only_ids_merged_with_create_into_table_type_declaration(
+                                                #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
+                                                #create_snake_case.#field_ident
+                                            )
+                                        }
+                                    });
                                     quote::quote! {
-                                        todo!()
+                                        Some({
+                                            let mut #acc_snake_case = vec![];
+                                            for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case
+                                                .into_iter()
+                                                .zip(#create_snake_case.0.into_iter())
+                                                .collect::<std::vec::Vec<(#ident_with_id_standart_not_null_read_only_ids_upper_camel_case, #ident_with_id_standart_not_null_create_upper_camel_case)>>()
+                                                .into_iter()
+                                                .enumerate()
+                                            {
+                                                #acc_snake_case.push(
+                                                    #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                                        #import_path::PostgresqlJsonTypeWhereElementDimensionOneEqual {
+                                                            logical_operator: #import_path::LogicalOperator::And,
+                                                            dimensions: #import_path::BoundedStdVecVec::try_from(
+                                                                vec![
+                                                                    #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                        std::primitive::i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                                    ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
+                                                                ]
+                                                            ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
+                                                            #value_snake_case: #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
+                                                                <#import_path::UuidUuidAsNotNullJsonbString as #import_path::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_table_type_declaration(
+                                                                    #read_only_ids_snake_case.0.#value_snake_case.#id_snake_case,
+                                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                                ),
+                                                                #(#content_token_stream),*
+                                                            )
+                                                        }
+                                                    )
+                                                );
+                                            }
+                                            #acc_snake_case
+                                        })
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
