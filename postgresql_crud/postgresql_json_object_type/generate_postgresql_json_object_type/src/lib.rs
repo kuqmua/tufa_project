@@ -5959,7 +5959,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                     match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
                                         (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
-                                            AnimalAsNotNullJsonbObject
                                             #ident_standart_not_null_upper_camel_case
                                             as
                                             #import_path::PostgresqlJsonTypeTestCases
@@ -6038,9 +6037,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         })
                                     }
                                 }
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote! {
-                                        todo!()
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                    match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                        (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
+                                            #ident_array_not_null_upper_camel_case
+                                            as
+                                            #import_path::PostgresqlJsonTypeTestCases
+                                        >::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
+                                            #read_only_ids_snake_case,
+                                            #create_snake_case
+                                        ) {
+                                            Some(#value_snake_case) => Some(
+                                                vec![
+                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                        Some(
+                                                            #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                                #value_snake_case
+                                                            ).expect("error 55054e89-789d-4d2a-abc1-d67d783e7109")
+                                                        )
+                                                    )
+                                                ]
+                                            ),
+                                            None => None
+                                        },
+                                        (Some(_), None) => panic!("error 6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
+                                        (None, Some(_)) => panic!("error a2761cd2-27ff-4db0-ae81-948aa04573a6"),
+                                        (None, None) => None,
                                     }
                                 }
                             },
