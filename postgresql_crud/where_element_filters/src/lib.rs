@@ -2870,7 +2870,6 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
 }
 impl<'a, T: serde::Serialize + std::marker::Send + 'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeWhereElementDimensionOneEqual<T> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        println!("PostgresqlJsonTypeWhereElementDimensionOneEqual start is_need_to_add_logical_operator {is_need_to_add_logical_operator}");
         let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
             Ok(value) => value,
             Err(error) => {
@@ -2883,9 +2882,7 @@ impl<'a, T: serde::Serialize + std::marker::Send + 'a> postgresql_crud_common::P
                 return Err(error);
             }
         };
-        let f = Ok(format!("{}({}{} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, dimensions_indexes, value));
-        println!("PostgresqlJsonTypeWhereElementDimensionOneEqual end is_need_to_add_logical_operator {is_need_to_add_logical_operator} {f:#?}");
-        f
+        Ok(format!("{}({}{} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, dimensions_indexes, value))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
         match self.dimensions.query_bind(query) {
