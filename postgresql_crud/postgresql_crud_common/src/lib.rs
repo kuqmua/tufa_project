@@ -277,10 +277,16 @@ where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        match &self.0 {
-            Some(value) => value.query_part(increment, column, is_need_to_add_logical_operator),
+        println!("NullableJsonObjectPostgresqlTypeWhereFilter start  is_need_to_add_logical_operator {is_need_to_add_logical_operator:#?}");
+        let u = match &self.0 {
+            Some(value) => {
+                println!("NullableJsonObjectPostgresqlTypeWhereFilter middle is_need_to_add_logical_operator {is_need_to_add_logical_operator} {value:#?}");
+                value.query_part(increment, column, is_need_to_add_logical_operator)
+            },
             None => Ok(format!("{column} = 'null'")), //todo fix
-        }
+        };
+        println!("NullableJsonObjectPostgresqlTypeWhereFilter ed is_need_to_add_logical_operator {is_need_to_add_logical_operator:#?} {u:#?}");
+        u
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -510,9 +516,11 @@ impl<'a, PostgresqlTypeWhereElement: PostgresqlTypeWhereFilter<'a>> PostgresqlTy
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
+            //
             match PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
-                    acc.push_str(&format!("{value} "));
+                    acc.push_str(&format!("{value} "));//here
+                    // acc.push_str(&format!("{value} and "));//here
                     is_need_to_add_logical_operator_inner_handle = true;
                 }
                 Err(error) => {
@@ -521,7 +529,9 @@ impl<'a, PostgresqlTypeWhereElement: PostgresqlTypeWhereFilter<'a>> PostgresqlTy
             }
         }
         let _: std::option::Option<std::primitive::char> = acc.pop();
-        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+        let d = Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)));
+        // println!("dddd {d:#?}");
+        d
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -1001,7 +1011,8 @@ impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        println!("NotEmptyUniqueEnumVec start is_need_to_add_logical_operator {is_need_to_add_logical_operator}");
         let mut acc = std::string::String::default();
         for (index, element) in self.0.iter().enumerate() {
             match element.query_part(increment, column, index != 0) {
@@ -1013,7 +1024,16 @@ where
                 }
             }
         }
-        Ok(format!("({acc})"))
+        let f = Ok(format!("({acc})"));
+        // let f = Ok(format!("and ({acc})"));
+        //here
+        // let f = Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)));
+
+        // 
+
+        println!("NotEmptyUniqueEnumVec end start is_need_to_add_logical_operator {is_need_to_add_logical_operator} {f:#?}");
+
+        f
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
