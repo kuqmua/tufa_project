@@ -1118,6 +1118,24 @@ pub fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_optio
         }
     }
 }
+pub fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream(
+    read_only_ids_token_stream: &dyn quote::ToTokens,
+    create_token_stream: &dyn quote::ToTokens,
+    where_element_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+    let create_snake_case = naming::CreateSnakeCase;
+    quote::quote!{
+        fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
+            #read_only_ids_snake_case: #read_only_ids_token_stream,
+            #create_snake_case: #create_token_stream
+        ) -> std::option::Option<std::vec::Vec<#where_element_token_stream>> {
+            #content_token_stream
+        }
+    }
+}
 
 pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     cfg_token_stream: &dyn quote::ToTokens,
@@ -1141,6 +1159,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     vec_greater_than_test_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream: &dyn quote::ToTokens,
+    read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
@@ -1224,6 +1243,12 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case},
         &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
     );
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream(
+        &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case},
+        &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case},
+        &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#where_element_upper_camel_case},
+        &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
+    );
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
@@ -1296,6 +1321,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
             }
             #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_content_token_stream
+            #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_content_token_stream
         }
     }
 }
@@ -1320,6 +1346,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream: &dyn quote::ToTokens,
+    read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -1399,6 +1426,12 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case},
         &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
     );
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream(
+        &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case},
+        &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case},
+        &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_element_upper_camel_case},
+        &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
+    );
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
@@ -1465,6 +1498,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             #read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_content_token_stream
             #read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_content_token_stream
             #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_content_token_stream
+            #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_content_token_stream
         }
     }
 }
