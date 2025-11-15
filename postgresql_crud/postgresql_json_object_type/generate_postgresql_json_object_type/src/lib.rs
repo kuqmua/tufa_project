@@ -5958,16 +5958,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         )
                                                     );
                                                 }
-                                                // let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                //     Some(
-                                                //         #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                //             #value_snake_case
-                                                //         ).expect("error 44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
-                                                //     )
-                                                // );
-                                                // if !#acc_snake_case.contains(&whole) {
-                                                //     #acc_snake_case.push(whole);
-                                                // }
+                                                let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                    Some(
+                                                        #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                            #value_snake_case
+                                                        ).expect("error 44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
+                                                    )
+                                                );
+                                                if !#acc_snake_case.contains(&whole) {
+                                                    #acc_snake_case.push(whole);
+                                                }
                                                 #acc_snake_case
                                             })
                                         },
