@@ -6002,15 +6002,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             )
                                                         );
                                                     }
-                                                    // let whole = #ident_where_element_upper_camel_case::#field_ident_upper_camel_case(
-                                                    //     #import_path::PostgresqlTypeWhere::try_new(
-                                                    //         #import_path::LogicalOperator::And,
-                                                    //         #value_snake_case
-                                                    //     ).expect("error beaeb784-58ea-4836-9c54-73924493bfb4")
-                                                    // );
-                                                    // if !#acc_snake_case.contains(&whole) {
-                                                    //     #acc_snake_case.push(whole);
-                                                    // }
+                                                    let whole = #ident_where_element_upper_camel_case::#field_ident_upper_camel_case(
+                                                        #import_path::PostgresqlTypeWhere::try_new(
+                                                            #import_path::LogicalOperator::And,
+                                                            #value_snake_case
+                                                        ).expect("error beaeb784-58ea-4836-9c54-73924493bfb4")
+                                                    );
+                                                    if !#acc_snake_case.contains(&whole) {
+                                                        #acc_snake_case.push(whole);
+                                                    }
                                                 }
                                             }
                                         });
