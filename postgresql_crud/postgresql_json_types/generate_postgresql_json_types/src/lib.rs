@@ -2775,11 +2775,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
                                 postgresql_json_type_pattern: &PostgresqlJsonTypePattern
                             |generate_not_null_content_token_stream(&{
+                                let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                    &not_null_or_nullable,
+                                    &postgresql_json_type_pattern
+                                ));
                                 let current_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                     &not_null_or_nullable,
                                     &postgresql_json_type_pattern
                                 ));
-                                quote::quote!{#current_ident_origin_upper_camel_case::new(#element_snake_case)}
+                                quote::quote!{#current_ident_table_type_declaration_upper_camel_case(#current_ident_origin_upper_camel_case::new(#element_snake_case))}
                             });
                             let generate_nullable_token_stream = |
                                 not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
