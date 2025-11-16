@@ -4027,7 +4027,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
-                                //here
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
                                     ident: {
                                         let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&match &dimension1_not_null_or_nullable {
