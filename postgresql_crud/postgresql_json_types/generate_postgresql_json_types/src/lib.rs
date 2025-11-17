@@ -3134,32 +3134,27 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     //         }
                                     //     },
                                     // }
-                                    match (not_null_or_nullable, dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
+                                    let content_token_stream = match (not_null_or_nullable, dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 for (zero_index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                     for (one_index, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
                                                         #not_null_content_token_stream
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 for (zero_index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                     for (one_index, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
                                                         #not_null_content_token_stream
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 for (zero_index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                     if let Some(#value_snake_case) = #element_snake_case.0 {
                                                         for (one_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
@@ -3167,12 +3162,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 for (zero_index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                     if let Some(#value_snake_case) = #element_snake_case.0 {
                                                         for (one_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
@@ -3180,12 +3173,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 if let Some(#value_snake_case) = #create_snake_case.0.0 {
                                                     for (zero_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
                                                         for (one_index, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
@@ -3193,12 +3184,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 if let Some(#value_snake_case) = #create_snake_case.0.0 {
                                                     for (zero_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
                                                         for (one_index, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
@@ -3206,12 +3195,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 if let Some(#value_snake_case) = #create_snake_case.0.0 {
                                                     for (zero_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
                                                         if let Some(#value_snake_case) = #element_snake_case.0 {
@@ -3221,16 +3208,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let content_token_stream = generate_nullable_token_stream(
-                                                &dimension2_not_null_or_nullable,
-                                                &PostgresqlJsonTypePattern::Standart
-                                            );
                                             quote::quote! {
-                                                let mut #acc_snake_case = vec![];
                                                 if let Some(#value_snake_case) = #create_snake_case.0.0 {
                                                     for (zero_index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
                                                         if let Some(#value_snake_case) = #element_snake_case.0 {
@@ -3240,9 +3221,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                         }
                                                     }
                                                 }
-                                                #if_acc_is_empty_none_else_some_value_token_stream
                                             }
                                         },
+                                    };
+                                    quote::quote!{
+                                        let mut #acc_snake_case = vec![];
+                                        #content_token_stream
+                                        #if_acc_is_empty_none_else_some_value_token_stream
                                     }
                                 }
                                 PostgresqlJsonTypePattern::ArrayDimension3 {
