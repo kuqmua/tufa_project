@@ -3105,16 +3105,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             };
                             let generate_if_some_token_stream = |
-                                array_dimension_number: &ArrayDimensionNumber,
                                 some_token_stream: &dyn quote::ToTokens,
                                 content_token_stream: &dyn quote::ToTokens
                             |{
-                                let index_number_token_stream = array_dimension_number.to_index_number_token_stream();
                                 quote::quote!{
                                     if let Some(#value_snake_case) = #some_token_stream {
-                                        for (#index_number_token_stream, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                            #content_token_stream
-                                        }
+                                        #content_token_stream
                                     }
                                 }
                             };
@@ -3136,83 +3132,66 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         &dimension2_not_null_or_nullable,
                                         &current_postgresql_json_type_pattern
                                     );
-                                    let content_4356fcf0_35e3_4abe_a7dc_b0677e620455_token_stream = quote::quote!{
-
-                                    };
-                                    // match not_null_or_nullable {
-                                    //     NotNullOrNullable::NotNull => {
-                                    //         match (dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
-                                    //             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-
-                                    //             },
-                                    //             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                                    
-                                    //             },
-                                    //             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-
-                                    //             },
-                                    //             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                                    
-                                    //             },
-                                    //         }
-                                    //     },
-                                    //     NotNullOrNullable::Nullable => {
-                                    //         match (dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
-                                    //             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                                    
-                                    //             },
-                                    //             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                                    
-                                    //             },
-                                    //             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-
-                                    //             },
-                                    //             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                                    
-                                    //             },
-                                    //         }
-                                    //     },
-                                    // }
                                     match (not_null_or_nullable, dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            quote::quote! {
-                                                for (index_0, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
-                                                    for (index_1, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
-                                                        #not_null_content_token_stream
-                                                    }
-                                                }
-                                            }
+                                            let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension2,
+                                                &quote::quote!{#element_snake_case.0},
+                                                &not_null_content_token_stream
+                                            );
+                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension1,
+                                                &quote::quote!{#create_snake_case.0.0},
+                                                &dimension2_token_stream
+                                            );
+                                            quote::quote! {#dimension1_token_stream}
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            quote::quote! {
-                                                for (index_0, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
-                                                    for (index_1, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
-                                                        #not_null_content_token_stream
-                                                    }
-                                                }
-                                            }
+                                            let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension2,
+                                                &quote::quote!{#element_snake_case.0},
+                                                &not_null_content_token_stream
+                                            );
+                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension1,
+                                                &quote::quote!{#create_snake_case.0.0},
+                                                &dimension2_token_stream
+                                            );
+                                            quote::quote! {#dimension1_token_stream}
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            quote::quote! {
-                                                for (index_0, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
-                                                    if let Some(#value_snake_case) = #element_snake_case.0 {
-                                                        for (index_1, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                            #not_null_content_token_stream
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension2,
+                                                &quote::quote!{#value_snake_case.0},
+                                                &not_null_content_token_stream
+                                            );
+                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
+                                                &quote::quote!{#element_snake_case.0},
+                                                &dimension2_token_stream
+                                            );
+                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension1,
+                                                &quote::quote!{#create_snake_case.0.0},
+                                                &if_some_dimension2_token_stream
+                                            );
+                                            quote::quote! {#dimension1_token_stream}
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            quote::quote! {
-                                                for (index_0, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
-                                                    if let Some(#value_snake_case) = #element_snake_case.0 {
-                                                        for (index_1, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                            #not_null_content_token_stream
-                                                        }
-                                                    }
-                                                }
-                                            }
+                                            let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension2,
+                                                &quote::quote!{#value_snake_case.0},
+                                                &not_null_content_token_stream
+                                            );
+                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
+                                                &quote::quote!{#element_snake_case.0},
+                                                &dimension2_token_stream
+                                            );
+                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension1,
+                                                &quote::quote!{#create_snake_case.0.0},
+                                                &if_some_dimension2_token_stream
+                                            );
+                                            quote::quote! {#dimension1_token_stream}
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                                             quote::quote! {
