@@ -3092,6 +3092,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 }
                             };
+                            let generate_for_index_element_into_iter_enumerate_token_stream = |
+                                array_dimension_number: &ArrayDimensionNumber,
+                                in_token_stream: &dyn quote::ToTokens,
+                                content_token_stream: &dyn quote::ToTokens
+                            |{
+                                let index_number_token_stream = array_dimension_number.to_index_number_token_stream();
+                                quote::quote!{
+                                    for (#index_number_token_stream, #element_snake_case) in #in_token_stream.into_iter().enumerate() {
+                                        #content_token_stream
+                                    }
+                                }
+                            };
                             let generate_if_some_token_stream = |
                                 array_dimension_number: &ArrayDimensionNumber,
                                 some_token_stream: &dyn quote::ToTokens,
