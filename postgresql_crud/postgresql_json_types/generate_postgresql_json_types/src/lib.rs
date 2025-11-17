@@ -3119,137 +3119,54 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #content_token_stream
                                 #if_acc_is_empty_none_else_some_value_token_stream
                             };
+                            let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
+                            let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
+                            let create_dot_zero_dot_zero_token_stream = quote::quote!{#create_snake_case.0.0};
                             match &postgresql_json_type_pattern {
                                 PostgresqlJsonTypePattern::Standart => standart_none_token_stream,
                                 PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => array_dimension1_none_token_stream,
                                 PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_acc_token_stream(&{
                                     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                                    let not_null_content_token_stream = generate_not_null_token_stream(
-                                        &dimension2_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    );
-                                    let nullable_token_stream = generate_nullable_token_stream(
-                                        &dimension2_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    );
-                                    let dimension2_in_token_stream = match dimension1_not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => quote::quote!{#element_snake_case.0},
-                                        NotNullOrNullable::Nullable => quote::quote!{#value_snake_case.0}
-                                    };
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                         &ArrayDimensionNumber::ArrayDimension2,
-                                        &dimension2_in_token_stream,
+                                        &match dimension1_not_null_or_nullable {
+                                            NotNullOrNullable::NotNull => &element_dot_zero_token_stream,
+                                            NotNullOrNullable::Nullable => &value_dot_zero_token_stream
+                                        },
                                         &match not_null_or_nullable {
-                                            NotNullOrNullable::NotNull => &not_null_content_token_stream,
-                                            NotNullOrNullable::Nullable => &nullable_token_stream
+                                            NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                                                &dimension2_not_null_or_nullable,
+                                                &current_postgresql_json_type_pattern
+                                            ),
+                                            NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                                &dimension2_not_null_or_nullable,
+                                                &current_postgresql_json_type_pattern
+                                            )
                                         }
                                     );
-                                    match (not_null_or_nullable, dimension1_not_null_or_nullable, dimension2_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension2_token_stream
-                                            );
-                                            quote::quote! {#dimension1_token_stream}
+                                    let maybe_if_some_dimension2_token_stream = match dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => dimension2_token_stream,
+                                        NotNullOrNullable::Nullable => generate_if_some_token_stream(
+                                            &element_dot_zero_token_stream,
+                                            &dimension2_token_stream
+                                        )
+                                    };
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                        &ArrayDimensionNumber::ArrayDimension1,
+                                        &match not_null_or_nullable {
+                                            NotNullOrNullable::NotNull => &create_dot_zero_dot_zero_token_stream,
+                                            NotNullOrNullable::Nullable => &value_dot_zero_token_stream
                                         },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension2_token_stream
-                                            );
-                                            quote::quote! {#dimension1_token_stream}
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#element_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &if_some_dimension2_token_stream
-                                            );
-                                            quote::quote! {#dimension1_token_stream}
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#element_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &if_some_dimension2_token_stream
-                                            );
-                                            quote::quote! {#dimension1_token_stream}
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#value_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let if_some_dimension1_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension1_token_stream
-                                            );
-                                            quote::quote! {
-                                                #if_some_dimension1_token_stream
-                                            }
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#value_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let if_some_dimension1_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension1_token_stream
-                                            );
-                                            quote::quote! {
-                                                #if_some_dimension1_token_stream
-                                            }
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#element_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#value_snake_case.0},
-                                                &if_some_dimension2_token_stream
-                                            );
-                                            let if_some_dimension1_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension1_token_stream
-                                            );
-                                            quote::quote! {
-                                                #if_some_dimension1_token_stream
-                                            }
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let if_some_dimension2_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#element_snake_case.0},
-                                                &dimension2_token_stream
-                                            );
-                                            let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
-                                                &ArrayDimensionNumber::ArrayDimension1,
-                                                &quote::quote!{#value_snake_case.0},
-                                                &if_some_dimension2_token_stream
-                                            );
-                                            let if_some_dimension1_token_stream = generate_if_some_token_stream(
-                                                &quote::quote!{#create_snake_case.0.0},
-                                                &dimension1_token_stream
-                                            );
-                                            quote::quote! {
-                                                #if_some_dimension1_token_stream
-                                            }
-                                        },
-                                    }
+                                        &maybe_if_some_dimension2_token_stream
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = match not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => dimension1_token_stream,
+                                        NotNullOrNullable::Nullable => generate_if_some_token_stream(
+                                            &create_dot_zero_dot_zero_token_stream,
+                                            &dimension1_token_stream
+                                        )
+                                    };
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
                                 }),
                                 PostgresqlJsonTypePattern::ArrayDimension3 {
                                     dimension1_not_null_or_nullable,
