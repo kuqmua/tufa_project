@@ -182,6 +182,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
     let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereElementEqualToJsonFieldSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
     let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereElementGreaterThanSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -5068,6 +5069,42 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
+                &vec_create_snake_case,
+                &generate_ident_create_content_element_token_stream,
+                &|element: &SynFieldWrapper|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.syn_field.ty;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
+                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                            let current_field_ident = &element.field_ident;
+                            if field_ident == current_field_ident {
+                                quote::quote! {
+                                    Some(
+                                        #import_path::PostgresqlTypeWhere::try_new(
+                                            #import_path::LogicalOperator::Or,
+                                            vec![#element_snake_case]
+                                        )
+                                        .expect("error dcddfa1a-f0cd-490f-8303-9302391b34f3"),
+                                    )
+                                }
+                            } else {
+                                quote::quote! {None}
+                            }
+                        })
+                    );
+                    quote::quote!{
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
+                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
+                            ident_create.#field_ident.clone()
+                        ) {
+                            for #element_snake_case in #value_snake_case {
+                                #assert_eq_token_stream
+                            }
+                        }
+                    }
+                }
+            );
             quote::quote!{{
                 #test_read_many_by_non_existent_primary_keys_token_stream
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
@@ -5077,6 +5114,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
                 #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
             }}
         };
         let read_one_token_stream = {
