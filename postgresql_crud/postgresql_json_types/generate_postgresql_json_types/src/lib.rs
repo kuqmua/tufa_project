@@ -117,6 +117,37 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
     }
+    enum ArrayDimensionNumber {
+        ArrayDimension1,
+        ArrayDimension2,
+        ArrayDimension3,
+        ArrayDimension4
+    }
+    impl std::convert::TryFrom<&PostgresqlJsonTypePattern> for ArrayDimensionNumber {
+        type Error = ();
+        fn try_from(value: &PostgresqlJsonTypePattern) -> Result<Self, Self::Error> {
+            match &value {
+                PostgresqlJsonTypePattern::Standart => Err(()),
+                PostgresqlJsonTypePattern::ArrayDimension1 {..} => Ok(Self::ArrayDimension1),
+                PostgresqlJsonTypePattern::ArrayDimension2 {..} => Ok(Self::ArrayDimension2),
+                PostgresqlJsonTypePattern::ArrayDimension3 {..} => Ok(Self::ArrayDimension3),
+                PostgresqlJsonTypePattern::ArrayDimension4 {..} => Ok(Self::ArrayDimension4),
+            }
+        }
+    }
+    impl ArrayDimensionNumber {
+        fn to_number_std_primitive_u8(&self) -> std::primitive::u8 {
+            match self {
+                Self::ArrayDimension1 => 0,
+                Self::ArrayDimension2 => 1,
+                Self::ArrayDimension3 => 2,
+                Self::ArrayDimension4 => 3,
+            }
+        }
+        fn to_index_number_token_stream(&self) -> proc_macro2::TokenStream {
+            format!("index_{}",self.to_number_std_primitive_u8()).parse::<proc_macro2::TokenStream>().expect("error dd0a2fb8-40a5-4d63-95bc-f47a3656f652")
+        }
+    }
     enum ArrayDimension {
         ArrayDimension1,
         ArrayDimension2 {
@@ -2992,20 +3023,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             // }
                             quote::quote! {todo!()}
                         } else {
-                            let vec_content_token_stream = {
-                                let mut content_token_stream = vec![];
-                                for element in 0..=1 {//here
-                                    let index_number_token_stream = format!("index_{element}").parse::<proc_macro2::TokenStream>().expect("error f0ce7e73-6d15-4de8-8f15-ce00334ed410");
-                                    content_token_stream.push(quote::quote! {
-                                        where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                            std::primitive::i32::try_from(#index_number_token_stream).expect("error 5a1818e7-3865-4222-bf6b-31486bd721d2")
-                                        ).expect("error ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
-                                    });
-                                }
-                                quote::quote! {
-                                    #(#content_token_stream),*
-                                }
-                            };
                             let generate_dimension_two_equal_initialization_token_stream = |
                                 current_value_ident_not_null_or_nullable: &NotNullOrNullable,
                                 current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
@@ -3022,6 +3039,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         &current_value_ident_postgresql_json_type_pattern
                                     )
                                 );
+                                let vec_content_token_stream = {
+                                    let mut content_token_stream = vec![];
+                                    // .to_index_number_token_stream()
+                                    for element in 0..=ArrayDimensionNumber::try_from(postgresql_json_type_pattern).expect("error a1ced640-242f-4977-8510-9c122a4b0ff5").to_number_std_primitive_u8() {
+                                        let index_number_token_stream = format!("index_{element}").parse::<proc_macro2::TokenStream>().expect("error f0ce7e73-6d15-4de8-8f15-ce00334ed410");
+                                        content_token_stream.push(quote::quote! {
+                                            where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                std::primitive::i32::try_from(#index_number_token_stream).expect("error 5a1818e7-3865-4222-bf6b-31486bd721d2")
+                                            ).expect("error ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
+                                        });
+                                    }
+                                    quote::quote! {
+                                        #(#content_token_stream),*
+                                    }
+                                };
                                 quote::quote! {
                                     #current_where_element_ident_where_element_upper_camel_case::DimensionTwoEqual(
                                         where_element_filters::PostgresqlJsonTypeWhereElementDimensionTwoEqual {
@@ -3060,10 +3092,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 }
                             };
-                            let generate_if_some_token_stream = |some_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                                if let Some(#value_snake_case) = #some_token_stream {
-                                    for (index_1, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                        #content_token_stream
+                            let generate_if_some_token_stream = |
+                                array_dimension_number: &ArrayDimensionNumber,
+                                some_token_stream: &dyn quote::ToTokens,
+                                content_token_stream: &dyn quote::ToTokens
+                            |{
+                                let index_number_token_stream = array_dimension_number.to_index_number_token_stream();
+                                quote::quote!{
+                                    if let Some(#value_snake_case) = #some_token_stream {
+                                        for (#index_number_token_stream, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
+                                            #content_token_stream
+                                        }
                                     }
                                 }
                             };
