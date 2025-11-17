@@ -3194,12 +3194,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             quote::quote! {#dimension1_token_stream}
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                                            let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                                &ArrayDimensionNumber::ArrayDimension2,
+                                                &quote::quote!{#element_snake_case.0},
+                                                &nullable_token_stream
+                                            );
                                             quote::quote! {
                                                 if let Some(#value_snake_case) = #create_snake_case.0.0 {
                                                     for (index_0, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                        for (index_1, #element_snake_case) in #element_snake_case.0.into_iter().enumerate() {
-                                                            #nullable_token_stream
-                                                        }
+                                                        #dimension2_token_stream
                                                     }
                                                 }
                                             }
