@@ -79,16 +79,16 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
                 }
             }
         },
-        // {
-        //     "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_json_type_pattern": {
-        //         "ArrayDimension2": {
-        //             "dimension1_not_null_or_nullable": "Nullable",
-        //             "dimension2_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
+        {
+            "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_json_type_pattern": {
+                "ArrayDimension2": {
+                    "dimension1_not_null_or_nullable": "Nullable",
+                    "dimension2_not_null_or_nullable": "Nullable"
+                }
+            }
+        },
         // {
         //     "postgresql_json_type": "StdPrimitiveI8AsJsonbNumber",
         //     "not_null_or_nullable": "Nullable",
