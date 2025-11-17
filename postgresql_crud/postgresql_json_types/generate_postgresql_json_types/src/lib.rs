@@ -479,6 +479,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
             let self_snake_case = naming::SelfSnakeCase;
+            let index_snake_case = naming::IndexSnakeCase;
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
             let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
@@ -3026,15 +3027,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             )
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                            let current_ident = generate_ident_token_stream(
+                                            let current_value_ident = generate_ident_token_stream(
                                                 &dimension2_not_null_or_nullable,
                                                 &PostgresqlJsonTypePattern::Standart
                                             );
-                                            let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
+                                            let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_value_ident);
                                             quote::quote!{
                                                 Some({
                                                     let mut #acc_snake_case = vec![];
-                                                    for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
+                                                    for (#index_snake_case, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                         if let Some(#value_snake_case) = #element_snake_case.0 {
                                                             for #element_snake_case in #value_snake_case.0 {
                                                                 #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionTwoEqual(
@@ -3043,11 +3044,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                                         dimensions: where_element_filters::BoundedStdVecVec::try_from(
                                                                             vec![
                                                                                 where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                                    std::primitive::i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                                                    std::primitive::i32::try_from(#index_snake_case).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
                                                                                 ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
                                                                             ]
                                                                         ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
-                                                                        #value_snake_case: #current_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
+                                                                        #value_snake_case: #current_value_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
                                                                     }
                                                                 ));
                                                             }
@@ -3058,15 +3059,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             }
                                         },
                                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                            let current_ident = generate_ident_token_stream(
+                                            let current_value_ident = generate_ident_token_stream(
                                                 &dimension2_not_null_or_nullable,
                                                 &PostgresqlJsonTypePattern::Standart
                                             );
-                                            let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
+                                            let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_value_ident);
                                             quote::quote!{
                                                 Some({
                                                     let mut #acc_snake_case = vec![];
-                                                    for (index, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
+                                                    for (#index_snake_case, #element_snake_case) in #create_snake_case.0.0.into_iter().enumerate() {
                                                         if let Some(#value_snake_case) = #element_snake_case.0 {
                                                             for #element_snake_case in #value_snake_case.0 {
                                                                 #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionTwoEqual(
@@ -3075,11 +3076,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                                         dimensions: where_element_filters::BoundedStdVecVec::try_from(
                                                                             vec![
                                                                                 where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                                    std::primitive::i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                                                    std::primitive::i32::try_from(#index_snake_case).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
                                                                                 ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
                                                                             ]
                                                                         ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
-                                                                        #value_snake_case: #current_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
+                                                                        #value_snake_case: #current_value_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
                                                                     }
                                                                 ));
                                                             }
@@ -3090,36 +3091,44 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             }
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                            let current_ident = generate_ident_token_stream(
+                                            let current_where_element_ident = generate_ident_token_stream(
+                                                &NotNullOrNullable::NotNull,
+                                                &postgresql_json_type_pattern
+                                            );
+                                            let current_value_ident = generate_ident_token_stream(
                                                 &dimension2_not_null_or_nullable,
                                                 &PostgresqlJsonTypePattern::Standart
                                             );
-                                            let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
+                                            let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_value_ident);
                                             quote::quote!{
                                                 Some({
                                                     let mut #acc_snake_case = vec![];
-                                                    if let Some(#value_snake_case) = #create_snake_case.0 {
-                                                        //
-                                                        for (index, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
-                                                            if let Some(#value_snake_case) = #element_snake_case.0 {
-                                                                for #element_snake_case in #value_snake_case.0 {
-                                                                    #acc_snake_case.push(#ident_where_element_upper_camel_case::DimensionTwoEqual(
-                                                                        where_element_filters::PostgresqlJsonTypeWhereElementDimensionTwoEqual {
-                                                                            logical_operator: #import_path::LogicalOperator::And,
-                                                                            dimensions: where_element_filters::BoundedStdVecVec::try_from(
-                                                                                vec![
-                                                                                    where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                                                        std::primitive::i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
-                                                                                    ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
-                                                                                ]
-                                                                            ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
-                                                                            #value_snake_case: #current_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
-                                                                        }
-                                                                    ));
+                                                    if let Some(#value_snake_case) = #create_snake_case.0.0 {
+                                                        for (#index_snake_case, #element_snake_case) in #value_snake_case.0.into_iter().enumerate() {
+                                                            for #element_snake_case in #element_snake_case.0 {
+                                                                if let Ok(#value_snake_case) = #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                                    vec![
+                                                                        VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberWhereElement::DimensionTwoEqual(
+                                                                            where_element_filters::PostgresqlJsonTypeWhereElementDimensionTwoEqual {
+                                                                                logical_operator: #import_path::LogicalOperator::And,
+                                                                                dimensions: where_element_filters::BoundedStdVecVec::try_from(
+                                                                                    vec![
+                                                                                        where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                                            std::primitive::i32::try_from(#index_snake_case).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                                                        ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
+                                                                                    ]
+                                                                                ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
+                                                                                #value_snake_case: #current_value_ident_table_type_declaration_upper_camel_case::new(#element_snake_case.into()),
+                                                                            }
+                                                                        )
+                                                                    ]
+                                                                ) {
+                                                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                                                        #value_snake_case
+                                                                    )));
                                                                 }
                                                             }
                                                         }
-                                                        //
                                                     }
                                                     #acc_snake_case
                                                 })
