@@ -3210,19 +3210,51 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     dimension2_not_null_or_nullable,
                                     dimension3_not_null_or_nullable,
                                     dimension4_not_null_or_nullable,
-                                } =>
-                                // generate_token_stream(
-                                //     &generate_ident_token_stream(
-                                //         &dimension2_not_null_or_nullable,
-                                //         &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                //             dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                //             dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                //         }
-                                //     )
-                                // )
-                                {
-                                    quote::quote! {todo!()}
-                                }
+                                } => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
+                                        dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                    };
+                                    let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                        &IndexNumber::One,
+                                        &value_dot_zero_token_stream,
+                                        &match not_null_or_nullable {
+                                            NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                                                &index_max_number,
+                                                &dimension2_not_null_or_nullable,
+                                                &current_postgresql_json_type_pattern
+                                            ),
+                                            NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                                                &index_max_number,
+                                                &dimension2_not_null_or_nullable,
+                                                &current_postgresql_json_type_pattern
+                                            )
+                                        }
+                                    );
+                                    let maybe_if_some_dimension2_token_stream = match dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => dimension2_token_stream,
+                                        NotNullOrNullable::Nullable => generate_if_some_token_stream(
+                                            &value_dot_zero_token_stream,
+                                            &dimension2_token_stream
+                                        )
+                                    };
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
+                                        &IndexNumber::Zero,
+                                        &match not_null_or_nullable {
+                                            NotNullOrNullable::NotNull => &create_dot_zero_dot_zero_token_stream,
+                                            NotNullOrNullable::Nullable => &value_dot_zero_token_stream
+                                        },
+                                        &maybe_if_some_dimension2_token_stream
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = match not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => dimension1_token_stream,
+                                        NotNullOrNullable::Nullable => generate_if_some_token_stream(
+                                            &create_dot_zero_dot_zero_token_stream,
+                                            &dimension1_token_stream
+                                        )
+                                    };
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
+                                })
                             }
                         }
                     },
