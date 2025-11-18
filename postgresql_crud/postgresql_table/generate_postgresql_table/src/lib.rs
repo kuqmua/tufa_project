@@ -5069,6 +5069,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
+            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
                 &vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
