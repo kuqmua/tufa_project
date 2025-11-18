@@ -197,6 +197,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -4511,13 +4512,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 enum Dimension {
                     One,
                     Two,
-                    Three
+                    Three,
+                    Four
                 }
                 let generate_dimension_equal_token_stream = |dimension: &Dimension|{
                     let function_name_token_stream: &dyn quote::ToTokens = match &dimension {
                         Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
                         Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
                         Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
+                        Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
                     };
                     let acc_is_empty_none_or_some_acc_token_stream = quote::quote!{
                         if #acc_snake_case.is_empty() {
@@ -6088,6 +6091,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &generate_dimension_equal_token_stream(&Dimension::One),
                         &generate_dimension_equal_token_stream(&Dimension::Two),
                         &generate_dimension_equal_token_stream(&Dimension::Three),
+                        &generate_dimension_equal_token_stream(&Dimension::Four),
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,
@@ -6137,6 +6141,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #create_snake_case
                         )},
                         &quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case(
+                            #read_only_ids_snake_case,
+                            #create_snake_case
+                        )},
+                        &quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )},
