@@ -4510,12 +4510,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
                 enum Dimension {
                     One,
-                    Two
+                    Two,
+                    Three
                 }
                 let generate_dimension_equal_token_stream = |dimension: &Dimension|{
                     let function_name_token_stream: &dyn quote::ToTokens = match &dimension {
                         Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
                         Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
+                        Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
                     };
                     let acc_is_empty_none_or_some_acc_token_stream = quote::quote!{
                         if #acc_snake_case.is_empty() {
@@ -6085,7 +6087,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         &generate_dimension_equal_token_stream(&Dimension::One),
                         &generate_dimension_equal_token_stream(&Dimension::Two),
-                        &quote::quote!{todo!()},
+                        &generate_dimension_equal_token_stream(&Dimension::Three),
                     ),
                     postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                         &cfg_feature_test_utils,
