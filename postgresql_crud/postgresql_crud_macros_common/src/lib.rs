@@ -1383,7 +1383,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     import_path: &ImportPath,
     type_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
-    vec_create_token_stream: &dyn quote::ToTokens,
+    option_vec_create_token_stream: &dyn quote::ToTokens,
     read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream: &dyn quote::ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
@@ -1419,7 +1419,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let read_inner_into_update_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
     let read_only_ids_into_option_value_read_inner_snake_case = naming::ReadOnlyIdsIntoOptionValueReadInnerSnakeCase;
     let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
-    let vec_create_snake_case = naming::VecCreateSnakeCase;
+    let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
@@ -1503,8 +1503,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
             type #postgresql_json_type_upper_camel_case = #self_upper_camel_case;
             type #select_upper_camel_case = #ident_select_upper_camel_case;
-            fn #vec_create_snake_case() -> std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case> {
-                #vec_create_token_stream
+            fn #option_vec_create_snake_case() -> std::option::Option<std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case>> {
+                #option_vec_create_token_stream
             }
             fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
                 #read_only_ids_snake_case: &#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
