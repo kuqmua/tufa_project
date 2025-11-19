@@ -1078,7 +1078,6 @@ fn generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(
         }
     }
 }
-//
 fn generate_update_to_read_only_ids_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -1091,6 +1090,25 @@ fn generate_update_to_read_only_ids_token_stream(
         fn #update_to_read_only_ids_snake_case(
             #value_snake_case: &#path_token_stream::#update_upper_camel_case
         ) -> #path_token_stream::#read_only_ids_upper_camel_case {
+            #content_token_stream
+        }
+    }
+}
+//
+fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+    import_path: &ImportPath,
+    path_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let value_upper_camel_case = naming::ValueUpperCamelCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    quote::quote!{
+        fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
+            #value_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
+        ) -> std::option::Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1352,6 +1370,11 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &self_postgresql_type_as_postgresql_type_token_stream,
         &update_to_read_only_ids_token_stream,
     );
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+        &import_path,
+        &self_postgresql_type_as_postgresql_type_token_stream,
+        &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case},
@@ -1408,11 +1431,12 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_inner_into_read_with_new_or_try_new_unwraped_content_token_stream
             #read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream
             #update_to_read_only_ids_content_token_stream
-            fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
-                #value_snake_case: &#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
-            ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case>> {
-                #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-            }
+            // fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
+            //     #value_snake_case: &#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
+            // ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case>> {
+            //     #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+            // }
+            #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream
             fn #previous_read_merged_with_option_update_into_read_snake_case(
                 #read_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case,
                 #option_update_snake_case: std::option::Option<#self_postgresql_type_as_postgresql_type_token_stream::#update_upper_camel_case>,
@@ -1563,6 +1587,11 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &update_to_read_only_ids_token_stream,
     );
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+        &import_path,
+        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
+        &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case},
@@ -1620,11 +1649,12 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 #read_only_ids_into_option_value_read_inner_token_stream
             }
             #update_to_read_only_ids_content_token_stream
-            fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
-                #value_snake_case: &#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
-            ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case>> {
-                #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-            }
+            #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream
+            // fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
+            //     #value_snake_case: &#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
+            // ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case>> {
+            //     #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+            // }
             fn #previous_read_merged_with_option_update_into_read_snake_case(
                 #read_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case,
                 #option_update_snake_case: std::option::Option<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#update_upper_camel_case>,
