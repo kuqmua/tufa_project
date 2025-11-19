@@ -184,6 +184,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
     let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereElementGreaterThanSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -5150,17 +5151,55 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
+            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream = generate_read_test_token_stream(
+                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_ident_create_content_element_token_stream,
+                &|element: &SynFieldWrapper|{
+                    let field_ident = &element.field_ident;
+                    let field_type = &element.syn_field.ty;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
+                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                            let current_field_ident = &element.field_ident;
+                            if field_ident == current_field_ident {
+                                quote::quote! {
+                                    Some(
+                                        #import_path::PostgresqlTypeWhere::try_new(
+                                            #import_path::LogicalOperator::Or,
+                                            vec![#element_snake_case]
+                                        )
+                                        .expect("error dcddfa1a-f0cd-490f-8303-9302391b34f3"),
+                                    )
+                                }
+                            } else {
+                                quote::quote! {None}
+                            }
+                        })
+                    );
+                    quote::quote!{
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
+                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
+                            ident_create.#field_ident.clone()
+                        ) {
+                            for #element_snake_case in #value_snake_case {
+                                #assert_eq_token_stream
+                            }
+                        }
+                    }
+                }
+            );
             quote::quote!{{
-                #test_read_many_by_non_existent_primary_keys_token_stream
-                #test_read_many_by_equal_to_created_primary_keys_token_stream
-                #read_only_ids_merged_with_create_into_where_element_equal_token_stream
-                #read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
-                #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
-                #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
-                #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
+                // #test_read_many_by_non_existent_primary_keys_token_stream
+                // #test_read_many_by_equal_to_created_primary_keys_token_stream
+                // #read_only_ids_merged_with_create_into_where_element_equal_token_stream
+                // #read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
+                // #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
+                // #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
+                // #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
                 #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream
             }}
         };
         let read_one_token_stream = {
@@ -6226,35 +6265,35 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
                             let start = std::time::Instant::now();
-                            #create_many_token_stream
-                            let create_many_elapsed = start.elapsed();
-                            #create_one_token_stream
-                            let create_one_elapsed = start.elapsed();
+                            // #create_many_token_stream
+                            // let create_many_elapsed = start.elapsed();
+                            // #create_one_token_stream
+                            // let create_one_elapsed = start.elapsed();
                             #read_many_token_stream
-                            let read_many_elapsed = start.elapsed();
-                            #read_one_token_stream
-                            let read_one_elapsed = start.elapsed();
-                            #update_many_token_stream
-                            let update_many_elapsed = start.elapsed();
-                            #update_one_token_stream
-                            let update_one_elapsed = start.elapsed();
-                            #delete_many_token_stream
-                            let delete_many_elapsed = start.elapsed();
-                            #delete_one_token_stream
-                            let delete_one_elapsed = start.elapsed();
-                            println!(
-                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                                create_many_elapsed,
-                                create_one_elapsed,
-                                read_many_elapsed,
-                                read_one_elapsed,
-                                update_many_elapsed,
-                                update_one_elapsed,
-                                delete_many_elapsed,
-                                delete_one_elapsed
-                            );
-                            #last_read_many_token_stream
-                            drop_table_if_exists(&#postgres_pool_snake_case).await;
+                            // let read_many_elapsed = start.elapsed();
+                            // #read_one_token_stream
+                            // let read_one_elapsed = start.elapsed();
+                            // #update_many_token_stream
+                            // let update_many_elapsed = start.elapsed();
+                            // #update_one_token_stream
+                            // let update_one_elapsed = start.elapsed();
+                            // #delete_many_token_stream
+                            // let delete_many_elapsed = start.elapsed();
+                            // #delete_one_token_stream
+                            // let delete_one_elapsed = start.elapsed();
+                            // println!(
+                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                            //     create_many_elapsed,
+                            //     create_one_elapsed,
+                            //     read_many_elapsed,
+                            //     read_one_elapsed,
+                            //     update_many_elapsed,
+                            //     update_one_elapsed,
+                            //     delete_many_elapsed,
+                            //     delete_one_elapsed
+                            // );
+                            // #last_read_many_token_stream
+                            // drop_table_if_exists(&#postgres_pool_snake_case).await;
                         });
                     })
                     .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
