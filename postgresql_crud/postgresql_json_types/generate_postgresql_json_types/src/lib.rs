@@ -479,7 +479,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let update_for_query_upper_camel_case = naming::UpdateForQueryUpperCamelCase;
             let update_upper_camel_case = naming::UpdateUpperCamelCase;
             let self_snake_case = naming::SelfSnakeCase;
-            let index_snake_case = naming::IndexSnakeCase;
             let equal_upper_camel_case = naming::EqualUpperCamelCase;
             let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
             let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
