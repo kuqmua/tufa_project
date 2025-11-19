@@ -6098,7 +6098,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &import_path,
                         &ident_read_inner_upper_camel_case,
                         &ident,
-                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case().expect("error eeb8ddcc-fec2-4aa1-900b-bc66ba04929c")},
+                        &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case()},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case)},
                         &quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case)},

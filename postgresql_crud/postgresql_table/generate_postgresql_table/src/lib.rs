@@ -194,7 +194,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
     let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
     let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
-    let vec_create_snake_case = naming::VecCreateSnakeCase;
+    let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
@@ -4774,7 +4774,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let ident_create_content_token_stream = generate_create_content_token_stream(&field_ident);
                     let content_token_stream = generate_content_token_stream(&element);
                     quote::quote!{
-                        for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream() {
+                        for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream().unwrap_or(vec![]) {
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4882,7 +4882,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             ) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields|{
                     generate_read_test_token_stream(
-                        &vec_create_snake_case,
+                        &option_vec_create_snake_case,
                         &generate_ident_create_content_element_token_stream,
                         &|element: &SynFieldWrapper|{
                             let field_ident = &element.field_ident;
@@ -4929,7 +4929,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             };
             let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream = generate_read_test_token_stream(
-                &vec_create_snake_case,
+                &option_vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -4965,7 +4965,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
-                &vec_create_snake_case,
+                &option_vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5035,7 +5035,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
-                &vec_create_snake_case,
+                &option_vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5072,7 +5072,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
-                &vec_create_snake_case,
+                &option_vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5109,7 +5109,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream = generate_read_test_token_stream(
-                &vec_create_snake_case,
+                &option_vec_create_snake_case,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;

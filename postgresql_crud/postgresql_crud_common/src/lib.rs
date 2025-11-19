@@ -154,7 +154,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: PostgresqlType;
     type Select: SelectAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
-    fn vec_create() -> std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>;
+    fn option_vec_create() -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Update;
