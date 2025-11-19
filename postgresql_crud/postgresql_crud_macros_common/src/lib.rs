@@ -1020,7 +1020,6 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
 //     }
 // }
 
-//
 pub fn generate_option_vec_create_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -1029,6 +1028,23 @@ pub fn generate_option_vec_create_token_stream(
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     quote::quote!{
         fn #option_vec_create_snake_case() -> std::option::Option<std::vec::Vec<#path_token_stream::#create_upper_camel_case>> {
+            #content_token_stream
+        }
+    }
+}
+//
+pub fn generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
+    path_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+    quote::quote!{
+        fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
+            #read_only_ids_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
+        ) -> std::vec::Vec<std::vec::Vec<#path_token_stream::#read_inner_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1194,7 +1210,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     type_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
     option_vec_create_token_stream: &dyn quote::ToTokens,
-    read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream: &dyn quote::ToTokens,
+    read_only_ids_to_two_dimensional_vec_read_inner_token_stream: &dyn quote::ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     update_to_read_only_ids_token_stream: &dyn quote::ToTokens,
@@ -1272,6 +1288,10 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &self_postgresql_type_as_postgresql_type_token_stream,
         &option_vec_create_token_stream,
     );
+    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
+        &self_postgresql_type_as_postgresql_type_token_stream,
+        &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case},
@@ -1324,11 +1344,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             type #postgresql_type_upper_camel_case = #self_upper_camel_case;
             type #select_upper_camel_case = #ident_select_upper_camel_case;
             #option_vec_create_content_token_stream
-            fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
-                #read_only_ids_snake_case: &#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case
-            ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#read_inner_upper_camel_case>> {
-                #read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream
-            }
+            #read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream
             fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case: #type_token_stream) -> #self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case {
                 #read_inner_into_read_with_new_or_try_new_unwraped_token_stream
             }
@@ -1401,7 +1417,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     type_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
     option_vec_create_token_stream: &dyn quote::ToTokens,
-    read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream: &dyn quote::ToTokens,
+    read_only_ids_to_two_dimensional_vec_read_inner_token_stream: &dyn quote::ToTokens,
     read_inner_into_read_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     read_inner_into_update_with_new_or_try_new_unwraped_token_stream: &dyn quote::ToTokens,
     read_only_ids_into_option_value_read_inner_token_stream: &dyn quote::ToTokens,
@@ -1477,6 +1493,10 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &option_vec_create_token_stream,
     );
+    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
+        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
+        &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case},
@@ -1525,11 +1545,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             type #postgresql_json_type_upper_camel_case = #self_upper_camel_case;
             type #select_upper_camel_case = #ident_select_upper_camel_case;
             #option_vec_create_content_token_stream
-            fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
-                #read_only_ids_snake_case: &#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
-            ) -> std::vec::Vec<std::vec::Vec<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
-                #read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream
-            }
+            #read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream
             fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(
                 #value_snake_case: #type_token_stream
             ) -> #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case {
