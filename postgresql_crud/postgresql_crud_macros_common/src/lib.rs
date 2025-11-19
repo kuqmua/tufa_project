@@ -1130,7 +1130,6 @@ fn generate_previous_read_merged_with_option_update_into_read_token_stream(
         }
     }
 }
-//
 fn generate_read_only_ids_merged_with_create_into_read_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -1146,6 +1145,28 @@ fn generate_read_only_ids_merged_with_create_into_read_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> #path_token_stream::#read_upper_camel_case {
+            #content_token_stream
+        }
+    }
+}
+//
+fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+    import_path: &ImportPath,
+    path_token_stream: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
+    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
+    let create_upper_camel_case = naming::CreateUpperCamelCase;
+    let create_snake_case = naming::CreateSnakeCase;
+    let value_upper_camel_case = naming::ValueUpperCamelCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    quote::quote!{
+        fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
+            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
+            #create_snake_case: #path_token_stream::#create_upper_camel_case
+        ) -> std::option::Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1420,6 +1441,11 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &self_postgresql_type_as_postgresql_type_token_stream,
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
+    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+        &import_path,
+        &self_postgresql_type_as_postgresql_type_token_stream,
+        &read_only_ids_merged_with_create_into_option_value_read_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case},
@@ -1479,12 +1505,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream
             #previous_read_merged_with_option_update_into_read_content_token_stream
             #read_only_ids_merged_with_create_into_read_content_token_stream
-            fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
-                #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
-                #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_type_as_postgresql_type_token_stream::#read_upper_camel_case>> {
-                #read_only_ids_merged_with_create_into_option_value_read_token_stream
-            }
+            #read_only_ids_merged_with_create_into_option_value_read_content_token_stream
             fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                 #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
@@ -1630,6 +1651,11 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
+    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
+        &import_path,
+        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
+        &read_only_ids_merged_with_create_into_option_value_read_token_stream,
+    );
     let read_only_ids_merged_with_create_into_where_element_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_element_equal_token_stream(
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case},
         &quote::quote!{#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case},
@@ -1690,12 +1716,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream
             #previous_read_merged_with_option_update_into_read_content_token_stream
             #read_only_ids_merged_with_create_into_read_content_token_stream
-            fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
-                #read_only_ids_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
-                #create_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
-            ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_upper_camel_case>> {
-                #read_only_ids_merged_with_create_into_option_value_read_token_stream
-            }
+            #read_only_ids_merged_with_create_into_option_value_read_content_token_stream
             fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                 #read_only_ids_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
                 #create_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
