@@ -3254,9 +3254,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     }
                                 );
-                                let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_token_stream(
+                                let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension3_not_null_or_nullable,
-                                    &value_dot_zero_token_stream,
                                     &dimension4_token_stream
                                 );
                                 let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
@@ -3264,9 +3263,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &value_dot_zero_token_stream,
                                     &maybe_if_some_dimension4_token_stream
                                 );
-                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_token_stream(
+                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension2_not_null_or_nullable,
-                                    &value_dot_zero_token_stream,
                                     &dimension3_token_stream
                                 );
                                 let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
@@ -3274,9 +3272,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &value_dot_zero_token_stream,
                                     &maybe_if_some_dimension3_token_stream
                                 );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_token_stream(
+                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension1_not_null_or_nullable,
-                                    &value_dot_zero_token_stream,
                                     &dimension2_token_stream
                                 );
                                 let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
