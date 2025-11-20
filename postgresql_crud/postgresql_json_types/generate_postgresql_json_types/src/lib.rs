@@ -3511,11 +3511,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     let maybe_if_some_dimension2_token_stream = match dimension1_not_null_or_nullable {
                                         NotNullOrNullable::NotNull => dimension2_token_stream,
                                         NotNullOrNullable::Nullable => generate_if_some_token_stream(
-                                            // &value_dot_zero_token_stream,
-                                            match not_null_or_nullable {
-                                                NotNullOrNullable::NotNull => &value_snake_case,
-                                                NotNullOrNullable::Nullable => &value_dot_zero_token_stream
-                                            },
+                                            //here
+                                            &value_dot_zero_token_stream,
+                                            // match not_null_or_nullable {
+                                            //     NotNullOrNullable::NotNull => &value_snake_case,
+                                            //     NotNullOrNullable::Nullable => &value_dot_zero_token_stream
+                                            // },
                                             &dimension2_token_stream
                                         )
                                     };
