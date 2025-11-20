@@ -2352,6 +2352,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &value_dot_zero_token_stream,
                     &content_token_stream
                 );
+                let generate_not_null_or_nullable_token_stream = |
+                    index_max_number: &IndexNumber,
+                    current_not_null_or_nullable: &NotNullOrNullable,
+                    current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
+                |match not_null_or_nullable {
+                    NotNullOrNullable::NotNull => generate_not_null_token_stream(
+                        &index_max_number,
+                        &current_not_null_or_nullable,
+                        &current_postgresql_json_type_pattern
+                    ),
+                    NotNullOrNullable::Nullable => generate_nullable_token_stream(
+                        &index_max_number,
+                        &current_not_null_or_nullable,
+                        &current_postgresql_json_type_pattern
+                    )
+                };
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -2895,18 +2911,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Zero,
                                     &starting_value_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension1_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
@@ -2920,18 +2929,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Zero,
                                     &starting_value_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension1_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
@@ -2950,18 +2952,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Zero,
                                     &starting_value_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension1_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
@@ -2982,18 +2977,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Zero,
                                     &starting_value_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension1_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
@@ -3012,18 +3000,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::One,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension2_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension1_not_null_or_nullable,
@@ -3050,18 +3031,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::One,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension2_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension1_not_null_or_nullable,
@@ -3090,18 +3064,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::One,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension2_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension1_not_null_or_nullable,
@@ -3134,18 +3101,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Two,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension3_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension3_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension3_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension2_not_null_or_nullable,
@@ -3182,18 +3142,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Two,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension3_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension3_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension3_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension2_not_null_or_nullable,
@@ -3241,18 +3194,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(
                                     &IndexNumber::Three,
                                     &value_dot_zero_token_stream,
-                                    &match not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                                            &index_max_number,
-                                            &dimension4_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        ),
-                                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                                            &index_max_number,
-                                            &dimension4_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern
-                                        )
-                                    }
+                                    &generate_not_null_or_nullable_token_stream(
+                                        &index_max_number,
+                                        &dimension4_not_null_or_nullable,
+                                        &current_postgresql_json_type_pattern
+                                    )
                                 );
                                 let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                     dimension3_not_null_or_nullable,
