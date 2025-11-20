@@ -2339,6 +2339,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &content_token_stream
                     )
                 };
+                let generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream = |content_token_stream: &dyn quote::ToTokens|generate_maybe_if_some_token_stream(
+                    not_null_or_nullable,
+                    &create_dot_zero_dot_zero_token_stream,
+                    &content_token_stream
+                );
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -2895,9 +2900,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     }
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -2922,9 +2925,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     }
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -2954,9 +2955,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     }
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -2988,9 +2987,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         )
                                     }
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3030,9 +3027,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3071,9 +3066,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3114,9 +3107,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3171,9 +3162,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3223,9 +3212,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
@@ -3296,9 +3283,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &starting_value_token_stream,
                                     &maybe_if_some_dimension2_token_stream
                                 );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_token_stream(
-                                    not_null_or_nullable,
-                                    &create_dot_zero_dot_zero_token_stream,
+                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
                                     &dimension1_token_stream
                                 );
                                 quote::quote! {#maybe_if_some_dimension1_token_stream}
