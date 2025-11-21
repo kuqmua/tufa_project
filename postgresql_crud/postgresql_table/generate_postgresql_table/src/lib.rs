@@ -4764,20 +4764,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     "error ee8d232d-98f2-4449-ad30-0e36ca2e7094"
                 );
             };
-            let option_vec_create_call_unwrap_or_vec_token_stream = quote::quote!{
+            let generate_option_vec_create_call_unwrap_or_vec_token_stream = |_: &syn::Ident|quote::quote!{
                 #option_vec_create_snake_case().unwrap_or(vec![])
             };
-            let vec_greater_than_test_call_token_stream = quote::quote!{
+            let generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream = |field_ident: &syn::Ident|quote::quote!{{
+                let mut #acc_snake_case = #option_vec_create_snake_case().unwrap_or(vec![]);
+                if #acc_snake_case.is_empty() {
+                    #acc_snake_case.push(ident_create_default.#field_ident.clone());
+                }
+                #acc_snake_case
+            }};
+            let generate_vec_greater_than_test_call_token_stream = |_: &syn::Ident|quote::quote!{
                 #vec_greater_than_test_snake_case()
             };
             let generate_read_test_token_stream = |
-                method_call_token_stream: &dyn quote::ToTokens,
+                generate_method_call_token_stream: &dyn Fn(&syn::Ident) -> proc_macro2::TokenStream,
                 generate_create_content_token_stream: &dyn Fn(&syn::Ident) -> proc_macro2::TokenStream,
                 generate_content_token_stream: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream,
             |{
                 generate_for_each_concurrent_one_token_stream(&generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.syn_field.ty;
+                    let method_call_token_stream = generate_method_call_token_stream(&field_ident);
                     let ident_create_content_token_stream = generate_create_content_token_stream(&field_ident);
                     let content_token_stream = generate_content_token_stream(&element);
                     quote::quote!{
@@ -4889,7 +4897,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             ) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields|{
                     generate_read_test_token_stream(
-                        &option_vec_create_call_unwrap_or_vec_token_stream,
+                        &generate_option_vec_create_call_unwrap_or_vec_token_stream,
                         &generate_ident_create_content_element_token_stream,
                         &|element: &SynFieldWrapper|{
                             let field_ident = &element.field_ident;
@@ -4936,7 +4944,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             };
             let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -4972,7 +4980,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5007,7 +5015,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream = generate_read_test_token_stream(
-                &vec_greater_than_test_call_token_stream,
+                &generate_vec_greater_than_test_call_token_stream,
                 &generate_ident_create_content_element_create_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5041,8 +5049,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
+            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5078,7 +5087,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5114,7 +5123,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -5150,7 +5159,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
             let create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream = generate_read_test_token_stream(
-                &option_vec_create_call_unwrap_or_vec_token_stream,
+                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
@@ -6338,7 +6347,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
