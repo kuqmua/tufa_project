@@ -459,7 +459,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }),
                     (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => generate_vec(PostgresqlJsonTypeRecordHandle {
                         not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                        postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("error 0e970a4f-eeec-421e-aa30-f90fc536d388"),
                     }),
                     (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
                         not_null_or_nullable: NotNullOrNullable::NotNull,
@@ -467,7 +467,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }),
                     (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable }) => generate_vec(PostgresqlJsonTypeRecordHandle {
                         not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable },
+                        postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("error 85f8ed83-aa1f-4f52-8f8f-80aeb86f8083"),
                     }),
                     (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension2 { .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
                         not_null_or_nullable: NotNullOrNullable::NotNull,
@@ -944,14 +944,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                                 let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error e994797d-7334-4e30-b180-af24c16b68b1")),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                 };
                                 generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => &{
                                 let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error 76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                 };
                                 generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
@@ -964,10 +964,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                                         dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 1b996c86-0b08-476a-b963-373dd6838496")
                                     ),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                 };
@@ -982,11 +979,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                                         dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                            dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error d24b7481-27d9-40c0-8476-344a16d08f27")
                                     ),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
                                 };
@@ -1026,14 +1019,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         },
                         PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
                             let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlJsonTypePattern::Standart, dimension1_not_null_or_nullable),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("error 1160d3df-2e2b-4a33-a297-6b48546b9ca8"), dimension1_not_null_or_nullable),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                             };
                             generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
                         }),
                         PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
                             let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }, dimension1_not_null_or_nullable),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&postgresql_json_type_pattern.down_by_1().expect("error 8ab62f4e-611b-4228-a295-3e731e934b9c"), dimension1_not_null_or_nullable),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                             };
                             generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
@@ -1045,10 +1038,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         } => generate_array_dimensions_initialization_token_stream(&{
                             let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                    &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                        dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                        dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                    },
+                                    &postgresql_json_type_pattern.down_by_1().expect("error ed64919d-4679-45da-9d14-22ddee84716b"),
                                     dimension1_not_null_or_nullable,
                                 ),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
@@ -1063,11 +1053,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         } => generate_array_dimensions_initialization_token_stream(&{
                             let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                    &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                        dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                        dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                        dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                    },
+                                    &postgresql_json_type_pattern.down_by_1().expect("error 25646d29-5a30-49fb-b91a-7b49ed8c5b0a"),
                                     dimension1_not_null_or_nullable,
                                 ),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
@@ -1441,7 +1427,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                 let array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension1_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::Standart
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension1_postgresql_json_type_filters = {
