@@ -4764,32 +4764,34 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     "error ee8d232d-98f2-4449-ad30-0e36ca2e7094"
                 );
             };
-            let generate_option_vec_create_call_unwrap_or_vec_token_stream = |_: &syn::Ident|quote::quote!{
-                #option_vec_create_snake_case().unwrap_or(vec![])
+            let generate_option_vec_create_call_unwrap_or_vec_token_stream = |_: &syn::Ident, field_type: &syn::Type|quote::quote!{
+                <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
             };
-            let generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream = |field_ident: &syn::Ident|quote::quote!{{
-                let mut #acc_snake_case = #option_vec_create_snake_case().unwrap_or(vec![]);
-                if #acc_snake_case.is_empty() {
-                    #acc_snake_case.push(ident_create_default.#field_ident.clone());
+            let generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream = |field_ident: &syn::Ident, field_type: &syn::Type|quote::quote!{
+                {
+                    let mut #acc_snake_case = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]);
+                    if #acc_snake_case.is_empty() {
+                        #acc_snake_case.push(ident_create_default.#field_ident.clone());
+                    }
+                    #acc_snake_case
                 }
-                #acc_snake_case
-            }};
-            let generate_vec_greater_than_test_call_token_stream = |_: &syn::Ident|quote::quote!{
-                #vec_greater_than_test_snake_case()
+            };
+            let generate_vec_greater_than_test_call_token_stream = |_: &syn::Ident, field_type: &syn::Type|quote::quote!{
+                <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#vec_greater_than_test_snake_case()
             };
             let generate_read_test_token_stream = |
-                generate_method_call_token_stream: &dyn Fn(&syn::Ident) -> proc_macro2::TokenStream,
+                generate_method_call_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
                 generate_create_content_token_stream: &dyn Fn(&syn::Ident) -> proc_macro2::TokenStream,
                 generate_content_token_stream: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream,
             |{
                 generate_for_each_concurrent_one_token_stream(&generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.syn_field.ty;
-                    let method_call_token_stream = generate_method_call_token_stream(&field_ident);
+                    let method_call_token_stream = generate_method_call_token_stream(&field_ident, &field_type);
                     let ident_create_content_token_stream = generate_create_content_token_stream(&field_ident);
                     let content_token_stream = generate_content_token_stream(&element);
                     quote::quote!{
-                        for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_call_token_stream {
+                        for #element_snake_case in #method_call_token_stream {
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
