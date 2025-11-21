@@ -2223,16 +2223,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                     };
-                    let generate_if_some_token_stream = |
-                        some_token_stream: &dyn quote::ToTokens,
-                        content_token_stream: &dyn quote::ToTokens
-                    |{
-                        quote::quote!{
-                            if let Some(#value_snake_case) = #some_token_stream {
-                                #content_token_stream
-                            }
-                        }
-                    };
                     let generate_acc_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                         let mut #acc_snake_case = vec![];
                         #content_token_stream
@@ -2244,7 +2234,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     };
                     let create_dot_zero_dot_zero_token_stream = quote::quote!{#create_snake_case.0.0};
-                    let read_only_ids_dot_zero_dot_zero_token_stream = quote::quote!{#read_only_ids_snake_case.0.#value_snake_case};
                     let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
                     let generate_dimension_equal_initialization_token_stream = |
                         index_max_number: &IndexNumber,
@@ -2291,36 +2280,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             )
                         }
                     };
-                    let generate_not_null_token_stream = |
-                        index_max_number: &IndexNumber,
-                        current_value_ident_not_null_or_nullable: &NotNullOrNullable,
-                        current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                    |{
-                        let content_token_stream = generate_dimension_equal_initialization_token_stream(
-                            index_max_number,
-                            &current_value_ident_not_null_or_nullable,
-                            &current_value_ident_postgresql_json_type_pattern,
-                        );
-                        quote::quote! {#acc_snake_case.push(#content_token_stream);}
-                    };
-                    let generate_nullable_token_stream = |
-                        index_max_number: &IndexNumber,
-                        current_value_ident_not_null_or_nullable: &NotNullOrNullable,
-                        current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                    |{
-                        let content_token_stream = generate_dimension_equal_initialization_token_stream(
-                            index_max_number,
-                            &current_value_ident_not_null_or_nullable,
-                            &current_value_ident_postgresql_json_type_pattern,
-                        );
-                        quote::quote! {
-                            if let Ok(#value_snake_case) = #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
-                                #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
-                                    #value_snake_case
-                                )));
-                            }
-                        }
-                    };
                     let starting_value_token_stream = match not_null_or_nullable {
                         NotNullOrNullable::NotNull => &create_dot_zero_dot_zero_token_stream,
                         NotNullOrNullable::Nullable => &value_dot_zero_token_stream
@@ -2331,10 +2290,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         content_token_stream: &dyn quote::ToTokens
                     |match not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote!{#content_token_stream},
-                        NotNullOrNullable::Nullable => generate_if_some_token_stream(
-                            &some_token_stream,
-                            &content_token_stream
-                        )
+                        NotNullOrNullable::Nullable => quote::quote!{
+                            if let Some(#value_snake_case) = #some_token_stream {
+                                #content_token_stream
+                            }
+                        }
                     };
                     let generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream = |content_token_stream: &dyn quote::ToTokens|generate_maybe_if_some_token_stream(
                         not_null_or_nullable,
@@ -2354,16 +2314,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         current_not_null_or_nullable: &NotNullOrNullable,
                         current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
                     |match not_null_or_nullable {
-                        NotNullOrNullable::NotNull => generate_not_null_token_stream(
-                            &index_max_number,
-                            &current_not_null_or_nullable,
-                            &current_postgresql_json_type_pattern
-                        ),
-                        NotNullOrNullable::Nullable => generate_nullable_token_stream(
-                            &index_max_number,
-                            &current_not_null_or_nullable,
-                            &current_postgresql_json_type_pattern
-                        )
+                        NotNullOrNullable::NotNull => {
+                            let content_token_stream = generate_dimension_equal_initialization_token_stream(
+                                index_max_number,
+                                &current_not_null_or_nullable,
+                                &current_postgresql_json_type_pattern,
+                            );
+                            quote::quote! {#acc_snake_case.push(#content_token_stream);}
+                        },
+                        NotNullOrNullable::Nullable => {
+                            let content_token_stream = generate_dimension_equal_initialization_token_stream(
+                                index_max_number,
+                                &current_not_null_or_nullable,
+                                &current_postgresql_json_type_pattern,
+                            );
+                            quote::quote! {
+                                if let Ok(#value_snake_case) = #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
+                                        #value_snake_case
+                                    )));
+                                }
+                            }
+                        }
                     };
                     let generate_for_index_element_into_iter_enumerate_three_token_stream = |
                         in_token_stream: &dyn quote::ToTokens,
