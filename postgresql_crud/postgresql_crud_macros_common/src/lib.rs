@@ -1282,7 +1282,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     quote::quote!{
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
-            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_element_upper_camel_case>> {
             #content_token_stream
@@ -1301,7 +1300,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     quote::quote!{
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
-            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_element_upper_camel_case>> {
             #content_token_stream
@@ -1320,7 +1318,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     quote::quote!{
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case(
-            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_element_upper_camel_case>> {
             #content_token_stream
@@ -1339,7 +1336,6 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     quote::quote!{
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
-            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_element_upper_camel_case>> {
             #content_token_stream

@@ -1380,12 +1380,8 @@ mod example_tests {
                                     acc.push(futures::FutureExt::boxed(async move {
                                         let ident_create = super::ExampleCreate { column_142: element };
                                         let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters { payload: ident_create.clone() }).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
-                                        let a = read_only_ids_returned_from_create_one.column_142.clone().expect("error 72625277-1786-487c-a6c4-8a062fe685e6");
-                                        let b = ident_create.column_142.clone();
-                                        // println!("aaaa {a:#?}\nbbb {b:#?}");
                                         if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal(
-                                            a,
-                                            b
+                                            ident_create.column_142.clone()
                                         ) {
                                             for element in value {
                                                 // println!("element {element:#?}");
@@ -1503,7 +1499,9 @@ mod example_tests {
                                     acc.push(futures::FutureExt::boxed(async move {
                                         let ident_create = super::ExampleCreate { column_142: element };
                                         let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters { payload: ident_create.clone() }).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
-                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal(read_only_ids_returned_from_create_one.column_142.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"), ident_create.column_142.clone()) {
+                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal(
+                                            ident_create.column_142.clone()
+                                        ) {
                                             for element in value {
                                                 assert_eq!(
                                                     vec![super::ExampleRead {
@@ -1619,7 +1617,9 @@ mod example_tests {
                                     acc.push(futures::FutureExt::boxed(async move {
                                         let ident_create = super::ExampleCreate { column_142: element };
                                         let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters { payload: ident_create.clone() }).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
-                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal(read_only_ids_returned_from_create_one.column_142.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"), ident_create.column_142.clone()) {
+                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal(
+                                            ident_create.column_142.clone()
+                                        ) {
                                             for element in value {
                                                 assert_eq!(
                                                     vec![super::ExampleRead {
@@ -1735,7 +1735,9 @@ mod example_tests {
                                     acc.push(futures::FutureExt::boxed(async move {
                                         let ident_create = super::ExampleCreate { column_142: element };
                                         let read_only_ids_returned_from_create_one = super::Example::try_create_one(&url_cloned, super::ExampleCreateOneParameters { payload: ident_create.clone() }).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
-                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal(read_only_ids_returned_from_create_one.column_142.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"), ident_create.column_142.clone()) {
+                                        if let Some(value) = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal(
+                                            ident_create.column_142.clone()
+                                        ) {
                                             for element in value {
                                                 assert_eq!(
                                                     vec![super::ExampleRead {
