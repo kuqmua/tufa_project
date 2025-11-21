@@ -1429,7 +1429,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case = {
                                     let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::Standart
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 21eaebaf-cd7a-4625-9232-0e23788a5432")
                                     ));
                                     quote::quote! {#value}
                                 };
@@ -1483,11 +1483,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                                 let array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension1_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 0c4491c4-8364-4c27-9478-227aefadb086")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension2_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension2_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension2_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_2().expect("error 2d4ee5d4-490e-4503-91a7-ed29f73e6219")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension2_postgresql_json_type_filters = {
@@ -1557,19 +1563,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case = {
                                     let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 3450bef4-e5f3-4bcd-b2de-4e4c67143336"),
                                     ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension2_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension2_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable }));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension2_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_2().expect("error 3c0d10f4-6d7d-45d0-b929-5e307c7d79b1")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension3_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension3_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension3_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_3().expect("error 9aaf9e82-0a92-4848-bfd4-de49013972a5")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension3_postgresql_json_type_filters = {
@@ -1651,30 +1660,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case = {
                                     let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                            dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 550d313b-e925-496d-8a57-87931c573155"),
                                     ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension2_inner_element_ident_table_type_declaration_upper_camel_case = {
                                     let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                         dimension2_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                        },
+                                        &postgresql_json_type_pattern.down_by_2().expect("error 7bda1424-64c0-402e-9bf8-44d5fb3b9903"),
                                     ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension3_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension3_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable }));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension3_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_3().expect("error b43aa5bd-9bba-4f3e-b93b-a41f108262ff")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let array_dimension4_inner_element_ident_table_type_declaration_upper_camel_case = {
-                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(dimension4_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart));
+                                    let value = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        dimension4_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_4().expect("error a246885a-ca72-4e37-a396-b7220e237c7e")
+                                    ));
                                     quote::quote! {#value}
                                 };
                                 let common_array_dimension4_postgresql_json_type_filters = {
