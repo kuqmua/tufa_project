@@ -2746,20 +2746,26 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_some_acc_content_token_stream(
                                 &not_null_or_nullable,
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => generate_ident_token_stream(&dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart),
-                                    NotNullOrNullable::Nullable => generate_ident_token_stream(&NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone() }),
+                                    NotNullOrNullable::NotNull => generate_ident_token_stream(
+                                        &dimension1_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_1().expect("error dec468c0-09fd-4db3-98e7-7fa9cd565909")
+                                    ),
+                                    NotNullOrNullable::Nullable => generate_ident_token_stream(
+                                        &NotNullOrNullable::NotNull,
+                                        &postgresql_json_type_pattern
+                                    ),
                                 },
                             ),
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_some_acc_content_token_stream(
                                 &not_null_or_nullable,
                                 &match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => generate_ident_token_stream(&dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone() }),
+                                    NotNullOrNullable::NotNull => generate_ident_token_stream(
+                                        &dimension1_not_null_or_nullable,
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 4010ebf7-d6e2-4d6e-a562-a299201c92ec")
+                                    ),
                                     NotNullOrNullable::Nullable => generate_ident_token_stream(
                                         &NotNullOrNullable::NotNull,
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                                            dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                        },
+                                        &postgresql_json_type_pattern
                                     ),
                                 },
                             ),
@@ -2772,18 +2778,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => generate_ident_token_stream(
                                         &dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                            dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error acdbb564-b169-40db-9815-2653c0150a4c")
                                     ),
                                     NotNullOrNullable::Nullable => generate_ident_token_stream(
                                         &NotNullOrNullable::NotNull,
-                                        &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                                            dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                            dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                        },
+                                        &postgresql_json_type_pattern
                                     ),
                                 },
                             ),
@@ -2797,20 +2796,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &match &not_null_or_nullable {
                                     NotNullOrNullable::NotNull => generate_ident_token_stream(
                                         &dimension1_not_null_or_nullable,
-                                        &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                            dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                            dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                            dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
-                                        },
+                                        &postgresql_json_type_pattern.down_by_1().expect("error 5abf9504-cde0-4c6c-adb9-145b385918a5"),
                                     ),
                                     NotNullOrNullable::Nullable => generate_ident_token_stream(
                                         &NotNullOrNullable::NotNull,
-                                        &PostgresqlJsonTypePattern::ArrayDimension4 {
-                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                                            dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                            dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                            dimension4_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
-                                        },
+                                        &postgresql_json_type_pattern
                                     ),
                                 },
                             ),
@@ -2939,13 +2929,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_handle_token_stream(
-                                &generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart),
+                                &generate_ident_token_stream(
+                                    dimension1_not_null_or_nullable,
+                                    &postgresql_json_type_pattern.down_by_1().expect("error d6f89137-9a47-4f74-afce-0e1959d3dc59")
+                                ),
                                 &match &dimension1_not_null_or_nullable {
                                     NotNullOrNullable::NotNull => &has_len_more_than_one_for_for_token_stream,
                                     NotNullOrNullable::Nullable => &has_len_more_than_one_token_stream,
                                 },
                             ),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_acc_content_handle_token_stream(&generate_ident_token_stream(dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }), &has_len_more_than_one_token_stream),
+                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_acc_content_handle_token_stream(
+                                &generate_ident_token_stream(
+                                    dimension1_not_null_or_nullable,
+                                    &postgresql_json_type_pattern.down_by_1().expect("error 38774398-d485-4c14-84e8-92e06c36c23b")
+                                ),
+                                &has_len_more_than_one_token_stream
+                            ),
                             PostgresqlJsonTypePattern::ArrayDimension3 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
@@ -2953,10 +2952,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             } => generate_acc_content_handle_token_stream(
                                 &generate_ident_token_stream(
                                     dimension1_not_null_or_nullable,
-                                    &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                        dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                        dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                    },
+                                    &postgresql_json_type_pattern.down_by_1().expect("error 053f4bab-0a8e-457f-9176-50e519b312bb")
                                 ),
                                 &has_len_more_than_one_token_stream,
                             ),
@@ -2968,11 +2964,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             } => generate_acc_content_handle_token_stream(
                                 &generate_ident_token_stream(
                                     dimension1_not_null_or_nullable,
-                                    &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                        dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                        dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                        dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                    },
+                                    &postgresql_json_type_pattern.down_by_1().expect("error 860f8f15-72ac-4557-a2c6-87b1aa958eb4")
                                 ),
                                 &has_len_more_than_one_token_stream,
                             ),
