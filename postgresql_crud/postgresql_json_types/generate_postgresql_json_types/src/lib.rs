@@ -2286,44 +2286,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     Two,
                     Three
                 }
-                impl IndexNumber {
-                    fn to_std_primitive_u8(&self) -> std::primitive::u8 {
-                        match self {
-                            Self::Zero => 0,
-                            Self::One => 1,
-                            Self::Two => 2,
-                            Self::Three => 3,
-                        }
-                    }
-                    fn to_number_starting_with_one_word_str(&self) -> &'static std::primitive::str {
-                        match self {
-                            Self::Zero => "One",
-                            Self::One => "Two",
-                            Self::Two => "Three",
-                            Self::Three => "Four",
-                        }
-                    }
-                    fn to_dimension_number_starting_with_one_equal_token_stream(&self) -> proc_macro2::TokenStream {
-                        format!(
-                            "Dimension{}Equal",
-                            self.to_number_starting_with_one_word_str()
-                        ).parse::<proc_macro2::TokenStream>().expect("error 52fa34ac-5cd1-4ae9-8a1d-832e73a505d7")
-                    }
-                    fn to_postgresql_json_type_where_element_dimension_number_starting_with_one_equal_token_stream(&self) -> proc_macro2::TokenStream {
-                        format!(
-                            "PostgresqlJsonTypeWhereElementDimension{}Equal",
-                            self.to_number_starting_with_one_word_str()
-                        ).parse::<proc_macro2::TokenStream>().expect("error 15d769b0-0767-473c-a2c5-3d0f6e221ced")
-                    }
-                }
                 let generate_array_dimension_equal_token_stream = |index_max_number: &IndexNumber| {
                     use postgresql_crud_macros_common::NotNullOrNullable;
+                    let index_number_to_std_primitive_u8 = |index_number: &IndexNumber| -> std::primitive::u8 {
+                        match index_number {
+                            IndexNumber::Zero => 0,
+                            IndexNumber::One => 1,
+                            IndexNumber::Two => 2,
+                            IndexNumber::Three => 3,
+                        }
+                    };
                     let generate_for_index_element_into_iter_enumerate_token_stream = |
                         index_number: &IndexNumber,
                         in_token_stream: &dyn quote::ToTokens,
                         content_token_stream: &dyn quote::ToTokens
                     |{
-                        let index_number_token_stream = format!("index_{}",index_number.to_std_primitive_u8()).parse::<proc_macro2::TokenStream>().expect("error dd0a2fb8-40a5-4d63-95bc-f47a3656f652");
+                        let index_number_token_stream = format!("index_{}",index_number_to_std_primitive_u8(index_number)).parse::<proc_macro2::TokenStream>().expect("error dd0a2fb8-40a5-4d63-95bc-f47a3656f652");
                         quote::quote!{
                             for (#index_number_token_stream, #value_snake_case) in #in_token_stream.into_iter().enumerate() {
                                 #content_token_stream
@@ -2365,8 +2343,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         current_value_ident_not_null_or_nullable: &NotNullOrNullable,
                         current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
                     |{
-                        let dimension_number_starting_with_one_equal_token_stream = index_max_number.to_dimension_number_starting_with_one_equal_token_stream();
-                        let postgresql_json_type_where_element_dimension_number_starting_with_one_equal_token_stream = index_max_number.to_postgresql_json_type_where_element_dimension_number_starting_with_one_equal_token_stream();
+                        let to_number_starting_with_one_word_str = |index_number: &IndexNumber|match index_number {
+                            IndexNumber::Zero => "One",
+                            IndexNumber::One => "Two",
+                            IndexNumber::Two => "Three",
+                            IndexNumber::Three => "Four",
+                        };
+                        let dimension_number_starting_with_one_equal_token_stream = format!(
+                            "Dimension{}Equal",
+                            to_number_starting_with_one_word_str(index_max_number)
+                        ).parse::<proc_macro2::TokenStream>().expect("error 52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
+                        let postgresql_json_type_where_element_dimension_number_starting_with_one_equal_token_stream = format!(
+                            "PostgresqlJsonTypeWhereElementDimension{}Equal",
+                            to_number_starting_with_one_word_str(index_max_number)
+                        ).parse::<proc_macro2::TokenStream>().expect("error 15d769b0-0767-473c-a2c5-3d0f6e221ced");
                         let current_where_element_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(
                             &generate_ident_token_stream(
                                 &NotNullOrNullable::NotNull,
@@ -2381,7 +2371,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         );
                         let vec_content_token_stream = {
                             let mut content_token_stream = vec![];
-                            for element in 0..=index_max_number.to_std_primitive_u8() {
+                            for element in 0..=index_number_to_std_primitive_u8(index_max_number) {
                                 let index_number_token_stream = format!("index_{element}").parse::<proc_macro2::TokenStream>().expect("error f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                                 content_token_stream.push(quote::quote! {
                                     where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
