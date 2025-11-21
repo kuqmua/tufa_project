@@ -2490,12 +2490,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &content_token_stream
                         )
                     };
+                    let generate_down_postgresql_json_type_pattern = |index_number: &IndexNumber|match index_max_number {
+                        IndexNumber::Zero => postgresql_json_type_pattern.down_by_1(),
+                        IndexNumber::One => postgresql_json_type_pattern.down_by_2(),
+                        IndexNumber::Two => postgresql_json_type_pattern.down_by_3(),
+                        IndexNumber::Three => postgresql_json_type_pattern.down_by_4(),
+                    };
                     match &postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                         PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 63f3476d-e0e0-471c-9faa-0a626c8ba75e");
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                                         &generate_not_null_or_nullable_token_stream(
                                             &dimension1_not_null_or_nullable,
@@ -2512,9 +2518,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                    };
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 99c97e51-792f-40e7-bdfe-f7424803e368");
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                                         &generate_not_null_or_nullable_token_stream(
                                             &dimension1_not_null_or_nullable,
@@ -2524,7 +2528,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::One => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 23f9b122-9788-4673-b996-5d437b363f7e");
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2552,10 +2556,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
-                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                    };
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 6b26e2ac-4462-451d-9111-01f659357a41");
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                                         &generate_not_null_or_nullable_token_stream(
                                             &dimension1_not_null_or_nullable,
@@ -2565,9 +2566,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::One => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                    };
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 66e824f8-7635-4f3d-8fcc-cdd629189cfe");
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2585,7 +2584,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::Two => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
+                                    let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 55896a34-0056-48f1-b79b-69391daa149a");
                                     let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2616,13 +2615,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension3_not_null_or_nullable,
                             dimension4_not_null_or_nullable,
                         } => {
+                            let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern(&index_max_number).expect("error 9048d6b1-5312-4c91-b48f-7f2adb197135");
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension3 {
-                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                        dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                    };
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                                         &generate_not_null_or_nullable_token_stream(
                                             &dimension1_not_null_or_nullable,
@@ -2632,10 +2627,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::One => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
-                                        dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                        dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                    };
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2653,9 +2644,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::Two => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                    };
                                     let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2678,7 +2666,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#dimension1_token_stream}
                                 }),
                                 IndexNumber::Three => generate_acc_token_stream(&{
-                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
                                     let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
