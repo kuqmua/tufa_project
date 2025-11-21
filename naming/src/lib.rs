@@ -699,10 +699,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["create", "into", "postgresql", "type", "option", "vec", "where", "element", "dimension", "one", "equal"],
     ["read", "only", "ids", "merged", "with", "table", "type", "declaration", "into", "postgresql", "type", "option", "where", "element", "greater", "than"],
     ["vec", "greater", "than", "test"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "one", "equal"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "two", "equal"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "three", "equal"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "four", "equal"]
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "one", "equal"],
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "two", "equal"],
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "three", "equal"],
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "four", "equal"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

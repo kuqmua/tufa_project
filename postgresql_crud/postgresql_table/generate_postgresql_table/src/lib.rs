@@ -181,10 +181,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
     let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
     let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereElementEqualToJsonFieldSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
+    let create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
+    let create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
+    let create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
+    let create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
     let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereElementGreaterThanSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -5041,7 +5041,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
+            let create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
                 &option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
@@ -5066,7 +5066,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         })
                     );
                     quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
                             ident_create.#field_ident.clone()
                         ) {
                             for #element_snake_case in #value_snake_case {
@@ -5077,7 +5077,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
+            let create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
                 &option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
@@ -5102,7 +5102,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         })
                     );
                     quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
                             ident_create.#field_ident.clone()
                         ) {
                             for #element_snake_case in #value_snake_case {
@@ -5113,7 +5113,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream = generate_read_test_token_stream(
+            let create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream = generate_read_test_token_stream(
                 &option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
@@ -5138,7 +5138,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         })
                     );
                     quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case(
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case(
                             ident_create.#field_ident.clone()
                         ) {
                             for #element_snake_case in #value_snake_case {
@@ -5149,7 +5149,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream = generate_read_test_token_stream(
+            let create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream = generate_read_test_token_stream(
                 &option_vec_create_call_unwrap_or_vec_token_stream,
                 &generate_ident_create_content_element_token_stream,
                 &|element: &SynFieldWrapper|{
@@ -5174,7 +5174,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         })
                     );
                     quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
+                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
                             ident_create.#field_ident.clone()
                         ) {
                             for #element_snake_case in #value_snake_case {
@@ -5192,10 +5192,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 // #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
                 // #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
                 // #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream
             }}
         };
         let read_one_token_stream = {
