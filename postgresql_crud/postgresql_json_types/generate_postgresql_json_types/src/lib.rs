@@ -117,6 +117,116 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
     }
+    impl PostgresqlJsonTypePattern {
+        fn down_by_1(&self) -> std::option::Option<Self> {
+            match &self {
+                Self::Standart => None,
+                Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: _,
+                } => Some(Self::Standart),
+                Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable,
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                }),
+                Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => Some(Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                }),
+                Self::ArrayDimension4 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                    dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                }),
+            }
+        }
+        fn down_by_2(&self) -> std::option::Option<Self> {
+            match &self {
+                Self::Standart => None,
+                Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                } => Some(Self::Standart),
+                Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable,
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                }),
+                Self::ArrayDimension4 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                }),
+            }
+        }
+        fn down_by_3(&self) -> std::option::Option<Self> {
+            match &self {
+                Self::Standart => None,
+                Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable: _,
+                } => Some(Self::Standart),
+                Self::ArrayDimension4 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable: _,
+                    dimension4_not_null_or_nullable,
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                }),
+            }
+        }
+        fn down_by_4(&self) -> std::option::Option<Self> {
+            match &self {
+                Self::Standart => None,
+                Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable: _,
+                } => None,
+                Self::ArrayDimension4 {
+                    dimension1_not_null_or_nullable: _,
+                    dimension2_not_null_or_nullable: _,
+                    dimension3_not_null_or_nullable: _,
+                    dimension4_not_null_or_nullable: _,
+                } => Some(Self::Standart),
+            }
+        }
+    }
     enum ArrayDimension {
         ArrayDimension1,
         ArrayDimension2 {
