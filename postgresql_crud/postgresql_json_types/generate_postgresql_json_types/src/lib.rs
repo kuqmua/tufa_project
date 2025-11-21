@@ -2401,17 +2401,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &content_token_stream
                 );
                 //
-                let generate_array_dimension_equal_token_stream = |
-                    //todo maybe remove
-                    postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                    index_max_number: &IndexNumber,
-                    current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern
-                | {
+                let generate_array_dimension_equal_token_stream = |index_max_number: &IndexNumber| {
                     match &postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                         PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
                                         &starting_value_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2433,6 +2429,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                    };
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
                                         &starting_value_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2447,6 +2446,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#maybe_if_some_dimension1_token_stream}
                                 }),
                                 IndexNumber::One => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2479,10 +2479,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         } => {
                             match index_max_number {
                                 IndexNumber::Zero => generate_acc_token_stream(&{
-                                    // let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
-                                    //     dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                    //     dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                    // };
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
+                                    };
                                     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
                                         &starting_value_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2497,9 +2497,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#maybe_if_some_dimension1_token_stream}
                                 }),
                                 IndexNumber::One => generate_acc_token_stream(&{
-                                    // let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    //     dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                    // };
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
+                                    };
                                     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2522,7 +2522,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     quote::quote! {#maybe_if_some_dimension1_token_stream}
                                 }),
                                 IndexNumber::Two => generate_acc_token_stream(&{
-                                    // let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
                                     let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
                                         &value_dot_zero_token_stream,
                                         &generate_not_null_or_nullable_token_stream(
@@ -2562,58 +2562,126 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension4_not_null_or_nullable,
                         } => {
                             match index_max_number {
-                                IndexNumber::Zero => {
-                                    quote::quote!{}
-                                },
-                                IndexNumber::One => {
-                                    quote::quote!{}
-                                },
-                                IndexNumber::Two => {
-                                    quote::quote!{}
-                                },
-                                IndexNumber::Three => {
-                                    quote::quote!{}
-                                },
+                                IndexNumber::Zero => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension3 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                        dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                    };
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
+                                        &starting_value_token_stream,
+                                        &generate_not_null_or_nullable_token_stream(
+                                            &index_max_number,
+                                            &dimension1_not_null_or_nullable,
+                                            &current_postgresql_json_type_pattern
+                                        )
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
+                                        &dimension1_token_stream
+                                    );
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
+                                }),
+                                IndexNumber::One => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
+                                        dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                    };
+                                    let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &generate_not_null_or_nullable_token_stream(
+                                            &index_max_number,
+                                            &dimension2_not_null_or_nullable,
+                                            &current_postgresql_json_type_pattern
+                                        )
+                                    );
+                                    let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension1_not_null_or_nullable,
+                                        &dimension2_token_stream
+                                    );
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
+                                        &starting_value_token_stream,
+                                        &maybe_if_some_dimension2_token_stream
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
+                                        &dimension1_token_stream
+                                    );
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
+                                }),
+                                IndexNumber::Two => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
+                                    };
+                                    let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &generate_not_null_or_nullable_token_stream(
+                                            &index_max_number,
+                                            &dimension3_not_null_or_nullable,
+                                            &current_postgresql_json_type_pattern
+                                        )
+                                    );
+                                    let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension2_not_null_or_nullable,
+                                        &dimension3_token_stream
+                                    );
+                                    let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &maybe_if_some_dimension3_token_stream
+                                    );
+                                    let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension1_not_null_or_nullable,
+                                        &dimension2_token_stream
+                                    );
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
+                                        &starting_value_token_stream,
+                                        &maybe_if_some_dimension2_token_stream
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
+                                        &dimension1_token_stream
+                                    );
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
+                                }),
+                                IndexNumber::Three => generate_acc_token_stream(&{
+                                    let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
+                                    let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &generate_not_null_or_nullable_token_stream(
+                                            &index_max_number,
+                                            &dimension4_not_null_or_nullable,
+                                            &current_postgresql_json_type_pattern
+                                        )
+                                    );
+                                    let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension3_not_null_or_nullable,
+                                        &dimension4_token_stream
+                                    );
+                                    let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &maybe_if_some_dimension4_token_stream
+                                    );
+                                    let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension2_not_null_or_nullable,
+                                        &dimension3_token_stream
+                                    );
+                                    let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                                        &value_dot_zero_token_stream,
+                                        &maybe_if_some_dimension3_token_stream
+                                    );
+                                    let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                                        dimension1_not_null_or_nullable,
+                                        &dimension2_token_stream
+                                    );
+                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
+                                        &starting_value_token_stream,
+                                        &maybe_if_some_dimension2_token_stream
+                                    );
+                                    let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
+                                        &dimension1_token_stream
+                                    );
+                                    quote::quote! {#maybe_if_some_dimension1_token_stream}
+                                }),
                             }
                         }
                     }
-                    // // let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                    // let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
-                    //     &value_dot_zero_token_stream,
-                    //     &generate_not_null_or_nullable_token_stream(
-                    //         &index_max_number,
-                    //         &dimension4_not_null_or_nullable,
-                    //         &current_postgresql_json_type_pattern
-                    //     )
-                    // );
-                    // let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                    //     dimension3_not_null_or_nullable,
-                    //     &dimension4_token_stream
-                    // );
-                    // let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                    //     &value_dot_zero_token_stream,
-                    //     &maybe_if_some_dimension4_token_stream
-                    // );
-                    // let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                    //     dimension2_not_null_or_nullable,
-                    //     &dimension3_token_stream
-                    // );
-                    // let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                    //     &value_dot_zero_token_stream,
-                    //     &maybe_if_some_dimension3_token_stream
-                    // );
-                    // let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                    //     dimension1_not_null_or_nullable,
-                    //     &dimension2_token_stream
-                    // );
-                    // let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                    //     &starting_value_token_stream,
-                    //     &maybe_if_some_dimension2_token_stream
-                    // );
-                    // let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                    //     &dimension1_token_stream
-                    // );
-                    // quote::quote! {#maybe_if_some_dimension1_token_stream}
                 };
                 //
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
@@ -3154,107 +3222,27 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let index_max_number = IndexNumber::Zero;
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => 
-                            generate_array_dimension_equal_token_stream(
-                                &postgresql_json_type_pattern,
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimension_equal_token_stream(
                                 &index_max_number,
-                                &PostgresqlJsonTypePattern::Standart
                             ),
-                            // generate_acc_token_stream(&{
-                            //     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                            //     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                            //         &starting_value_token_stream,
-                            //         &generate_not_null_or_nullable_token_stream(
-                            //             &index_max_number,
-                            //             &dimension1_not_null_or_nullable,
-                            //             &current_postgresql_json_type_pattern
-                            //         )
-                            //     );
-                            //     let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                            //         &dimension1_token_stream
-                            //     );
-                            //     quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            // }),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => 
-                            generate_array_dimension_equal_token_stream(
-                                &postgresql_json_type_pattern,
+                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_array_dimension_equal_token_stream(
                                 &index_max_number,
-                                &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                }
                             ),
-                            // generate_acc_token_stream(&{
-                            //     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                            //         dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                            //     };
-                            //     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                            //         &starting_value_token_stream,
-                            //         &generate_not_null_or_nullable_token_stream(
-                            //             &index_max_number,
-                            //             &dimension1_not_null_or_nullable,
-                            //             &current_postgresql_json_type_pattern
-                            //         )
-                            //     );
-                            //     let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                            //         &dimension1_token_stream
-                            //     );
-                            //     quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            // }),
                             PostgresqlJsonTypePattern::ArrayDimension3 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
-                            } => 
-                            generate_array_dimension_equal_token_stream(
-                                &postgresql_json_type_pattern,
+                            } => generate_array_dimension_equal_token_stream(
                                 &index_max_number,
-                                &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                    dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                }
                             ),
-                            // generate_acc_token_stream(&{
-                            //     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
-                            //         dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                            //         dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                            //     };
-                            //     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                            //         &starting_value_token_stream,
-                            //         &generate_not_null_or_nullable_token_stream(
-                            //             &index_max_number,
-                            //             &dimension1_not_null_or_nullable,
-                            //             &current_postgresql_json_type_pattern
-                            //         )
-                            //     );
-                            //     let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                            //         &dimension1_token_stream
-                            //     );
-                            //     quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            // }),
                             PostgresqlJsonTypePattern::ArrayDimension4 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable,
-                            } => generate_acc_token_stream(&{
-                                let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension3 {
-                                    dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                    dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                    dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                };
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                                    &starting_value_token_stream,
-                                    &generate_not_null_or_nullable_token_stream(
-                                        &index_max_number,
-                                        &dimension1_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    )
-                                );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                                    &dimension1_token_stream
-                                );
-                                quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            })
+                            } => generate_array_dimension_equal_token_stream(
+                                &index_max_number,
+                            ),
                         }
                     },
                     &{
@@ -3262,103 +3250,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => none_token_stream.clone(),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => 
-                            generate_array_dimension_equal_token_stream(
-                                &postgresql_json_type_pattern,
+                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => generate_array_dimension_equal_token_stream(
                                 &index_max_number,
-                                &PostgresqlJsonTypePattern::Standart
                             ),
-                            // generate_acc_token_stream(&{
-                            //     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                            //     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                            //         &value_dot_zero_token_stream,
-                            //         &generate_not_null_or_nullable_token_stream(
-                            //             &index_max_number,
-                            //             &dimension2_not_null_or_nullable,
-                            //             &current_postgresql_json_type_pattern
-                            //         )
-                            //     );
-                            //     let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                            //         dimension1_not_null_or_nullable,
-                            //         &dimension2_token_stream
-                            //     );
-                            //     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                            //         &starting_value_token_stream,
-                            //         &maybe_if_some_dimension2_token_stream
-                            //     );
-                            //     let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                            //         &dimension1_token_stream
-                            //     );
-                            //     quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            // }),
                             PostgresqlJsonTypePattern::ArrayDimension3 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
-                            } => 
-                            generate_array_dimension_equal_token_stream(
-                                &postgresql_json_type_pattern,
+                            } => generate_array_dimension_equal_token_stream(
                                 &index_max_number,
-                                &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                                }
                             ),
-                            // generate_acc_token_stream(&{
-                            //     let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                            //         dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
-                            //     };
-                            //     let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                            //         &value_dot_zero_token_stream,
-                            //         &generate_not_null_or_nullable_token_stream(
-                            //             &index_max_number,
-                            //             &dimension2_not_null_or_nullable,
-                            //             &current_postgresql_json_type_pattern
-                            //         )
-                            //     );
-                            //     let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                            //         dimension1_not_null_or_nullable,
-                            //         &dimension2_token_stream
-                            //     );
-                            //     let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                            //         &starting_value_token_stream,
-                            //         &maybe_if_some_dimension2_token_stream
-                            //     );
-                            //     let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                            //         &dimension1_token_stream
-                            //     );
-                            //     quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            // }),
                             PostgresqlJsonTypePattern::ArrayDimension4 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable,
-                            } => generate_acc_token_stream(&{
-                                let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension2 {
-                                    dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                    dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                };
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &generate_not_null_or_nullable_token_stream(
-                                        &index_max_number,
-                                        &dimension2_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    )
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                                    &starting_value_token_stream,
-                                    &maybe_if_some_dimension2_token_stream
-                                );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                                    &dimension1_token_stream
-                                );
-                                quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            })
+                            } => generate_array_dimension_equal_token_stream(
+                                &index_max_number,
+                            ),
                         }
                     },
                     &{
@@ -3371,75 +3280,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
-                            } => generate_acc_token_stream(&{
-                                let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                                let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &generate_not_null_or_nullable_token_stream(
-                                        &index_max_number,
-                                        &dimension3_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    )
-                                );
-                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension2_not_null_or_nullable,
-                                    &dimension3_token_stream
-                                );
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &maybe_if_some_dimension3_token_stream
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                                    &starting_value_token_stream,
-                                    &maybe_if_some_dimension2_token_stream
-                                );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                                    &dimension1_token_stream
-                                );
-                                quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            }),
+                            } => generate_array_dimension_equal_token_stream(
+                                &index_max_number,
+                            ),
                             PostgresqlJsonTypePattern::ArrayDimension4 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable,
-                            } => generate_acc_token_stream(&{
-                                let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    dimension1_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
-                                };
-                                let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &generate_not_null_or_nullable_token_stream(
-                                        &index_max_number,
-                                        &dimension3_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    )
-                                );
-                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension2_not_null_or_nullable,
-                                    &dimension3_token_stream
-                                );
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &maybe_if_some_dimension3_token_stream
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                                    &starting_value_token_stream,
-                                    &maybe_if_some_dimension2_token_stream
-                                );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                                    &dimension1_token_stream
-                                );
-                                quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            })
+                            } => generate_array_dimension_equal_token_stream(
+                                &index_max_number,
+                            ),
                         }
                     },
                     &{
@@ -3458,45 +3309,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable,
-                            } => generate_acc_token_stream(&{
-                                let current_postgresql_json_type_pattern = PostgresqlJsonTypePattern::Standart;
-                                let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &generate_not_null_or_nullable_token_stream(
-                                        &index_max_number,
-                                        &dimension4_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern
-                                    )
-                                );
-                                let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension3_not_null_or_nullable,
-                                    &dimension4_token_stream
-                                );
-                                let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &maybe_if_some_dimension4_token_stream
-                                );
-                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension2_not_null_or_nullable,
-                                    &dimension3_token_stream
-                                );
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &value_dot_zero_token_stream,
-                                    &maybe_if_some_dimension3_token_stream
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_token_stream(
-                                    &starting_value_token_stream,
-                                    &maybe_if_some_dimension2_token_stream
-                                );
-                                let maybe_if_some_dimension1_token_stream = generate_maybe_if_some_not_null_or_nullable_create_dot_zero_dot_zero_token_stream(
-                                    &dimension1_token_stream
-                                );
-                                quote::quote! {#maybe_if_some_dimension1_token_stream}
-                            })
+                            } => generate_array_dimension_equal_token_stream(
+                                &index_max_number,
+                            ),
                         }
                     },
                 )
