@@ -194,7 +194,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
     let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
     let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
-    let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
+    let prepare_postgresql_table_and_extensions_snake_case = naming::PreparePostgresqlTableAndExtensionsSnakeCase;
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -390,7 +390,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let pub_async_fn_prepare_postgresql_table_token_stream = {
+        let pub_async_fn_prepare_postgresql_table_and_extensions_token_stream = {
             let prepare_postgresql_double_quotes_token_stream = {
                 let acc = {
                     let mut acc = std::string::String::new();
@@ -418,9 +418,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 acc
             };
             quote::quote! {
-                pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                pub async fn #prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-                    // println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
                             error,
@@ -428,7 +427,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         });
                     }
                     let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
-                    // println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
                             error,
@@ -439,7 +437,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #prepare_postgresql_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
                     );
-                    // println!("{prepare_postgresql_query_stringified}");
                     if let Err(error) = sqlx::query(&prepare_postgresql_query_stringified).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#prepare_postgresql_upper_camel_case {
                             error,
@@ -452,7 +449,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let pub_async_fn_prepare_postgresql_token_stream = quote::quote! {
             pub async fn #prepare_postgresql_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
-                #ident::#prepare_postgresql_table_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await
+                #ident::#prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await
             }
         };
         let pub_fn_allow_methods_token_stream = {
@@ -501,7 +498,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             impl #ident {
                 #pub_fn_table_token_stream
                 #fn_primary_key_token_stream
-                #pub_async_fn_prepare_postgresql_table_token_stream
+                #pub_async_fn_prepare_postgresql_table_and_extensions_token_stream
                 #pub_async_fn_prepare_postgresql_token_stream
                 #pub_fn_allow_methods_token_stream
                 #fn_generate_select_query_part_token_stream

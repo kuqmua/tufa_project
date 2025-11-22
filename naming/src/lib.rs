@@ -702,7 +702,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "one", "equal"],
     ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "two", "equal"],
     ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "three", "equal"],
-    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "four", "equal"]
+    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "dimension", "four", "equal"],
+    ["prepare", "postgresql", "table", "and", "extensions"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
