@@ -194,6 +194,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
     let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
     let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
+    let prepare_extensions_snake_case = naming::PrepareExtensionsSnakeCase;
+    let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
     let prepare_postgresql_table_and_extensions_snake_case = naming::PreparePostgresqlTableAndExtensionsSnakeCase;
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
@@ -390,7 +392,24 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let pub_async_fn_prepare_postgresql_table_and_extensions_token_stream = {
+        let pub_async_fn_prepare_extensions_token_stream = quote::quote! {
+            pub async fn #prepare_extensions_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                if let Err(#error_snake_case) = sqlx::query("create extension if not exists pg_jsonschema").execute(#pool_snake_case).await {
+                    return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
+                        #error_snake_case,
+                        code_occurence: error_occurence_lib::code_occurence!()
+                    });
+                }
+                if let Err(#error_snake_case) = sqlx::query("create extension if not exists \"uuid-ossp\"").execute(#pool_snake_case).await {
+                    return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
+                        #error_snake_case,
+                        code_occurence: error_occurence_lib::code_occurence!()
+                    });
+                }
+                Ok(())
+            }
+        };
+        let pub_async_fn_prepare_postgresql_table_token_stream = {
             let prepare_postgresql_double_quotes_token_stream = {
                 let acc = {
                     let mut acc = std::string::String::new();
@@ -418,30 +437,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 acc
             };
             quote::quote! {
-                pub async fn #prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
-                    let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
-                    if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
-                        return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
-                            error,
-                            code_occurence: error_occurence_lib::code_occurence!()
-                        });
-                    }
-                    let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
-                    if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await {
-                        return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
-                            error,
-                            code_occurence: error_occurence_lib::code_occurence!()
-                        });
-                    }
-                    let prepare_postgresql_query_stringified = format!(
+                pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                    if let Err(error) = sqlx::query(&format!(
                         #prepare_postgresql_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
-                    );
-                    if let Err(error) = sqlx::query(&prepare_postgresql_query_stringified).execute(#pool_snake_case).await {
+                    )).execute(#pool_snake_case).await {
                         return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#prepare_postgresql_upper_camel_case {
                             error,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
+                    }
+                    Ok(())
+                }
+            }
+        };
+        let pub_async_fn_prepare_postgresql_table_and_extensions_token_stream = {
+            quote::quote! {
+                pub async fn #prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                    if let Err(#error_snake_case) = #ident::#prepare_extensions_snake_case(#pool_snake_case).await {
+                        return Err(#error_snake_case);
+                    }
+                    if let Err(#error_snake_case) = #ident::#prepare_postgresql_table_snake_case(#pool_snake_case, table).await {
+                        return Err(#error_snake_case);
                     }
                     Ok(())
                 }
@@ -498,6 +515,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             impl #ident {
                 #pub_fn_table_token_stream
                 #fn_primary_key_token_stream
+                #pub_async_fn_prepare_extensions_token_stream
+                #pub_async_fn_prepare_postgresql_table_token_stream
                 #pub_async_fn_prepare_postgresql_table_and_extensions_token_stream
                 #pub_async_fn_prepare_postgresql_token_stream
                 #pub_fn_allow_methods_token_stream
