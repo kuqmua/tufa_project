@@ -2115,3 +2115,19 @@ impl Dimension {
         }
     }
 }
+pub enum DimensionIndexNumber {
+    Zero,
+    One,
+    Two,
+    Three
+}
+impl std::convert::From<&Dimension> for DimensionIndexNumber {
+    fn from(value: &Dimension) -> Self {
+        match &value {
+            Dimension::One => Self::Zero,
+            Dimension::Two => Self::One,
+            Dimension::Three => Self::Two,
+            Dimension::Four => Self::Three
+        }
+    }
+}
