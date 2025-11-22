@@ -594,8 +594,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
             let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
             let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
-            let create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
-            let create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
 
             let std_primitive_i8_token_stream = token_patterns::StdPrimitiveI8;
             let std_primitive_i16_token_stream = token_patterns::StdPrimitiveI16;
