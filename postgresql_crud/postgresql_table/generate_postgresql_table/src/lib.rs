@@ -6155,6 +6155,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                             drop_table_if_exists(&table_name, &#postgres_pool_snake_case).await;
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
+                            let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
                                 super::#ident::prepare_postgresql(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
                                 let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
@@ -6162,14 +6163,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #config_snake_case: &#config_snake_case,
                                     project_git_info: &git_info::PROJECT_GIT_INFO,
                                 });
+                                let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
+                                let _ = started_tx.send(());
                                 axum::serve(
-                                    tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a"),
+                                    tcp_listener,
                                     axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
                                 )
                                 .await
                                 .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                             });
-                            tokio::time::sleep(std::time::Duration::from_millis(1000)).await;
+                            started_rx.await.expect("error 87003141-43a4-4975-8ddf-273148add50f");
                             let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                     #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
@@ -6183,33 +6186,33 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #common_read_only_ids_returned_from_create_one_token_stream
                             let start = std::time::Instant::now();
                             #create_many_token_stream
-                            let create_many_elapsed = start.elapsed();
-                            #create_one_token_stream
-                            let create_one_elapsed = start.elapsed();
-                            #read_many_token_stream
-                            let read_many_elapsed = start.elapsed();
-                            #read_one_token_stream
-                            let read_one_elapsed = start.elapsed();
-                            #update_many_token_stream
-                            let update_many_elapsed = start.elapsed();
-                            #update_one_token_stream
-                            let update_one_elapsed = start.elapsed();
-                            #delete_many_token_stream
-                            let delete_many_elapsed = start.elapsed();
-                            #delete_one_token_stream
-                            let delete_one_elapsed = start.elapsed();
-                            println!(
-                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                                create_many_elapsed,
-                                create_one_elapsed,
-                                read_many_elapsed,
-                                read_one_elapsed,
-                                update_many_elapsed,
-                                update_one_elapsed,
-                                delete_many_elapsed,
-                                delete_one_elapsed
-                            );
-                            #last_read_many_token_stream
+                            // let create_many_elapsed = start.elapsed();
+                            // #create_one_token_stream
+                            // let create_one_elapsed = start.elapsed();
+                            // #read_many_token_stream
+                            // let read_many_elapsed = start.elapsed();
+                            // #read_one_token_stream
+                            // let read_one_elapsed = start.elapsed();
+                            // #update_many_token_stream
+                            // let update_many_elapsed = start.elapsed();
+                            // #update_one_token_stream
+                            // let update_one_elapsed = start.elapsed();
+                            // #delete_many_token_stream
+                            // let delete_many_elapsed = start.elapsed();
+                            // #delete_one_token_stream
+                            // let delete_one_elapsed = start.elapsed();
+                            // println!(
+                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                            //     create_many_elapsed,
+                            //     create_one_elapsed,
+                            //     read_many_elapsed,
+                            //     read_one_elapsed,
+                            //     update_many_elapsed,
+                            //     update_one_elapsed,
+                            //     delete_many_elapsed,
+                            //     delete_one_elapsed
+                            // );
+                            // #last_read_many_token_stream
                             drop_table_if_exists(&table_name, &#postgres_pool_snake_case).await;
                         });
                     })
