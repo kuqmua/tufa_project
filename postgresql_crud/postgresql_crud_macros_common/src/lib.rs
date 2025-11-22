@@ -2105,3 +2105,13 @@ pub enum Dimension {
     Three,
     Four
 }
+impl Dimension {
+    pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_snake_case(&self) -> std::boxed::Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
+        match self {
+            Self::One => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase),
+            Self::Two => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase),
+            Self::Three => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase),
+            Self::Four => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase),
+        }
+    }
+}
