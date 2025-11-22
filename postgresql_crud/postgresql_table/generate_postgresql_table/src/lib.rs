@@ -6156,6 +6156,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
                             let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
                             let table = #ident_double_quotes_token_stream;
+                            let table_create_many = format!("{table}_create_many");
+                            let table_create_one = format!("{table}_create_one");
+                            let table_read_many = format!("{table}_read_many");
+                            let table_read_one = format!("{table}_read_one");
+                            let table_update_many = format!("{table}_update_many");
+                            let table_update_one = format!("{table}_update_one");
+                            let table_delete_many = format!("{table}_delete_many");
+                            let table_delete_one = format!("{table}_delete_one");
+                            let table_create_many_cloned = table_create_many.clone();
+                            let table_create_one_cloned = table_create_one.clone();
+                            let table_read_many_cloned = table_read_many.clone();
+                            let table_read_one_cloned = table_read_one.clone();
+                            let table_update_many_cloned = table_update_many.clone();
+                            let table_update_one_cloned = table_update_one.clone();
+                            let table_delete_many_cloned = table_delete_many.clone();
+                            let table_delete_one_cloned = table_delete_one.clone();
                             async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
                                 let #query_snake_case = format!("drop table if exists {table}");
                                 println!("{query}");
@@ -6165,7 +6181,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
-                                super::#ident::prepare_postgresql(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0a7889da-c2b5-4205-adf1-75904ad80cc0");
+                                super::#ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table).await.expect("error 0c29cf7d-1af7-459c-b0c6-69855ca98bef");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_many_cloned).await.expect("error 141d990c-91e5-4518-8978-7660fcf88784");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_one_cloned).await.expect("error cdd3b111-5e8b-4201-896e-bd38dc8b4d7c");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_many_cloned).await.expect("error 878298c2-3320-4b54-ad8d-e67000cc4955");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_one_cloned).await.expect("error 425e8574-6cdd-43b5-9b7b-75efce9b750d");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_many_cloned).await.expect("error ab50eb74-29ab-49b3-bdd4-ff6c6c6b700a");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_one_cloned).await.expect("error de8885ae-34f5-430b-a3b4-bf91c999b2c8");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_many_cloned).await.expect("error 2bb3d5ec-1069-470c-a758-60afe3bd5224");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_one_cloned).await.expect("error e5cc2f6f-65a2-472d-8a1e-56e23fbc165a");
                                 let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
                                     #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
                                     #config_snake_case: &#config_snake_case,
@@ -6222,6 +6247,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             // );
                             // #last_read_many_token_stream
                             drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
+                            drop_table_if_exists(&postgres_pool, &table_create_many).await;
+                            drop_table_if_exists(&postgres_pool, &table_create_one).await;
+                            drop_table_if_exists(&postgres_pool, &table_read_many).await;
+                            drop_table_if_exists(&postgres_pool, &table_read_one).await;
+                            drop_table_if_exists(&postgres_pool, &table_update_many).await;
+                            drop_table_if_exists(&postgres_pool, &table_update_one).await;
+                            drop_table_if_exists(&postgres_pool, &table_delete_many).await;
+                            drop_table_if_exists(&postgres_pool, &table_delete_one).await;
                         });
                     })
                     .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
@@ -6270,7 +6303,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
