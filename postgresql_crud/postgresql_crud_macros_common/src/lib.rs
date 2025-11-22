@@ -2098,3 +2098,10 @@ pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
         }
     }
 }
+
+pub enum Dimension {
+    One,
+    Two,
+    Three,
+    Four
+}

@@ -5051,154 +5051,64 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
-            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream = generate_read_test_token_stream(
-                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
-                &generate_ident_create_content_element_token_stream,
-                &|element: &SynFieldWrapper|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
-                            if field_ident == current_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        #import_path::PostgresqlTypeWhere::try_new(
-                                            #import_path::LogicalOperator::Or,
-                                            vec![#element_snake_case]
-                                        )
-                                        .expect("error 7af7fbed-95ca-400d-8764-7988ab73cd84"),
-                                    )
+            let (
+                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream,
+                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream,
+                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream,
+                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream,
+            ) = {
+                //todo if vec_create is empty then do different logic (for uuid). now uuid tested using one default case
+                let generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
+                    let function_name_token_stream: &dyn quote::ToTokens = match &dimension {
+                        postgresql_crud_macros_common::Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
+                    };
+                    generate_read_test_token_stream(
+                        &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
+                        &generate_ident_create_content_element_token_stream,
+                        &|element: &SynFieldWrapper|{
+                            let field_ident = &element.field_ident;
+                            let field_type = &element.syn_field.ty;
+                            let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
+                                &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                                    let current_field_ident = &element.field_ident;
+                                    if field_ident == current_field_ident {
+                                        quote::quote! {
+                                            Some(
+                                                #import_path::PostgresqlTypeWhere::try_new(
+                                                    #import_path::LogicalOperator::Or,
+                                                    vec![#element_snake_case]
+                                                )
+                                                .expect("error 7af7fbed-95ca-400d-8764-7988ab73cd84"),
+                                            )
+                                        }
+                                    } else {
+                                        quote::quote! {None}
+                                    }
+                                })
+                            );
+                            quote::quote!{
+                                if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#function_name_token_stream(
+                                    read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
+                                    ident_create.#field_ident.clone()
+                                ) {
+                                    for #element_snake_case in #value_snake_case {
+                                        #assert_eq_token_stream
+                                    }
                                 }
-                            } else {
-                                quote::quote! {None}
-                            }
-                        })
-                    );
-                    quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case(
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
-                            ident_create.#field_ident.clone()
-                        ) {
-                            for #element_snake_case in #value_snake_case {
-                                #assert_eq_token_stream
                             }
                         }
-                    }
-                }
-            );
-            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream = generate_read_test_token_stream(
-                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
-                &generate_ident_create_content_element_token_stream,
-                &|element: &SynFieldWrapper|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
-                            if field_ident == current_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        #import_path::PostgresqlTypeWhere::try_new(
-                                            #import_path::LogicalOperator::Or,
-                                            vec![#element_snake_case]
-                                        )
-                                        .expect("error dcddfa1a-f0cd-490f-8303-9302391b34f3"),
-                                    )
-                                }
-                            } else {
-                                quote::quote! {None}
-                            }
-                        })
-                    );
-                    quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case(
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
-                            ident_create.#field_ident.clone()
-                        ) {
-                            for #element_snake_case in #value_snake_case {
-                                #assert_eq_token_stream
-                            }
-                        }
-                    }
-                }
-            );
-            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream = generate_read_test_token_stream(
-                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
-                &generate_ident_create_content_element_token_stream,
-                &|element: &SynFieldWrapper|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
-                            if field_ident == current_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        #import_path::PostgresqlTypeWhere::try_new(
-                                            #import_path::LogicalOperator::Or,
-                                            vec![#element_snake_case]
-                                        )
-                                        .expect("error dcddfa1a-f0cd-490f-8303-9302391b34f3"),
-                                    )
-                                }
-                            } else {
-                                quote::quote! {None}
-                            }
-                        })
-                    );
-                    quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case(
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
-                            ident_create.#field_ident.clone()
-                        ) {
-                            for #element_snake_case in #value_snake_case {
-                                #assert_eq_token_stream
-                            }
-                        }
-                    }
-                }
-            );
-            //todo if vec_create is empty then do different logic (for uuid). now uuid is not tested
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream = generate_read_test_token_stream(
-                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
-                &generate_ident_create_content_element_token_stream,
-                &|element: &SynFieldWrapper|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
-                            if field_ident == current_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        #import_path::PostgresqlTypeWhere::try_new(
-                                            #import_path::LogicalOperator::Or,
-                                            vec![#element_snake_case]
-                                        )
-                                        .expect("error dcddfa1a-f0cd-490f-8303-9302391b34f3"),
-                                    )
-                                }
-                            } else {
-                                quote::quote! {None}
-                            }
-                        })
-                    );
-                    quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case(
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 2ed000a5-cf70-4df1-903a-c1f6d224e926"),
-                            ident_create.#field_ident.clone()
-                        ) {
-                            for #element_snake_case in #value_snake_case {
-                                #assert_eq_token_stream
-                            }
-                        }
-                    }
-                }
-            );
+                    )
+                };
+                (
+                    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_token_stream(&postgresql_crud_macros_common::Dimension::One),
+                    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
+                    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
+                    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_number_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four)
+                )
+            };
             quote::quote!{{
                 // #test_read_many_by_non_existent_primary_keys_token_stream
                 // #test_read_many_by_equal_to_created_primary_keys_token_stream

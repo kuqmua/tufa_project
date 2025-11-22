@@ -4509,18 +4509,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let self_postgresql_json_type_token_stream = quote::quote!{#self_upper_camel_case::#postgresql_json_type_upper_camel_case};
             let (impl_postgresql_json_type_test_cases_for_ident_token_stream, impl_postgresql_type_test_cases_for_ident_token_stream) = {
                 let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
-                enum Dimension {
-                    One,
-                    Two,
-                    Three,
-                    Four
-                }
-                let generate_dimension_equal_token_stream = |dimension: &Dimension|{
+                let generate_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
                     let function_name_token_stream: &dyn quote::ToTokens = match &dimension {
-                        Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
-                        Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
-                        Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
-                        Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
+                        postgresql_crud_macros_common::Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
                     };
                     let acc_is_empty_none_or_some_acc_token_stream = quote::quote!{
                         if #acc_snake_case.is_empty() {
@@ -6088,18 +6082,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 )
                             }
                         },
-                        &generate_dimension_equal_token_stream(&Dimension::One),
-                        &generate_dimension_equal_token_stream(&Dimension::Two),
-                        &generate_dimension_equal_token_stream(&Dimension::Three),
-                        &generate_dimension_equal_token_stream(&Dimension::Four),
+                        &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::One),
+                        &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
+                        &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
+                        &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
                     ),
                     {
-                        let generate_dimension_equal_token_stream = |dimension: &Dimension|{
+                        let generate_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
                             let function_name_token_stream: &dyn quote::ToTokens = match &dimension {
-                                Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
-                                Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
-                                Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
-                                Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
+                                postgresql_crud_macros_common::Dimension::One => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case,
+                                postgresql_crud_macros_common::Dimension::Two => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case,
+                                postgresql_crud_macros_common::Dimension::Three => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case,
+                                postgresql_crud_macros_common::Dimension::Four => &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case,
                             };
                             quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#function_name_token_stream(
                                 #read_only_ids_snake_case,
@@ -6145,10 +6139,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &quote::quote!{None},
                             &quote::quote!{vec![]},
                             &quote::quote!{None},
-                            &generate_dimension_equal_token_stream(&Dimension::One),
-                            &generate_dimension_equal_token_stream(&Dimension::Two),
-                            &generate_dimension_equal_token_stream(&Dimension::Three),
-                            &generate_dimension_equal_token_stream(&Dimension::Four),
+                            &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::One),
+                            &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
+                            &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
+                            &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
                         )
                     },
                 )
