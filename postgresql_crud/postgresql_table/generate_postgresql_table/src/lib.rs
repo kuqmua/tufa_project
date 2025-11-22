@@ -451,22 +451,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let pub_async_fn_prepare_postgresql_table_and_extensions_token_stream = {
-            quote::quote! {
-                pub async fn #prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
-                    if let Err(#error_snake_case) = #ident::#prepare_extensions_snake_case(#pool_snake_case).await {
-                        return Err(#error_snake_case);
-                    }
-                    if let Err(#error_snake_case) = #ident::#prepare_postgresql_table_snake_case(#pool_snake_case, table).await {
-                        return Err(#error_snake_case);
-                    }
-                    Ok(())
-                }
-            }
-        };
         let pub_async_fn_prepare_postgresql_token_stream = quote::quote! {
             pub async fn #prepare_postgresql_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
-                #ident::#prepare_postgresql_table_and_extensions_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await
+                if let Err(#error_snake_case) = #ident::#prepare_extensions_snake_case(#pool_snake_case).await {
+                    return Err(#error_snake_case);
+                }
+                if let Err(#error_snake_case) = #ident::#prepare_postgresql_table_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await {
+                    return Err(#error_snake_case);
+                }
+                Ok(())
             }
         };
         let pub_fn_allow_methods_token_stream = {
@@ -517,7 +510,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #fn_primary_key_token_stream
                 #pub_async_fn_prepare_extensions_token_stream
                 #pub_async_fn_prepare_postgresql_table_token_stream
-                #pub_async_fn_prepare_postgresql_table_and_extensions_token_stream
                 #pub_async_fn_prepare_postgresql_token_stream
                 #pub_fn_allow_methods_token_stream
                 #fn_generate_select_query_part_token_stream
