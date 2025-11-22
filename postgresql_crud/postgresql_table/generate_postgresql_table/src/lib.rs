@@ -6147,13 +6147,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case)))
                             .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
                             let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
-                            let table_name = #ident_double_quotes_token_stream;
-                            async fn drop_table_if_exists(name: &std::primitive::str, #postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
-                                let #query_snake_case = format!("drop table if exists {name}");
+                            let table = #ident_double_quotes_token_stream;
+                            async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
+                                let #query_snake_case = format!("drop table if exists {table}");
                                 println!("{query}");
                                 let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
                             }
-                            drop_table_if_exists(&table_name, &#postgres_pool_snake_case).await;
+                            drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
@@ -6213,7 +6213,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //     delete_one_elapsed
                             // );
                             // #last_read_many_token_stream
-                            drop_table_if_exists(&table_name, &#postgres_pool_snake_case).await;
+                            drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                         });
                     })
                     .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
@@ -6262,7 +6262,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
