@@ -182,10 +182,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_merged_with_create_into_where_element_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereElementEqualSnakeCase;
     let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
     let read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereElementEqualToJsonFieldSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
     let create_into_postgresql_type_option_vec_where_element_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereElementGreaterThanSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -197,7 +193,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let prepare_postgresql_snake_case = naming::PreparePostgresqlSnakeCase;
     let prepare_extensions_snake_case = naming::PrepareExtensionsSnakeCase;
     let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
-    let prepare_postgresql_table_and_extensions_snake_case = naming::PreparePostgresqlTableAndExtensionsSnakeCase;
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -6231,33 +6226,33 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #common_read_only_ids_returned_from_create_one_token_stream
                             let start = std::time::Instant::now();
                             #create_many_token_stream
-                            // let create_many_elapsed = start.elapsed();
-                            // #create_one_token_stream
-                            // let create_one_elapsed = start.elapsed();
-                            // #read_many_token_stream
-                            // let read_many_elapsed = start.elapsed();
-                            // #read_one_token_stream
-                            // let read_one_elapsed = start.elapsed();
-                            // #update_many_token_stream
-                            // let update_many_elapsed = start.elapsed();
-                            // #update_one_token_stream
-                            // let update_one_elapsed = start.elapsed();
-                            // #delete_many_token_stream
-                            // let delete_many_elapsed = start.elapsed();
-                            // #delete_one_token_stream
-                            // let delete_one_elapsed = start.elapsed();
-                            // println!(
-                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                            //     create_many_elapsed,
-                            //     create_one_elapsed,
-                            //     read_many_elapsed,
-                            //     read_one_elapsed,
-                            //     update_many_elapsed,
-                            //     update_one_elapsed,
-                            //     delete_many_elapsed,
-                            //     delete_one_elapsed
-                            // );
-                            // #last_read_many_token_stream
+                            let create_many_elapsed = start.elapsed();
+                            #create_one_token_stream
+                            let create_one_elapsed = start.elapsed();
+                            #read_many_token_stream
+                            let read_many_elapsed = start.elapsed();
+                            #read_one_token_stream
+                            let read_one_elapsed = start.elapsed();
+                            #update_many_token_stream
+                            let update_many_elapsed = start.elapsed();
+                            #update_one_token_stream
+                            let update_one_elapsed = start.elapsed();
+                            #delete_many_token_stream
+                            let delete_many_elapsed = start.elapsed();
+                            #delete_one_token_stream
+                            let delete_one_elapsed = start.elapsed();
+                            println!(
+                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                                create_many_elapsed,
+                                create_one_elapsed,
+                                read_many_elapsed,
+                                read_one_elapsed,
+                                update_many_elapsed,
+                                update_one_elapsed,
+                                delete_many_elapsed,
+                                delete_one_elapsed
+                            );
+                            #last_read_many_token_stream
                             drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                             drop_table_if_exists(&postgres_pool, &table_create_many).await;
                             drop_table_if_exists(&postgres_pool, &table_create_one).await;

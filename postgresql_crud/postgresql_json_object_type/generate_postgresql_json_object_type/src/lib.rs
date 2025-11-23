@@ -194,10 +194,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
             let read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualToJsonFieldSnakeCase;
             let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionOneEqualSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionTwoEqualSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionThreeEqualSnakeCase;
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementDimensionFourEqualSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
