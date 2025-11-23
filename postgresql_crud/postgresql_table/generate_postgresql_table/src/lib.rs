@@ -2291,13 +2291,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let url_token_stream = {
-            let url_handle_token_stream = naming::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &ident_snake_case_stringified);
-            quote::quote! {
-                let #url_snake_case = format!(
-                    #url_handle_token_stream,
-                    #endpoint_location_snake_case,
-                );
-            }
+            let url_handle_token_stream = naming::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &format!("{{{table_snake_case}}}"));
+            quote::quote! {let #url_snake_case = format!(#url_handle_token_stream, #endpoint_location_snake_case);}
         };
         let future_token_stream = {
             let operation_http_method_snake_case_token_stream = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
