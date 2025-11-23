@@ -4230,6 +4230,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .map(|#element_snake_case| #element_snake_case.to_vec())
                         .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                     {
+                        let table_create_many_cloned2_cloned = table_create_many_cloned2.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4242,9 +4243,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                                 #acc_snake_case
                             };
-                            let read_only_ids_from_try_create_many = super::#ident::try_create_many(&url_cloned, super::#ident_create_many_parameters_upper_camel_case {
-                                #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(ident_vec_create.clone())
-                            }).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
+                            let read_only_ids_from_try_create_many = super::#ident::try_create_many_handle(
+                                &url_cloned,
+                                super::#ident_create_many_parameters_upper_camel_case {
+                                    #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(ident_vec_create.clone())
+                                },
+                                &table_create_many_cloned2_cloned.clone()
+                            ).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
                             assert_eq!(
                                 {
                                     let mut #acc_snake_case = vec![];
@@ -6205,6 +6210,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_update_one_cloned = table_update_one.clone();
                             let table_delete_many_cloned = table_delete_many.clone();
                             let table_delete_one_cloned = table_delete_one.clone();
+                            let table_create_many_cloned2 = table_create_many.clone();
+                            let table_create_one_cloned2 = table_create_one.clone();
+                            let table_read_many_cloned2 = table_read_many.clone();
+                            let table_read_one_cloned2 = table_read_one.clone();
+                            let table_update_many_cloned2 = table_update_many.clone();
+                            let table_update_one_cloned2 = table_update_one.clone();
+                            let table_delete_many_cloned2 = table_delete_many.clone();
+                            let table_delete_one_cloned2 = table_delete_one.clone();
                             async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
                                 let #query_snake_case = format!("drop table if exists {table}");
                                 println!("{query}");
