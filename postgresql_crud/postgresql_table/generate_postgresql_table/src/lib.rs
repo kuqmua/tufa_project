@@ -6226,33 +6226,33 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #common_read_only_ids_returned_from_create_one_token_stream
                             let start = std::time::Instant::now();
                             #create_many_token_stream
-                            let create_many_elapsed = start.elapsed();
-                            #create_one_token_stream
-                            let create_one_elapsed = start.elapsed();
-                            #read_many_token_stream
-                            let read_many_elapsed = start.elapsed();
-                            #read_one_token_stream
-                            let read_one_elapsed = start.elapsed();
-                            #update_many_token_stream
-                            let update_many_elapsed = start.elapsed();
-                            #update_one_token_stream
-                            let update_one_elapsed = start.elapsed();
-                            #delete_many_token_stream
-                            let delete_many_elapsed = start.elapsed();
-                            #delete_one_token_stream
-                            let delete_one_elapsed = start.elapsed();
-                            println!(
-                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                                create_many_elapsed,
-                                create_one_elapsed,
-                                read_many_elapsed,
-                                read_one_elapsed,
-                                update_many_elapsed,
-                                update_one_elapsed,
-                                delete_many_elapsed,
-                                delete_one_elapsed
-                            );
-                            #last_read_many_token_stream
+                            // let create_many_elapsed = start.elapsed();
+                            // #create_one_token_stream
+                            // let create_one_elapsed = start.elapsed();
+                            // #read_many_token_stream
+                            // let read_many_elapsed = start.elapsed();
+                            // #read_one_token_stream
+                            // let read_one_elapsed = start.elapsed();
+                            // #update_many_token_stream
+                            // let update_many_elapsed = start.elapsed();
+                            // #update_one_token_stream
+                            // let update_one_elapsed = start.elapsed();
+                            // #delete_many_token_stream
+                            // let delete_many_elapsed = start.elapsed();
+                            // #delete_one_token_stream
+                            // let delete_one_elapsed = start.elapsed();
+                            // println!(
+                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                            //     create_many_elapsed,
+                            //     create_one_elapsed,
+                            //     read_many_elapsed,
+                            //     read_one_elapsed,
+                            //     update_many_elapsed,
+                            //     update_one_elapsed,
+                            //     delete_many_elapsed,
+                            //     delete_one_elapsed
+                            // );
+                            // #last_read_many_token_stream
                             drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                             drop_table_if_exists(&postgres_pool, &table_create_many).await;
                             drop_table_if_exists(&postgres_pool, &table_create_one).await;
