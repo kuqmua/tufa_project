@@ -195,6 +195,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
+    let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
+    let routes_snake_case = naming::RoutesSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
     let error_2_token_stream = token_patterns::Error2;
@@ -3924,9 +3926,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let slash_delete_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one_payload_example_snake_case);
         quote::quote! {
             impl #ident {
-                pub fn routes(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
+                fn #routes_handle_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream, #table_snake_case: &std::primitive::str) -> axum::Router {
                     axum::Router::new().nest(
-                        &format!("/{}",#ident_table_name_call_token_stream),
+                        &format!("/{}",#table_snake_case),
                         axum::Router::new()
                         .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
                         .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
@@ -3947,6 +3949,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
                         .with_state(#app_state_snake_case)
                     )
+                }
+                pub fn #routes_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
+                    #ident::#routes_handle_snake_case(#app_state_snake_case, &#ident_table_name_call_token_stream)
                 }
             }
         }
@@ -6228,7 +6233,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let _ = started_tx.send(());
                                 axum::serve(
                                     tcp_listener,
-                                    axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
+                                    axum::Router::new().merge(super::#ident::#routes_snake_case(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
                                 )
                                 .await
                                 .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
