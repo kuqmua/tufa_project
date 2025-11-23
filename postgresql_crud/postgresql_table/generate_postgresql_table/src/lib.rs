@@ -6233,7 +6233,43 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let _ = started_tx.send(());
                                 axum::serve(
                                     tcp_listener,
-                                    axum::Router::new().merge(super::#ident::#routes_snake_case(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
+                                    axum::Router::new()
+                                    .merge(super::#ident::#routes_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case)
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_create_many_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_create_one_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_read_many_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_read_one_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_update_many_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_update_one_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_delete_many_cloned
+                                    ))
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_delete_one_cloned
+                                    ))
+                                    .into_make_service(),
                                 )
                                 .await
                                 .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
