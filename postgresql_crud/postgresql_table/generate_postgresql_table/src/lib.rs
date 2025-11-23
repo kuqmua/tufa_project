@@ -4930,6 +4930,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let content_token_stream = generate_content_token_stream(&element);
                     quote::quote!{
                         for #element_snake_case in #method_call_token_stream {
+                            let table_read_many_cloned2_cloned = table_read_many_cloned2.clone();
                             let url_cloned = url.clone();
                             let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                             #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -5246,17 +5247,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             };
             quote::quote!{{
+                let table_read_many_cloned2_cloned = table_read_many_cloned2.clone();
                 #test_read_many_by_non_existent_primary_keys_token_stream
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
                 #read_only_ids_merged_with_create_into_where_element_equal_token_stream
                 #read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
-                #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
-                #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
-                #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
-                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream
+                // #read_only_ids_merged_with_create_into_option_vec_where_element_equal_to_json_field_token_stream
+                // #create_into_postgresql_type_option_vec_where_element_dimension_one_equal_token_stream
+                // #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_one_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_two_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_three_equal_token_stream
+                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_dimension_four_equal_token_stream
             }}
         };
         let read_one_token_stream = {
@@ -6435,8 +6437,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let create_many_elapsed = start.elapsed();
                             #create_one_token_stream
                             let create_one_elapsed = start.elapsed();
-                            // #read_many_token_stream
-                            // let read_many_elapsed = start.elapsed();
+                            #read_many_token_stream
+                            let read_many_elapsed = start.elapsed();
                             // #read_one_token_stream
                             // let read_one_elapsed = start.elapsed();
                             // #update_many_token_stream
