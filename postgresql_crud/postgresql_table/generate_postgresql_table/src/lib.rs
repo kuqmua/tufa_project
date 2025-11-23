@@ -222,6 +222,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
+    let ident_table_name_call_token_stream = quote::quote!{#ident::#table_name_snake_case()};
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
@@ -669,14 +670,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         fn operation_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
             naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
         }
-        fn snake_case_stringified(&self) -> std::string::String {
+        fn self_snake_case_stringified(&self) -> std::string::String {
             naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
         }
-        fn snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        fn self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
             naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
         }
-        fn handle_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(&self.snake_case_token_stream());
+        fn self_handle_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
+            quote::quote!{#value}
+        }
+        fn try_self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::TrySelfSnakeCase::from_tokens(&self.self_snake_case_token_stream());
+            quote::quote!{#value}
+        }
+        fn try_self_handle_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
             quote::quote!{#value}
         }
         fn operation_payload_example_snake_case(&self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
@@ -2149,8 +2158,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         binded_query_token_stream: &dyn quote::ToTokens,
         postgresql_logic_token_stream: &dyn quote::ToTokens
     | -> proc_macro2::TokenStream {
-            let operation_handle_snake_case_token_stream = operation.handle_snake_case_token_stream();
-            let operation_snake_case_token_stream = operation.snake_case_token_stream();
+            let operation_handle_snake_case_token_stream = operation.self_handle_snake_case_token_stream();
+            let operation_snake_case_token_stream = operation.self_snake_case_token_stream();
             let request_parts_preparation_token_stream = {
                 let header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = &generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &header_content_type_application_json_not_found_syn_variant_wrapper, file!(), line!(), column!());
                 let check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = &generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &check_body_size_syn_variant_wrapper, file!(), line!(), column!());
@@ -2228,7 +2237,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                         #request_snake_case: axum::extract::Request,
                     ) -> axum::response::Response {
-                        #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, &#ident::#table_name_snake_case()).await
+                        #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, &#ident_table_name_call_token_stream).await
                     }
                 }
             }
@@ -2256,7 +2265,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let generate_try_operation_token_stream = |operation: &Operation, type_variants_from_request_response_syn_variants: &[syn::Variant], result_ok_type_token_stream: &dyn quote::ToTokens, payload_check_token_stream: &dyn quote::ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens| -> proc_macro2::TokenStream {
-        let try_operation_snake_case = naming::parameter::TrySelfSnakeCase::from_display(operation);
+        let try_operation_snake_case_token_stream = operation.try_self_snake_case_token_stream();
+        let try_operation_handle_snake_case_token_stream = operation.try_self_handle_snake_case_token_stream();
         let ident_try_operation_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(operation);
         let ident_operation_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(operation);
         let payload_token_stream = {
@@ -2386,9 +2396,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         quote::quote! {
             impl #ident {
-                pub async fn #try_operation_snake_case(
+                async fn #try_operation_handle_snake_case_token_stream(
                     #endpoint_location_snake_case: #ref_std_primitive_str,
-                    #parameters_snake_case: #ident_operation_parameters_upper_camel_case
+                    #parameters_snake_case: #ident_operation_parameters_upper_camel_case,
+                    #table_snake_case: &std::primitive::str,
                 ) -> Result<#result_ok_type_token_stream, #ident_try_operation_error_named_upper_camel_case> {
                     #payload_token_stream
                     #url_token_stream
@@ -2400,6 +2411,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #expected_response_token_stream
                     #try_operation_logic_error_named_with_serialize_deserialize_token_stream
                     #return_error_token_stream
+                }
+                pub async fn #try_operation_snake_case_token_stream(
+                    #endpoint_location_snake_case: #ref_std_primitive_str,
+                    #parameters_snake_case: #ident_operation_parameters_upper_camel_case
+                ) -> Result<#result_ok_type_token_stream, #ident_try_operation_error_named_upper_camel_case> {
+                    #ident::#try_operation_handle_snake_case_token_stream(
+                        #endpoint_location_snake_case,
+                        #parameters_snake_case,
+                        &#ident_table_name_call_token_stream
+                    ).await
                 }
             }
         }
@@ -3869,22 +3890,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let update_one = Operation::UpdateOne;
         let delete_many = Operation::DeleteMany;
         let delete_one = Operation::DeleteOne;
-        let slash_create_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many.snake_case_stringified());
-        let slash_create_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one.snake_case_stringified());
-        let slash_read_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many.snake_case_stringified());
-        let slash_read_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_one.snake_case_stringified());
-        let slash_update_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_many.snake_case_stringified());
-        let slash_update_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one.snake_case_stringified());
-        let slash_delete_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many.snake_case_stringified());
-        let slash_delete_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one.snake_case_stringified());
-        let create_many_snake_case_token_stream = create_many.snake_case_token_stream();
-        let create_one_snake_case_token_stream = create_one.snake_case_token_stream();
-        let read_many_snake_case_token_stream = read_many.snake_case_token_stream();
-        let read_one_snake_case_token_stream = read_one.snake_case_token_stream();
-        let update_many_snake_case_token_stream = update_many.snake_case_token_stream();
-        let update_one_snake_case_token_stream = update_one.snake_case_token_stream();
-        let delete_many_snake_case_token_stream = delete_many.snake_case_token_stream();
-        let delete_one_snake_case_token_stream = delete_one.snake_case_token_stream();
+        let slash_create_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many.self_snake_case_stringified());
+        let slash_create_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one.self_snake_case_stringified());
+        let slash_read_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many.self_snake_case_stringified());
+        let slash_read_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_one.self_snake_case_stringified());
+        let slash_update_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_many.self_snake_case_stringified());
+        let slash_update_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one.self_snake_case_stringified());
+        let slash_delete_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many.self_snake_case_stringified());
+        let slash_delete_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one.self_snake_case_stringified());
+        let create_many_snake_case_token_stream = create_many.self_snake_case_token_stream();
+        let create_one_snake_case_token_stream = create_one.self_snake_case_token_stream();
+        let read_many_snake_case_token_stream = read_many.self_snake_case_token_stream();
+        let read_one_snake_case_token_stream = read_one.self_snake_case_token_stream();
+        let update_many_snake_case_token_stream = update_many.self_snake_case_token_stream();
+        let update_one_snake_case_token_stream = update_one.self_snake_case_token_stream();
+        let delete_many_snake_case_token_stream = delete_many.self_snake_case_token_stream();
+        let delete_one_snake_case_token_stream = delete_one.self_snake_case_token_stream();
         let create_many_payload_example_snake_case = create_many.operation_payload_example_snake_case();
         let create_one_payload_example_snake_case = create_one.operation_payload_example_snake_case();
         let read_many_payload_example_snake_case = read_many.operation_payload_example_snake_case();
@@ -3905,7 +3926,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             impl #ident {
                 pub fn routes(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
                     axum::Router::new().nest(
-                        &format!("/{}",#ident::#table_name_snake_case()),
+                        &format!("/{}",#ident_table_name_call_token_stream),
                         axum::Router::new()
                         .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
                         .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
