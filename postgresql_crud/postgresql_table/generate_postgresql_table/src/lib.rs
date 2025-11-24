@@ -4298,21 +4298,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream,
             table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream
         ) = {
+            let test_name = "read_only_ids_merged_with_create_into_where_element_equal";
             let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
-                format!("table_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
+                format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
             };
             (
                 generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
-                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{table}}_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}"));
+                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{table}}_{test_name}_{field_ident}"));
                     quote::quote! {
                         let #initialization_variable_name_token_stream = format!(#format_content_token_stream);
                     }
                 }),
                 generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
-                    let variable_name_token_stream = format!("table_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}_cloned").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
+                    let variable_name_token_stream = format!("table_{test_name}_{field_ident}_cloned").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
                     quote::quote! {
                         let #variable_name_token_stream = #initialization_variable_name_token_stream.clone();
