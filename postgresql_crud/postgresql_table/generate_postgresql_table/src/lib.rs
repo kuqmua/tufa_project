@@ -6365,7 +6365,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table = #ident_double_quotes_token_stream;
                             let table_create_many = format!("{table}_create_many");
                             let table_create_one = format!("{table}_create_one");
+
+                            //todo remove _read_many table
                             let table_read_many = format!("{table}_read_many");
+                            //
+                            let table_test_read_many_by_non_existent_primary_keys = format!("{table}_test_read_many_by_non_existent_primary_keys");
+                            // #test_read_many_by_non_existent_primary_keys_token_stream
+                            // #test_read_many_by_equal_to_created_primary_keys_token_stream
+                            //
                             let table_read_one = format!("{table}_read_one");
                             let table_update_many = format!("{table}_update_many");
                             let table_update_one = format!("{table}_update_one");
@@ -6374,6 +6381,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_create_many_cloned = table_create_many.clone();
                             let table_create_one_cloned = table_create_one.clone();
                             let table_read_many_cloned = table_read_many.clone();
+                            //
+                            let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
+                            //
                             let table_read_one_cloned = table_read_one.clone();
                             let table_update_many_cloned = table_update_many.clone();
                             let table_update_one_cloned = table_update_one.clone();
@@ -6382,25 +6392,35 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_create_many_cloned2 = table_create_many.clone();
                             let table_create_one_cloned2 = table_create_one.clone();
                             let table_read_many_cloned2 = table_read_many.clone();
+                            //
+                            let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
+                            //
                             let table_read_one_cloned2 = table_read_one.clone();
                             let table_update_many_cloned2 = table_update_many.clone();
                             let table_update_one_cloned2 = table_update_one.clone();
                             let table_delete_many_cloned2 = table_delete_many.clone();
                             let table_delete_one_cloned2 = table_delete_one.clone();
-                            async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
-                                let #query_snake_case = format!("drop table if exists {table}");
-                                println!("{query}");
-                                let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
-                            }
-                            drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
-                            drop_table_if_exists(&postgres_pool, &table_create_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_create_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_read_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_read_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_update_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_update_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_delete_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_delete_one).await;
+
+                            let drop_all_test_tables = async ||{
+                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
+                                    let #query_snake_case = format!("drop table if exists {table}");
+                                    println!("{query}");
+                                    let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
+                                }
+                                drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
+                                drop_table_if_exists(&postgres_pool, &table_create_many).await;
+                                drop_table_if_exists(&postgres_pool, &table_create_one).await;
+                                drop_table_if_exists(&postgres_pool, &table_read_many).await;
+                                //
+
+                                //
+                                drop_table_if_exists(&postgres_pool, &table_read_one).await;
+                                drop_table_if_exists(&postgres_pool, &table_update_many).await;
+                                drop_table_if_exists(&postgres_pool, &table_update_one).await;
+                                drop_table_if_exists(&postgres_pool, &table_delete_many).await;
+                                drop_table_if_exists(&postgres_pool, &table_delete_one).await;
+                            };
+                            drop_all_test_tables().await;
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
@@ -6517,15 +6537,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //     delete_one_elapsed
                             // );
                             // #last_read_many_token_stream
-                            drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
-                            drop_table_if_exists(&postgres_pool, &table_create_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_create_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_read_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_read_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_update_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_update_one).await;
-                            drop_table_if_exists(&postgres_pool, &table_delete_many).await;
-                            drop_table_if_exists(&postgres_pool, &table_delete_one).await;
+                            drop_all_test_tables().await;
                         });
                     })
                     .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
