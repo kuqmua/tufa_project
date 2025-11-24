@@ -6182,6 +6182,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
             );
             quote::quote!{{
+                let table_delete_one_cloned2_cloned = table_delete_one_cloned2.clone();
                 if let Err(#error_snake_case) = super::#ident::try_delete_one_handle(
                     &url,
                     super::#ident_delete_one_parameters_upper_camel_case {
@@ -6455,20 +6456,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let update_one_elapsed = start.elapsed();
                             #delete_many_token_stream
                             let delete_many_elapsed = start.elapsed();
-                            // #delete_one_token_stream
-                            // let delete_one_elapsed = start.elapsed();
-                            // println!(
-                            //     "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
-                            //     create_many_elapsed,
-                            //     create_one_elapsed,
-                            //     read_many_elapsed,
-                            //     read_one_elapsed,
-                            //     update_many_elapsed,
-                            //     update_one_elapsed,
-                            //     delete_many_elapsed,
-                            //     delete_one_elapsed
-                            // );
-                            // #last_read_many_token_stream
+                            #delete_one_token_stream
+                            let delete_one_elapsed = start.elapsed();
+                            println!(
+                                "create_many {:?}\ncreate_one {:?}\nread_many {:?}\nread_one {:?}\nupdate_many {:?}\nupdate_one {:?}\ndelete_many {:?}\ndelete_one {:?}",
+                                create_many_elapsed,
+                                create_one_elapsed,
+                                read_many_elapsed,
+                                read_one_elapsed,
+                                update_many_elapsed,
+                                update_one_elapsed,
+                                delete_many_elapsed,
+                                delete_one_elapsed
+                            );
+                            #last_read_many_token_stream
                             drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                             drop_table_if_exists(&postgres_pool, &table_create_many).await;
                             drop_table_if_exists(&postgres_pool, &table_create_one).await;
