@@ -35,8 +35,8 @@ pub struct Example {
     #[generate_postgresql_table_primary_key]
     pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
-    pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
+    // pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
+    // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
     // pub column_4: postgresql_crud::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
@@ -53,7 +53,7 @@ pub struct Example {
     // pub column_15: postgresql_crud::OptionVecOfStdPrimitiveI64AsNullableArrayOfNotNullInt8,
     // pub column_16: postgresql_crud::VecOfOptionStdPrimitiveI64AsNotNullArrayOfNullableInt8,
     // pub column_17: postgresql_crud::OptionVecOfOptionStdPrimitiveI64AsNullableArrayOfNullableInt8,
-    // pub column_18: postgresql_crud::StdPrimitiveF32AsNotNullFloat4,
+    pub column_18: postgresql_crud::StdPrimitiveF32AsNotNullFloat4,//wtf
     // pub column_19: postgresql_crud::OptionStdPrimitiveF32AsNullableFloat4,
     // pub column_20: postgresql_crud::VecOfStdPrimitiveF32AsNotNullArrayOfNotNullFloat4,
     // pub column_21: postgresql_crud::OptionVecOfStdPrimitiveF32AsNullableArrayOfNotNullFloat4,
