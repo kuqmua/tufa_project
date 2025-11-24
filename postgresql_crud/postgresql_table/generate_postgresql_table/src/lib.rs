@@ -4650,17 +4650,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         }
                     }
-                    let table_read_many_cloned2_cloned = table_read_many_cloned2.clone();
+                    //here
+                    // table_test_read_many_by_non_existent_primary_keys_cloned2
+                    let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     let url_cloned = url.clone();
                     let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(1, &url_cloned, select_default_all_with_max_page_size_cloned, &table_read_many_cloned2_cloned).await;
+                        generate_test_read_many_by_non_existent_primary_keys(1, &url_cloned, select_default_all_with_max_page_size_cloned, &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned).await;
                     }));
-                    let table_read_many_cloned2_cloned = table_read_many_cloned2.clone();
+                    let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     let url_cloned = url.clone();
                     let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(2, &url_cloned, select_default_all_with_max_page_size_cloned, &table_read_many_cloned2_cloned).await;
+                        generate_test_read_many_by_non_existent_primary_keys(2, &url_cloned, select_default_all_with_max_page_size_cloned, &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned).await;
                     }));
                 }}
             };
@@ -6412,7 +6414,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 drop_table_if_exists(&postgres_pool, &table_create_one).await;
                                 drop_table_if_exists(&postgres_pool, &table_read_many).await;
                                 //
-
+                                drop_table_if_exists(&postgres_pool, &table_test_read_many_by_non_existent_primary_keys_cloned2).await;
                                 //
                                 drop_table_if_exists(&postgres_pool, &table_read_one).await;
                                 drop_table_if_exists(&postgres_pool, &table_update_many).await;
@@ -6429,6 +6431,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_many_cloned).await.expect("error 141d990c-91e5-4518-8978-7660fcf88784");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_one_cloned).await.expect("error cdd3b111-5e8b-4201-896e-bd38dc8b4d7c");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_many_cloned).await.expect("error 878298c2-3320-4b54-ad8d-e67000cc4955");
+                                //
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_non_existent_primary_keys_cloned).await.expect("error 878298c2-3320-4b54-ad8d-e67000cc4955");
+                                //
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_one_cloned).await.expect("error 425e8574-6cdd-43b5-9b7b-75efce9b750d");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_many_cloned).await.expect("error ab50eb74-29ab-49b3-bdd4-ff6c6c6b700a");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_one_cloned).await.expect("error de8885ae-34f5-430b-a3b4-bf91c999b2c8");
@@ -6459,6 +6464,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
                                         &table_read_many_cloned
                                     ))
+                                    //
+                                    .merge(super::#ident::#routes_handle_snake_case(
+                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                                        &table_test_read_many_by_non_existent_primary_keys_cloned
+                                    ))
+                                    //
                                     .merge(super::#ident::#routes_handle_snake_case(
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
                                         &table_read_one_cloned
