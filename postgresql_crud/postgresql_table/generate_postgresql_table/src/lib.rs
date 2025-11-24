@@ -4294,14 +4294,32 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &quote::quote!{#element_snake_case.#create_snake_case}
         );
         //
-        let table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            let variable_name_token_stream = format!("table_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}_token_stream").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
-            let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{table}}_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}"));
-            quote::quote! {
-                let #variable_name_token_stream = format!(#format_content_token_stream);
-            }
-        });
+        let (
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream
+        ) = {
+            let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
+                format!("table_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
+            };
+            (
+                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                    let field_ident = &element.field_ident;
+                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{table}}_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}"));
+                    quote::quote! {
+                        let #initialization_variable_name_token_stream = format!(#format_content_token_stream);
+                    }
+                }),
+                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                    let field_ident = &element.field_ident;
+                    let variable_name_token_stream = format!("table_read_only_ids_merged_with_create_into_where_element_equal_{field_ident}_cloned").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
+                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                    quote::quote! {
+                        let #variable_name_token_stream = #initialization_variable_name_token_stream.clone();
+                    }
+                })
+            )
+        };
         //
         let create_many_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -6381,19 +6399,23 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //
                             let table_test_read_many_by_non_existent_primary_keys = format!("{table}_test_read_many_by_non_existent_primary_keys");
                             let table_test_read_many_by_equal_to_created_primary_keys = format!("{table}_test_read_many_by_equal_to_created_primary_keys");
-                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_token_stream
+                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream
                             //
                             let table_read_one = format!("{table}_read_one");
                             let table_update_many = format!("{table}_update_many");
                             let table_update_one = format!("{table}_update_one");
                             let table_delete_many = format!("{table}_delete_many");
                             let table_delete_one = format!("{table}_delete_one");
+
+
+
                             let table_create_many_cloned = table_create_many.clone();
                             let table_create_one_cloned = table_create_one.clone();
                             let table_read_many_cloned = table_read_many.clone();
                             //
                             let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
+                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream
                             //
                             let table_read_one_cloned = table_read_one.clone();
                             let table_update_many_cloned = table_update_many.clone();
@@ -6403,6 +6425,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_create_many_cloned2 = table_create_many.clone();
                             let table_create_one_cloned2 = table_create_one.clone();
                             let table_read_many_cloned2 = table_read_many.clone();
+
+
+
                             //
                             let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned2 = table_test_read_many_by_equal_to_created_primary_keys.clone();
