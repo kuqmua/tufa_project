@@ -6033,6 +6033,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let delete_many_token_stream = {
             quote::quote!{{
+                let table_delete_many_cloned2_cloned = table_delete_many_cloned2.clone();
                 {
                     let generate_test_delete_many_by_non_existent_primary_keys = async |length: std::primitive::usize| match super::#ident::try_delete_many_handle(
                         &url,
@@ -6452,8 +6453,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let update_many_elapsed = start.elapsed();
                             #update_one_token_stream
                             let update_one_elapsed = start.elapsed();
-                            // #delete_many_token_stream
-                            // let delete_many_elapsed = start.elapsed();
+                            #delete_many_token_stream
+                            let delete_many_elapsed = start.elapsed();
                             // #delete_one_token_stream
                             // let delete_one_elapsed = start.elapsed();
                             // println!(
