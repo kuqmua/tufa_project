@@ -5263,6 +5263,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let read_one_token_stream = {
             quote::quote!{{
+                let table_read_one_cloned2_cloned = table_read_one_cloned2.clone();
                 if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
                     &url,
                     super::#ident_read_one_parameters_upper_camel_case {
@@ -5271,7 +5272,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             select: select_default_all_with_max_page_size.clone()
                         }
                     },
-                    &table_read_many_cloned2_cloned
+                    &table_read_one_cloned2_cloned
                 ).await {
                     if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
                         read_one_error_named_with_serialize_deserialize,
@@ -6439,8 +6440,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let create_one_elapsed = start.elapsed();
                             #read_many_token_stream
                             let read_many_elapsed = start.elapsed();
-                            // #read_one_token_stream
-                            // let read_one_elapsed = start.elapsed();
+                            #read_one_token_stream
+                            let read_one_elapsed = start.elapsed();
                             // #update_many_token_stream
                             // let update_many_elapsed = start.elapsed();
                             // #update_one_token_stream
