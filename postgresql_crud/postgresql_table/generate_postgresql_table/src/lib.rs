@@ -5841,6 +5841,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                     .into_iter()
                                     .map(|#element_snake_case| {
+                                        let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
                                         let url_cloned = url.clone();
                                         futures::FutureExt::boxed(async move {
                                             super::#ident::try_create_many_handle(
@@ -5942,6 +5943,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 "error db146190-0496-42a7-93d6-8405eb641954"
                             );
                             for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
+                                let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -6017,6 +6019,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 futures::StreamExt::for_each_concurrent(
                     futures::stream::iter({
                         let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                        let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
                         #update_one_only_one_column_tests_token_stream
                         #acc_snake_case
                     }),
@@ -6447,8 +6450,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let read_one_elapsed = start.elapsed();
                             #update_many_token_stream
                             let update_many_elapsed = start.elapsed();
-                            // #update_one_token_stream
-                            // let update_one_elapsed = start.elapsed();
+                            #update_one_token_stream
+                            let update_one_elapsed = start.elapsed();
                             // #delete_many_token_stream
                             // let delete_many_elapsed = start.elapsed();
                             // #delete_one_token_stream
