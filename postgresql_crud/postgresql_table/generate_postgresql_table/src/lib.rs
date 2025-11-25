@@ -5481,39 +5481,40 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }}
         };
         let read_one_token_stream = {
-            quote::quote!{{
-                let table_read_one_cloned2_cloned = table_read_one_cloned2.clone();
-                if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
-                    &url,
-                    super::#ident_read_one_parameters_upper_camel_case {
-                        payload: super::#ident_read_one_payload_upper_camel_case {
-                            #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
-                            select: select_default_all_with_max_page_size.clone()
-                        }
-                    },
-                    &table_read_one_cloned2_cloned
-                ).await {
-                    if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
-                        read_one_error_named_with_serialize_deserialize,
-                        code_occurence: _
-                    } = #error_snake_case {
-                        if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
-                            postgresql,
+            quote::quote!{
+                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                    if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
+                        &url,
+                        super::#ident_read_one_parameters_upper_camel_case {
+                            payload: super::#ident_read_one_payload_upper_camel_case {
+                                #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
+                                select: select_default_all_with_max_page_size.clone()
+                            }
+                        },
+                        &table_read_one_cloned2
+                    ).await {
+                        if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                            read_one_error_named_with_serialize_deserialize,
                             code_occurence: _
-                        } = read_one_error_named_with_serialize_deserialize {
-                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                panic!("error 10010cca-57ec-4620-8ddf-4a3227999b06");
+                        } = #error_snake_case {
+                            if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
+                                postgresql,
+                                code_occurence: _
+                            } = read_one_error_named_with_serialize_deserialize {
+                                if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
+                                    panic!("error 10010cca-57ec-4620-8ddf-4a3227999b06");
+                                }
+                            } else {
+                                panic!("error c77029fe-1f95-4df5-a5fb-ef663d7bc08d");
                             }
                         } else {
-                            panic!("error c77029fe-1f95-4df5-a5fb-ef663d7bc08d");
+                            panic!("error 8031870d-aea7-44ef-a91b-1b1ea068e5dd")
                         }
                     } else {
-                        panic!("error 8031870d-aea7-44ef-a91b-1b1ea068e5dd")
+                        panic!("error 9153abfc-f12f-45dd-8d64-52147577f8dd")
                     }
-                } else {
-                    panic!("error 9153abfc-f12f-45dd-8d64-52147577f8dd")
-                }
-            }}
+                }));
+            }
         };
         let update_many_token_stream = {
             //todo add test for trying to update empty vec
@@ -6713,6 +6714,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #create_many_token_stream
                                     #create_one_token_stream
                                     #read_many_token_stream
+                                    #read_one_token_stream
                                     #acc_snake_case
                                 }),
                                 100,
