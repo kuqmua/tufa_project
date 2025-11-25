@@ -4298,78 +4298,76 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let generate_table_test_name_field_ident_cloned2_token_stream = |test_name: &std::primitive::str, field_ident: &syn::Ident|{
             format!("table_{test_name}_{field_ident}_cloned2").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
         };
-        let generate_table_field_idents_code_parts_token_stream = |test_name: &std::primitive::str|{
+        let mut table_field_idents_initialization_vec_token_stream = vec![];
+        let mut table_field_idents_clones_vec_token_stream = vec![];
+        let mut table_field_idents_clones2_vec_token_stream = vec![];
+        let mut table_field_idents_drop_table_if_exists_vec_token_stream = vec![];
+        let mut table_field_idents_prepare_postgresql_table_vec_token_stream = vec![];
+        let mut table_field_idents_routes_handle_vec_token_stream = vec![];
+        let mut fill_table_field_idents_vec_token_stream = |test_name: &std::primitive::str|{
             let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
                 format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
             };
             let generate_variable_name_cloned_token_stream = |field_ident: &syn::Ident|{
                 format!("table_{test_name}_{field_ident}_cloned").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
             };
-            (
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
-                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&{
-                        let value = format!("{{table}}_{test_name}_{field_ident}");
-                        if value.len() > 63 {
-                            panic!("error 77f9bfb7-f7d8-4ba0-96d0-712d4246ecae");
-                        }
-                        value
-                    });
-                    quote::quote! {
-                        let #initialization_variable_name_token_stream = format!(#format_content_token_stream);
+            table_field_idents_initialization_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                let format_content_token_stream = generate_quotes::double_quotes_token_stream(&{
+                    let value = format!("{{table}}_{test_name}_{field_ident}");
+                    if value.len() > 63 {
+                        panic!("error 77f9bfb7-f7d8-4ba0-96d0-712d4246ecae");
                     }
-                }),
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
-                    quote::quote! {
-                        let #variable_name_cloned_token_stream = #initialization_variable_name_token_stream.clone();
-                    }
-                }),
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let table_test_name_field_ident_cloned2_token_stream = generate_table_test_name_field_ident_cloned2_token_stream(&test_name, &field_ident);
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
-                    quote::quote! {
-                        let #table_test_name_field_ident_cloned2_token_stream = #initialization_variable_name_token_stream.clone();
-                    }
-                }),
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
-                    quote::quote! {
-                        drop_table_if_exists(&postgres_pool, &#initialization_variable_name_token_stream).await;
-                    }
-                }),
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
-                    quote::quote! {
-                        super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &#variable_name_cloned_token_stream).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
-                    }
-                }),
-                generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
-                    quote::quote! {
-                        .merge(super::#ident::#routes_handle_snake_case(
-                            std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
-                            &#variable_name_cloned_token_stream
-                        ))
-                    }
-                }),
-            )
+                    value
+                });
+                quote::quote! {
+                    let #initialization_variable_name_token_stream = format!(#format_content_token_stream);
+                }
+            }));
+            table_field_idents_clones_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
+                let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                quote::quote! {
+                    let #variable_name_cloned_token_stream = #initialization_variable_name_token_stream.clone();
+                }
+            }));
+            table_field_idents_clones2_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let table_test_name_field_ident_cloned2_token_stream = generate_table_test_name_field_ident_cloned2_token_stream(&test_name, &field_ident);
+                let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                quote::quote! {
+                    let #table_test_name_field_ident_cloned2_token_stream = #initialization_variable_name_token_stream.clone();
+                }
+            }));
+            table_field_idents_drop_table_if_exists_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(&field_ident);
+                quote::quote! {
+                    drop_table_if_exists(&postgres_pool, &#initialization_variable_name_token_stream).await;
+                }
+            }));
+            table_field_idents_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
+                quote::quote! {
+                    super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &#variable_name_cloned_token_stream).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
+                }
+            }));
+            table_field_idents_routes_handle_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(&field_ident);
+                quote::quote! {
+                    .merge(super::#ident::#routes_handle_snake_case(
+                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
+                        &#variable_name_cloned_token_stream
+                    ))
+                }
+            }));
         };
-        let (
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones2_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_drop_table_if_exists_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_prepare_postgresql_table_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_routes_handle_token_stream,
-        ) = generate_table_field_idents_code_parts_token_stream(&table_read_only_ids_merged_with_create_into_where_element_equal_name);
+        fill_table_field_idents_vec_token_stream(&table_read_only_ids_merged_with_create_into_where_element_equal_name);
+        // read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
         //
         let create_many_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -6489,7 +6487,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //
                             let table_test_read_many_by_non_existent_primary_keys = format!("{table}_test_read_many_by_non_existent_primary_keys");
                             let table_test_read_many_by_equal_to_created_primary_keys = format!("{table}_test_read_many_by_equal_to_created_primary_keys");
-                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream
+                            #(#table_field_idents_initialization_vec_token_stream)*
                             //
                             let table_read_one = format!("{table}_read_one");
                             let table_update_many = format!("{table}_update_many");
@@ -6505,7 +6503,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //
                             let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream
+                            #(#table_field_idents_clones_vec_token_stream)*
                             //
                             let table_read_one_cloned = table_read_one.clone();
                             let table_update_many_cloned = table_update_many.clone();
@@ -6519,7 +6517,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             //
                             let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned2 = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                            #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones2_token_stream
+                            #(#table_field_idents_clones2_vec_token_stream)*
                             //
                             let table_read_one_cloned2 = table_read_one.clone();
                             let table_update_many_cloned2 = table_update_many.clone();
@@ -6540,7 +6538,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //
                                 drop_table_if_exists(&postgres_pool, &table_test_read_many_by_non_existent_primary_keys_cloned2).await;
                                 drop_table_if_exists(&postgres_pool, &table_test_read_many_by_equal_to_created_primary_keys_cloned2).await;
-                                #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_drop_table_if_exists_token_stream
+                                #(#table_field_idents_drop_table_if_exists_vec_token_stream)*
                                 //
                                 drop_table_if_exists(&postgres_pool, &table_read_one).await;
                                 drop_table_if_exists(&postgres_pool, &table_update_many).await;
@@ -6560,7 +6558,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 //
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_non_existent_primary_keys_cloned).await.expect("error 56a27d70-0393-4759-9d02-f9eb1e623f5f");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_equal_to_created_primary_keys_cloned).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
-                                #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_prepare_postgresql_table_token_stream
+                                #(#table_field_idents_prepare_postgresql_table_vec_token_stream)*
                                 //
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_one_cloned).await.expect("error 425e8574-6cdd-43b5-9b7b-75efce9b750d");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_many_cloned).await.expect("error ab50eb74-29ab-49b3-bdd4-ff6c6c6b700a");
@@ -6601,7 +6599,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
                                         &table_test_read_many_by_equal_to_created_primary_keys_cloned
                                     ))
-                                    #table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_routes_handle_token_stream
+                                    #(#table_field_idents_routes_handle_vec_token_stream)*
                                     //
                                     .merge(super::#ident::#routes_handle_snake_case(
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
