@@ -5482,13 +5482,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let read_one_token_stream = {
             quote::quote!{
+                let url_cloned = url.clone();
+                let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
                     if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
-                        &url,
+                        &url_cloned,
                         super::#ident_read_one_parameters_upper_camel_case {
                             payload: super::#ident_read_one_payload_upper_camel_case {
                                 #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
-                                select: select_default_all_with_max_page_size.clone()
+                                select: select_default_all_with_max_page_size_cloned.clone()
                             }
                         },
                         &table_read_one_cloned2
@@ -5917,19 +5919,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             });
             quote::quote! {{
-                futures::StreamExt::for_each_concurrent(
-                    futures::stream::iter({
-                        let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                        let table_update_many_cloned2_cloned = table_update_many_cloned2.clone();
-                        #update_many_only_one_column_tests_token_stream
-                        #acc_snake_case
-                    }),
-                    100,
-                    |fut| async move {
-                        fut.await;
-                    },
-                )
-                .await;
+                let table_update_many_cloned2_cloned = table_update_many_cloned2.clone();
+                #update_many_only_one_column_tests_token_stream
             }}
         };
         let update_one_token_stream = {
@@ -6715,6 +6706,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #create_one_token_stream
                                     #read_many_token_stream
                                     #read_one_token_stream
+                                    #update_many_token_stream
                                     #acc_snake_case
                                 }),
                                 100,
