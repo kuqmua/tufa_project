@@ -4295,20 +4295,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         );
         
         let table_read_only_ids_merged_with_create_into_where_element_equal_name = "8e427ad7_5231_4f1e_8579_2e1aaa5da988";
-        // table_read_many_cloned2
         let generate_table_test_name_field_ident_cloned2_token_stream = |test_name: &std::primitive::str, field_ident: &syn::Ident|{
             format!("table_{test_name}_{field_ident}_cloned2").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
         };
-        //
-        let (
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones2_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_drop_table_if_exists_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_prepare_postgresql_table_token_stream,
-            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_routes_handle_token_stream,
-        ) = {
-            let test_name = table_read_only_ids_merged_with_create_into_where_element_equal_name;
+        let generate_table_field_idents_code_parts_token_stream = |test_name: &std::primitive::str|{
             let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
                 format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
             };
@@ -4372,6 +4362,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }),
             )
         };
+        let (
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_initialization_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_clones2_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_drop_table_if_exists_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_prepare_postgresql_table_token_stream,
+            table_read_only_ids_merged_with_create_into_where_element_equal_field_idents_routes_handle_token_stream,
+        ) = generate_table_field_idents_code_parts_token_stream(&table_read_only_ids_merged_with_create_into_where_element_equal_name);
         //
         let create_many_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
