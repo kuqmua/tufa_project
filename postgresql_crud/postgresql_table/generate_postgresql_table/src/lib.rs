@@ -5562,7 +5562,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
                                     },
                                 },
-                                &table_update_many_cloned2_cloned
+                                &current_table
                             )
                             .await
                             .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
@@ -5708,14 +5708,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                     .into_iter()
                                     .map(|#element_snake_case| {
-                                        let table_update_many_cloned2_cloned = table_update_many_cloned2.clone();
+                                        let current_table = table_update_many_cloned2.clone();
                                         let url_cloned = url.clone();
                                         futures::FutureExt::boxed(async move { super::#ident::try_create_many_handle(
                                             &url_cloned,
                                             super::#ident_create_many_parameters_upper_camel_case {
                                                 payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
                                             },
-                                            &table_update_many_cloned2_cloned
+                                            &current_table
                                         ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
                                     })
                                     .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>(),
@@ -5791,7 +5791,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
                                             },
                                         },
-                                        &table_update_many_cloned2_cloned
+                                        &current_table
                                     )
                                     .await
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
@@ -5808,7 +5808,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 "error 50198a7f-e65c-4e4e-8d7f-9881cfd42453"
                             );
                             for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                let table_update_many_cloned2_cloned = table_update_many_cloned2.clone();
+                                let current_table = table_update_many_cloned2.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -5861,7 +5861,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     #acc_snake_case
                                                 }).expect("error 69e1bd8a-fe78-4301-85ca-f4f3958d7493")
                                             },
-                                            &table_update_many_cloned2_cloned
+                                            &current_table
                                         ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                         "error 34bfb3c7-7a53-479e-9d4f-0856003573e1"
                                     );
@@ -5900,7 +5900,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
                                                     }
                                                 },
-                                                &table_update_many_cloned2_cloned
+                                                &current_table
                                             ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
                                             #acc_snake_case.sort_by(|a, b| {
                                                 if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
@@ -5920,7 +5920,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             });
             quote::quote! {{
-                let table_update_many_cloned2_cloned = table_update_many_cloned2.clone();
+                let current_table = table_update_many_cloned2.clone();
                 #update_many_only_one_column_tests_token_stream
             }}
         };
