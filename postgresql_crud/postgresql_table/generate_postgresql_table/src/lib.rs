@@ -4978,21 +4978,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }));
                 }}
             };
-            // let generate_for_each_concurrent_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
-            //     futures::StreamExt::for_each_concurrent(
-            //         futures::stream::iter({
-            //             let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-            //             #content_token_stream
-            //             #acc_snake_case
-            //         }),
-            //         1,//todo if it was more than 1 - test will not pass coz potential duplicates in table
-            //         |fut| async move {
-            //             fut.await;
-            //         },
-            //     )
-            //     .await;
-            // };
-
             let generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream = |ident_where_many_try_new_parameters_content_token_stream: &dyn quote::ToTokens|quote::quote!{
                 assert_eq!(
                     vec![
