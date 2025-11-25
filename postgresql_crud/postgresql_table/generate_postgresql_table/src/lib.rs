@@ -6420,7 +6420,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
             );
             quote::quote!{{
-                let table_delete_one_cloned2_cloned = table_delete_one_cloned2.clone();
+                let current_table = table_delete_one_cloned2.clone();
                 let ident_create_default_cloned = ident_create_default.clone();
                 let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                 let url_cloned = url.clone();
@@ -6432,7 +6432,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4())
                             }
                         },
-                        &table_delete_one_cloned2_cloned
+                        &current_table
                     ).await {
                         if let super::#ident_try_delete_one_error_named_upper_camel_case::#ident_delete_one_error_named_with_serialize_deserialize_upper_camel_case {
                             delete_one_error_named_with_serialize_deserialize,
@@ -6459,7 +6459,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         super::#ident_create_one_parameters_upper_camel_case {
                             payload: ident_create_default_cloned.clone()
                         },
-                        &table_delete_one_cloned2_cloned
+                        &current_table
                     ).await.expect("error 8be80909-0e8d-42f9-a5c8-fa08244cb592");
                     assert_eq!(
                         super::#ident_read_upper_camel_case {
@@ -6474,7 +6474,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     select: select_default_all_with_max_page_size_cloned.clone()
                                 }
                             },
-                            &table_delete_one_cloned2_cloned
+                            &current_table
                         ).await.expect("error c8c44c89-aeb0-43d3-ae72-02b7a5979f5a"),
                         "error 86ef08ae-4356-4417-9490-1d13eb2af71f"
                     );
@@ -6485,7 +6485,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
                             }
                         },
-                        &table_delete_one_cloned2_cloned
+                        &current_table
                     ).await.expect("error acab86b7-b199-4732-b8ea-76c00a12abb2");
                     assert_eq!(
                         read_only_ids_from_try_delete_one,
@@ -6500,7 +6500,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select: select_default_all_with_max_page_size_cloned.clone()
                             }
                         },
-                        &table_delete_one_cloned2_cloned
+                        &current_table
                     ).await {
                         if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = error {
                             if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
