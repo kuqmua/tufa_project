@@ -6540,14 +6540,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table = #ident_double_quotes_token_stream;
                             let table_create_many = format!("{table}_create_many");
                             let table_create_one = format!("{table}_create_one");
-
-                            //todo remove _read_many table
-                            let table_read_many = format!("{table}_read_many");
-                            //
                             let table_test_read_many_by_non_existent_primary_keys = format!("{table}_test_read_many_by_non_existent_primary_keys");
                             let table_test_read_many_by_equal_to_created_primary_keys = format!("{table}_test_read_many_by_equal_to_created_primary_keys");
                             #(#table_field_idents_initialization_vec_token_stream)*
-                            //
+
                             let table_read_one = format!("{table}_read_one");
                             let table_update_many = format!("{table}_update_many");
                             let table_update_one = format!("{table}_update_one");
@@ -6558,12 +6554,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
 
                             let table_create_many_cloned = table_create_many.clone();
                             let table_create_one_cloned = table_create_one.clone();
-                            let table_read_many_cloned = table_read_many.clone();
-                            //
                             let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
                             #(#table_field_idents_clones_vec_token_stream)*
-                            //
+
                             let table_read_one_cloned = table_read_one.clone();
                             let table_update_many_cloned = table_update_many.clone();
                             let table_update_one_cloned = table_update_one.clone();
@@ -6571,13 +6565,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_one_cloned = table_delete_one.clone();
                             let table_create_many_cloned2 = table_create_many.clone();
                             let table_create_one_cloned2 = table_create_one.clone();
-                            let table_read_many_cloned2 = table_read_many.clone();
 
-                            //
                             let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
                             let table_test_read_many_by_equal_to_created_primary_keys_cloned2 = table_test_read_many_by_equal_to_created_primary_keys.clone();
                             #(#table_field_idents_clones2_vec_token_stream)*
-                            //
+
                             let table_read_one_cloned2 = table_read_one.clone();
                             let table_update_many_cloned2 = table_update_many.clone();
                             let table_update_one_cloned2 = table_update_one.clone();
@@ -6593,12 +6585,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
                                 drop_table_if_exists(&postgres_pool, &table_create_many).await;
                                 drop_table_if_exists(&postgres_pool, &table_create_one).await;
-                                drop_table_if_exists(&postgres_pool, &table_read_many).await;
-                                //
                                 drop_table_if_exists(&postgres_pool, &table_test_read_many_by_non_existent_primary_keys_cloned2).await;
                                 drop_table_if_exists(&postgres_pool, &table_test_read_many_by_equal_to_created_primary_keys_cloned2).await;
                                 #(#table_field_idents_drop_table_if_exists_vec_token_stream)*
-                                //
                                 drop_table_if_exists(&postgres_pool, &table_read_one).await;
                                 drop_table_if_exists(&postgres_pool, &table_update_many).await;
                                 drop_table_if_exists(&postgres_pool, &table_update_one).await;
@@ -6613,12 +6602,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table).await.expect("error 0c29cf7d-1af7-459c-b0c6-69855ca98bef");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_many_cloned).await.expect("error 141d990c-91e5-4518-8978-7660fcf88784");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_one_cloned).await.expect("error cdd3b111-5e8b-4201-896e-bd38dc8b4d7c");
-                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_many_cloned).await.expect("error 878298c2-3320-4b54-ad8d-e67000cc4955");
-                                //
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_non_existent_primary_keys_cloned).await.expect("error 56a27d70-0393-4759-9d02-f9eb1e623f5f");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_equal_to_created_primary_keys_cloned).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
                                 #(#table_field_idents_prepare_postgresql_table_vec_token_stream)*
-                                //
+
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_one_cloned).await.expect("error 425e8574-6cdd-43b5-9b7b-75efce9b750d");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_many_cloned).await.expect("error ab50eb74-29ab-49b3-bdd4-ff6c6c6b700a");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_one_cloned).await.expect("error de8885ae-34f5-430b-a3b4-bf91c999b2c8");
@@ -6647,11 +6634,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     ))
                                     .merge(super::#ident::#routes_handle_snake_case(
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_read_many_cloned
-                                    ))
-                                    //
-                                    .merge(super::#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
                                         &table_test_read_many_by_non_existent_primary_keys_cloned
                                     ))
                                     .merge(super::#ident::#routes_handle_snake_case(
@@ -6659,7 +6641,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &table_test_read_many_by_equal_to_created_primary_keys_cloned
                                     ))
                                     #(#table_field_idents_routes_handle_vec_token_stream)*
-                                    //
                                     .merge(super::#ident::#routes_handle_snake_case(
                                         std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case),
                                         &table_read_one_cloned
