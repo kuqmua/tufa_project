@@ -5152,7 +5152,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 })
             };
-
+            let some_primary_key_where_element_initialization_token_stream = quote::quote! {
+                Some(
+                    postgresql_crud::PostgresqlTypeWhere::try_new(
+                        postgresql_crud::LogicalOperator::And,
+                        vec![
+                            <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
+                                read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
+                                #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                            )
+                        ]
+                    )
+                    .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
+                )
+            };
             let (
                 read_only_ids_merged_with_create_into_where_element_equal_token_stream,
                 read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_token_stream
@@ -5172,20 +5185,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     let current_field_ident = &element.field_ident;
                                     let current_field_type = &element.syn_field.ty;
                                     if current_field_ident == primary_key_field_ident {
-                                        quote::quote! {
-                                            Some(
-                                                postgresql_crud::PostgresqlTypeWhere::try_new(
-                                                    postgresql_crud::LogicalOperator::And,
-                                                    vec![
-                                                        <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                            read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                                                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                        )
-                                                    ]
-                                                )
-                                                .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
-                                            )
-                                        }
+                                        some_primary_key_where_element_initialization_token_stream.clone()
                                     }
                                     else if current_field_ident == field_ident {
                                         let content_token_stream = {
@@ -5213,7 +5213,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             )
                                         }
                                     } else {
-                                        quote::quote! {None}
+                                        none_token_stream.clone()
                                     }
                                 })
                             )
@@ -5236,20 +5236,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                             let current_field_ident = &element.field_ident;
                             if current_field_ident == primary_key_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        postgresql_crud::PostgresqlTypeWhere::try_new(
-                                            postgresql_crud::LogicalOperator::And,
-                                            vec![
-                                                <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                )
-                                            ]
-                                        )
-                                        .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
-                                    )
-                                }
+                                some_primary_key_where_element_initialization_token_stream.clone()
                             }
                             else if current_field_ident == field_ident {
                                 quote::quote! {
@@ -5262,7 +5249,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 }
                             } else {
-                                quote::quote! {None}
+                                none_token_stream.clone()
                             }
                         })
                     );
@@ -5289,20 +5276,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                             let current_field_ident = &element.field_ident;
                             if primary_key_field_ident == current_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        postgresql_crud::PostgresqlTypeWhere::try_new(
-                                            postgresql_crud::LogicalOperator::And,
-                                            vec![
-                                                <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                )
-                                            ]
-                                        )
-                                        .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
-                                    )
-                                }
+                                some_primary_key_where_element_initialization_token_stream.clone()
                             }
                             else if current_field_ident == field_ident{
                                 quote::quote! {
@@ -5315,7 +5289,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 }
                             } else {
-                                quote::quote! {None}
+                                none_token_stream.clone()
                             }
                         })
                     );
@@ -5341,20 +5315,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                             let current_field_ident = &element.field_ident;
                             if current_field_ident == primary_key_field_ident {
-                                quote::quote! {
-                                    Some(
-                                        postgresql_crud::PostgresqlTypeWhere::try_new(
-                                            postgresql_crud::LogicalOperator::And,
-                                            vec![
-                                                <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                    read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                )
-                                            ]
-                                        )
-                                        .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
-                                    )
-                                }
+                                some_primary_key_where_element_initialization_token_stream.clone()
                             }
                             else if current_field_ident == field_ident {
                                 quote::quote! {
@@ -5367,7 +5328,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 }
                             } else {
-                                quote::quote! {None}
+                                none_token_stream.clone()
                             }
                         })
                     );
@@ -5405,20 +5366,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                                     let current_field_ident = &element.field_ident;
                                     if current_field_ident == primary_key_field_ident {
-                                        quote::quote! {
-                                            Some(
-                                                #import_path::PostgresqlTypeWhere::try_new(
-                                                    #import_path::LogicalOperator::And,
-                                                    vec![
-                                                        <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_element_equal(
-                                                            read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                                                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                        )
-                                                    ]
-                                                )
-                                                .expect("error eaff9b33-3b0f-4179-8af0-bfaecb70ad16"),
-                                            )
-                                        }
+                                        some_primary_key_where_element_initialization_token_stream.clone()
                                     }
                                     else if current_field_ident == field_ident {
                                         quote::quote! {
@@ -5431,7 +5379,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             )
                                         }
                                     } else {
-                                        quote::quote! {None}
+                                        none_token_stream.clone()
                                     }
                                 })
                             );
