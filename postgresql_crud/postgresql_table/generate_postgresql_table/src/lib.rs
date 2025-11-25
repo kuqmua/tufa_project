@@ -6227,19 +6227,21 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             });
             quote::quote! {{
-                futures::StreamExt::for_each_concurrent(
-                    futures::stream::iter({
-                        let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                        let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
-                        #update_one_only_one_column_tests_token_stream
-                        #acc_snake_case
-                    }),
-                    100,
-                    |fut| async move {
-                        fut.await;
-                    },
-                )
-                .await;
+                let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
+                #update_one_only_one_column_tests_token_stream
+                // futures::StreamExt::for_each_concurrent(
+                //     futures::stream::iter({
+                //         let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                //         let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
+                //         #update_one_only_one_column_tests_token_stream
+                //         #acc_snake_case
+                //     }),
+                //     100,
+                //     |fut| async move {
+                //         fut.await;
+                //     },
+                // )
+                // .await;
             }}
         };
         let delete_many_token_stream = {
@@ -6707,6 +6709,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #read_many_token_stream
                                     #read_one_token_stream
                                     #update_many_token_stream
+                                    #update_one_token_stream
                                     #acc_snake_case
                                 }),
                                 100,
