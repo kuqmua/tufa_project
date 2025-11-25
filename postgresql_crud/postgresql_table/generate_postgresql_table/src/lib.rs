@@ -6232,7 +6232,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }}
         };
         let delete_many_token_stream = {
-            quote::quote!{{
+            let test_delete_many_by_non_existent_primary_keys_token_stream = quote::quote!{
                 {
                     async fn generate_test_delete_many_by_non_existent_primary_keys(
                         length: std::primitive::usize,
@@ -6287,6 +6287,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         generate_test_delete_many_by_non_existent_primary_keys(2, &url_cloned, &table_delete_many_cloned2_cloned).await;
                     }));
                 }
+            };
+            let test_delete_many_by_primary_keys_token_stream = quote::quote!{
                 {
                     async fn generate_test_delete_many_by_primary_keys(
                         length: std::primitive::usize,
@@ -6406,6 +6408,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         generate_test_delete_many_by_primary_keys(2, &url_cloned, select_default_all_with_max_page_size_cloned, &table_delete_many_cloned2_cloned, ident_create_default_cloned).await;
                     }));
                 }
+            };
+            quote::quote!{{
+                #test_delete_many_by_non_existent_primary_keys_token_stream
+                #test_delete_many_by_primary_keys_token_stream
             }}
         };
         let delete_one_token_stream = {
