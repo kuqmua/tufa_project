@@ -5942,7 +5942,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     select: select_default_all_with_max_page_size_cloned.clone()
                                 }
                             },
-                            &table_update_one_cloned2_cloned
+                            &current_table
                         ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
                     }
                 }
@@ -6053,7 +6053,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                     .into_iter()
                                     .map(|#element_snake_case| {
-                                        let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
+                                        let current_table = table_update_one_cloned2.clone();
                                         let url_cloned = url.clone();
                                         futures::FutureExt::boxed(async move {
                                             super::#ident::try_create_many_handle(
@@ -6061,7 +6061,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 super::#ident_create_many_parameters_upper_camel_case {
                                                     payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
                                                 },
-                                                &table_update_one_cloned2_cloned
+                                                &current_table
                                             ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
                                         })
                                     })
@@ -6138,7 +6138,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 8070b103-ef91-4188-b788-b14439b6235a"),
                                             },
                                         },
-                                        &table_update_one_cloned2_cloned
+                                        &current_table
                                     )
                                     .await
                                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
@@ -6155,7 +6155,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 "error db146190-0496-42a7-93d6-8405eb641954"
                             );
                             for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
+                                let current_table = table_update_one_cloned2.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -6200,7 +6200,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     #ident_update_parameters_initialization_without_primary_key_token_stream
                                                 ).expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
                                             },
-                                            &table_update_one_cloned2_cloned
+                                            &current_table
                                         ).await.expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                         "error 564de31c-3664-4c62-85fc-e03793372f8f"
                                     );
@@ -6217,7 +6217,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     select: select_default_all_with_max_page_size_cloned
                                                 }
                                             },
-                                            &table_update_one_cloned2_cloned
+                                            &current_table
                                         ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                         "error d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
                                     );
@@ -6228,7 +6228,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             });
             quote::quote! {{
-                let table_update_one_cloned2_cloned = table_update_one_cloned2.clone();
+                let current_table = table_update_one_cloned2.clone();
                 #update_one_only_one_column_tests_token_stream
             }}
         };
