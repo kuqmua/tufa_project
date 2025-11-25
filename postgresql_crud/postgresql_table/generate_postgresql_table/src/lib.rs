@@ -6238,7 +6238,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     async fn generate_test_delete_many_by_non_existent_primary_keys(
                         length: std::primitive::usize,
                         url: &std::primitive::str,
-                        table_delete_many: &std::primitive::str
+                        current_table: &std::primitive::str
                     ){
                         match super::#ident::try_delete_many_handle(
                             &url,
@@ -6268,7 +6268,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     })),
                                 },
                             },
-                            &table_delete_many
+                            &current_table
                         )
                         .await {
                             Ok(value) => if value.len() != 0 {
@@ -6277,15 +6277,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             Err(error) => panic!("error 0d5dec47-8b2e-4f02-909b-3a58b65bc6a5"),
                         }
                     };
-                    let table_delete_many_cloned2_cloned = table_delete_many_cloned2.clone();
+                    let current_table = table_delete_many_cloned2.clone();
                     let url_cloned = url.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_delete_many_by_non_existent_primary_keys(1, &url_cloned, &table_delete_many_cloned2_cloned).await;
+                        generate_test_delete_many_by_non_existent_primary_keys(1, &url_cloned, &current_table).await;
                     }));
-                    let table_delete_many_cloned2_cloned = table_delete_many_cloned2.clone();
+                    let current_table = table_delete_many_cloned2.clone();
                     let url_cloned = url.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_delete_many_by_non_existent_primary_keys(2, &url_cloned, &table_delete_many_cloned2_cloned).await;
+                        generate_test_delete_many_by_non_existent_primary_keys(2, &url_cloned, &current_table).await;
                     }));
                 }
             };
