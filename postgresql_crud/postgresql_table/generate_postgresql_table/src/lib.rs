@@ -4690,7 +4690,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         //         payload: ident_create_default
                         //     },
                         //     &current_table
-                        // ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                        // ).await.expect("error 8475e942-9a5c-4d85-bb0a-bcef46bc858e");
                         //
                         match super::#ident::try_read_many_handle(
                             &url,
@@ -4743,8 +4743,49 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         }
                         //
-
-                        //
+                        // let read_only_ids_from_try_delete_one = super::#ident::try_delete_one_handle(
+                        //     &url_cloned,
+                        //     super::#ident_delete_one_parameters_upper_camel_case {
+                        //         #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
+                        //             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
+                        //         }
+                        //     },
+                        //     &table_create_one_cloned2_cloned
+                        // ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                        // if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
+                        //     &url_cloned,
+                        //     super::#ident_read_one_parameters_upper_camel_case {
+                        //         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                        //             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                        //             #select_snake_case: select_default_all_with_max_page_size_cloned
+                        //         }
+                        //     },
+                        //     &table_create_one_cloned2_cloned
+                        // )
+                        // .await {
+                        //     if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                        //         read_one_error_named_with_serialize_deserialize,
+                        //         code_occurence: _,
+                        //     } = #error_snake_case {
+                        //         if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
+                        //             postgresql,
+                        //             code_occurence: _,
+                        //         } = read_one_error_named_with_serialize_deserialize {
+                        //             if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
+                        //                 panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
+                        //             }
+                        //         }
+                        //         else {
+                        //              panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
+                        //         }
+                        //     }
+                        //     else {
+                        //         panic!("error bcd3f9bf-d6b7-4594-b078-8fe9c34bcf18")
+                        //     }
+                        // }
+                        // else {
+                        //     panic!("error 893263c9-7c62-4551-9225-74153c6e1c57")
+                        // }
                     }
                     let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     let url_cloned = url.clone();
