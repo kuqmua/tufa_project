@@ -4400,7 +4400,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .map(|#element_snake_case| #element_snake_case.to_vec())
                         .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                     {
-                        let table_create_many_cloned2_cloned = table_create_many_cloned2.clone();
+                        let current_table = table_create_many_cloned2.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4418,7 +4418,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 super::#ident_create_many_parameters_upper_camel_case {
                                     #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(ident_vec_create.clone())
                                 },
-                                &table_create_many_cloned2_cloned.clone()
+                                &current_table.clone()
                             ).await.expect("error 5eecedc4-bb02-454a-acd9-0af758f30b2e");
                             assert_eq!(
                                 {
@@ -4475,7 +4475,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
                                         }
                                     },
-                                    &table_create_many_cloned2_cloned
+                                    &current_table
                                 )
                                 .await
                                 .expect("error cb64ceaf-74a4-4501-b614-0c9d9e4e0598"),
@@ -4506,7 +4506,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }))
                                         }
                                     },
-                                    &table_create_many_cloned2_cloned
+                                    &current_table
                                 ).await.expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
                                 #acc_snake_case.sort_by(|a,b|a.cmp(&b));
                                 #acc_snake_case
@@ -4553,7 +4553,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
                                     }
                                 },
-                                &table_create_many_cloned2_cloned
+                                &current_table
                             )
                             .await {
                                 Ok(#value_snake_case) => {
@@ -4583,7 +4583,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
                 quote::quote! {
                     for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]) {
-                        let table_create_one_cloned2_cloned = table_create_one_cloned2.clone();
+                        let current_table = table_create_one_cloned2.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4595,7 +4595,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 super::#ident_create_one_parameters_upper_camel_case {
                                     payload: ident_create.clone()
                                 },
-                                &table_create_one_cloned2_cloned
+                                &current_table
                             ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                             assert_eq!(
                                 super::#ident_read_upper_camel_case {
@@ -4610,7 +4610,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #select_snake_case: select_default_all_with_max_page_size_cloned.clone()
                                         }
                                     },
-                                    &table_create_one_cloned2_cloned
+                                    &current_table
                                 )
                                 .await
                                 .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
@@ -4623,7 +4623,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
                                     }
                                 },
-                                &table_create_one_cloned2_cloned
+                                &current_table
                             ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                             assert_eq!(
                                 read_only_ids_from_try_delete_one,
@@ -4638,7 +4638,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #select_snake_case: select_default_all_with_max_page_size_cloned
                                     }
                                 },
-                                &table_create_one_cloned2_cloned
+                                &current_table
                             )
                             .await {
                                 if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
