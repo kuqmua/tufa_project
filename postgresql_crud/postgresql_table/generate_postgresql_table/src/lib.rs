@@ -4396,7 +4396,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let field_type = &element.syn_field.ty;
                 let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&field_type);
                 let ident_create_content_token_stream = generate_ident_create_content_element_token_stream(&field_ident);
-                quote::quote! {
+                quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
                         .chunks(10)
                         .map(|#element_snake_case| #element_snake_case.to_vec())
@@ -4569,7 +4569,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }));
                     }
-                }
+                }}
             });
             quote::quote!{{
                 #create_many_tests_token_stream
@@ -4583,7 +4583,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(
                     &primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
                 );
-                quote::quote! {
+                quote::quote! {{
                     for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]) {
                         let current_table = table_create_one_cloned2.clone();
                         let url_cloned = url.clone();
@@ -4668,7 +4668,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }));
                     }
-                }
+                }}
             });
             quote::quote!{{
                 #create_one_tests_token_stream
@@ -5443,7 +5443,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }}
         };
         let read_one_token_stream = {
-            quote::quote!{
+            quote::quote!{{
                 let url_cloned = url.clone();
                 let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -5478,7 +5478,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         panic!("error 9153abfc-f12f-45dd-8d64-52147577f8dd")
                     }
                 }));
-            }
+            }}
         };
         let update_many_token_stream = {
             //todo add test for trying to update empty vec
