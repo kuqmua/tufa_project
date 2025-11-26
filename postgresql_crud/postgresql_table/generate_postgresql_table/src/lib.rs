@@ -5007,32 +5007,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     }
-                    let table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
-                    let url_cloned = url.clone();
-                    let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
-                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_equal_to_created_primary_keys(
-                            1,
-                            &url_cloned,
-                            select_default_all_with_max_page_size_cloned,
-                            &table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned,
-                            ident_create_default_cloned,
-                        ).await;
-                    }));
-                    let table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
-                    let url_cloned = url.clone();
-                    let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
-                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_equal_to_created_primary_keys(
-                            2,
-                            &url_cloned,
-                            select_default_all_with_max_page_size_cloned,
-                            &table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned,
-                            ident_create_default_cloned,
-                        ).await;
-                    }));
+                    let lengths = vec![1,2];
+                    for element in lengths {
+                        let table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
+                        let url_cloned = url.clone();
+                        let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
+                        let ident_create_default_cloned = ident_create_default.clone();
+                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                            generate_test_read_many_by_equal_to_created_primary_keys(
+                                element,
+                                &url_cloned,
+                                select_default_all_with_max_page_size_cloned,
+                                &table_test_read_many_by_equal_to_created_primary_keys_cloned2_cloned,
+                                ident_create_default_cloned,
+                            ).await;
+                        }));
+                    }
                 }}
             };
             let generate_read_only_ids_merged_with_create_into_where_element_assert_eq_token_stream = |ident_where_many_try_new_parameters_content_token_stream: &dyn quote::ToTokens|quote::quote!{
