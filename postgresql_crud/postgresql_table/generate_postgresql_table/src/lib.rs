@@ -4674,6 +4674,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let read_many_token_stream = {
             //todo additional read_many checks
+
             let test_read_many_by_non_existent_primary_keys_token_stream = {
                 quote::quote!{{
                     async fn generate_test_read_many_by_non_existent_primary_keys(
@@ -4681,16 +4682,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         url: &std::primitive::str,
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
                         current_table: &std::primitive::str,
-                        // ident_create_default: bool,
+                        ident_create_default: super::#ident_create_upper_camel_case,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
                     ){
-                        //just to add some data
-                        // let read_only_ids_from_try_create_one = super::#ident::try_create_one_handle(
-                        //     &url,
-                        //     super::#ident_create_one_parameters_upper_camel_case {
-                        //         payload: ident_create_default
-                        //     },
-                        //     &current_table
-                        // ).await.expect("error 8475e942-9a5c-4d85-bb0a-bcef46bc858e");
+                        //just to add some data to be sure it will not return from the test query
+                        let read_only_ids_from_try_create_one = super::#ident::try_create_one_handle(
+                            &url,
+                            super::#ident_create_one_parameters_upper_camel_case {
+                                payload: ident_create_default
+                            },
+                            &current_table
+                        ).await.expect("error 71632985-ec25-4928-aa9e-1e224a7478c1");
                         //
                         match super::#ident::try_read_many_handle(
                             &url,
@@ -4722,7 +4724,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         )
                                         .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
                                     )),
-                                    select: select_default_all_with_max_page_size,
+                                    select: select_default_all_with_max_page_size.clone(),
                                     order_by: postgresql_crud::OrderBy {
                                         column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                             #primary_key_field_type_as_postgresql_type_select_token_stream::default()
@@ -4743,61 +4745,79 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         }
                         //
-                        // let read_only_ids_from_try_delete_one = super::#ident::try_delete_one_handle(
-                        //     &url_cloned,
-                        //     super::#ident_delete_one_parameters_upper_camel_case {
-                        //         #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
-                        //             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
-                        //         }
-                        //     },
-                        //     &table_create_one_cloned2_cloned
-                        // ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                        // if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
-                        //     &url_cloned,
-                        //     super::#ident_read_one_parameters_upper_camel_case {
-                        //         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                        //             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
-                        //             #select_snake_case: select_default_all_with_max_page_size_cloned
-                        //         }
-                        //     },
-                        //     &table_create_one_cloned2_cloned
-                        // )
-                        // .await {
-                        //     if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
-                        //         read_one_error_named_with_serialize_deserialize,
-                        //         code_occurence: _,
-                        //     } = #error_snake_case {
-                        //         if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
-                        //             postgresql,
-                        //             code_occurence: _,
-                        //         } = read_one_error_named_with_serialize_deserialize {
-                        //             if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                        //                 panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
-                        //             }
-                        //         }
-                        //         else {
-                        //              panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
-                        //         }
-                        //     }
-                        //     else {
-                        //         panic!("error bcd3f9bf-d6b7-4594-b078-8fe9c34bcf18")
-                        //     }
-                        // }
-                        // else {
-                        //     panic!("error 893263c9-7c62-4551-9225-74153c6e1c57")
-                        // }
+                        let read_only_ids_from_try_delete_one = super::#ident::try_delete_one_handle(
+                            &url,
+                            super::#ident_delete_one_parameters_upper_camel_case {
+                                #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
+                                    #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
+                                }
+                            },
+                            &current_table
+                        ).await.expect("error cc3958f0-1a4a-4440-97c7-ca63611405c5");
+                        if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
+                            &url,
+                            super::#ident_read_one_parameters_upper_camel_case {
+                                #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                    #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                                    #select_snake_case: select_default_all_with_max_page_size.clone()
+                                }
+                            },
+                            &current_table
+                        )
+                        .await {
+                            if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                                read_one_error_named_with_serialize_deserialize,
+                                code_occurence: _,
+                            } = #error_snake_case {
+                                if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql {
+                                    postgresql,
+                                    code_occurence: _,
+                                } = read_one_error_named_with_serialize_deserialize {
+                                    if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
+                                        panic!("error 99bd4d82-4976-4e1e-8022-543b01221a91");
+                                    }
+                                }
+                                else {
+                                     panic!("error 5a86690f-80e2-4dbc-9853-1826f94748bd");
+                                }
+                            }
+                            else {
+                                panic!("error d90d6d02-33f7-4886-99df-dee76b83400f")
+                            }
+                        }
+                        else {
+                            panic!("error 62e65598-2c1f-4912-b3a2-dccd6e1714a1")
+                        }
                     }
                     let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     let url_cloned = url.clone();
                     let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
+                    let ident_create_default_cloned = ident_create_default.clone();
+                    let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(1, &url_cloned, select_default_all_with_max_page_size_cloned, &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned).await;
+                        generate_test_read_many_by_non_existent_primary_keys(
+                            1,
+                            &url_cloned,
+                            select_default_all_with_max_page_size_cloned,
+                            &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
+                            ident_create_default_cloned,
+                            &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                        ).await;
                     }));
                     let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     let url_cloned = url.clone();
                     let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
+                    let ident_create_default_cloned = ident_create_default.clone();
+                    let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(2, &url_cloned, select_default_all_with_max_page_size_cloned, &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned).await;
+                        generate_test_read_many_by_non_existent_primary_keys(
+                            2,
+                            &url_cloned,
+                            select_default_all_with_max_page_size_cloned,
+                            &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
+                            ident_create_default_cloned,
+                            &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                        ).await;
                     }));
                 }}
             };
