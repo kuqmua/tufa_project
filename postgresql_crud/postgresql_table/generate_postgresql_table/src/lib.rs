@@ -4796,36 +4796,24 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ){
                         #content_token_stream
                     }
-                    let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
-                    let url_cloned = url.clone();
-                    let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
-                    let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
-                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(
-                            1,
-                            &url_cloned,
-                            select_default_all_with_max_page_size_cloned,
-                            &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
-                            ident_create_default_cloned,
-                            &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
-                        ).await;
-                    }));
-                    let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
-                    let url_cloned = url.clone();
-                    let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
-                    let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
-                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                        generate_test_read_many_by_non_existent_primary_keys(
-                            2,
-                            &url_cloned,
-                            select_default_all_with_max_page_size_cloned,
-                            &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
-                            ident_create_default_cloned,
-                            &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
-                        ).await;
-                    }));
+                    let lengths = vec![1,2];
+                    for element in lengths {
+                        let table_test_read_many_by_non_existent_primary_keys_cloned2_cloned = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
+                        let url_cloned = url.clone();
+                        let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
+                        let ident_create_default_cloned = ident_create_default.clone();
+                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
+                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                            generate_test_read_many_by_non_existent_primary_keys(
+                                element,
+                                &url_cloned,
+                                select_default_all_with_max_page_size_cloned,
+                                &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
+                                ident_create_default_cloned,
+                                &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                            ).await;
+                        }));
+                    }
                 }}
             };
             let test_read_many_by_equal_to_created_primary_keys_token_stream = {
