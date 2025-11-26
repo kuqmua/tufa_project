@@ -4402,7 +4402,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .map(|#element_snake_case| #element_snake_case.to_vec())
                         .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                     {
-                        let current_table = table_create_many_cloned2.clone();
+                        let current_table = current_table.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4572,6 +4572,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }}
             });
             quote::quote!{{
+                let current_table = table_create_many_cloned2.clone();
                 #create_many_tests_token_stream
             }}
         };
@@ -4585,7 +4586,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
                 quote::quote! {{
                     for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]) {
-                        let current_table = table_create_one_cloned2.clone();
+                        let current_table = current_table.clone();
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -4671,6 +4672,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }}
             });
             quote::quote!{{
+                let current_table = table_create_one_cloned2.clone();
                 #create_one_tests_token_stream
             }}
         };
