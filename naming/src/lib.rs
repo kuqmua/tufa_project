@@ -707,7 +707,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["prepare", "postgresql", "table", "and", "extensions"],
     ["table"],
     ["routes"],
-    ["routes", "handle"]
+    ["routes", "handle"],
+    ["read", "only", "ids", "merged", "with", "create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "all", "elements", "equal"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
