@@ -4676,11 +4676,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let read_many_token_stream = {
             //todo additional read_many checks
-            //just to add some data to be sure it will not return from the test query
-            let add_create_one_default_and_delete_after_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            let add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{
                     let read_only_ids_from_try_create_one_default = super::#ident::try_create_one_handle(
-                        &url_cloned,
+                        &url,
                         super::#ident_create_one_parameters_upper_camel_case {
                             payload: ident_create_default
                         },
@@ -4688,7 +4687,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ).await.expect("error 71632985-ec25-4928-aa9e-1e224a7478c1");
                     #content_token_stream
                     let _ = super::#ident::try_delete_one_handle(
-                        &url_cloned,
+                        &url,
                         super::#ident_delete_one_parameters_upper_camel_case {
                             #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
                                 #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream
@@ -4697,7 +4696,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &current_table
                     ).await.expect("error cc3958f0-1a4a-4440-97c7-ca63611405c5");
                     if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
-                        &url_cloned,
+                        &url,
                         super::#ident_read_one_parameters_upper_camel_case {
                             #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                 #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream,
@@ -4733,7 +4732,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             };
             let test_read_many_by_non_existent_primary_keys_token_stream = {
-                let content_token_stream = add_create_one_default_and_delete_after_token_stream(&quote::quote!{
+                let content_token_stream = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream(&quote::quote!{
                     match super::#ident::try_read_many_handle(
                         &url,
                         super::#ident_read_many_parameters_upper_camel_case {
@@ -4786,14 +4785,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 });
                 quote::quote!{{
-                    let generate_test_read_many_by_non_existent_primary_keys = async |
+                    async fn generate_test_read_many_by_non_existent_primary_keys(
                         length: std::primitive::usize,
-                        // url: &std::primitive::str,
-                        // select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
-                        // current_table: &std::primitive::str,
-                        // ident_create_default: super::#ident_create_upper_camel_case,
-                        // no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
-                    |{
+                        url: &std::primitive::str,
+                        select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
+                        current_table: &std::primitive::str,
+                        ident_create_default: super::#ident_create_upper_camel_case,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
+                    ){
                         #content_token_stream
                     }
                     let lengths = vec![1,2];
@@ -4808,7 +4807,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 element,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
-                                &table_test_read_many_by_non_existent_primary_keys_cloned2_cloned,
+                                &current_table,
                                 ident_create_default_cloned,
                                 &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
                             ).await;
