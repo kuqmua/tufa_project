@@ -5672,14 +5672,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                 .into_iter()
                                 .map(|#element_snake_case| {
-                                    let current_table_cloned = current_table.clone();
+                                    let current_table = current_table.clone();
                                     let url_cloned = url.clone();
                                     futures::FutureExt::boxed(async move { super::#ident::try_create_many_handle(
                                         &url_cloned,
                                         super::#ident_create_many_parameters_upper_camel_case {
                                             payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
                                         },
-                                        &current_table_cloned
+                                        &current_table
                                     ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
                                 })
                                 .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>(),
@@ -6015,7 +6015,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                 .into_iter()
                                 .map(|#element_snake_case| {
-                                    let current_table_cloned = current_table.clone();
+                                    let current_table = current_table.clone();
                                     let url_cloned = url.clone();
                                     futures::FutureExt::boxed(async move {
                                         super::#ident::try_create_many_handle(
@@ -6023,7 +6023,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             super::#ident_create_many_parameters_upper_camel_case {
                                                 payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
                                             },
-                                            &current_table_cloned
+                                            &current_table
                                         ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
                                     })
                                 })
