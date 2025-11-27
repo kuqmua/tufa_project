@@ -3252,7 +3252,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         })])
                                     }
                                 },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                    let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &postgresql_json_type_pattern);
+                                    let current_ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&current_ident);
+                                    quote::quote!{
+                                        Some(vec![#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_snake_case.0.0 {
+                                            Some(#value_snake_case) => Some(
+                                                #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                    vec![
+                                                        #current_ident_where_element_upper_camel_case::LengthMoreThan(
+                                                            where_element_filters::PostgresqlJsonTypeWhereElementLengthMoreThan {
+                                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                                #value_snake_case: where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                                    std::primitive::i32::try_from(#value_snake_case.0.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
+                                                                ).expect("error aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
+                                                            }
+                                                        )
+                                                    ]
+                                                ).expect("error cb1c6535-8b63-4756-a7b3-cab5b21de2d7")
+                                            ),
+                                            None => None,
+                                        })])
+                                    }
+                                },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
                                 quote::quote!{todo!()}
