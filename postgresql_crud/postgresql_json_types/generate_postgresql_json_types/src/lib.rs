@@ -3205,7 +3205,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                    Some(vec![
+                                        #ident_where_element_upper_camel_case::LengthMoreThan(
+                                            where_element_filters::PostgresqlJsonTypeWhereElementLengthMoreThan {
+                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                value: where_element_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                    std::primitive::i32::try_from(#create_snake_case.0.0.len()).expect("error a152c651-16ea-4ef1-9e08-13e7fa1f651f")
+                                                ).expect("error c1256d93-235a-4e21-8d27-155175b259de"),
+                                            }
+                                        )
+                                    ])
+                                },
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
