@@ -5458,7 +5458,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                     quote::quote!{
                         if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
-                            read_only_ids_returned_from_create_one.#field_ident.clone().expect("error 492392fc-3d37-4b29-9b39-2b71dda920e4"),
                             ident_create.#field_ident.clone()
                         ) {
                             for #element_snake_case in #value_snake_case {

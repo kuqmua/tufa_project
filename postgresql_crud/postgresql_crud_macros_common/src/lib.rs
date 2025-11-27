@@ -1335,14 +1335,11 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementLengthMoreThanSnakeCase;
-    let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     quote::quote!{
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
-            #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_element_upper_camel_case>> {
             #content_token_stream

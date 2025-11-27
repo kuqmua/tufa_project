@@ -4661,13 +4661,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_token_stream = ||{
                     let generate_nullable_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
-                        match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
+                        match #create_snake_case.0 {
+                            Some(#create_snake_case) => match <
                                 #content_token_stream
                                 as
                                 #import_path::PostgresqlJsonTypeTestCases
                             >::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
-                                #read_only_ids_snake_case,
                                 #create_snake_case
                             ) {
                                 Some(#value_snake_case) => if #value_snake_case.is_empty() {
@@ -4702,9 +4701,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                                 None => None
                             },
-                            (Some(_), None) => panic!("error 6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
-                            (None, Some(_)) => panic!("error a2761cd2-27ff-4db0-ae81-948aa04573a6"),
-                            (None, None) => None,
+                            None => None,
                         }
                     };
                     match &postgresql_json_object_type_pattern {
@@ -4718,7 +4715,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                     quote::quote! {
                                         if let Some(#value_snake_case) = #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
-                                            #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                             #create_snake_case.#field_ident
                                         ) {
                                             for #element_snake_case in #value_snake_case.clone() {
@@ -4760,22 +4756,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                     quote::quote! {
                                         #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
-                                            #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                             #create_snake_case.#field_ident
                                         )
                                     }
                                 });
                                 quote::quote! {
                                     let mut #acc_snake_case = vec![];
-                                    for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case
-                                        .into_iter()
-                                        .zip(#create_snake_case.0.into_iter())
-                                        .collect::<std::vec::Vec<(#ident_with_id_standart_not_null_read_only_ids_upper_camel_case, #ident_with_id_standart_not_null_create_upper_camel_case)>>()
+                                    for (index, #create_snake_case) in #create_snake_case.0.into_iter()
                                         .into_iter()
                                         .enumerate()
                                     {
                                         #acc_snake_case.push(
-                                            #ident_where_element_upper_camel_case::DimensionOneEqual(
+                                            #ident_where_element_upper_camel_case::
+                                            
+                                            
+                                            
+                                            DimensionOneEqual(
                                                 #import_path::PostgresqlJsonTypeWhereElementDimensionOneEqual {
                                                     logical_operator: #import_path::LogicalOperator::And,
                                                     dimensions: #import_path::BoundedStdVecVec::try_from(
@@ -6276,7 +6272,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
                             &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
                             &quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
-                                #read_only_ids_snake_case,
                                 #create_snake_case
                             )},
                         )
@@ -6347,10 +6342,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         );
     }
     let generated: proc_macro2::TokenStream = quote::quote! {#(#postgresql_json_object_type_array)*};
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlJsonObjectType",
-    //     &generated,
-    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
-    // );
+    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        "GeneratePostgresqlJsonObjectType",
+        &generated,
+        &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    );
     generated.into()
 }
