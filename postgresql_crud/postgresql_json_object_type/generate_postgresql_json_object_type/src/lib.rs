@@ -194,6 +194,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let read_only_ids_merged_with_create_into_vec_where_element_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualUsingFieldsSnakeCase;
             let read_only_ids_merged_with_create_into_vec_where_element_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereElementEqualToJsonFieldSnakeCase;
             let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereElementLengthMoreThanSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -6130,7 +6131,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
                             &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
                             &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
-                            &quote::quote!{todo!()},
+                            &quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
+                                #read_only_ids_snake_case,
+                                #create_snake_case
+                            )},
                         )
                     },
                 )
