@@ -1436,6 +1436,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
                                         ident: array_dimension1_inner_element_ident_table_type_declaration_upper_camel_case.clone(),
                                     });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
@@ -1504,6 +1505,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray {
@@ -1593,6 +1595,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
@@ -1701,6 +1704,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
@@ -3196,7 +3200,36 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
-                    &quote::quote!{todo!()},
+                    &{
+                        use postgresql_crud_macros_common::NotNullOrNullable;
+                        match &postgresql_json_type_pattern {
+                            PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                            },
+                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
+                                quote::quote!{todo!()}
+                            },
+                            PostgresqlJsonTypePattern::ArrayDimension3 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                            } => {
+                                quote::quote!{todo!()}
+                            },
+                            PostgresqlJsonTypePattern::ArrayDimension4 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable,
+                            } => {
+                                quote::quote!{todo!()}
+                            }
+                        }
+                    }
                 )
             };
             let generated = quote::quote! {
