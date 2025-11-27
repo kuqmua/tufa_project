@@ -3196,6 +3196,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
                     &generate_array_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
+                    &quote::quote!{todo!()},
                 )
             };
             let generated = quote::quote! {
