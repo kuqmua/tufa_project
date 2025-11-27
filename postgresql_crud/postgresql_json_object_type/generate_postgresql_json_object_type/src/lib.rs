@@ -6078,7 +6078,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two),
                         &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three),
                         &generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four),
-                        &quote::quote!{todo!()},
+                        &match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                }
+                            },
+                            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    quote::quote!{
+                                        todo!()
+                                    }
+                                }
+                            }
+                        }
                     ),
                     {
                         let generate_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
