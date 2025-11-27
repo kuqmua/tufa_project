@@ -4634,6 +4634,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 });
                                 quote::quote! {
                                     let mut #acc_snake_case = vec![];
+                                    //todo add another loop
                                     for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case
                                         .into_iter()
                                         .zip(#create_snake_case.0.into_iter())
