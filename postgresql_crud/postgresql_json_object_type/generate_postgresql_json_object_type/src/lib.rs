@@ -4632,12 +4632,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #create_snake_case.#field_ident.clone()
                                         ) {
                                             for #element_snake_case in #value_snake_case.clone() {
-                                                #acc_snake_case.push(#ident_where_element_upper_camel_case::#element_field_ident_upper_camel_case(
+                                                let handle = #ident_where_element_upper_camel_case::#element_field_ident_upper_camel_case(
                                                     #import_path::PostgresqlTypeWhere::try_new(
                                                         #import_path::LogicalOperator::And,
                                                         vec![#element_snake_case]
                                                     ).expect("error 1f7ae335-461f-4215-8fb5-ee7cf2f32881")
-                                                ));
+                                                );
+                                                if !#acc_snake_case.contains(&handle) {
+                                                    #acc_snake_case.push(handle);
+                                                }
                                             }
                                             let whole = #ident_where_element_upper_camel_case::#element_field_ident_upper_camel_case(
                                                 #import_path::PostgresqlTypeWhere::try_new(
