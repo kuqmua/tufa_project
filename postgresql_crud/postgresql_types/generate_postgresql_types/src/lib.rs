@@ -6058,6 +6058,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &quote::quote!{None},
                     &quote::quote!{None},
                     &quote::quote!{None},
+                    &quote::quote!{todo!()},
                     &quote::quote!{None},
                 )
             };

@@ -219,7 +219,9 @@ pub trait PostgresqlTypeTestCases {
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
 
-    // todo LengthEqual
+    fn create_into_postgresql_json_type_option_vec_where_element_length_equal(
+        create: <Self::PostgresqlType as PostgresqlType>::Create
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
     fn create_into_postgresql_json_type_option_vec_where_element_length_more_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
@@ -299,6 +301,10 @@ pub trait PostgresqlJsonTypeTestCases {
     // In
     // RegularExpression
     // ContainsElementRegularExpression
+
+    fn create_into_postgresql_json_type_option_vec_where_element_length_equal(
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
+    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::WhereElement>>;
     fn create_into_postgresql_json_type_option_vec_where_element_length_more_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::WhereElement>>;

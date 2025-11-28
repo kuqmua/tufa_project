@@ -708,7 +708,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["table"],
     ["routes"],
     ["routes", "handle"],
-    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "length", "more", "than"]
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "length", "more", "than"],
+    ["create", "into", "postgresql", "json", "type", "option", "vec", "where", "element", "length", "equal"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
