@@ -4821,7 +4821,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                     quote::quote! {
                                         for (index, #create_snake_case) in #create_snake_case.0.clone().into_iter().into_iter().enumerate() {
-                                            if let Some(#value_snake_case) = #field_type_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_element_length_more_than_snake_case(
+                                            if let Some(#value_snake_case) = #field_type_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_element_length_equal_snake_case(
                                                 #create_snake_case.#field_ident
                                             ) {
                                                 for #element_snake_case in #value_snake_case.clone() {
