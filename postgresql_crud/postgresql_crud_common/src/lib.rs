@@ -403,6 +403,9 @@ impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWher
         }
         Ok(Self { logical_operator, value })
     }
+    pub fn get_logical_operator(&self) -> &postgresql_crud_common_and_macros_common::LogicalOperator {
+        &self.logical_operator
+    }
 }
 const _: () = {
     #[expect(clippy::useless_attribute)]
@@ -1070,7 +1073,7 @@ where
                 }
             }
         }
-        Ok(format!("{acc}"))
+        Ok(acc)
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,

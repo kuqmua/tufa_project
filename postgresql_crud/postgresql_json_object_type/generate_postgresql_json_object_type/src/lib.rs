@@ -1635,23 +1635,34 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         let element_field_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&field_ident);
                                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                                        quote::quote! {Self::#element_field_ident_upper_camel_case(#value_snake_case) => generate_element_query(#value_snake_case, &#field_ident_double_quotes_token_stream)}
+                                        quote::quote! {
+                                            Self::#element_field_ident_upper_camel_case(#value_snake_case) => generate_element_query(
+                                                #value_snake_case.get_logical_operator(),
+                                                #value_snake_case,
+                                                &#field_ident_double_quotes_token_stream
+                                            )
+                                        }
                                     });
                                     quote::quote! {
-                                        let mut generate_element_query = |value: &dyn #import_path::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
+                                        let mut generate_element_query = |
+                                            logical_operator: &#import_path::LogicalOperator,
+                                            #value_snake_case: &dyn #import_path::PostgresqlTypeWhereFilter<'_>,
+                                            field: &std::primitive::str
+                                        | -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
+                                            let logical_operator_query_part = logical_operator.to_query_part(is_need_to_add_logical_operator);
                                             let elem = "elem";
                                             let #value_snake_case = match #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
                                                 #value_snake_case,
                                                 #increment_snake_case,
                                                 &format!("{elem}->'{field}'"),
-                                                is_need_to_add_logical_operator
+                                                false
                                             ) {
                                                 Ok(#value_snake_case) => #value_snake_case,
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
                                                 }
                                             };
-                                            Ok(format!("exists (select 1 from jsonb_array_elements({column}) as {elem} where {value})"))
+                                            Ok(format!("{logical_operator_query_part}(exists (select 1 from jsonb_array_elements({column}) as {elem} where {value}))"))
                                         };
                                         match &self {
                                             Self::Equal(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::#query_part_snake_case(
