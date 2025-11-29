@@ -318,7 +318,7 @@ impl RegularExpressionCase {
 pub struct UnsignedPartOfStdPrimitiveI32(std::primitive::i32); //todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
-    UnsignedPartOfStdPrimitiveI32IsLessThanZero {
+    LessThanZero {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -327,7 +327,7 @@ pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
 impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI32 {
     type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
-        if value >= 0 { Ok(Self(value)) } else { Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero { value, code_occurence: error_occurence_lib::code_occurence!() }) }
+        if value >= 0 { Ok(Self(value)) } else { Err(Self::Error::LessThanZero { value, code_occurence: error_occurence_lib::code_occurence!() }) }
     }
 }
 const _: () = {
@@ -418,19 +418,35 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
-pub struct NotZeroUnsignedPartOfStdPrimitiveI32(std::primitive::i32); //todo why exactly i32? maybe different types for postgresql type and postgresql json type
+pub struct NotZeroUnsignedPartOfStdPrimitiveI32(UnsignedPartOfStdPrimitiveI32);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
-    NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::i32,
+    UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+        #[eo_error_occurence]
+        value: UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    IsZero {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 impl std::convert::TryFrom<std::primitive::i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
-        if value >= 1 { Ok(Self(value)) } else { Err(Self::Error::NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne { value, code_occurence: error_occurence_lib::code_occurence!() }) }
+        match UnsignedPartOfStdPrimitiveI32::try_from(value) {
+            Ok(value) => if value.0 == 0 {
+                Err(Self::Error::IsZero {
+                    code_occurence: error_occurence_lib::code_occurence!()
+                })
+            }
+            else {
+                Ok(Self(value))
+            },
+            Err(error) => Err(Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+                value: error,
+                code_occurence: error_occurence_lib::code_occurence!()
+            })
+        }
     }
 }
 const _: () = {
@@ -493,15 +509,15 @@ const _: () = {
 };
 impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
+        self.0.to_std_string_string()
     }
 }
 impl sqlx::Type<sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
+        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <UnsignedPartOfStdPrimitiveI32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
@@ -511,14 +527,15 @@ impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
 }
 impl NotZeroUnsignedPartOfStdPrimitiveI32 {
     pub const fn get(&self) -> std::primitive::i32 {
-        self.0
+        self.0.get()
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotZeroUnsignedPartOfStdPrimitiveI32 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(1)
+        Self(postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
+
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, schemars::JsonSchema)]
 pub struct Between<T>
