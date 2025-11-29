@@ -2276,7 +2276,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             for element in 0..=index_number_to_std_primitive_u8(&dimension_index_number_max) {
                                 let index_number_token_stream = format!("index_{element}").parse::<proc_macro2::TokenStream>().expect("error f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                                 content_token_stream.push(quote::quote! {
-                                    where_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                    postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
                                         std::primitive::i32::try_from(#index_number_token_stream).expect("error 5a1818e7-3865-4222-bf6b-31486bd721d2")
                                     ).expect("error ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
                                 });
@@ -2902,7 +2902,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ::LengthEqual(
                                             where_filters::PostgresqlJsonTypeWhereLengthEqual {
                                                 logical_operator: #import_path::LogicalOperator::Or,
-                                                #value_snake_case: where_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
                                                     std::primitive::i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
                                                 ).expect("error aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
                                             }
@@ -2950,7 +2950,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ::LengthGreaterThan(
                                             where_filters::PostgresqlJsonTypeWhereLengthGreaterThan {
                                                 logical_operator: #import_path::LogicalOperator::Or,
-                                                #value_snake_case: where_filters::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
                                                     std::primitive::i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
                                                 ).expect("error aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
                                             }

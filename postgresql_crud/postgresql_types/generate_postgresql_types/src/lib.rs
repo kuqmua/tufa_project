@@ -5668,7 +5668,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         logical_operator: #import_path::LogicalOperator::Or,
                                                         dimensions: where_filters::BoundedStdVecVec::try_from(
                                                             vec![
-                                                                where_filters::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
                                                                     std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
                                                                 ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
                                                             ]
