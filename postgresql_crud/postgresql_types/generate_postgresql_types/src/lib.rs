@@ -5955,7 +5955,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     quote::quote!{vec![#content_token_stream]}
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_vec_greater_than_test()
+                                    <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_vec_where_greater_than_test()
                                     .into_iter().
                                     map(|#element_snake_case|#import_path::PostgresqlTypeGreaterThanTest {
                                         variant: #element_snake_case.variant,
