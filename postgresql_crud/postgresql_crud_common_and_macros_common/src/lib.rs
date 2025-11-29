@@ -78,3 +78,28 @@ impl quote::ToTokens for GreaterThanVariant {
         }.to_tokens(tokens);
     }
 }
+
+#[derive(Debug)]
+pub enum LengthGreaterThanVariant {
+    LengthGreaterThan,
+    NotLengthGreaterThan,
+    EqualNotLengthGreaterThan,
+}
+impl LengthGreaterThanVariant {
+    pub fn logical_operator(&self) -> LogicalOperator {
+        match &self {
+            LengthGreaterThanVariant::LengthGreaterThan => LogicalOperator::Or,
+            LengthGreaterThanVariant::NotLengthGreaterThan => LogicalOperator::OrNot,
+            LengthGreaterThanVariant::EqualNotLengthGreaterThan => LogicalOperator::OrNot,
+        }
+    }
+}
+impl quote::ToTokens for LengthGreaterThanVariant {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            LengthGreaterThanVariant::LengthGreaterThan => quote::quote!{LengthGreaterThan},
+            LengthGreaterThanVariant::NotLengthGreaterThan => quote::quote!{NotLengthGreaterThan},
+            LengthGreaterThanVariant::EqualNotLengthGreaterThan => quote::quote!{EqualNotLengthGreaterThan},
+        }.to_tokens(tokens);
+    }
+}

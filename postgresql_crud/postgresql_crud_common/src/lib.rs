@@ -234,6 +234,13 @@ pub struct GreaterThanTest<T: PostgresqlType> {
     pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
 }
 
+#[derive(Debug)]
+pub struct LengthThanTest<T: PostgresqlType> {
+    pub variant: LengthGreaterThanVariant,
+    pub create: <T as PostgresqlType>::Create,
+    pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
+}
+
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: PostgresqlJsonType;
