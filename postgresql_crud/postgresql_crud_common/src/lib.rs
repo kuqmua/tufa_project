@@ -238,7 +238,7 @@ pub struct PostgresqlTypeGreaterThanTest<T: PostgresqlType> {
 pub struct PostgresqlJsonTypeLengthGreaterThanTest<T: PostgresqlJsonType> {
     pub variant: PostgresqlJsonTypeLengthGreaterThanVariant,
     pub create: <T as PostgresqlJsonType>::Create,
-    pub length_greater_than: std::primitive::i32,
+    pub length_greater_than: UnsignedPartOfStdPrimitiveI32,
 }
 
 #[cfg(feature = "test-utils")]
