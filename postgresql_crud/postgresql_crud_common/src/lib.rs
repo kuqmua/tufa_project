@@ -222,7 +222,7 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn postgresql_json_type_vec_where_length_greater_than_test() -> std::vec::Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>;
+    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> std::option::Option<std::vec::Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
@@ -320,7 +320,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn postgresql_json_type_vec_where_length_greater_than_test() -> std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>;
+    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> std::option::Option<std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
