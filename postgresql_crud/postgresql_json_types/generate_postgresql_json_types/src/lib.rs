@@ -2665,9 +2665,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![]},
                     }
                 };
-                // let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = ;
-                // let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = ;
-                // let read_only_ids_into_option_value_read_inner_token_stream = ;
+                let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
+                let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
+                let read_only_ids_into_option_value_read_inner_token_stream = {
+                    let content_token_stream = generate_import_path_value_initialization_token_stream(&if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
+                        quote::quote! {#value_snake_case.0.#value_snake_case}
+                    } else {
+                        quote::quote! {
+                            <#ident as #import_path::PostgresqlJsonType>::into_inner(
+                                <
+                                    <#ident as #import_path::PostgresqlJsonType>::Read
+                                    as
+                                    #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                                >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                            )
+                        }
+                    });
+                    quote::quote! {Some(#content_token_stream)}
+                };
                 // let update_to_read_only_ids_token_stream = ;
                 // let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = ;
                 // let previous_read_merged_with_option_update_into_read_token_stream = ;
@@ -2692,24 +2707,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident,
                     &option_vec_create_token_stream,
                     &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
-                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
-                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
-                    &{
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
-                            quote::quote! {#value_snake_case.0.#value_snake_case}
-                        } else {
-                            quote::quote! {
-                                <#ident as #import_path::PostgresqlJsonType>::into_inner(
-                                    <
-                                        <#ident as #import_path::PostgresqlJsonType>::Read
-                                        as
-                                        #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                )
-                            }
-                        });
-                        quote::quote! {Some(#value_initialization_token_stream)}
-                    },
+                    &read_inner_into_read_with_new_or_try_new_unwraped_token_stream,
+                    &read_inner_into_update_with_new_or_try_new_unwraped_token_stream,
+                    &read_only_ids_into_option_value_read_inner_token_stream,
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
