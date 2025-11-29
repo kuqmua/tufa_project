@@ -222,6 +222,7 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn postgresql_json_type_vec_where_length_greater_than_test() -> std::vec::Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
@@ -234,6 +235,13 @@ pub struct PostgresqlTypeGreaterThanTest<T: PostgresqlType> {
     pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
 }
 
+
+#[derive(Debug)]
+pub struct PostgresqlTypeLengthGreaterThanTest<T: PostgresqlType> {
+    pub variant: PostgresqlJsonTypeLengthGreaterThanVariant,
+    pub create: <T as PostgresqlType>::Create,
+    pub length_greater_than: UnsignedPartOfStdPrimitiveI32,
+}
 #[derive(Debug)]
 pub struct PostgresqlJsonTypeLengthGreaterThanTest<T: PostgresqlJsonType> {
     pub variant: PostgresqlJsonTypeLengthGreaterThanVariant,
@@ -312,8 +320,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    // PostgresqlJsonTypeLengthGreaterThanTest
-    // fn postgresql_json_type_vec_where_length_greater_than_test() -> std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>;
+    fn postgresql_json_type_vec_where_length_greater_than_test() -> std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;

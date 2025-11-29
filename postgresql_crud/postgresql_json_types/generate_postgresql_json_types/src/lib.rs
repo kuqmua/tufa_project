@@ -2937,6 +2937,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                         }
                     },
+                    &quote::quote!{todo!()},
                     &{
                         let generate_token_stream = ||{
                             let content_token_stream = {
