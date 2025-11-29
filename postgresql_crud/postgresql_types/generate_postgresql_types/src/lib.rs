@@ -5259,6 +5259,365 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ),
                     }
                 };
+                let option_vec_create_token_stream = {
+                    let generate_some_acc_content_token_stream = |
+                        not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                        ident_token_stream: &dyn quote::ToTokens,
+                        additonal_content_token_stream: &dyn quote::ToTokens,
+                    | {
+                        let (
+                            new_or_try_new_content_token_stream,
+                            maybe_acc_push_none_token_stream
+                        ) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (
+                                quote::quote!{try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
+                                proc_macro2::TokenStream::new()
+                            ),
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (
+                                quote::quote!{new(vec![#element_snake_case.0.into()])},
+                                proc_macro2::TokenStream::new()
+                            ),
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
+                                quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
+                                quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
+                            ),
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
+                                quote::quote!{new(Some(#element_snake_case.0.into()))},
+                                quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
+                            ),
+                        };
+                        let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
+                        quote::quote! {Some({
+                            let mut #acc_snake_case = vec![];
+                            for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]) {
+                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
+                            }
+                            #maybe_acc_push_none_token_stream
+                            #additonal_content_token_stream
+                            #acc_snake_case
+                        })}
+                    };
+                    match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
+                                CanBePrimaryKey::True => quote::quote!{None},
+                                CanBePrimaryKey::False => {
+                                    let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
+                                    let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                        quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
+                                    }
+                                    else {
+                                        quote::quote!{new(#element_snake_case)}
+                                    };
+                                    quote::quote!{Some({
+                                        #content_token_stream.into_iter().map(|#element_snake_case|
+                                            #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
+                                        ).collect()
+                                    })}
+                                },
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_some_acc_content_token_stream(
+                                &not_null_or_nullable,
+                                &generate_ident_token_stream(
+                                    &postgresql_type,
+                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    &PostgresqlTypePattern::Standart,
+                                ),
+                                &proc_macro2::TokenStream::new()
+                            )
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_some_acc_content_token_stream(
+                            &not_null_or_nullable,
+                            &generate_ident_token_stream(
+                                &postgresql_type,
+                                &match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                },
+                                &match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
+                                    },
+                                },
+                            ),
+                            &match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_as_postgresql_type_test_cases_token_stream,
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgresql_type_test_cases_token_stream,
+                                    };
+                                    let (
+                                        first_token_stream,
+                                        second_token_stream,
+                                        third_token_stream
+                                    ) = {
+                                        let generate_new_or_try_new_token_stream = |content_token_stream: &dyn quote::ToTokens|if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                            quote::quote!{try_new(#content_token_stream).expect("error 75ad9383-b257-4a0b-bd8d-c931950bf745")}
+                                        }
+                                        else {
+                                            quote::quote!{new(#content_token_stream)}
+                                        };
+                                        let generate_vec_value_clone_zero_into_number_token_stream = |value: std::primitive::usize|{
+                                            let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().unwrap();
+                                            quote::quote!{vec![#value_snake_case.clone().0.into(); #number_token_stream]}
+                                        };
+                                        (
+                                            generate_new_or_try_new_token_stream(&quote::quote!{
+                                                #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![])
+                                                .into_iter()
+                                                .map(|#element_snake_case|#element_snake_case.0.into())
+                                                .collect()
+                                            }),
+                                            generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(2)),
+                                            generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(1000))
+                                        )
+                                    };
+                                    quote::quote!{
+                                        #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
+                                        if let Some(#value_snake_case) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]).get(0) {
+                                            #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
+                                            #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
+                                        }
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                            }
+                        )
+                    }
+                };
+                let read_only_ids_to_two_dimensional_vec_read_inner_token_stream = match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::True);
+                            quote::quote! {vec![{#content_token_stream}]}
+                        }
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            let mut #acc_snake_case = vec![];
+                            for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case) {
+                                for element1 in element0 {
+                                    #acc_snake_case.push(vec![Some(element1)]);
+                                }
+                            }
+                            #acc_snake_case.push(vec![None]);
+                            #acc_snake_case
+                        }
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote! {
+                                    let mut #acc_snake_case = vec![];
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                    let has_len_greater_than_one = {
+                                        let mut has_len_greater_than_one = false;
+                                        for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if #element_snake_case.len() > 1 {
+                                                has_len_greater_than_one = true;
+                                                break;
+                                            }
+                                        }
+                                        has_len_greater_than_one
+                                    };
+                                    for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
+                                        #acc_snake_case.push(vec![#element_snake_case]);
+                                    }
+                                    if let Some(#value_snake_case) = option_additional {
+                                        if has_len_greater_than_one {
+                                            #acc_snake_case.push(#value_snake_case.0);
+                                        }
+                                        if !has_len_greater_than_one {
+                                            #acc_snake_case.push(#value_snake_case.1);
+                                        }
+                                    }
+                                    #acc_snake_case
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote! {
+                                    let mut #acc_snake_case = vec![];
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                    let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
+                                    #acc_snake_case.push({
+                                        let mut #acc_snake_case = vec![];
+                                        for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
+                                            for element1 in element0 {
+                                                #acc_snake_case.push(element1);
+                                            }
+                                        }
+                                        vec![#acc_snake_case]
+                                    });
+                                    if let Some(#value_snake_case) = option_additional {
+                                        if has_len_greater_than_one {
+                                            #acc_snake_case.push(#value_snake_case.0);
+                                        }
+                                        if !has_len_greater_than_one {
+                                            #acc_snake_case.push(#value_snake_case.1);
+                                        }
+                                    }
+                                    #acc_snake_case
+                                }
+                            },
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let content_token_stream = match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_array_not_null_as_postgresql_type_test_cases_token_stream,
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream,
+                            };
+                            quote::quote! {
+                                let mut #acc_snake_case = vec![];
+                                let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                                let option_additional = {
+                                    let mut option_additional = None;
+                                    for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                        if option_additional.is_some() {
+                                            break;
+                                        }
+                                        for element1 in element0 {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element2 in element1 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((
+                                                        vec![Some(vec![element2.clone()])],
+                                                        vec![Some(vec![element2.clone(), element2.clone()])]
+                                                    ));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    option_additional
+                                };
+                                let has_len_greater_than_one = {
+                                    let mut has_len_greater_than_one = false;
+                                    for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                        for element1 in element0 {
+                                            if element1.len() > 1 {
+                                                has_len_greater_than_one = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    has_len_greater_than_one
+                                };
+                                #acc_snake_case.push(vec![Some({
+                                    let mut #acc_snake_case = vec![];
+                                    for element0 in read_only_ids_to_two_dimensional_vec_read_inner.clone() {
+                                        for element1 in element0 {
+                                            for element2 in element1 {
+                                                #acc_snake_case.push(element2);
+                                            }
+                                        }
+                                    }
+                                    #acc_snake_case
+                                })]);
+                                #acc_snake_case.push(vec![None]);
+                                if let Some(#value_snake_case) = option_additional {
+                                    if has_len_greater_than_one {
+                                        #acc_snake_case.push(#value_snake_case.0);
+                                    }
+                                    if !has_len_greater_than_one {
+                                        #acc_snake_case.push(#value_snake_case.1);
+                                    }
+                                }
+                                #acc_snake_case
+                            }
+                        },
+                    }
+                };
+                let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
+                let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
+                let update_to_read_only_ids_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                    quote::quote! {
+                        #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0.clone()))//todo its not correct. must be only for primary key but it for all types what van be primary key
+                    }
+                } else {
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{None});
+                    quote::quote! {
+                        #import_path_non_primary_key_postgresql_type_read_only_ids_token_stream(#value_initialization_token_stream)
+                    }
+                };
+                let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = {
+                    //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
+                        let content_token_stream: &dyn quote::ToTokens = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                            &quote::quote!{#value_snake_case.0.clone()}
+                        } else {
+                            &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        };
+                        quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)}
+                    });
+                    quote::quote!{Some(#value_initialization_token_stream)}
+                };
+                let previous_read_merged_with_option_update_into_read_token_stream = quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::normalize(match #option_update_snake_case {
+                    Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.0),
+                    None => #read_snake_case
+                })};
+                let read_only_ids_merged_with_create_into_read_token_stream = {
+                    let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                        quote::quote! {#read_only_ids_snake_case.0}
+                    } else {
+                        quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
+                    };
+                    quote::quote!{
+                        #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)
+                    }
+                };
+                let read_only_ids_merged_with_create_into_option_value_read_token_stream = {
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
+                        <#ident as #import_path::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
+                            #read_only_ids_snake_case,
+                            #create_snake_case
+                        )
+                    });
+                    quote::quote! {Some(#value_initialization_token_stream)}
+                };
+                let read_only_ids_merged_with_create_into_table_type_declaration_token_stream = {
+                    let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                        quote::quote! {#read_only_ids_snake_case.0.0}
+                    } else {
+                        quote::quote!{#create_snake_case.0}
+                    };
+                    quote::quote!{#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
+                };
                 //todo maybe it into function (not in proc macro)
                 let read_only_ids_merged_with_create_into_where_equal_token_stream = {
                     let content_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
@@ -5280,794 +5639,456 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {
                     vec![#read_only_ids_merged_with_create_into_where_equal_token_stream]
                 };
+                let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = quote::quote!{None};
+                let create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream = match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => quote::quote!{None},
+                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                        let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_upper_camel_case,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_upper_camel_case,
+                        };
+                        let some_token_stream = {
+                            let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote!{#create_snake_case.0.0},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{#value_snake_case.0},
+                            };
+                            quote::quote! {
+                                Some({
+                                    let mut #acc_snake_case = vec![];
+                                    for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
+                                        let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
+                                        #acc_snake_case.push(
+                                            #ident_where_upper_camel_case::DimensionOneEqual(
+                                                where_filters::PostgresqlTypeWhereDimensionOneEqual {
+                                                    logical_operator: #import_path::LogicalOperator::Or,
+                                                    dimensions: where_filters::BoundedStdVecVec::try_from(
+                                                        vec![
+                                                            postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
+                                                                std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
+                                                            ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
+                                                        ]
+                                                    ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
+                                                    #value_snake_case: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(#element_snake_case),
+                                                }
+                                            )
+                                        );
+                                    }
+                                    #acc_snake_case
+                                })
+                            }
+                        };
+                        match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => some_token_stream,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                match #create_snake_case.0.0 {
+                                    Some(#value_snake_case) => #some_token_stream,
+                                    None => None
+                                }
+                            },
+                        }
+                    }
+                };
+                let postgresql_type_option_vec_where_greater_than_test_token_stream = {
+                    let greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::GreaterThan;
+                    let not_greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::NotGreaterThan;
+                    let equal_not_greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::EqualNotGreaterThan;
+                    let generate_greater_than_test_token_stream = |
+                        greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
+                        create_content_token_stream: &dyn quote::ToTokens,
+                        table_type_declaration_content_token_stream: &dyn quote::ToTokens,
+                    |quote::quote!{
+                        #import_path::PostgresqlTypeGreaterThanTest {
+                            variant: #import_path::PostgresqlTypeGreaterThanVariant::#greater_than_variant_token_stream,
+                            create: #ident_as_postgresql_type_token_stream::Create::#create_content_token_stream,
+                            greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::#table_type_declaration_content_token_stream,
+                        }
+                    };
+                    let generate_greater_than_test_new_new_token_stream = |
+                        greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
+                        create_token_stream: &dyn quote::ToTokens,
+                        greater_than_token_stream: &dyn quote::ToTokens,
+                    |generate_greater_than_test_token_stream(
+                        &greater_than_variant_token_stream,
+                        &quote::quote!{new(#create_token_stream)},
+                        &quote::quote!{new(#greater_than_token_stream)}
+                    );
+                    let generate_greater_than_test_try_new_try_new_token_stream = |
+                        greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
+                        create_token_stream: &dyn quote::ToTokens,
+                        greater_than_token_stream: &dyn quote::ToTokens,
+                    |generate_greater_than_test_token_stream(
+                        &greater_than_variant_token_stream,
+                        &quote::quote!{try_new(#create_token_stream).expect("error 8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
+                        &quote::quote!{try_new(#greater_than_token_stream).expect("error c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
+                    );
+                    let generate_greater_than_test_new_new_vec_token_stream = |
+                        less_token_stream: &dyn quote::ToTokens,
+                        less_with_more_token_stream: &dyn quote::ToTokens,
+                        zero_token_stream: &dyn quote::ToTokens,
+                        one_token_stream: &dyn quote::ToTokens,
+                        more_token_stream: &dyn quote::ToTokens,
+                        more_with_less_token_stream: &dyn quote::ToTokens,
+                    |{
+                        let greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &greater_than,
+                            &less_with_more_token_stream,
+                            &less_token_stream
+                        );
+                        let greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &greater_than,
+                            &one_token_stream,
+                            &zero_token_stream
+                        );
+                        let greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &greater_than,
+                            &more_token_stream,
+                            &more_with_less_token_stream
+                        );
+                        let not_greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &not_greater_than,
+                            &less_token_stream,
+                            &less_with_more_token_stream
+                        );
+                        let not_greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &not_greater_than,
+                            &zero_token_stream,
+                            &one_token_stream
+                        );
+                        let not_greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &not_greater_than,
+                            &more_with_less_token_stream,
+                            &more_token_stream
+                        );
+                        let equal_not_greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &equal_not_greater_than,
+                            &less_token_stream,
+                            &less_token_stream
+                        );
+                        let equal_not_greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &equal_not_greater_than,
+                            &zero_token_stream,
+                            &zero_token_stream
+                        );
+                        let equal_not_greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
+                            &equal_not_greater_than,
+                            &more_token_stream,
+                            &more_token_stream
+                        );
+                        quote::quote!{
+                            #greater_than_less_token_stream,
+                            #greater_than_zero_token_stream,
+                            #greater_than_more_token_stream,
+                            #not_greater_than_less_token_stream,
+                            #not_greater_than_zero_token_stream,
+                            #not_greater_than_more_token_stream,
+                            #equal_not_greater_than_less_token_stream,
+                            #equal_not_greater_than_zero_token_stream,
+                            #equal_not_greater_than_more_token_stream
+                        }
+                    };
+                    let generate_greater_than_test_try_new_try_new_vec_token_stream = |
+                        less_token_stream: &dyn quote::ToTokens,
+                        less_with_more_token_stream: &dyn quote::ToTokens,
+                        zero_token_stream: &dyn quote::ToTokens,
+                        one_token_stream: &dyn quote::ToTokens,
+                        more_token_stream: &dyn quote::ToTokens,
+                        more_with_less_token_stream: &dyn quote::ToTokens,
+                    |{
+                        let greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &greater_than,
+                            &less_with_more_token_stream,
+                            &less_token_stream
+                        );
+                        let greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &greater_than,
+                            &one_token_stream,
+                            &zero_token_stream
+                        );
+                        let greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &greater_than,
+                            &more_token_stream,
+                            &more_with_less_token_stream
+                        );
+                        let not_greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &not_greater_than,
+                            &less_token_stream,
+                            &less_with_more_token_stream
+                        );
+                        let not_greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &not_greater_than,
+                            &zero_token_stream,
+                            &one_token_stream
+                        );
+                        let not_greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &not_greater_than,
+                            &more_with_less_token_stream,
+                            &more_token_stream
+                        );
+                        let equal_not_greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &equal_not_greater_than,
+                            &less_token_stream,
+                            &less_token_stream
+                        );
+                        let equal_not_greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &equal_not_greater_than,
+                            &zero_token_stream,
+                            &zero_token_stream
+                        );
+                        let equal_not_greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
+                            &equal_not_greater_than,
+                            &more_token_stream,
+                            &more_token_stream
+                        );
+                        quote::quote!{
+                            #greater_than_less_token_stream,
+                            #greater_than_zero_token_stream,
+                            #greater_than_more_token_stream,
+                            #not_greater_than_less_token_stream,
+                            #not_greater_than_zero_token_stream,
+                            #not_greater_than_more_token_stream,
+                            #equal_not_greater_than_less_token_stream,
+                            #equal_not_greater_than_zero_token_stream,
+                            #equal_not_greater_than_more_token_stream
+                        }
+                    };
+                    match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let wrap_into_some_vec_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{Some(vec![#content_token_stream])};
+                                match &postgresql_type {
+                                    PostgresqlType::StdPrimitiveI16AsInt2 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
+                                        &quote::quote!{#std_primitive_i16_token_stream::MIN},
+                                        &quote::quote!{#std_primitive_i16_token_stream::MIN + 1},
+                                        &quote::quote!{0},
+                                        &quote::quote!{1},
+                                        &quote::quote!{#std_primitive_i16_token_stream::MAX},
+                                        &quote::quote!{#std_primitive_i16_token_stream::MAX - 1}
+                                    )),
+                                    PostgresqlType::StdPrimitiveI32AsInt4 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
+                                        &quote::quote!{#std_primitive_i32_token_stream::MIN},
+                                        &quote::quote!{#std_primitive_i32_token_stream::MIN + 1},
+                                        &quote::quote!{0},
+                                        &quote::quote!{1},
+                                        &quote::quote!{#std_primitive_i32_token_stream::MAX},
+                                        &quote::quote!{#std_primitive_i32_token_stream::MAX - 1}
+                                    )),
+                                    PostgresqlType::StdPrimitiveI64AsInt8 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
+                                        &quote::quote!{#std_primitive_i64_token_stream::MIN},
+                                        &quote::quote!{#std_primitive_i64_token_stream::MIN + 1},
+                                        &quote::quote!{0},
+                                        &quote::quote!{1},
+                                        &quote::quote!{#std_primitive_i64_token_stream::MAX},
+                                        &quote::quote!{#std_primitive_i64_token_stream::MAX - 1}
+                                    )),
+                                    PostgresqlType::StdPrimitiveF32AsFloat4 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
+                                        &quote::quote!{#std_primitive_f32_token_stream::MIN},
+                                        &quote::quote!{#std_primitive_f32_token_stream::MIN.next_up()},
+                                        &quote::quote!{0.0},
+                                        &quote::quote!{1.0},
+                                        &quote::quote!{#std_primitive_f32_token_stream::MAX},
+                                        &quote::quote!{#std_primitive_f32_token_stream::MAX.next_down()}
+                                    )),
+                                    PostgresqlType::StdPrimitiveF64AsFloat8 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
+                                        //todo rust f64 != postgresql float8
+                                        &quote::quote!{-2.0},
+                                        &quote::quote!{-2.0 + 1.0},
+                                        &quote::quote!{0.0},
+                                        &quote::quote!{1.0},
+                                        &quote::quote!{2.0},
+                                        &quote::quote!{2.0 - 1.0}
+                                    )),
+                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
+                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
+                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
+                                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => none_token_stream.clone(),
+                                    PostgresqlType::StdPrimitiveBoolAsBool => none_token_stream.clone(),
+                                    PostgresqlType::StdStringStringAsText => none_token_stream.clone(),
+                                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap()},
+                                    )),
+                                    PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).unwrap()},
+                                    )),
+                                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).unwrap()},//todo not sure about this values. maybe reuse
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).unwrap()},
+                                    )),
+                                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap())},
+                                    )),
+                                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => none_token_stream.clone(),
+                                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => none_token_stream.clone(),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => none_token_stream.clone(),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => none_token_stream.clone(),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => none_token_stream.clone(),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => none_token_stream.clone(),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_token_stream.clone(),
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                match <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test() {
+                                    Some(#value_snake_case) => Some(
+                                        #value_snake_case
+                                        .into_iter()
+                                        .map(|#element_snake_case|#import_path::PostgresqlTypeGreaterThanTest {
+                                            variant: #element_snake_case.variant,
+                                            create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.create.0))),
+                                            greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.greater_than.0))),
+                                        }).collect()
+                                    ),
+                                    None => None
+                                }
+                            }
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 {..} => none_token_stream.clone(),
+                    }
+                };
+                let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => {
+                        enum IsNeedToImplPostgresqlTypeGreaterThanTest {
+                            TrueFromReadOnlyIds,
+                            TrueFromCreate,
+                            False
+                        }
+                        let is_need_to_impl_greater_than_test = match &postgresql_type {
+                            PostgresqlType::StdPrimitiveI16AsInt2 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::StdPrimitiveI32AsInt4 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::StdPrimitiveI64AsInt8 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::StdPrimitiveF32AsFloat4 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::StdPrimitiveF64AsFloat8 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
+                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
+                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => IsNeedToImplPostgresqlTypeGreaterThanTest::False,//todo why no support?
+                            PostgresqlType::StdPrimitiveBoolAsBool => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::StdStringStringAsText => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => IsNeedToImplPostgresqlTypeGreaterThanTest::False,//todo why no support?
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
+                        };
+                        enum ReadOnlyIdsCreate {
+                            ReadOnlyIds,
+                            Create,
+                        }
+                        let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
+                            match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    let content_token_stream = match &read_only_ids_create {
+                                        ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case(#read_only_ids_snake_case.0.0)},
+                                        ReadOnlyIdsCreate::Create => quote::quote!{table_type_declaration},
+                                    };
+                                    quote::quote!{
+                                        Some(
+                                            #ident_where_upper_camel_case::GreaterThan(
+                                                where_filters::PostgresqlTypeWhereGreaterThan {
+                                                    logical_operator: greater_than_variant.logical_operator(),
+                                                    #value_snake_case: #content_token_stream,
+                                                }
+                                            )
+                                        )
+                                    }
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let content_token_stream = match &read_only_ids_create {
+                                        ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0},
+                                        ReadOnlyIdsCreate::Create => quote::quote!{#table_type_declaration_snake_case.0.0},
+                                    };
+                                    quote::quote!{
+                                        match #content_token_stream {
+                                            Some(#value_snake_case) => Some(
+                                                #ident_where_upper_camel_case::GreaterThan(
+                                                    where_filters::PostgresqlTypeWhereGreaterThan {
+                                                        logical_operator: greater_than_variant.logical_operator(),
+                                                        #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
+                                                    }
+                                                )
+                                            ),
+                                            None => None
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        match &is_need_to_impl_greater_than_test {
+                            IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&ReadOnlyIdsCreate::ReadOnlyIds),
+                            IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate => generate_some_token_stream(&ReadOnlyIdsCreate::Create),
+                            IsNeedToImplPostgresqlTypeGreaterThanTest::False => quote::quote!{None},
+                        }
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 {..} => quote::quote!{None},
+                };
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream = quote::quote!{None};
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream = quote::quote!{None};
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream = quote::quote!{None};
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = quote::quote!{None};
+                let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = quote::quote!{None};
+                let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote!{todo!()};
+                let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote!{None};
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &import_path,
                     &ident_inner_type_token_stream,
                     &ident,
-                    &{
-                        let generate_some_acc_content_token_stream = |
-                            not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
-                            ident_token_stream: &dyn quote::ToTokens,
-                            additonal_content_token_stream: &dyn quote::ToTokens,
-                        | {
-                            let (
-                                new_or_try_new_content_token_stream,
-                                maybe_acc_push_none_token_stream
-                            ) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (
-                                    quote::quote!{try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")},
-                                    proc_macro2::TokenStream::new()
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (
-                                    quote::quote!{new(vec![#element_snake_case.0.into()])},
-                                    proc_macro2::TokenStream::new()
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
-                                    quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
-                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
-                                ),
-                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
-                                    quote::quote!{new(Some(#element_snake_case.0.into()))},
-                                    quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
-                                ),
-                            };
-                            let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
-                            quote::quote! {Some({
-                                let mut #acc_snake_case = vec![];
-                                for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]) {
-                                    #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
-                                }
-                                #maybe_acc_push_none_token_stream
-                                #additonal_content_token_stream
-                                #acc_snake_case
-                            })}
-                        };
-                        match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
-                                    CanBePrimaryKey::True => quote::quote!{None},
-                                    CanBePrimaryKey::False => {
-                                        let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
-                                        let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                            quote::quote!{try_new(#element_snake_case).expect("error 941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                                        }
-                                        else {
-                                            quote::quote!{new(#element_snake_case)}
-                                        };
-                                        quote::quote!{Some({
-                                            #content_token_stream.into_iter().map(|#element_snake_case|
-                                                #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
-                                            ).collect()
-                                        })}
-                                    },
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_some_acc_content_token_stream(
-                                    &not_null_or_nullable,
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart,
-                                    ),
-                                    &proc_macro2::TokenStream::new()
-                                )
-                            },
-                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_some_acc_content_token_stream(
-                                &not_null_or_nullable,
-                                &generate_ident_token_stream(
-                                    &postgresql_type,
-                                    &match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    },
-                                    &match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
-                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
-                                        },
-                                    },
-                                ),
-                                &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        let content_token_stream: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
-                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_as_postgresql_type_test_cases_token_stream,
-                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgresql_type_test_cases_token_stream,
-                                        };
-                                        let (
-                                            first_token_stream,
-                                            second_token_stream,
-                                            third_token_stream
-                                        ) = {
-                                            let generate_new_or_try_new_token_stream = |content_token_stream: &dyn quote::ToTokens|if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                                quote::quote!{try_new(#content_token_stream).expect("error 75ad9383-b257-4a0b-bd8d-c931950bf745")}
-                                            }
-                                            else {
-                                                quote::quote!{new(#content_token_stream)}
-                                            };
-                                            let generate_vec_value_clone_zero_into_number_token_stream = |value: std::primitive::usize|{
-                                                let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().unwrap();
-                                                quote::quote!{vec![#value_snake_case.clone().0.into(); #number_token_stream]}
-                                            };
-                                            (
-                                                generate_new_or_try_new_token_stream(&quote::quote!{
-                                                    #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![])
-                                                    .into_iter()
-                                                    .map(|#element_snake_case|#element_snake_case.0.into())
-                                                    .collect()
-                                                }),
-                                                generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(2)),
-                                                generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(1000))
-                                            )
-                                        };
-                                        quote::quote!{
-                                            #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                            if let Some(#value_snake_case) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]).get(0) {
-                                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
-                                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
-                                            }
-                                        }
-                                    },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
-                                }
-                            )
-                        }
-                    },
-                    &match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::True);
-                                quote::quote! {vec![{#content_token_stream}]}
-                            }
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                let mut #acc_snake_case = vec![];
-                                for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case) {
-                                    for element1 in element0 {
-                                        #acc_snake_case.push(vec![Some(element1)]);
-                                    }
-                                }
-                                #acc_snake_case.push(vec![None]);
-                                #acc_snake_case
-                            }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    quote::quote! {
-                                        let mut #acc_snake_case = vec![];
-                                        let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_greater_than_one = {
-                                            let mut has_len_greater_than_one = false;
-                                            for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                                if #element_snake_case.len() > 1 {
-                                                    has_len_greater_than_one = true;
-                                                    break;
-                                                }
-                                            }
-                                            has_len_greater_than_one
-                                        };
-                                        for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
-                                            #acc_snake_case.push(vec![#element_snake_case]);
-                                        }
-                                        if let Some(#value_snake_case) = option_additional {
-                                            if has_len_greater_than_one {
-                                                #acc_snake_case.push(#value_snake_case.0);
-                                            }
-                                            if !has_len_greater_than_one {
-                                                #acc_snake_case.push(#value_snake_case.1);
-                                            }
-                                        }
-                                        #acc_snake_case
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    quote::quote! {
-                                        let mut #acc_snake_case = vec![];
-                                        let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
-                                        let option_additional = {
-                                            let mut option_additional = None;
-                                            for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element1 in element0 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                            option_additional
-                                        };
-                                        let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
-                                        #acc_snake_case.push({
-                                            let mut #acc_snake_case = vec![];
-                                            for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
-                                                for element1 in element0 {
-                                                    #acc_snake_case.push(element1);
-                                                }
-                                            }
-                                            vec![#acc_snake_case]
-                                        });
-                                        if let Some(#value_snake_case) = option_additional {
-                                            if has_len_greater_than_one {
-                                                #acc_snake_case.push(#value_snake_case.0);
-                                            }
-                                            if !has_len_greater_than_one {
-                                                #acc_snake_case.push(#value_snake_case.1);
-                                            }
-                                        }
-                                        #acc_snake_case
-                                    }
-                                },
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let content_token_stream = match &dimension1_not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_array_not_null_as_postgresql_type_test_cases_token_stream,
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream,
-                                };
-                                quote::quote! {
-                                    let mut #acc_snake_case = vec![];
-                                    let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
-                                    let option_additional = {
-                                        let mut option_additional = None;
-                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                            if option_additional.is_some() {
-                                                break;
-                                            }
-                                            for element1 in element0 {
-                                                if option_additional.is_some() {
-                                                    break;
-                                                }
-                                                for element2 in element1 {
-                                                    if option_additional.is_none() {
-                                                        option_additional = Some((
-                                                            vec![Some(vec![element2.clone()])],
-                                                            vec![Some(vec![element2.clone(), element2.clone()])]
-                                                        ));
-                                                    }
-                                                    else {
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        option_additional
-                                    };
-                                    let has_len_greater_than_one = {
-                                        let mut has_len_greater_than_one = false;
-                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                            for element1 in element0 {
-                                                if element1.len() > 1 {
-                                                    has_len_greater_than_one = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        has_len_greater_than_one
-                                    };
-                                    #acc_snake_case.push(vec![Some({
-                                        let mut #acc_snake_case = vec![];
-                                        for element0 in read_only_ids_to_two_dimensional_vec_read_inner.clone() {
-                                            for element1 in element0 {
-                                                for element2 in element1 {
-                                                    #acc_snake_case.push(element2);
-                                                }
-                                            }
-                                        }
-                                        #acc_snake_case
-                                    })]);
-                                    #acc_snake_case.push(vec![None]);
-                                    if let Some(#value_snake_case) = option_additional {
-                                        if has_len_greater_than_one {
-                                            #acc_snake_case.push(#value_snake_case.0);
-                                        }
-                                        if !has_len_greater_than_one {
-                                            #acc_snake_case.push(#value_snake_case.1);
-                                        }
-                                    }
-                                    #acc_snake_case
-                                }
-                            },
-                        }
-                    },
-                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
-                    &generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
-                    &if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                        quote::quote! {
-                            #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0.clone()))//todo its not correct. must be only for primary key but it for all types what van be primary key
-                        }
-                    } else {
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{None});
-                        quote::quote! {
-                            #import_path_non_primary_key_postgresql_type_read_only_ids_token_stream(#value_initialization_token_stream)
-                        }
-                    },
-                    &{
-                        //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
-                            let content_token_stream: &dyn quote::ToTokens = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                                &quote::quote!{#value_snake_case.0.clone()}
-                            } else {
-                                &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                            };
-                            quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)}
-                        });
-                        quote::quote!{Some(#value_initialization_token_stream)}
-                    },
-                    &quote::quote!{#self_postgresql_type_as_postgresql_type_token_stream::normalize(match #option_update_snake_case {
-                        Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.0),
-                        None => #read_snake_case
-                    })},
-                    &{
-                        let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                            quote::quote! {#read_only_ids_snake_case.0}
-                        } else {
-                            quote::quote!{#ident_read_upper_camel_case(#create_snake_case.0)}
-                        };
-                        quote::quote!{
-                            #self_postgresql_type_as_postgresql_type_token_stream::normalize(#content_token_stream)
-                        }
-                    },
-                    &{
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
-                            <#ident as #import_path::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
-                                #read_only_ids_snake_case,
-                                #create_snake_case
-                            )
-                        });
-                        quote::quote! {Some(#value_initialization_token_stream)}
-                    },
-                    &{
-                        let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                            quote::quote! {#read_only_ids_snake_case.0.0}
-                        } else {
-                            quote::quote!{#create_snake_case.0}
-                        };
-                        quote::quote!{#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
-                    },
+                    &option_vec_create_token_stream,
+                    &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
+                    &read_inner_into_read_with_new_or_try_new_unwraped_token_stream,
+                    &read_inner_into_update_with_new_or_try_new_unwraped_token_stream,
+                    &update_to_read_only_ids_token_stream,
+                    &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    &previous_read_merged_with_option_update_into_read_token_stream,
+                    &read_only_ids_merged_with_create_into_read_token_stream,
+                    &read_only_ids_merged_with_create_into_option_value_read_token_stream,
+                    &read_only_ids_merged_with_create_into_table_type_declaration_token_stream,
                     &read_only_ids_merged_with_create_into_where_equal_token_stream,
                     &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream,
-                    &quote::quote!{None},
-                    &match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => quote::quote!{None},
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                            let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_upper_camel_case,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_table_type_declaration_upper_camel_case,
-                            };
-                            let some_token_stream = {
-                                let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote!{#create_snake_case.0.0},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{#value_snake_case.0},
-                                };
-                                quote::quote! {
-                                    Some({
-                                        let mut #acc_snake_case = vec![];
-                                        for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
-                                            let index = i.checked_add(1).expect("error a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
-                                            #acc_snake_case.push(
-                                                #ident_where_upper_camel_case::DimensionOneEqual(
-                                                    where_filters::PostgresqlTypeWhereDimensionOneEqual {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
-                                                        dimensions: where_filters::BoundedStdVecVec::try_from(
-                                                            vec![
-                                                                postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                    std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
-                                                                ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
-                                                            ]
-                                                        ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),
-                                                        #value_snake_case: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(#element_snake_case),
-                                                    }
-                                                )
-                                            );
-                                        }
-                                        #acc_snake_case
-                                    })
-                                }
-                            };
-                            match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => some_token_stream,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    match #create_snake_case.0.0 {
-                                        Some(#value_snake_case) => #some_token_stream,
-                                        None => None
-                                    }
-                                },
-                            }
-                        }
-                    },
-                    &{
-                        let greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::GreaterThan;
-                        let not_greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::NotGreaterThan;
-                        let equal_not_greater_than = postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant::EqualNotGreaterThan;
-                        let generate_greater_than_test_token_stream = |
-                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
-                            create_content_token_stream: &dyn quote::ToTokens,
-                            table_type_declaration_content_token_stream: &dyn quote::ToTokens,
-                        |quote::quote!{
-                            #import_path::PostgresqlTypeGreaterThanTest {
-                                variant: #import_path::PostgresqlTypeGreaterThanVariant::#greater_than_variant_token_stream,
-                                create: #ident_as_postgresql_type_token_stream::Create::#create_content_token_stream,
-                                greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::#table_type_declaration_content_token_stream,
-                            }
-                        };
-                        let generate_greater_than_test_new_new_token_stream = |
-                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
-                            create_token_stream: &dyn quote::ToTokens,
-                            greater_than_token_stream: &dyn quote::ToTokens,
-                        |generate_greater_than_test_token_stream(
-                            &greater_than_variant_token_stream,
-                            &quote::quote!{new(#create_token_stream)},
-                            &quote::quote!{new(#greater_than_token_stream)}
-                        );
-                        let generate_greater_than_test_try_new_try_new_token_stream = |
-                            greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
-                            create_token_stream: &dyn quote::ToTokens,
-                            greater_than_token_stream: &dyn quote::ToTokens,
-                        |generate_greater_than_test_token_stream(
-                            &greater_than_variant_token_stream,
-                            &quote::quote!{try_new(#create_token_stream).expect("error 8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
-                            &quote::quote!{try_new(#greater_than_token_stream).expect("error c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
-                        );
-                        let generate_greater_than_test_new_new_vec_token_stream = |
-                            less_token_stream: &dyn quote::ToTokens,
-                            less_with_more_token_stream: &dyn quote::ToTokens,
-                            zero_token_stream: &dyn quote::ToTokens,
-                            one_token_stream: &dyn quote::ToTokens,
-                            more_token_stream: &dyn quote::ToTokens,
-                            more_with_less_token_stream: &dyn quote::ToTokens,
-                        |{
-                            let greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &greater_than,
-                                &less_with_more_token_stream,
-                                &less_token_stream
-                            );
-                            let greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &greater_than,
-                                &one_token_stream,
-                                &zero_token_stream
-                            );
-                            let greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &greater_than,
-                                &more_token_stream,
-                                &more_with_less_token_stream
-                            );
-                            let not_greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &not_greater_than,
-                                &less_token_stream,
-                                &less_with_more_token_stream
-                            );
-                            let not_greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &not_greater_than,
-                                &zero_token_stream,
-                                &one_token_stream
-                            );
-                            let not_greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &not_greater_than,
-                                &more_with_less_token_stream,
-                                &more_token_stream
-                            );
-                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &equal_not_greater_than,
-                                &less_token_stream,
-                                &less_token_stream
-                            );
-                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &equal_not_greater_than,
-                                &zero_token_stream,
-                                &zero_token_stream
-                            );
-                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(
-                                &equal_not_greater_than,
-                                &more_token_stream,
-                                &more_token_stream
-                            );
-                            quote::quote!{
-                                #greater_than_less_token_stream,
-                                #greater_than_zero_token_stream,
-                                #greater_than_more_token_stream,
-                                #not_greater_than_less_token_stream,
-                                #not_greater_than_zero_token_stream,
-                                #not_greater_than_more_token_stream,
-                                #equal_not_greater_than_less_token_stream,
-                                #equal_not_greater_than_zero_token_stream,
-                                #equal_not_greater_than_more_token_stream
-                            }
-                        };
-                        let generate_greater_than_test_try_new_try_new_vec_token_stream = |
-                            less_token_stream: &dyn quote::ToTokens,
-                            less_with_more_token_stream: &dyn quote::ToTokens,
-                            zero_token_stream: &dyn quote::ToTokens,
-                            one_token_stream: &dyn quote::ToTokens,
-                            more_token_stream: &dyn quote::ToTokens,
-                            more_with_less_token_stream: &dyn quote::ToTokens,
-                        |{
-                            let greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &greater_than,
-                                &less_with_more_token_stream,
-                                &less_token_stream
-                            );
-                            let greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &greater_than,
-                                &one_token_stream,
-                                &zero_token_stream
-                            );
-                            let greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &greater_than,
-                                &more_token_stream,
-                                &more_with_less_token_stream
-                            );
-                            let not_greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &not_greater_than,
-                                &less_token_stream,
-                                &less_with_more_token_stream
-                            );
-                            let not_greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &not_greater_than,
-                                &zero_token_stream,
-                                &one_token_stream
-                            );
-                            let not_greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &not_greater_than,
-                                &more_with_less_token_stream,
-                                &more_token_stream
-                            );
-                            let equal_not_greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &equal_not_greater_than,
-                                &less_token_stream,
-                                &less_token_stream
-                            );
-                            let equal_not_greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &equal_not_greater_than,
-                                &zero_token_stream,
-                                &zero_token_stream
-                            );
-                            let equal_not_greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(
-                                &equal_not_greater_than,
-                                &more_token_stream,
-                                &more_token_stream
-                            );
-                            quote::quote!{
-                                #greater_than_less_token_stream,
-                                #greater_than_zero_token_stream,
-                                #greater_than_more_token_stream,
-                                #not_greater_than_less_token_stream,
-                                #not_greater_than_zero_token_stream,
-                                #not_greater_than_more_token_stream,
-                                #equal_not_greater_than_less_token_stream,
-                                #equal_not_greater_than_zero_token_stream,
-                                #equal_not_greater_than_more_token_stream
-                            }
-                        };
-                        match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                    let wrap_into_some_vec_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{Some(vec![#content_token_stream])};
-                                    match &postgresql_type {
-                                        PostgresqlType::StdPrimitiveI16AsInt2 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
-                                            &quote::quote!{#std_primitive_i16_token_stream::MIN},
-                                            &quote::quote!{#std_primitive_i16_token_stream::MIN + 1},
-                                            &quote::quote!{0},
-                                            &quote::quote!{1},
-                                            &quote::quote!{#std_primitive_i16_token_stream::MAX},
-                                            &quote::quote!{#std_primitive_i16_token_stream::MAX - 1}
-                                        )),
-                                        PostgresqlType::StdPrimitiveI32AsInt4 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
-                                            &quote::quote!{#std_primitive_i32_token_stream::MIN},
-                                            &quote::quote!{#std_primitive_i32_token_stream::MIN + 1},
-                                            &quote::quote!{0},
-                                            &quote::quote!{1},
-                                            &quote::quote!{#std_primitive_i32_token_stream::MAX},
-                                            &quote::quote!{#std_primitive_i32_token_stream::MAX - 1}
-                                        )),
-                                        PostgresqlType::StdPrimitiveI64AsInt8 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
-                                            &quote::quote!{#std_primitive_i64_token_stream::MIN},
-                                            &quote::quote!{#std_primitive_i64_token_stream::MIN + 1},
-                                            &quote::quote!{0},
-                                            &quote::quote!{1},
-                                            &quote::quote!{#std_primitive_i64_token_stream::MAX},
-                                            &quote::quote!{#std_primitive_i64_token_stream::MAX - 1}
-                                        )),
-                                        PostgresqlType::StdPrimitiveF32AsFloat4 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
-                                            &quote::quote!{#std_primitive_f32_token_stream::MIN},
-                                            &quote::quote!{#std_primitive_f32_token_stream::MIN.next_up()},
-                                            &quote::quote!{0.0},
-                                            &quote::quote!{1.0},
-                                            &quote::quote!{#std_primitive_f32_token_stream::MAX},
-                                            &quote::quote!{#std_primitive_f32_token_stream::MAX.next_down()}
-                                        )),
-                                        PostgresqlType::StdPrimitiveF64AsFloat8 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
-                                            //todo rust f64 != postgresql float8
-                                            &quote::quote!{-2.0},
-                                            &quote::quote!{-2.0 + 1.0},
-                                            &quote::quote!{0.0},
-                                            &quote::quote!{1.0},
-                                            &quote::quote!{2.0},
-                                            &quote::quote!{2.0 - 1.0}
-                                        )),
-                                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
-                                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
-                                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => none_token_stream.clone(),//todo diffrent test logic for autogenerated?
-                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => none_token_stream.clone(),
-                                        PostgresqlType::StdPrimitiveBoolAsBool => none_token_stream.clone(),
-                                        PostgresqlType::StdStringStringAsText => none_token_stream.clone(),
-                                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap()},
-                                        )),
-                                        PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).unwrap()},
-                                            &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).unwrap()},
-                                        )),
-                                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).unwrap()},//todo not sure about this values. maybe reuse
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).unwrap()},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).unwrap()},
-                                        )),
-                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap())},
-                                            &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap())},
-                                        )),
-                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => none_token_stream.clone(),
-                                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => none_token_stream.clone(),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => none_token_stream.clone(),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => none_token_stream.clone(),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => none_token_stream.clone(),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => none_token_stream.clone(),
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_token_stream.clone(),
-                                    }
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    match <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test() {
-                                        Some(#value_snake_case) => Some(
-                                            #value_snake_case
-                                            .into_iter()
-                                            .map(|#element_snake_case|#import_path::PostgresqlTypeGreaterThanTest {
-                                                variant: #element_snake_case.variant,
-                                                create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.create.0))),
-                                                greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(#element_snake_case.greater_than.0))),
-                                            }).collect()
-                                        ),
-                                        None => None
-                                    }
-                                }
-                            },
-                            PostgresqlTypePattern::ArrayDimension1 {..} => none_token_stream.clone(),
-                        }
-                    },
-                    &match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => {
-                            enum IsNeedToImplPostgresqlTypeGreaterThanTest {
-                                TrueFromReadOnlyIds,
-                                TrueFromCreate,
-                                False
-                            }
-                            let is_need_to_impl_greater_than_test = match &postgresql_type {
-                                PostgresqlType::StdPrimitiveI16AsInt2 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::StdPrimitiveI32AsInt4 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::StdPrimitiveI64AsInt8 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::StdPrimitiveF32AsFloat4 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::StdPrimitiveF64AsFloat8 => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
-                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
-                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds,
-                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => IsNeedToImplPostgresqlTypeGreaterThanTest::False,//todo why no support?
-                                PostgresqlType::StdPrimitiveBoolAsBool => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::StdStringStringAsText => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::SqlxTypesTimeTimeAsTime => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate,
-                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => IsNeedToImplPostgresqlTypeGreaterThanTest::False,//todo why no support?
-                                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
-                            };
-                            enum ReadOnlyIdsCreate {
-                                ReadOnlyIds,
-                                Create,
-                            }
-                            let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
-                                match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                        let content_token_stream = match &read_only_ids_create {
-                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case(#read_only_ids_snake_case.0.0)},
-                                            ReadOnlyIdsCreate::Create => quote::quote!{table_type_declaration},
-                                        };
-                                        quote::quote!{
-                                            Some(
-                                                #ident_where_upper_camel_case::GreaterThan(
-                                                    where_filters::PostgresqlTypeWhereGreaterThan {
-                                                        logical_operator: greater_than_variant.logical_operator(),
-                                                        #value_snake_case: #content_token_stream,
-                                                    }
-                                                )
-                                            )
-                                        }
-                                    },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        let content_token_stream = match &read_only_ids_create {
-                                            ReadOnlyIdsCreate::ReadOnlyIds => quote::quote!{#read_only_ids_snake_case.0},
-                                            ReadOnlyIdsCreate::Create => quote::quote!{#table_type_declaration_snake_case.0.0},
-                                        };
-                                        quote::quote!{
-                                            match #content_token_stream {
-                                                Some(#value_snake_case) => Some(
-                                                    #ident_where_upper_camel_case::GreaterThan(
-                                                        where_filters::PostgresqlTypeWhereGreaterThan {
-                                                            logical_operator: greater_than_variant.logical_operator(),
-                                                            #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
-                                                        }
-                                                    )
-                                                ),
-                                                None => None
-                                            }
-                                        }
-                                    }
-                                }
-                            };
-                            match &is_need_to_impl_greater_than_test {
-                                IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&ReadOnlyIdsCreate::ReadOnlyIds),
-                                IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate => generate_some_token_stream(&ReadOnlyIdsCreate::Create),
-                                IsNeedToImplPostgresqlTypeGreaterThanTest::False => quote::quote!{None},
-                            }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 {..} => quote::quote!{None},
-                    },
-                    &quote::quote!{None},
-                    &quote::quote!{None},
-                    &quote::quote!{None},
-                    &quote::quote!{None},
-                    &quote::quote!{None},
-                    &quote::quote!{todo!()},
-                    &quote::quote!{None},
+                    &read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream,
+                    &create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream,
+                    &postgresql_type_option_vec_where_greater_than_test_token_stream,
+                    &read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream,
+                    &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream,
+                    &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream,
+                    &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream,
+                    &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream,
+                    &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
+                    &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
+                    &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
                 )
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
