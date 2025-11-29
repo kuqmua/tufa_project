@@ -1,5 +1,5 @@
 #[proc_macro]
-pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -341,7 +341,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
-            let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
+            let ident = naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase::from_display(&filter);
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -847,7 +847,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             // match &filter {
             //     postgresql_crud_macros_common::PostgresqlTypeFilter::In {ident: _} => {
             //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            //             "GeneratePostgresqlTypeWhereElementFilter",
+            //             "GeneratePostgresqlTypeWhereFilter",
             //             &generated,
             //             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
             //         );
@@ -866,7 +866,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let postgresql_json_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
-            let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
+            let ident = naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&filter);
             let pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream = quote::quote! {
                 pub #value_snake_case: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
             };
@@ -1320,7 +1320,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             // match &filter {
             //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {ident: _} => {
             //         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            //         //     "GeneratePostgresqlTypeWhereElementFilter",
+            //         //     "GeneratePostgresqlTypeWhereFilter",
             //         //     &generated,
             //         //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
             //         // );
@@ -1338,7 +1338,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         };
         // if let postgresql_crud_macros_common::PostgresqlTypeFilter:: = &filter {
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //         "GeneratePostgresqlTypeWhereElementFilter",
+        //         "GeneratePostgresqlTypeWhereFilter",
         //         &generated,
         //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
         //     );
@@ -1350,7 +1350,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         #postgresql_json_type_token_stream
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlTypeWhereElementFilters",
+    //     "GeneratePostgresqlTypeWhereFilters",
     //     &generated,
     //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     // );

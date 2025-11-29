@@ -47,6 +47,6 @@ pub use postgresql_types::*;
 
 pub use postgresql_json_types::*;
 
-pub use where_element_filters::*;
+pub use where_filters::*;
 
 pub use postgresql_crud_common::*; //todo

@@ -14,7 +14,7 @@ postgresql_table = {path = "./postgresql_table"}
 postgresql_json_object_type = {path = "./postgresql_json_object_type"}
 postgresql_json_types = {path = "./postgresql_json_types"}
 postgresql_types = {path = "./postgresql_types"}
-where_element_filters = {path = "./where_element_filters"}
+where_filters = {path = "./where_filters"}
 route_validators = {path = "../route_validators"}
 
 [lints]
@@ -27,5 +27,5 @@ test-utils = [
     "postgresql_json_object_type/test-utils",
     "postgresql_json_types/test-utils",
     "postgresql_types/test-utils",
-    "where_element_filters/test-utils"
+    "where_filters/test-utils"
 ]

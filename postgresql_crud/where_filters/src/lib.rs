@@ -1,4 +1,4 @@
-generate_where_element_filters::generate_where_element_filters!();
+generate_where_filters::generate_where_filters!();
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum EncodeFormat {

@@ -107,8 +107,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneRangeLength => &naming::DimensionOneRangeLengthUpperCamelCase,
         }
     }
-    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
-        let value = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
+    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
+        let value = naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
@@ -316,8 +316,8 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourOverlapsWithArray { ident: _ } => &naming::DimensionFourOverlapsWithArrayUpperCamelCase,
         }
     }
-    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
-        let value = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
+    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
+        let value = naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
@@ -398,6 +398,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
 
 pub trait PostgresqlFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
-    fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
+    fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream>;
 }

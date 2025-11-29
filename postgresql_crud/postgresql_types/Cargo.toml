@@ -10,7 +10,7 @@ sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_
 serde = {version = "=1.0", features = ["derive"]}
 chrono = {version = "=0.4", features = ["serde"]}
 error_occurence_lib = {path = "../../error_occurence_lib"}
-where_element_filters = {path = "../where_element_filters"}
+where_filters = {path = "../where_filters"}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 thiserror = {version = "=1.0.48"}
 schemars = {version = "=0.8.22"}

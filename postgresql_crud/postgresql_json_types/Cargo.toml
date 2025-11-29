@@ -13,7 +13,7 @@ schemars = {version = "=0.8.22"}
 thiserror = {version = "=1.0.48"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
-where_element_filters = {path = "../where_element_filters"}
+where_filters = {path = "../where_filters"}
 
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]
