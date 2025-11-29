@@ -129,7 +129,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         #   }
         # },
         # {
-        #   "LengthMoreThan": {
+        #   "LengthGreaterThan": {
         #     "logical_operator": "Or",
         #     "value": 0
         #   }
@@ -789,7 +789,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #             }
     #           },
     #           {
-    #             "LengthMoreThan": {
+    #             "LengthGreaterThan": {
     #               "logical_operator": "Or",
     #               "value": 0
     #             }
@@ -990,7 +990,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               }
     #             },
     #             {
-    #               "LengthMoreThan": {
+    #               "LengthGreaterThan": {
     #                 "logical_operator": "Or",
     #                 "value": 0
     #               }

@@ -2426,36 +2426,36 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let end_upper_camel_case = naming::EndUpperCamelCase;
                 let invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case = naming::InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase;
                 let nanosecond_precision_is_not_supported_upper_camel_case = naming::NanosecondPrecisionIsNotSupportedUpperCamelCase;
-                let included_start_more_than_included_end_upper_camel_case = naming::IncludedStartMoreThanIncludedEndUpperCamelCase;
-                let included_start_more_than_excluded_end_upper_camel_case = naming::IncludedStartMoreThanExcludedEndUpperCamelCase;
-                let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
-                let excluded_start_more_than_excluded_end_upper_camel_case = naming::ExcludedStartMoreThanExcludedEndUpperCamelCase;
+                let included_start_greater_than_included_end_upper_camel_case = naming::IncludedStartGreaterThanIncludedEndUpperCamelCase;
+                let included_start_greater_than_excluded_end_upper_camel_case = naming::IncludedStartGreaterThanExcludedEndUpperCamelCase;
+                let excluded_start_greater_than_included_end_upper_camel_case = naming::ExcludedStartGreaterThanIncludedEndUpperCamelCase;
+                let excluded_start_greater_than_excluded_end_upper_camel_case = naming::ExcludedStartGreaterThanExcludedEndUpperCamelCase;
                 let included_end_cannot_be_max_upper_camel_case = naming::IncludedEndCannotBeMaxUpperCamelCase;
                 let generate_int_range_type_error_variants_token_stream = |int_range_type: &IntRangeType| {
                     let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(int_range_type);
                     quote::quote! {
-                        #included_start_more_than_included_end_upper_camel_case {
+                        #included_start_greater_than_included_end_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
                             #start_snake_case: #range_inner_type_token_stream,
                             #[eo_to_std_string_string_serialize_deserialize]
                             #end_snake_case: #range_inner_type_token_stream,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        #included_start_more_than_excluded_end_upper_camel_case {
+                        #included_start_greater_than_excluded_end_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
                             #start_snake_case: #range_inner_type_token_stream,
                             #[eo_to_std_string_string_serialize_deserialize]
                             #end_snake_case: #range_inner_type_token_stream,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        #excluded_start_more_than_included_end_upper_camel_case {
+                        #excluded_start_greater_than_included_end_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
                             #start_snake_case: #range_inner_type_token_stream,
                             #[eo_to_std_string_string_serialize_deserialize]
                             #end_snake_case: #range_inner_type_token_stream,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
-                        #excluded_start_more_than_excluded_end_upper_camel_case {
+                        #excluded_start_greater_than_excluded_end_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
                             #start_snake_case: #range_inner_type_token_stream,
                             #[eo_to_std_string_string_serialize_deserialize]
@@ -2697,7 +2697,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 let (#start_snake_case, #end_snake_case) = match (#value_snake_case.#start_snake_case, #value_snake_case.#end_snake_case) {
                                                     (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
                                                         if #start_snake_case > #end_snake_case {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
+                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_greater_than_included_end_upper_camel_case {
                                                                 #start_snake_case,
                                                                 #end_snake_case,
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -2713,7 +2713,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                     (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
                                                         if #start_snake_case > #end_snake_case {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
+                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_greater_than_excluded_end_upper_camel_case {
                                                                 #start_snake_case,
                                                                 #end_snake_case,
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -2724,7 +2724,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded),
                                                     (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
                                                         if #start_snake_case > #end_snake_case {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
+                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_greater_than_included_end_upper_camel_case {
                                                                 #start_snake_case,
                                                                 #end_snake_case,
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -2740,7 +2740,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                     (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
                                                         if #start_snake_case > #end_snake_case {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
+                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_greater_than_excluded_end_upper_camel_case {
                                                                 #start_snake_case,
                                                                 #end_snake_case,
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -3100,38 +3100,38 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             let try_new_convert_pg_range_int_content_token_stream = generate_self_match_try_new_token_stream(
                                                 &quote::quote! {sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }},
                                                 &quote::quote! {
-                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_greater_than_included_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
-                                                        #start_snake_case,
-                                                        #end_snake_case,
-                                                        code_occurence,
-                                                    }),
-                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
-                                                        #start_snake_case,
-                                                        #end_snake_case,
-                                                        code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_greater_than_included_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
                                                     }),
-                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_greater_than_excluded_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_greater_than_excluded_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
                                                     }),
-                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_greater_than_included_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
-                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_greater_than_included_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_greater_than_excluded_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_greater_than_excluded_end_upper_camel_case {
                                                         #start_snake_case,
                                                         #end_snake_case,
                                                         code_occurence,
@@ -4037,7 +4037,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual);
-                                vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan);
+                                vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthGreaterThan);
                                 vec
                             };
                             let common_array_dimension1_postgresql_type_number_filters = {
@@ -5450,24 +5450,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             option_additional
                                         };
-                                        let has_len_more_than_one = {
-                                            let mut has_len_more_than_one = false;
+                                        let has_len_greater_than_one = {
+                                            let mut has_len_greater_than_one = false;
                                             for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
                                                 if #element_snake_case.len() > 1 {
-                                                    has_len_more_than_one = true;
+                                                    has_len_greater_than_one = true;
                                                     break;
                                                 }
                                             }
-                                            has_len_more_than_one
+                                            has_len_greater_than_one
                                         };
                                         for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
                                             #acc_snake_case.push(vec![#element_snake_case]);
                                         }
                                         if let Some(#value_snake_case) = option_additional {
-                                            if has_len_more_than_one {
+                                            if has_len_greater_than_one {
                                                 #acc_snake_case.push(#value_snake_case.0);
                                             }
-                                            if !has_len_more_than_one {
+                                            if !has_len_greater_than_one {
                                                 #acc_snake_case.push(#value_snake_case.1);
                                             }
                                         }
@@ -5495,7 +5495,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             option_additional
                                         };
-                                        let has_len_more_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
+                                        let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
                                         #acc_snake_case.push({
                                             let mut #acc_snake_case = vec![];
                                             for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
@@ -5506,10 +5506,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             vec![#acc_snake_case]
                                         });
                                         if let Some(#value_snake_case) = option_additional {
-                                            if has_len_more_than_one {
+                                            if has_len_greater_than_one {
                                                 #acc_snake_case.push(#value_snake_case.0);
                                             }
-                                            if !has_len_more_than_one {
+                                            if !has_len_greater_than_one {
                                                 #acc_snake_case.push(#value_snake_case.1);
                                             }
                                         }
@@ -5550,17 +5550,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                         option_additional
                                     };
-                                    let has_len_more_than_one = {
-                                        let mut has_len_more_than_one = false;
+                                    let has_len_greater_than_one = {
+                                        let mut has_len_greater_than_one = false;
                                         for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
                                             for element1 in element0 {
                                                 if element1.len() > 1 {
-                                                    has_len_more_than_one = true;
+                                                    has_len_greater_than_one = true;
                                                     break;
                                                 }
                                             }
                                         }
-                                        has_len_more_than_one
+                                        has_len_greater_than_one
                                     };
                                     #acc_snake_case.push(vec![Some({
                                         let mut #acc_snake_case = vec![];
@@ -5575,10 +5575,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     })]);
                                     #acc_snake_case.push(vec![None]);
                                     if let Some(#value_snake_case) = option_additional {
-                                        if has_len_more_than_one {
+                                        if has_len_greater_than_one {
                                             #acc_snake_case.push(#value_snake_case.0);
                                         }
-                                        if !has_len_more_than_one {
+                                        if !has_len_greater_than_one {
                                             #acc_snake_case.push(#value_snake_case.1);
                                         }
                                     }
