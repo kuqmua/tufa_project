@@ -196,7 +196,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let prepare_extensions_snake_case = naming::PrepareExtensionsSnakeCase;
     let prepare_postgresql_table_snake_case = naming::PreparePostgresqlTableSnakeCase;
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
-    let vec_greater_than_test_snake_case = naming::VecGreaterThanTestSnakeCase;
+    let postgresql_type_vec_greater_than_test_snake_case = naming::PostgresqlTypeVecGreaterThanTestSnakeCase;
     let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
     let routes_snake_case = naming::RoutesSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -5091,8 +5091,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #acc_snake_case
                 }
             };
-            let generate_vec_greater_than_test_call_token_stream = |_: &syn::Ident, field_type: &syn::Type|quote::quote!{
-                <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#vec_greater_than_test_snake_case()
+            let generate_postgresql_type_vec_greater_than_test_call_token_stream = |_: &syn::Ident, field_type: &syn::Type|quote::quote!{
+                <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#postgresql_type_vec_greater_than_test_snake_case()
             };
             let generate_read_test_token_stream = |
                 test_name: &std::primitive::str,
@@ -5346,7 +5346,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_token_stream = generate_read_test_token_stream(
                 &table_read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than_name,
-                &generate_vec_greater_than_test_call_token_stream,
+                &generate_postgresql_type_vec_greater_than_test_call_token_stream,
                 &generate_ident_create_content_element_create_token_stream,
                 &|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;

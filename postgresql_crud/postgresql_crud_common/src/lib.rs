@@ -196,9 +196,9 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_type_option_vec_where_element_dimension_one_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create
     ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::WhereElement>>;
-    fn vec_greater_than_test() -> std::vec::Vec<GreaterThanTest<Self::PostgresqlType>>;
+    fn postgresql_type_vec_greater_than_test() -> std::vec::Vec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>;
     fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_element_greater_than(
-        greater_than_variant: GreaterThanVariant,
+        greater_than_variant: PostgresqlTypeGreaterThanVariant,
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         table_type_declaration: <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration,
     ) -> std::option::Option<<Self::PostgresqlType as PostgresqlType>::WhereElement>;
@@ -228,17 +228,17 @@ pub trait PostgresqlTypeTestCases {
 }
 
 #[derive(Debug)]
-pub struct GreaterThanTest<T: PostgresqlType> {
-    pub variant: GreaterThanVariant,
+pub struct PostgresqlTypeGreaterThanTest<T: PostgresqlType> {
+    pub variant: PostgresqlTypeGreaterThanVariant,
     pub create: <T as PostgresqlType>::Create,
     pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
 }
 
 #[derive(Debug)]
-pub struct LengthThanTest<T: PostgresqlType> {
-    pub variant: LengthGreaterThanVariant,
-    pub create: <T as PostgresqlType>::Create,
-    pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
+pub struct PostgresqlJsonTypeLengthGreaterThanTest<T: PostgresqlJsonType> {
+    pub variant: PostgresqlJsonTypeLengthGreaterThanVariant,
+    pub create: <T as PostgresqlJsonType>::Create,
+    pub length_greater_than: <T as PostgresqlJsonType>::TableTypeDeclaration
 }
 
 #[cfg(feature = "test-utils")]
