@@ -1400,7 +1400,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream: &dyn quote::ToTokens,
     create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream: &dyn quote::ToTokens,
-    postgresql_type_vec_where_greater_than_test_token_stream: &dyn quote::ToTokens,
+    postgresql_type_option_vec_where_greater_than_test_token_stream: &dyn quote::ToTokens,
     read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream: &dyn quote::ToTokens,
     create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream: &dyn quote::ToTokens,
     create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream: &dyn quote::ToTokens,
@@ -1490,7 +1490,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
     );
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
-    let postgresql_type_vec_where_greater_than_test_snake_case = naming::PostgresqlTypeVecWhereGreaterThanTestSnakeCase;
+    let postgresql_type_option_vec_where_greater_than_test_snake_case = naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
         &self_postgresql_type_as_postgresql_type_token_stream,
@@ -1544,8 +1544,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             ) -> std::option::Option<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
                 #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
             }
-            fn #postgresql_type_vec_where_greater_than_test_snake_case() -> std::vec::Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>> {
-                #postgresql_type_vec_where_greater_than_test_token_stream
+            fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> std::option::Option<std::vec::Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
+                #postgresql_type_option_vec_where_greater_than_test_token_stream
             }
             fn #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case(
                 greater_than_variant: #import_path::PostgresqlTypeGreaterThanVariant,
