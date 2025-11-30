@@ -42,7 +42,7 @@ fn check_specific_dependency_version_usage() {
     let forbidden_dependency_logic_symbols = ['>', '<', '*', '~', '^'];
     let toml_keys = ["dependencies", "dev-dependencies", "build-dependencies"];
     let mut is_logic_executed = true;
-    let unspecified_dependencies = toml_table_workspace_members_map_vec.iter().fold(Vec::new(), |mut acc, member| {
+    let unspecified_dependencies = toml_table_workspace_members_map_vec.iter().fold(std::vec::Vec::new(), |mut acc, member| {
         let path_to_cargo_toml_member = format!("../{member}/Cargo.toml");
         let mut buf_reader_member = std::io::BufReader::new(std::fs::File::open(path_to_cargo_toml_member.clone()).unwrap_or_else(|error| panic!("{cannot_open_file}{path_to_cargo_toml_member}{file_error}\"{error}\"")));
         let mut cargo_toml_member_content = std::string::String::new();
