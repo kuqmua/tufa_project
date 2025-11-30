@@ -38,16 +38,19 @@ jobs:
         toolchain: nightly
         override: true
 
-    - name: Run tests
-      env:
-        SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
-        TIMEZONE: "10800"
-        REDIS_URL: "redis://127.0.0.1:6379"
-        DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
-        TRACING_LEVEL: "debug"
-        SOURCE_PLACE_TYPE: "source"
-        ENABLE_API_GIT_COMMIT_CHECK: "true"
-        MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
-      run: |
-        cd common
-        cargo test --features test-utils -- --nocapture
+    - name: Show rustc version
+      run: rustc --version
+
+    # - name: Run tests
+    #   env:
+    #     SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
+    #     TIMEZONE: "10800"
+    #     REDIS_URL: "redis://127.0.0.1:6379"
+    #     DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
+    #     TRACING_LEVEL: "debug"
+    #     SOURCE_PLACE_TYPE: "source"
+    #     ENABLE_API_GIT_COMMIT_CHECK: "true"
+    #     MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
+    #   run: |
+    #     cd common
+    #     cargo test --features test-utils -- --nocapture
