@@ -8,7 +8,7 @@ edition = "2024"
 [dependencies]
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 chrono = {version = "=0.4", features = ["serde"]}
-serde = {version = "=1.0", features = ["derive"]}
+serde = {version = "=1.0.224", features = ["derive"]}
 schemars = {version = "=0.8.22"}
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}

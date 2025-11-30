@@ -8,7 +8,7 @@ edition = "2024"
 [dependencies]
 axum = {version = "=0.7.4", features = ["macros"]}
 thiserror = {version = "=1.0.48"}
-serde = {version = "=1.0", features = ["derive"]}
+serde = {version = "=1.0.224", features = ["derive"]}
 http-body = {version = "=1.0.0"}
 bytes = {version = "=1.2.1"}
 git_info = {path = "../git_info"}

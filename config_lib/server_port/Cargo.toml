@@ -6,7 +6,7 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = {version = "=1.0", features = ["derive"]}
+serde = {version = "=1.0.224", features = ["derive"]}
 constants = {path = "../../constants"}
 server_port_try_from_u16 = {path = "./server_port_try_from_u16"}
 server_port_common = {path = "./server_port_common"}
