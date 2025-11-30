@@ -38,9 +38,6 @@ jobs:
         toolchain: nightly
         override: true
 
-    # - name: Show rustc version
-    #   run: rustc --version
-
     - name: Run tests
       env:
         SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
@@ -52,6 +49,5 @@ jobs:
         ENABLE_API_GIT_COMMIT_CHECK: "true"
         MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
       run: |
-        cd common
         rustc --version
         RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
