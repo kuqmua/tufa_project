@@ -8,7 +8,7 @@ proc-macro = true
 
 [dependencies]
 regex = {version = "=1.9.3"}
-serde_json = {version = "=1.0"}
+serde_json = {version = "=1.0.145"}
 proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
 syn = {version = "=2.0.100"}

@@ -6,7 +6,7 @@ version = "0.1.0"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-log = {version = "=0.4"}
+log = {version = "=0.4.28"}
 # pretty_env_logger = {version = "=0.4"}
 teloxide = {version = "=0.13.0", features = ["macros"]}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
@@ -14,8 +14,8 @@ tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 # serde = {version = "=1.0.224", features = ["derive"]}
 # serde-aux = {version = "=4.0.0"}
 # serde-xml-rs = {version = "=0.6.0"}
-# serde_derive = {version = "=1.0"}
-# serde_json = {version = "=1.0"}
+# serde_derive = {version = "=1.0.224"}
+# serde_json = {version = "=1.0.145"}
 # common = {path = "../common"}# local dev test without commits version
 # error_occurence_lib = {path = "../error_occurence_lib"}
 
