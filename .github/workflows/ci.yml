@@ -12,7 +12,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: dev
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -27,4 +27,24 @@ jobs:
     - name: Connect to PostgreSQL
       run: |
         pg_isready -h localhost -p 5432
-        psql postgresql://postgres:postgres@localhost:5432/postgres -c "SELECT version();"
+        psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -c "SELECT version();"
+
+    - name: Install Rust Nightly
+      uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        toolchain: 1.93.0-nightly
+        override: true
+
+    - name: Run tests
+      env:
+        SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
+        TIMEZONE: "10800"
+        REDIS_URL: "redis://127.0.0.1:6379"
+        DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
+        TRACING_LEVEL: "debug"
+        SOURCE_PLACE_TYPE: "source"
+        ENABLE_API_GIT_COMMIT_CHECK: "true"
+        MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
+      run: |
+        cd common
+        cargo test --features test-utils -- --nocapture
