@@ -1,4 +1,2 @@
 #[cfg(test)]
-mod check_same_dependencies_having_same_version;
-#[cfg(test)]
-mod check_specific_dependency_version_usage;
+mod check_dependencies_having_same_exact_version_in_the_project;

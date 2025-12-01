@@ -1,5 +1,5 @@
 #[test]
-fn check_same_dependencies_having_same_version() {
+fn check_dependencies_having_same_exact_version_in_the_project() {
     let path = std::path::Path::new(&"../");
     fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> std::vec::Vec<std::string::String> {
         let mut acc = vec![];
@@ -32,6 +32,9 @@ fn check_same_dependencies_having_same_version() {
         dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
         #[serde(rename = "dev-dependencies")]
         dev_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
+        #[serde(rename = "build-dependencies")]
+        build_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
+        
     }
     let mut acc: std::vec::Vec<(std::string::String, toml::Value)> = vec![];
     for cargo_toml_string in &cargo_toml_string_vec {
@@ -75,7 +78,6 @@ fn check_same_dependencies_having_same_version() {
                                     else {
                                         panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
                                     }
-                                    //
                                     {
                                         let mut is_found = false;
                                         for (acc_key, acc_version_value) in &acc {
@@ -131,6 +133,7 @@ fn check_same_dependencies_having_same_version() {
                 };
                 handle_dependencies(cargo_toml.dependencies);
                 handle_dependencies(cargo_toml.dev_dependencies);
+                handle_dependencies(cargo_toml.build_dependencies);
             }
         }
     }
