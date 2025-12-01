@@ -154,7 +154,6 @@ private_interfaces = { level = "deny", priority = 0 } #private type in primary i
 redundant_semicolons = { level = "deny", priority = 0 } #detects unnecessary trailing semicolons
 refining_impl_trait = { level = "deny", priority = -1 } #impl trait in impl method signature does not match trait method signature
 renamed_and_removed_lints = { level = "deny", priority = 0 } #lints that have been renamed or removed
-repr_transparent_non_zst_fields = { level = "deny", priority = 0 } #transparent type contains an external ZST that is marked #[non_exhaustive] or contains private fields
 semicolon_in_expressions_from_macros = { level = "deny", priority = 0 } #trailing semicolon in macro body used as expression
 special_module_name = { level = "deny", priority = 0 } #module declarations for files with a special meaning
 stable_features = { level = "deny", priority = 0 } #stable features found in `#[feature]` directive
