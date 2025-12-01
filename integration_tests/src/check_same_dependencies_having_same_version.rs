@@ -33,17 +33,18 @@ fn check_same_dependencies_having_same_version() {
         #[serde(rename = "dev-dependencies")]
         dev_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
     }
-    for cargo_toml_string in cargo_toml_string_vec {
+    let mut acc: std::vec::Vec<(std::string::String, toml::Value)> = vec![];
+    for cargo_toml_string in &cargo_toml_string_vec {
         let cargo_toml: CargoToml = toml::from_str(&cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
+        //todo after fix issue with pg_jsonschema remove this check
         if let Some(package) = &cargo_toml.package {
             if package.name != "pg_jsonschema" {
-                let handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
+                let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
                     if let Some(value) = deps {
-                        //todo after fix issue with pg_jsonschema remove this check
-                        for (_, value) in value {
+                        for (key, value) in value {
                             if let toml::Value::Table(value) = value {
-                                let handle_toml_value_string_valid_version = |toml_value: &toml::Value|{
-                                    if let toml::Value::String(value) = toml_value {
+                                let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
+                                    if let toml::Value::String(value) = version_value {
                                         fn is_valid_version(value: &std::primitive::str) -> std::primitive::bool {
                                             let version = match value.strip_prefix('=') {
                                                 Some(value) => value,
@@ -53,7 +54,7 @@ fn check_same_dependencies_having_same_version() {
                                             if parts.len() != 3 {
                                                 return false;
                                             }
-                                            //// parse each part as u64 (ensures it's a valid unsigned number)
+                                            // parse each part as u64 (ensures it's a valid unsigned number)
                                             for part in parts {
                                                 if part.is_empty() {
                                                     return false; // prevents "=1..2"
@@ -73,6 +74,23 @@ fn check_same_dependencies_having_same_version() {
                                     }
                                     else {
                                         panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
+                                    }
+                                    //
+                                    {
+                                        let mut is_found = false;
+                                        for (acc_key, acc_version_value) in &acc {
+                                            if key == *acc_key {
+                                                if version_value == acc_version_value {
+                                                    is_found = true;
+                                                }
+                                                else {
+                                                    panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
+                                                }
+                                            }
+                                        }
+                                        if !is_found {
+                                            acc.push((key.clone(), version_value.clone()));
+                                        }
                                     }
                                 };
                                 if value.len() == 1 {
@@ -116,5 +134,4 @@ fn check_same_dependencies_having_same_version() {
             }
         }
     }
-    //todo check same version in different crates
 }
