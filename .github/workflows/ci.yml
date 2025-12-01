@@ -33,7 +33,7 @@ jobs:
         psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -c "SELECT version();"
 
     - name: Install Rust Nightly
-      uses: dtolnay/rust-toolchain/nightly
+      uses: dtolnay/rust-toolchain@nightly
 
     - name: Run tests
       env:
