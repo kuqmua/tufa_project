@@ -35,11 +35,11 @@ fn check_same_dependencies_having_same_version() {
     }
     for cargo_toml_string in cargo_toml_string_vec {
         let cargo_toml: CargoToml = toml::from_str(&cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
-        let handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
-            if let Some(value) = deps {
-                //todo after fix issue with pg_jsonschema remove this check
-                if let Some(package) = &cargo_toml.package {
-                    if package.name != "pg_jsonschema" {
+        if let Some(package) = &cargo_toml.package {
+            if package.name != "pg_jsonschema" {
+                let handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
+                    if let Some(value) = deps {
+                        //todo after fix issue with pg_jsonschema remove this check
                         for (_, value) in value {
                             if let toml::Value::Table(value) = value {
                                 let handle_toml_value_string_valid_version = |toml_value: &toml::Value|{
@@ -53,7 +53,7 @@ fn check_same_dependencies_having_same_version() {
                                             if parts.len() != 3 {
                                                 return false;
                                             }
-                                            // parse each part as u64 (ensures it's a valid unsigned number)
+                                            //// parse each part as u64 (ensures it's a valid unsigned number)
                                             for part in parts {
                                                 if part.is_empty() {
                                                     return false; // prevents "=1..2"
@@ -110,11 +110,11 @@ fn check_same_dependencies_having_same_version() {
                             }
                         }
                     }
-                }
+                };
+                handle_dependencies(cargo_toml.dependencies);
+                handle_dependencies(cargo_toml.dev_dependencies);
             }
-        };
-        handle_dependencies(cargo_toml.dependencies);
-        handle_dependencies(cargo_toml.dev_dependencies);
+        }
     }
     //todo check same version in different crates
 }
