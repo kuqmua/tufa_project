@@ -1,11 +1,12 @@
 #actual docker-compose now on ubuntu with ryzen 7600 in pg_jsonschema folder
 version: '3.3'
 services:
-  postgres_service:
+  postgresql_16_with_pg_jsonschema_service:
     container_name: postgresql_16_with_pg_jsonschema
-    build:
-        context: ../pg_jsonschema
-        dockerfile: ../pg_jsonschema/Dockerfile
+    image: ghcr.io/kuqmua/postgresql_16_with_pg_jsonschema
+    # build:
+    #     context: ../pg_jsonschema
+    #     dockerfile: ../pg_jsonschema/Dockerfile
     restart: always
     environment:
       POSTGRES_USER: postgres

@@ -1056,3 +1056,4 @@ volatile_composites = { level = "deny", priority = 0 }
 wrong_pub_self_convention = { level = "deny", priority = 0 }
 zombie_processes = { level = "deny", priority = 0 }
 ptr_offset_by_literal = { level = "deny", priority = 0 }
+manual_ilog2 = { level = "deny", priority = 0 }

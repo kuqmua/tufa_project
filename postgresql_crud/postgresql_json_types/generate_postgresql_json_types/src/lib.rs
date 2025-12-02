@@ -2422,7 +2422,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-                //
                 let option_vec_create_token_stream = {
                     use postgresql_crud_macros_common::NotNullOrNullable;
                     let generate_some_acc_content_token_stream = |not_null_or_nullable: &NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens| {
@@ -2933,7 +2932,33 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                     }
                 };
-                let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote!{todo!()};
+                let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = {
+                    use postgresql_crud_macros_common::NotNullOrNullable;
+                    match &postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => quote::quote! {None},
+                            NotNullOrNullable::Nullable => quote::quote! {None},
+                        },
+                        PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {todo!()},
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote! {todo!()},
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {todo!()},
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote! {todo!()},
+                        },
+                        PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable: _ } => quote::quote! {todo!()},
+                        PostgresqlJsonTypePattern::ArrayDimension3 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable: _,
+                            dimension3_not_null_or_nullable: _,
+                        } => quote::quote! {todo!()},
+                        PostgresqlJsonTypePattern::ArrayDimension4 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable: _,
+                            dimension3_not_null_or_nullable: _,
+                            dimension4_not_null_or_nullable: _,
+                        } => quote::quote! {todo!()},
+                    }
+                };
                 let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = {
                     let generate_token_stream = ||{
                         let content_token_stream = {
