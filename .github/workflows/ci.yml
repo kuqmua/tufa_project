@@ -42,6 +42,4 @@ jobs:
         SOURCE_PLACE_TYPE: "source"
         ENABLE_API_GIT_COMMIT_CHECK: "true"
         MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES: "1048576000"
-      run: |
-        rustc --version
-        RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
+      run: RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
