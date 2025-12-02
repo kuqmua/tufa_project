@@ -1,7 +1,10 @@
 name: Test
 on:
   pull_request:
-  push: { branches: master }
+  push: { branches: [master] }
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -13,7 +16,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Build docker images
-      run: docker-compose -f .ci/docker-compose.yaml build
+      run: docker compose -f .ci/docker-compose.yaml build
 
     - name: Run tests
-      run: docker-compose -f .ci/docker-compose.yaml run test_pg_jsonschema
+      run: docker compose -f .ci/docker-compose.yaml run test_pg_jsonschema

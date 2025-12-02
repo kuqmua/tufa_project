@@ -14,16 +14,10 @@ fn jsonb_matches_schema(schema: Json, instance: JsonB) -> bool {
 
 #[pg_extern(immutable, strict, parallel_safe)]
 fn jsonschema_is_valid(schema: Json) -> bool {
-    match jsonschema::JSONSchema::compile(&schema.0) {
+    match jsonschema::meta::validate(&schema.0) {
         Ok(_) => true,
-        Err(e) => {
-            // Only call notice! for a non empty instance_path
-            if e.instance_path.last().is_some() {
-                notice!(
-                    "Invalid JSON schema at path: {}",
-                    e.instance_path.to_string()
-                );
-            }
+        Err(err) => {
+            notice!("Invalid JSON schema at path: {}", err.instance_path());
             false
         }
     }
@@ -31,15 +25,14 @@ fn jsonschema_is_valid(schema: Json) -> bool {
 
 #[pg_extern(immutable, strict, parallel_safe)]
 fn jsonschema_validation_errors(schema: Json, instance: Json) -> Vec<String> {
-    let schema = match jsonschema::JSONSchema::compile(&schema.0) {
-        Ok(s) => s,
-        Err(e) => return vec![e.to_string()],
+    let validator = match jsonschema::validator_for(&schema.0) {
+        Ok(v) => v,
+        Err(err) => return vec![err.to_string()],
     };
-    let errors = match schema.validate(&instance.0) {
-        Ok(_) => vec![],
-        Err(e) => e.into_iter().map(|e| e.to_string()).collect(),
-    };
-    errors
+    validator
+        .iter_errors(&instance.0)
+        .map(|err| err.to_string())
+        .collect()
 }
 
 #[pg_schema]
@@ -63,6 +56,22 @@ mod tests {
         assert!(!crate::json_matches_schema(
             Json(json!({ "maxLength": max_length })),
             Json(json!("foobar")),
+        ));
+    }
+
+    #[pg_test]
+    fn test_json_matches_schema_arbitrary_precision() {
+        assert!(crate::json_matches_schema(
+            Json(json!({ "type": "number", "multipleOf": 0.1 })),
+            Json(json!(17.2)),
+        ));
+        assert!(crate::json_matches_schema(
+            Json(json!({ "type": "number", "multipleOf": 0.2 })),
+            Json(json!(17.2)),
+        ));
+        assert!(!crate::json_matches_schema(
+            Json(json!({ "type": "number", "multipleOf": 0.3 })),
+            Json(json!(17.2)),
         ));
     }
 
@@ -147,12 +156,19 @@ mod tests {
     }
 
     #[pg_test]
+    fn test_jsonschema_unknown_specification() {
+        assert!(!crate::jsonschema_is_valid(Json(json!({
+            "$schema": "invalid-uri", "type": "string"
+        }))));
+    }
+
+    #[pg_test]
     fn test_jsonschema_validation_errors_none() {
         let errors = crate::jsonschema_validation_errors(
             Json(json!({ "maxLength": 4 })),
             Json(json!("foo")),
         );
-        assert!(errors.len() == 0);
+        assert!(errors.is_empty());
     }
 
     #[pg_test]
@@ -162,7 +178,7 @@ mod tests {
             Json(json!("123456789")),
         );
         assert!(errors.len() == 1);
-        assert!(errors[0] == "\"123456789\" is longer than 4 characters".to_string());
+        assert!(errors[0] == *"\"123456789\" is longer than 4 characters");
     }
 
     #[pg_test]
@@ -188,9 +204,9 @@ mod tests {
         );
 
         assert!(errors.len() == 3);
-        assert!(errors[0] == "[] is not of type \"number\"".to_string());
-        assert!(errors[1] == "\"1\" is not of type \"boolean\"".to_string());
-        assert!(errors[2] == "1 is not of type \"string\"".to_string());
+        assert!(errors[0] == *"[] is not of type \"number\"");
+        assert!(errors[1] == *"\"1\" is not of type \"boolean\"");
+        assert!(errors[2] == *"1 is not of type \"string\"");
     }
 }
 

@@ -2,10 +2,11 @@
 version: '3.3'
 services:
   postgres_service:
-    container_name: postgres_container
+    container_name: postgresql_16_with_pg_jsonschema
+    # image: postgresql_16_with_pg_jsonschema
     build:
         context: ../pg_jsonschema
-        dockerfile: ../pg_jsonschema/dockerfiles/db/Dockerfile
+        dockerfile: ../pg_jsonschema/Dockerfile
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -15,33 +16,6 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  # postgres_service:
-  #   container_name: "postgres_service"
-  #   image: pg_jsonschema_postgres_service
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: dev
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  # postgres_service:
-  #   container_name: postgres_container
-  #   image: postgres:16.3
-  #   restart: always
-  #   environment:
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: dev
-  #   # env_file:
-  #   #   - ./dbs.env
-  #   volumes:
-  #     - /var/lib/postgresql/data:/var/lib/postgresql/data
-  #     # maybe use specific naming
-  #   ports:
-  #     - 5432:5432
   # mongodb_service:
   #   container_name: mongodb_container
   #   image: mongo:7.0.0
