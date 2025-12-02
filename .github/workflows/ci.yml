@@ -11,11 +11,11 @@ jobs:
     
     services:
       postgres:
-        image: postgres:18
+        image: ghcr.io/kuqmua/postgresql_16_with_pg_jsonschema:latest
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: dev
+          POSTGRES_DB: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -26,11 +26,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
-    - name: Connect to PostgreSQL
-      run: |
-        pg_isready -h localhost -p 5432
-        psql postgresql://postgres:postgres@127.0.0.1:5432/postgres -c "SELECT version();"
 
     - name: Install Rust Nightly
       uses: dtolnay/rust-toolchain@nightly
