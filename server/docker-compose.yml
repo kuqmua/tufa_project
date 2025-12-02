@@ -3,7 +3,6 @@ version: '3.3'
 services:
   postgres_service:
     container_name: postgresql_16_with_pg_jsonschema
-    # image: postgresql_16_with_pg_jsonschema
     build:
         context: ../pg_jsonschema
         dockerfile: ../pg_jsonschema/Dockerfile
