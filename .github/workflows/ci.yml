@@ -9,16 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Login to GHCR
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
     services:
       postgres:
         image: ghcr.io/kuqmua/postgresql_16_with_pg_jsonschema:latest
@@ -28,6 +18,16 @@ jobs:
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to GHCR
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install Rust Nightly
       uses: dtolnay/rust-toolchain@nightly
