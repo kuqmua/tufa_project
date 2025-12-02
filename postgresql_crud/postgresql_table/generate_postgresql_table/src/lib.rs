@@ -5502,18 +5502,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             );
             quote::quote!{{
-                // #test_read_many_by_non_existent_primary_keys_token_stream
-                // #test_read_many_by_equal_to_created_primary_keys_token_stream
-                // #read_only_ids_merged_with_create_into_where_equal_token_stream
-                // #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream
-                // #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream
-                // #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
+                #test_read_many_by_non_existent_primary_keys_token_stream
+                #test_read_many_by_equal_to_created_primary_keys_token_stream
+                #read_only_ids_merged_with_create_into_where_equal_token_stream
+                #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream
+                #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream
+                #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
-                // #create_into_postgresql_json_type_option_vec_where_length_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_length_equal_token_stream
                 // #create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream
             }}
         };
@@ -6605,7 +6605,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     "redis://127.0.0.1:6379".to_string()
                                 ).expect("error 4a839f29-f8a7-4193-b1cc-84524e304c9f").0,
                                 database_url: <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10".to_string()
+                                    "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_string()
                                 ).expect("error f9c20f05-3cdf-46ae-b6d3-5943c627f0df").0,
                                 tracing_level: <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                     "error".to_string()
@@ -6762,14 +6762,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
                                     let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                                    // #create_many_token_stream
-                                    // #create_one_token_stream
+                                    #create_many_token_stream
+                                    #create_one_token_stream
                                     #read_many_token_stream
-                                    // #read_one_token_stream
-                                    // #update_many_token_stream
-                                    // #update_one_token_stream
-                                    // #delete_many_token_stream
-                                    // #delete_one_token_stream
+                                    #read_one_token_stream
+                                    #update_many_token_stream
+                                    #update_one_token_stream
+                                    #delete_many_token_stream
+                                    #delete_one_token_stream
                                     #acc_snake_case
                                 }),
                                 100,

@@ -176,10 +176,10 @@ pub struct Example {
     // pub column_139: postgresql_crud::OptionVecOfSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTzRange,
     // pub column_140: postgresql_crud::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
-    // pub column_142: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
-    // pub column_143: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
-    // pub column_144: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub column_145: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub column_142: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
+    pub column_143: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
+    pub column_144: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub column_145: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1251,4 +1251,4 @@ pub struct Animal {
 //     // pub field_13: postgresql_crud::OptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
 // }
 
-// /////////////
+// // /////////////
