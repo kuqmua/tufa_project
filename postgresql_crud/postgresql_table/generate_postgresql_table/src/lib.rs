@@ -671,28 +671,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalLogic,
             }
         }
-        fn operation_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
-            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
+        fn operation_error_named_with_serialize_deserialize_snake_case(self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
+            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
         }
-        fn self_snake_case_stringified(&self) -> std::string::String {
+        fn self_snake_case_stringified(self) -> std::string::String {
             naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
         }
-        fn self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        fn self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
             naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
         }
-        fn self_handle_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        fn self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
             let value = naming::parameter::SelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
             quote::quote!{#value}
         }
-        fn try_self_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        fn try_self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
             let value = naming::parameter::TrySelfSnakeCase::from_tokens(&self.self_snake_case_token_stream());
             quote::quote!{#value}
         }
-        fn try_self_handle_snake_case_token_stream(&self) -> proc_macro2::TokenStream {
+        fn try_self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
             let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
             quote::quote!{#value}
         }
-        fn operation_payload_example_snake_case(&self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+        fn operation_payload_example_snake_case(self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
             naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
         }
     }

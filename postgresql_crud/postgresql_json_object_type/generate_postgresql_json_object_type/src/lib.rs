@@ -59,14 +59,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             GeneratePostgresqlJsonObjectTypeConfig::All => PostgresqlJsonObjectTypeRecord::all(),
             GeneratePostgresqlJsonObjectTypeConfig::Concrete(postgresql_json_object_type_record) => match (&postgresql_json_object_type_record.not_null_or_nullable, &postgresql_json_object_type_record.postgresql_json_object_type_pattern) {
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => vec![postgresql_json_object_type_record],
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => vec![
-                    PostgresqlJsonObjectTypeRecord {
-                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
-                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
-                    },
-                    postgresql_json_object_type_record
-                ],
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) |
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Array) => vec![
                     PostgresqlJsonObjectTypeRecord {
                         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
