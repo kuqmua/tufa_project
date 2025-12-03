@@ -980,7 +980,7 @@ infallible_try_from = { level = "deny", priority = 0 }
 inverted_saturating_sub = { level = "deny", priority = 0 }
 io_other_error = { level = "deny", priority = 0 }
 ip_constant = { level = "deny", priority = 0 }
-literal_string_with_formatting_args = { level = "deny", priority = 0 }
+literal_string_with_formatting_args = { level = "allow", priority = 0 }#in proc macros for generating formatting content is not correct
 manual_abs_diff = { level = "deny", priority = 0 }
 manual_contains = { level = "deny", priority = 0 }
 manual_dangling_ptr = { level = "deny", priority = 0 }
