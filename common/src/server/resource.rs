@@ -1,12 +1,7 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, from_str::FromStr)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, from_str::FromStr)]
 pub enum Resource {
+    #[default]
     Local,
     Mongodb,
     PostgreSql,
-}
-
-impl Default for Resource {
-    fn default() -> Self {
-        Self::Local
-    }
 }
