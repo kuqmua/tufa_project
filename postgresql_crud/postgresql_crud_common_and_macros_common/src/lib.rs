@@ -11,9 +11,10 @@ pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size() -> std::vec::Vec<Self>;
 }
 
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]
 pub enum LogicalOperator {
     And,
+    #[default]
     Or,
     AndNot,
     OrNot,
@@ -41,11 +42,6 @@ impl LogicalOperator {
 impl std::fmt::Display for LogicalOperator {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{self:?}")
-    }
-}
-impl Default for LogicalOperator {
-    fn default() -> Self {
-        Self::Or
     }
 }
 impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOperator {

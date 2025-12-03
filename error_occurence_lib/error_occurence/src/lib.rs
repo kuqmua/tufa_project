@@ -90,7 +90,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     }));
                     let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).unwrap() {
+                        match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).expect("error 8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
                                     error_occurence_lib::ToStdStringString::to_std_string_string(#element_ident)

@@ -678,7 +678,7 @@ pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {
-            let value = attr.path().segments.first().map_or_else(|| panic!("{proc_macro_name_ident_stringified} attr.path().segments.get(0) is None"), |value| value);
+            let value = attr.path().segments.first().unwrap_or_else(|| panic!("{proc_macro_name_ident_stringified} attr.path().segments.get(0) is None"));
             if let Ok(named_attribute) = StatusCode::try_from(&value.ident.to_string()) {
                 if option_self.is_some() {
                     panic!("{proc_macro_name_ident_stringified} duplicated status_code attributes are not supported");
@@ -688,10 +688,5 @@ pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &
             }
         }
     });
-    option_self.map_or_else(
-        || {
-            panic!("{proc_macro_name_ident_stringified} not supported status_code attribute");
-        },
-        |attr| attr,
-    )
+    option_self.unwrap_or_else(||panic!("{proc_macro_name_ident_stringified} not supported status_code attribute"))
 }

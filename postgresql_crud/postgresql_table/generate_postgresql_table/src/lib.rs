@@ -1991,8 +1991,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     if element.path().segments.len() == 1 {
                         let segment = element.path().segments.first().unwrap_or_else(|| panic!("element.path().segments.get(0) is None"));
                         if let Ok(value) = {
-                            use std::str::FromStr;
-                            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::from_str(&segment.ident.to_string())
+                            <macros_helpers::error_occurence::ErrorOccurenceFieldAttribute as std::str::FromStr>::from_str(&segment.ident.to_string())
                         } {
                             match error_occurence_attribute {
                                 Some(value) => panic!("duplicated attributes ({}) are not supported", macros_helpers::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(&value)),

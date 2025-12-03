@@ -5,7 +5,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
     panic_location::panic_location();
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).unwrap();
+            let regex = regex::Regex::new(REGEX_VALUE).expect("error 20948d87-2c38-4896-96b6-239d9c9a0a38");
             for element in &element {
                 if !regex.is_match(element) {
                     panic!("invalid element {element}, regex: {REGEX_VALUE}");
@@ -82,7 +82,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
     panic_location::panic_location();
     let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).unwrap();
+            let regex = regex::Regex::new(REGEX_VALUE).expect("error cba1b5fb-6833-416b-96d9-b64b7a308008");
             for element in &element {
                 if !regex.is_match(element) {
                     panic!("invalid element {element}, regex: {REGEX_VALUE}");

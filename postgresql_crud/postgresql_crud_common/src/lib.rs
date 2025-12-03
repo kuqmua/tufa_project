@@ -146,7 +146,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
         std::string::String
     >;
-    fn get_inner<'a>(value: &'a <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery) -> &'a Self::ReadInner;
+    fn get_inner(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery) -> &Self::ReadInner;
     fn increment_checked_add_one(increment: &mut std::primitive::u64) -> Result<std::primitive::u64, QueryPartErrorNamed>;
 }
 
@@ -622,9 +622,10 @@ impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultBut
     }
 }
 
-#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
+#[derive(Debug, Default, Clone, Copy, serde::Serialize, serde::Deserialize, PartialEq, Eq, from_str::FromStr)]
 pub enum Order {
     #[serde(rename(serialize = "asc", deserialize = "asc"))]
+    #[default]
     Asc,
     #[serde(rename(serialize = "desc", deserialize = "desc"))]
     Desc,
@@ -635,11 +636,6 @@ impl std::fmt::Display for Order {
             Self::Asc => write!(formatter, "{}", naming::AscUpperCamelCase),
             Self::Desc => write!(formatter, "{}", naming::DescUpperCamelCase),
         }
-    }
-}
-impl Default for Order {
-    fn default() -> Self {
-        Self::Asc
     }
 }
 impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {

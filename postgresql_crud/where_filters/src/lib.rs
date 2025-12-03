@@ -1,7 +1,8 @@
 generate_where_filters::generate_where_filters!();
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum EncodeFormat {
+    #[default]
     Base64,
     Hex,
     Escape,
@@ -13,11 +14,6 @@ impl std::fmt::Display for EncodeFormat {
             Self::Hex => write!(formatter, "hex"),
             Self::Escape => write!(formatter, "escape"),
         }
-    }
-}
-impl std::default::Default for EncodeFormat {
-    fn default() -> Self {
-        Self::Base64
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
@@ -167,9 +163,7 @@ where
     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
-            Err(error) => {
-                return Err(error);
-            },
+            Err(error) => Err(error)
         }
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -481,7 +475,7 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &'static [&str] = &["start", "end"];
+            const FIELDS: &[&str] = &["start", "end"];
             _serde::Deserializer::deserialize_struct(
                 __deserializer,
                 "Between",

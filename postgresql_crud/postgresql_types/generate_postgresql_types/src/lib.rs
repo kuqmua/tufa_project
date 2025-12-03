@@ -5317,9 +5317,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_some_acc_content_token_stream(
-                                &not_null_or_nullable,
+                                not_null_or_nullable,
                                 &generate_ident_token_stream(
-                                    &postgresql_type,
+                                    postgresql_type,
                                     &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                     &PostgresqlTypePattern::Standart,
                                 ),
@@ -5327,17 +5327,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_some_acc_content_token_stream(
-                            &not_null_or_nullable,
+                            not_null_or_nullable,
                             &generate_ident_token_stream(
-                                &postgresql_type,
+                                postgresql_type,
                                 &match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => dimension1_not_null_or_nullable.clone(),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => *dimension1_not_null_or_nullable,
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                 },
                                 &match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => PostgresqlTypePattern::Standart,
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => PostgresqlTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
+                                        dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable
                                     },
                                 },
                             ),
@@ -5708,7 +5708,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         create_token_stream: &dyn quote::ToTokens,
                         greater_than_token_stream: &dyn quote::ToTokens,
                     |generate_greater_than_test_token_stream(
-                        &greater_than_variant_token_stream,
+                        greater_than_variant_token_stream,
                         &quote::quote!{new(#create_token_stream)},
                         &quote::quote!{new(#greater_than_token_stream)}
                     );
@@ -5717,7 +5717,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         create_token_stream: &dyn quote::ToTokens,
                         greater_than_token_stream: &dyn quote::ToTokens,
                     |generate_greater_than_test_token_stream(
-                        &greater_than_variant_token_stream,
+                        greater_than_variant_token_stream,
                         &quote::quote!{try_new(#create_token_stream).expect("error 8327c651-9a52-470f-b5ab-dd2680b2f5e1")},
                         &quote::quote!{try_new(#greater_than_token_stream).expect("error c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
                     );

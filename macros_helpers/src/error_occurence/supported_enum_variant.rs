@@ -27,11 +27,8 @@ impl SuportedEnumVariant {
             },
             syn::Fields::Unit => panic!("{error_message}"),
         });
-        all_equal.map_or_else(
-            || {
-                panic!("{} with enums where all variants are named or unnamed", naming::SUPPORTS_ONLY_STRINGIFIED);
-            },
-            |supported_enum_variant| supported_enum_variant,
-        )
+        all_equal.unwrap_or_else(|| {
+            panic!("{} with enums where all variants are named or unnamed", naming::SUPPORTS_ONLY_STRINGIFIED);
+        })
     }
 }

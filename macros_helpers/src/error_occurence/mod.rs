@@ -10,7 +10,6 @@ pub mod supported_enum_variant;
 pub mod vec_element_type;
 pub mod vec_lifetime_to_string;
 
-#[expect(clippy::enum_variant_names)]
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttribute {
     EoToStdStringString,
@@ -61,10 +60,7 @@ impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                         return Err("no first value in punctuated".to_string());
                     }
                 };
-                if let Ok(value) = {
-                    use std::str::FromStr;
-                    Self::from_str(&first_segment_ident.to_string())
-                } {
+                if let Ok(value) = std::str::FromStr::from_str(&first_segment_ident.to_string()) {
                     if option_attribute.is_some() {
                         return Err("two or more supported attributes!".to_string());
                     }
@@ -158,7 +154,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).unwrap() {
+        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).expect("error 2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string

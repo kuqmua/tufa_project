@@ -16,33 +16,16 @@ pub async fn start_bot() {
     let bot = teloxide::Bot::from_env();
     Box::pin(teloxide::repl(bot, |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| async move {
         log::info!("answer");
-        let _unused = match cmd {
-            Command::Help => {
-                use teloxide::prelude::Requester;
-                bot.send_message(
-                    msg.chat.id,
-                    {
-                        use teloxide::utils::command::BotCommands;
-                        Command::descriptions()
-                    }
-                    .to_string(),
-                )
-                .await?
+        let _unused = teloxide::prelude::Requester::send_message(
+            &bot,
+            msg.chat.id,
+            match cmd {
+                Command::Help => <Command as teloxide::utils::command::BotCommands>::descriptions().to_string(),
+                Command::Username(username) => format!("Your username is @{username}."),
+                Command::UsernameAndAge { username, age } => format!("Your username is @{username} and age is {age}."),
+                Command::GitInfo => "123message".to_string()
             }
-            Command::Username(username) => {
-                use teloxide::prelude::Requester;
-                bot.send_message(msg.chat.id, format!("Your username is @{username}.")).await?
-            }
-            Command::UsernameAndAge { username, age } => {
-                use teloxide::prelude::Requester;
-                bot.send_message(msg.chat.id, format!("Your username is @{username} and age is {age}.")).await?
-            }
-            Command::GitInfo => {
-                use teloxide::prelude::Requester;
-                bot.send_message(msg.chat.id, "123message").await?
-            }
-        };
-
+        ).await?;
         Ok(())
     }))
     .await;

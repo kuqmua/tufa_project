@@ -7,8 +7,9 @@ pub enum DeriveOrImpl {
     Impl(proc_macro2::TokenStream),
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum NotNullOrNullable {
+    #[default]
     NotNull,
     Nullable,
 }
@@ -37,11 +38,6 @@ impl NotNullOrNullable {
             Self::NotNull => std::string::String::default(),
             Self::Nullable => std::string::String::from("StdOptionOption"),
         }
-    }
-}
-impl std::default::Default for NotNullOrNullable {
-    fn default() -> Self {
-        Self::NotNull
     }
 }
 
@@ -1449,7 +1445,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &update_to_read_only_ids_token_stream,
     );
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        &import_path,
+        import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
     );
@@ -1462,7 +1458,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
     let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        &import_path,
+        import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &read_only_ids_merged_with_create_into_option_value_read_token_stream,
     );
@@ -1514,7 +1510,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     );
     let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
         &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
-        &import_path,
+        import_path,
         &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
     );
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
@@ -1631,7 +1627,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &update_to_read_only_ids_token_stream,
     );
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        &import_path,
+        import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
     );
@@ -1644,7 +1640,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
     let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        &import_path,
+        import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &read_only_ids_merged_with_create_into_option_value_read_token_stream,
     );
@@ -1692,7 +1688,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     );
     let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
         &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
-        &import_path,
+        import_path,
         &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
     );
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
