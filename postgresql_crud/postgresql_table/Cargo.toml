@@ -8,5 +8,8 @@ generate_postgresql_table = {path = "./generate_postgresql_table"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 app_state = {path = "../../app_state"}
 
+[lints]
+workspace = true
+
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]

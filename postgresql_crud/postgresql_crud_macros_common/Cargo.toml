@@ -17,3 +17,6 @@ enum_extension_lib = {path = "../../enum_extension_lib"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 macros_helpers = {path = "../../macros_helpers"}
+
+[lints]
+workspace = true

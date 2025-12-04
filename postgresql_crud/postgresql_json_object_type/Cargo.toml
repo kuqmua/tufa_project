@@ -12,5 +12,8 @@ thiserror = {version = "=1.0.48"}
 schemars = {version = "=0.8.22"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 
+[lints]
+workspace = true
+
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]

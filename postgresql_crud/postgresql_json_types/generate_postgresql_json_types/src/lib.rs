@@ -43,7 +43,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         String,
     }
     impl std::fmt::Display for PostgresqlJsonTypeName {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(
                 formatter,
                 "{}",
@@ -217,7 +217,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl ArrayDimension {
-        pub fn to_usize(&self) -> std::primitive::usize {
+        fn to_usize(&self) -> std::primitive::usize {
             match &self {
                 Self::ArrayDimension1 { .. } => 1,
                 Self::ArrayDimension2 { .. } => 2,
@@ -1707,7 +1707,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                     .iter()
-                    .map(|element| element as &dyn postgresql_crud_macros_common::PostgresqlFilter)
+                    .map(|element|{
+                        let element: &dyn postgresql_crud_macros_common::PostgresqlFilter = element;
+                        element
+                    })
                     .collect(),
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveUtoipaToSchema::True,

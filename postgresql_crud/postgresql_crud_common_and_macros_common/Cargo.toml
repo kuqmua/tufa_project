@@ -9,3 +9,6 @@ quote = {version = "=1.0.36"}
 serde = {version = "=1.0.224", features = ["derive"]}
 schemars = {version = "=0.8.22"}
 naming = {path = "../../naming"}
+
+[lints]
+workspace = true

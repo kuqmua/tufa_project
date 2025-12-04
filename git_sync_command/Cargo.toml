@@ -7,3 +7,6 @@ version = "0.1.0"
 
 [dependencies]
 dotenv = { version = "=0.15.0" }
+
+[lints]
+workspace = true

@@ -15,5 +15,8 @@ utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 thiserror = {version = "=1.0.48"}
 schemars = {version = "=0.8.22"}
 
+[lints]
+workspace = true
+
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]

@@ -19,3 +19,6 @@ postgresql_crud_common_and_macros_common = {path = "../postgresql_crud_common_an
 
 [features]
 test-utils = []
+
+[lints]
+workspace = true

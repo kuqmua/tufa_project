@@ -1,5 +1,5 @@
 fn main() {
-    dotenv::dotenv().expect("cannot initialize dotenv");
+    let _unused = dotenv::dotenv().expect("cannot initialize dotenv");
     let gitmodules_path_env_name = "GITMODULES_PATH";
     let string_path = match std::env::var(gitmodules_path_env_name) {
         Err(_) => panic!("failed to find std::env::var {gitmodules_path_env_name}"),
@@ -13,12 +13,12 @@ fn main() {
     };
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf.into_os_string().into_string().expect("cannot convert canonicalize_pathbuf_as_string to string");
     let contents = std::fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("cannot read .gitmodules file");
-    std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
+    let _unused = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
     let paths_vec: Vec<String> = contents.lines().filter_map(|e| e.find("path = ").map(|index| e[index + substring_value.len()..].to_string())).collect();
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
-    std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
+    let _unused = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
     // let mut threads_vector = Vec::with_capacity(paths_vec.len());
     // let error_vec_arc_mutex =
     //     std::sync::Arc::new(std::sync::Mutex::new(Vec::<CommandError>::new()));

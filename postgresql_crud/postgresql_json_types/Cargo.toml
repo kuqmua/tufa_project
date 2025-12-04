@@ -15,5 +15,8 @@ error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}
 
+[lints]
+workspace = true
+
 [features]
 test-utils = ["postgresql_crud_common/test-utils"]

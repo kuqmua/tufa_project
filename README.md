@@ -9,13 +9,6 @@
 * remove type_path.path.segments.len() check in proc_macros. use .get(index) instead of [index]
 * format!("{}, ", e)) for error refactor in format server/src/preparation/check_availability.rs:91:29 error_string
 * proc macreo input parameter crate or common
-* add use trait import in the scope in case of macro like this 
-```
-let f: u32 = {
-    use common::traits::something::Something;
-    0
-};
-```
 * some logic around location() file!() line!() column!() - maybe generate all other functions -github link and others on compiletime instead of runtime?
 * for all function with git_info input parameters - use get_git_info instead 
 * clippy settings token stream  - cannot do what. if u use this macro - will be an error "error: an inner attribute is not permitted in this context"
