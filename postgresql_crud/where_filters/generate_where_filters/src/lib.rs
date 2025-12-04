@@ -50,10 +50,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &naming::PubSnakeCase };
         let maybe_derive_serde_deserialize_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-            ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => &match maybe_additional_traits_token_stream {
-                Some(value) => quote::quote! {<#t_token_stream: #value>},
-                None => quote::quote! {<#t_token_stream>},
-            },
+            ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => &if let Some(value) = maybe_additional_traits_token_stream { quote::quote! {<#t_token_stream: #value>} } else { quote::quote! {<#t_token_stream>} },
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
         };
         quote::quote! {
@@ -67,10 +64,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
     let generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream: &dyn quote::ToTokens| {
         postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => match &maybe_additional_traits_token_stream {
-                    Some(value) => quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
-                    None => quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
-                },
+                ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => if let Some(value) = &maybe_additional_traits_token_stream { quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>} } else { quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>} },
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
             },
             &postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon,

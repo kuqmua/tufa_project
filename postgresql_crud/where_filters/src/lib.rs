@@ -351,7 +351,7 @@ const _: () = {
             }
             #[doc(hidden)]
             struct __FieldVisitor;
-            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+            impl _serde::de::Visitor<'_> for __FieldVisitor {
                 type Value = __Field;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "field identifier")

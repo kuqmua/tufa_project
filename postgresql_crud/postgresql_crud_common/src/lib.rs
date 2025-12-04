@@ -425,7 +425,7 @@ impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<T> {
         }
         Ok(Self { logical_operator, value })
     }
-    pub fn get_logical_operator(&self) -> &postgresql_crud_common_and_macros_common::LogicalOperator {
+    pub const fn get_logical_operator(&self) -> &postgresql_crud_common_and_macros_common::LogicalOperator {
         &self.logical_operator
     }
 }
@@ -664,7 +664,7 @@ pub struct PaginationBase {
     offset: std::primitive::i64,
 }
 impl PaginationBase {
-    pub fn new_unchecked(limit: std::primitive::i64, offset: std::primitive::i64) -> Self {
+    pub const fn new_unchecked(limit: std::primitive::i64, offset: std::primitive::i64) -> Self {
         Self { limit, offset }
     }
     pub const fn start(&self) -> std::primitive::i64 {
@@ -696,10 +696,10 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
     > {
         if let Err(error) = query.try_bind(self.limit) {
             return Err(error.to_string());
-        };
+        }
         if let Err(error) = query.try_bind(self.offset) {
             return Err(error.to_string());
-        };
+        }
         Ok(query)
     }
 }
@@ -1056,7 +1056,7 @@ impl<T> std::convert::From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
     }
 }
 impl<T1> NotEmptyUniqueEnumVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: NotEmptyUniqueEnumVec<T1>) -> NotEmptyUniqueEnumVec<T2> {
+    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: Self) -> NotEmptyUniqueEnumVec<T2> {
         NotEmptyUniqueEnumVec(
             value.0
             .into_iter()
