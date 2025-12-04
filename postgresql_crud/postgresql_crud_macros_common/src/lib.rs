@@ -537,54 +537,52 @@ pub enum ImportPath {
     PostgresqlCrudCommon,
 }
 impl ImportPath {
-    pub fn snake_case_std_primitive_str(&self) -> &'static std::primitive::str {
+    pub const fn snake_case_std_primitive_str(&self) -> &'static std::primitive::str {
         match &self {
-            ImportPath::Crate => "crate",
-            ImportPath::PostgresqlCrud => "postgresql_crud",
-            ImportPath::PostgresqlCrudCommon => "postgresql_crud_common",
+            Self::Crate => "crate",
+            Self::PostgresqlCrud => "postgresql_crud",
+            Self::PostgresqlCrudCommon => "postgresql_crud_common",
+        }
+    }
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(&self) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+        }
+    }
+    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(&self) -> &dyn quote::ToTokens {
+        match &self {
+            Self::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+            Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
+        }
+    }
+    pub const fn to_path(&self) -> &'static std::primitive::str {
+        match &self {
+            Self::Crate => "crate",
+            Self::PostgresqlCrud => "postgresql_crud",
+            Self::PostgresqlCrudCommon => "postgresql_crud_common",
         }
     }
 }
 impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.snake_case_std_primitive_str().parse::<proc_macro2::TokenStream>().expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59").to_tokens(tokens)
-    }
-}
-impl ImportPath {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
-        match &self {
-            ImportPath::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
-        match &self {
-            ImportPath::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(&self) -> &dyn quote::ToTokens {
-        match &self {
-            ImportPath::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-        }
-    }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size(&self) -> &dyn quote::ToTokens {
-        match &self {
-            ImportPath::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-            ImportPath::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
-        }
-    }
-    pub fn to_path(&self) -> &'static std::primitive::str {
-        match &self {
-            ImportPath::Crate => "crate",
-            ImportPath::PostgresqlCrud => "postgresql_crud",
-            ImportPath::PostgresqlCrudCommon => "postgresql_crud_common",
-        }
+        self.snake_case_std_primitive_str().parse::<proc_macro2::TokenStream>().expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59").to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone)]
@@ -825,7 +823,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_table_type_declaration_upper_camel_case: &dyn quote::ToTokens,
-    is_primary_key_underscore: IsPrimaryKeyUnderscore,
+    is_primary_key_underscore: &IsPrimaryKeyUnderscore,
     create_table_column_query_part_token_stream: &dyn quote::ToTokens,
     ident_create_upper_camel_case: &dyn quote::ToTokens,
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
@@ -1735,8 +1733,8 @@ pub enum ReadOrUpdate {
 impl ReadOrUpdate {
     pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            ReadOrUpdate::Read => &naming::ReadUpperCamelCase,
-            ReadOrUpdate::Update => &naming::UpdateUpperCamelCase,
+            Self::Read => &naming::ReadUpperCamelCase,
+            Self::Update => &naming::UpdateUpperCamelCase,
         }
     }
 }
@@ -1779,7 +1777,7 @@ pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToT
         }
     }
 }
-pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, vec_ident_type: std::vec::Vec<(&syn::Ident, &syn::Type)>, len: std::primitive::usize, generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, vec_ident_type: &[(&syn::Ident, &syn::Type)], len: std::primitive::usize, generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     let vec_ident = vec_ident_type.iter().map(|element| element.0).collect::<std::vec::Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {

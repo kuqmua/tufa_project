@@ -1234,7 +1234,7 @@ pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid;1] {
     ]
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<std::option::Option<()>>);
 impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
@@ -1274,7 +1274,7 @@ pub enum EqualOperator {
     IsNull
 }
 impl EqualOperator {
-    pub fn to_query_str(&self) -> &'static std::primitive::str {
+    pub const fn to_query_str(&self) -> &'static std::primitive::str {
         match &self {
             Self::Equal => "=",
             Self::IsNull => "is null",

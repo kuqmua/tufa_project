@@ -36,7 +36,7 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
                                 if is_deprecated {
                                     break;
                                 }
-                                for span_label_label_default_lint_group_group_deprecated_selector_element in h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector) {
+                                for _ in h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector) {
                                     is_deprecated = true;
                                     break;
                                 }
