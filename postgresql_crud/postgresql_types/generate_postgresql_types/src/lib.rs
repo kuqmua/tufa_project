@@ -481,7 +481,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<PostgresqlTypePattern>(&mut __map)?);
                                 }
                                 _ => {
-                                    let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                                    let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
                                 }
                             }
                         }
@@ -497,7 +497,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             _serde::__private::Some(__field2) => __field2,
                             _serde::__private::None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
-                        Ok(PostgresqlTypeRecord::try_from((__field0, __field1, __field2)).expect("error f52ee12d-dd20-4d76-9348-18f4ae78e6c4"))
+                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
+                            Ok(value) => serde::__private::Ok(value),
+                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        }
                     }
                 }
                 #[doc(hidden)]
