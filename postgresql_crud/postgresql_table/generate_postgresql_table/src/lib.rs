@@ -4808,7 +4808,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
+                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_non_existent_primary_keys(
                                 element,
@@ -5024,7 +5024,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
+                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_equal_to_created_primary_keys(
                                 element,
@@ -6319,7 +6319,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
+                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_non_existent_primary_keys(
                                 element,
@@ -6449,7 +6449,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row.clone();
+                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_primary_keys(
                                 element,
