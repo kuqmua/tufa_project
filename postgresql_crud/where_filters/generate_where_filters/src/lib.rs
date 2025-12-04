@@ -225,7 +225,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         Four,
     }
     impl DimensionNumber {
-        fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
+        const fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
             match &self {
                 Self::One => 1,
                 Self::Two => 2,
@@ -244,8 +244,8 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
     impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             match &self {
-                KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero => quote::quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
-                KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero => quote::quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                Self::CanBeZero => quote::quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                Self::CanNotBeZero => quote::quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
             }
         }
     }
@@ -285,10 +285,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         ArrayDimension,
     }
     impl PostgresqlTypeKind {
-        fn format_argument(&self) -> &'static std::primitive::str {
+        const fn format_argument(&self) -> &'static std::primitive::str {
             match &self {
-                PostgresqlTypeKind::Standart => "",
-                PostgresqlTypeKind::ArrayDimension => "{}",
+                Self::Standart => "",
+                Self::ArrayDimension => "{}",
             }
         }
     }

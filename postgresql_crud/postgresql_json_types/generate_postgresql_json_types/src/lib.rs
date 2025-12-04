@@ -1088,18 +1088,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let maybe_impl_is_string_empty_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
                     match &postgresql_json_type {
-                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
-                        | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => proc_macro2::TokenStream::new(),
-                        PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber |
+                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => proc_macro2::TokenStream::new(),
+                        PostgresqlJsonType::StdStringStringAsJsonbString |
                         PostgresqlJsonType::UuidUuidAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
                     }
                 } else {
@@ -1269,20 +1269,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let ident_select_token_stream = {
                 let ident_select_token_stream = {
-                    let content_token_stream = match ArrayDimension::try_from(postgresql_json_type_pattern) {
-                        Ok(array_dimension) => {
-                            let mut arguments_token_stream = vec![];
-                            for element in 1..=array_dimension.to_usize() {
-                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
-                                arguments_token_stream.push(quote::quote! {
-                                    #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
-                                });
-                            }
-                            quote::quote! {{
-                                #(#arguments_token_stream),*
-                            }}
+                    let content_token_stream = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
+                        let mut arguments_token_stream = vec![];
+                        for element in 1..=array_dimension.to_usize() {
+                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                            arguments_token_stream.push(quote::quote! {
+                                #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
+                            });
                         }
-                        Err(_) => quote::quote! {;},
+                        quote::quote! {{
+                            #(#arguments_token_stream),*
+                        }}
+                    }
+                    else {
+                        quote::quote! {;}
                     };
                     quote::quote! {
                         #[derive(
@@ -1297,8 +1297,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         pub struct #ident_select_upper_camel_case #content_token_stream
                     }
                 };
-                let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| match ArrayDimension::try_from(postgresql_json_type_pattern) {
-                    Ok(array_dimension) => {
+                let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| {
+                    let content_token_stream = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
                         let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                             postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                             postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
@@ -1310,11 +1310,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #dimension_number_pagination_token_stream: #content_token_stream
                             });
                         }
-                        quote::quote! {Self {
-                            #(#arguments_token_stream),*
-                        }}
+                        quote::quote! {#(#arguments_token_stream),*}
                     }
-                    Err(_) => quote::quote! {Self{}},
+                    else {
+                        proc_macro2::TokenStream::new()
+                    };
+                    quote::quote! {Self{#content_token_stream}}
                 };
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &generate_default_some_one_content_token_stream(&postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne));
@@ -1708,8 +1709,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                     .iter()
                     .map(|element|{
-                        let element: &dyn postgresql_crud_macros_common::PostgresqlFilter = element;
-                        element
+                        let element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = element;
+                        element_handle
                     })
                     .collect(),
                     &ident,
@@ -2013,13 +2014,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_create_for_query_upper_camel_case,
                     &ident_select_upper_camel_case,
                     &match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension1 { .. } => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
-                        PostgresqlJsonTypePattern::ArrayDimension2 { .. } => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
-                        PostgresqlJsonTypePattern::ArrayDimension3 { .. } => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
+                        PostgresqlJsonTypePattern::Standart => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
+                        PostgresqlJsonTypePattern::ArrayDimension1 { .. } |
+                        PostgresqlJsonTypePattern::ArrayDimension2 { .. } |
+                        PostgresqlJsonTypePattern::ArrayDimension3 { .. } |
                         PostgresqlJsonTypePattern::ArrayDimension4 { .. } => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
                     },
                     &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::False,
@@ -2046,7 +2044,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         &{
                                             let mut current_usize_value = array_dimension_select_pattern.to_usize();
                                             array_dimension_select_pattern.select_array().into_iter().fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, not_null_or_nullable| {
-                                                let current_usize_value_minus_one = current_usize_value - one;
+                                                let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("error a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
                                                 let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
                                                 let value = generate_jsonb_agg(&acc, &d_usize_minus_one_elem_value, &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)), current_usize_value);
                                                 acc = match &not_null_or_nullable {

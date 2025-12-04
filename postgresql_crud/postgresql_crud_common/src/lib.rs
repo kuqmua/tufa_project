@@ -1118,63 +1118,63 @@ pub struct JsonFieldRights {
     can_update: std::primitive::bool,
 }
 
-pub fn std_primitive_i8_test_cases_vec() -> [std::primitive::i8;3] {
+pub const fn std_primitive_i8_test_cases_vec() -> [std::primitive::i8;3] {
     [
         std::primitive::i8::MIN,
         0,
         std::primitive::i8::MAX
     ]
 }
-pub fn std_primitive_i16_test_cases_vec() -> [std::primitive::i16;3] {
+pub const fn std_primitive_i16_test_cases_vec() -> [std::primitive::i16;3] {
     [
         std::primitive::i16::MIN,
         0,
         std::primitive::i16::MAX
     ]
 }
-pub fn std_primitive_i32_test_cases_vec() -> [std::primitive::i32;3] {
+pub const fn std_primitive_i32_test_cases_vec() -> [std::primitive::i32;3] {
     [
         std::primitive::i32::MIN,
         0,
         std::primitive::i32::MAX
     ]
 }
-pub fn std_primitive_i64_test_cases_vec() -> [std::primitive::i64;3] {
+pub const fn std_primitive_i64_test_cases_vec() -> [std::primitive::i64;3] {
     [
         std::primitive::i64::MIN,
         0,
         std::primitive::i64::MAX
     ]
 }
-pub fn std_primitive_u8_test_cases_vec() -> [std::primitive::u8;3] {
+pub const fn std_primitive_u8_test_cases_vec() -> [std::primitive::u8;3] {
     [
         std::primitive::u8::MIN,
         0,
         std::primitive::u8::MAX
     ]
 }
-pub fn std_primitive_u16_test_cases_vec() -> [std::primitive::u16;3] {
+pub const fn std_primitive_u16_test_cases_vec() -> [std::primitive::u16;3] {
     [
         std::primitive::u16::MIN,
         0,
         std::primitive::u16::MAX
     ]
 }
-pub fn std_primitive_u32_test_cases_vec() -> [std::primitive::u32;3] {
+pub const fn std_primitive_u32_test_cases_vec() -> [std::primitive::u32;3] {
     [
         std::primitive::u32::MIN,
         0,
         std::primitive::u32::MAX
     ]
 }
-pub fn std_primitive_u64_test_cases_vec() -> [std::primitive::u64;3] {
+pub const fn std_primitive_u64_test_cases_vec() -> [std::primitive::u64;3] {
     [
         std::primitive::u64::MIN,
         0,
         std::primitive::u64::MAX
     ]
 }
-pub fn std_primitive_f32_test_cases_vec() -> [std::primitive::f32;12] {
+pub const fn std_primitive_f32_test_cases_vec() -> [std::primitive::f32;12] {
     [
         std::primitive::f32::EPSILON,
         std::primitive::f32::MAX,
@@ -1190,7 +1190,7 @@ pub fn std_primitive_f32_test_cases_vec() -> [std::primitive::f32;12] {
         1e30
     ]
 }
-pub fn std_primitive_f64_test_cases_vec() -> [std::primitive::f64;12] {
+pub const fn std_primitive_f64_test_cases_vec() -> [std::primitive::f64;12] {
     [
         std::primitive::f64::EPSILON,
         std::primitive::f64::MAX,
@@ -1206,7 +1206,7 @@ pub fn std_primitive_f64_test_cases_vec() -> [std::primitive::f64;12] {
         1e300
     ]
 }
-pub fn std_primitive_bool_test_cases_vec() -> [std::primitive::bool;2] {
+pub const fn std_primitive_bool_test_cases_vec() -> [std::primitive::bool;2] {
     [
         true,
         false
