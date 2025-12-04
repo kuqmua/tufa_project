@@ -39,8 +39,6 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
-    where
-        T: _serde::Deserialize<'de>,
     {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
@@ -56,8 +54,6 @@ const _: () = {
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
-            where
-                T: _serde::Deserialize<'de>,
             {
                 type Value = UniqueVec<T>;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {

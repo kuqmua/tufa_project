@@ -64,7 +64,7 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
                 },
             }
         }
-        let _ = acc.pop();
+        let _: std::option::Option<std::primitive::char> = acc.pop();
         Ok(acc)
     }
     pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -278,14 +278,14 @@ const _: () = {
         }
     }
 };
-impl std::string::ToString for RegexRegex {
-    fn to_string(&self) -> std::string::String {
-        self.0.to_string()
+impl std::fmt::Display for RegexRegex {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(regex::Regex::new("").unwrap())
+        Self(regex::Regex::new("[a-z]+").unwrap())
     }
 }
 
@@ -656,7 +656,7 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
     pub fn into_inner(self) -> std::vec::Vec<T> {
         self.0
     }
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool, postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = std::string::String::new();
         let current_len = match &variant {
             Variant::Normal => self.0.len(),
@@ -679,17 +679,17 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         }
         Ok(acc)
     }
-    pub fn postgresql_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::Normal)
+    pub fn postgresql_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::Normal)
     }
-    pub fn postgresql_json_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::Normal)
+    pub fn postgresql_json_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::Normal)
     }
-    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::MinusOne)
+    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::MinusOne)
     }
-    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
+    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
     pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
