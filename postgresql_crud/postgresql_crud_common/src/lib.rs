@@ -1214,7 +1214,7 @@ pub fn std_primitive_bool_test_cases_vec() -> [std::primitive::bool;2] {
 }
 pub fn std_string_string_test_cases_vec() -> [std::string::String;12] {
     [
-        "".to_string(),
+        std::string::String::new(),
         "a".to_string(),
         "Hello, world!".to_string(),
         "   ".to_string(),

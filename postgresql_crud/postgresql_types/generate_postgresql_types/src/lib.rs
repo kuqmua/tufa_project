@@ -4501,14 +4501,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
                         };
                         let maybe_array_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => "".to_string(),
+                            PostgresqlTypePattern::Standart => std::string::String::new(),
                             PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
                         };
                         let maybe_constraint_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => "".to_string(),
+                            PostgresqlTypePattern::Standart => std::string::String::new(),
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => std::string::String::new(),
                             },
                         };
                         let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
@@ -4517,7 +4517,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let space_additional_parameter = " {}";
                         match (&not_null_or_nullable, &can_be_primary_key) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.clone());
                                 quote::quote! {
                                     format!(#format_handle_token_stream)
                                 }
@@ -4709,7 +4709,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
                                         );
                                         match &postgresql_type_range {
-                                            PostgresqlTypeRange::StdPrimitiveI32AsInt4 => int_range_normalize_token_stream,
+                                            PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
                                             PostgresqlTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_token_stream,
                                             PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => {
                                                 let generate_dot_succ_opt_expect_token_stream = |id: &dyn std::fmt::Display| {
@@ -4738,7 +4738,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
                                                 )
                                             }
-                                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => range_match_timestamp_and_timestamp_tz_token_stream,
+                                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                                             PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => range_match_timestamp_and_timestamp_tz_token_stream,
                                         }
                                     } else {
@@ -5116,8 +5116,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdPrimitiveI64AsInt8 => generate_typical_test_cases_vec_token_stream(&quote::quote!{std_primitive_i64_test_cases_vec}),
                         PostgresqlType::StdPrimitiveF32AsFloat4 => generate_typical_test_cases_vec_token_stream(&quote::quote!{std_primitive_f32_test_cases_vec}),
                         PostgresqlType::StdPrimitiveF64AsFloat8 => generate_typical_test_cases_vec_token_stream(&quote::quote!{std_primitive_f64_test_cases_vec}),
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => empty_vec_token_stream,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => empty_vec_token_stream,
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => empty_vec_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote! {
                             #import_path::std_primitive_i64_test_cases_vec().into_iter().map(|#element_snake_case|
