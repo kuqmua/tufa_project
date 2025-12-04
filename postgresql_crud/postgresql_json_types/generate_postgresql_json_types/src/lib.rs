@@ -58,18 +58,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeName {
         fn from(value: &PostgresqlJsonType) -> Self {
             match &value {
-                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => Self::Number,
-                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
                 PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
                 PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Boolean,
-                PostgresqlJsonType::StdStringStringAsJsonbString => Self::String,
+                PostgresqlJsonType::StdStringStringAsJsonbString |
                 PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
             }
         }
@@ -92,7 +92,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     }
     impl quote::ToTokens for PostgresqlJsonType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().expect("error eb6cafe0-ad0d-4108-8b0e-c062b155efbb").to_tokens(tokens)
+            self.to_string().parse::<proc_macro2::TokenStream>().expect("error eb6cafe0-ad0d-4108-8b0e-c062b155efbb").to_tokens(tokens);
         }
     }
     #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -118,10 +118,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl PostgresqlJsonTypePattern {
-        fn down_by_1(&self) -> std::option::Option<Self> {
+        const fn down_by_1(&self) -> std::option::Option<Self> {
             match &self {
                 Self::Standart => None,
-                Self::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => Some(Self::Standart),
+                Self::ArrayDimension1 {..} => Some(Self::Standart),
                 Self::ArrayDimension2 { dimension1_not_null_or_nullable: _, dimension2_not_null_or_nullable } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }),
                 Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: _,
@@ -143,11 +143,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }),
             }
         }
-        fn down_by_2(&self) -> std::option::Option<Self> {
+        const fn down_by_2(&self) -> std::option::Option<Self> {
             match &self {
-                Self::Standart => None,
-                Self::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => None,
-                Self::ArrayDimension2 { dimension1_not_null_or_nullable: _, dimension2_not_null_or_nullable: _ } => Some(Self::Standart),
+                Self::Standart |
+                Self::ArrayDimension1 {..} => None,
+                Self::ArrayDimension2 {..} => Some(Self::Standart),
                 Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: _,
                     dimension2_not_null_or_nullable: _,
@@ -164,16 +164,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }),
             }
         }
-        fn down_by_3(&self) -> std::option::Option<Self> {
+        const fn down_by_3(&self) -> std::option::Option<Self> {
             match &self {
-                Self::Standart => None,
-                Self::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => None,
-                Self::ArrayDimension2 { dimension1_not_null_or_nullable: _, dimension2_not_null_or_nullable: _ } => None,
-                Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                    dimension3_not_null_or_nullable: _,
-                } => Some(Self::Standart),
+                Self::Standart |
+                Self::ArrayDimension1 {..} |
+                Self::ArrayDimension2 {..} => None,
+                Self::ArrayDimension3 {..} => Some(Self::Standart),
                 Self::ArrayDimension4 {
                     dimension1_not_null_or_nullable: _,
                     dimension2_not_null_or_nullable: _,
@@ -182,22 +178,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable }),
             }
         }
-        fn down_by_4(&self) -> std::option::Option<Self> {
+        const fn down_by_4(&self) -> std::option::Option<Self> {
             match &self {
-                Self::Standart => None,
-                Self::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => None,
-                Self::ArrayDimension2 { dimension1_not_null_or_nullable: _, dimension2_not_null_or_nullable: _ } => None,
-                Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                    dimension3_not_null_or_nullable: _,
-                } => None,
-                Self::ArrayDimension4 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                    dimension3_not_null_or_nullable: _,
-                    dimension4_not_null_or_nullable: _,
-                } => Some(Self::Standart),
+                Self::Standart |
+                Self::ArrayDimension1 {..} |
+                Self::ArrayDimension2 {..} |
+                Self::ArrayDimension3 {..} => None,
+                Self::ArrayDimension4 {..} => Some(Self::Standart),
             }
         }
     }
@@ -217,7 +204,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl ArrayDimension {
-        fn to_usize(&self) -> std::primitive::usize {
+        const fn to_usize(&self) -> std::primitive::usize {
             match &self {
                 Self::ArrayDimension1 { .. } => 1,
                 Self::ArrayDimension2 { .. } => 2,
@@ -269,7 +256,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl ArrayDimensionSelectPattern {
-        fn to_usize(&self) -> std::primitive::usize {
+        const fn to_usize(&self) -> std::primitive::usize {
             match &self {
                 Self::ArrayDimension2 { .. } => 2,
                 Self::ArrayDimension3 { .. } => 3,

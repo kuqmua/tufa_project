@@ -245,8 +245,8 @@ double_negations = { level = "deny", priority = 0 }
 absolute_paths = { level = "allow", priority = 0 }
 absurd_extreme_comparisons = { level = "deny", priority = 0 }
 alloc_instead_of_core = { level = "deny", priority = 0 }
-allow_attributes = { level = "deny", priority = 0 }
-allow_attributes_without_reason = { level = "deny", priority = 0 }
+allow_attributes = { level = "allow", priority = 0 }#todo deny after migrating to the latest serde version
+allow_attributes_without_reason = { level = "allow", priority = 0 }#todo deny after migrating to the latest serde version
 almost_complete_range = { level = "deny", priority = 0 }
 almost_swapped = { level = "deny", priority = 0 }
 approx_constant = { level = "deny", priority = 0 }

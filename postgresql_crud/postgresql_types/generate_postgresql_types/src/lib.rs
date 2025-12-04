@@ -532,7 +532,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         not_null_or_nullable: value.1,
                         postgresql_type_pattern: value.2,
                     }),
-                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => match &value.0.can_be_an_array_element() {
+                    PostgresqlTypePattern::ArrayDimension1 {..} => match &value.0.can_be_an_array_element() {
                         CanBeAnArrayElement::True => Ok(Self {
                             postgresql_type: value.0,
                             not_null_or_nullable: value.1,
@@ -2938,7 +2938,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 match &postgresql_type_pattern {
                                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(ref value) = postgresql_type_range_try_from_postgresql_type {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(value) = &postgresql_type_range_try_from_postgresql_type {
                                             generate_pg_range_conversion_token_stream(&value_snake_case, &{
                                                 let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
                                                 quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value)}
@@ -3232,7 +3232,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => proc_macro2::TokenStream::new(),
+                        PostgresqlTypePattern::ArrayDimension1 {..} => proc_macro2::TokenStream::new(),
                     };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
@@ -4510,7 +4510,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_select_upper_camel_case,
                     &match &element.postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::True,
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
+                        PostgresqlTypePattern::ArrayDimension1 {..} => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                     },
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_string()},
