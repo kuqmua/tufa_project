@@ -1252,7 +1252,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                             __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
                         }
                         _ => {
-                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                            let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                         }
                     }
                 }

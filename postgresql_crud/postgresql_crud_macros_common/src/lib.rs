@@ -2042,7 +2042,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                                 match __key {
                                     #visit_map_match_variants_token_stream
                                     _ => {
-                                        let _ = _serde::de::MapAccess::next_value::<
+                                        let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<
                                             _serde::de::IgnoredAny,
                                         >(&mut __map)?;
                                     }
