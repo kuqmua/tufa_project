@@ -1,2 +1,0 @@
-#todo linter override for crates - runtime - deny all. compile time\tests - allow some
-unwrap_used = { level = "deny", priority = 1 }
