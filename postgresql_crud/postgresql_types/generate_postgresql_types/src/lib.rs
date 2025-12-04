@@ -1930,7 +1930,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                         match __key {
                                             #(#fields_initialization_token_stream)*
-                                            _ => {
+                                            __Field::__ignore => {
                                                 let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                                             }
                                         }

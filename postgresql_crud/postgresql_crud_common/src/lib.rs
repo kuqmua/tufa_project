@@ -545,7 +545,7 @@ const _: () = {
                                 }
                                 __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::vec::Vec<T>>(&mut __map)?);
                             }
-                            _ => {
+                            __Field::__ignore => {
                                 let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
                             }
                         }
@@ -866,7 +866,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                             }
                             __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
                         }
-                        _ => {
+                        __Field::__ignore => {
                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                         }
                     }

@@ -455,7 +455,7 @@ const _: () = {
                                 }
                                 __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
                             }
-                            _ => {
+                            __Field::__ignore => {
                                 let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
                             }
                         }

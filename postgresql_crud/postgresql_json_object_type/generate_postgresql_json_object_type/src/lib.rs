@@ -2857,7 +2857,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             }
                                                             __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __map)?);
                                                         }
-                                                        _ => {
+                                                        __Field::__ignore => {
                                                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
                                                         }
                                                     }

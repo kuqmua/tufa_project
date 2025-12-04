@@ -1838,19 +1838,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_read_inner_standart_not_null_alias_token_stream),
                                 });
                                 let token_stream2 = vec_token_stream(&match &dimension3_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => token_stream1.clone(),
+                                    NotNullOrNullable::NotNull => token_stream1,
                                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_stream1),
                                 });
                                 let token_stream3 = vec_token_stream(&match &dimension2_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => token_stream2.clone(),
+                                    NotNullOrNullable::NotNull => token_stream2,
                                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_stream2),
                                 });
                                 let token_stream4 = vec_token_stream(&match &dimension1_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => token_stream3.clone(),
+                                    NotNullOrNullable::NotNull => token_stream3,
                                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_stream3),
                                 });
                                 let token_stream5 = match &not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => token_stream4.clone(),
+                                    NotNullOrNullable::NotNull => token_stream4,
                                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_stream4),
                                 };
                                 quote::quote! {#token_stream5}
