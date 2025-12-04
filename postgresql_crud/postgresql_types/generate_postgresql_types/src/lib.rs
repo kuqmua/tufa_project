@@ -450,7 +450,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
-                        Ok(PostgresqlTypeRecord::from((__field0, __field1, __field2)))
+                        Ok(PostgresqlTypeRecord::try_from((__field0, __field1, __field2)).expect("error cdda76b2-1de3-4407-b47f-f39d2d07a833"))
                     }
                     #[inline]
                     fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -497,7 +497,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             _serde::__private::Some(__field2) => __field2,
                             _serde::__private::None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
-                        Ok(PostgresqlTypeRecord::from((__field0, __field1, __field2)))
+                        Ok(PostgresqlTypeRecord::try_from((__field0, __field1, __field2)).expect("error f52ee12d-dd20-4d76-9348-18f4ae78e6c4"))
                     }
                 }
                 #[doc(hidden)]
@@ -507,59 +507,54 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     "PostgresqlTypeRecord",
                     FIELDS,
                     __Visitor {
-                        marker: _serde::__private::PhantomData::<PostgresqlTypeRecord>,
+                        marker: _serde::__private::PhantomData::<Self>,
                         lifetime: _serde::__private::PhantomData,
                     },
                 )
             }
         }
     };
-    impl std::convert::From<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
-        fn from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Self {
+    impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
+        type Error = std::string::String;
+        fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Result<Self, Self::Error> {
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
             let cant_support_array_version_message = "cant support array_version: ";
             match &value.0.can_be_nullable() {
                 CanBeNullable::True => match &value.2 {
-                    PostgresqlTypePattern::Standart => Self {
+                    PostgresqlTypePattern::Standart => Ok(Self {
                         postgresql_type: value.0,
                         not_null_or_nullable: value.1,
                         postgresql_type_pattern: value.2,
-                    },
+                    }),
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => match &value.0.can_be_an_array_element() {
-                        CanBeAnArrayElement::True => Self {
+                        CanBeAnArrayElement::True => Ok(Self {
                             postgresql_type: value.0,
                             not_null_or_nullable: value.1,
                             postgresql_type_pattern: value.2,
-                        },
-                        CanBeAnArrayElement::False => {
-                            panic!("{cant_support_array_version_message}{value:#?}")
-                        }
+                        }),
+                        CanBeAnArrayElement::False => Err(format!("{cant_support_array_version_message}{value:#?}"))
                     },
                 },
                 CanBeNullable::False => {
                     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
-                        panic!("{cant_support_nullable_variants_message}{value:#?}");
+                        return Err(format!("{cant_support_nullable_variants_message}{value:#?}"));
                     }
                     match &value.2 {
-                        PostgresqlTypePattern::Standart => Self {
+                        PostgresqlTypePattern::Standart => Ok(Self {
                             postgresql_type: value.0,
                             not_null_or_nullable: value.1,
                             postgresql_type_pattern: value.2,
-                        },
+                        }),
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &value.0.can_be_an_array_element() {
                             CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => Self {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => Ok(Self {
                                     postgresql_type: value.0,
                                     not_null_or_nullable: value.1,
                                     postgresql_type_pattern: value.2,
-                                },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    panic!("{cant_support_nullable_variants_message}{value:#?}")
-                                }
+                                }),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => Err(format!("{cant_support_nullable_variants_message}{value:#?}"))
                             },
-                            CanBeAnArrayElement::False => {
-                                panic!("{cant_support_array_version_message}{value:#?}")
-                            }
+                            CanBeAnArrayElement::False => Err(format!("{cant_support_array_version_message}{value:#?}"))
                         },
                     }
                 }
@@ -569,47 +564,49 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     impl PostgresqlTypeRecord {
         fn all() -> std::vec::Vec<Self> {
             PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
-                PostgresqlTypePattern::all().into_iter().for_each(|postgresql_type_pattern| match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => match &postgresql_type.can_be_nullable() {
-                        CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                            acc.push(PostgresqlTypeRecord {
-                                postgresql_type: postgresql_type.clone(),
-                                not_null_or_nullable,
-                                postgresql_type_pattern: postgresql_type_pattern.clone(),
-                            });
-                        }),
-                        CanBeNullable::False => {
-                            acc.push(PostgresqlTypeRecord {
-                                postgresql_type: postgresql_type.clone(),
-                                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                postgresql_type_pattern,
-                            });
-                        }
-                    },
-                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &postgresql_type.can_be_an_array_element() {
-                        CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
+                for postgresql_type_pattern in PostgresqlTypePattern::all() {
+                    match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &postgresql_type.can_be_nullable() {
                             CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                acc.push(PostgresqlTypeRecord {
+                                acc.push(Self {
                                     postgresql_type: postgresql_type.clone(),
                                     not_null_or_nullable,
                                     postgresql_type_pattern: postgresql_type_pattern.clone(),
                                 });
                             }),
                             CanBeNullable::False => {
-                                if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                        acc.push(PostgresqlTypeRecord {
-                                            postgresql_type: postgresql_type.clone(),
-                                            not_null_or_nullable,
-                                            postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
-                                        });
-                                    });
-                                }
+                                acc.push(Self {
+                                    postgresql_type: postgresql_type.clone(),
+                                    not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    postgresql_type_pattern,
+                                });
                             }
                         },
-                        CanBeAnArrayElement::False => (),
-                    },
-                });
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &postgresql_type.can_be_an_array_element() {
+                            CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
+                                CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                                    acc.push(Self {
+                                        postgresql_type: postgresql_type.clone(),
+                                        not_null_or_nullable,
+                                        postgresql_type_pattern: postgresql_type_pattern.clone(),
+                                    });
+                                }),
+                                CanBeNullable::False => {
+                                    if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
+                                        for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                            acc.push(Self {
+                                                postgresql_type: postgresql_type.clone(),
+                                                not_null_or_nullable,
+                                                postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
+                                            });
+                                        }
+                                    }
+                                }
+                            },
+                            CanBeAnArrayElement::False => (),
+                        },
+                    }
+                }
                 acc
             })
         }
@@ -637,28 +634,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         type Error = ();
         fn try_from(value: &PostgresqlType) -> Result<Self, Self::Error> {
             match value {
-                PostgresqlType::StdPrimitiveI16AsInt2 => Err(()),
-                PostgresqlType::StdPrimitiveI32AsInt4 => Err(()),
-                PostgresqlType::StdPrimitiveI64AsInt8 => Err(()),
-                PostgresqlType::StdPrimitiveF32AsFloat4 => Err(()),
-                PostgresqlType::StdPrimitiveF64AsFloat8 => Err(()),
-                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => Err(()),
-                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => Err(()),
-                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Err(()),
-                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Err(()),
-                PostgresqlType::StdPrimitiveBoolAsBool => Err(()),
+                PostgresqlType::StdPrimitiveI16AsInt2 |
+                PostgresqlType::StdPrimitiveI32AsInt4 |
+                PostgresqlType::StdPrimitiveI64AsInt8 |
+                PostgresqlType::StdPrimitiveF32AsFloat4 |
+                PostgresqlType::StdPrimitiveF64AsFloat8 |
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                PostgresqlType::StdPrimitiveBoolAsBool |
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::StdStringStringAsText => Ok(Self::StdStringStringAsText),
-                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Ok(Self::SqlxTypesChronoNaiveTimeAsTime),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Ok(Self::SqlxTypesTimeTimeAsTime),
-                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Err(()),
-                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Err(()),
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Err(()),
-                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Ok(Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange),
@@ -668,7 +665,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     }
     impl std::convert::From<&PostgresqlTypeInitializationTryNew> for PostgresqlType {
-        fn from(value: &PostgresqlTypeInitializationTryNew) -> PostgresqlType {
+        fn from(value: &PostgresqlTypeInitializationTryNew) -> Self {
             match value {
                 PostgresqlTypeInitializationTryNew::StdStringStringAsText => Self::StdStringStringAsText,
                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
@@ -713,30 +710,30 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize),
     }
     impl std::convert::From<&PostgresqlType> for PostgresqlTypeDeserialize {
-        fn from(value: &PostgresqlType) -> PostgresqlTypeDeserialize {
+        fn from(value: &PostgresqlType) -> Self {
             match value {
-                PostgresqlType::StdPrimitiveI16AsInt2 => Self::Derive,
-                PostgresqlType::StdPrimitiveI32AsInt4 => Self::Derive,
-                PostgresqlType::StdPrimitiveI64AsInt8 => Self::Derive,
-                PostgresqlType::StdPrimitiveF32AsFloat4 => Self::Derive,
-                PostgresqlType::StdPrimitiveF64AsFloat8 => Self::Derive,
-                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => Self::Derive,
-                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => Self::Derive,
-                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Self::Derive,
-                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Self::Derive,
-                PostgresqlType::StdPrimitiveBoolAsBool => Self::Derive,
+                PostgresqlType::StdPrimitiveI16AsInt2 |
+                PostgresqlType::StdPrimitiveI32AsInt4 |
+                PostgresqlType::StdPrimitiveI64AsInt8 |
+                PostgresqlType::StdPrimitiveF32AsFloat4 |
+                PostgresqlType::StdPrimitiveF64AsFloat8 |
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                PostgresqlType::StdPrimitiveBoolAsBool |
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::Derive,
                 PostgresqlType::StdStringStringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText)),
-                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Self::Derive,
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime)),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime)),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval)),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate)),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp)),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)),
-                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::Derive,
-                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::Derive,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::Derive,
-                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::Derive,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range)),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range)),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange)),
@@ -797,12 +794,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }),
                 }
             }
-            generate_postgresql_type_record_handle_vec(PostgresqlTypeRecordHandle {
+            for postgresql_type_record_handle_element in generate_postgresql_type_record_handle_vec(PostgresqlTypeRecordHandle {
                 not_null_or_nullable: postgresql_type_record_element.not_null_or_nullable,
                 postgresql_type_pattern: postgresql_type_record_element.postgresql_type_pattern,
-            })
-            .into_iter()
-            .for_each(|postgresql_type_record_handle_element| {
+            }) {
                 let postgresql_type_record = PostgresqlTypeRecord {
                     postgresql_type: postgresql_type_record_element.postgresql_type.clone(),
                     not_null_or_nullable: postgresql_type_record_handle_element.not_null_or_nullable,
@@ -811,7 +806,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 if !acc.contains(&postgresql_type_record) {
                     acc.push(postgresql_type_record);
                 }
-            });
+            }
             acc
         })
     };
@@ -819,8 +814,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //     "GeneratePostgresqlTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_type_record_vec).unwrap(),
     // );
-    use rayon::iter::IntoParallelRefIterator;
-    use rayon::iter::ParallelIterator;
+    use rayon::iter::IntoParallelRefIterator as _;
+    use rayon::iter::ParallelIterator as _;
     let (columns_token_stream, postgresql_type_array) = postgresql_type_record_vec
         .into_iter()
         .enumerate()
@@ -3254,7 +3249,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_dot_zero_token_stream.clone(),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_dot_zero_token_stream,
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
                                     &self_dot_zero_token_stream,
                                     &proc_macro2::TokenStream::new(),
@@ -3262,7 +3257,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                 let dimension1_token_stream = match &dimension1_not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream,
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
                                         &element_dot_zero_token_stream,
                                         &proc_macro2::TokenStream::new(),
