@@ -1,5 +1,5 @@
 #[test]
-fn check_dependencies_having_same_exact_version_in_the_project() {
+fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspace_true() {
     let path = std::path::Path::new(&"../");
     fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> std::vec::Vec<std::string::String> {
         let mut acc = vec![];
@@ -26,6 +26,10 @@ fn check_dependencies_having_same_exact_version_in_the_project() {
     struct Name {
         name: std::string::String,
     }
+    #[derive(Debug, PartialEq, serde::Deserialize)]
+    struct Lints {
+        workspace: std::primitive::bool,
+    }
     #[derive(Debug, serde::Deserialize)]
     struct CargoToml {
         package: std::option::Option<Name>,
@@ -34,7 +38,7 @@ fn check_dependencies_having_same_exact_version_in_the_project() {
         dev_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
         #[serde(rename = "build-dependencies")]
         build_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
-        
+        lints: std::option::Option<Lints>,
     }
     let mut acc: std::vec::Vec<(std::string::String, toml::Value)> = vec![];
     for cargo_toml_string in &cargo_toml_string_vec {
@@ -42,6 +46,9 @@ fn check_dependencies_having_same_exact_version_in_the_project() {
         //todo after fix issue with pg_jsonschema remove this check
         if let Some(package) = &cargo_toml.package {
             if package.name != "pg_jsonschema" {
+                if cargo_toml.lints != Some(Lints {workspace: true}) {
+                    panic!("error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc")
+                }
                 let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
                     if let Some(value) = deps {
                         for (key, value) in value {
