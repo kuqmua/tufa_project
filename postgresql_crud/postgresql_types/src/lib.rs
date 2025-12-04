@@ -1306,7 +1306,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithOne {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        let one = 1;
+        let one: std::primitive::i32 = 1;
         Self(postgresql_crud_common::PaginationBase::new_unchecked(
             std::primitive::i32::MAX.checked_sub(one).expect("error c0f03c51-d565-4377-ad4e-f38ee636909b").into(),
             one.into()

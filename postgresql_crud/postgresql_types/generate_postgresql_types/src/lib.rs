@@ -1330,7 +1330,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let micro_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &micro_snake_case,
                                 &generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream(&quote::quote! {
-                                    #nanosecond_snake_case(&self.0) / 1000
+                                    #nanosecond_snake_case(&self.0).checked_div(1000).expect("error aea037b7-95ef-4616-b018-6f2ed1651928")
                                 }),
                             );
                             quote::quote! {
@@ -2818,7 +2818,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 }
                                             },
                                             PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote::quote! {
-                                                if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
+                                                if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case).checked_rem(1000).expect("error 7c8b4e12-8509-41e4-8769-0fe10aafd930") != 0 {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                         #value_snake_case: #value_snake_case.to_string(),
                                                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -2827,7 +2827,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 Ok(Self(#value_snake_case))
                                             },
                                             PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => quote::quote! {
-                                                if #value_snake_case.nanosecond() % 1000 != 0 {
+                                                if #value_snake_case.nanosecond().checked_rem(1000).expect("error ce47524f-de07-4a01-a4c5-78d39398b922") != 0 {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                         #value_snake_case: #value_snake_case.to_string(),
                                                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -3158,7 +3158,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             #micro_snake_case,
                                                         ) {
                                                             Some(#value_snake_case) => {
-                                                                if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
+                                                                if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case).checked_rem(1000).expect("error c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
                                                                     return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                                         #value_snake_case: #value_snake_case.to_string(),
                                                                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -3185,7 +3185,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             #microsecond_snake_case,
                                                         ) {
                                                             Ok(#value_snake_case) => {
-                                                                if #value_snake_case.nanosecond() % 1000 != 0 {
+                                                                if #value_snake_case.nanosecond().checked_rem(1000).expect("error 0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
                                                                     return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                                         #value_snake_case: #value_snake_case.to_string(),
                                                                         code_occurence: error_occurence_lib::code_occurence!(),
