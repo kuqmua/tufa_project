@@ -1963,7 +1963,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 } else {
-                    quote::quote! {ok_field_ident_jsonb_build_object_value(&field_ident)}
+                    quote::quote! {Ok(field_ident_jsonb_build_object_value(&field_ident))}
                 };
                 let select_only_created_or_updated_ids_query_bind_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                     quote::quote! {
