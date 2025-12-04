@@ -1,4 +1,4 @@
-const REGEX_VALUE: &str = r"^[a-zA-Z]+$";
+const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -7,9 +7,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error 20948d87-2c38-4896-96b6-239d9c9a0a38");
             for element in &element {
-                if !regex.is_match(element) {
-                    panic!("invalid element {element}, regex: {REGEX_VALUE}");
-                }
+                assert!(regex.is_match(element), "invalid element {element}, regex: {REGEX_VALUE}");
             }
         }
         let phrase_part_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
@@ -84,9 +82,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error cba1b5fb-6833-416b-96d9-b64b7a308008");
             for element in &element {
-                if !regex.is_match(element) {
-                    panic!("invalid element {element}, regex: {REGEX_VALUE}");
-                }
+                assert!(regex.is_match(element), "invalid element {element}, regex: {REGEX_VALUE}");
             }
         }
         let self_match_name = "self";
@@ -98,10 +94,8 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     break;
                 }
             }
-            if !is_self_exists_and_only_one {
-                panic!("cannot find {self_match_name}");
-            }
-        }
+            assert!(is_self_exists_and_only_one, "cannot find {self_match_name}");
+        };
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
@@ -127,7 +121,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     }
                     acc
                 });
-                let _ = value.pop();
+                let _: Option<std::primitive::char> = value.pop();
                 value
             });
             let struct_upper_camel_case_upper_camel_case_token_stream = {
