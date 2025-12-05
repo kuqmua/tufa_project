@@ -211,7 +211,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let derive_debug = token_patterns::DeriveDebug;
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
+    // let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
     let sqlx_row = token_patterns::SqlxRow;
@@ -1189,7 +1189,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
                 let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                 quote::quote! {
-                    #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                    Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 }
             });
             quote::quote! {vec![#elements_token_stream]}
@@ -1372,15 +1372,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote! {#field_ident});
                     let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
                     quote::quote! {
-                        let #field_ident = if let Ok(#value_snake_case) = sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
-                            &#value_snake_case,
-                            #field_ident_double_quotes_token_stream
-                        ) {
-                            Some(#value_snake_case)
-                        }
-                        else {
-                            None
-                        };
+                        let #field_ident = sqlx::Row::try_get::<
+                            #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream,
+                            &std::primitive::str
+                        >(&#value_snake_case, #field_ident_double_quotes_token_stream).ok();
                     }
                 });
                 let self_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -1450,22 +1445,23 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     }
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
-    let ident_column_read_permission_token_stream = {
-        let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
-        let fields_permission_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            //todo permissions for json
-            quote::quote! {
-                #field_ident: std::primitive::bool
-            }
-        });
-        quote::quote! {
-            #derive_debug_clone_copy
-            pub struct #ident_column_read_permission_upper_camel_case {
-                #fields_permission_token_stream
-            }
-        }
-    };
+    //todo
+    // let ident_column_read_permission_token_stream = {
+    //     let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
+    //     let fields_permission_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+    //         let field_ident = &element.field_ident;
+    //         //todo permissions for json
+    //         quote::quote! {
+    //             #field_ident: std::primitive::bool
+    //         }
+    //     });
+    //     quote::quote! {
+    //         #derive_debug_clone_copy
+    //         pub struct #ident_column_read_permission_upper_camel_case {
+    //             #fields_permission_token_stream
+    //         }
+    //     }
+    // };
     let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
     let ident_update_many_parameters_upper_camel_case = naming::parameter::SelfUpdateManyParametersUpperCamelCase::from_tokens(&ident);
     let ident_update_many_payload_upper_camel_case = naming::parameter::SelfUpdateManyPayloadUpperCamelCase::from_tokens(&ident);
@@ -6865,7 +6861,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #select_token_stream
         #ident_read_token_stream
         #ident_read_only_ids_token_stream
-        #ident_column_read_permission_token_stream
+        // #ident_column_read_permission_token_stream
         #ident_update_token_stream
         #ident_update_for_query_token_stream
     };
