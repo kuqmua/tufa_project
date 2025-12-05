@@ -2295,8 +2295,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
             quote::quote! {
                 let #payload_snake_case = {
-                    let #value_snake_case = #operation_payload_with_serialize_deserialize_initialization_token_stream;
-                    match serde_json::to_string(&#value_snake_case) {
+                    match serde_json::to_string(&#parameters_snake_case.#payload_snake_case) {
                         Ok(#value_snake_case) => #value_snake_case,
                         Err(#error_0_token_stream) => {
                             return Err(#ident_try_operation_error_named_upper_camel_case::#serde_json_to_string_syn_variant_initialization_token_stream);
