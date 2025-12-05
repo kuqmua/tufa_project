@@ -2053,7 +2053,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         }
                     }
                     #[doc(hidden)]
-                    const FIELDS: &[&'static str] = &[#fields_array_elements_token_stream];
+                    const FIELDS: &[&str] = &[#fields_array_elements_token_stream];
                     _serde::Deserializer::deserialize_struct(
                         __deserializer,
                         #ident_double_quotes_token_stream,
