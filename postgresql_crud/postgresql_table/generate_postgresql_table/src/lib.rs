@@ -226,7 +226,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
-    let ident_table_name_call_token_stream = quote::quote!{#ident::#table_name_snake_case()};
+    let self_table_name_call_token_stream = quote::quote!{Self::#table_name_snake_case()};
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
@@ -2251,7 +2251,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                 #request_snake_case: axum::extract::Request,
             ) -> axum::response::Response {
-                #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, &#ident_table_name_call_token_stream).await
+                #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, &#self_table_name_call_token_stream).await
             }
         }
     };
@@ -2426,7 +2426,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 Self::#try_operation_handle_snake_case_token_stream(
                     #endpoint_location_snake_case,
                     #parameters_snake_case,
-                    &#ident_table_name_call_token_stream
+                    &#self_table_name_call_token_stream
                 ).await
             }
         }
@@ -4087,7 +4087,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             }
             pub fn #routes_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
-                #ident::#routes_handle_snake_case(#app_state_snake_case, &#ident_table_name_call_token_stream)
+                #ident::#routes_handle_snake_case(#app_state_snake_case, &#self_table_name_call_token_stream)
             }
         });
     };
