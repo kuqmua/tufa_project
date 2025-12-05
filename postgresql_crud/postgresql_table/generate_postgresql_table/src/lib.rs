@@ -418,7 +418,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for _ in &fields {
                         acc.push_str("{},");
                     }
-                    let _: Option<char> = acc.pop();
+                    let _: std::option::Option<std::primitive::char> = acc.pop();
                     acc
                 };
                 generate_quotes::double_quotes_token_stream(&format!("create table if not exists {{table}} ({acc})"))
@@ -832,7 +832,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let mut #acc_snake_case = std::string::String::default();
                         #primary_key_content_token_stream
                         #column_increments_token_stream
-                        let _: Option<char> = #acc_snake_case.pop();
+                        let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -1684,7 +1684,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let mut #acc_snake_case = std::string::String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
-                        let _ = #acc_snake_case.pop();
+                        let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -2514,7 +2514,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             acc.push(',');
             acc
         });
-        let _: Option<char> = value.pop();
+        let _: std::option::Option<std::primitive::char> = value.pop();
         value
     };
     let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
@@ -2533,7 +2533,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             {
                 let mut #acc_snake_case = #std_string_string_token_stream::new();
                 #(#select_only_ids_query_part_initialization_token_stream)*
-                let _ = #acc_snake_case.pop();
+                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                 #acc_snake_case
             }
         }
@@ -2587,7 +2587,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                 }
                             }
-                            let _: Option<char> = #acc_snake_case.pop();
+                            let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                             #acc_snake_case
                         },
                         &#select_only_ids_query_part_token_stream
@@ -3186,15 +3186,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &quote::quote!{
                     let mut #acc_snake_case = std::vec::Vec::new();
                     for #element_snake_case in &#value_snake_case {
-                        if !#acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
-                            #acc_snake_case.push(&#element_snake_case.#primary_key_field_ident);
-                        }
-                        else {
+                        if #acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
                             return Err(#ident_operation_payload_try_new_error_named_upper_camel_case::#not_unique_primary_key_upper_camel_case {
                                 #not_unique_primary_key_snake_case: #element_snake_case.#primary_key_field_ident.clone(),
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             });
                         }
+                        #acc_snake_case.push(&#element_snake_case.#primary_key_field_ident);
                     }
                     Ok(Self(#value_snake_case))
                 }
@@ -3270,7 +3268,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     __deserializer,
                                     #ident_operation_payload_double_quotes_token_stream,
                                     __Visitor {
-                                        marker: _serde::__private::PhantomData::<#ident_operation_payload_upper_camel_case>,
+                                        marker: _serde::__private::PhantomData::<Self>,
                                         lifetime: _serde::__private::PhantomData,
                                     },
                                 )
@@ -3364,7 +3362,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let elements = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #fields_named_without_primary_key_update_assignment_token_stream
-                                let _: Option<char> = #acc_snake_case.pop();
+                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let primary_keys = {
@@ -3372,7 +3370,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
                                 }
-                                let _: Option<char> = #acc_snake_case.pop();
+                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             //todo refactor\reuse
@@ -3616,7 +3614,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #columns_snake_case = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #additional_parameters_modification_token_stream
-                                let _: Option<char> = #acc_snake_case.pop();
+                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
