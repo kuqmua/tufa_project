@@ -1610,9 +1610,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     fn #update_query_part_primary_key_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #primary_key_field_type_as_postgresql_type_token_stream #update_query_part_snake_case(
                             &self.#primary_key_field_ident,
-                            &"",
-                            &#ident::#primary_key_snake_case(),
-                            &"",
+                            "",
+                            #ident::#primary_key_snake_case(),
+                            "",
                             #increment_snake_case,
                         ) {
                             Ok(value_snake_case) => Ok(value_snake_case),
@@ -1633,9 +1633,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                             &#value_snake_case.#value_snake_case,
-                            &#field_ident_double_quotes_token_stream,
-                            &#field_ident_double_quotes_token_stream,
-                            &"",
+                            #field_ident_double_quotes_token_stream,
+                            #field_ident_double_quotes_token_stream,
+                            "",
                             #increment_snake_case
                         ) {
                             Ok(#value_snake_case) => Ok(#value_snake_case),
