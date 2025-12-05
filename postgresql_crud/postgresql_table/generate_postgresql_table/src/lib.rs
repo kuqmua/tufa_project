@@ -1888,13 +1888,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &postgresql_syn_variant_wrapper, postgresql_file, postgresql_line, postgresql_column);
         let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &row_and_rollback_syn_variant_wrapper, row_and_rollback_file, row_and_rollback_line, row_and_rollback_column);
         quote::quote! {
-            match #executor_snake_case.#rollback_snake_case().await {
-                Ok(_) => {
-                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                }
-                Err(#error_1_token_stream) => {
-                    #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                }
+            if let Err(#error_1_token_stream) = #executor_snake_case.#rollback_snake_case().await {
+                #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
+            }
+            else {
+                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
             }
         }
     };
@@ -2251,7 +2249,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                 #request_snake_case: axum::extract::Request,
             ) -> axum::response::Response {
-                #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, #self_table_name_call_token_stream).await
+                Self::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, #self_table_name_call_token_stream).await
             }
         }
     };
