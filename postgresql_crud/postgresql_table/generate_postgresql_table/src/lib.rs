@@ -1183,7 +1183,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))});
+        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|element|format!("cannot serialize into json: {element:?}")))});
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
         let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
             let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -2251,7 +2251,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                 #request_snake_case: axum::extract::Request,
             ) -> axum::response::Response {
-                #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, &#self_table_name_call_token_stream).await
+                #ident::#operation_handle_snake_case_token_stream(#app_state_snake_case, #request_snake_case, #self_table_name_call_token_stream).await
             }
         }
     };
@@ -2277,7 +2277,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
         }
     };
-    let generate_try_operation_token_stream = |operation: &Operation, type_variants_from_request_response_syn_variants: &[syn::Variant], result_ok_type_token_stream: &dyn quote::ToTokens, payload_check_token_stream: &dyn quote::ToTokens, desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens| {
+    let generate_try_operation_token_stream = |
+        operation: &Operation,
+        type_variants_from_request_response_syn_variants: &[syn::Variant],
+        result_ok_type_token_stream: &dyn quote::ToTokens,
+        desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens
+    | {
         let try_operation_snake_case_token_stream = operation.try_self_snake_case_token_stream();
         let try_operation_handle_snake_case_token_stream = operation.try_self_handle_snake_case_token_stream();
         let ident_try_operation_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(operation);
@@ -2290,7 +2295,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
             quote::quote! {
                 let #payload_snake_case = {
-                    #payload_check_token_stream
                     let #value_snake_case = #operation_payload_with_serialize_deserialize_initialization_token_stream;
                     match serde_json::to_string(&#value_snake_case) {
                         Ok(#value_snake_case) => #value_snake_case,
@@ -2386,8 +2390,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 let #operation_error_named_with_serialize_deserialize_snake_case = match #expected_response_snake_case {
                     #ident_operation_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case) => {
-                        let #value_snake_case = #desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream;
-                        return Ok(#value_snake_case);
+                        return Ok(#desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream);
                     },
                     #(#try_operation_logic_response_variants_to_try_operation_logic_error_named_with_serialize_deserialize),*
                 };
@@ -2426,7 +2429,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 Self::#try_operation_handle_snake_case_token_stream(
                     #endpoint_location_snake_case,
                     #parameters_snake_case,
-                    &#self_table_name_call_token_stream
+                    #self_table_name_call_token_stream
                 ).await
             }
         }
@@ -2655,7 +2658,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_ident_read_only_ids_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case));
+            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &std_vec_vec_ident_read_only_ids_token_stream,
+                &value_snake_case,
+            ));
             quote::quote! {
                 #try_operation_error_named_token_stream
             }
@@ -2780,9 +2788,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             impl_ident_vec_token_stream.push(generate_try_operation_token_stream(
                 &operation,
                 &type_variants_from_request_response_syn_variants,
-                // &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                 &ident_read_only_ids_upper_camel_case,
-                &proc_macro2::TokenStream::new(),
                 &value_snake_case,
             ));
             quote::quote! {
@@ -2973,7 +2979,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_struct_options_ident_token_stream,
-                &proc_macro2::TokenStream::new(),
                 &quote::quote! {
                     #value_snake_case
                     .into_iter()
@@ -3113,8 +3118,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &ident_read_upper_camel_case,
-                &proc_macro2::TokenStream::new(),
-                &quote::quote! {#value_snake_case}
+                &value_snake_case,
             ));
             quote::quote! {
                 #try_operation_error_named_token_stream
@@ -3530,8 +3534,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &std_vec_vec_ident_read_only_ids_token_stream,
-                &proc_macro2::TokenStream::new(),
-                &value_snake_case
+                &value_snake_case,
             ));
             quote::quote! {
                 #try_operation_error_named_token_stream
@@ -3740,8 +3743,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &ident_read_only_ids_upper_camel_case,
-                &proc_macro2::TokenStream::new(),
-                &value_snake_case
+                &value_snake_case,
             ));
             quote::quote! {
                 #try_operation_error_named_token_stream
@@ -3823,7 +3825,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &std_vec_vec_primary_key_field_type_read_token_stream, &proc_macro2::TokenStream::new(), &value_snake_case));
+            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &std_vec_vec_primary_key_field_type_read_token_stream,
+                &value_snake_case,
+            ));
             quote::quote! {
                 #try_operation_error_named_token_stream
             }
@@ -3922,7 +3929,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &common_http_request_syn_variants);
-            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(&operation, &type_variants_from_request_response_syn_variants, &primary_key_field_type_as_postgresql_type_read_upper_camel_case, &proc_macro2::TokenStream::new(), &value_snake_case));
+            impl_ident_vec_token_stream.push(generate_try_operation_token_stream(
+                &operation,
+                &type_variants_from_request_response_syn_variants,
+                &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
+                &value_snake_case,
+            ));
             quote::quote! {
                 #try_operation_error_named_token_stream
             }
@@ -4087,7 +4099,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             }
             pub fn #routes_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
-                Self::#routes_handle_snake_case(#app_state_snake_case, &#self_table_name_call_token_stream)
+                Self::#routes_handle_snake_case(#app_state_snake_case, #self_table_name_call_token_stream)
             }
         });
     };
