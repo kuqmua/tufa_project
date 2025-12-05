@@ -925,7 +925,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let impl_ident_where_many_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
             &ident_where_many_upper_camel_case,
             &fields_declaration_token_stream,
-            &ident_where_many_upper_camel_case,
             &ident_where_many_try_new_error_named_upper_camel_case,
             &{
                 let generate_fields_token_stream = |should_add_borrow: ShouldAddBorrow| {
@@ -1515,7 +1514,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let impl_ident_update_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
             &ident_update_upper_camel_case,
             &fields_declaration_token_stream,
-            &ident_update_upper_camel_case,
             &ident_update_try_new_error_named_upper_camel_case,
             &{
                 let (left_token_stream, right_token_stream) = {
@@ -3181,7 +3179,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let impl_ident_operation_payload_vec_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
                 &generate_ident_operation_payload_upper_camel_case(&operation),
                 &quote::quote!{#value_snake_case: #std_vec_vec_ident_update_token_stream},
-                &quote::quote!{Self},
                 &ident_operation_payload_try_new_error_named_upper_camel_case,
                 &quote::quote!{
                     let mut #acc_snake_case = std::vec::Vec::new();

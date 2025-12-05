@@ -2059,7 +2059,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
                         &generate_ident_read_or_ident_with_id_read_upper_camel_case(is_standart_with_id),
                         &generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(is_standart_with_id, &ReadOrReadInner::ReadWithoutSerdeOptionIsNoneAnnotation),
-                        &quote::quote!{Self},
                         &ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case,
                         &{
                             let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
@@ -2576,7 +2575,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_pub_try_new_token_stream(
                                 &generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
-                                &quote::quote!{Self},
                                 &ident_update_try_new_error_named_upper_camel_case,
                                 &{
                                     let custom_serde_error_deserializing_ident_update_stringified = format!("custom serde error deserializing {ident_update_upper_camel_case}");

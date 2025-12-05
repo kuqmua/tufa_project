@@ -1934,7 +1934,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                     #[doc(hidden)]
                     struct __FieldVisitor;
                     #[automatically_derived]
-                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                    impl _serde::de::Visitor<'_> for __FieldVisitor {
                         type Value = __Field;
                         fn expecting(
                             &self,
@@ -2057,7 +2057,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         #ident_double_quotes_token_stream,
                         FIELDS,
                         __Visitor {
-                            marker: _serde::__private::PhantomData::<#ident>,
+                            marker: _serde::__private::PhantomData::<Self>,
                             lifetime: _serde::__private::PhantomData,
                         },
                     )
