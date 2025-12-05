@@ -3992,102 +3992,102 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#create_many_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#create_many_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
+                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(Self::#create_many_payload_example_snake_case))
                     .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#create_one_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#create_one_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(#ident::#create_one_payload_example_snake_case))
+                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(Self::#create_one_payload_example_snake_case))
                     .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#read_many_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#read_many_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(#ident::#read_many_payload_example_snake_case))
+                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(Self::#read_many_payload_example_snake_case))
                     .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#read_one_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#read_one_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(#ident::#read_one_payload_example_snake_case))
+                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(Self::#read_one_payload_example_snake_case))
                     .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#update_many_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#update_many_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(#ident::#update_many_payload_example_snake_case))
+                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(Self::#update_many_payload_example_snake_case))
                     .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#update_one_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#update_one_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(#ident::#update_one_payload_example_snake_case))
+                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(Self::#update_one_payload_example_snake_case))
                     .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#delete_many_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#delete_many_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_many_payload_example_snake_case))
+                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(Self::#delete_many_payload_example_snake_case))
                     .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(
                         {
                             let table = table.to_string();
                             move |app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request| {
                                 let table = table.clone();
                                 async move {
-                                    #ident::#delete_one_snake_case_token_stream(app_state, request, &table).await
+                                    Self::#delete_one_snake_case_token_stream(app_state, request, &table).await
                                 }
                             }
                         }
                     ))
-                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_one_payload_example_snake_case))
+                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(Self::#delete_one_payload_example_snake_case))
                     // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
                     .with_state(#app_state_snake_case)
                 )
             }
             pub fn #routes_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
-                #ident::#routes_handle_snake_case(#app_state_snake_case, &#self_table_name_call_token_stream)
+                Self::#routes_handle_snake_case(#app_state_snake_case, &#self_table_name_call_token_stream)
             }
         });
     };
