@@ -739,13 +739,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let wrap_into_axum_response_token_stream = |axum_json_content_token_stream: &dyn quote::ToTokens, status_code_token_stream: &dyn quote::ToTokens| {
+    enum ShouldAddReturn {
+        True,
+        False
+    }
+    let wrap_into_axum_response_token_stream = |
+        axum_json_content_token_stream: &dyn quote::ToTokens,
+        status_code_token_stream: &dyn quote::ToTokens,
+        should_add_return: &ShouldAddReturn,
+    | {
+        let return_content_token_stream = match should_add_return {
+            ShouldAddReturn::True => quote::quote!{return response;},
+            ShouldAddReturn::False => quote::quote!{response},
+        };
         quote::quote! {
             let mut response = axum::response::IntoResponse::into_response(
                 axum::Json(#axum_json_content_token_stream)
             );
             *response.status_mut() = #status_code_token_stream;
-            return response;
+            #return_content_token_stream
         }
     };
     let generate_operation_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation, syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| {
@@ -753,7 +765,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let syn_variant_initialization_token_stream = generate_initialization_token_stream(syn_variant_wrapper, file, line, column);
         let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap_or_else(|| panic!("option_status_code is None")).to_axum_http_status_code_token_stream();
-        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(&quote::quote! {#ident_operation_response_variants_upper_camel_case::#from_snake_case(#error_snake_case)}, &status_code_token_stream);
+        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
+            &quote::quote! {#ident_operation_response_variants_upper_camel_case::#from_snake_case(#error_snake_case)},
+            &status_code_token_stream,
+            &ShouldAddReturn::True,
+        );
         quote::quote! {
             let #error_snake_case = #ident_operation_error_named_upper_camel_case::#syn_variant_initialization_token_stream;
             #eprintln_error_token_stream
@@ -2214,6 +2230,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {#ident_operation_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case)}
                 },
                 &operation.desirable_status_code().to_axum_http_status_code_token_stream(),
+                &ShouldAddReturn::False,
             );
             quote::quote! {
                 impl #ident {
@@ -2486,6 +2503,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()}
             },
             &quote::quote! {axum::http::StatusCode::OK},
+            &ShouldAddReturn::True,
         );
         quote::quote! {
             impl #ident {
