@@ -1887,14 +1887,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_match_postgres_transaction_rollback_await_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: std::primitive::u32, postgresql_column: std::primitive::u32, row_and_rollback_file: &'static str, row_and_rollback_line: std::primitive::u32, row_and_rollback_column: std::primitive::u32| {
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &postgresql_syn_variant_wrapper, postgresql_file, postgresql_line, postgresql_column);
         let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &row_and_rollback_syn_variant_wrapper, row_and_rollback_file, row_and_rollback_line, row_and_rollback_column);
-        quote::quote! {
+        quote::quote! {{
             if let Err(#error_1_token_stream) = #executor_snake_case.#rollback_snake_case().await {
                 #row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
             }
-            else {
-                #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-            }
-        }
+            #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+        }}
     };
     let generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: std::primitive::u32, postgresql_column: std::primitive::u32, row_and_rollback_file: &'static str, row_and_rollback_line: std::primitive::u32, row_and_rollback_column: std::primitive::u32| {
         let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(operation, postgresql_file, postgresql_line, postgresql_column, row_and_rollback_file, row_and_rollback_line, row_and_rollback_column);
