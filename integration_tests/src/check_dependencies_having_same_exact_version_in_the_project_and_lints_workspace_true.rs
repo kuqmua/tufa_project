@@ -11,10 +11,11 @@ fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspa
                     for element in get_cargo_toml_contents_recursive(&path) {
                         acc.push(element);
                     }
-                } else if path.is_file() && path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
+                }
+                if path.is_file() && path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
                     let mut file = std::fs::File::open(&path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
                     let mut contents = std::string::String::new();
-                    let _ = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
+                    let _: std::primitive::usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
                     acc.push(contents);
                 }
             }
@@ -42,106 +43,103 @@ fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspa
     }
     let mut acc: std::vec::Vec<(std::string::String, toml::Value)> = vec![];
     for cargo_toml_string in &cargo_toml_string_vec {
-        let cargo_toml: CargoToml = toml::from_str(&cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
+        let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
         //todo after fix issue with pg_jsonschema remove this check
-        if let Some(package) = &cargo_toml.package {
-            if package.name != "pg_jsonschema" {
-                if cargo_toml.lints != Some(Lints {workspace: true}) {
-                    panic!("error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc")
-                }
-                let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
-                    if let Some(value) = deps {
-                        for (key, value) in value {
-                            if let toml::Value::Table(value) = value {
-                                let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
-                                    if let toml::Value::String(value) = version_value {
-                                        fn is_valid_version(value: &std::primitive::str) -> std::primitive::bool {
-                                            let version = match value.strip_prefix('=') {
-                                                Some(value) => value,
-                                                None => return false,
-                                            };
-                                            let parts: Vec<&str> = version.split('.').collect();
-                                            if parts.len() != 3 {
+        if let Some(package) = &cargo_toml.package && package.name != "pg_jsonschema" {
+            assert!(cargo_toml.lints == Some(Lints {workspace: true}), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
+            let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
+                if let Some(value) = deps {
+                    let mut keys = value.keys().clone().collect::<std::vec::Vec<_>>();
+                    keys.sort();
+                    for key in keys {
+                        let value = &value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91");
+                        if let toml::Value::Table(value) = value {
+                            let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
+                                if let toml::Value::String(value) = version_value {
+                                    fn is_valid_version(value: &std::primitive::str) -> std::primitive::bool {
+                                        let version = match value.strip_prefix('=') {
+                                            Some(value) => value,
+                                            None => return false,
+                                        };
+                                        let parts: Vec<&str> = version.split('.').collect();
+                                        if parts.len() != 3 {
+                                            return false;
+                                        }
+                                        //// parse each part as u64 (ensures it's a valid unsigned number)
+                                        for part in parts {
+                                            if part.is_empty() {
+                                                return false; // prevents "=1..2"
+                                            }
+                                            if part.starts_with('0') && part != "0" {
+                                                return false; // optional: forbid leading zeros
+                                            }
+                                            if part.parse::<std::primitive::u64>().is_err() {
                                                 return false;
                                             }
-                                            // parse each part as u64 (ensures it's a valid unsigned number)
-                                            for part in parts {
-                                                if part.is_empty() {
-                                                    return false; // prevents "=1..2"
-                                                }
-                                                if part.starts_with('0') && part != "0" {
-                                                    return false; // optional: forbid leading zeros
-                                                }
-                                                if part.parse::<std::primitive::u64>().is_err() {
-                                                    return false;
-                                                }
-                                            }
-                                            true
                                         }
-                                        if !is_valid_version(&value) {
-                                            panic!("error 862fd6d2-cecb-4631-bcef-1043fb904153");
-                                        }
+                                        true
                                     }
-                                    else {
-                                        panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
-                                    }
-                                    {
-                                        let mut is_found = false;
-                                        for (acc_key, acc_version_value) in &acc {
-                                            if key == *acc_key {
-                                                if version_value == acc_version_value {
-                                                    is_found = true;
-                                                }
-                                                else {
-                                                    panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
-                                                }
-                                            }
-                                        }
-                                        if !is_found {
-                                            acc.push((key.clone(), version_value.clone()));
-                                        }
-                                    }
-                                };
-                                if value.len() == 1 {
-                                    if let Some(version_value) = value.get("version") {
-                                        handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else if value.get("path").is_some() {}
-                                    else {
-                                        panic!("error a2ac9215-0d83-428b-b572-355bd19f6211");
-                                    }
-                                }
-                                else if value.len() == 2 {
-                                    if let Some(version_value) = value.get("version") && value.get("features").is_some() {
-                                        handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else if value.get("path").is_some() && value.get("features").is_some() {}
-                                    else {
-                                        panic!("error 029bed67-2e36-4403-aead-9f415bdb20d9");
-                                    }
-                                }
-                                else if value.len() == 3 {
-                                    if let Some(version_value) = value.get("version") && value.get("features").is_some() && value.get("default-features").is_some() {
-                                        handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else {
-                                        panic!("error 2233a0a2-c162-42ae-afb5-3b714d63612b");
-                                    }
+                                    assert!(is_valid_version(value), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
                                 }
                                 else {
-                                    panic!("error fc975adf-98f9-4f91-9e97-bff3245e06bb");
+                                    panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
+                                }
+                                {
+                                    let mut is_found = false;
+                                    for (acc_key, acc_version_value) in &acc {
+                                        if key == acc_key {
+                                            if version_value == acc_version_value {
+                                                is_found = true;
+                                            }
+                                            else {
+                                                panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
+                                            }
+                                        }
+                                    }
+                                    if !is_found {
+                                        acc.push((key.clone(), version_value.clone()));
+                                    }
+                                }
+                            };
+                            if value.len() == 1 {
+                                if let Some(version_value) = value.get("version") {
+                                    handle_toml_value_string_valid_version(version_value);
+                                }
+                                else if value.get("path").is_some() {}
+                                else {
+                                    panic!("error a2ac9215-0d83-428b-b572-355bd19f6211");
+                                }
+                            }
+                            else if value.len() == 2 {
+                                if let Some(version_value) = value.get("version") && value.get("features").is_some() {
+                                    handle_toml_value_string_valid_version(version_value);
+                                }
+                                else if value.get("path").is_some() && value.get("features").is_some() {}
+                                else {
+                                    panic!("error 029bed67-2e36-4403-aead-9f415bdb20d9");
+                                }
+                            }
+                            else if value.len() == 3 {
+                                if let Some(version_value) = value.get("version") && value.get("features").is_some() && value.get("default-features").is_some() {
+                                    handle_toml_value_string_valid_version(version_value);
+                                }
+                                else {
+                                    panic!("error 2233a0a2-c162-42ae-afb5-3b714d63612b");
                                 }
                             }
                             else {
-                                panic!("error c61368cc-42b8-4de4-9df2-3bb30cc2ad79");
+                                panic!("error fc975adf-98f9-4f91-9e97-bff3245e06bb");
                             }
                         }
+                        else {
+                            panic!("error c61368cc-42b8-4de4-9df2-3bb30cc2ad79");
+                        }
                     }
-                };
-                handle_dependencies(cargo_toml.dependencies);
-                handle_dependencies(cargo_toml.dev_dependencies);
-                handle_dependencies(cargo_toml.build_dependencies);
-            }
+                }
+            };
+            handle_dependencies(cargo_toml.dependencies);
+            handle_dependencies(cargo_toml.dev_dependencies);
+            handle_dependencies(cargo_toml.build_dependencies);
         }
     }
 }

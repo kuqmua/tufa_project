@@ -14,7 +14,7 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
     let lints_vec_from_file = toml_value_table.keys().collect::<std::vec::Vec<&std::string::String>>();
     let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3");
     fn parse_article_ids_from_file(html: &std::primitive::str) -> std::vec::Vec<std::string::String> {
-        let document = scraper::Html::parse_document(&html);
+        let document = scraper::Html::parse_document(html);
         let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
         let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
         let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("error eb483b13-e70e-40f4-b83a-3eeb00413d57");
@@ -36,7 +36,7 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
                                 if is_deprecated {
                                     break;
                                 }
-                                for _ in h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector) {
+                                if h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector).next().is_some() {
                                     is_deprecated = true;
                                     break;
                                 }
