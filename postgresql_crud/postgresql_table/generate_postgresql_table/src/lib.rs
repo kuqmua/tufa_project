@@ -4737,7 +4737,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &current_table
                 ).await.expect("error 71632985-ec25-4928-aa9e-1e224a7478c1");
                 #content_token_stream
-                let _ = super::#ident::try_delete_one_handle(
+                let _: #primary_key_field_type_as_postgresql_type_read_token_stream = super::#ident::try_delete_one_handle(
                     url,
                     super::#ident_delete_one_parameters_upper_camel_case {
                         #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case {
