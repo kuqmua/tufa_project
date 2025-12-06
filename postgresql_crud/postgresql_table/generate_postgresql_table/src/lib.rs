@@ -1948,7 +1948,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             match #sqlx_row::try_get::<
                 #sqlx_row_try_get_type_token_stream,
                 #ref_std_primitive_str
-            >(&#value_snake_case, &Self::#primary_key_snake_case()) {
+            >(&#value_snake_case, Self::#primary_key_snake_case()) {
                 Ok(#value_snake_case) => #ok_token_stream,
                 Err(#error_0_token_stream) => {
                     #err_token_stream
@@ -3880,8 +3880,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = quote::quote! {#postgresql_crud_snake_case::generate_delete_one_query_string(
-                    &#table_snake_case,
-                    &Self::#primary_key_snake_case(),
+                    #table_snake_case,
+                    Self::#primary_key_snake_case(),
                 )};
                 let binded_query_token_stream = {
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
