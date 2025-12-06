@@ -1907,8 +1907,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
         }
     };
-    let generate_fetch_token_stream = |value_handle_token_stream: &dyn quote::ToTokens, try_next_error_initialization_token_stream: &dyn quote::ToTokens| {
-        wrap_into_value_token_stream(&quote::quote! {
+    enum ShouldWrapIntoValue {
+        True,
+        False
+    }
+    let generate_fetch_token_stream = |
+        value_handle_token_stream: &dyn quote::ToTokens,
+        try_next_error_initialization_token_stream: &dyn quote::ToTokens,
+        should_wrap_into_value: &ShouldWrapIntoValue,
+    | {
+        let content_token_stream = quote::quote! {
             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
             let mut #acc_snake_case = std::vec::Vec::new();
             while let Some(#value_snake_case) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
@@ -1924,7 +1932,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #acc_snake_case.push(#value_snake_case);
             }
             #acc_snake_case
-        })
+        };
+        match should_wrap_into_value {
+            ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
+            ShouldWrapIntoValue::False => content_token_stream,
+        }
     };
     let generate_fetch_one_token_stream = |value_handle_token_stream: &dyn quote::ToTokens, fetch_one_error_initialization_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
@@ -2450,6 +2462,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+            &ShouldWrapIntoValue::True,
         )
     };
     enum CreateOneOrUpdateOneOrDeleteOne {
@@ -2628,6 +2641,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                            &ShouldWrapIntoValue::True,
                         )
                     },
                 );
@@ -2938,11 +2952,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream)}
                         },
                         &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
+                        &ShouldWrapIntoValue::False,
                     );
-                    quote::quote! {
+                    quote::quote! {{
                         #fetch_token_stream
-                        #value_snake_case
-                    }
+                    }}
                 };
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
                     &operation,
@@ -3472,6 +3486,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     //             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                     //         ),
                     //         &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                    //         &ShouldWrapIntoValue::True,
                     //     )
                     // }
                     &{
@@ -3494,6 +3509,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                            &ShouldWrapIntoValue::True,
                         )
                     },
                 );
