@@ -1927,7 +1927,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         })
     };
     let generate_fetch_one_token_stream = |value_handle_token_stream: &dyn quote::ToTokens, fetch_one_error_initialization_token_stream: &dyn quote::ToTokens| {
-        wrap_into_value_token_stream(&quote::quote! {
+        quote::quote! {
             match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
                 Ok(#value_snake_case) => {
                     #value_handle_token_stream
@@ -1936,7 +1936,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #fetch_one_error_initialization_token_stream
                 }
             }
-        })
+        }
     };
     let generate_sqlx_row_try_get_primary_key_token_stream = |sqlx_row_try_get_type_token_stream: &dyn quote::ToTokens, ok_token_stream: &dyn quote::ToTokens, err_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
@@ -2472,10 +2472,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Operation::UpdateOne,
             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
         };
-        generate_fetch_one_token_stream(
+        wrap_into_value_token_stream(&generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(&quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case}, &value_snake_case, &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!())),
             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-        )
+        ))
     };
     let generate_operation_payload_example_token_stream = |operation: &Operation| {
         let operation_payload_example_snake_case = operation.operation_payload_example_snake_case();
@@ -2737,7 +2737,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Operation::UpdateOne,
                             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
                         };
-                        generate_fetch_one_token_stream(
+                        wrap_into_value_token_stream(&generate_fetch_one_token_stream(
                             // &generate_sqlx_row_try_get_primary_key_token_stream(
                             //     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
                             //     &value_snake_case,
@@ -2755,7 +2755,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                        )
+                        ))
                     },
                 );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
@@ -3073,16 +3073,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = {
-                    let fetch_one_token_stream = generate_fetch_one_token_stream(
-                        &generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadOne),
-                        &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
-                    );
-                    quote::quote! {
-                        #fetch_one_token_stream
-                        #value_snake_case
-                    }
-                };
+                let postgresql_logic_token_stream = generate_fetch_one_token_stream(
+                    &generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadOne),
+                    &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
+                );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
@@ -3698,7 +3692,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Operation::UpdateOne,
                             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
                         };
-                        generate_fetch_one_token_stream(
+                        wrap_into_value_token_stream(&generate_fetch_one_token_stream(
                             &{
                                 let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
                                 quote::quote! {
@@ -3709,7 +3703,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                        )
+                        ))
                     },
                 );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(
