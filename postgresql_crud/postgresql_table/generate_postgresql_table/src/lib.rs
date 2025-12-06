@@ -3578,7 +3578,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         quote::quote! {
                             if let Some(#value_snake_case) = &#update_for_query_snake_case.#field_ident {
                                 #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
-                                    &#field_ident_double_quotes_token_stream,
+                                    #field_ident_double_quotes_token_stream,
                                     &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(#value_snake_case, &mut #increment_snake_case) {
                                         Ok(#value_snake_case) => #value_snake_case,
                                         Err(#error_0_token_stream) => {
