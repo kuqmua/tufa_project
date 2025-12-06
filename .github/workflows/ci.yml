@@ -57,8 +57,8 @@ jobs:
           sleep 2
         done
 
-    # - name: Run Clippy
-    #   run: cargo clippy --all-targets --all-features -- -D warnings
+    - name: Run Clippy
+      run: cargo clippy #cargo clippy --all-targets --all-features -- -D warnings (with tests check)
 
     - name: Run tests
       env:
