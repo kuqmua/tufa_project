@@ -57,6 +57,9 @@ jobs:
           sleep 2
         done
 
+    # - name: Run Clippy
+    #   run: cargo clippy --all-targets --all-features -- -D warnings
+
     - name: Run tests
       env:
         SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"

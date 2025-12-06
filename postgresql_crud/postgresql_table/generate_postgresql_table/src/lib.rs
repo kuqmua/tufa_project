@@ -4765,9 +4765,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             postgresql,
                             code_occurence: _,
                         } = read_one_error_named_with_serialize_deserialize {
-                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                panic!("error 99bd4d82-4976-4e1e-8022-543b01221a91");
-                            }
+                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error 99bd4d82-4976-4e1e-8022-543b01221a91");
                         }
                         else {
                              panic!("error 5a86690f-80e2-4dbc-9853-1826f94748bd");
@@ -6542,9 +6540,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 postgresql,
                                 code_occurence: _
                             } = delete_one_error_named_with_serialize_deserialize {
-                                if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                    panic!("error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
-                                }
+                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
                             } else {
                                 panic!("error e63b27a3-f3e3-4f19-998a-88ce798b08cc");
                             }
@@ -6607,9 +6603,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 postgresql,
                                 code_occurence: _
                             } = read_one_error_named_with_serialize_deserialize {
-                                if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                    panic!("error 2c10a1e0-ee7f-4710-9329-5e6ba04a880c");
-                                }
+                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error 2c10a1e0-ee7f-4710-9329-5e6ba04a880c");
                             } else {
                                 panic!("error f6bb9f64-4453-4eb2-9972-7266270b3972");
                             }
