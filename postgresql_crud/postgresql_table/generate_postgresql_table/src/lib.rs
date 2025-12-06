@@ -1950,7 +1950,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             match #sqlx_row::try_get::<
                 #sqlx_row_try_get_type_token_stream,
                 #ref_std_primitive_str
-            >(&#value_snake_case, &#ident::#primary_key_snake_case()) {
+            >(&#value_snake_case, &Self::#primary_key_snake_case()) {
                 Ok(#value_snake_case) => #ok_token_stream,
                 Err(#error_0_token_stream) => {
                     #err_token_stream
@@ -3045,7 +3045,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                             &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                             &mut 0,
-                            &#ident::#primary_key_snake_case(),
+                            &Self::#primary_key_snake_case(),
                             false
                         ) {
                             Ok(#value_snake_case) => #value_snake_case,
@@ -3326,7 +3326,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                                     if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                                         #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
-                                                            &#ident::#primary_key_snake_case(),
+                                                            &Self::#primary_key_snake_case(),
                                                             &match #element_snake_case.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
                                                                 Ok(#value_snake_case) => #value_snake_case,
                                                                 Err(#error_0_token_stream) => {
@@ -3385,7 +3385,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             postgresql_crud::generate_update_many_query_string(
                                 &#table_snake_case,
                                 &elements,
-                                &#ident::#primary_key_snake_case(),
+                                &Self::#primary_key_snake_case(),
                                 &primary_keys,
                                 &return_columns
                             )
@@ -3621,7 +3621,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #postgresql_crud_snake_case::generate_update_one_query_string(
                                 &#table_snake_case,
                                 &#columns_snake_case,
-                                &#ident::#primary_key_snake_case(),
+                                &Self::#primary_key_snake_case(),
                                 &#primary_key_query_part_snake_case,
                                 &return_columns
                             )
@@ -3792,7 +3792,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #additional_paramaters_initialization_token_stream
                             #additional_parameters_snake_case
                         },
-                        &#ident::#primary_key_snake_case(),
+                        &Self::#primary_key_snake_case(),
                     )}
                 };
                 let binded_query_token_stream = {
@@ -3883,7 +3883,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = quote::quote! {#postgresql_crud_snake_case::generate_delete_one_query_string(
                     &#table_snake_case,
-                    &#ident::#primary_key_snake_case(),
+                    &Self::#primary_key_snake_case(),
                 )};
                 let binded_query_token_stream = {
                     let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
