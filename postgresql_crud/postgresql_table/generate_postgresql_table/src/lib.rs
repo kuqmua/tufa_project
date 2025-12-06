@@ -4744,7 +4744,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream
                         }
                     },
-                    &current_table
+                    current_table
                 ).await.expect("error cc3958f0-1a4a-4440-97c7-ca63611405c5");
                 if let Err(#error_snake_case) = super::#ident::try_read_one_handle(
                     url,
