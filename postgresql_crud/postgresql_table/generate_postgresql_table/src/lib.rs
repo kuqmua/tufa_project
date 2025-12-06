@@ -2262,7 +2262,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &#body_bytes_snake_case,
                 ) {
                     Ok(#value_snake_case) => {
-                        let #value_snake_case = #ident_operation_payload_upper_camel_case::#from_snake_case(#value_snake_case);
                         #operation_payload_with_serialize_deserialize_check_token_stream
                         #value_snake_case
                     },
