@@ -4754,7 +4754,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_snake_case: select_default_all_with_max_page_size.clone()
                         }
                     },
-                    &current_table
+                    current_table
                 )
                 .await {
                     if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
@@ -4853,7 +4853,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_non_existent_primary_keys(
                                 element,
@@ -4861,7 +4860,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -5069,7 +5068,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_equal_to_created_primary_keys(
                                 element,
@@ -5077,7 +5075,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -5907,9 +5905,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 should_break = true;
                                                 break;
                                             }
-                                            else {
-                                                local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                                            }
+                                            local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
                                         }
                                         if should_break {
                                             break;
@@ -6252,9 +6248,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 should_break = true;
                                                 break;
                                             }
-                                            else {
-                                                local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                                            }
+                                            local_increment = local_increment.checked_add(1).expect("error 326274d1-199d-4c43-89b3-c61c8ecdfd77");
                                         }
                                         if should_break {
                                             break;
@@ -6343,7 +6337,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         Ok(value) => if value.len() != 0 {
                             panic!("error 51d14103-5122-4d96-a45c-4dd958ab3adc")
                         },
-                        Err(error) => panic!("error 0d5dec47-8b2e-4f02-909b-3a58b65bc6a5"),
+                        Err(error) => panic!("error 0d5dec47-8b2e-4f02-909b-3a58b65bc6a5 {error:#?}"),
                     }
                 });
                 quote::quote!{{
@@ -6364,7 +6358,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_non_existent_primary_keys(
                                 element,
@@ -6372,7 +6365,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -6494,7 +6487,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = select_default_all_with_max_page_size.clone();
                         let current_table = current_table.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned = no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row;
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_primary_keys(
                                 element,
@@ -6502,7 +6494,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                &no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row_cloned,
+                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
