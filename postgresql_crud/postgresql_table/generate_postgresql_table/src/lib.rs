@@ -3325,7 +3325,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                                 }
                                                             },
-                                                            &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
+                                                            &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(#value_snake_case, &mut #increment_snake_case) {
                                                                 Ok(#value_snake_case) => #value_snake_case,
                                                                 Err(#error_0_token_stream) => {
                                                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3579,7 +3579,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if let Some(#value_snake_case) = &#update_for_query_snake_case.#field_ident {
                                 #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
                                     &#field_ident_double_quotes_token_stream,
-                                    &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
+                                    &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(#value_snake_case, &mut #increment_snake_case) {
                                         Ok(#value_snake_case) => #value_snake_case,
                                         Err(#error_0_token_stream) => {
                                             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3611,9 +3611,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             };
                             #postgresql_crud_snake_case::generate_update_one_query_string(
-                                &#table_snake_case,
+                                #table_snake_case,
                                 &#columns_snake_case,
-                                &Self::#primary_key_snake_case(),
+                                Self::#primary_key_snake_case(),
                                 &#primary_key_query_part_snake_case,
                                 &return_columns
                             )
@@ -3778,7 +3778,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let query_string_token_stream = {
                     let additional_paramaters_initialization_token_stream = generate_read_or_delete_many_additional_paramaters_initialization_token_stream(&ReadManyOrDeleteMany::DeleteMany);
                     quote::quote! {#postgresql_crud_snake_case::generate_delete_many_query_string(
-                        &#table_snake_case,
+                        #table_snake_case,
                         &{
                             #increment_initialization_token_stream
                             #additional_paramaters_initialization_token_stream
