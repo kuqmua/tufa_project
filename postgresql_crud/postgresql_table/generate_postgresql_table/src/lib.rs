@@ -1072,10 +1072,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     }
     let generate_read_or_delete_many_additional_paramaters_initialization_token_stream = |read_many_or_delete_many: &ReadManyOrDeleteMany| {
-        let maybe_mut_token_stream: &dyn quote::ToTokens = match &read_many_or_delete_many {
-            ReadManyOrDeleteMany::ReadMany => &naming::MutSnakeCase,
-            ReadManyOrDeleteMany::DeleteMany => &proc_macro2::TokenStream::new(),
-        };
         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&Operation::from(read_many_or_delete_many), &query_part_syn_variant_wrapper, file!(), line!(), column!());
         quote::quote! {
             match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
@@ -2287,10 +2283,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_operation_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(operation);
         let payload_token_stream = {
             let serde_json_to_string_syn_variant_initialization_token_stream = generate_initialization_token_stream(&serde_json_to_string_syn_variant_wrapper, file!(), line!(), column!());
-            let operation_payload_with_serialize_deserialize_initialization_token_stream = {
-                let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(operation);
-                quote::quote! {#ident_operation_payload_upper_camel_case::#from_snake_case(#parameters_snake_case.#payload_snake_case)}
-            };
             quote::quote! {
                 let #payload_snake_case = {
                     match serde_json::to_string(&#parameters_snake_case.#payload_snake_case) {
