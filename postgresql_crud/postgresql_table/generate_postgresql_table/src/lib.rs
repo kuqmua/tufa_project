@@ -1082,7 +1082,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&Operation::from(read_many_or_delete_many), &query_part_syn_variant_wrapper, file!(), line!(), column!());
         quote::quote! {
-            let #maybe_mut_token_stream #additional_parameters_snake_case = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
+            match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                 &#parameters_snake_case.#payload_snake_case.#where_many_snake_case,
                 &mut #increment_snake_case,
                 &"",//useless
@@ -1092,7 +1092,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 Err(#error_0_token_stream) => {
                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                 }
-            };
+            }
         }
     };
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
@@ -2863,7 +2863,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &#generate_select_query_part_parameters_payload_select_call_token_stream,
                         &{
                             #increment_initialization_token_stream
-                            #additional_paramaters_initialization_token_stream
+                            let mut #additional_parameters_snake_case = #additional_paramaters_initialization_token_stream;
                             {
                                 #prefix_to_additional_parameters_token_stream
                                 let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
@@ -3782,9 +3782,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &{
                             #increment_initialization_token_stream
                             #additional_paramaters_initialization_token_stream
-                            #additional_parameters_snake_case
                         },
-                        &Self::#primary_key_snake_case(),
+                        Self::#primary_key_snake_case(),
                     )}
                 };
                 let binded_query_token_stream = {
