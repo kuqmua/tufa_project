@@ -382,14 +382,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let pub_fn_table_token_stream = quote::quote! {
-            pub fn #table_name_snake_case() -> &'static str {
+            pub const fn #table_name_snake_case() -> &'static str {
                 #ident_snake_case_double_quotes_token_stream
             }
         };
         let fn_primary_key_token_stream = {
             let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
             quote::quote! {
-                fn #primary_key_snake_case() -> &'static std::primitive::str {
+                const fn #primary_key_snake_case() -> &'static std::primitive::str {
                     #primary_key_field_ident_double_quotes_token_stream
                 }
             }
@@ -455,19 +455,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let pub_async_fn_prepare_postgresql_token_stream = quote::quote! {
             pub async fn #prepare_postgresql_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
-                if let Err(#error_snake_case) = Self::#prepare_extensions_snake_case(#pool_snake_case).await {
-                    return Err(#error_snake_case);
-                }
-                if let Err(#error_snake_case) = Self::#prepare_postgresql_table_snake_case(#pool_snake_case, &#ident_snake_case_double_quotes_token_stream).await {
-                    return Err(#error_snake_case);
-                }
+                Self::#prepare_extensions_snake_case(#pool_snake_case).await?;
+                Self::#prepare_postgresql_table_snake_case(#pool_snake_case, #ident_snake_case_double_quotes_token_stream).await?;
                 Ok(())
             }
         };
         let pub_fn_allow_methods_token_stream = {
             let http_method_token_stream = quote::quote! {http::Method};
             quote::quote! {
-                pub fn allow_methods() -> [#http_method_token_stream;4] {[
+                pub const fn allow_methods() -> [#http_method_token_stream;4] {[
                     #http_method_token_stream::GET,
                     #http_method_token_stream::POST,
                     #http_method_token_stream::PATCH,
@@ -498,7 +494,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #value_snake_case.push_str(&match #element_snake_case {
                             #variants_token_stream
                         });
-                        #value_snake_case.push_str(",");
+                        #value_snake_case.push(',');
                     }
                     let _: #std_option_option_std_primitive_char_token_stream = #value_snake_case.pop();
                     #value_snake_case
@@ -2571,8 +2567,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
-                        &#table_snake_case,
-                        &#column_names_double_quotes_token_stream,
+                        #table_snake_case,
+                        #column_names_double_quotes_token_stream,
                         &{
                             #increment_initialization_token_stream
                             let mut #acc_snake_case = #std_string_string::default();
@@ -2707,8 +2703,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         #postgresql_crud_snake_case::generate_create_one_query_string(
-                            &#table_snake_case,
-                            &#column_names_double_quotes_token_stream,
+                            #table_snake_case,
+                            #column_names_double_quotes_token_stream,
                             &match #parameters_snake_case.#payload_snake_case.#create_query_part_snake_case(&mut 0) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
@@ -2858,12 +2854,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let query_string_token_stream = {
                     let additional_paramaters_initialization_token_stream = generate_read_or_delete_many_additional_paramaters_initialization_token_stream(&ReadManyOrDeleteMany::ReadMany);
                     let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
-                    let prefix_to_additional_parameters_token_stream = quote::quote! {
-                        let #prefix_snake_case = match additional_parameters.is_empty() {
-                            true => "",
-                            false => " ",
-                        };
-                    };
+                    let prefix_to_additional_parameters_token_stream = quote::quote! {let #prefix_snake_case = if additional_parameters.is_empty() {""} else {" "};};
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let order_by_column_match_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
                         let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
@@ -2873,7 +2864,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     });
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
-                        &#table_snake_case,
+                        #table_snake_case,
                         &#generate_select_query_part_parameters_payload_select_call_token_stream,
                         &{
                             #increment_initialization_token_stream
@@ -2893,7 +2884,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                     #order_snake_case,
                                 ));
-                            }
+                            };
                             {
                                 #prefix_to_additional_parameters_token_stream
                                 let #value_snake_case = match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
@@ -2907,12 +2898,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     },
                                 };
-                                #additional_parameters_snake_case.push_str(&format!(
-                                    "{}{}",
-                                    #prefix_snake_case,
-                                    #value_snake_case
-                                ));
-                            }
+                                #additional_parameters_snake_case.push_str(&format!("{prefix}{value}"));
+                            };
                             #additional_parameters_snake_case
                         }
                     )}
