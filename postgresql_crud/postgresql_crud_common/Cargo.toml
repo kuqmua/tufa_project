@@ -10,10 +10,8 @@ sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_
 serde = {version = "=1.0.224", features = ["derive"]}
 thiserror = {version = "=1.0.48"}
 schemars = {version = "=0.8.22"}
-regex = {version = "=1.9.3"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 from_str = {path = "../../from_str"}
-app_state = {path = "../../app_state"}
 naming = {path = "../../naming"}
 postgresql_crud_common_and_macros_common = {path = "../postgresql_crud_common_and_macros_common"}
 

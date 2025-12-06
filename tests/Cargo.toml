@@ -10,7 +10,5 @@ workspace = true
 
 [dev-dependencies]
 reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
-serde = {version = "=1.0.224", features = ["derive"]}
-serde_json = {version = "=1.0.145"}
 toml = {version = "=0.9.6"}
 scraper = {version = "=0.24.0"}

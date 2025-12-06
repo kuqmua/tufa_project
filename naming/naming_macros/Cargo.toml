@@ -12,7 +12,6 @@ serde_json = {version = "=1.0.145"}
 proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
 syn = {version = "=2.0.100"}
-convert_case = {version = "=0.6.0"}
 constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
