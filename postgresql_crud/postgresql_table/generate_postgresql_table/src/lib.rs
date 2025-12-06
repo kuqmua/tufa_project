@@ -3312,13 +3312,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 if #is_field_ident_update_exists_snake_case {
                                     #acc_snake_case.push_str(&
                                         postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
-                                            &#field_ident_double_quotes_token_stream,
+                                            #field_ident_double_quotes_token_stream,
                                             &{
                                                 let mut #acc_snake_case = #std_string_string::default();
                                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                                     if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                                         #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
-                                                            &Self::#primary_key_snake_case(),
+                                                            Self::#primary_key_snake_case(),
                                                             &match #element_snake_case.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
                                                                 Ok(#value_snake_case) => #value_snake_case,
                                                                 Err(#error_0_token_stream) => {
@@ -3375,9 +3375,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #acc_snake_case
                             };
                             postgresql_crud::generate_update_many_query_string(
-                                &#table_snake_case,
+                                #table_snake_case,
                                 &elements,
-                                &Self::#primary_key_snake_case(),
+                                Self::#primary_key_snake_case(),
                                 &primary_keys,
                                 &return_columns
                             )
