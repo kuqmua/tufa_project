@@ -1736,7 +1736,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
     let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::RowAndRollbackUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
@@ -1912,11 +1911,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         wrap_into_value_token_stream(&quote::quote! {
             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
             let mut #acc_snake_case = std::vec::Vec::new();
-            while let Some(#value_snake_case) = match {
-                #use_postgresql_crud_try_stream_ext_token_stream;
-                #rows_snake_case.try_next()
-            }.await
-            {
+            while let Some(#value_snake_case) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
                 Ok(#value_snake_case) => match #value_snake_case {
                     Some(#value_snake_case) => #value_handle_token_stream,
                     None => None,
