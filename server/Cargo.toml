@@ -62,14 +62,14 @@ tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]
 # uuid = {version = "1.2.2", features = ["v4", "serde"]}
 # validator = {version = "=0.16.0"}
 # valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
-utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
+# utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+# utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
 git_info = {path = "../git_info"}
 common = {path = "../common"}# local dev test without commits version
 # enum_extension_lib = {path = "../enum_extension_lib"}
-error_occurence_lib = {path = "../error_occurence_lib"}
+# error_occurence_lib = {path = "../error_occurence_lib"}
 app_state = {path = "../app_state"}
-constants = {path = "../constants"}
+# constants = {path = "../constants"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
