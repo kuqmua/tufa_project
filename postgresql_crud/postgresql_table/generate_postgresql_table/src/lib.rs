@@ -4450,7 +4450,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
                         .chunks(10)
-                        .map(|#element_snake_case| #element_snake_case.to_vec())
+                        .map(std::vec::Vec::from)
                         .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                     {
                         let current_table = current_table.clone();
