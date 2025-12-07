@@ -183,7 +183,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
     let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase;
     let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
-    let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
+    // let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -4426,7 +4426,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_name = "de556c26_9297_4adb_9483_22d474cf1e7d";
         let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_name = "35b26a97_abdd_4cf9_b4e5_aa9b47aa1a0d";
         let table_create_into_postgresql_json_type_option_vec_where_length_equal_name = "1ce53b67_1e94_413e_83cf_c6d7094289a8";
-        let table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name = "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
+        // let table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name = "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
 
         fill_table_field_idents_vec_token_stream(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
@@ -4439,13 +4439,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_name,
             &table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_name,
             &table_create_into_postgresql_json_type_option_vec_where_length_equal_name,
-            &table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name,
+            // &table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name,
         ]);
         let create_many_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                 let field_ident = &element.field_ident;
                 let field_type = &element.syn_field.ty;
-                let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&field_type);
                 let ident_create_content_token_stream = generate_ident_create_content_element_token_stream(field_ident);
                 quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
@@ -5492,37 +5491,37 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             );
-            let _create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = generate_read_test_token_stream(
-                table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name,
-                &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
-                &generate_ident_create_content_element_token_stream,
-                &|element: &SynFieldWrapper|{
-                    let field_ident = &element.field_ident;
-                    let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
-                            if current_field_ident == primary_key_field_ident {
-                                some_primary_key_where_initialization_token_stream.clone()
-                            }
-                            else if current_field_ident == field_ident {
-                                generate_postgresql_type_where_try_new_and_token_stream(&quote::quote!{vec![#element_snake_case]})
-                            } else {
-                                none_token_stream.clone()
-                            }
-                        })
-                    );
-                    quote::quote!{
-                        if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
-                            ident_create.#field_ident.clone()
-                        ) {
-                            for #element_snake_case in #value_snake_case {
-                                #assert_eq_token_stream
-                            }
-                        }
-                    }
-                }
-            );
+            // let _create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = generate_read_test_token_stream(
+            //     table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name,
+            //     &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
+            //     &generate_ident_create_content_element_token_stream,
+            //     &|element: &SynFieldWrapper|{
+            //         let field_ident = &element.field_ident;
+            //         let field_type = &element.syn_field.ty;
+            //         let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(
+            //             &generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+            //                 let current_field_ident = &element.field_ident;
+            //                 if current_field_ident == primary_key_field_ident {
+            //                     some_primary_key_where_initialization_token_stream.clone()
+            //                 }
+            //                 else if current_field_ident == field_ident {
+            //                     generate_postgresql_type_where_try_new_and_token_stream(&quote::quote!{vec![#element_snake_case]})
+            //                 } else {
+            //                     none_token_stream.clone()
+            //                 }
+            //             })
+            //         );
+            //         quote::quote!{
+            //             if let Some(#value_snake_case) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
+            //                 ident_create.#field_ident.clone()
+            //             ) {
+            //                 for #element_snake_case in #value_snake_case {
+            //                     #assert_eq_token_stream
+            //                 }
+            //             }
+            //         }
+            //     }
+            // );
             quote::quote!{{
                 #test_read_many_by_non_existent_primary_keys_token_stream
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
@@ -5761,7 +5760,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
                                         .map(std::vec::Vec::from)
-                                        .into_iter()
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
                                             let url_cloned = url.clone();
@@ -6096,7 +6094,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
                                         .map(std::vec::Vec::from)
-                                        .into_iter()
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
                                             let url_cloned = url.clone();
@@ -6582,11 +6579,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #[cfg(test)]
             mod #ident_tests_snake_case {
                 #[test]
-                fn test_size_of() {
+                fn size_of() {
                     assert_eq!(std::mem::size_of::<super::#ident>(), 0);
                 }
                 #[test]
-                fn test_crud() {
+                fn crud() {
                     std::thread::Builder::new()
                     .stack_size(16 * 1024 * 1024)
                     .spawn(|| {
@@ -6657,7 +6654,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_read_one_cloned2 = table_read_one.clone();
                             let table_update_many_cloned2 = table_update_many.clone();
                             let table_update_one_cloned2 = table_update_one.clone();
-                            let table_delete_many_cloned2 = table_delete_many.clone();
+                            // let table_delete_many_cloned2 = table_delete_many.clone();
                             let table_delete_one_cloned2 = table_delete_one.clone();
 
                             let drop_all_test_tables = async ||{
@@ -6665,7 +6662,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     let #query_snake_case = format!("drop table if exists {table}");
                                     let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
                                 }
-                                drop_table_if_exists(&#postgres_pool_snake_case, &table).await;
+                                drop_table_if_exists(&#postgres_pool_snake_case, table).await;
                                 drop_table_if_exists(&postgres_pool, &table_create_many).await;
                                 drop_table_if_exists(&postgres_pool, &table_create_one).await;
                                 drop_table_if_exists(&postgres_pool, &table_test_read_many_by_non_existent_primary_keys_cloned2).await;
@@ -6682,7 +6679,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
                                 super::#ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
-                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table).await.expect("error 0c29cf7d-1af7-459c-b0c6-69855ca98bef");
+                                super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, table).await.expect("error 0c29cf7d-1af7-459c-b0c6-69855ca98bef");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_many_cloned).await.expect("error 141d990c-91e5-4518-8978-7660fcf88784");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_one_cloned).await.expect("error cdd3b111-5e8b-4201-896e-bd38dc8b4d7c");
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_non_existent_primary_keys_cloned).await.expect("error 56a27d70-0393-4759-9d02-f9eb1e623f5f");
@@ -6695,11 +6692,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 super::#ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_one_cloned).await.expect("error e5cc2f6f-65a2-472d-8a1e-56e23fbc165a");
                                 let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
                                     #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
-                                    #config_snake_case: &#config_snake_case,
+                                    #config_snake_case,
                                     project_git_info: &git_info::PROJECT_GIT_INFO,
                                 });
                                 let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
-                                let _: Result<(), ()> = started_tx.send(());
+                                if let Err(error) = started_tx.send(()) {
+                                    panic!("error aa3b8154-1fe2-4d3f-a164-26f9d21245cd {error:#?}");
+                                }
                                 axum::serve(
                                     tcp_listener,
                                     axum::Router::new()
