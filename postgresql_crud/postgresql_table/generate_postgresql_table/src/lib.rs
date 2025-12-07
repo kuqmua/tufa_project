@@ -6267,7 +6267,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };}
             });
             quote::quote! {{
-                let current_table = table_update_one_cloned2.clone();
                 #update_one_only_one_column_tests_token_stream
             };}
         };
