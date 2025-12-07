@@ -4824,7 +4824,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
                             }
                         },
-                        &current_table
+                        current_table
                     )
                     .await {
                         Ok(#value_snake_case) => if #value_snake_case.len() != 0 {
@@ -4950,7 +4950,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error 0bb172c7-3344-4d31-bba5-6ce9e8f28746"),
                                 }
                             },
-                            &current_table
+                            current_table
                         )
                         .await
                         .expect("error 0c45413e-45c7-493c-a105-3ba88661d360"),
@@ -5036,7 +5036,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error bd3be33e-f145-445b-8d02-4c42c8ab4a0c"),
                             },
                         },
-                        &current_table
+                        current_table
                     )
                     .await
                     {
@@ -6460,12 +6460,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error e5b2edbc-f2b2-48a0-82b9-02720f721eae"),
                             },
                         },
-                        &current_table
+                        current_table
                     )
                     .await {
-                        Ok(#value_snake_case) => if #value_snake_case.len() != 0 {
-                            panic!("error 77f038b0-6f39-4b5b-a402-a1b6142acd0d")
-                        },
+                        Ok(#value_snake_case) => assert!(#value_snake_case.len() == 0, "error 77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
                         Err(#error_snake_case) => panic!("error bcb79917-ee81-416e-82a3-f43a823266a3 {error:#?}")
                     }
                 });
