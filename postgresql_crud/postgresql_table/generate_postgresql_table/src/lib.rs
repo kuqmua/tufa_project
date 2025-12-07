@@ -5793,7 +5793,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &current_table
                                     ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
                                 })
-                                .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>(),
                             )
                             .buffer_unordered(5)
                             .collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>()
@@ -5893,7 +5892,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut local_increment = 0;
+                                    let mut local_increment: std::primitive::usize = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
                                         &read_only_ids_current_element.#field_ident.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")
@@ -6136,7 +6135,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
                                     })
                                 })
-                                .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>(),
                             )
                             .buffer_unordered(5)
                             .collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>()
@@ -6236,7 +6234,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut local_increment = 0;
+                                    let mut local_increment: std::primitive::usize = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
                                         &read_only_ids_current_element.#field_ident.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")
