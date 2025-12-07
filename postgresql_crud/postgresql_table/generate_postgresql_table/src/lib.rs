@@ -4703,9 +4703,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         postgresql,
                                         ..
                                     } = read_one_error_named_with_serialize_deserialize {
-                                        if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                            panic!("error d7152378-3a59-4050-8710-87b7000c8e3d");
-                                        }
+                                        assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error d7152378-3a59-4050-8710-87b7000c8e3d");
                                     }
                                     else {
                                          panic!("error e1ac93a5-59e6-477e-a99d-c02e99497421");
@@ -4827,9 +4825,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         current_table
                     )
                     .await {
-                        Ok(#value_snake_case) => if #value_snake_case.len() != 0 {
-                            panic!("error 06df4025-e2d1-4128-b819-c06613c6ae3f");
-                        },
+                        Ok(#value_snake_case) => assert!(#value_snake_case.len() == 0, "error 06df4025-e2d1-4128-b819-c06613c6ae3f"),
                         Err(#error_snake_case) => {
                             panic!("error e661c49b-2288-4548-8783-35495e193976: {error:#?}");
                         },
@@ -5040,11 +5036,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     )
                     .await
                     {
-                        Ok(#value_snake_case) => {
-                            if #value_snake_case != std::vec::Vec::new() {
-                                panic!("error d79c0af3-5e2e-4891-a7ff-d1007b573e77");
-                            }
-                        }
+                        Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
                         Err(#error_snake_case) => {
                             panic!("error 1f079962-06af-4d21-a837-c88b0e7db265 {error:#?}");
                         }
