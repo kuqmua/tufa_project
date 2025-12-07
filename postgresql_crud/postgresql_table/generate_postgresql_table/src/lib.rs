@@ -4477,7 +4477,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 {
                                     let mut #acc_snake_case = vec![];
                                     assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "error 39572295-b6a4-49d7-a65a-16f8bcf44ede");
-                                    for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()).collect::<std::vec::Vec<(super::#ident_read_only_ids_upper_camel_case, super::#ident_create_upper_camel_case)>>() {
+                                    for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()) {
                                         #acc_snake_case.push(super::#ident_read_upper_camel_case {
                                             #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                                 &read_only_ids.#primary_key_field_ident
@@ -4609,11 +4609,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &current_table
                             )
                             .await {
-                                Ok(#value_snake_case) => {
-                                    if #value_snake_case != std::vec::Vec::new() {
-                                        panic!("error 4e88679a-0d23-418f-8767-4e9b7531429c");
-                                    }
-                                },
+                                Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error 4e88679a-0d23-418f-8767-4e9b7531429c"),
                                 Err(#error_snake_case) => {
                                     panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
                                 }
@@ -4825,7 +4821,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         current_table
                     )
                     .await {
-                        Ok(#value_snake_case) => assert!(#value_snake_case.len() == 0, "error 06df4025-e2d1-4128-b819-c06613c6ae3f"),
+                        Ok(#value_snake_case) => assert!(#value_snake_case.is_empty(), "error 06df4025-e2d1-4128-b819-c06613c6ae3f"),
                         Err(#error_snake_case) => {
                             panic!("error e661c49b-2288-4548-8783-35495e193976: {error:#?}");
                         },
@@ -4884,9 +4880,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "error 52c9d1ea-1593-4b32-97d1-0ed4a529a74a");
                             for (read_only_ids, create) in read_only_ids_from_try_create_many.clone()
                                 .into_iter()
-                                .zip(ident_vec_create.into_iter())
-                                .collect::<std::vec::Vec<(super::#ident_read_only_ids_upper_camel_case, super::#ident_create_upper_camel_case)>>()
-                            {
+                                .zip(ident_vec_create.into_iter()) {
                                 #acc_snake_case.push(super::#ident_read_upper_camel_case {
                                     #primary_key_field_ident: <
                                         #primary_key_field_type
