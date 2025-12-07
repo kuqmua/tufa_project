@@ -2,7 +2,7 @@ mod filters;
 
 pub use filters::*;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum DeriveOrImpl {
     Derive,
     Impl(proc_macro2::TokenStream),
@@ -172,7 +172,7 @@ pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming:
     )
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,
@@ -186,7 +186,7 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum ShouldDeriveUtoipaToSchema {
     True,
     False,
@@ -200,7 +200,7 @@ impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsCreateQueryPartSelfCreateUsed {
     True,
     False,
@@ -213,7 +213,7 @@ impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsCreateQueryBindMutable {
     True,
     False,
@@ -226,7 +226,7 @@ impl quote::ToTokens for IsCreateQueryBindMutable {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartSelfSelectUsed {
     True,
     False,
@@ -239,7 +239,7 @@ impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
     True,
     False,
@@ -252,7 +252,7 @@ impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorM
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
     True,
     False,
@@ -265,7 +265,7 @@ impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryPartSelfUpdateUsed {
     True,
     False,
@@ -278,7 +278,7 @@ impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryPartJsonbSetTargetUsed {
     True,
     False,
@@ -292,7 +292,7 @@ impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsUpdateQueryBindMutable {
     True,
     False,
@@ -306,7 +306,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
     True,
     False,
@@ -320,7 +320,7 @@ impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
     True,
     False,
@@ -547,7 +547,7 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum ImportPath {
     Crate,
     PostgresqlCrud,
@@ -602,7 +602,7 @@ impl quote::ToTokens for ImportPath {
         self.snake_case_std_primitive_str().parse::<proc_macro2::TokenStream>().expect("error uuid d8636ee5-942b-472d-a025-c6e0700e1b59").to_tokens(tokens);
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsQueryBindMutable {
     True,
     False,
@@ -615,7 +615,7 @@ impl quote::ToTokens for IsQueryBindMutable {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum IncrementParameterUnderscore {
     True,
     False,
@@ -628,7 +628,7 @@ impl quote::ToTokens for IncrementParameterUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum ColumnParameterUnderscore {
     True,
     False,
@@ -641,7 +641,7 @@ impl quote::ToTokens for ColumnParameterUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsNeedToAddLogicalOperatorUnderscore {
     True,
     False,
@@ -732,7 +732,7 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartValueUnderscore {
     True,
     False,
@@ -745,7 +745,7 @@ impl quote::ToTokens for CreateQueryPartValueUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum CreateQueryPartIncrementUnderscore {
     True,
     False,
@@ -758,7 +758,7 @@ impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum CreateQueryBindValueUnderscore {
     True,
     False,
@@ -771,7 +771,7 @@ impl quote::ToTokens for CreateQueryBindValueUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum SelectQueryPartValueUnderscore {
     True,
     False,
@@ -784,7 +784,7 @@ impl quote::ToTokens for SelectQueryPartValueUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartValueUnderscore {
     True,
     False,
@@ -797,7 +797,7 @@ impl quote::ToTokens for UpdateQueryPartValueUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
     True,
     False,
@@ -810,7 +810,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetTargetUnderscore {
     True,
     False,
@@ -823,7 +823,7 @@ impl quote::ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
         }
     }
 }
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum UpdateQueryPartJsonbSetPathUnderscore {
     True,
     False,
@@ -1106,7 +1106,7 @@ fn generate_update_to_read_only_ids_token_stream(
     }
 }
 fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1161,7 +1161,7 @@ fn generate_read_only_ids_merged_with_create_into_read_token_stream(
     }
 }
 fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1243,7 +1243,7 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     create_token_stream: &dyn quote::ToTokens,
     where_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
-    postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
+    postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType,
 ) -> proc_macro2::TokenStream {
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
@@ -1278,7 +1278,7 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_to_json_fi
         &create_token_stream,
         &where_token_stream,
         &content_token_stream,
-        &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
     )
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
@@ -1376,8 +1376,8 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
 }
 
 fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-    postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
-    import_path: &ImportPath,
+    postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType,
+    import_path: ImportPath,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_json_type_option_vec_where_length_greater_than_test_snake_case = naming::PostgresqlJsonTypeOptionVecWhereLengthGreaterThanTestSnakeCase;
@@ -1460,7 +1460,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &update_to_read_only_ids_token_stream,
     );
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
     );
@@ -1473,7 +1473,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
     let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &read_only_ids_merged_with_create_into_option_value_read_token_stream,
     );
@@ -1498,7 +1498,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &self_postgresql_type_as_postgresql_type_create_token_stream,
         &self_postgresql_type_as_postgresql_type_where_token_stream,
         &read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream,
-        &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
     );
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let postgresql_type_option_vec_where_greater_than_test_snake_case = naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
@@ -1524,8 +1524,8 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
     );
     let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-        &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
-        import_path,
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
+        *import_path,
         &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
     );
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
@@ -1642,7 +1642,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &update_to_read_only_ids_token_stream,
     );
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
     );
@@ -1655,7 +1655,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &read_only_ids_merged_with_create_into_read_token_stream,
     );
     let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &read_only_ids_merged_with_create_into_option_value_read_token_stream,
     );
@@ -1702,8 +1702,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
     );
     let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-        &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
-        import_path,
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+        *import_path,
         &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
     );
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
@@ -1744,7 +1744,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum ReadOrUpdate {
     Read,
     Update,
@@ -1758,7 +1758,7 @@ impl ReadOrUpdate {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub enum IsPrimaryKeyUnderscore {
     True,
     False,
@@ -2098,13 +2098,13 @@ pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToT
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum PostgresqlTypeOrPostgresqlJsonType {
     PostgresqlType,
     PostgresqlJsonType,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
     DefaultSomeOneWithMaxPageSize
@@ -2115,13 +2115,13 @@ pub fn generate_value_initialization_token_stream(import_path: &ImportPath, cont
     quote::quote!{#import_path::Value { #value_snake_case: #content_token_stream }}
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum EqualOperatorHandle {
     Equal,
     IsNull
@@ -2152,7 +2152,7 @@ pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum Dimension {
     One,
     Two,
@@ -2169,7 +2169,7 @@ impl Dimension {
         }
     }
 }
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum DimensionIndexNumber {
     Zero,
     One,

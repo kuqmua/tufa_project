@@ -1,6 +1,6 @@
 generate_where_filters::generate_where_filters!();
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum EncodeFormat {
     #[default]
     Base64,
@@ -289,7 +289,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum RegularExpressionCase {
     Sensitive,
     Insensitive,

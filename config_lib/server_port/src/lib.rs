@@ -1,6 +1,6 @@
 pub use server_port_try_from_u16::server_port_try_from_u16;
 
-#[derive(Debug, Clone, serde::Serialize)]
+#[derive(Debug, Clone, Copy, serde::Serialize)]
 pub struct ServerPort(std::primitive::u16);
 impl std::fmt::Display for ServerPort {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {

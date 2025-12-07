@@ -375,7 +375,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -408,7 +408,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_self_value_query_bind_token_stream
@@ -453,7 +453,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             for #element_snake_case in #self_snake_case.#value_snake_case.into_vec() {
@@ -493,7 +493,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             #if_let_err_query_try_bind_self_value_to_string_token_stream
@@ -521,7 +521,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -551,8 +551,8 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             }
                         },
                         match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 | PostgresqlTypePatternHandle::ArrayDimension2 | PostgresqlTypePatternHandle::ArrayDimension3 | PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone(),
+                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false,
+                            PostgresqlTypePatternHandle::ArrayDimension1 | PostgresqlTypePatternHandle::ArrayDimension2 | PostgresqlTypePatternHandle::ArrayDimension3 | PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true,
                         },
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
@@ -596,7 +596,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             if let Err(#error_snake_case) = #query_snake_case.try_bind(self.encoded_string_representation) {
@@ -619,7 +619,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         generate_query_part_one_value_token_stream(&generate_quotes::double_quotes_token_stream(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"))),
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         query_bind_one_value_token_stream.clone(),
                     )
                 };
@@ -683,7 +683,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 ))
                             }
                         },
-                        is_query_bind_mutable_true.clone(),
+                        is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -720,7 +720,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 };
                                 Ok(format!("{}({} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
                             },
-                            is_query_bind_mutable_true.clone(),
+                            is_query_bind_mutable_true,
                             quote::quote! {
                                 #maybe_dimensions_query_bind_content_token_stream
                                 if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(&#self_snake_case.#value_snake_case) {
@@ -759,7 +759,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                 };
                                 Ok(format!("{}({}{dimensions_indexes} {content})", &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case))
                             },
-                            is_query_bind_mutable_true.clone(),
+                            is_query_bind_mutable_true,
                             quote::quote! {
                                 #maybe_dimensions_query_bind_content_token_stream
                                 if let postgresql_crud_common::EqualOperator::Equal = &<T as postgresql_crud_common::PostgresqlTypeEqualOperator>::operator(
@@ -897,7 +897,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
@@ -933,7 +933,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_one_value_token_stream
@@ -980,7 +980,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
@@ -1011,7 +1011,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         match #self_snake_case.#value_snake_case.query_bind_one_by_one(#query_snake_case) {
@@ -1080,7 +1080,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #if_let_err_query_try_bind_self_value_to_string_token_stream
@@ -1114,7 +1114,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #if_let_err_query_try_bind_self_value_to_string_token_stream
@@ -1148,7 +1148,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #if_let_err_query_try_bind_self_value_to_string_token_stream
@@ -1181,7 +1181,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
@@ -1214,7 +1214,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                             ))
                         }
                     },
-                    is_query_bind_mutable_true.clone(),
+                    is_query_bind_mutable_true,
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream

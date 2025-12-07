@@ -1111,7 +1111,7 @@ where
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct JsonFieldRights {
     can_create: std::primitive::bool,
     can_read: std::primitive::bool,
@@ -1269,7 +1269,7 @@ pub fn increment_checked_add_one_returning_increment(increment: &mut std::primit
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum EqualOperator {
     Equal,
     IsNull
@@ -1286,7 +1286,7 @@ pub trait PostgresqlTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, Copy,PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
 pub struct UnsignedPartOfStdPrimitiveI32(std::primitive::i32); //todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
@@ -1389,7 +1389,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UnsignedPart
     }
 }
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
 pub struct NotZeroUnsignedPartOfStdPrimitiveI32(UnsignedPartOfStdPrimitiveI32);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {

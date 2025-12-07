@@ -50,7 +50,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum PostgresqlTypeGreaterThanVariant {
     GreaterThan,
     NotGreaterThan,
@@ -75,7 +75,7 @@ impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub enum PostgresqlJsonTypeLengthGreaterThanVariant {
     LengthGreaterThan,
     NotLengthGreaterThan,
