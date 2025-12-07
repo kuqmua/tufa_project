@@ -4985,7 +4985,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     })),
                                 },
                             },
-                            &current_table
+                            current_table
                         )
                         .await
                         .expect("error d5c23a9d-eb02-44e4-8654-e2a3d7752f51");
@@ -6331,7 +6331,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 })),
                             },
                         },
-                        &current_table
+                        current_table
                     )
                     .await {
                         Ok(value) => if value.len() != 0 {
@@ -6412,7 +6412,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 })),
                             },
                         },
-                        &current_table
+                        current_table
                     ).await.expect("error b80b91b8-7de1-4ea2-97cf-1987a5f7cc57");
                     assert_eq!(
                         read_only_ids_from_try_delete_many,
@@ -6463,7 +6463,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         current_table
                     )
                     .await {
-                        Ok(#value_snake_case) => assert!(#value_snake_case.len() == 0, "error 77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
+                        Ok(#value_snake_case) => assert!(#value_snake_case.is_empty(), "error 77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
                         Err(#error_snake_case) => panic!("error bcb79917-ee81-416e-82a3-f43a823266a3 {error:#?}")
                     }
                 });
