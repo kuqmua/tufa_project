@@ -752,7 +752,7 @@ self_assignment = { level = "deny", priority = 0 }
 self_named_constructors = { level = "deny", priority = 0 }
 self_named_module_files = { level = "deny", priority = 0 }
 semicolon_if_nothing_returned = { level = "deny", priority = 0 }
-semicolon_inside_block = { level = "deny", priority = 0 }
+semicolon_inside_block = { level = "allow", priority = 0 } #thought it useless
 semicolon_outside_block = { level = "deny", priority = 0 }
 separated_literal_suffix = { level = "deny", priority = 0 }
 serde_api_misuse = { level = "deny", priority = 0 }

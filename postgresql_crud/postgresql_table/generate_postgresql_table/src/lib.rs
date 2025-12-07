@@ -4485,9 +4485,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
                                         });
                                     }
-                                    #acc_snake_case.sort_by(|a, b| {
-                                        if let (Some(a), Some(b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                            a.#value_snake_case.cmp(&b.#value_snake_case)
+                                    #acc_snake_case.sort_by(|first, second| {
+                                        if let (Some(first), Some(second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                            first.#value_snake_case.cmp(&second.#value_snake_case)
                                         } else {
                                             panic!("error 4428083a-53be-4184-a5b7-94ae2de21d40");
                                         }
@@ -4902,9 +4902,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
                                 });
                             }
-                            #acc_snake_case.sort_by(|a, b| {
-                                if let (Some(a), Some(b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                    a.#value_snake_case.cmp(&b.#value_snake_case)
+                            #acc_snake_case.sort_by(|first, second| {
+                                if let (Some(first), Some(second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                    first.#value_snake_case.cmp(&second.#value_snake_case)
                                 } else {
                                     panic!("error 0faa6fb3-a7c0-44ca-9b51-13f6ca2fc543");
                                 }
@@ -5642,9 +5642,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             )
                             .await
                             .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                            #acc_snake_case.sort_by(|a, b| {
-                                if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                    value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                            #acc_snake_case.sort_by(|first, second| {
+                                if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                    value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                 } else {
                                     panic!("must not be what");
                                 }
@@ -5681,7 +5681,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                     quote::quote! {
                         #current_field_ident: match &#element_snake_case.#current_field_ident {
-                            Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&#value_snake_case),
+                            Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(#value_snake_case),
                             None => Some(#value_initialization_token_stream),
                         }
                     }
@@ -5817,9 +5817,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #ident_read_fields_initialization_without_primary_key_after_create_many_token_stream
                                     });
                                 }
-                                #acc_snake_case.sort_by(|a, b| {
-                                    if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                        value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                                #acc_snake_case.sort_by(|first, second| {
+                                    if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                        value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                     }
                                     else {
                                         panic!("must not be what");
@@ -5870,9 +5870,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                                 .await
                                 .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                #acc_snake_case.sort_by(|a, b| {
-                                    if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                        value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                                #acc_snake_case.sort_by(|first, second| {
+                                    if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                        value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                     }
                                     else {
                                         panic!("must not be what")
@@ -5975,9 +5975,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             },
                                             &current_table
                                         ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                        #acc_snake_case.sort_by(|a, b| {
-                                            if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                                value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                                        #acc_snake_case.sort_by(|first, second| {
+                                            if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                                value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                             } else {
                                                 panic!("must not be what");
                                             }
@@ -6046,7 +6046,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                     quote::quote! {
                         #current_field_ident: match &#element_snake_case.#current_field_ident {
-                            Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(&#value_snake_case),
+                            Some(#value_snake_case) => <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(#value_snake_case),
                             None => Some(#value_initialization_token_stream),
                         }
                     }
@@ -6160,9 +6160,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #ident_read_fields_initialization_without_primary_key_after_create_many_token_stream
                                     });
                                 }
-                                #acc_snake_case.sort_by(|a, b| {
-                                    if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                        value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                                #acc_snake_case.sort_by(|first, second| {
+                                    if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                        value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                     }
                                     else {
                                         panic!("must not be what");
@@ -6213,9 +6213,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                                 .await
                                 .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
-                                #acc_snake_case.sort_by(|a, b| {
-                                    if let (Some(value_a), Some(value_b)) = (&a.#primary_key_field_ident, &b.#primary_key_field_ident) {
-                                        value_a.#value_snake_case.cmp(&value_b.#value_snake_case)
+                                #acc_snake_case.sort_by(|first, second| {
+                                    if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                        value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
                                     }
                                     else {
                                         panic!("must not be what")
@@ -6334,9 +6334,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         current_table
                     )
                     .await {
-                        Ok(value) => if value.len() != 0 {
-                            panic!("error 51d14103-5122-4d96-a45c-4dd958ab3adc")
-                        },
+                        Ok(value) => assert!(value.is_empty(), "error 51d14103-5122-4d96-a45c-4dd958ab3adc"),
                         Err(error) => panic!("error 0d5dec47-8b2e-4f02-909b-3a58b65bc6a5 {error:#?}"),
                     }
                 });
@@ -6368,8 +6366,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
-                    }
-                };}
+                    };
+                }}
             };
             let test_delete_many_by_primary_keys_token_stream = {
                 let content_token_stream = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream(&quote::quote!{
@@ -6495,8 +6493,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
-                    }
-                };}
+                    };
+                }}
             };
             quote::quote!{{
                 #test_delete_many_by_non_existent_primary_keys_token_stream
