@@ -2,6 +2,7 @@ mod filters;
 
 pub use filters::*;
 
+#[derive(Debug)]
 pub enum DeriveOrImpl {
     Derive,
     Impl(proc_macro2::TokenStream),
@@ -171,6 +172,7 @@ pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming:
     )
 }
 
+#[derive(Debug)]
 pub enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,
@@ -184,6 +186,7 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     }
 }
 
+#[derive(Debug)]
 pub enum ShouldDeriveUtoipaToSchema {
     True,
     False,
@@ -197,6 +200,7 @@ impl quote::ToTokens for ShouldDeriveUtoipaToSchema {
     }
 }
 
+#[derive(Debug)]
 pub enum IsCreateQueryPartSelfCreateUsed {
     True,
     False,
@@ -209,6 +213,7 @@ impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
         }
     }
 }
+#[derive(Debug)]
 pub enum IsCreateQueryBindMutable {
     True,
     False,
@@ -221,6 +226,7 @@ impl quote::ToTokens for IsCreateQueryBindMutable {
         }
     }
 }
+#[derive(Debug)]
 pub enum IsSelectQueryPartSelfSelectUsed {
     True,
     False,
@@ -233,6 +239,7 @@ impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
         }
     }
 }
+#[derive(Debug)]
 pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
     True,
     False,
@@ -245,6 +252,7 @@ impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorM
         }
     }
 }
+#[derive(Debug)]
 pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
     True,
     False,
@@ -257,6 +265,7 @@ impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
         }
     }
 }
+#[derive(Debug)]
 pub enum IsUpdateQueryPartSelfUpdateUsed {
     True,
     False,
@@ -269,6 +278,7 @@ impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
         }
     }
 }
+#[derive(Debug)]
 pub enum IsUpdateQueryPartJsonbSetTargetUsed {
     True,
     False,
@@ -281,6 +291,8 @@ impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
         }
     }
 }
+
+#[derive(Debug)]
 pub enum IsUpdateQueryBindMutable {
     True,
     False,
@@ -293,6 +305,8 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
         }
     }
 }
+
+#[derive(Debug)]
 pub enum IsSelectOnlyUpdatedIdsQueryBindMutable {
     True,
     False,
@@ -305,6 +319,8 @@ impl quote::ToTokens for IsSelectOnlyUpdatedIdsQueryBindMutable {
         }
     }
 }
+
+#[derive(Debug)]
 pub enum IsSelectOnlyCreatedIdsQueryBindMutable {
     True,
     False,
@@ -531,6 +547,7 @@ pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
 }
 
+#[derive(Debug)]
 pub enum ImportPath {
     Crate,
     PostgresqlCrud,
@@ -1726,6 +1743,8 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         }
     }
 }
+
+#[derive(Debug)]
 pub enum ReadOrUpdate {
     Read,
     Update,
@@ -2079,11 +2098,13 @@ pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToT
     }
 }
 
+#[derive(Debug)]
 pub enum PostgresqlTypeOrPostgresqlJsonType {
     PostgresqlType,
     PostgresqlJsonType,
 }
 
+#[derive(Debug)]
 pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
     DefaultSomeOneWithMaxPageSize
@@ -2094,11 +2115,13 @@ pub fn generate_value_initialization_token_stream(import_path: &ImportPath, cont
     quote::quote!{#import_path::Value { #value_snake_case: #content_token_stream }}
 }
 
+#[derive(Debug)]
 pub enum EqualOrEqualUsingFields {
     Equal,
     EqualUsingFields
 }
 
+#[derive(Debug)]
 pub enum EqualOperatorHandle {
     Equal,
     IsNull
@@ -2129,6 +2152,7 @@ pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
     }
 }
 
+#[derive(Debug)]
 pub enum Dimension {
     One,
     Two,
@@ -2145,6 +2169,7 @@ impl Dimension {
         }
     }
 }
+#[derive(Debug)]
 pub enum DimensionIndexNumber {
     Zero,
     One,

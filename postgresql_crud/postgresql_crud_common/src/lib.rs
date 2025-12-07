@@ -1269,6 +1269,7 @@ pub fn increment_checked_add_one_returning_increment(increment: &mut std::primit
     }
 }
 
+#[derive(Debug)]
 pub enum EqualOperator {
     Equal,
     IsNull
