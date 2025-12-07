@@ -5794,7 +5794,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 &current_table
                                             ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
                                         })
-                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>()
                                     ),
                                     5
                                 )
@@ -6139,7 +6138,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
                                             })
                                         })
-                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>()
                                     ),
                                     5
                                 )
