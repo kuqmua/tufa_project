@@ -4561,7 +4561,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                     &current_table
                                 ).await.expect("error 716e470e-d738-4642-adfc-df1f9b945d27");
-                                #acc_snake_case.sort_by(|a,b|a.cmp(&b));
+                                #acc_snake_case.sort();
                                 #acc_snake_case
                             };
                             assert_eq!(
@@ -4570,7 +4570,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|element|
                                         #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
                                     ).collect::<std::vec::Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>();
-                                    #acc_snake_case.sort_by(|a,b|a.cmp(&b));
+                                    #acc_snake_case.sort();
                                     #acc_snake_case
                                 },
                                 "error f58f5572-4286-4a74-8006-0507339910d4"

@@ -5751,14 +5751,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #(#parameters_token_stream),*
                                                     ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
                                                 }).collect::<std::vec::Vec<#ident_with_id_standart_not_null_read_upper_camel_case>>();
-                                                #acc_snake_case.sort_by(|a, b| {
-                                                    if let (Some(value_a), Some(value_b)) = (&a.id, &b.id) {
+                                                #acc_snake_case.sort_by(|first, second| {
+                                                    if let (Some(value_first), Some(value_second)) = (&first.id, &second.id) {
                                                         //maybe remove .clone - add .get by ref method
                                                         #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::into_inner(
-                                                            value_a.#value_snake_case.clone()
+                                                            value_first.#value_snake_case.clone()
                                                         )
                                                         .cmp(&#import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream::into_inner(
-                                                            value_b.#value_snake_case.clone()
+                                                            value_second.#value_snake_case.clone()
                                                         ))
                                                     }
                                                     else {
