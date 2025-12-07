@@ -4989,7 +4989,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         )
                         .await
                         .expect("error d5c23a9d-eb02-44e4-8654-e2a3d7752f51");
-                        #acc_snake_case.sort_by(|a, b| a.cmp(&b));
+                        #acc_snake_case.sort_by(|first, second| first.cmp(&second));
                         #acc_snake_case
                     };
                     assert_eq!(
@@ -4998,7 +4998,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case|
                                 #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
                             ).collect::<std::vec::Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
-                            #acc_snake_case.sort_by(|a, b| a.cmp(&b));
+                            #acc_snake_case.sort_by(|first, second| first.cmp(&second));
                             #acc_snake_case
                         },
                         "error ebbbea6e-c402-4637-9bab-02678c11926c"
@@ -5195,7 +5195,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                     .await
                                     .expect("error 338bcf89-0c3d-49d7-ac51-b73af98a32b0");
-                                    #acc_snake_case.sort_by(|a, b| a.cmp(&b));
+                                    #acc_snake_case.sort_by(|first, second| first.cmp(&second));
                                     #acc_snake_case
                                 };
                                 assert_eq!(
@@ -5241,11 +5241,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                                 .await
                                 {
-                                    Ok(#value_snake_case) => {
-                                        if #value_snake_case != std::vec::Vec::new() {
-                                            panic!("error 38187925-c136-41de-940d-eba75efc3a39");
-                                        }
-                                    }
+                                    Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error 38187925-c136-41de-940d-eba75efc3a39"),
                                     Err(#error_snake_case) => {
                                         panic!("error 1817b67a-c6c5-4fea-8ca7-23581c1888a3 {error:#?}");
                                     }
@@ -5581,9 +5577,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             postgresql,
                             ..
                         } = read_one_error_named_with_serialize_deserialize {
-                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                panic!("error 10010cca-57ec-4620-8ddf-4a3227999b06");
-                            }
+                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error 10010cca-57ec-4620-8ddf-4a3227999b06");
                         } else {
                             panic!("error c77029fe-1f95-4df5-a5fb-ef663d7bc08d");
                         }
