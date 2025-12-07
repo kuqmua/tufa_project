@@ -4155,6 +4155,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &quote::quote!{#element_snake_case.#primary_key_field_ident.clone()}
         );
         let (
+            primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream,
             primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream,
@@ -4167,6 +4168,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &content_token_stream
             );
             (
+                generate_read_only_ids_into_read_token_stream(&quote::quote!{#element_snake_case.#primary_key_field_ident}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{#element_snake_case.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{read_only_ids_from_try_create_one.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote!{read_only_ids_from_try_create_one_default.#primary_key_field_ident.clone()}),
@@ -4304,9 +4306,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ..
                     } = error {
                         if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, .. } = read_one_error_named_with_serialize_deserialize {
-                            if postgresql != no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row {
-                                panic!("error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
-                            }
+                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
                         } else {
                             panic!("error 0ad0117b-a2e0-4629-99d0-71935cd93d15");
                         }
@@ -4568,7 +4568,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 read_only_ids_from_try_delete_many,
                                 {
                                     let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|element|
-                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                                     ).collect::<std::vec::Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>();
                                     #acc_snake_case.sort();
                                     #acc_snake_case
@@ -4986,7 +4986,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         read_only_ids_from_try_delete_many,
                         {
                             let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case|
-                                #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                             ).collect::<std::vec::Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                             #acc_snake_case.sort();
                             #acc_snake_case
@@ -6702,7 +6702,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     project_git_info: &git_info::PROJECT_GIT_INFO,
                                 });
                                 let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("error 663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
-                                let _ = started_tx.send(());
+                                let _: Result<(), ()> = started_tx.send(());
                                 axum::serve(
                                     tcp_listener,
                                     axum::Router::new()
