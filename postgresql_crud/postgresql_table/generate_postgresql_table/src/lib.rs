@@ -5662,7 +5662,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     if field_ident == current_field_ident {
                         quote::quote! {
                             if let Some(#value_snake_case) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                                for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(&#value_snake_case) {
+                                for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(#value_snake_case) {
                                     for _ in #element_snake_case {
                                         #acc_snake_case.push(ident_create_default.clone());
                                     }
@@ -6028,7 +6028,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     if field_ident == current_field_ident {
                         quote::quote! {
                             if let Some(#value_snake_case) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                                for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(&#value_snake_case) {
+                                for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(#value_snake_case) {
                                     for _ in #element_snake_case {
                                         #acc_snake_case.push(ident_create_default.clone());
                                     }
