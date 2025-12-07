@@ -4880,7 +4880,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         super::#ident_create_many_parameters_upper_camel_case {
                             payload: super::#ident_create_many_payload_upper_camel_case(ident_vec_create.clone())
                         },
-                        &current_table
+                        current_table
                     ).await.expect("error d775179f-f7b1-41d3-9c83-4ca8bd1abeec");
                     assert_eq!(
                         {
@@ -6384,7 +6384,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #acc_snake_case
                             })
                         },
-                        &current_table
+                        current_table
                     ).await.expect("error b8695890-65fb-469b-a6f9-be481d648eb9");
                     let read_only_ids_from_try_delete_many = super::#ident::try_delete_many_handle(
                         url,
@@ -6399,7 +6399,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
                                                         postgresql_crud::PostgresqlTypeWhereEqual {
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            #value_snake_case: #primary_key_field_type_read_only_ids_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream.into()
+                                                            #value_snake_case: #primary_key_field_type_read_only_ids_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream
                                                         }
                                                     )
                                                 );
