@@ -5775,27 +5775,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     } else {
                         let current_table = current_table.clone();
                         let read_only_ids_current_elements = {
-                            use futures::StreamExt;
-                            futures::stream::iter(
-                                read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                .chunks(25)
-                                .map(std::vec::Vec::from)
-                                .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
-                                .into_iter()
-                                .map(|#element_snake_case| {
-                                    let current_table = current_table.clone();
-                                    let url_cloned = url.clone();
-                                    futures::FutureExt::boxed(async move { super::#ident::try_create_many_handle(
-                                        &url_cloned,
-                                        super::#ident_create_many_parameters_upper_camel_case {
-                                            payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
-                                        },
-                                        &current_table
-                                    ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
-                                })
+                            futures::StreamExt::collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>(
+                                futures::StreamExt::buffer_unordered(
+                                    futures::stream::iter(
+                                        read_only_ids_to_two_dimensional_vec_read_inner_acc
+                                        .chunks(25)
+                                        .map(std::vec::Vec::from)
+                                        .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
+                                        .into_iter()
+                                        .map(|#element_snake_case| {
+                                            let current_table = current_table.clone();
+                                            let url_cloned = url.clone();
+                                            futures::FutureExt::boxed(async move { super::#ident::try_create_many_handle(
+                                                &url_cloned,
+                                                super::#ident_create_many_parameters_upper_camel_case {
+                                                    payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
+                                                },
+                                                &current_table
+                                            ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98") })
+                                        })
+                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>()
+                                    ),
+                                    5
+                                )
                             )
-                            .buffer_unordered(5)
-                            .collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>()
                             .await
                             .into_iter()
                             .flatten()
@@ -6115,29 +6118,32 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     else {
                         let current_table = table_update_one_cloned2.clone();
                         let read_only_ids_current_elements = {
-                            use futures::StreamExt;
-                            futures::stream::iter(
-                                read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                .chunks(25)
-                                .map(std::vec::Vec::from)
-                                .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
-                                .into_iter()
-                                .map(|#element_snake_case| {
-                                    let current_table = current_table.clone();
-                                    let url_cloned = url.clone();
-                                    futures::FutureExt::boxed(async move {
-                                        super::#ident::try_create_many_handle(
-                                            &url_cloned,
-                                            super::#ident_create_many_parameters_upper_camel_case {
-                                                payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
-                                            },
-                                            &current_table
-                                        ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
-                                    })
-                                })
+                            futures::StreamExt::collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>(
+                                futures::StreamExt::buffer_unordered(
+                                    futures::stream::iter(
+                                        read_only_ids_to_two_dimensional_vec_read_inner_acc
+                                        .chunks(25)
+                                        .map(std::vec::Vec::from)
+                                        .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
+                                        .into_iter()
+                                        .map(|#element_snake_case| {
+                                            let current_table = current_table.clone();
+                                            let url_cloned = url.clone();
+                                            futures::FutureExt::boxed(async move {
+                                                super::#ident::try_create_many_handle(
+                                                    &url_cloned,
+                                                    super::#ident_create_many_parameters_upper_camel_case {
+                                                        payload: super::#ident_create_many_payload_upper_camel_case(#element_snake_case)
+                                                    },
+                                                    &current_table
+                                                ).await.expect("error 0aedfa07-149b-4028-a131-a64ccdda6b98")
+                                            })
+                                        })
+                                        .collect::<std::vec::Vec<futures::future::BoxFuture<'static, std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>>()
+                                    ),
+                                    5
+                                )
                             )
-                            .buffer_unordered(5)
-                            .collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>()
                             .await
                             .into_iter()
                             .flatten()
