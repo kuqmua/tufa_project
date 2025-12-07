@@ -4451,7 +4451,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
                         .chunks(10)
                         .map(std::vec::Vec::from)
-                        .collect::<std::vec::Vec<std::vec::Vec<#field_type_as_postgresql_type_create_token_stream>>>()
                     {
                         let current_table = current_table.clone();
                         let url_cloned = url.clone();
@@ -5762,7 +5761,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
                                         .map(std::vec::Vec::from)
-                                        .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                         .into_iter()
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
@@ -6098,7 +6096,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
                                         .map(std::vec::Vec::from)
-                                        .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                         .into_iter()
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
