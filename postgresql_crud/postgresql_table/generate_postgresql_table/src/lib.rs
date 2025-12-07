@@ -5779,7 +5779,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             futures::stream::iter(
                                 read_only_ids_to_two_dimensional_vec_read_inner_acc
                                 .chunks(25)
-                                .map(|#element_snake_case| #element_snake_case.to_vec())
+                                .map(std::vec::Vec::from)
                                 .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                 .into_iter()
                                 .map(|#element_snake_case| {
@@ -6120,7 +6120,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             futures::stream::iter(
                                 read_only_ids_to_two_dimensional_vec_read_inner_acc
                                 .chunks(25)
-                                .map(|#element_snake_case| #element_snake_case.to_vec())
+                                .map(std::vec::Vec::from)
                                 .collect::<std::vec::Vec<std::vec::Vec<super::#ident_create_upper_camel_case>>>()
                                 .into_iter()
                                 .map(|#element_snake_case| {
