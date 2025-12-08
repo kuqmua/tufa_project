@@ -26,7 +26,7 @@ mod tests {
         };
         toml_value_table.keys().cloned().collect::<std::vec::Vec<std::string::String>>()
     }
-    fn compare(
+    fn compare_lints_vec_from_cargo_toml_with_lints_to_check(
         rust_or_clippy: RustOrClippy,
         lints_vec_from_cargo_toml: std::vec::Vec<std::string::String>,
         lints_to_check: std::vec::Vec<std::string::String>,
@@ -89,7 +89,7 @@ mod tests {
             })
             .collect::<std::vec::Vec<std::string::String>>()
         };
-        compare(
+        compare_lints_vec_from_cargo_toml_with_lints_to_check(
             rust_or_clippy,
             lints_vec_from_cargo_toml,
             lints_from_command,
@@ -156,7 +156,7 @@ mod tests {
             }
             parse_article_ids_from_file(&body)
         };
-        compare(
+        compare_lints_vec_from_cargo_toml_with_lints_to_check(
             rust_or_clippy,
             lints_vec_from_cargo_toml,
             clippy_lints_from_docs,
