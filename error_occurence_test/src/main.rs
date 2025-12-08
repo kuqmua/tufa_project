@@ -35,7 +35,6 @@ pub enum ErrorNamedOne {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum ErrorNamedTwo {
     Variant {

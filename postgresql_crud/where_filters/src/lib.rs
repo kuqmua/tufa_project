@@ -57,7 +57,12 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         for _ in self.to_vec() {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
-                    acc.push_str(&format!("${value},"));
+                    use std::fmt::Write as _;
+                    if write!(acc, "${value},").is_err() {
+                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
                 },
                 Err(error) => {
                     return Err(error);
@@ -665,12 +670,21 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         for _ in 0..current_len {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
-                    acc.push_str(&match &postgresql_type_or_postgresql_json_type {
-                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[${value}]"),
-                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
-                            format!("->${value}")
+                    use std::fmt::Write as _;
+                    if write!(
+                        acc,
+                        "{}",
+                        &match &postgresql_type_or_postgresql_json_type {
+                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[${value}]"),
+                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
+                                format!("->${value}")
+                            }
                         }
-                    });
+                    ).is_err() {
+                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
                 },
                 Err(error) => {
                     return Err(error);

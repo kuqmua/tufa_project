@@ -85,7 +85,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     });
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(&fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).fold(String::new(), |mut acc, element| {
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        acc.push_str(&format!("{element_ident}: {{}}\n"));
+                        use std::fmt::Write as _;
+                        if let Err(error) = writeln!(acc, "{element_ident}: {{}}") {
+                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        }
                         acc
                     }));
                     let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
@@ -101,7 +104,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     #element_ident.to_string().lines().fold(
                                         #std_string_string::new(),
                                         |mut acc, element| {
-                                            acc.push_str(&format!("\n {element}"));
+                                            use std::fmt::Write as _;
+                                            if let Err(error) = write!(acc, "\n {element}") {
+                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                            }
                                             acc
                                         }
                                     )
@@ -118,7 +124,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 .fold(
                                                     #std_string_string::new(),
                                                     |mut acc, element| {
-                                                        acc.push_str(&format!("\n {element}"));
+                                                        use std::fmt::Write as _;
+                                                        if let Err(error) = write!(acc, "\n {element}") {
+                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        }
                                                         acc
                                                     }
                                                 )
@@ -136,7 +145,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                             acc.push_str(&element.to_string().lines().fold(
                                                 #std_string_string::new(),
                                                 |mut acc, element| {
-                                                    acc.push_str(&format!("\n {element}"));
+                                                    use std::fmt::Write as _;
+                                                    if let Err(error) = write!(acc, "\n {element}") {
+                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    }
                                                     acc
                                                 },
                                             ));
@@ -152,12 +164,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         .fold(
                                             #std_string_string::new(),
                                             |mut acc, (key, value)| {
-                                                acc.push_str(
-                                                    &format!(
-                                                        "\n {key}: {}",
-                                                        &error_occurence_lib::ToStdStringString::to_std_string_string(value)
-                                                    )
-                                                );
+                                                use std::fmt::Write as _;
+                                                if let Err(error) = write!(acc, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(value)) {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                                 acc
                                             }
                                         )
@@ -170,16 +180,23 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         .fold(
                                             #std_string_string::new(),
                                             |mut acc, (key, value)| {
-                                                acc.push_str(&format!(
+                                                use std::fmt::Write as _;
+                                                if let Err(error) = write!(
+                                                    acc,
                                                     "\n {key}: {}",
                                                     value.to_string().lines().fold(
                                                         #std_string_string::new(),
                                                         |mut acc, element| {
-                                                            acc.push_str(&format!("\n  {element}"));
+                                                            use std::fmt::Write as _;
+                                                            if let Err(error) = write!(acc, "\n  {element}") {
+                                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                            }
                                                             acc
                                                         }
                                                     )
-                                                ));
+                                                ) {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                                 acc
                                             }
                                         )
@@ -410,7 +427,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     // println!("{generated} ");
     // if ident == "" {
     //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         &"ErrorOccurence",
+    //         "ErrorOccurence",
     //         &generated,
     //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
     //     );

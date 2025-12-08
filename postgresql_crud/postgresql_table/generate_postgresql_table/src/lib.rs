@@ -2496,7 +2496,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: u64 = 0;};
     let column_names = {
         let mut value = fields.iter().fold(String::default(), |mut acc, element| {
-            acc.push_str(&format!("{}", &element.field_ident));
+            use std::fmt::Write as _;
+            if let Err(error) = write!(acc, "{}", &element.field_ident) {
+                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+            }
             acc.push(',');
             acc
         });

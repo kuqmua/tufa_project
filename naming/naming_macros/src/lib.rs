@@ -20,7 +20,10 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
             if index == 0 {
                 acc.push_str(&element_snake_case_stringified);
             } else {
-                acc.push_str(&format!("_{element_snake_case_stringified}"));
+                use std::fmt::Write as _;
+                if let Err(error) = write!(acc, "_{element_snake_case_stringified}") {
+                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                }
             }
             acc
         });
@@ -115,9 +118,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 let mut value = element.iter().fold(String::new(), |mut acc, element| {
                     let symbol = '_';
                     if element == "self" {
-                        acc.push_str(&format!("{{value}}{symbol}"));
+                        use std::fmt::Write as _;
+                        if let Err(error) = write!(acc, "{{value}}{symbol}") {
+                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        }
                     } else {
-                        acc.push_str(&format!("{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element)));
+                        use std::fmt::Write as _;
+                        if let Err(error) = write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element)) {
+                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        }
                     }
                     acc
                 });
@@ -189,7 +198,10 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                         match value {
                             syn::Type::Path(type_path) => {
                                 let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc, elem| {
-                                    acc.push_str(&format!("{}::", elem.ident));
+                                    use std::fmt::Write as _;
+                                    if let Err(error) = write!(acc, "{}::", elem.ident) {
+                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    }
                                     acc
                                 });
                                 let last = type_path.path.segments.iter().last().unwrap();
@@ -224,7 +236,6 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
         }
     });
     let generated = quote::quote! {#(#implementations_token_stream)*};
-    // println!("{generated}");
     generated.into()
 }
 

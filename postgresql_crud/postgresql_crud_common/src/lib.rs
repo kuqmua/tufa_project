@@ -387,6 +387,7 @@ pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
+    WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence::CodeOccurence},
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 
@@ -585,7 +586,10 @@ impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for Pos
         for element in &self.value {
             match PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
-                    acc.push_str(&format!("{value} "));
+                    use std::fmt::Write as _;
+                    if write!(acc, "{value} ").is_err() {
+                        return Err(QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!()});
+                    }
                     is_need_to_add_logical_operator_inner_handle = true;
                 }
                 Err(error) => {
@@ -1402,6 +1406,9 @@ pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
+////////////
+
+////////////
 impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
