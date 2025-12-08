@@ -72,21 +72,7 @@ mod tests {
             regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
             .expect("error 60d99c87-273a-48ac-8daa-4f0a853d16bd")
             .captures_iter(&stdout)
-            .map(|element| {
-                let value = convert_case::Casing::to_case(
-                    &element[1].to_string(),
-                    convert_case::Case::Snake
-                );
-                if value == "invalid_from_utf_8" {
-                    std::string::String::from("invalid_from_utf8")
-                }
-                else if value == "invalid_from_utf_8_unchecked" {
-                    std::string::String::from("invalid_from_utf8_unchecked")
-                }
-                else {
-                    value
-                }
-            })
+            .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
             .collect::<std::vec::Vec<std::string::String>>()
         };
         compare_lints_vec_from_cargo_toml_with_lints_to_check(
