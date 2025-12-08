@@ -244,7 +244,6 @@ rust_2024_guarded_string_incompatible_syntax = { level = "deny", priority = 0 }
 rust_2024_incompatible_pat = { level = "deny", priority = 0 }
 rust_2024_prelude_collisions = { level = "deny", priority = 0 }
 tail_expr_drop_order = { level = "deny", priority = 0 }
-unqualified_local_imports = { level = "deny", priority = 0 }
 unsafe_attr_outside_unsafe = { level = "deny", priority = 0 }
 ambiguous_wide_pointer_comparisons = { level = "deny", priority = 0 }
 boxed_slice_into_iter = { level = "deny", priority = 0 }
