@@ -13,7 +13,6 @@ members = [
   "from_str",
   "git_info",
   "git_sync_command",
-  "integration_tests",
   "postgresql_crud",
   "postgresql_crud/postgresql_crud_common",
   "postgresql_crud/postgresql_crud_common_and_macros_common",
