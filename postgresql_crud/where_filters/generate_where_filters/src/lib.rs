@@ -46,7 +46,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             }
         }
     };
-    let generate_struct_token_stream = |filter_initialized_with_try_new_result_is_ok: std::primitive::bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_token_stream: &dyn quote::ToTokens| {
+    let generate_struct_token_stream = |filter_initialized_with_try_new_result_is_ok: bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_token_stream: &dyn quote::ToTokens| {
         let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &naming::PubSnakeCase };
         let maybe_derive_serde_deserialize_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
@@ -219,7 +219,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         Four,
     }
     impl DimensionNumber {
-        const fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
+        const fn dimension_std_primitive_u8(&self) -> u8 {
             match &self {
                 Self::One => 1,
                 Self::Two => 2,
@@ -279,7 +279,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         ArrayDimension,
     }
     impl PostgresqlTypeKind {
-        const fn format_argument(&self) -> &'static std::primitive::str {
+        const fn format_argument(&self) -> &'static str {
             match &self {
                 Self::Standart => "",
                 Self::ArrayDimension => "{}",

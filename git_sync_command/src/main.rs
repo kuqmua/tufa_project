@@ -90,7 +90,7 @@ impl std::fmt::Display for CommandError {
     }
 }
 
-fn commands(canonicalize_pathbuf_as_string: &std::primitive::str, path: &std::primitive::str) -> Result<(), CommandError> {
+fn commands(canonicalize_pathbuf_as_string: &str, path: &str) -> Result<(), CommandError> {
     let path = format!("{canonicalize_pathbuf_as_string}/{path}");
     println!("start {path}");
     if let Err(error) = std::process::Command::new("git").args(["checkout", "."]).current_dir(&path).output() {

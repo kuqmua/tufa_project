@@ -58,7 +58,7 @@ pub enum ErrorUnnamedOne {
 #[derive(Debug)]
 pub struct DisplayStruct {
     pub display: std::string::String,
-    pub something: std::primitive::bool,
+    pub something: bool,
 }
 
 //todo or maybe two different traits - display foreign type and convert into serializable and deserializable type
@@ -71,8 +71,8 @@ impl error_occurence_lib::ToStdStringString for DisplayStruct {
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct SerializeDeserializeStruct {
     pub one: std::string::String,
-    pub two: std::primitive::bool,
-    pub three: std::primitive::u32,
+    pub two: bool,
+    pub three: u32,
 }
 
 impl error_occurence_lib::ToStdStringString for SerializeDeserializeStruct {

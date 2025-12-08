@@ -1153,8 +1153,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             fn #select_query_part_snake_case(
                                 &self,
-                                column_name_and_maybe_field_getter: &std::primitive::str,
-                                column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+                                column_name_and_maybe_field_getter: &str,
+                                column_name_and_maybe_field_getter_for_error_message: &str,
                             ) -> #std_string_string_token_stream {
                                 let mut #acc_snake_case = #std_string_string_token_stream::default();
                                 #select_query_part_for_loop_token_stream
@@ -1235,7 +1235,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             fn #select_query_part_postgresql_type_snake_case(
                                 &self,
-                                #column_snake_case: &std::primitive::str,
+                                #column_snake_case: &str,
                             ) -> #std_string_string_token_stream {
                                 #content_token_stream
                             }
@@ -1644,7 +1644,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let mut generate_element_query = |
                                             logical_operator: &#import_path::LogicalOperator,
                                             #value_snake_case: &dyn #import_path::PostgresqlTypeWhereFilter<'_>,
-                                            field: &std::primitive::str
+                                            field: &str
                                         | -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                                             let logical_operator_query_part = logical_operator.to_query_part(is_need_to_add_logical_operator);
                                             let elem = "elem";
@@ -2444,7 +2444,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_jsonb_set_target_token_stream = {
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{jsonb_set_target_snake_case}}}->'{{value}}'"));
                     quote::quote! {
-                        let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
+                        let #generate_jsonb_set_target_snake_case = |value: &str|{
                             format!(#format_handle_token_stream)
                         };
                     }
@@ -3312,8 +3312,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{
                             fn #select_only_updated_ids_query_part_snake_case(
                                 &self,
-                                column_name_and_maybe_field_getter: &std::primitive::str,
-                                #increment_snake_case: &mut std::primitive::u64
+                                column_name_and_maybe_field_getter: &str,
+                                #increment_snake_case: &mut u64
                             ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                                 #content_token_stream
                             }
@@ -4662,7 +4662,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 dimensions: #import_path::BoundedStdVecVec::try_from(
                                                     vec![
                                                         #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                            std::primitive::i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                            i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
                                                         ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
                                                     ]
                                                 ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
@@ -4832,7 +4832,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #import_path::PostgresqlJsonTypeWhereLengthEqual {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             #value_snake_case: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                std::primitive::i32::try_from(#create_snake_case.0.len()).expect("error 1811faf7-c0a5-4e05-b866-546affd441df")
+                                                i32::try_from(#create_snake_case.0.len()).expect("error 1811faf7-c0a5-4e05-b866-546affd441df")
                                             ).expect("error a590f39b-ad2c-4002-afac-f7c18156362e"),
                                         }
                                     ));
@@ -4977,7 +4977,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #import_path::PostgresqlJsonTypeWhereLengthGreaterThan {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             #value_snake_case: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                std::primitive::i32::try_from(#create_snake_case.0.len()).expect("error 1fbbd897-2fae-4271-9fac-4b4007aecf32")
+                                                i32::try_from(#create_snake_case.0.len()).expect("error 1fbbd897-2fae-4271-9fac-4b4007aecf32")
                                             ).expect("error 0eb5d915-bbbe-44c0-9096-d3d858d3a937"),
                                         }
                                     ));

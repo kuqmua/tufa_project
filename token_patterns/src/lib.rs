@@ -86,14 +86,14 @@ impl quote::ToTokens for ThiserrorError {
 pub struct StdPrimitiveChar;
 impl quote::ToTokens for StdPrimitiveChar {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::char}.to_tokens(tokens);
+        quote::quote! {char}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct RefStdPrimitiveStr;
 impl quote::ToTokens for RefStdPrimitiveStr {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {&std::primitive::str}.to_tokens(tokens);
+        quote::quote! {&str}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -157,7 +157,7 @@ impl quote::ToTokens for DeriveDebugThisErrorErrorOccurence {
 pub struct StdPrimitiveStrSqlxColumnIndex;
 impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {&'a std::primitive::str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
+        quote::quote! {&'a str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
@@ -250,77 +250,77 @@ impl quote::ToTokens for FieldAttributeSerdeSkipSerializingIfOptionIsNone {
 pub struct StdPrimitiveBool;
 impl quote::ToTokens for StdPrimitiveBool {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::bool}.to_tokens(tokens);
+        quote::quote! {bool}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveU8;
 impl quote::ToTokens for StdPrimitiveU8 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::u8}.to_tokens(tokens);
+        quote::quote! {u8}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveU16;
 impl quote::ToTokens for StdPrimitiveU16 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::u16}.to_tokens(tokens);
+        quote::quote! {u16}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveU32;
 impl quote::ToTokens for StdPrimitiveU32 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::u32}.to_tokens(tokens);
+        quote::quote! {u32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveU64;
 impl quote::ToTokens for StdPrimitiveU64 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::u64}.to_tokens(tokens);
+        quote::quote! {u64}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveI8;
 impl quote::ToTokens for StdPrimitiveI8 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::i8}.to_tokens(tokens);
+        quote::quote! {i8}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveI16;
 impl quote::ToTokens for StdPrimitiveI16 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::i16}.to_tokens(tokens);
+        quote::quote! {i16}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveI32;
 impl quote::ToTokens for StdPrimitiveI32 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::i32}.to_tokens(tokens);
+        quote::quote! {i32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveI64;
 impl quote::ToTokens for StdPrimitiveI64 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::i64}.to_tokens(tokens);
+        quote::quote! {i64}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveF32;
 impl quote::ToTokens for StdPrimitiveF32 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::f32}.to_tokens(tokens);
+        quote::quote! {f32}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct StdPrimitiveF64;
 impl quote::ToTokens for StdPrimitiveF64 {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::primitive::f64}.to_tokens(tokens);
+        quote::quote! {f64}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

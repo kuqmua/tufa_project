@@ -121,7 +121,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     }
                     acc
                 });
-                let _: Option<std::primitive::char> = value.pop();
+                let _: Option<char> = value.pop();
                 value
             });
             let struct_upper_camel_case_upper_camel_case_token_stream = {
@@ -153,7 +153,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 trait_snake_case_token_upper_camel_case_stream,
             )
         };
-        let generate_struct_token_stream = |elements_concat_value_case_double_quotes_token_stream: &dyn quote::ToTokens, is_upper_camel_case: std::primitive::bool, trait_ident_token_stream: &dyn quote::ToTokens| {
+        let generate_struct_token_stream = |elements_concat_value_case_double_quotes_token_stream: &dyn quote::ToTokens, is_upper_camel_case: bool, trait_ident_token_stream: &dyn quote::ToTokens| {
             let struct_ident_token_stream = if is_upper_camel_case {
                 quote::quote! {#struct_upper_camel_case_upper_camel_case_token_stream}
             } else {

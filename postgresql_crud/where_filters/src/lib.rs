@@ -52,7 +52,7 @@ impl<T: std::cmp::PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
-    pub fn query_part_one_by_one(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn query_part_one_by_one(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         for _ in self.to_vec() {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
@@ -64,7 +64,7 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
                 },
             }
         }
-        let _: std::option::Option<std::primitive::char> = acc.pop();
+        let _: std::option::Option<char> = acc.pop();
         Ok(acc)
     }
     pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -160,7 +160,7 @@ impl<'a, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for Postgresql
 where
     T: serde::Serialize + 'a,
 {
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
             Err(error) => Err(error)
@@ -300,7 +300,7 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
     }
 }
 impl RegularExpressionCase {
-    pub const fn postgreql_syntax(&self) -> &'static std::primitive::str {
+    pub const fn postgreql_syntax(&self) -> &'static str {
         match &self {
             Self::Sensitive => "~",
             Self::Insensitive => "~*",
@@ -497,7 +497,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
     }
 }
 impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for Between<T> {
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         let start_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(error) => {
@@ -630,14 +630,14 @@ impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
-pub struct BoundedStdVecVec<T, const LENGTH: std::primitive::usize>(std::vec::Vec<T>);
+pub struct BoundedStdVecVec<T, const LENGTH: usize>(std::vec::Vec<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
         #[eo_to_std_string_string_serialize_deserialize]
-        wrong_length: std::primitive::usize,
+        wrong_length: usize,
         #[eo_to_std_string_string_serialize_deserialize]
-        expected: std::primitive::usize,
+        expected: usize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -649,14 +649,14 @@ enum Variant {
     Normal,
     MinusOne,
 }
-impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: std::primitive::usize> BoundedStdVecVec<T, LENGTH> {
+impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: usize> BoundedStdVecVec<T, LENGTH> {
     pub const fn to_inner(&self) -> &std::vec::Vec<T> {
         &self.0
     }
     pub fn into_inner(self) -> std::vec::Vec<T> {
         self.0
     }
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = std::string::String::new();
         let current_len = match &variant {
             Variant::Normal => self.0.len(),
@@ -679,16 +679,16 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         }
         Ok(acc)
     }
-    pub fn postgresql_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn postgresql_type_query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::Normal)
     }
-    pub fn postgresql_json_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn postgresql_json_type_query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::Normal)
     }
-    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::MinusOne)
     }
-    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
     pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -703,7 +703,7 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         Ok(query)
     }
 }
-impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec<T>> for BoundedStdVecVec<T, LENGTH> {
+impl<T, const LENGTH: usize> std::convert::TryFrom<std::vec::Vec<T>> for BoundedStdVecVec<T, LENGTH> {
     type Error = BoundedStdVecVecTryNewErrorNamed;
     fn try_from(value: std::vec::Vec<T>) -> Result<Self, Self::Error> {
         let len = value.len();
@@ -721,7 +721,7 @@ impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T, const LENGTH: std::primitive::usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
+    impl<'de, T, const LENGTH: usize> _serde::Deserialize<'de> for BoundedStdVecVec<T, LENGTH>
     where
         T: _serde::Deserialize<'de>,
     {
@@ -730,7 +730,7 @@ const _: () = {
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
-            struct __Visitor<'de, T, const LENGTH: std::primitive::usize>
+            struct __Visitor<'de, T, const LENGTH: usize>
             where
                 T: _serde::Deserialize<'de>,
             {
@@ -738,7 +738,7 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T, const LENGTH: std::primitive::usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
+            impl<'de, T, const LENGTH: usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
             where
                 T: _serde::Deserialize<'de>,
             {
@@ -785,7 +785,7 @@ const _: () = {
         }
     }
 };
-impl<T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement, const LENGTH: std::primitive::usize> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for BoundedStdVecVec<T, LENGTH> {
+impl<T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement, const LENGTH: usize> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for BoundedStdVecVec<T, LENGTH> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
     }

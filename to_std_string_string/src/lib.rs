@@ -6,102 +6,102 @@ impl ToStdStringString for std::string::String {
         self.clone()
     }
 }
-impl ToStdStringString for std::primitive::i8 {
+impl ToStdStringString for i8 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::i16 {
+impl ToStdStringString for i16 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::i32 {
+impl ToStdStringString for i32 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::i64 {
+impl ToStdStringString for i64 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::u8 {
+impl ToStdStringString for u8 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::u16 {
+impl ToStdStringString for u16 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::u32 {
+impl ToStdStringString for u32 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::u64 {
+impl ToStdStringString for u64 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::f32 {
+impl ToStdStringString for f32 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::primitive::f64 {
+impl ToStdStringString for f64 {
     fn to_std_string_string(&self) -> std::string::String {
         self.to_string()
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::i8> {
+impl ToStdStringString for std::option::Option<i8> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::i16> {
+impl ToStdStringString for std::option::Option<i16> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::i32> {
+impl ToStdStringString for std::option::Option<i32> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::i64> {
+impl ToStdStringString for std::option::Option<i64> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::u8> {
+impl ToStdStringString for std::option::Option<u8> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::u16> {
+impl ToStdStringString for std::option::Option<u16> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::u32> {
+impl ToStdStringString for std::option::Option<u32> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::u64> {
+impl ToStdStringString for std::option::Option<u64> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::f32> {
+impl ToStdStringString for std::option::Option<f32> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<std::primitive::f64> {
+impl ToStdStringString for std::option::Option<f64> {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:?}")
     }
@@ -136,7 +136,7 @@ impl ToStdStringString for axum::Error {
         format!("{self}")
     }
 }
-impl ToStdStringString for std::primitive::usize {
+impl ToStdStringString for usize {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self}")
     }

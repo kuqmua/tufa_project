@@ -32,7 +32,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
     let ident = &syn_derive_input.ident;
     let generated = quote::quote! {
         impl #ident {
-            pub fn get_length() -> std::primitive::usize {
+            pub fn get_length() -> usize {
                 #len
             }
             pub fn into_array() -> [#ident; #len] {

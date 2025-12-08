@@ -31,7 +31,7 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
     pub fn into_vec(self) -> std::vec::Vec<T> {
         self.0
     }
-    pub const fn is_empty(&self) -> std::primitive::bool {
+    pub const fn is_empty(&self) -> bool {
         self.0.is_empty()
     }
 }

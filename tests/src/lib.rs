@@ -6,7 +6,7 @@ mod tests {
         Clippy
     }
     impl RustOrClippy {
-        fn name(&self) -> &std::primitive::str {
+        fn name(&self) -> &str {
             match self {
                 Self::Rust => "rust",
                 Self::Clippy => "clippy"
@@ -102,7 +102,7 @@ mod tests {
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
         let clippy_lints_from_docs = {
             let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3");
-            fn parse_article_ids_from_file(html: &std::primitive::str) -> std::vec::Vec<std::string::String> {
+            fn parse_article_ids_from_file(html: &str) -> std::vec::Vec<std::string::String> {
                 let document = scraper::Html::parse_document(html);
                 let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
                 let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
@@ -172,7 +172,7 @@ mod tests {
                     if path.is_file() && path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
                         let mut file = std::fs::File::open(&path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
                         let mut contents = std::string::String::new();
-                        let _: std::primitive::usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
+                        let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
                         acc.push(contents);
                     }
                 }
@@ -186,7 +186,7 @@ mod tests {
         }
         #[derive(Debug, PartialEq, serde::Deserialize)]
         struct Lints {
-            workspace: std::primitive::bool,
+            workspace: bool,
         }
         #[derive(Debug, serde::Deserialize)]
         struct CargoToml {
@@ -213,7 +213,7 @@ mod tests {
                             if let toml::Value::Table(value) = value {
                                 let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
                                     if let toml::Value::String(value) = version_value {
-                                        fn is_valid_version(value: &std::primitive::str) -> std::primitive::bool {
+                                        fn is_valid_version(value: &str) -> bool {
                                             let version = match value.strip_prefix('=') {
                                                 Some(value) => value,
                                                 None => return false,
@@ -230,7 +230,7 @@ mod tests {
                                                 if part.starts_with('0') && part != "0" {
                                                     return false; // optional: forbid leading zeros
                                                 }
-                                                if part.parse::<std::primitive::u64>().is_err() {
+                                                if part.parse::<u64>().is_err() {
                                                     return false;
                                                 }
                                             }

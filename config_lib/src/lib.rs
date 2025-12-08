@@ -36,7 +36,7 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::i32>() {
+        let value = match value.parse::<i32>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveI32Parsing { std_primitive_i32_parsing: error });
@@ -160,7 +160,7 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
 }
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct EnableApiGitCommitCheck(pub std::primitive::bool);
+pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
     StdPrimitiveBoolParsing { std_primitive_bool_parsing: std::str::ParseBoolError },
@@ -168,7 +168,7 @@ pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::bool>() {
+        let value = match value.parse::<bool>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveBoolParsing { std_primitive_bool_parsing: error });
@@ -179,7 +179,7 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
 }
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct MaximumSizeOfHttpBodyInBytes(pub std::primitive::usize);
+pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
     StdPrimitiveUsizeParsing { std_primitive_usize_parsing: std::num::ParseIntError },
@@ -187,7 +187,7 @@ pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
     fn try_from_std_env_var_ok(value: std::string::String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<std::primitive::usize>() {
+        let value = match value.parse::<usize>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveUsizeParsing { std_primitive_usize_parsing: error });

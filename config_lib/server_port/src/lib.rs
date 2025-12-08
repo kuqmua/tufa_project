@@ -1,7 +1,7 @@
 pub use server_port_try_from_u16::server_port_try_from_u16;
 
 #[derive(Debug, Clone, Copy, serde::Serialize)]
-pub struct ServerPort(std::primitive::u16);
+pub struct ServerPort(u16);
 impl std::fmt::Display for ServerPort {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
@@ -9,9 +9,9 @@ impl std::fmt::Display for ServerPort {
 }
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 pub struct ServerPortErrorNamed {
-    server_port_min_value: std::primitive::u16,
-    server_port_max_value: std::primitive::u16,
-    value: std::primitive::u16,
+    server_port_min_value: u16,
+    server_port_max_value: u16,
+    value: u16,
     message: std::string::String,
 }
 impl std::fmt::Display for ServerPortErrorNamed {
@@ -20,9 +20,9 @@ impl std::fmt::Display for ServerPortErrorNamed {
     }
 }
 impl std::error::Error for ServerPortErrorNamed {}
-impl std::convert::TryFrom<std::primitive::u16> for ServerPort {
+impl std::convert::TryFrom<u16> for ServerPort {
     type Error = ServerPortErrorNamed;
-    fn try_from(value: std::primitive::u16) -> Result<Self, Self::Error> {
+    fn try_from(value: u16) -> Result<Self, Self::Error> {
         if value < server_port_common::SERVER_PORT_MIN_VALUE {
             Err(Self::Error {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
@@ -47,7 +47,7 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
     where
         D: serde::Deserializer<'de>,
     {
-        let value = match std::primitive::u16::deserialize(deserializer) {
+        let value = match u16::deserialize(deserializer) {
             Ok(value) => value,
             Err(error) => {
                 return Err(error);

@@ -7,6 +7,6 @@ pub struct Config {
     pub database_url: secrecy::Secret<std::string::String>,
     pub tracing_level: config_lib::types::TracingLevel,
     pub source_place_type: config_lib::types::SourcePlaceType,
-    pub enable_api_git_commit_check: std::primitive::bool,
-    pub maximum_size_of_http_body_in_bytes: std::primitive::usize,
+    pub enable_api_git_commit_check: bool,
+    pub maximum_size_of_http_body_in_bytes: usize,
 }

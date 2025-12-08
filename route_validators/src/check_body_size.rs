@@ -4,7 +4,7 @@ pub enum CheckBodySizeErrorNamed {
         #[eo_to_std_string_string]
         axum_error: axum::Error,
         #[eo_to_std_string_string_serialize_deserialize]
-        maximum_size_of_body_limit_in_bytes: std::primitive::usize,
+        maximum_size_of_body_limit_in_bytes: usize,
         #[eo_to_std_string_string]
         size_hint: http_body::SizeHint,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -19,7 +19,7 @@ impl http_logic::GetAxumHttpStatusCode for CheckBodySizeErrorNamed {
     }
 }
 
-pub async fn check_body_size(body: axum::body::Body, limit: std::primitive::usize) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
+pub async fn check_body_size(body: axum::body::Body, limit: usize) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
     let size_hint = axum::body::HttpBody::size_hint(&body);
     //todo maybe move to router with idenpotent key log or something
     match size_hint.exact() {

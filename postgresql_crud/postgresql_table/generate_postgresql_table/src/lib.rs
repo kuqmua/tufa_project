@@ -389,7 +389,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let fn_primary_key_token_stream = {
             let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
             quote::quote! {
-                const fn #primary_key_snake_case() -> &'static std::primitive::str {
+                const fn #primary_key_snake_case() -> &'static str {
                     #primary_key_field_ident_double_quotes_token_stream
                 }
             }
@@ -418,13 +418,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for _ in &fields {
                         acc.push_str("{},");
                     }
-                    let _: std::option::Option<std::primitive::char> = acc.pop();
+                    let _: std::option::Option<char> = acc.pop();
                     acc
                 };
                 generate_quotes::double_quotes_token_stream(&format!("create table if not exists {{table}} ({acc})"))
             };
             let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
-                let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
+                let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: bool| {
                     let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                     let field_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
@@ -439,7 +439,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 acc
             };
             quote::quote! {
-                pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
+                pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     if let Err(error) = sqlx::query(&format!(
                         #prepare_postgresql_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
@@ -715,7 +715,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     }
     let generate_ident_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
     let generate_ident_operation_response_variants_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ResponseVariants").parse::<proc_macro2::TokenStream>().unwrap();
-    let generate_initialization_token_stream = |syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| -> proc_macro2::TokenStream {
+    let generate_initialization_token_stream = |syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: u32, column: u32| -> proc_macro2::TokenStream {
         let variant_ident = &syn_variant_wrapper.variant.ident;
         let fields_token_stream = if let syn::Fields::Named(value) = &syn_variant_wrapper.variant.fields {
             value.named.iter().enumerate().map(|(index, element)| {
@@ -757,7 +757,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #return_content_token_stream
         }
     };
-    let generate_operation_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation, syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| {
+    let generate_operation_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation, syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: u32, column: u32| {
         let ident_operation_error_named_upper_camel_case = generate_ident_operation_error_named_upper_camel_case(operation);
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let syn_variant_initialization_token_stream = generate_initialization_token_stream(syn_variant_wrapper, file, line, column);
@@ -824,11 +824,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     })
                 });
                 quote::quote! {
-                    fn #create_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, postgresql_crud::#query_part_error_named_upper_camel_case> {
+                    fn #create_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#std_string_string, postgresql_crud::#query_part_error_named_upper_camel_case> {
                         let mut #acc_snake_case = std::string::String::default();
                         #primary_key_content_token_stream
                         #column_increments_token_stream
-                        let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                        let _: std::option::Option<char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -1347,7 +1347,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&primary_key_field_type);
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
                     quote::quote! {
-                        let #primary_key_field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &std::primitive::str>(
+                        let #primary_key_field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &str>(
                             &#value_snake_case,
                             #field_ident_double_quotes_token_stream
                         ) {
@@ -1366,7 +1366,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {
                         let #field_ident = sqlx::Row::try_get::<
                             #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream,
-                            &std::primitive::str
+                            &str
                         >(&#value_snake_case, #field_ident_double_quotes_token_stream).ok();
                     }
                 });
@@ -1444,7 +1444,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     //         let field_ident = &element.field_ident;
     //         //todo permissions for json
     //         quote::quote! {
-    //             #field_ident: std::primitive::bool
+    //             #field_ident: bool
     //         }
     //     });
     //     quote::quote! {
@@ -1593,7 +1593,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let impl_ident_update_for_query_token_stream = {
             let update_query_part_primary_key_token_stream = {
                 quote::quote! {
-                    fn #update_query_part_primary_key_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
+                    fn #update_query_part_primary_key_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #primary_key_field_type_as_postgresql_type_token_stream #update_query_part_snake_case(
                             &self.#primary_key_field_ident,
                             "",
@@ -1615,7 +1615,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {
                     fn #update_query_part_field_ident_snake_case(
                         #value_snake_case: &postgresql_crud::Value<#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_for_query_upper_camel_case>,
-                        #increment_snake_case: &mut std::primitive::u64
+                        #increment_snake_case: &mut u64
                     ) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                             &#value_snake_case.#value_snake_case,
@@ -1666,11 +1666,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 });
                 quote::quote! {
-                    fn #select_only_updated_ids_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string_token_stream, postgresql_crud::QueryPartErrorNamed> {
+                    fn #select_only_updated_ids_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#std_string_string_token_stream, postgresql_crud::QueryPartErrorNamed> {
                         let mut #acc_snake_case = std::string::String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
-                        let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                        let _: std::option::Option<char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -1875,7 +1875,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
         quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_type_token_stream}
     };
-    let generate_match_postgres_transaction_rollback_await_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: std::primitive::u32, postgresql_column: std::primitive::u32, row_and_rollback_file: &'static str, row_and_rollback_line: std::primitive::u32, row_and_rollback_column: std::primitive::u32| {
+    let generate_match_postgres_transaction_rollback_await_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: u32, postgresql_column: u32, row_and_rollback_file: &'static str, row_and_rollback_line: u32, row_and_rollback_column: u32| {
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &postgresql_syn_variant_wrapper, postgresql_file, postgresql_line, postgresql_column);
         let row_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &row_and_rollback_syn_variant_wrapper, row_and_rollback_file, row_and_rollback_line, row_and_rollback_column);
         quote::quote! {{
@@ -1885,7 +1885,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
         }}
     };
-    let generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: std::primitive::u32, postgresql_column: std::primitive::u32, row_and_rollback_file: &'static str, row_and_rollback_line: std::primitive::u32, row_and_rollback_column: std::primitive::u32| {
+    let generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = |operation: &Operation, postgresql_file: &'static str, postgresql_line: u32, postgresql_column: u32, row_and_rollback_file: &'static str, row_and_rollback_line: u32, row_and_rollback_column: u32| {
         let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(operation, postgresql_file, postgresql_line, postgresql_column, row_and_rollback_file, row_and_rollback_line, row_and_rollback_column);
         quote::quote! {
             drop(#rows_snake_case);
@@ -2225,7 +2225,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             async fn #operation_handle_snake_case_token_stream(
                 #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                 #request_snake_case: axum::extract::Request,
-                #table_snake_case: &std::primitive::str,
+                #table_snake_case: &str,
             ) -> axum::response::Response {
                 #request_parts_preparation_token_stream
                 #additional_validators_token_stream
@@ -2398,7 +2398,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             async fn #try_operation_handle_snake_case_token_stream(
                 #endpoint_location_snake_case: #ref_std_primitive_str,
                 #parameters_snake_case: #ident_operation_parameters_upper_camel_case,
-                #table_snake_case: &std::primitive::str,
+                #table_snake_case: &str,
             ) -> Result<#result_ok_type_token_stream, #ident_try_operation_error_named_upper_camel_case> {
                 #payload_token_stream
                 #url_token_stream
@@ -2494,14 +2494,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
+    let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: u64 = 0;};
     let column_names = {
         let mut value = fields.iter().fold(std::string::String::default(), |mut acc, element| {
             acc.push_str(&format!("{}", &element.field_ident));
             acc.push(',');
             acc
         });
-        let _: std::option::Option<std::primitive::char> = value.pop();
+        let _: std::option::Option<char> = value.pop();
         value
     };
     let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
@@ -2520,7 +2520,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             {
                 let mut #acc_snake_case = #std_string_string_token_stream::new();
                 #(#select_only_ids_query_part_initialization_token_stream)*
-                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                let _: std::option::Option<char> = #acc_snake_case.pop();
                 #acc_snake_case
             }
         }
@@ -2574,7 +2574,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                 }
                             }
-                            let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                            let _: std::option::Option<char> = #acc_snake_case.pop();
                             #acc_snake_case
                         },
                         &#select_only_ids_query_part_token_stream
@@ -2883,7 +2883,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     &#parameters_snake_case.#payload_snake_case.pagination,
                                     &mut #increment_snake_case,
                                     &"",
-                                    std::primitive::bool::default()
+                                    bool::default()
                                 ) {
                                     Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_0_token_stream) => {
@@ -3335,7 +3335,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let elements = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #fields_named_without_primary_key_update_assignment_token_stream
-                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                                let _: std::option::Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let primary_keys = {
@@ -3343,7 +3343,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
                                 }
-                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                                let _: std::option::Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             //todo refactor\reuse
@@ -3588,7 +3588,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #columns_snake_case = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #additional_parameters_modification_token_stream
-                                let _: std::option::Option<std::primitive::char> = #acc_snake_case.pop();
+                                let _: std::option::Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
@@ -3971,7 +3971,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let slash_delete_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many_payload_example_snake_case);
         let slash_delete_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one_payload_example_snake_case);
         impl_ident_vec_token_stream.push(quote::quote! {
-            fn #routes_handle_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream, #table_snake_case: &std::primitive::str) -> axum::Router {
+            fn #routes_handle_snake_case(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream, #table_snake_case: &str) -> axum::Router {
                 axum::Router::new().nest(
                     &format!("/{table}"),
                     axum::Router::new()
@@ -4345,7 +4345,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &quote::quote!{#element_snake_case.#create_snake_case}
         );
         
-        let generate_table_test_name_field_ident_cloned2_token_stream = |test_name: &std::primitive::str, field_ident: &syn::Ident|{
+        let generate_table_test_name_field_ident_cloned2_token_stream = |test_name: &str, field_ident: &syn::Ident|{
             format!("table_{test_name}_{field_ident}_cloned2").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
         };
         let mut table_field_idents_initialization_vec_token_stream = vec![];
@@ -4354,7 +4354,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_drop_table_if_exists_vec_token_stream = vec![];
         let mut table_field_idents_prepare_postgresql_table_vec_token_stream = vec![];
         let mut table_field_idents_routes_handle_vec_token_stream = vec![];
-        let mut fill_table_field_idents_vec_token_stream = |test_names: std::vec::Vec<&std::primitive::str>|{
+        let mut fill_table_field_idents_vec_token_stream = |test_names: std::vec::Vec<&str>|{
             for test_name in test_names {
                 let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
                     format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
@@ -4828,12 +4828,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote!{{
                     let current_table = table_test_read_many_by_non_existent_primary_keys_cloned2.clone();
                     async fn generate_test_read_many_by_non_existent_primary_keys(
-                        length: std::primitive::usize,
-                        url: &std::primitive::str,
+                        length: usize,
+                        url: &str,
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
-                        current_table: &std::primitive::str,
+                        current_table: &str,
                         ident_create_default: super::#ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ){
                         #content_token_stream
                     }
@@ -5037,12 +5037,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote!{{
                     let current_table = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
                     async fn generate_test_read_many_by_equal_to_created_primary_keys(
-                        length: std::primitive::usize,
-                        url: &std::primitive::str,
+                        length: usize,
+                        url: &str,
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
-                        current_table: &std::primitive::str,
+                        current_table: &str,
                         ident_create_default: super::#ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ) {
                         #content_token_stream
                     }
@@ -5120,7 +5120,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#postgresql_type_option_vec_where_greater_than_test_snake_case().unwrap_or(vec![])
             };
             let generate_read_test_token_stream = |
-                test_name: &std::primitive::str,
+                test_name: &str,
                 generate_method_call_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
                 generate_create_content_token_stream: &dyn Fn(&syn::Ident) -> proc_macro2::TokenStream,
                 generate_content_token_stream: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream,
@@ -5257,7 +5257,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream
             ) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |
-                    test_name: &std::primitive::str,
+                    test_name: &str,
                     equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields
                 |{
                     generate_read_test_token_stream(
@@ -5404,7 +5404,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             ) = {
                 //todo if vec_create is empty then do different logic (for uuid). now uuid tested using one default case
                 let generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream = |
-                    test_name: &std::primitive::str,
+                    test_name: &str,
                     dimension: &postgresql_crud_macros_common::Dimension
                 |{
                     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case = dimension.read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case();
@@ -5871,7 +5871,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut local_increment: std::primitive::usize = 0;
+                                    let mut local_increment: usize = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
                                         &read_only_ids_current_element.#field_ident.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")
@@ -6207,7 +6207,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     as
                                     postgresql_crud::PostgresqlTypeTestCases
                                 >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                    let mut local_increment: std::primitive::usize = 0;
+                                    let mut local_increment: usize = 0;
                                     let mut option_test_case = None;
                                     for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
                                         &read_only_ids_current_element.#field_ident.clone().expect("error c4d98a71-f30f-410e-b410-a75f4672f2f7")
@@ -6311,12 +6311,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote!{{
                     let current_table = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
                     async fn generate_test_delete_many_by_non_existent_primary_keys(
-                        length: std::primitive::usize,
-                        url: &std::primitive::str,
+                        length: usize,
+                        url: &str,
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
-                        current_table: &std::primitive::str,
+                        current_table: &str,
                         ident_create_default: super::#ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ){
                         #content_token_stream
                     }
@@ -6438,12 +6438,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote!{{
                     let current_table = table_test_read_many_by_equal_to_created_primary_keys_cloned2.clone();
                     async fn generate_test_delete_many_by_primary_keys(
-                        length: std::primitive::usize,
-                        url: &std::primitive::str,
+                        length: usize,
+                        url: &str,
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<super::#ident_select_upper_camel_case>,
-                        current_table: &std::primitive::str,
+                        current_table: &str,
                         ident_create_default: super::#ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &std::primitive::str,
+                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ) {
                         #content_token_stream
                     }
@@ -6657,7 +6657,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_one_cloned2 = table_delete_one.clone();
 
                             let drop_all_test_tables = async ||{
-                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &std::primitive::str) {
+                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &str) {
                                     let #query_snake_case = format!("drop table if exists {table}");
                                     let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
                                 }

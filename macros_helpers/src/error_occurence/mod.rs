@@ -24,7 +24,7 @@ pub enum ErrorOccurenceFieldAttribute {
 }
 impl std::str::FromStr for ErrorOccurenceFieldAttribute {
     type Err = ();
-    fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
         if value == "eo_to_std_string_string" {
             Ok(Self::EoToStdStringString)
         } else if value == "eo_to_std_string_string_serialize_deserialize" {

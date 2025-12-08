@@ -8949,7 +8949,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!({
     ]
 });
 
-fn field_ident_jsonb_build_object_value(field_ident: &std::primitive::str) -> std::string::String {
+fn field_ident_jsonb_build_object_value(field_ident: &str) -> std::string::String {
     format!("'{field_ident}',jsonb_build_object('value','null'::jsonb),")
 }
 

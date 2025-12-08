@@ -200,7 +200,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl ArrayDimension {
-        const fn to_usize(&self) -> std::primitive::usize {
+        const fn to_usize(&self) -> usize {
             match &self {
                 Self::ArrayDimension1 { .. } => 1,
                 Self::ArrayDimension2 { .. } => 2,
@@ -252,7 +252,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl ArrayDimensionSelectPattern {
-        const fn to_usize(&self) -> std::primitive::usize {
+        const fn to_usize(&self) -> usize {
             match &self {
                 Self::ArrayDimension2 { .. } => 2,
                 Self::ArrayDimension3 { .. } => 3,
@@ -489,7 +489,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     let (_fields_token_stream, postgresql_json_type_array) = postgresql_json_type_record_vec
         .into_iter()
         .enumerate()
-        .collect::<std::vec::Vec<(std::primitive::usize, PostgresqlJsonTypeRecord)>>()
+        .collect::<std::vec::Vec<(usize, PostgresqlJsonTypeRecord)>>()
         .par_iter()
         // .into_iter() //just for console prints ordering
         .map(|(index, element)| {
@@ -1952,9 +1952,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let postgresql_crud_macros_common_import_path_postgresql_crud_common = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let impl_postgresql_json_type_for_ident_token_stream = {
-                let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
-                let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
-                let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
+                let generate_dimension_number_stringified = |dimensions_number: usize| format!("dimension{dimensions_number}");
+                let generate_dimension_number_start_stringified = |dimensions_number: usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
+                let generate_dimension_number_end_stringified = |dimensions_number: usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
                 let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                     quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
@@ -1997,17 +1997,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             use postgresql_crud_macros_common::NotNullOrNullable;
                             let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
                             let format_handle = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                                let generate_jsonb_agg = |jsonb_agg_content: &std::primitive::str, jsonb_array_elements_content: &std::primitive::str, ordinality_content: &std::primitive::str, dimensions_number: std::primitive::usize| {
+                                let generate_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
                                     let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
                                     let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
                                     format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
                                 };
                                 if let Ok(array_dimension_select_pattern) = ArrayDimensionSelectPattern::try_from(&array_dimension) {
                                     //Dimension1 does not fit into pattern. its only for 2+ dimensions
-                                    let generate_d_number_elem = |content: std::primitive::usize| format!("d{content}_elem");
-                                    let generate_d_number_ord = |content: std::primitive::usize| format!("d{content}_elem");
-                                    let generate_dot_value = |content: &std::primitive::str| format!("{content}.value");
-                                    let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str| format!("as {first_content}(value, {second_content}) where {second_content}");
+                                    let generate_d_number_elem = |content: usize| format!("d{content}_elem");
+                                    let generate_d_number_ord = |content: usize| format!("d{content}_elem");
+                                    let generate_dot_value = |content: &str| format!("{content}.value");
+                                    let generate_as_value_where = |first_content: &str, second_content: &str| format!("as {first_content}(value, {second_content}) where {second_content}");
                                     let one = 1;
                                     generate_jsonb_agg(
                                         &{
@@ -2191,7 +2191,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_array_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension| {
                     use postgresql_crud_macros_common::NotNullOrNullable;
                     let dimension_index_number_max = postgresql_crud_macros_common::DimensionIndexNumber::from(dimension);
-                    let index_number_to_std_primitive_u8 = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber| -> std::primitive::u8 {
+                    let index_number_to_std_primitive_u8 = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber| -> u8 {
                         match dimension_index_number {
                             postgresql_crud_macros_common::DimensionIndexNumber::Zero => 0,
                             postgresql_crud_macros_common::DimensionIndexNumber::One => 1,
@@ -2247,7 +2247,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let index_number_token_stream = format!("index_{element}").parse::<proc_macro2::TokenStream>().expect("error f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                                 content_token_stream.push(quote::quote! {
                                     postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                        std::primitive::i32::try_from(#index_number_token_stream).expect("error 5a1818e7-3865-4222-bf6b-31486bd721d2")
+                                        i32::try_from(#index_number_token_stream).expect("error 5a1818e7-3865-4222-bf6b-31486bd721d2")
                                     ).expect("error ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
                                 });
                             }
@@ -2859,7 +2859,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         where_filters::PostgresqlJsonTypeWhereLengthEqual {
                                             logical_operator: #import_path::LogicalOperator::Or,
                                             #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                std::primitive::i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
+                                                i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
                                             ).expect("error aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
                                         }
                                     )
@@ -2932,7 +2932,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         where_filters::PostgresqlJsonTypeWhereLengthGreaterThan {
                                             logical_operator: #import_path::LogicalOperator::Or,
                                             #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                std::primitive::i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
+                                                i32::try_from(#content_token_stream.len()).expect("error 56aee101-8823-4a80-bb06-c77ce1955151")
                                             ).expect("error aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
                                         }
                                     )

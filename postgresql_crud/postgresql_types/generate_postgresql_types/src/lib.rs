@@ -134,7 +134,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         StdPrimitiveI32AsSerialInitializedByPostgresql,
         StdPrimitiveI64AsBigSerialInitializedByPostgresql,
         SqlxPostgresTypesPgMoneyAsMoney,
-        // SqlxTypesBigDecimalAsNumeric, remove coz dont know how to deserialize with scale std::primitive::i64
+        // SqlxTypesBigDecimalAsNumeric, remove coz dont know how to deserialize with scale i64
         StdPrimitiveBoolAsBool,
         StdStringStringAsText,
         StdVecVecStdPrimitiveU8AsBytea,
@@ -319,7 +319,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // },
     }
     impl PostgresqlTypePattern {
-        const fn array_dimensions_number(&self) -> std::primitive::usize {
+        const fn array_dimensions_number(&self) -> usize {
             match &self {
                 Self::Standart => 0,
                 Self::ArrayDimension1 { .. } => 1,
@@ -825,7 +825,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     let (columns_token_stream, postgresql_type_array) = postgresql_type_record_vec
         .into_iter()
         .enumerate()
-        .collect::<std::vec::Vec<(std::primitive::usize, PostgresqlTypeRecord)>>()
+        .collect::<std::vec::Vec<(usize, PostgresqlTypeRecord)>>()
         .par_iter()
         // .into_iter() //just for console prints ordering
         .map(|(index, element)| {
@@ -1001,15 +1001,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
             let inner_type_standart_not_null_token_stream = {
                 let value = {
-                    let std_primitive_i16_stringified = "std::primitive::i16".to_string();
-                    let std_primitive_i32_stringified = "std::primitive::i32".to_string();
-                    let std_primitive_i64_stringified = "std::primitive::i64".to_string();
-                    let std_primitive_f32_stringified = "std::primitive::f32".to_string();
-                    let std_primitive_f64_stringified = "std::primitive::f64".to_string();
+                    let std_primitive_i16_stringified = "i16".to_string();
+                    let std_primitive_i32_stringified = "i32".to_string();
+                    let std_primitive_i64_stringified = "i64".to_string();
+                    let std_primitive_f32_stringified = "f32".to_string();
+                    let std_primitive_f64_stringified = "f64".to_string();
                     let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
-                    let std_primitive_bool_stringified = "std::primitive::bool".to_string();
+                    let std_primitive_bool_stringified = "bool".to_string();
                     let std_string_string_stringified = "std::string::String".to_string();
-                    let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
+                    let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<u8>".to_string();
                     let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                     let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
                     let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
@@ -1202,7 +1202,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Four,
                 }
                 impl ParameterNumber {
-                    const fn get_index(&self) -> std::primitive::usize {
+                    const fn get_index(&self) -> usize {
                         match &self {
                             Self::One => 0,
                             Self::Two => 1,
@@ -1210,7 +1210,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Self::Four => 3,
                         }
                     }
-                    fn get_vec_from_index_starting_with_zero(&self) -> std::vec::Vec<std::primitive::usize> {
+                    fn get_vec_from_index_starting_with_zero(&self) -> std::vec::Vec<usize> {
                         (0..=self.get_index()).collect()
                     }
                 }
@@ -1255,7 +1255,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {#(#value)*}
                         };
                         quote::quote! {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
+                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
                         }
                     };
                     let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(&parameter_number_two);
@@ -1492,7 +1492,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                         }
                     };
-                    let generate_field_index_token_stream = |index: std::primitive::usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
+                    let generate_field_index_token_stream = |index: usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
                     let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                         let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
@@ -1532,9 +1532,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     }};
                     let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_token_stream)};
-                    let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
+                    let array_std_primitive_u8_6_token_stream = quote::quote! {[u8; 6]};
                     let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_token_stream, match_origin_try_new_for_deserialize_two_token_stream, match_origin_try_new_for_deserialize_four_token_stream) = {
-                        let generate_match_origin_try_new_for_deserialize_token_stream = |length: std::primitive::usize| {
+                        let generate_match_origin_try_new_for_deserialize_token_stream = |length: usize| {
                             let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
                                 match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#(#fields_token_stream),*) {
@@ -1551,7 +1551,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         )
                     };
                     let (origin_new_for_deserialize_two_token_stream, origin_new_for_deserialize_three_token_stream) = {
-                        let generate_origin_new_for_deserialize_token_stream = |length: std::primitive::usize| {
+                        let generate_origin_new_for_deserialize_token_stream = |length: usize| {
                             let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
                                 _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
@@ -5310,7 +5310,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         else {
                                             quote::quote!{new(#content_token_stream)}
                                         };
-                                        let generate_vec_value_clone_zero_into_number_token_stream = |value: std::primitive::usize|{
+                                        let generate_vec_value_clone_zero_into_number_token_stream = |value: usize|{
                                             let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().unwrap();
                                             quote::quote!{vec![#value_snake_case.clone().0.into(); #number_token_stream]}
                                         };
@@ -5616,7 +5616,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     dimensions: where_filters::BoundedStdVecVec::try_from(
                                                         vec![
                                                             postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32::try_from(
-                                                                std::primitive::i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
+                                                                i32::try_from(index).expect("error 5954966c-571a-4744-ba04-9806fc7e63c9")
                                                             ).expect("error 8d269b8f-41db-4fd9-b33a-e0c532593163")
                                                         ]
                                                     ).expect("error fe1e037f-70ce-4744-b34b-0413754e6fb0"),

@@ -144,7 +144,7 @@ pub fn postgresql_crud_common_query_part_error_named_token_stream() -> proc_macr
 pub fn generate_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {value}"))
 }
-pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> proc_macro2::TokenStream {
+pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: usize) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {length} elements"))
 }
 pub fn generate_tuple_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
@@ -161,7 +161,7 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
-pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
+pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
     let struct_postgresql_type_ident_where_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(ident);
     let struct_postgresql_type_ident_where_tokens_with_number_elements_double_quotes_token_stream = generate_struct_ident_with_number_elements_double_quotes_token_stream(ident, length);
     let postgresql_type_ident_where_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
@@ -554,7 +554,7 @@ pub enum ImportPath {
     PostgresqlCrudCommon,
 }
 impl ImportPath {
-    pub const fn snake_case_std_primitive_str(&self) -> &'static std::primitive::str {
+    pub const fn snake_case_std_primitive_str(&self) -> &'static str {
         match &self {
             Self::Crate => "crate",
             Self::PostgresqlCrud => "postgresql_crud",
@@ -589,7 +589,7 @@ impl ImportPath {
             Self::PostgresqlCrudCommon => &token_patterns::PostgresqlCrudCommonAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize,
         }
     }
-    pub const fn to_path(&self) -> &'static std::primitive::str {
+    pub const fn to_path(&self) -> &'static str {
         match &self {
             Self::Crate => "crate",
             Self::PostgresqlCrud => "postgresql_crud",
@@ -725,7 +725,7 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                <#type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
             }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
                 <#type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
             }
         }
@@ -1779,7 +1779,7 @@ pub fn postgresql_crud_common_query_part_error_named_checked_add_initialization_
 pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         impl postgresql_crud_common::IsStringEmpty for #ident {
-            fn is_string_empty(&self) -> std::primitive::bool {
+            fn is_string_empty(&self) -> bool {
                 self.0.to_string().is_empty()
             }
         }
@@ -1794,7 +1794,7 @@ pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToT
         }
     }
 }
-pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, vec_ident_type: &[(&syn::Ident, &syn::Type)], len: std::primitive::usize, generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, vec_ident_type: &[(&syn::Ident, &syn::Type)], len: usize, generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
     let vec_ident = vec_ident_type.iter().map(|element| element.0).collect::<std::vec::Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {
@@ -1807,7 +1807,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
         };
         quote::quote! {#(#field_enum_variants_token_stream),*}
     };
-    fn generate_underscore_underscore_field_index_token_stream(index: std::primitive::usize) -> proc_macro2::TokenStream {
+    fn generate_underscore_underscore_field_index_token_stream(index: usize) -> proc_macro2::TokenStream {
         let value = format!("__field{index}");
         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
@@ -1828,7 +1828,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
         };
         quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
     };
-    fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize) -> proc_macro2::TokenStream {
+    fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: usize) -> proc_macro2::TokenStream {
         let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
         quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
     }
@@ -2090,7 +2090,7 @@ pub fn wrap_content_into_scopes_token_stream(content_token_stream: &dyn quote::T
     quote::quote! {(#content_token_stream)}
 }
 
-pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToTokens, std_primitive_bool: std::primitive::bool) -> proc_macro2::TokenStream {
+pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToTokens, std_primitive_bool: bool) -> proc_macro2::TokenStream {
     if std_primitive_bool {
         wrap_content_into_scopes_token_stream(&content_token_stream)
     } else {

@@ -1092,7 +1092,7 @@ generate_postgresql_types::generate_postgresql_types!("All");
 //     ]
 // });
 
-fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
     if is_primary_key { "primary key" } else { "" }
 }
 
@@ -1102,24 +1102,24 @@ pub struct PaginationStartsWithOne(postgresql_crud_common::PaginationBase);
 pub enum PaginationStartsWithOneTryNewErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
+        limit: i64,
         #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
+        offset: i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     LimitIsLessThanOrEqualToZero {
         #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
+        limit: i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     OffsetIsLessThanOne {
         #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
+        offset: i64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
 impl PaginationStartsWithOne {
-    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
+    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
                 Err(PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero { limit, code_occurence: error_occurence_lib::code_occurence!() })
@@ -1132,10 +1132,10 @@ impl PaginationStartsWithOne {
             Err(PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow { limit, offset, code_occurence: error_occurence_lib::code_occurence!() })
         }
     }
-    pub const fn start(&self) -> std::primitive::i64 {
+    pub const fn start(&self) -> i64 {
         self.0.start()
     }
-    pub const fn end(&self) -> std::primitive::i64 {
+    pub const fn end(&self) -> i64 {
         self.0.end()
     }
 }
@@ -1213,13 +1213,13 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             where
                 __A: serde::de::SeqAccess<'de>,
             {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                let __field0 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
                     }
                 };
-                let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                let __field1 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
                         return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
@@ -1235,21 +1235,21 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: serde::__private::Option<std::primitive::i64> = serde::__private::None;
-                let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                let mut __field0: serde::__private::Option<i64> = serde::__private::None;
+                let mut __field1: serde::__private::Option<i64> = serde::__private::None;
                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
                         __Field::__field0 => {
                             if serde::__private::Option::is_some(&__field0) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
                             }
-                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
                             if serde::__private::Option::is_some(&__field1) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
                             }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -1284,7 +1284,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
     }
 }
 impl<'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithOne {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, postgresql_crud_common::QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -1306,9 +1306,9 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithOne {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        let one: std::primitive::i32 = 1;
+        let one: i32 = 1;
         Self(postgresql_crud_common::PaginationBase::new_unchecked(
-            std::primitive::i32::MAX.checked_sub(one).expect("error c0f03c51-d565-4377-ad4e-f38ee636909b").into(),
+            i32::MAX.checked_sub(one).expect("error c0f03c51-d565-4377-ad4e-f38ee636909b").into(),
             one.into()
         ))
     }
