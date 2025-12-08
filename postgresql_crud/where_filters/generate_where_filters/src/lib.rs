@@ -128,8 +128,8 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         )
     };
     let regular_expression_case_and_value_declaration_token_stream = quote::quote! {
-        pub regular_expression_case: crate::RegularExpressionCase,
-        pub value: crate::RegexRegex
+        pub regular_expression_case: RegularExpressionCase,
+        pub value: RegexRegex
     };
     let regular_expression_case_and_value_default_initialization_token_stream = quote::quote! {
         regular_expression_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
