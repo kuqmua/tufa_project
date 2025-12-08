@@ -190,13 +190,13 @@ mod tests {
         }
         #[derive(Debug, serde::Deserialize)]
         struct CargoToml {
-            package: std::option::Option<Name>,
-            dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
+            package: Option<Name>,
+            dependencies: Option<std::collections::HashMap<String, toml::Value>>,
             #[serde(rename = "dev-dependencies")]
-            dev_dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
+            dev_dependencies: Option<std::collections::HashMap<String, toml::Value>>,
             #[serde(rename = "build-dependencies")]
-            build_dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
-            lints: std::option::Option<Lints>,
+            build_dependencies: Option<std::collections::HashMap<String, toml::Value>>,
+            lints: Option<Lints>,
         }
         let mut acc: std::vec::Vec<(String, toml::Value)> = vec![];
         for cargo_toml_string in &cargo_toml_string_vec {
@@ -204,7 +204,7 @@ mod tests {
             //todo after fix issue with pg_jsonschema remove this check
             if let Some(package) = &cargo_toml.package && package.name != "pg_jsonschema" {
                 assert!(cargo_toml.lints == Some(Lints {workspace: true}), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
-                let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<String, toml::Value>>|{
+                let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>|{
                     if let Some(value) = deps {
                         let mut keys = value.keys().clone().collect::<std::vec::Vec<_>>();
                         keys.sort();

@@ -118,7 +118,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl PostgresqlJsonTypePattern {
-        const fn down_by_1(&self) -> std::option::Option<Self> {
+        const fn down_by_1(&self) -> Option<Self> {
             match &self {
                 Self::Standart => None,
                 Self::ArrayDimension1 {..} => Some(Self::Standart),
@@ -143,7 +143,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }),
             }
         }
-        const fn down_by_2(&self) -> std::option::Option<Self> {
+        const fn down_by_2(&self) -> Option<Self> {
             match &self {
                 Self::Standart |
                 Self::ArrayDimension1 {..} => None,
@@ -162,7 +162,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }),
             }
         }
-        const fn down_by_3(&self) -> std::option::Option<Self> {
+        const fn down_by_3(&self) -> Option<Self> {
             match &self {
                 Self::Standart |
                 Self::ArrayDimension1 {..} |
@@ -174,7 +174,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable }),
             }
         }
-        const fn down_by_4(&self) -> std::option::Option<Self> {
+        const fn down_by_4(&self) -> Option<Self> {
             match &self {
                 Self::Standart |
                 Self::ArrayDimension1 {..} |

@@ -64,7 +64,7 @@ impl<T: std::cmp::PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmp
                 },
             }
         }
-        let _: std::option::Option<char> = acc.pop();
+        let _: Option<char> = acc.pop();
         Ok(acc)
     }
     pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<

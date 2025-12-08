@@ -111,7 +111,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
         let value = naming::parameter::PostgresqlTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
-    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
+    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream> {
         match &self {
             Self::Equal { ident } |
             Self::DimensionOneEqual { ident } |
@@ -320,7 +320,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
         let value = naming::parameter::PostgresqlJsonTypeWhereSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
-    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
+    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream> {
         match &self {
             Self::Equal { ident } |
             Self::DimensionOneEqual { ident } |
@@ -400,5 +400,5 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
 pub trait PostgresqlFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
-    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream>;
+    fn maybe_generic(&self) -> Option<proc_macro2::TokenStream>;
 }

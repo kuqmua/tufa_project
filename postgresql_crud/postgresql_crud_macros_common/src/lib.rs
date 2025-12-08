@@ -24,7 +24,7 @@ impl NotNullOrNullable {
     pub fn maybe_option_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
         match &self {
             Self::NotNull => content_token_stream,
-            Self::Nullable => quote::quote! {std::option::Option<#content_token_stream>},
+            Self::Nullable => quote::quote! {Option<#content_token_stream>},
         }
     }
     pub fn maybe_some_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
@@ -59,7 +59,7 @@ pub fn generate_postgresql_type_where_token_stream(
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             let prefix_where_self_upper_camel_case = element.prefix_where_self_upper_camel_case();
-            let option_type_token_stream: std::option::Option<proc_macro2::TokenStream> = element.maybe_generic();
+            let option_type_token_stream: Option<proc_macro2::TokenStream> = element.maybe_generic();
             let type_token_stream = match option_type_token_stream {
                 Some(value) => quote::quote! {<#value>},
                 None => proc_macro2::TokenStream::new(),
@@ -155,7 +155,7 @@ pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream:
     quote::quote! {sqlx::types::Json<#type_token_stream>}
 }
 pub fn generate_std_option_option_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    quote::quote! {std::option::Option<#type_token_stream>}
+    quote::quote! {Option<#type_token_stream>}
 }
 pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {std::vec::Vec<#type_token_stream>}
@@ -1038,7 +1038,7 @@ fn generate_option_vec_create_token_stream(
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     quote::quote!{
-        fn #option_vec_create_snake_case() -> std::option::Option<std::vec::Vec<#path_token_stream::#create_upper_camel_case>> {
+        fn #option_vec_create_snake_case() -> Option<std::vec::Vec<#path_token_stream::#create_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1118,7 +1118,7 @@ fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some
     quote::quote!{
         fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
             #value_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
-        ) -> std::option::Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
+        ) -> Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1135,7 +1135,7 @@ fn generate_previous_read_merged_with_option_update_into_read_token_stream(
     quote::quote!{
         fn #previous_read_merged_with_option_update_into_read_snake_case(
             #read_snake_case: #path_token_stream::#read_upper_camel_case,
-            #option_update_snake_case: std::option::Option<#path_token_stream::#update_upper_camel_case>,
+            #option_update_snake_case: Option<#path_token_stream::#update_upper_camel_case>,
         ) -> #path_token_stream::#read_upper_camel_case {
             #content_token_stream
         }
@@ -1176,7 +1176,7 @@ fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream
         fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> std::option::Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
+        ) -> Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1295,7 +1295,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         fn #name_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1352,7 +1352,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token
     quote::quote!{
         fn #create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1369,7 +1369,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
     quote::quote!{
         fn #create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> std::option::Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1386,7 +1386,7 @@ fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (quote::quote!{PostgresqlJsonTypeLengthGreaterThanTest},quote::quote!{PostgresqlJsonType}),
     };
     quote::quote!{
-        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> std::option::Option<std::vec::Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
+        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<std::vec::Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
             #content_token_stream
         }
     }
@@ -1552,17 +1552,17 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_content_token_stream
             fn #create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case(
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> std::option::Option<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
+            ) -> Option<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
                 #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
             }
-            fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> std::option::Option<std::vec::Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
+            fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> Option<std::vec::Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
                 #postgresql_type_option_vec_where_greater_than_test_token_stream
             }
             fn #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case(
                 greater_than_variant: #import_path::PostgresqlTypeGreaterThanVariant,
                 #read_only_ids_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case,
                 #table_type_declaration_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case,
-            ) -> std::option::Option<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case> {
+            ) -> Option<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case> {
                 #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream
             }
             #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream
@@ -1721,7 +1721,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             #read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream
             fn #read_only_ids_into_option_value_read_inner_snake_case(
                 #value_snake_case: #self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case
-            ) -> std::option::Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
+            ) -> Option<#import_path::#value_upper_camel_case<#self_postgresql_json_type_as_postgresql_json_type_token_stream::#read_inner_upper_camel_case>> {
                 #read_only_ids_into_option_value_read_inner_token_stream
             }
             #update_to_read_only_ids_content_token_stream

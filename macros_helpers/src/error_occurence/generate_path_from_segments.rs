@@ -3,7 +3,7 @@ pub fn generate_path_from_segments(segments: &syn::punctuated::Punctuated<syn::P
         acc.push_str(&format!("{}::", elem.ident));
         acc
     });
-    let _: std::option::Option<char> = segments_stringified.pop();
-    let _: std::option::Option<char> = segments_stringified.pop();
+    let _: Option<char> = segments_stringified.pop();
+    let _: Option<char> = segments_stringified.pop();
     segments_stringified
 }

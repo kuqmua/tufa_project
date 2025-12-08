@@ -234,7 +234,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     }
     let (primary_key_field, fields, fields_without_primary_key) = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
-            let mut option_primary_key_field: std::option::Option<SynFieldWrapper> = None;
+            let mut option_primary_key_field: Option<SynFieldWrapper> = None;
             let mut fields = vec![];
             let mut fields_without_primary_key = vec![];
             for element in &fields_named.named {
@@ -418,7 +418,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for _ in &fields {
                         acc.push_str("{},");
                     }
-                    let _: std::option::Option<char> = acc.pop();
+                    let _: Option<char> = acc.pop();
                     acc
                 };
                 generate_quotes::double_quotes_token_stream(&format!("create table if not exists {{table}} ({acc})"))
@@ -533,17 +533,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     #[derive(Debug)]
     struct SynVariantWrapper {
         variant: syn::Variant,
-        status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
+        status_code: Option<macros_helpers::status_code::StatusCode>,
     }
     impl SynVariantWrapper {
         const fn get_syn_variant(&self) -> &syn::Variant {
             &self.variant
         }
-        const fn get_option_status_code(&self) -> std::option::Option<&macros_helpers::status_code::StatusCode> {
+        const fn get_option_status_code(&self) -> Option<&macros_helpers::status_code::StatusCode> {
             self.status_code.as_ref()
         }
     }
-    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display, status_code: std::option::Option<macros_helpers::status_code::StatusCode>, fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>| -> SynVariantWrapper {
+    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display, status_code: Option<macros_helpers::status_code::StatusCode>, fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>| -> SynVariantWrapper {
         SynVariantWrapper {
             variant: syn::Variant {
                 attrs: status_code.as_ref().map_or_else(
@@ -828,7 +828,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let mut #acc_snake_case = String::default();
                         #primary_key_content_token_stream
                         #column_increments_token_stream
-                        let _: std::option::Option<char> = #acc_snake_case.pop();
+                        let _: Option<char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -1670,7 +1670,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let mut #acc_snake_case = String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
-                        let _: std::option::Option<char> = #acc_snake_case.pop();
+                        let _: Option<char> = #acc_snake_case.pop();
                         Ok(#acc_snake_case)
                     }
                 }
@@ -2501,7 +2501,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             acc.push(',');
             acc
         });
-        let _: std::option::Option<char> = value.pop();
+        let _: Option<char> = value.pop();
         value
     };
     let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
@@ -2520,7 +2520,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             {
                 let mut #acc_snake_case = #std_string_string_token_stream::new();
                 #(#select_only_ids_query_part_initialization_token_stream)*
-                let _: std::option::Option<char> = #acc_snake_case.pop();
+                let _: Option<char> = #acc_snake_case.pop();
                 #acc_snake_case
             }
         }
@@ -2574,7 +2574,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                 }
                             }
-                            let _: std::option::Option<char> = #acc_snake_case.pop();
+                            let _: Option<char> = #acc_snake_case.pop();
                             #acc_snake_case
                         },
                         &#select_only_ids_query_part_token_stream
@@ -3335,7 +3335,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let elements = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #fields_named_without_primary_key_update_assignment_token_stream
-                                let _: std::option::Option<char> = #acc_snake_case.pop();
+                                let _: Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let primary_keys = {
@@ -3343,7 +3343,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
                                 }
-                                let _: std::option::Option<char> = #acc_snake_case.pop();
+                                let _: Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             //todo refactor\reuse
@@ -3588,7 +3588,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #columns_snake_case = {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #additional_parameters_modification_token_stream
-                                let _: std::option::Option<char> = #acc_snake_case.pop();
+                                let _: Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;

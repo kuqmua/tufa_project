@@ -32,7 +32,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream};
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
-        True { maybe_additional_traits_token_stream: std::option::Option<proc_macro2::TokenStream> },
+        True { maybe_additional_traits_token_stream: Option<proc_macro2::TokenStream> },
         False,
     }
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {

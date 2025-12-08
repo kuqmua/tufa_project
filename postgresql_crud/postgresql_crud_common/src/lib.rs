@@ -154,17 +154,17 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: PostgresqlType;
     type Select: SelectAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
-    fn option_vec_create() -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>>;
+    fn option_vec_create() -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Update;
     fn update_to_read_only_ids(value: &<Self::PostgresqlType as PostgresqlType>::Update) -> <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
-    ) -> std::option::Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
+    ) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
         read: <Self::PostgresqlType as PostgresqlType>::Read,
-        option_update: std::option::Option<<Self::PostgresqlType as PostgresqlType>::Update>,
+        option_update: Option<<Self::PostgresqlType as PostgresqlType>::Update>,
     ) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_only_ids_merged_with_create_into_read(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
@@ -173,7 +173,7 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_option_value_read(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
+    ) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type_declaration(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
@@ -191,41 +191,41 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 
     fn create_into_postgresql_type_option_vec_where_dimension_one_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn postgresql_type_option_vec_where_greater_than_test() -> std::option::Option<std::vec::Vec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn postgresql_type_option_vec_where_greater_than_test() -> Option<std::vec::Vec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
     fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than(
         greater_than_variant: PostgresqlTypeGreaterThanVariant,
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         table_type_declaration: <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration,
-    ) -> std::option::Option<<Self::PostgresqlType as PostgresqlType>::Where>;
+    ) -> Option<<Self::PostgresqlType as PostgresqlType>::Where>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> std::option::Option<std::vec::Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> Option<std::vec::Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 }
 
 #[derive(Debug)]
@@ -253,18 +253,18 @@ pub struct PostgresqlJsonTypeLengthGreaterThanTest<T: PostgresqlJsonType> {
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: PostgresqlJsonType;
     type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
-    fn option_vec_create() -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>>;
+    fn option_vec_create() -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> std::vec::Vec<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Update;
-    fn read_only_ids_into_option_value_read_inner(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
+    fn read_only_ids_into_option_value_read_inner(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
     fn update_to_read_only_ids(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::Update) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds;
     fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
         value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds
-    ) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
+    ) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
     fn previous_read_merged_with_option_update_into_read(
         read: <Self::PostgresqlJsonType as PostgresqlJsonType>::Read,
-        option_update: std::option::Option<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>,
+        option_update: Option<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>,
     ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
     fn read_only_ids_merged_with_create_into_read(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
@@ -273,7 +273,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_option_value_read(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
+    ) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
     fn read_only_ids_merged_with_create_into_table_type_declaration(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
@@ -294,19 +294,19 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
 
     //todo
     // LengthGreaterThan
@@ -319,11 +319,11 @@ pub trait PostgresqlJsonTypeTestCases {
 
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> std::option::Option<std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> Option<std::vec::Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> std::option::Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<std::vec::Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {
@@ -335,7 +335,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
@@ -593,7 +593,7 @@ impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for Pos
                 }
             }
         }
-        let _: std::option::Option<char> = acc.pop();
+        let _: Option<char> = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
@@ -925,7 +925,7 @@ impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVe
     }
 }
 
-//this needed coz serde std::option::Option<std::option::Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
+//this needed coz serde Option<Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct Value<T> {
     pub value: T,
@@ -1235,7 +1235,7 @@ pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid;1] {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
-pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<std::option::Option<()>>);
+pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<Option<()>>);
 impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {

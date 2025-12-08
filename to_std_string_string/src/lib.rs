@@ -56,52 +56,52 @@ impl ToStdStringString for f64 {
         self.to_string()
     }
 }
-impl ToStdStringString for std::option::Option<i8> {
+impl ToStdStringString for Option<i8> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<i16> {
+impl ToStdStringString for Option<i16> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<i32> {
+impl ToStdStringString for Option<i32> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<i64> {
+impl ToStdStringString for Option<i64> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<u8> {
+impl ToStdStringString for Option<u8> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<u16> {
+impl ToStdStringString for Option<u16> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<u32> {
+impl ToStdStringString for Option<u32> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<u64> {
+impl ToStdStringString for Option<u64> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<f32> {
+impl ToStdStringString for Option<f32> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
 }
-impl ToStdStringString for std::option::Option<f64> {
+impl ToStdStringString for Option<f64> {
     fn to_std_string_string(&self) -> String {
         format!("{self:?}")
     }
