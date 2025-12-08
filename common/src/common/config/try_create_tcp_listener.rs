@@ -1,5 +1,5 @@
 pub trait TryCreateTcpListener<'a> {
-    fn try_create_tcp_listener(&self) -> Result<std::net::TcpListener, Box<crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed>>;
+    fn try_create_tcp_listener(&self) -> Result<std::net::TcpListener, Box<TryCreateTcpListenerErrorNamed>>;
 }
 
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)] //
