@@ -10,7 +10,7 @@ use crate::components::rc::rc_progress::interface::StrokeColor;
 pub fn line(props: &ProgressProps) -> Html {
     let class_name = match props.class_name.clone() {
         Some(cn) => cn,
-        None => String::from(""),
+        None => String::new(),
     };
     let percent = match props.percent.clone() {
         Some(p) => p,
@@ -31,7 +31,7 @@ pub fn line(props: &ProgressProps) -> Html {
     let stroke_width = props.stroke_width.unwrap_or(1.0);
     let style = match props.style.clone() {
         Some(s) => s,
-        None => String::from(""),
+        None => String::new(),
     };
     let trail_color = match props.trail_color.clone() {
         Some(tc) => tc,

@@ -82,7 +82,7 @@ pub fn back_top(_props: &BackTopProps) -> Html {
 
     html! {
     //   <div
-    //     style={props.style.clone().unwrap_or(String::from(""))}
+    //     style={props.style.clone().unwrap_or(String::new())}
     //     // pub on_click: Option<Callback<MouseEvent>>,
     //     // pub duration: Option<u32>,
     //     // class={classString}

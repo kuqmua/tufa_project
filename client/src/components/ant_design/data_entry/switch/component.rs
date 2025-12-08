@@ -97,7 +97,7 @@
 //             Some(s) => s,
 //         };
 //         let class = match props.class.clone() {
-//             None => String::from(""),
+//             None => String::new(),
 //             Some(c) => c,
 //         };
 //         let classes = match (size, props.loading) {

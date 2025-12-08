@@ -90,7 +90,7 @@ pub struct AlertChangingStyle {
 
 #[function_component(Alert)]
 pub fn alert(props: &AlertProps) -> Html {
-    // let style = use_state(|| String::from(""));
+    // let style = use_state(|| String::new());
     // let cloned_style = style.clone();
     let alert_changing_style = use_state(|| AlertChangingStyleState::Opened);
     let alert_changing_style_second_clone = alert_changing_style.clone();

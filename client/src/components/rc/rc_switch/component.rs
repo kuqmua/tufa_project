@@ -40,7 +40,7 @@ pub enum MouseOrKeyboardEvent {
 pub fn rc_switch(prop: &RcSwitchProps) -> Html {
     let props = prop.clone();
     let class = match props.class.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(cn) => cn,
     };
     let prefix_cls = match props.prefix_cls.clone() {
@@ -63,15 +63,15 @@ pub fn rc_switch(prop: &RcSwitchProps) -> Html {
         Some(li) => li,
     };
     let tab_index = match props.tab_index {
-        None => String::from(""),
+        None => String::new(),
         Some(ti) => ti.to_string(),
     };
     let style = match props.style.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(s) => s,
     };
     let title = match props.title.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(t) => t,
     };
     let inner_checked = use_state(|| match (checked, default_checked) {

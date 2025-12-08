@@ -19,12 +19,12 @@ pub enum ErrorNamedOne {
         eo_serde: SerializeDeserializeStruct,
         #[eo_error_occurence]
         eo_error_occurence_field: ErrorNamedTwo, //IN SERIALIZE DESERIALIZE nested
-        #[eo_vec_to_std_string_string] //todo remove wrapper under std::vec::Vec
-        eo_vec_display_field: std::vec::Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE std::vec::Vec<String>
+        #[eo_vec_to_std_string_string] //todo remove wrapper under Vec
+        eo_vec_display_field: Vec<DisplayStruct>, //IN SERIALIZE DESERIALIZE Vec<String>
         #[eo_vec_to_std_string_string_serialize_deserialize]
-        eo_vec_serde: std::vec::Vec<SerializeDeserializeStruct>,
+        eo_vec_serde: Vec<SerializeDeserializeStruct>,
         #[eo_vec_error_occurence]
-        eo_vec_error_occurence_field: std::vec::Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE std::vec::Vec<nested>
+        eo_vec_error_occurence_field: Vec<ErrorUnnamedOne>, //IN SERIALIZE DESERIALIZE Vec<nested>
         #[eo_hashmap_key_std_string_string_value_to_std_string_string]
         hashmap_string_string: std::collections::HashMap<String, DisplayStruct>,
         #[eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize]

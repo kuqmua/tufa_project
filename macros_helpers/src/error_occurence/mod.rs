@@ -179,7 +179,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             }
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote! {
-                    std::vec::Vec<#std_string_string>
+                    Vec<#std_string_string>
                 }
             }
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
@@ -188,28 +188,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 } else {
                     panic!("Type::Path(value) != &element.ty");
                 };
-                assert!(segments.len() == 3, "segments.len() != 3");
+                assert!(segments.len() == 1, "segments.len() != 1");
                 let first_segment = segments.iter().next().expect("no .next() element");
-                assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
-                match first_segment.arguments {
-                    syn::PathArguments::None => (),
-                    syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => panic!("first_segment.arguments != PathArguments::None"),
-                }
-                let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
-                {
-                    let vec_snake_case = naming::VecSnakeCase;
-                    assert!(second_segment.ident == vec_snake_case.to_string(), "second_segment.ident != {vec_snake_case} {}", second_segment.ident);
-                };
-                match second_segment.arguments {
-                    syn::PathArguments::None => (),
-                    syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => panic!("second_segment.arguments != PathArguments::None"),
-                }
-                let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
-                {
-                    let vec_upper_camel_case = naming::VecUpperCamelCase;
-                    assert!(third_segment.ident == vec_upper_camel_case.to_string(), "third_segment.ident != {vec_upper_camel_case} {}", third_segment.ident);
-                };
-                let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments {
+                let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "args.len() != 1");
                     let value = format!(
                         "{}{}",
@@ -224,7 +205,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
                 };
                 quote::quote! {
-                    std::vec::Vec<#element_vec_type_with_serialize_deserialize_token_stream>
+                    Vec<#element_vec_type_with_serialize_deserialize_token_stream>
                 }
             }
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {

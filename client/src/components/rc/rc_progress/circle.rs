@@ -37,7 +37,7 @@ impl fmt::Display for CircleStyle {
         write!(
             formatter, 
             "stroke: {}; stroke-dasharray: {}; stroke-dashoffset: {}; transform: {}; transform-origin: {}; transition: {}; fill-opacity: {};",
-            self.stroke.clone().unwrap_or_else(|| String::from("")),
+            self.stroke.clone().unwrap_or_else(|| String::new()),
             self.stroke_dash_array,
             self.stroke_dash_offset,
             self.transform,
@@ -97,7 +97,7 @@ pub fn get_circle_style(
 pub fn circle(props: &ProgressProps) -> Html {
     let class_name = match props.class_name.clone() {
         Some(cn) => cn,
-        None => String::from(""),
+        None => String::new(),
     };
     let percent = match props.percent.clone() {
         Some(p) => p,
@@ -120,7 +120,7 @@ pub fn circle(props: &ProgressProps) -> Html {
     let stroke_width = props.stroke_width.unwrap_or(1.0);
     let style = match props.style.clone() {
         Some(s) => s,
-        None => String::from(""),
+        None => String::new(),
     };
     let trail_color = match props.trail_color.clone() {
         Some(tc) => tc,

@@ -543,7 +543,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             self.status_code.as_ref()
         }
     }
-    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display, status_code: Option<macros_helpers::status_code::StatusCode>, fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>| -> SynVariantWrapper {
+    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display, status_code: Option<macros_helpers::status_code::StatusCode>, fields: Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>| -> SynVariantWrapper {
         SynVariantWrapper {
             variant: syn::Variant {
                 attrs: status_code.as_ref().map_or_else(
@@ -941,7 +941,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         );
-        let impl_serde_deserialize_for_ident_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_where_many_upper_camel_case, &fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|_: &syn::Ident, syn_type: &syn::Type| {
+        let impl_serde_deserialize_for_ident_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_where_many_upper_camel_case, &fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|_: &syn::Ident, syn_type: &syn::Type| {
             let syn_type_as_postgresql_type_where_token_stream = generate_as_postgresql_type_where_token_stream(&syn_type);
             postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_where_token_stream>})
         });
@@ -1281,8 +1281,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     })
-                    .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let fields_initiation_token_stream = &fields.iter().map(|element| element.syn_field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming::FIELD_IDENT_IS_NONE))).collect::<std::vec::Vec<&syn::Ident>>();
+                    .collect::<Vec<proc_macro2::TokenStream>>();
+                let fields_initiation_token_stream = &fields.iter().map(|element| element.syn_field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming::FIELD_IDENT_IS_NONE))).collect::<Vec<&syn::Ident>>();
                 quote::quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
                         #value_snake_case: sqlx::postgres::PgRow,
@@ -1528,7 +1528,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         );
-        let impl_serde_deserialize_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_update_upper_camel_case, &fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
+        let impl_serde_deserialize_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&ident_update_upper_camel_case, &fields.iter().map(|element| (&element.field_ident, &element.syn_field.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(), fields_len, &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
             if syn_ident == primary_key_field_ident {
                 quote::quote! {#primary_key_field_type_update_token_stream}
             } else {
@@ -1817,7 +1817,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let header_content_type_application_json_not_found_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::HeaderContentTypeApplicationJsonNotFoundUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
+        Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
     );
     let common_http_request_syn_variants = {
         vec![
@@ -1827,7 +1827,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             reqwest_syn_variant_wrapper.get_syn_variant().clone(),
         ]
     };
-    let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute| -> std::vec::Vec<syn::Variant> {
+    let generate_additional_error_variants = |syn_derive_input: &syn::DeriveInput, generate_postgresql_table_attribute: GeneratePostgresqlTableAttribute| -> Vec<syn::Variant> {
         let generate_postgresql_table_attribute_stringified = generate_postgresql_table_attribute.to_string();
         let common_additional_error_variants_attribute_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &generate_postgresql_table_attribute.generate_path_to_attribute());
         let value: syn::DeriveInput = syn::parse((*common_additional_error_variants_attribute_token_stream).clone().into()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -1842,7 +1842,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlTableAttribute::CommonAdditionalErrorVariants);
     let common_route_syn_variants = {
-        let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
+        let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<Vec<&syn::Variant>>();
         let mut value = vec![
             check_body_size_syn_variant_wrapper.get_syn_variant(),
             postgresql_syn_variant_wrapper.get_syn_variant(),
@@ -1910,7 +1910,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     | {
         let content_token_stream = quote::quote! {
             let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
-            let mut #acc_snake_case = std::vec::Vec::new();
+            let mut #acc_snake_case = Vec::new();
             while let Some(#value_snake_case) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
                 Ok(#value_snake_case) => match #value_snake_case {
                     Some(#value_snake_case) => #value_handle_token_stream,
@@ -2022,7 +2022,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream = |operation: &Operation, desirable_type_token_stream: &dyn quote::ToTokens, type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
+    let generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream = |operation: &Operation, desirable_type_token_stream: &dyn quote::ToTokens, type_variants_from_request_response_syn_variants: &Vec<syn::Variant>| -> proc_macro2::TokenStream {
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let ident_try_operation_logic_response_variants_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(element));
@@ -2115,8 +2115,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
         }
     };
-    let generate_type_variants_from_request_response_syn_variants = |syn_variants: &std::vec::Vec<&syn::Variant>, operation: &Operation| -> std::vec::Vec<syn::Variant> {
-        let mut type_variants_from_request_response_syn_variants = std::vec::Vec::new();
+    let generate_type_variants_from_request_response_syn_variants = |syn_variants: &Vec<&syn::Variant>, operation: &Operation| -> Vec<syn::Variant> {
+        let mut type_variants_from_request_response_syn_variants = Vec::new();
         for element in syn_variants {
             type_variants_from_request_response_syn_variants.push((*element).clone());
         }
@@ -2126,7 +2126,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
         type_variants_from_request_response_syn_variants
     };
-    let generate_ident_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
+    let generate_ident_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &Vec<syn::Variant>| -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(operation);
         let syn_variants = {
             let mut value = vec![];
@@ -2964,7 +2964,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &quote::quote! {
                     #value_snake_case
                     .into_iter()
-                    .fold(std::vec::Vec::new(), |mut #acc_snake_case, #element_snake_case| {
+                    .fold(Vec::new(), |mut #acc_snake_case, #element_snake_case| {
                         #acc_snake_case.push(#element_snake_case);
                         #acc_snake_case
                     })
@@ -3157,7 +3157,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &quote::quote!{#value_snake_case: #std_vec_vec_ident_update_token_stream},
                 &ident_operation_payload_try_new_error_named_upper_camel_case,
                 &quote::quote!{
-                    let mut #acc_snake_case = std::vec::Vec::new();
+                    let mut #acc_snake_case = Vec::new();
                     for #element_snake_case in &#value_snake_case {
                         if #acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
                             return Err(#ident_operation_payload_try_new_error_named_upper_camel_case::#not_unique_primary_key_upper_camel_case {
@@ -3274,7 +3274,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #parameters_logic_token_stream
                         let #update_for_query_vec_snake_case = #parameters_snake_case.#payload_snake_case.0.into_iter()
                         .map(|#element_snake_case|#ident_update_for_query_upper_camel_case::from(#element_snake_case))
-                        .collect::<std::vec::Vec<#ident_update_for_query_upper_camel_case>>();
+                        .collect::<Vec<#ident_update_for_query_upper_camel_case>>();
                     }
                 };
                 let query_string_token_stream = {
@@ -4354,7 +4354,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_drop_table_if_exists_vec_token_stream = vec![];
         let mut table_field_idents_prepare_postgresql_table_vec_token_stream = vec![];
         let mut table_field_idents_routes_handle_vec_token_stream = vec![];
-        let mut fill_table_field_idents_vec_token_stream = |test_names: std::vec::Vec<&str>|{
+        let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>|{
             for test_name in test_names {
                 let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident|{
                     format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c")
@@ -4449,7 +4449,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
                         .chunks(10)
-                        .map(std::vec::Vec::from)
+                        .map(Vec::from)
                     {
                         let current_table = current_table.clone();
                         let url_cloned = url.clone();
@@ -4567,7 +4567,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 {
                                     let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|element|
                                         #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                                    ).collect::<std::vec::Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>();
+                                    ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>();
                                     #acc_snake_case.sort();
                                     #acc_snake_case
                                 },
@@ -4607,7 +4607,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &current_table
                             )
                             .await {
-                                Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error 4e88679a-0d23-418f-8767-4e9b7531429c"),
+                                Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "error 4e88679a-0d23-418f-8767-4e9b7531429c"),
                                 Err(#error_snake_case) => {
                                     panic!("error 24ab86d6-15c9-47f1-a43f-c5fac4b38188 {error:#?}");
                                 }
@@ -4985,7 +4985,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         {
                             let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case|
                                 #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                            ).collect::<std::vec::Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
+                            ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                             #acc_snake_case.sort();
                             #acc_snake_case
                         },
@@ -5028,7 +5028,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     )
                     .await
                     {
-                        Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
+                        Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "error d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
                         Err(#error_snake_case) => {
                             panic!("error 1f079962-06af-4d21-a837-c88b0e7db265 {error:#?}");
                         }
@@ -5225,7 +5225,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                                 .await
                                 {
-                                    Ok(#value_snake_case) => assert!(#value_snake_case == std::vec::Vec::new(), "error 38187925-c136-41de-940d-eba75efc3a39"),
+                                    Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "error 38187925-c136-41de-940d-eba75efc3a39"),
                                     Err(#error_snake_case) => {
                                         panic!("error 1817b67a-c6c5-4fea-8ca7-23581c1888a3 {error:#?}");
                                     }
@@ -5754,12 +5754,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     } else {
                         let current_table = current_table.clone();
                         let read_only_ids_current_elements = {
-                            futures::StreamExt::collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>(
+                            futures::StreamExt::collect::<Vec<Vec<super::#ident_read_only_ids_upper_camel_case>>>(
                                 futures::StreamExt::buffer_unordered(
                                     futures::stream::iter(
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
-                                        .map(std::vec::Vec::from)
+                                        .map(Vec::from)
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
                                             let url_cloned = url.clone();
@@ -5778,7 +5778,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .await
                             .into_iter()
                             .flatten()
-                            .collect::<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>()
+                            .collect::<Vec<super::#ident_read_only_ids_upper_camel_case>>()
                         };
                         assert_eq!(
                             {
@@ -6088,12 +6088,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     else {
                         let current_table = table_update_one_cloned2.clone();
                         let read_only_ids_current_elements = {
-                            futures::StreamExt::collect::<std::vec::Vec<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>>(
+                            futures::StreamExt::collect::<Vec<Vec<super::#ident_read_only_ids_upper_camel_case>>>(
                                 futures::StreamExt::buffer_unordered(
                                     futures::stream::iter(
                                         read_only_ids_to_two_dimensional_vec_read_inner_acc
                                         .chunks(25)
-                                        .map(std::vec::Vec::from)
+                                        .map(Vec::from)
                                         .map(|#element_snake_case| {
                                             let current_table = current_table.clone();
                                             let url_cloned = url.clone();
@@ -6114,7 +6114,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .await
                             .into_iter()
                             .flatten()
-                            .collect::<std::vec::Vec<super::#ident_read_only_ids_upper_camel_case>>()
+                            .collect::<Vec<super::#ident_read_only_ids_upper_camel_case>>()
                         };
                         assert_eq!(
                             {
@@ -6389,7 +6389,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                     &#element_snake_case.#primary_key_field_ident
                                 ).unwrap().#value_snake_case
-                            ).collect::<std::vec::Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>()
+                            ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>()
                         },
                         "error db5e88a6-c75b-421b-acfb-56931b97ba3b"
                     );
@@ -6760,7 +6760,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #common_read_only_ids_returned_from_create_one_token_stream
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
-                                    let mut #acc_snake_case: std::vec::Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                                    let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
                                     #create_many_token_stream
                                     #create_one_token_stream
                                     #read_many_token_stream

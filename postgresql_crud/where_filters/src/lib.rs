@@ -24,9 +24,9 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 
 //difference between NotEmptyUniqueEnumVec and PostgresqlJsonTypeNotEmptyUniqueVec only in postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(std::vec::Vec<T>);
+pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: std::cmp::PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -44,10 +44,10 @@ impl<T: std::cmp::PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
-    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
+    pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn into_vec(self) -> std::vec::Vec<T> {
+    pub fn into_vec(self) -> Vec<T> {
         self.0
     }
 }
@@ -110,7 +110,7 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     _serde::__private::Ok(PostgresqlJsonTypeNotEmptyUniqueVec(__field0))
                 }
                 #[inline]
@@ -118,7 +118,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlJsonTypeNotEmptyUniqueVec with 1 element"));
@@ -148,7 +148,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
 }
 impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     fn default() -> Self {
-        Self(std::vec::Vec::default())
+        Self(Vec::default())
     }
 }
 impl<T> std::convert::From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
@@ -527,9 +527,9 @@ impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Enco
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct PostgresqlTypeNotEmptyUniqueVec<T>(std::vec::Vec<T>);
+pub struct PostgresqlTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -547,10 +547,10 @@ impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         }
         Ok(Self(value))
     }
-    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
+    pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn into_vec(self) -> std::vec::Vec<T> {
+    pub fn into_vec(self) -> Vec<T> {
         self.0
     }
 }
@@ -582,7 +582,7 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     _serde::__private::Ok(PostgresqlTypeNotEmptyUniqueVec(__field0))
                 }
                 #[inline]
@@ -590,7 +590,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element"));
@@ -620,7 +620,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
 }
 impl<T> std::default::Default for PostgresqlTypeNotEmptyUniqueVec<T> {
     fn default() -> Self {
-        Self(std::vec::Vec::default())
+        Self(Vec::default())
     }
 }
 impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
@@ -630,7 +630,7 @@ impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
-pub struct BoundedStdVecVec<T, const LENGTH: usize>(std::vec::Vec<T>);
+pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
@@ -650,10 +650,10 @@ enum Variant {
     MinusOne,
 }
 impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: usize> BoundedStdVecVec<T, LENGTH> {
-    pub const fn to_inner(&self) -> &std::vec::Vec<T> {
+    pub const fn to_inner(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn into_inner(self) -> std::vec::Vec<T> {
+    pub fn into_inner(self) -> Vec<T> {
         self.0
     }
     fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
@@ -703,9 +703,9 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         Ok(query)
     }
 }
-impl<T, const LENGTH: usize> std::convert::TryFrom<std::vec::Vec<T>> for BoundedStdVecVec<T, LENGTH> {
+impl<T, const LENGTH: usize> std::convert::TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
     type Error = BoundedStdVecVecTryNewErrorNamed;
-    fn try_from(value: std::vec::Vec<T>) -> Result<Self, Self::Error> {
+    fn try_from(value: Vec<T>) -> Result<Self, Self::Error> {
         let len = value.len();
         if len == LENGTH {
             Ok(Self(value))
@@ -751,7 +751,7 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
@@ -762,7 +762,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct BoundedStdVecVec with 1 element"));

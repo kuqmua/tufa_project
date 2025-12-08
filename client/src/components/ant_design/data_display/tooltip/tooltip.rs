@@ -341,7 +341,7 @@ pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: S
                 };
                 let class = format!("{}-disabled-compatible-wrapper", prefix_cls); //todo //classNames(element.props.className, `${prefixCls}-disabled-compatible-wrapper`)
                 let style = match overrided_props.style {
-                    None => String::from(""),
+                    None => String::new(),
                     Some(pseudo_css_wrapper) => pseudo_css_wrapper.to_string(),
                 };
                 html! {

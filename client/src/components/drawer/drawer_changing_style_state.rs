@@ -30,13 +30,13 @@ impl DrawerChangingStyleState {
                 display: String::from("none"),
                 transform: format!("translate3d({}100%, 0, 0)", translate_sign),
                 webkit_transform: format!("translate3d({}100%, 0, 0)", translate_sign),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
             DrawerChangingStyleState::OpenedBeforeTimeout => DrawerChangingStyle {
                 display: String::from("block"),
                 transform: format!("translate3d({}100%, 0, 0)", translate_sign),
                 webkit_transform: format!("translate3d({}100%, 0, 0)", translate_sign),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
             DrawerChangingStyleState::OpenedAfterTimeout => DrawerChangingStyle {
                 display: String::from("block"),
@@ -48,7 +48,7 @@ impl DrawerChangingStyleState {
                 display: String::from("block"),
                 transform: format!("translate3d({}100%, 0, 0)", translate_sign),
                 webkit_transform: format!("translate3d({}100%, 0, 0)", translate_sign),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
         }
     }

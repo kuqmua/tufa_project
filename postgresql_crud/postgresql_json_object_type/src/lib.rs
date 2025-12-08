@@ -10,9 +10,9 @@ pub enum UniqueVecTryNewErrorNamed<T> {
     },
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct UniqueVec<T>(std::vec::Vec<T>);
+pub struct UniqueVec<T>(Vec<T>);
 impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
-    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
         let mut acc = vec![];
         for element in &value {
             if acc.contains(&element) {
@@ -25,10 +25,10 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
         }
         Ok(Self(value))
     }
-    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
+    pub const fn to_vec(&self) -> &Vec<T> {
         &self.0
     }
-    pub fn into_vec(self) -> std::vec::Vec<T> {
+    pub fn into_vec(self) -> Vec<T> {
         self.0
     }
     pub const fn is_empty(&self) -> bool {
@@ -64,7 +64,7 @@ const _: () = {
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match UniqueVec::try_new(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
@@ -75,7 +75,7 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
@@ -105,7 +105,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
 }
 impl<T> std::default::Default for UniqueVec<T> {
     fn default() -> Self {
-        Self(std::vec::Vec::default())
+        Self(Vec::default())
     }
 }
 impl<T> std::convert::From<UniqueVec<T>> for Vec<T> {
@@ -120,7 +120,7 @@ impl<T1> UniqueVec<T1> {
             value.0
             .into_iter()
             .map(T2::from)
-            .collect::<std::vec::Vec<T2>>()
+            .collect::<Vec<T2>>()
         )
     }
 }

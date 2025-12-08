@@ -325,7 +325,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::ArrayDimension1 { .. } => 1,
             }
         }
-        fn all() -> std::vec::Vec<Self> {
+        fn all() -> Vec<Self> {
             Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
                 match &postgresql_type_pattern {
                     Self::Standart => {
@@ -568,7 +568,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     }
     impl PostgresqlTypeRecord {
-        fn all() -> std::vec::Vec<Self> {
+        fn all() -> Vec<Self> {
             PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
                 for postgresql_type_pattern in PostgresqlTypePattern::all() {
                     match &postgresql_type_pattern {
@@ -620,7 +620,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlTypesConfig {
         All,
-        Concrete(std::vec::Vec<PostgresqlTypeRecord>),
+        Concrete(Vec<PostgresqlTypeRecord>),
     }
     #[derive(Debug)]
     enum PostgresqlTypeInitializationTryNew {
@@ -772,7 +772,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 not_null_or_nullable: NotNullOrNullable,
                 postgresql_type_pattern: PostgresqlTypePattern,
             }
-            fn generate_postgresql_type_record_handle_vec(postgresql_type_record_handle: PostgresqlTypeRecordHandle) -> std::vec::Vec<PostgresqlTypeRecordHandle> {
+            fn generate_postgresql_type_record_handle_vec(postgresql_type_record_handle: PostgresqlTypeRecordHandle) -> Vec<PostgresqlTypeRecordHandle> {
                 let generate_vec = |current_postgresql_type_record_handle: PostgresqlTypeRecordHandle| {
                     let mut acc = vec![];
                     for element in generate_postgresql_type_record_handle_vec(current_postgresql_type_record_handle) {
@@ -825,7 +825,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     let (columns_token_stream, postgresql_type_array) = postgresql_type_record_vec
         .into_iter()
         .enumerate()
-        .collect::<std::vec::Vec<(usize, PostgresqlTypeRecord)>>()
+        .collect::<Vec<(usize, PostgresqlTypeRecord)>>()
         .par_iter()
         // .into_iter() //just for console prints ordering
         .map(|(index, element)| {
@@ -1009,7 +1009,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
                     let std_primitive_bool_stringified = "bool".to_string();
                     let std_string_string_stringified = "String".to_string();
-                    let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<u8>".to_string();
+                    let std_vec_vec_std_primitive_u8_stringified = "Vec<u8>".to_string();
                     let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                     let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
                     let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
@@ -1210,7 +1210,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Self::Four => 3,
                         }
                     }
-                    fn get_vec_from_index_starting_with_zero(&self) -> std::vec::Vec<usize> {
+                    fn get_vec_from_index_starting_with_zero(&self) -> Vec<usize> {
                         (0..=self.get_index()).collect()
                     }
                 }
@@ -1535,7 +1535,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[u8; 6]};
                     let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_token_stream, match_origin_try_new_for_deserialize_two_token_stream, match_origin_try_new_for_deserialize_four_token_stream) = {
                         let generate_match_origin_try_new_for_deserialize_token_stream = |length: usize| {
-                            let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
+                            let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
                                 match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#(#fields_token_stream),*) {
                                     Ok(#value_snake_case) => _serde::__private::Ok(#value_snake_case),
@@ -1552,7 +1552,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let (origin_new_for_deserialize_two_token_stream, origin_new_for_deserialize_three_token_stream) = {
                         let generate_origin_new_for_deserialize_token_stream = |length: usize| {
-                            let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
+                            let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
                                 _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
                             }
@@ -5071,7 +5071,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote! {
                             #import_path::std_primitive_i64_test_cases_vec().into_iter().map(|#element_snake_case|
                                 #inner_type_standart_not_null_token_stream(#element_snake_case)
-                            ).collect::<std::vec::Vec<#inner_type_standart_not_null_token_stream>>()
+                            ).collect::<Vec<#inner_type_standart_not_null_token_stream>>()
                         },
                         PostgresqlType::StdPrimitiveBoolAsBool => generate_typical_test_cases_vec_token_stream(&quote::quote!{std_primitive_bool_test_cases_vec}),
                         PostgresqlType::StdStringStringAsText => generate_typical_test_cases_vec_token_stream(&quote::quote!{std_string_string_test_cases_vec}),
@@ -6106,10 +6106,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 generated.to_string(),
             )
         })
-        .collect::<(std::vec::Vec<String>, std::vec::Vec<String>)>();
+        .collect::<(Vec<String>, Vec<String>)>();
     //this need only for better development experience
     if false {
-        let columns_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        let columns_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<Vec<proc_macro2::TokenStream>>();
         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             "GeneratePostgresqlTypesExample",
             &quote::quote! {
@@ -6121,7 +6121,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         );
     }
     let generated = {
-        let postgresql_type_array = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        let postgresql_type_array = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#postgresql_type_array)*}
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

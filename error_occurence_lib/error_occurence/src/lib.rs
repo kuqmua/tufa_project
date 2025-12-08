@@ -26,7 +26,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 panic!("does support only syn::GenericParam::Type")
             }
         })
-        .collect::<std::vec::Vec<&syn::Ident>>();
+        .collect::<Vec<&syn::Ident>>();
     let ident_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);

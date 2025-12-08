@@ -59,8 +59,8 @@ pub fn get_uuid() -> UUIDStruct {
 // }
 
 pub fn use_id(id: Option<String>) -> String {
-    // let inner_id = String::from("");
-    let inner_id = String::from("");
+    // let inner_id = String::new();
+    let inner_id = String::new();
     // let set_inner_id = format!("rc_progress_{}", get_uuid().to_string());
 
     // Inner id for accessibility usage. Only work in client side

@@ -219,13 +219,13 @@ pub fn select_trigger(props: &RefTriggerPropsAndSelectTriggerProps) -> Html {
         Some(a) => format!("{}-{}", dropdown_prefix_cls, a),
         None => match props.transition_name.clone() {
             Some(tn) => tn,
-            None => String::from(""),
+            None => String::new(),
         },
     };
     let merged_transition_name = match props.animation.clone() {
         None => match props.transition_name.clone() {
             Some(tn) => tn,
-            None => String::from(""),
+            None => String::new(),
         },
         Some(a) => format!("{}-{}", dropdown_prefix_cls, a),
     };

@@ -88,7 +88,7 @@ pub fn select(props: &SelectProps) -> Html {
         })
         .collect::<Html>();
     let style = match props.style.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(s) => s,
     };
     let classes = match props.additional_classes.clone() {

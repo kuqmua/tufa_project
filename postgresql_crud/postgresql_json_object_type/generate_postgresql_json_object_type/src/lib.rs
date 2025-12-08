@@ -24,7 +24,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         trait_gen: TraitGen,
     }
     impl PostgresqlJsonObjectTypeRecord {
-        fn all() -> std::vec::Vec<Self> {
+        fn all() -> Vec<Self> {
             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
                 for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
                     acc.push(Self {
@@ -112,14 +112,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     };
     //     not_null_or_nullable_filter && postgresql_json_object_type_pattern_filter && trait_gen_filter
     // })
-    // .collect::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>()
+    // .collect::<Vec<PostgresqlJsonObjectTypeRecord>>()
     ;
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
     // );
 
-    // element.iter().enumerate().fold(String::from(""), |mut acc, (index, element)| {
+    // element.iter().enumerate().fold(String::new(), |mut acc, (index, element)| {
     //     let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
     //     if index == 0 {
     //         acc.push_str(&element_snake_case_stringified);
@@ -229,7 +229,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let syn_derive_input_ident = &syn_derive_input.ident;
             let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
                 if let syn::Fields::Named(fields_named) = &data_struct.fields {
-                    fields_named.named.iter().collect::<std::vec::Vec<&syn::Field>>()
+                    fields_named.named.iter().collect::<Vec<&syn::Field>>()
                 } else {
                     panic!("supports only syn::Fields::Named");
                 }
@@ -326,7 +326,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 acc.push(element);
                 acc
             });
-            let get_vec_syn_field = |is_standart_with_id: &IsStandartWithId| -> &std::vec::Vec<&syn::Field> {
+            let get_vec_syn_field = |is_standart_with_id: &IsStandartWithId| -> &Vec<&syn::Field> {
                 match &is_standart_with_id {
                     IsStandartWithId::False => &vec_syn_field,
                     IsStandartWithId::True => &vec_syn_field_with_id,
@@ -2141,7 +2141,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let generate_impl_serde_deserialize_for_ident_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
-                    postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&generate_ident_read_or_ident_with_id_read_upper_camel_case(is_standart_with_id), &current_vec_syn_field.iter().map(|element| (element.ident.as_ref().unwrap(), &element.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(), current_vec_syn_field.len(), &|_: &syn::Ident, syn_type: &syn::Type| {
+                    postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&generate_ident_read_or_ident_with_id_read_upper_camel_case(is_standart_with_id), &current_vec_syn_field.iter().map(|element| (element.ident.as_ref().unwrap(), &element.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(), current_vec_syn_field.len(), &|_: &syn::Ident, syn_type: &syn::Type| {
                         let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
                         postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                             &wrap_into_value_declaration_token_stream(&type_read_token_stream)
@@ -2642,7 +2642,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let check_not_unique_id_in_update_array_token_stream = quote::quote! {
                                             let update_acc = #update_snake_case.to_vec().iter()
                                             .map(|#element_snake_case|&#element_snake_case.#id_snake_case)
-                                            .collect::<std::vec::Vec<&#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream>>();
+                                            .collect::<Vec<&#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream>>();
                                         };
                                         let check_not_unique_id_in_delete_aray_token_stream = {
                                             let not_unique_id_in_json_delete_array_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json delete array: {{}}"));
@@ -4684,7 +4684,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let mut #acc_snake_case = vec![];
                                     for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
                                         .zip(#create_snake_case.0.into_iter())
-                                        .collect::<std::vec::Vec<(#ident_with_id_standart_not_null_read_only_ids_upper_camel_case, #ident_with_id_standart_not_null_create_upper_camel_case)>>()
+                                        .collect::<Vec<(#ident_with_id_standart_not_null_read_only_ids_upper_camel_case, #ident_with_id_standart_not_null_create_upper_camel_case)>>()
                                         .into_iter()
                                         .enumerate()
                                     {
@@ -5750,7 +5750,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #(#parameters_token_stream),*
                                                     ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
-                                                }).collect::<std::vec::Vec<#ident_with_id_standart_not_null_read_upper_camel_case>>();
+                                                }).collect::<Vec<#ident_with_id_standart_not_null_read_upper_camel_case>>();
                                                 #acc_snake_case.sort_by(|first, second| {
                                                     if let (Some(value_first), Some(value_second)) = (&first.id, &second.id) {
                                                         //maybe remove .clone - add .get by ref method
@@ -5998,7 +5998,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_read_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 90d33ddd-e08d-488c-8577-c75febe97301");
                                                 let mut #acc_snake_case = vec![];
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
+                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
                                                     #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                                     #ident_with_id_standart_not_null_create_upper_camel_case,
                                                 )>>() {
@@ -6104,7 +6104,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_table_type_declaration_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 7776a146-06a8-4972-8e16-371d41ee164c");
                                                 let mut #acc_snake_case = vec![];
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
+                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
                                                     #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                                     #ident_with_id_standart_not_null_create_upper_camel_case,
                                                 )>>() {
@@ -6185,7 +6185,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 logical_operator: #import_path::LogicalOperator::And,
                                                 #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                     let mut #acc_snake_case = vec![];
-                                                    for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
+                                                    for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
                                                         #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                                         #ident_with_id_standart_not_null_create_upper_camel_case,
                                                     )>>() {
@@ -6290,7 +6290,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     logical_operator: #import_path::LogicalOperator::And,
                                                     #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                         let mut #acc_snake_case = vec![];
-                                                        for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<std::vec::Vec<(
+                                                        for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
                                                             #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                                             #ident_with_id_standart_not_null_create_upper_camel_case,
                                                         )>>() {
@@ -6570,7 +6570,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 generated,
             )
         })
-        .collect::<(std::vec::Vec<proc_macro2::TokenStream>, std::vec::Vec<proc_macro2::TokenStream>)>();
+        .collect::<(Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>)>();
     if false {
         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             "GeneratePostgresqlJsonObjectTypeExample",

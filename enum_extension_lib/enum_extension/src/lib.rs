@@ -38,8 +38,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
             pub fn into_array() -> [#ident; #len] {
                 [ #(#ident::#variants),* ]
             }
-            pub fn into_vec() -> std::vec::Vec<Self> {
-                let mut self_vec = std::vec::Vec::with_capacity(Self::get_length());
+            pub fn into_vec() -> Vec<Self> {
+                let mut self_vec = Vec::with_capacity(Self::get_length());
                 for element in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()
@@ -59,8 +59,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 }
                 variants_hashmap
             }
-            pub fn into_string_name_and_variant_tuple_vec() -> std::vec::Vec<(String, Self)> {
-                let mut variants_vec = std::vec::Vec::with_capacity(Self::get_length());
+            pub fn into_string_name_and_variant_tuple_vec() -> Vec<(String, Self)> {
+                let mut variants_vec = Vec::with_capacity(Self::get_length());
                 for element in {
                     use enum_extension_lib::IntoEnumIterator;
                     Self::iter()

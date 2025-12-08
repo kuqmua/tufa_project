@@ -43,7 +43,7 @@ impl NotNullOrNullable {
 }
 
 pub fn generate_postgresql_type_where_token_stream(
-    variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
+    variants: &Vec<&dyn crate::PostgresqlFilter>,
     prefix: &dyn quote::ToTokens,
     should_derive_utoipa_to_schema: &crate::ShouldDeriveUtoipaToSchema,
     should_derive_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
@@ -158,7 +158,7 @@ pub fn generate_std_option_option_tokens_declaration_token_stream(type_token_str
     quote::quote! {Option<#type_token_stream>}
 }
 pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    quote::quote! {std::vec::Vec<#type_token_stream>}
+    quote::quote! {Vec<#type_token_stream>}
 }
 
 pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
@@ -496,7 +496,7 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
     let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
         impl #path_trait_token_stream for #ident {
-            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> std::vec::Vec<Self> {
+            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case() -> Vec<Self> {
                 #content_token_stream
             }
         }
@@ -518,7 +518,7 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
     let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementWithMaxPageSizeSnakeCase;
     quote::quote! {
         impl #path_trait_token_stream for #ident {
-            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_snake_case() -> std::vec::Vec<Self> {
+            fn #all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size_snake_case() -> Vec<Self> {
                 #content_token_stream
             }
         }
@@ -1025,7 +1025,7 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
 //         fn #method_name_token_stream(
 //             #read_only_ids_snake_case: #self_postgresql_type_or_postgresql_json_type_as_postgresql_json_type_token_stream::#read_only_ids_upper_camel_case,
 //             #create_snake_case: #self_postgresql_type_or_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case
-//         ) -> std::vec::Vec<#self_postgresql_type_or_postgresql_json_type_as_postgresql_json_type_token_stream::#where_upper_camel_case> {
+//         ) -> Vec<#self_postgresql_type_or_postgresql_json_type_as_postgresql_json_type_token_stream::#where_upper_camel_case> {
 //             #content_token_stream
 //         }
 //     }
@@ -1038,7 +1038,7 @@ fn generate_option_vec_create_token_stream(
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     quote::quote!{
-        fn #option_vec_create_snake_case() -> Option<std::vec::Vec<#path_token_stream::#create_upper_camel_case>> {
+        fn #option_vec_create_snake_case() -> Option<Vec<#path_token_stream::#create_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1054,7 +1054,7 @@ fn generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
     quote::quote!{
         fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
             #read_only_ids_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
-        ) -> std::vec::Vec<std::vec::Vec<#path_token_stream::#read_inner_upper_camel_case>> {
+        ) -> Vec<Vec<#path_token_stream::#read_inner_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1232,7 +1232,7 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fiel
         fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
-        ) -> std::vec::Vec<#where_token_stream> {
+        ) -> Vec<#where_token_stream> {
             #content_token_stream
         }
     }
@@ -1248,7 +1248,7 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
     let return_type_token_stream = {
-        let return_type_handle_token_stream = quote::quote!{std::vec::Vec<#where_token_stream>};
+        let return_type_handle_token_stream = quote::quote!{Vec<#where_token_stream>};
         match &postgresql_type_or_postgresql_json_type {
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => generate_std_option_option_tokens_declaration_token_stream(&return_type_handle_token_stream),
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => return_type_handle_token_stream,
@@ -1295,7 +1295,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         fn #name_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1352,7 +1352,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token
     quote::quote!{
         fn #create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1369,7 +1369,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
     quote::quote!{
         fn #create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<std::vec::Vec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<Vec<#path_token_stream::#where_upper_camel_case>> {
             #content_token_stream
         }
     }
@@ -1386,7 +1386,7 @@ fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (quote::quote!{PostgresqlJsonTypeLengthGreaterThanTest},quote::quote!{PostgresqlJsonType}),
     };
     quote::quote!{
-        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<std::vec::Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
+        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
             #content_token_stream
         }
     }
@@ -1552,10 +1552,10 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_content_token_stream
             fn #create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case(
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> Option<std::vec::Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
+            ) -> Option<Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
                 #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
             }
-            fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> Option<std::vec::Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
+            fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> Option<Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
                 #postgresql_type_option_vec_where_greater_than_test_token_stream
             }
             fn #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case(
@@ -1795,7 +1795,7 @@ pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToT
     }
 }
 pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, vec_ident_type: &[(&syn::Ident, &syn::Type)], len: usize, generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream) -> proc_macro2::TokenStream {
-    let vec_ident = vec_ident_type.iter().map(|element| element.0).collect::<std::vec::Vec<&syn::Ident>>();
+    let vec_ident = vec_ident_type.iter().map(|element| element.0).collect::<Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {
             let mut vec = vec![];

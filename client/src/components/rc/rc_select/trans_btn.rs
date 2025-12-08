@@ -37,7 +37,7 @@ pub fn trans_btn(props: &TransBtnProps) -> Html {
                 .clone()
                 .iter()
                 .map(|cls| format!("{}-icon", cls))
-                .fold(String::from(""), |mut acc, elem| {
+                .fold(String::new(), |mut acc, elem| {
                     acc.push_str(&elem);
                     acc
                 });
@@ -53,7 +53,7 @@ pub fn trans_btn(props: &TransBtnProps) -> Html {
         .class_names
         .clone()
         .iter()
-        .fold(String::from(""), |mut acc, elem| {
+        .fold(String::new(), |mut acc, elem| {
             acc.push_str(elem);
             acc
         });

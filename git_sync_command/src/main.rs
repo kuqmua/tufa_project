@@ -15,7 +15,7 @@ fn main() {
     let contents = std::fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("cannot read .gitmodules file");
     let _unused = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
-    let paths_vec: std::vec::Vec<String> = contents.lines()
+    let paths_vec: Vec<String> = contents.lines()
         .filter_map(|element| {
             element.find("path = ")
             .map(|index| {

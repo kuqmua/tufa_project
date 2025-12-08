@@ -48,7 +48,7 @@ impl Default for ProgressProps {
             id: None,
             stroke_width: Some(1.0),
             trail_width: Some(1.0),
-            class_name: Some(String::from("")),
+            class_name: Some(String::new()),
             percent: Some(Percent::Number(0.0)),
             stroke_color: Some(StrokeColor {
                 colors: vec![String::from("#2db7f5")],
@@ -56,7 +56,7 @@ impl Default for ProgressProps {
             trail_color: Some(String::from("#D9D9D9")),
             stroke_linecap: Some(StrokeLinecapType::Round),
             prefix_cls: Some(String::from("rc-progress")),
-            style: Some(String::from("")), //React.CSSProperties
+            style: Some(String::new()), //React.CSSProperties
             gap_degree: None,
             gap_position: Some(GapPositionType::Bottom),
             transition: None,
@@ -73,7 +73,7 @@ impl ProgressProps {
             id: None,
             stroke_width: Some(1.0),
             trail_width: Some(1.0),
-            class_name: Some(String::from("")),
+            class_name: Some(String::new()),
             percent: Some(Percent::Number(0.0)),
             stroke_color: Some(StrokeColor {
                 colors: vec![String::from("#2db7f5")],
@@ -81,7 +81,7 @@ impl ProgressProps {
             trail_color: Some(String::from("#D9D9D9")),
             stroke_linecap: Some(StrokeLinecapType::Round),
             prefix_cls: Some(String::from("rc-progress")),
-            style: Some(String::from("")), //React.CSSProperties
+            style: Some(String::new()), //React.CSSProperties
             gap_degree: None,
             gap_position: Some(GapPositionType::Bottom),
             transition: None,
@@ -117,7 +117,7 @@ pub struct StrokeColor {
 
 impl Display for StrokeColor {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut gradient = String::from("");
+        let mut gradient = String::new();
         self.colors.iter().for_each(|c| {
             gradient.push_str(c);
         });

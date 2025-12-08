@@ -17,7 +17,7 @@
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote::quote! {}
-//     // }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+//     // }).collect::<Vec<proc_macro2::TokenStream>>();
 
 //     let field_code_occurence_new_d7be05e4_ebc4_47bc_a99c_d1143d5e4dae_token_stream = macros_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(
 //         file!(),

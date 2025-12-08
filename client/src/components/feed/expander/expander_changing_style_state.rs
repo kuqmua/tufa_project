@@ -30,13 +30,13 @@ impl ExpanderChangingStyleState {
                 display: String::from("none"),
                 transform: String::from("translate3d(0, 100%, 0)"),
                 webkit_transform: String::from("translate3d(0, 100%, 0)"),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
             ExpanderChangingStyleState::OpenedBeforeTimeout => ExpanderChangingStyle {
                 display: String::from("block"),
                 transform: String::from("translate3d(0, 100%, 0)"),
                 webkit_transform: String::from("translate3d(0, 100%, 0)"),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
             ExpanderChangingStyleState::OpenedAfterTimeout => ExpanderChangingStyle {
                 display: String::from("block"),
@@ -48,7 +48,7 @@ impl ExpanderChangingStyleState {
                 display: String::from("block"),
                 transform: String::from("translate3d(0, 100%, 0)"),
                 webkit_transform: String::from("translate3d(0, 100%, 0)"),
-                opacity: String::from(""),
+                opacity: String::new(),
             },
         }
     }

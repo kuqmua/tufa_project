@@ -5,7 +5,7 @@ pub struct PseudoCssWrapper {
 
 impl PseudoCssWrapper {
     pub fn to_string(&self) -> String {
-        let mut formated = String::from("");
+        let mut formated = String::new();
         self.style.iter().for_each(|(k, v)| {
             formated.push_str(&format!("{}: {};", k, v));
         });

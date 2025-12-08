@@ -50,7 +50,7 @@ pub struct BadgeProps {
 #[function_component(Badge)]
 pub fn badge(props: &BadgeProps) -> Html {
     let offset_style = match props.offset.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(badge_offset) => {
             let right_or_left = match badge_offset.x.is_positive() {
                 true => format!("right: -{}px;", badge_offset.x),
@@ -64,48 +64,48 @@ pub fn badge(props: &BadgeProps) -> Html {
         }
     };
     let title = match (props.title.clone(), props.count) {
-        (None, None) => String::from(""),
+        (None, None) => String::new(),
         (None, Some(count)) => count.to_string(),
         (Some(title), None) => title,
         (Some(title), Some(_)) => title,
     };
     let color_style = match props.color.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(color) => format!("background: {};", color.to_css_string()),
     };
     let sup_style = format!("{} {}", color_style, offset_style);
     let count_class = match props.count {
-        None => String::from(""),
+        None => String::new(),
         Some(count) => match (props.dot.clone(), count == 0, props.show_zero.clone()) {
-            (None, true, None) => String::from(""),
+            (None, true, None) => String::new(),
             (None, true, Some(_)) => String::from("ant-badge-count"),
             (None, false, None) => String::from("ant-badge-count"),
             (None, false, Some(_)) => String::from("ant-badge-count"),
-            (Some(_), true, None) => String::from(""),
-            (Some(_), true, Some(_)) => String::from(""),
-            (Some(_), false, None) => String::from(""),
-            (Some(_), false, Some(_)) => String::from(""),
+            (Some(_), true, None) => String::new(),
+            (Some(_), true, Some(_)) => String::new(),
+            (Some(_), false, None) => String::new(),
+            (Some(_), false, Some(_)) => String::new(),
         },
     };
     let scroll_class = match props.count {
-        None => String::from(""),
+        None => String::new(),
         Some(count) => match (props.dot.clone(), count == 0, props.show_zero.clone()) {
-            (None, true, None) => String::from(""),
+            (None, true, None) => String::new(),
             (None, true, Some(_)) => String::from("ant-scroll-number"),
             (None, false, None) => String::from("ant-scroll-number"),
             (None, false, Some(_)) => String::from("ant-scroll-number"),
-            (Some(_), true, None) => String::from(""),
-            (Some(_), true, Some(_)) => String::from(""),
-            (Some(_), false, None) => String::from(""),
-            (Some(_), false, Some(_)) => String::from(""),
+            (Some(_), true, None) => String::new(),
+            (Some(_), true, Some(_)) => String::new(),
+            (Some(_), false, None) => String::new(),
+            (Some(_), false, Some(_)) => String::new(),
         },
     };
     let (status_sup_class, status_span_class, dot_class) = match props.dot.clone() {
-        None => (String::from(""), String::from(""), String::from("")),
+        None => (String::new(), String::new(), String::new()),
         Some(option_badge_status) => match option_badge_status {
             None => (
-                String::from(""),
-                String::from(""),
+                String::new(),
+                String::new(),
                 String::from("ant-badge-dot"),
             ),
             Some(status) => (
@@ -116,15 +116,15 @@ pub fn badge(props: &BadgeProps) -> Html {
         },
     };
     let multiple_words_class = match props.count.clone() {
-        None => String::from(""),
+        None => String::new(),
         Some(count) => match count.to_string().len() > 1 {
-            false => String::from(""),
+            false => String::new(),
             true => String::from("ant-badge-multiple-words"),
         },
     };
     let not_a_wrapper_class = match props.children.len() {
         0 => String::from("ant-badge-not-a-wrapper"),
-        _ => String::from(""),
+        _ => String::new(),
     };
     let sup_class = format!(
         "{} {} {} {} {}",
