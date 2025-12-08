@@ -94,7 +94,7 @@ mod tests {
                 std::string::String::from("resolving_to_items_shadowing_supertrait_items"),
                 std::string::String::from("shadowing_supertrait_items")
             ]
-        )
+        );
     }
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lints() {
@@ -153,7 +153,7 @@ mod tests {
                 std::string::String::from("manual_ilog2"),
                 std::string::String::from("ptr_offset_by_literal")
             ]
-        )
+        );
     }
     #[test]
     fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspace_true() {

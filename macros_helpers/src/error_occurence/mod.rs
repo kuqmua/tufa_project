@@ -68,7 +68,7 @@ impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                 }
             } //other attributes are not for this proc_macro
         }
-        option_attribute.map_or_else(|| Err("option attribute is None".to_string()), |value| Ok(value))
+        option_attribute.map_or_else(|| Err("option attribute is None".to_string()), Ok)
     }
 }
 impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
