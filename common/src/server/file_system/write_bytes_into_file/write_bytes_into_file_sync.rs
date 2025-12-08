@@ -9,7 +9,7 @@ pub enum WriteBytesIntoFileSyncErrorNamed {
 
 pub fn write_bytes_into_file_sync(
     path: &std::path::Path,
-    bytes: std::string::String,
+    bytes: String,
 ) -> Result<(), Box<WriteBytesIntoFileSyncErrorNamed>> {
     if let Some(prefix) = path.parent() {
         if let Err(error) = std::fs::create_dir_all(prefix) {

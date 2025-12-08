@@ -2,12 +2,12 @@
 // pub enum PostgresCheckProvidersLinkPartsTablesEmptyErrorNamed {
 //     SelectCountOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display]
-//         hashmap_provider_kind_sqlx_error: std::collections::HashMap<std::string::String, sqlx::Error>,
+//         hashmap_provider_kind_sqlx_error: std::collections::HashMap<String, sqlx::Error>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     NotEmptyOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize]
-//         hashmap_provider_kind_len: std::collections::HashMap<std::string::String, i64>,
+//         hashmap_provider_kind_len: std::collections::HashMap<String, i64>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     }
 // }
@@ -29,9 +29,9 @@
 //         });
 //     let count_provider_links_tables_error_vec: Vec<(crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Result<(i64,), sqlx::Error>)> =
 //         futures::future::join_all(count_provider_links_tables_tasks_vec).await;
-//     let mut count_provider_links_tables_error_hashmap: std::collections::HashMap<std::string::String, sqlx::Error> =
+//     let mut count_provider_links_tables_error_hashmap: std::collections::HashMap<String, sqlx::Error> =
 //         std::collections::HashMap::with_capacity(count_provider_links_tables_error_vec.len());
-//     let mut provider_links_tables_not_empty_error_hashmap: std::collections::HashMap<std::string::String, i64> =
+//     let mut provider_links_tables_not_empty_error_hashmap: std::collections::HashMap<String, i64> =
 //         std::collections::HashMap::with_capacity(count_provider_links_tables_error_vec.len());
 //     for (pk, result) in count_provider_links_tables_error_vec {
 //         match result {

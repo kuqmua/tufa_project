@@ -178,16 +178,16 @@ pub enum PointsValue {
 }
 
 impl PointsValue {
-    pub fn get_string(&self) -> std::string::String {
+    pub fn get_string(&self) -> String {
         match self {
-            PointsValue::Cr => std::string::String::from("cr"),
-            PointsValue::Cl => std::string::String::from("cl"),
-            PointsValue::Bc => std::string::String::from("bc"),
-            PointsValue::Tc => std::string::String::from("tc"),
-            PointsValue::Bl => std::string::String::from("bl"),
-            PointsValue::Tr => std::string::String::from("tr"),
-            PointsValue::Br => std::string::String::from("br"),
-            PointsValue::Tl => std::string::String::from("tl"),
+            PointsValue::Cr => String::from("cr"),
+            PointsValue::Cl => String::from("cl"),
+            PointsValue::Bc => String::from("bc"),
+            PointsValue::Tc => String::from("tc"),
+            PointsValue::Bl => String::from("bl"),
+            PointsValue::Tr => String::from("tr"),
+            PointsValue::Br => String::from("br"),
+            PointsValue::Tl => String::from("tl"),
         }
     }
 }
@@ -209,20 +209,20 @@ pub enum PositionType {
 }
 
 impl PositionType {
-    pub fn get_string(&self) -> std::string::String {
+    pub fn get_string(&self) -> String {
         match *self {
-            PositionType::Left => std::string::String::from("left"),
-            PositionType::Right => std::string::String::from("right"),
-            PositionType::Top => std::string::String::from("top"),
-            PositionType::Bottom => std::string::String::from("bottom"),
-            PositionType::TopLeft => std::string::String::from("topLeft"),
-            PositionType::LeftTop => std::string::String::from("leftTop"),
-            PositionType::TopRight => std::string::String::from("topRight"),
-            PositionType::RightTop => std::string::String::from("rightTop"),
-            PositionType::BottomRight => std::string::String::from("bottomRight"),
-            PositionType::RightBottom => std::string::String::from("rightBottom"),
-            PositionType::BottomLeft => std::string::String::from("bottomLeft"),
-            PositionType::LeftBottom => std::string::String::from("leftBottom"),
+            PositionType::Left => String::from("left"),
+            PositionType::Right => String::from("right"),
+            PositionType::Top => String::from("top"),
+            PositionType::Bottom => String::from("bottom"),
+            PositionType::TopLeft => String::from("topLeft"),
+            PositionType::LeftTop => String::from("leftTop"),
+            PositionType::TopRight => String::from("topRight"),
+            PositionType::RightTop => String::from("rightTop"),
+            PositionType::BottomRight => String::from("bottomRight"),
+            PositionType::RightBottom => String::from("rightBottom"),
+            PositionType::BottomLeft => String::from("bottomLeft"),
+            PositionType::LeftBottom => String::from("leftBottom"),
         }
     }
 }

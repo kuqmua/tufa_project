@@ -1,6 +1,6 @@
 // pub struct EmailClient {
 //     http_client: reqwest::Client,
-//     base_url: std::string::String,
+//     base_url: String,
 //     sender: crate::repositories_types::server::domain::SubscriberEmail,
 //     authorization_token: secrecy::Secret<String>,
 // }
@@ -8,7 +8,7 @@
 // impl EmailClient {
 //     #[must_use]
 //     pub fn new(
-//         base_url: std::string::String,
+//         base_url: String,
 //         sender: crate::repositories_types::server::domain::SubscriberEmail,
 //         authorization_token: secrecy::Secret<String>,
 //         timeout: std::time::Duration,
@@ -87,10 +87,10 @@
 // //             }
 // //         }
 // //     }
-// //     fn subject() -> std::string::String {
+// //     fn subject() -> String {
 // //         Sentence(1..2).fake()
 // //     }
-// //     fn content() -> std::string::String {
+// //     fn content() -> String {
 // //         Paragraph(1..10).fake()
 // //     }
 // //     fn email() -> crate::repositories_types::server::domain::SubscriberEmail {
@@ -99,7 +99,7 @@
 // //         )
 // //         .unwrap()
 // //     }
-// //     fn email_client(base_url: std::string::String) -> EmailClient {
+// //     fn email_client(base_url: String) -> EmailClient {
 // //         EmailClient::new(
 // //             base_url,
 // //             email(),

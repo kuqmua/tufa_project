@@ -36,7 +36,7 @@ pub enum MouseOrKeyboardEvent {
 pub fn custom_switch(prop: &CustomSwitchProps) -> Html {
     let props = prop.clone();
     let class = match props.class.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(cn) => cn,
     };
     let disabled = props.disabled.clone().is_some();
@@ -55,15 +55,15 @@ pub fn custom_switch(prop: &CustomSwitchProps) -> Html {
         Some(li) => li,
     };
     let tab_index = match props.tab_index {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(ti) => ti.to_string(),
     };
     let style = match props.style.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(s) => s,
     };
     let title = match props.title.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(t) => t,
     };
     let inner_checked = use_state(|| match (checked, default_checked) {

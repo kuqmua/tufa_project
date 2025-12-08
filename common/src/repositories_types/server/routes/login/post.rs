@@ -1,6 +1,6 @@
 // #[derive(serde::Deserialize)]
 // pub struct FormData {
-//     pub username: std::string::String,
+//     pub username: String,
 //     pub password: secrecy::Secret<String>,
 // }
 

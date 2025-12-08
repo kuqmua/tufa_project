@@ -30,7 +30,7 @@ pub enum HtmlInputType {
 }
 
 impl HtmlInputType {
-    pub fn get(&self) -> std::string::String {
+    pub fn get(&self) -> String {
         match self {
             HtmlInputType::Button => "button".to_string(),
             HtmlInputType::Checkbox => "checkbox".to_string(),

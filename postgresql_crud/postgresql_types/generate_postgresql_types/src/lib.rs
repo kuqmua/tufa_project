@@ -154,7 +154,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> std::string::String {
+    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> String {
         format!("sqlx::postgres::types::PgRange<{value}>")
     }
     enum CanBeNullable {
@@ -521,7 +521,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     };
     impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
-        type Error = std::string::String;
+        type Error = String;
         fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Result<Self, Self::Error> {
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
             let cant_support_array_version_message = "cant support array_version: ";
@@ -1008,7 +1008,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let std_primitive_f64_stringified = "f64".to_string();
                     let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
                     let std_primitive_bool_stringified = "bool".to_string();
-                    let std_string_string_stringified = "std::string::String".to_string();
+                    let std_string_string_stringified = "String".to_string();
                     let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<u8>".to_string();
                     let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                     let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
@@ -4352,7 +4352,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"default"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
                 let typical_query_part_token_stream = quote::quote! {
-                    let mut #acc_snake_case = std::string::String::default();
+                    let mut #acc_snake_case = String::default();
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                         Ok(#value_snake_case) => {
                             #acc_snake_case.push_str(&format!("${value}"));
@@ -4450,14 +4450,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
                         };
                         let maybe_array_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => std::string::String::new(),
+                            PostgresqlTypePattern::Standart => String::new(),
                             PostgresqlTypePattern::ArrayDimension1 { .. } => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>(),
                         };
                         let maybe_constraint_part = match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => std::string::String::new(),
+                            PostgresqlTypePattern::Standart => String::new(),
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => std::string::String::new(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => String::new(),
                             },
                         };
                         let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};

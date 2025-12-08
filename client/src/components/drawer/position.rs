@@ -8,21 +8,21 @@ impl DrawerPosition {
     pub fn get_style(&self) -> DrawerPositionStyle {
         match *self {
             DrawerPosition::Left => DrawerPositionStyle {
-                translate_sign: std::string::String::from("-"),
-                left_value: std::string::String::from("0"),
-                right_value: std::string::String::from("auto"),
+                translate_sign: String::from("-"),
+                left_value: String::from("0"),
+                right_value: String::from("auto"),
             },
             DrawerPosition::Right => DrawerPositionStyle {
-                translate_sign: std::string::String::from("+"),
-                left_value: std::string::String::from("auto"),
-                right_value: std::string::String::from("0"),
+                translate_sign: String::from("+"),
+                left_value: String::from("auto"),
+                right_value: String::from("0"),
             },
         }
     }
 }
 
 pub struct DrawerPositionStyle {
-    pub translate_sign: std::string::String, //maybe change later
-    pub left_value: std::string::String,
-    pub right_value: std::string::String,
+    pub translate_sign: String, //maybe change later
+    pub left_value: String,
+    pub right_value: String,
 }

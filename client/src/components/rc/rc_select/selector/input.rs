@@ -27,20 +27,20 @@ pub enum InputRef {
 
 #[derive(Properties, PartialEq, Eq, Clone)]
 pub struct InputProps {
-    pub prefix_cls: std::string::String,
-    pub id: std::string::String,
+    pub prefix_cls: String,
+    pub id: String,
     pub input_element: Option<Html>, //not actually an option in react
     pub disabled: Option<()>,
     pub auto_focus: Option<()>,
-    pub auto_complete: std::string::String,
+    pub auto_complete: String,
     pub editable: Option<()>,
     pub active_descendant_id: Option<String>,
-    pub value: std::string::String,
+    pub value: String,
     pub max_length: Option<i32>,
     pub open: Option<()>,
     pub tab_index: i32,
     /** Pass accessibility props to input */
-    pub attrs: HashMap<String, std::string::String>, //Record<string, unknown>,
+    pub attrs: HashMap<String, String>, //Record<string, unknown>,
 
     pub on_key_down: Option<Callback<KeyboardEvent>>, //React.KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLElement>,
     pub on_mouse_down: Option<Callback<MouseEvent>>, //React.MouseEventHandler<HTMLInputElement | HTMLTextAreaElement | HTMLElement>,

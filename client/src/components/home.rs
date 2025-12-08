@@ -6,11 +6,11 @@ pub enum ExpanderStatus {
 }
 
 impl ExpanderStatus {
-    pub fn striing(&self) -> std::string::String {
+    pub fn striing(&self) -> String {
         match *self {
-            ExpanderStatus::Closed => std::string::String::from("Closed"),
-            ExpanderStatus::Share => std::string::String::from("share"),
-            ExpanderStatus::ExpandMore => std::string::String::from("expand more"),
+            ExpanderStatus::Closed => String::from("Closed"),
+            ExpanderStatus::Share => String::from("share"),
+            ExpanderStatus::ExpandMore => String::from("expand more"),
         }
     }
 }
@@ -184,8 +184,8 @@ pub fn home() -> Html {
       //   size={super::ant_design::avatar::AvatarSize::Type(super::ant_design::avatar::AvatarSizeType::Large)}
       //   shape={super::ant_design::avatar::AvatarShape::Square}
       //   // content={crate::components::ant_design::avatar::AvatarContent::Image(crate::components::ant_design::avatar::AvatarImage{
-      //   //   src: std::string::String::from("https://avatars.mds.yandex.net/i?id=0baad4e75b583fcb7ce171f1ce863011-5284759-images-thumbs&n=13&exp=1"),
-      //   //   alt: std::string::String::from("avatar"),
+      //   //   src: String::from("https://avatars.mds.yandex.net/i?id=0baad4e75b583fcb7ce171f1ce863011-5284759-images-thumbs&n=13&exp=1"),
+      //   //   alt: String::from("avatar"),
       //   //   on_error: Some(yew::Callback::from(|_: yew::Event| {
       //   //     gloo::console::log!("on_error");
       //   //   }))
@@ -194,7 +194,7 @@ pub fn home() -> Html {
       // />
       // <Switch/>
       <super::ant_design::data_entry::select::Select
-        values={vec![String::from("alice"), std::string::String::from("bob")]}
+        values={vec![String::from("alice"), String::from("bob")]}
         default_value={String::from("bob")}
         id={String::from("09760707")}
         set_choosen_value={select_callback}

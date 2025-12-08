@@ -89,7 +89,7 @@
 //     //   }
 //     let render_switch = || {
 //         let prefix_cls = match props.prefix_cls.clone() {
-//             None => std::string::String::from("switch"),
+//             None => String::from("switch"),
 //             Some(pc) => pc,
 //         };
 //         let size = match props.size.clone() {
@@ -97,7 +97,7 @@
 //             Some(s) => s,
 //         };
 //         let class = match props.class.clone() {
-//             None => std::string::String::from(""),
+//             None => String::from(""),
 //             Some(c) => c,
 //         };
 //         let classes = match (size, props.loading) {

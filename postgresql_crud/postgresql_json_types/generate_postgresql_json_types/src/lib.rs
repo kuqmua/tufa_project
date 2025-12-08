@@ -1029,7 +1029,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let extensions_token_stream = &schema_object_token_stream.extensions;
                         quote::quote! {
                             impl schemars::JsonSchema for #ident_origin_upper_camel_case {
-                                fn schema_name() -> std::string::String {
+                                fn schema_name() -> String {
                                     #schema_name_format_handle_token_stream.to_owned()
                                 }
                                 fn schema_id() -> std::borrow::Cow<'static, str> {

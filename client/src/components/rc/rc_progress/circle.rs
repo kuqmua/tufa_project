@@ -8,7 +8,7 @@ use yew::Callback;
 use yew::Html;
 use yew::{function_component, html};
 
-pub fn strip_percent_to_number(percent: std::string::String) -> std::string::String {
+pub fn strip_percent_to_number(percent: String) -> String {
     percent.replace('%', "")
 }
 
@@ -24,11 +24,11 @@ pub const VIEW_BOX_SIZE: f64 = 100.0;
 #[derive(PartialEq, Eq, Clone)]
 pub struct CircleStyle {
     pub stroke: Option<String>,
-    pub stroke_dash_array: std::string::String,
+    pub stroke_dash_array: String,
     pub stroke_dash_offset: f64,
-    pub transform: std::string::String,
-    pub transform_origin: std::string::String,
-    pub transition: std::string::String,
+    pub transform: String,
+    pub transform_origin: String,
+    pub transition: String,
     pub fill_opacity: f64,
 }
 
@@ -37,7 +37,7 @@ impl fmt::Display for CircleStyle {
         write!(
             formatter, 
             "stroke: {}; stroke-dasharray: {}; stroke-dashoffset: {}; transform: {}; transform-origin: {}; transition: {}; fill-opacity: {};",
-            self.stroke.clone().unwrap_or_else(|| std::string::String::from("")),
+            self.stroke.clone().unwrap_or_else(|| String::from("")),
             self.stroke_dash_array,
             self.stroke_dash_offset,
             self.transform,
@@ -56,7 +56,7 @@ pub fn get_circle_style(
     rotate_deg: f64,
     gap_degree: f64,
     gap_position: GapPositionType,
-    stroke_color: std::string::String,
+    stroke_color: String,
     stroke_linecap: StrokeLinecapType,
     stroke_width: f64,
     step_space: Option<f64>,
@@ -87,8 +87,8 @@ pub fn get_circle_style(
       stroke_dash_array: format!("{}px {}", perimeter_without_gap, perimeter),
       stroke_dash_offset: stroke_dash_offset + step_space,
       transform: format!("rotate({}deg)", rotate_deg + offset_deg + position_deg),
-      transform_origin: std::string::String::from("50% 50%"),
-      transition: std::string::String::from("stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s"),
+      transform_origin: String::from("50% 50%"),
+      transition: String::from("stroke-dashoffset .3s ease 0s, stroke-dasharray .3s ease 0s, stroke .3s, stroke-width .06s ease .3s, opacity .3s ease 0s"),
       fill_opacity: 0.0
     }
 }
@@ -97,7 +97,7 @@ pub fn get_circle_style(
 pub fn circle(props: &ProgressProps) -> Html {
     let class_name = match props.class_name.clone() {
         Some(cn) => cn,
-        None => std::string::String::from(""),
+        None => String::from(""),
     };
     let percent = match props.percent.clone() {
         Some(p) => p,
@@ -105,7 +105,7 @@ pub fn circle(props: &ProgressProps) -> Html {
     };
     let prefix_cls = match props.prefix_cls.clone() {
         Some(pc) => pc,
-        None => std::string::String::from("rc-progress"),
+        None => String::from("rc-progress"),
     };
     let stroke_color = match props.stroke_color.clone() {
         Some(sc) => sc,
@@ -120,11 +120,11 @@ pub fn circle(props: &ProgressProps) -> Html {
     let stroke_width = props.stroke_width.unwrap_or(1.0);
     let style = match props.style.clone() {
         Some(s) => s,
-        None => std::string::String::from(""),
+        None => String::from(""),
     };
     let trail_color = match props.trail_color.clone() {
         Some(tc) => tc,
-        None => std::string::String::from("#D9D9D9"),
+        None => String::from("#D9D9D9"),
     };
     let gap_degree = props.gap_degree.unwrap_or(0.0);
     let trail_width = props.trail_width.unwrap_or(1.0);
@@ -189,7 +189,7 @@ pub fn circle(props: &ProgressProps) -> Html {
             (Some(c), Some(_)) => Some(c.clone()),
           };
           let stroke = color.clone().map(|_| format!("url(#{})", gradient_id));
-          let color_handle = color.unwrap_or_else(|| std::string::String::from("#2db7f5"));
+          let color_handle = color.unwrap_or_else(|| String::from("#2db7f5"));
           let circle_style_for_stack = get_circle_style(
             perimeter,
             perimeter_without_gap,
@@ -293,7 +293,7 @@ pub fn circle(props: &ProgressProps) -> Html {
         let mut prep_vec = gradient
                 .into_iter()
                 .map(|(key, value)| (key, value))
-                .collect::<Vec<(u32, std::string::String)>>();
+                .collect::<Vec<(u32, String)>>();
             prep_vec.sort_by(|(key1, _), (key2, _)| key2.cmp(key1));
             let inner_content = prep_vec
                 .iter()
@@ -323,7 +323,7 @@ pub fn circle(props: &ProgressProps) -> Html {
             }
     };
     let stroke_width_common = if trail_width == 0.0 && stroke_width == 0.0 {
-        std::string::String::from("0")
+        String::from("0")
     } else if stroke_width == 0.0 {
         trail_width.to_string()
     } else if trail_width == 0.0 {

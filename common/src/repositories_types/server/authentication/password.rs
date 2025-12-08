@@ -26,7 +26,7 @@ pub enum ValidateCredentialsErrorNamed {
     },
     UnknownUsername {
         #[eo_to_std_string_string_serialize_deserialize]
-        message: std::string::String,
+        message: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

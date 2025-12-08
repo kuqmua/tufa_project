@@ -19,11 +19,11 @@ pub static UUID = std::sync::Mutex::new(0);
 #[derive(PartialEq, Eq, Clone)]
 pub enum UUIDStruct {
     Number(i32),
-    std::string::String(String),
+    String(String),
 }
 
 impl UUIDStruct {
-    pub fn to_string(&self) -> std::string::String {
+    pub fn to_string(&self) -> String {
         match self {
             UUIDStruct::Number(n) => n.to_string(),
             UUIDStruct::String(s) => s.clone(),
@@ -58,9 +58,9 @@ pub fn get_uuid() -> UUIDStruct {
 //   return retId;
 // }
 
-pub fn use_id(id: Option<String>) -> std::string::String {
-    // let inner_id = std::string::String::from("");
-    let inner_id = std::string::String::from("");
+pub fn use_id(id: Option<String>) -> String {
+    // let inner_id = String::from("");
+    let inner_id = String::from("");
     // let set_inner_id = format!("rc_progress_{}", get_uuid().to_string());
 
     // Inner id for accessibility usage. Only work in client side

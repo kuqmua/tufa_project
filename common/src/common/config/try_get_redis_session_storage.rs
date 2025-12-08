@@ -1,6 +1,6 @@
 // #[derive(Debug, strum_macros::Display)]
 // pub enum TryGetRedisSessionStorageError {
-//     Redis(std::string::String), //anyhow::Error
+//     Redis(String), //anyhow::Error
 // }
 
 // pub trait TryGetRedisSessionStorage {

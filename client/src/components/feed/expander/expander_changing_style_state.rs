@@ -27,28 +27,28 @@ impl ExpanderChangingStyleState {
     pub fn get_value(&self) -> ExpanderChangingStyle {
         match *self {
             ExpanderChangingStyleState::Initial => ExpanderChangingStyle {
-                display: std::string::String::from("none"),
-                transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                webkit_transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                opacity: std::string::String::from(""),
+                display: String::from("none"),
+                transform: String::from("translate3d(0, 100%, 0)"),
+                webkit_transform: String::from("translate3d(0, 100%, 0)"),
+                opacity: String::from(""),
             },
             ExpanderChangingStyleState::OpenedBeforeTimeout => ExpanderChangingStyle {
-                display: std::string::String::from("block"),
-                transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                webkit_transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                opacity: std::string::String::from(""),
+                display: String::from("block"),
+                transform: String::from("translate3d(0, 100%, 0)"),
+                webkit_transform: String::from("translate3d(0, 100%, 0)"),
+                opacity: String::from(""),
             },
             ExpanderChangingStyleState::OpenedAfterTimeout => ExpanderChangingStyle {
-                display: std::string::String::from("block"),
-                transform: std::string::String::from("translate3d(0, 0, 0)"),
-                webkit_transform: std::string::String::from("translate3d(0, 0, 0)"),
-                opacity: std::string::String::from("0.5"),
+                display: String::from("block"),
+                transform: String::from("translate3d(0, 0, 0)"),
+                webkit_transform: String::from("translate3d(0, 0, 0)"),
+                opacity: String::from("0.5"),
             },
             ExpanderChangingStyleState::ClosedBeforeTimeout => ExpanderChangingStyle {
-                display: std::string::String::from("block"),
-                transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                webkit_transform: std::string::String::from("translate3d(0, 100%, 0)"),
-                opacity: std::string::String::from(""),
+                display: String::from("block"),
+                transform: String::from("translate3d(0, 100%, 0)"),
+                webkit_transform: String::from("translate3d(0, 100%, 0)"),
+                opacity: String::from(""),
             },
         }
     }
@@ -56,8 +56,8 @@ impl ExpanderChangingStyleState {
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct ExpanderChangingStyle {
-    pub display: std::string::String,
-    pub transform: std::string::String,
-    pub webkit_transform: std::string::String,
-    pub opacity: std::string::String,
+    pub display: String,
+    pub transform: String,
+    pub webkit_transform: String,
+    pub opacity: String,
 }

@@ -7,7 +7,7 @@ pub enum MongoDropEmptyCollectionErrorNamed {
     },
     CollectionIsNotEmpty {
         #[eo_to_std_string_string_serialize_deserialize]
-        collection_name: std::string::String,
+        collection_name: String,
         #[eo_to_std_string_string_serialize_deserialize]
         collection_len: u64,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -17,7 +17,7 @@ pub enum MongoDropEmptyCollectionErrorNamed {
 pub async fn mongo_drop_empty_collection<'a>(
     mongo_client: &mongodb::Client,
     db_name: &'a str,
-    db_collection_name: std::string::String,
+    db_collection_name: String,
 ) -> Result<
     (),
     Box<crate::server::mongo::mongo_drop_empty_collection::MongoDropEmptyCollectionErrorNamed>,

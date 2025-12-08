@@ -2,9 +2,9 @@ use yew::{function_component, html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct SpinnerProps {
-    pub height: std::string::String,
-    pub width: std::string::String,
-    pub fill: std::string::String,
+    pub height: String,
+    pub width: String,
+    pub fill: String,
 }
 // was not in material design
 //https://codepen.io/mrrocks/pen/ExLovj

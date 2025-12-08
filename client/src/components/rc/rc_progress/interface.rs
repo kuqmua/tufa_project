@@ -39,7 +39,7 @@ pub struct ProgressProps {
     pub transition: Option<String>,
     pub on_click: Option<Callback<MouseEvent>>, //React.MouseEventHandler
     pub steps: Option<Steps>,
-    pub gradient: Option<HashMap<u32, std::string::String>>,
+    pub gradient: Option<HashMap<u32, String>>,
 }
 
 impl Default for ProgressProps {
@@ -117,7 +117,7 @@ pub struct StrokeColor {
 
 impl Display for StrokeColor {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut gradient = std::string::String::from("");
+        let mut gradient = String::from("");
         self.colors.iter().for_each(|c| {
             gradient.push_str(c);
         });
@@ -134,12 +134,12 @@ pub enum GapPositionType {
 }
 
 impl GapPositionType {
-    pub fn get_value(&self) -> std::string::String {
+    pub fn get_value(&self) -> String {
         match self {
-            GapPositionType::Top => std::string::String::from("top"),
-            GapPositionType::Right => std::string::String::from("right"),
-            GapPositionType::Bottom => std::string::String::from("bottom"),
-            GapPositionType::Left => std::string::String::from("left"),
+            GapPositionType::Top => String::from("top"),
+            GapPositionType::Right => String::from("right"),
+            GapPositionType::Bottom => String::from("bottom"),
+            GapPositionType::Left => String::from("left"),
         }
     }
 }
@@ -152,11 +152,11 @@ pub enum StrokeLinecapType {
 }
 
 impl StrokeLinecapType {
-    pub fn get_value(&self) -> std::string::String {
+    pub fn get_value(&self) -> String {
         match self {
-            StrokeLinecapType::Round => std::string::String::from("round"),
-            StrokeLinecapType::Butt => std::string::String::from("butt"),
-            StrokeLinecapType::Square => std::string::String::from("square"),
+            StrokeLinecapType::Round => String::from("round"),
+            StrokeLinecapType::Butt => String::from("butt"),
+            StrokeLinecapType::Square => String::from("square"),
         }
     }
 }

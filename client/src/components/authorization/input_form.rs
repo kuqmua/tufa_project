@@ -3,7 +3,7 @@ use yew::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct InputFormProps {
-    pub placeholder: std::string::String,
+    pub placeholder: String,
     pub input_type: HtmlInputType,
     pub action: Callback<Event>,
 }

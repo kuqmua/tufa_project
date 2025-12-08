@@ -1,8 +1,8 @@
 #[derive(Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct YewduxStore {
     pub count: u32,
-    pub username: std::string::String,
-    pub password: std::string::String,
+    pub username: String,
+    pub password: String,
 }
 
 impl yewdux::prelude::Persistent for YewduxStore {

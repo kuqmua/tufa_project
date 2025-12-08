@@ -1,9 +1,9 @@
 #[derive(Debug)]
 pub struct SubscriberEmail(String);
 
-impl TryFrom<std::string::String> for SubscriberEmail {
-    type Error = std::string::String;
-    fn try_from(possible_email: std::string::String) -> Result<Self, std::string::String> {
+impl TryFrom<String> for SubscriberEmail {
+    type Error = String;
+    fn try_from(possible_email: String) -> Result<Self, String> {
         if validator::validate_email(&possible_email) {
             Ok(Self(possible_email))
         } else {
@@ -50,7 +50,7 @@ impl std::fmt::Display for SubscriberEmail {
 //     }
 
 //     #[derive(Debug, Clone)]
-//     struct ValidEmailFixture(pub std::string::String);
+//     struct ValidEmailFixture(pub String);
 
 //     impl quickcheck::Arbitrary for ValidEmailFixture {
 //         fn arbitrary<G: quickcheck::Gen>(g: &mut G) -> Self {

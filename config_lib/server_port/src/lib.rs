@@ -12,7 +12,7 @@ pub struct ServerPortErrorNamed {
     server_port_min_value: u16,
     server_port_max_value: u16,
     value: u16,
-    message: std::string::String,
+    message: String,
 }
 impl std::fmt::Display for ServerPortErrorNamed {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -28,7 +28,7 @@ impl std::convert::TryFrom<u16> for ServerPort {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
                 server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: std::string::String::from(server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
+                message: String::from(server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
             })
         } else if value <= server_port_common::SERVER_PORT_MAX_VALUE {
             Ok(Self(value))
@@ -37,7 +37,7 @@ impl std::convert::TryFrom<u16> for ServerPort {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
                 server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: std::string::String::from(server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
+                message: String::from(server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
             })
         }
     }

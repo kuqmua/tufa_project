@@ -10,7 +10,7 @@ use crate::components::rc::rc_progress::interface::StrokeColor;
 pub fn line(props: &ProgressProps) -> Html {
     let class_name = match props.class_name.clone() {
         Some(cn) => cn,
-        None => std::string::String::from(""),
+        None => String::from(""),
     };
     let percent = match props.percent.clone() {
         Some(p) => p,
@@ -18,7 +18,7 @@ pub fn line(props: &ProgressProps) -> Html {
     };
     let prefix_cls = match props.prefix_cls.clone() {
         Some(pc) => pc,
-        None => std::string::String::from("rc-progress"),
+        None => String::from("rc-progress"),
     };
     let stroke_color = match props.stroke_color.clone() {
         Some(sc) => sc,
@@ -31,11 +31,11 @@ pub fn line(props: &ProgressProps) -> Html {
     let stroke_width = props.stroke_width.unwrap_or(1.0);
     let style = match props.style.clone() {
         Some(s) => s,
-        None => std::string::String::from(""),
+        None => String::from(""),
     };
     let trail_color = match props.trail_color.clone() {
         Some(tc) => tc,
-        None => std::string::String::from("#D9D9D9"),
+        None => String::from("#D9D9D9"),
     };
     let trail_width = props.trail_width.unwrap_or(1.0);
     let mut default_props = props.default();
@@ -62,7 +62,7 @@ pub fn line(props: &ProgressProps) -> Html {
     let view_box_string = format!("0 0 100 {}", stroke_width);
     let mut stack_ptg = 0.0;
     let gap_position = match props.clone().gap_position {
-        None => std::string::String::from("bottom"),
+        None => String::from("bottom"),
         Some(gp) => gp.get_value(),
     };
     let on_click = match props.clone().on_click {
@@ -87,7 +87,7 @@ pub fn line(props: &ProgressProps) -> Html {
         let stroke_dash_array =  format!("{}px, 100px", ptg * dash_percent);
         let stroke_dash_offset = format!("-{}px", stack_ptg);
         let transition = match props.transition.clone() {
-            None => std::string::String::from("stroke-dashoffset 0.3s ease 0s, stroke-dasharray .3s ease 0s, stroke 0.3s linear"),
+            None => String::from("stroke-dashoffset 0.3s ease 0s, stroke-dasharray .3s ease 0s, stroke 0.3s linear"),
             Some(t) => t,
         };
         let path_style = format!("
@@ -101,9 +101,9 @@ pub fn line(props: &ProgressProps) -> Html {
         );
         let color = match stroke_color_list.get(index) {
             None => match stroke_color_list.is_empty() {
-                true => std::string::String::from("#2db7f5"),//default
+                true => String::from("#2db7f5"),//default
                 false => match stroke_color_list.last() {
-                    None => std::string::String::from("#2db7f5"),//default
+                    None => String::from("#2db7f5"),//default
                     Some(element) => element.to_string(),
                 },
             },
@@ -132,7 +132,7 @@ pub fn line(props: &ProgressProps) -> Html {
         }
     }).collect::<Vec<Html>>();
     let stroke_width_common = if trail_width == 0.0 && stroke_width == 0.0 {
-        std::string::String::from("0")
+        String::from("0")
     } else if stroke_width == 0.0 {
         trail_width.to_string()
     } else if trail_width == 0.0 {

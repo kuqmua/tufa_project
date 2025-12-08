@@ -11,14 +11,14 @@
 //     #[tvfrr_400_bad_request]
 //     FailedToDeserializeQueryString {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         failed_to_deserialize_query_string: std::string::String,
+//         failed_to_deserialize_query_string: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     //#[non_exhaustive] case
 //     #[tvfrr_500_internal_server_error]
 //     UnexpectedCase {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         unexpected_case: std::string::String,
+//         unexpected_case: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }

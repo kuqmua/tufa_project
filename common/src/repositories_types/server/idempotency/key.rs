@@ -3,8 +3,8 @@ pub struct IdempotencyKey(String);
 
 #[derive(Debug, thiserror::Error)]
 pub enum IdempotencyKeyTryFromStringError {
-    CannotBeEmpty(std::string::String),
-    MustBeShorter(std::string::String),
+    CannotBeEmpty(String),
+    MustBeShorter(String),
 }
 
 impl std::fmt::Display for IdempotencyKeyTryFromStringError {
@@ -19,10 +19,10 @@ impl std::fmt::Display for IdempotencyKeyTryFromStringError {
 impl TryFrom<String> for IdempotencyKey {
     type Error = IdempotencyKeyTryFromStringError;
 
-    fn try_from(s: std::string::String) -> Result<Self, Self::Error> {
+    fn try_from(s: String) -> Result<Self, Self::Error> {
         if s.is_empty() {
             return Err(IdempotencyKeyTryFromStringError::CannotBeEmpty(
-                std::string::String::from("The idempotency key cannot be empty"),
+                String::from("The idempotency key cannot be empty"),
             ));
         }
         let max_length = 50;
@@ -35,7 +35,7 @@ impl TryFrom<String> for IdempotencyKey {
     }
 }
 
-impl From<IdempotencyKey> for std::string::String {
+impl From<IdempotencyKey> for String {
     fn from(k: IdempotencyKey) -> Self {
         k.0
     }

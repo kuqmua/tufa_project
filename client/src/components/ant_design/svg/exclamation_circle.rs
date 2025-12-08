@@ -42,7 +42,7 @@ pub fn exclamation_circle(props: &SvgProps) -> Html {
                             FillWith::Hsl(fill) => {
                                 format!("hsl({}, {}%, 95%)", fill.hue(), fill.saturation())
                             }
-                            FillWith::CurrentColor => std::string::String::from("currentColor"), //what should i do with currect color?
+                            FillWith::CurrentColor => String::from("currentColor"), //what should i do with currect color?
                         };
                         html! {
                           <>

@@ -13,7 +13,7 @@ mod tests {
             }
         }
     }
-    fn lints_vec_from_cargo_toml(value: RustOrClippy) -> std::vec::Vec<std::string::String> {
+    fn lints_vec_from_cargo_toml(value: RustOrClippy) -> std::vec::Vec<String> {
         let mut file = std::fs::File::open("../Cargo.toml").expect("error 39a0d238-d776-4b4e-ac2a-62f76a60f527");
         let mut contents = String::new();
         let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 2f5914f2-bff0-40d3-9948-07f2c562779b");
@@ -24,13 +24,13 @@ mod tests {
             toml::Value::Table(value) => value,
             toml::Value::String(_) | toml::Value::Integer(_) | toml::Value::Float(_) | toml::Value::Boolean(_) | toml::Value::Datetime(_) | toml::Value::Array(_) => panic!("not ok"),
         };
-        toml_value_table.keys().cloned().collect::<std::vec::Vec<std::string::String>>()
+        toml_value_table.keys().cloned().collect::<std::vec::Vec<String>>()
     }
     fn compare_lints_vec_from_cargo_toml_with_lints_to_check(
         rust_or_clippy: RustOrClippy,
-        lints_vec_from_cargo_toml: std::vec::Vec<std::string::String>,
-        lints_to_check: std::vec::Vec<std::string::String>,
-        lints_not_in_cargo_toml_vec_exceptions: std::vec::Vec<std::string::String>
+        lints_vec_from_cargo_toml: std::vec::Vec<String>,
+        lints_to_check: std::vec::Vec<String>,
+        lints_not_in_cargo_toml_vec_exceptions: std::vec::Vec<String>
     ) {
         let rust_or_clippy_name = rust_or_clippy.name();
         let mut lints_not_in_cargo_toml = vec![];
@@ -65,15 +65,15 @@ mod tests {
                 .expect("error 7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(output.status.success(), "error 0c000f24-afad-4397-88a4-913d0c113a34");
             {
-                let stderr = std::string::String::from_utf8_lossy(&output.stderr);
+                let stderr = String::from_utf8_lossy(&output.stderr);
                 assert!(stderr.trim().is_empty(), "error 0a4b2082-a764-4080-9d72-61e009f03f27 {stderr}");
             };
-            let stdout = std::string::String::from_utf8_lossy(&output.stdout);
+            let stdout = String::from_utf8_lossy(&output.stdout);
             regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
             .expect("error 60d99c87-273a-48ac-8daa-4f0a853d16bd")
             .captures_iter(&stdout)
             .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
-            .collect::<std::vec::Vec<std::string::String>>()
+            .collect::<std::vec::Vec<String>>()
         };
         compare_lints_vec_from_cargo_toml_with_lints_to_check(
             rust_or_clippy,
@@ -81,18 +81,18 @@ mod tests {
             lints_from_command,
             //todo on commit momment seems like this lints still not added to rustc, but in the list of rustc -W help
             vec![
-                std::string::String::from("fuzzy_provenance_casts"),
-                std::string::String::from("lossy_provenance_casts"),
-                std::string::String::from("multiple_supertrait_upcastable"),
-                std::string::String::from("must_not_suspend"),
-                std::string::String::from("non_exhaustive_omitted_patterns"),
-                std::string::String::from("supertrait_item_shadowing_definition"),
-                std::string::String::from("supertrait_item_shadowing_usage"),
-                std::string::String::from("aarch_64_softfloat_neon"),
-                std::string::String::from("default_overrides_default_fields"),
-                std::string::String::from("test_unstable_lint"),
-                std::string::String::from("resolving_to_items_shadowing_supertrait_items"),
-                std::string::String::from("shadowing_supertrait_items")
+                String::from("fuzzy_provenance_casts"),
+                String::from("lossy_provenance_casts"),
+                String::from("multiple_supertrait_upcastable"),
+                String::from("must_not_suspend"),
+                String::from("non_exhaustive_omitted_patterns"),
+                String::from("supertrait_item_shadowing_definition"),
+                String::from("supertrait_item_shadowing_usage"),
+                String::from("aarch_64_softfloat_neon"),
+                String::from("default_overrides_default_fields"),
+                String::from("test_unstable_lint"),
+                String::from("resolving_to_items_shadowing_supertrait_items"),
+                String::from("shadowing_supertrait_items")
             ]
         );
     }
@@ -102,7 +102,7 @@ mod tests {
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
         let clippy_lints_from_docs = {
             let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3");
-            fn parse_article_ids_from_file(html: &str) -> std::vec::Vec<std::string::String> {
+            fn parse_article_ids_from_file(html: &str) -> std::vec::Vec<String> {
                 let document = scraper::Html::parse_document(html);
                 let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
                 let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
@@ -148,17 +148,17 @@ mod tests {
             clippy_lints_from_docs,
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
             vec![
-                std::string::String::from(""),
-                std::string::String::from("decimal_bitwise_operands"),
-                std::string::String::from("manual_ilog2"),
-                std::string::String::from("ptr_offset_by_literal")
+                String::from(""),
+                String::from("decimal_bitwise_operands"),
+                String::from("manual_ilog2"),
+                String::from("ptr_offset_by_literal")
             ]
         );
     }
     #[test]
     fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspace_true() {
         let path = std::path::Path::new(&"../");
-        fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> std::vec::Vec<std::string::String> {
+        fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> std::vec::Vec<String> {
             let mut acc = vec![];
             if path.is_dir() {
                 for entry in std::fs::read_dir(path).expect("error 81837dea-c20f-469a-b365-528f0b9f50a4") {
@@ -171,7 +171,7 @@ mod tests {
                     }
                     if path.is_file() && path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
                         let mut file = std::fs::File::open(&path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
-                        let mut contents = std::string::String::new();
+                        let mut contents = String::new();
                         let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
                         acc.push(contents);
                     }
@@ -182,7 +182,7 @@ mod tests {
         let cargo_toml_string_vec = get_cargo_toml_contents_recursive(path);
         #[derive(Debug, serde::Deserialize)]
         struct Name {
-            name: std::string::String,
+            name: String,
         }
         #[derive(Debug, PartialEq, serde::Deserialize)]
         struct Lints {
@@ -191,20 +191,20 @@ mod tests {
         #[derive(Debug, serde::Deserialize)]
         struct CargoToml {
             package: std::option::Option<Name>,
-            dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
+            dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
             #[serde(rename = "dev-dependencies")]
-            dev_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
+            dev_dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
             #[serde(rename = "build-dependencies")]
-            build_dependencies: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>,
+            build_dependencies: std::option::Option<std::collections::HashMap<String, toml::Value>>,
             lints: std::option::Option<Lints>,
         }
-        let mut acc: std::vec::Vec<(std::string::String, toml::Value)> = vec![];
+        let mut acc: std::vec::Vec<(String, toml::Value)> = vec![];
         for cargo_toml_string in &cargo_toml_string_vec {
             let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
             //todo after fix issue with pg_jsonschema remove this check
             if let Some(package) = &cargo_toml.package && package.name != "pg_jsonschema" {
                 assert!(cargo_toml.lints == Some(Lints {workspace: true}), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
-                let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<std::string::String, toml::Value>>|{
+                let mut handle_dependencies = |deps: std::option::Option<std::collections::HashMap<String, toml::Value>>|{
                     if let Some(value) = deps {
                         let mut keys = value.keys().clone().collect::<std::vec::Vec<_>>();
                         keys.sort();

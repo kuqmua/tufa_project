@@ -60,7 +60,7 @@ cargo expand something::something --lib > generated.rs
 #![feature(inline_const)]
 
 struct S{ 
-    one: std::string::String,
+    one: String,
     two: i32
 }
 impl S {
@@ -109,7 +109,7 @@ mod something {
     #[allow(dead_code)]
     #[derive(Debug)]
     pub struct Something {
-        one: std::string::String,
+        one: String,
         two: i32,
     }
     pub struct InputCheckedSomething<'a> {
@@ -199,7 +199,7 @@ pub fn proc_macro_derive_example(input: proc_macro::TokenStream) -> proc_macro::
     let generated = quote::quote! {
         #[derive(Debug, serde::Serialize)]
         pub struct Something {
-            pub something: std::string::String,
+            pub something: String,
         }
     };
     generated.into()

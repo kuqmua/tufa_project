@@ -15,7 +15,7 @@ fn main() {
     let contents = std::fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("cannot read .gitmodules file");
     let _unused = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
-    let paths_vec: std::vec::Vec<std::string::String> = contents.lines()
+    let paths_vec: std::vec::Vec<String> = contents.lines()
         .filter_map(|element| {
             element.find("path = ")
             .map(|index| {
@@ -61,11 +61,11 @@ fn main() {
 
 #[derive(Clone, Debug)]
 enum CommandError {
-    CheckoutDot { path: std::string::String, error: std::string::String },
-    SubmoduleUpdate { path: std::string::String, error: std::string::String },
-    CheckoutMain { path: std::string::String, error: std::string::String },
-    Pull { path: std::string::String, error: std::string::String },
-    CargoBuild { path: std::string::String, error: std::string::String },
+    CheckoutDot { path: String, error: String },
+    SubmoduleUpdate { path: String, error: String },
+    CheckoutMain { path: String, error: String },
+    Pull { path: String, error: String },
+    CargoBuild { path: String, error: String },
 }
 
 impl std::fmt::Display for CommandError {

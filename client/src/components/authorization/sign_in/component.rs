@@ -15,8 +15,8 @@ use yewdux_functional::use_store;
 #[function_component(SignIn)]
 pub fn sign_in() -> Html {
     let store = use_store::<PersistentStore<YewduxStore>>();
-    let username = use_state(|| std::string::String::from(""));
-    let password = use_state(|| std::string::String::from(""));
+    let username = use_state(|| String::from(""));
+    let password = use_state(|| String::from(""));
     let username_cloned = username;
     let password_cloned = password;
     let header_name = "Sign in";

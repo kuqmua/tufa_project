@@ -213,7 +213,7 @@
 
 //   let title: string | undefined;
 //   if (typeof renderedText === 'string' || typeof renderedText === 'number') {
-//     title = std::string::String(renderedText);
+//     title = String(renderedText);
 //   }
 
 //   return (

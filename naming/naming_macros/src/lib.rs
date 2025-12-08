@@ -3,19 +3,19 @@ const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error 20948d87-2c38-4896-96b6-239d9c9a0a38");
             for element in &element {
                 assert!(regex.is_match(element), "invalid element {element}, regex: {REGEX_VALUE}");
             }
         }
-        let phrase_part_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
+        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::from(""), |mut acc, element| {
             let element_upper_camel_case_stringified = naming_common::AsRefStrToUpperCamelCaseStringified::case(element);
             acc.push_str(&element_upper_camel_case_stringified);
             acc
         });
-        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
+        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::from(""), |mut acc, (index, element)| {
             let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
             if index == 0 {
                 acc.push_str(&element_snake_case_stringified);
@@ -78,7 +78,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
 #[proc_macro]
 pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<std::string::String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<std::vec::Vec<std::vec::Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error cba1b5fb-6833-416b-96d9-b64b7a308008");
             for element in &element {
@@ -99,11 +99,11 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element.iter().fold(std::string::String::from(""), |mut acc, element| {
+            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::from(""), |mut acc, element| {
                 acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element));
                 acc
             });
-            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(std::string::String::from(""), |mut acc, element| {
+            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::from(""), |mut acc, element| {
                 if element == "self" {
                     acc.push_str("{value}");
                 } else {
@@ -112,7 +112,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                 acc
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
-                let mut value = element.iter().fold(std::string::String::from(""), |mut acc, element| {
+                let mut value = element.iter().fold(String::from(""), |mut acc, element| {
                     let symbol = '_';
                     if element == "self" {
                         acc.push_str(&format!("{{value}}{symbol}"));
@@ -167,12 +167,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
             };
             quote::quote! {
                 #[derive(Debug)]
-                pub struct #struct_ident_token_stream(std::string::String);
+                pub struct #struct_ident_token_stream(String);
                 impl #struct_ident_token_stream {
                     fn wrap(value: &dyn std::fmt::Display) -> Self {
                         Self(Self::format(value))
                     }
-                    fn format(value: &dyn std::fmt::Display) -> std::string::String {
+                    fn format(value: &dyn std::fmt::Display) -> String {
                         format!(#elements_concat_value_case_double_quotes_token_stream)
                     }
                     pub fn from_display(value: &dyn std::fmt::Display) -> Self {
@@ -188,7 +188,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     pub fn from_type_last_segment(value: &syn::Type) -> Self {
                         match value {
                             syn::Type::Path(type_path) => {
-                                let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(std::string::String::from(""), |mut acc, elem| {
+                                let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::from(""), |mut acc, elem| {
                                     acc.push_str(&format!("{}::", elem.ident));
                                     acc
                                 });
@@ -261,7 +261,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(input_to
     let trait_path_token_stream = trait_path_token_stream();
     let generated = quote::quote! {
         impl #trait_path_token_stream::AsRefStrToUpperCamelCaseStringified for #ident {
-            fn case(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of std::string::String
+            fn case(&self) -> #std_string_string_token_stream {//todo maybe write duplicate Trait with &str instead of String
                 match self {
                     #(#variants_matching_values_token_stream),*
                 }

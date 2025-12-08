@@ -6,7 +6,7 @@
 //     email_client: actix_web::web::Data<
 //         common::repositories_types::server::email_client::EmailClient,
 //     >,
-//     base_url: actix_web::web::Data<std::string::String>,
+//     base_url: actix_web::web::Data<String>,
 // ) -> Result<
 //     actix_web::HttpResponse,
 //     common::repositories_types::server::routes::SubscribeErrorNamed,

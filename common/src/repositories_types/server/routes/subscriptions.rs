@@ -1,13 +1,13 @@
 // #[derive(serde::Deserialize)]
 // pub struct FormData {
-//     pub email: std::string::String,
-//     pub name: std::string::String,
+//     pub email: String,
+//     pub name: String,
 // }
 
 // impl std::convert::TryFrom<FormData>
 //     for crate::repositories_types::server::domain::NewSubscriber
 // {
-//     type Error = std::string::String;
+//     type Error = String;
 //     fn try_from(value: FormData) -> Result<Self, Self::Error> {
 //         let name =
 //             crate::repositories_types::server::domain::SubscriberName::parse(value.name)?;
@@ -21,7 +21,7 @@
 // pub enum SubscribeErrorNamed {
 //     TryIntoNewSubscriber {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         try_into_new_subscriber: std::string::String,
+//         try_into_new_subscriber: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     PostgresPoolBegin {
@@ -64,7 +64,7 @@
 //     }
 // }
 
-// pub fn generate_subscription_token() -> std::string::String {
+// pub fn generate_subscription_token() -> String {
 //     let mut rng = rand::thread_rng();
 //     std::iter::repeat_with(|| {
 //         use rand::Rng;

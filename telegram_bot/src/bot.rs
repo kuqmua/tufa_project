@@ -6,7 +6,7 @@ enum Command {
     #[command(description = "handle a username.")]
     Username(String),
     #[command(description = "handle a username and an age.", parse_with = "split")]
-    UsernameAndAge { username: std::string::String, age: u8 },
+    UsernameAndAge { username: String, age: u8 },
     #[command(description = "show bot source code info ")]
     GitInfo,
 }

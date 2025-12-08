@@ -33,7 +33,7 @@ impl app_state::GetPostgresPool for AppState<'_> {
     }
 }
 impl git_info::GetGitCommitLink for AppState<'_> {
-    fn get_git_commit_link(&self) -> std::string::String {
+    fn get_git_commit_link(&self) -> String {
         self.project_git_info.get_git_commit_link()
     }
 }

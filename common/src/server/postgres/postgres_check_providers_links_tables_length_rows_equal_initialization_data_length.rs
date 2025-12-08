@@ -2,12 +2,12 @@
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorNamed {
 //     SelectCountOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         inner_errors: std::collections::HashMap<std::string::String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'a>>,
+//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ProviderLinksTablesRowsLengthNotEqualOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         inner_errors: std::collections::HashMap<std::string::String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<'a>>,
+//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -79,10 +79,10 @@
 //         &Vec<String>,
 //         Result<(i64,), sqlx::Error>,
 //     )> = futures::future::join_all(count_provider_links_tables_tasks_vec).await;
-//     let mut count_provider_links_tables_error_hashmap: std::collections::HashMap<std::string::String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed> =
+//     let mut count_provider_links_tables_error_hashmap: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed> =
 //         std::collections::HashMap::new();
 //     let mut provider_links_tables_rows_length_not_equal_error_hashmap: std::collections::HashMap<
-//         std::string::String,
+//         String,
 //         PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed,
 //     > = std::collections::HashMap::new();
 //     for (pk, string_vec, result) in count_provider_links_tables_error_vec {

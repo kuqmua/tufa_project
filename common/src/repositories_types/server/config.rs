@@ -3,8 +3,8 @@ pub struct Config {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
     pub service_socket_address: std::net::SocketAddr,
     pub timezone: chrono::FixedOffset,
-    pub redis_url: secrecy::Secret<std::string::String>,
-    pub database_url: secrecy::Secret<std::string::String>,
+    pub redis_url: secrecy::Secret<String>,
+    pub database_url: secrecy::Secret<String>,
     pub tracing_level: config_lib::types::TracingLevel,
     pub source_place_type: config_lib::types::SourcePlaceType,
     pub enable_api_git_commit_check: bool,

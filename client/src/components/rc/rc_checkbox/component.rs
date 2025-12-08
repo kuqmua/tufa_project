@@ -13,15 +13,15 @@ use yew::Callback;
 #[function_component(RcCheckBox)]
 pub fn rc_checkbox(props: &RcCheckBoxProps) -> Html {
     let prefix_cls = match props.prefix_cls.clone() {
-        None => std::string::String::from("rc-checkbox"),
+        None => String::from("rc-checkbox"),
         Some(pc) => pc,
     };
     let class_name = match props.class_name.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(cn) => cn,
     };
     let style = match props.style.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(s) => s,
     };
     let type_handle = match props.type_handle.clone() {
@@ -29,7 +29,7 @@ pub fn rc_checkbox(props: &RcCheckBoxProps) -> Html {
         Some(t) => t,
     };
     let title = match props.title.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(t) => t,
     };
     let default_checked = props.default_checked.is_some();
@@ -38,18 +38,18 @@ pub fn rc_checkbox(props: &RcCheckBoxProps) -> Html {
         Some(_) => true,
     };
     let name = match props.name.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(n) => n,
     };
     let id = match props.id.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(i) => i,
     };
     let required = props.required.clone().is_some();
     let read_only = props.read_only.clone().is_some();
     let disabled = props.disabled.clone().is_some();
     let tab_index = match props.tab_index {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(ti) => ti.to_string(),
     };
     // let checked_state = use_state(|| checked);
@@ -82,7 +82,7 @@ pub fn rc_checkbox(props: &RcCheckBoxProps) -> Html {
         Some(oku) => oku,
     };
     let value = match props.value.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(v) => v,
     };
     let auto_focus = props.auto_focus.clone().is_some();

@@ -1,23 +1,23 @@
 #[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct MacroOccurence {
-    pub file: std::string::String,
+    pub file: String,
     pub line: u32,
     pub column: u32,
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct CodeOccurence {
-    file: std::string::String,
+    file: String,
     line: u32,
     column: u32,
-    commit: std::string::String,
+    commit: String,
     #[schema(value_type = StdTimeDuration)]
     duration: std::time::Duration,
     macro_occurence: std::option::Option<MacroOccurence>,
 }
 impl CodeOccurence {
     #[must_use]
-    pub fn new(file: std::string::String, line: u32, column: u32, macro_occurence: std::option::Option<MacroOccurence>) -> Self {
+    pub fn new(file: String, line: u32, column: u32, macro_occurence: std::option::Option<MacroOccurence>) -> Self {
         Self {
             file,
             line,

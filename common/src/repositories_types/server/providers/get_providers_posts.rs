@@ -6,12 +6,12 @@
 // // pub enum PostErrorVariant {
 // //     //todo: think about this naming
 // //     NoItems {
-// //         link: std::string::String,
+// //         link: String,
 // //         no_items_error: NoItemsError,
 // //         provider_kind: crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 // //     },
 // //     RssFetchAndParseProviderDataError {
-// //         link: std::string::String,
+// //         link: String,
 // //         provider_kind: crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 // //         error: RssFetchLinkError,
 // //     }, //rewrite this error coz it must not be string. dont know to to clone error between threads
@@ -38,7 +38,7 @@
 //     // },
 //     GetNewProvidersPosts {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         hashmap_provider_kind_rss_part: std::collections::HashMap<std::string::String, GetProviderPostsErrorUnnamed<'a>>,
+//         hashmap_provider_kind_rss_part: std::collections::HashMap<String, GetProviderPostsErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }

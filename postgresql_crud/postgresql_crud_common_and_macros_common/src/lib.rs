@@ -20,7 +20,7 @@ pub enum LogicalOperator {
     OrNot,
 }
 impl LogicalOperator {
-    pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> std::string::String {
+    pub fn to_query_part(&self, is_need_to_add_logical_operator: bool) -> String {
         let not_space = format!("{} ", naming::NotSnakeCase);
         if is_need_to_add_logical_operator {
             let and_space = format!("{} ", naming::AndSnakeCase);
@@ -33,7 +33,7 @@ impl LogicalOperator {
             }
         } else {
             match &self {
-                Self::And | Self::Or => std::string::String::default(),
+                Self::And | Self::Or => String::default(),
                 Self::AndNot | Self::OrNot => not_space,
             }
         }

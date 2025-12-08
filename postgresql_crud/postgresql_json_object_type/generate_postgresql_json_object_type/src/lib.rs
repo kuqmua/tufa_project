@@ -119,7 +119,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
     // );
 
-    // element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
+    // element.iter().enumerate().fold(String::from(""), |mut acc, (index, element)| {
     //     let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
     //     if index == 0 {
     //         acc.push_str(&element_snake_case_stringified);

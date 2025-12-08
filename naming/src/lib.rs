@@ -742,14 +742,14 @@ pub trait StdFmtDisplayPlusQuoteToTokens: std::fmt::Display + quote::ToTokens {}
 impl<T> StdFmtDisplayPlusQuoteToTokens for T where T: std::fmt::Display + quote::ToTokens {}
 
 pub trait SwaggerUrlPathSelfQuotesStringified {
-    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String;
+    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String;
 }
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
     T: naming_common::AsRefStrToSnakeCaseStringified,
 {
-    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> std::string::String {
+    fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String {
         generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.case(),))
     }
 }

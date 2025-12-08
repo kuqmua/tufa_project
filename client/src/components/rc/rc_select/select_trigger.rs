@@ -147,7 +147,7 @@ pub struct AlignType {
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct SelectTriggerProps {
-    pub prefix_cls: std::string::String,
+    pub prefix_cls: String,
     pub children: Children,
     pub disabled: Option<()>,
     pub visible: Option<()>,
@@ -156,9 +156,9 @@ pub struct SelectTriggerProps {
     pub transition_name: Option<String>,
     pub container_width: i32,
     //   pub placement?: Option<Placement>,
-    pub dropdown_style: std::string::String, //React.CSSProperties,
-    pub dropdown_class_name: std::string::String,
-    pub direction: std::string::String,
+    pub dropdown_style: String, //React.CSSProperties,
+    pub dropdown_class_name: String,
+    pub direction: String,
     pub dropdown_match_select_width: Option<DropdownMatchSelectWidth>,
     pub dropdown_render: Option<Callback<Html>>, //(menu: React.ReactElement) => React.ReactElement
     pub get_popup_container: Option<Callback<()>>, //RenderDOMFunc
@@ -173,7 +173,7 @@ pub struct SelectTriggerProps {
 pub struct RefTriggerPropsAndSelectTriggerProps {
     pub get_popup_element: Callback<Html>, //() => HTMLDivElement
     //
-    pub prefix_cls: std::string::String,
+    pub prefix_cls: String,
     pub children: Children,
     pub disabled: Option<()>,
     pub visible: Option<()>,
@@ -182,9 +182,9 @@ pub struct RefTriggerPropsAndSelectTriggerProps {
     pub transition_name: Option<String>,
     pub container_width: i32,
     //   pub placement?: Option<Placement>,
-    pub dropdown_style: std::string::String, //React.CSSProperties,
-    pub dropdown_class_name: std::string::String,
-    pub direction: std::string::String,
+    pub dropdown_style: String, //React.CSSProperties,
+    pub dropdown_class_name: String,
+    pub direction: String,
     pub dropdown_match_select_width: Option<DropdownMatchSelectWidth>,
     // pub dropdown_render: Option<Callback<Html>>, //(menu: React.ReactElement) => React.ReactElement //no need
     pub get_popup_container: Option<Callback<()>>, //RenderDOMFunc
@@ -200,7 +200,7 @@ pub struct RefTriggerPropsAndSelectTriggerProps {
 #[function_component(SelectTrigger)]
 pub fn select_trigger(props: &RefTriggerPropsAndSelectTriggerProps) -> Html {
     // let prefix_cls = match props.prefix_cls.clone() {
-    //     None => std::string::String::from("ant-checkbox"),
+    //     None => String::from("ant-checkbox"),
     //     Some(pc) => pc,
     // };
     let dropdown_prefix_cls = format!("{}-dropdown", props.prefix_cls);
@@ -219,13 +219,13 @@ pub fn select_trigger(props: &RefTriggerPropsAndSelectTriggerProps) -> Html {
         Some(a) => format!("{}-{}", dropdown_prefix_cls, a),
         None => match props.transition_name.clone() {
             Some(tn) => tn,
-            None => std::string::String::from(""),
+            None => String::from(""),
         },
     };
     let merged_transition_name = match props.animation.clone() {
         None => match props.transition_name.clone() {
             Some(tn) => tn,
-            None => std::string::String::from(""),
+            None => String::from(""),
         },
         Some(a) => format!("{}-{}", dropdown_prefix_cls, a),
     };

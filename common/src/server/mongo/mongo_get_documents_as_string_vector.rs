@@ -12,7 +12,7 @@ pub enum MongoGetDocumentsAsStringVectorErrorNamed {
     },
     NoKeyInDocument {
         #[eo_to_std_string_string_serialize_deserialize]
-        key: std::string::String,
+        key: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

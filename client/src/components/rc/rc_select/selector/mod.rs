@@ -36,8 +36,8 @@ use yew::Properties;
 
 #[derive(Properties, PartialEq, Eq, Clone)]
 pub struct InnerSelectorProps {
-    pub prefix_cls: std::string::String,
-    pub id: std::string::String,
+    pub prefix_cls: String,
+    pub id: String,
     //   mode: Mode;
     pub input_ref: NodeRef,
     pub placeholder: Option<Html>,
@@ -46,7 +46,7 @@ pub struct InnerSelectorProps {
     pub auto_complete: Option<String>,
     //   values: DisplayValueType[];
     pub show_search: Option<()>,
-    pub search_value: std::string::String,
+    pub search_value: String,
     pub active_descendant_id: Option<String>,
     pub open: Option<()>,
     pub tab_index: Option<i32>,
@@ -106,15 +106,15 @@ pub enum MaxTagCount {
 
 #[derive(Properties, PartialEq, Eq, Clone)]
 pub struct SelectorProps {
-    pub id: std::string::String,
-    pub prefix_cls: std::string::String,
+    pub id: String,
+    pub prefix_cls: String,
     pub show_search: Option<()>,
     pub open: Option<()>,
     /** Display in the Selector value, it's not same as `value` prop */
     // pub values: DisplayValueType[],
     // pub mode: Mode,
-    pub search_value: std::string::String,
-    pub active_value: std::string::String,
+    pub search_value: String,
+    pub active_value: String,
     pub input_element: Html,
     pub max_length: Option<i32>,
 
@@ -193,15 +193,15 @@ pub struct SelectorProps {
 
 #[derive(Properties, PartialEq, Eq, Clone)]
 pub struct SelectorPropsWithRefSelectorProps {
-    pub id: std::string::String,
-    pub prefix_cls: std::string::String,
+    pub id: String,
+    pub prefix_cls: String,
     pub show_search: Option<()>,
     pub open: Option<()>,
     /** Display in the Selector value, it's not same as `value` prop */
     // pub values: DisplayValueType[],
     // pub mode: Mode,
-    pub search_value: std::string::String,
-    pub active_value: std::string::String,
+    pub search_value: String,
+    pub active_value: String,
     pub input_element: Html,
     pub max_length: Option<i32>,
 
@@ -242,8 +242,8 @@ pub fn selector(props: &SelectorPropsWithRefSelectorProps) -> Html {
     let on_input_key_down = props.on_input_key_down.clone();
     let on_internal_input_key_down = Callback::from(move |event: KeyboardEvent| {
         let key = event.key();
-        let up = std::string::String::from("UP");
-        let down = std::string::String::from("DOWN");
+        let up = String::from("UP");
+        let down = String::from("DOWN");
         if key == up {
             event.prevent_default();
         }

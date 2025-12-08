@@ -45,7 +45,7 @@
 //     user_id: uuid::Uuid,
 //     pool: &sqlx::PgPool,
 // ) -> Result<
-//     std::string::String,
+//     String,
 //     common::repositories_types::server::routes::admin::dashboard::GetUsernameErrorNamed<
 //         'a,
 //     >,

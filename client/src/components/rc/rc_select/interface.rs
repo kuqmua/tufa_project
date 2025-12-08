@@ -18,7 +18,7 @@ use yew::Properties;
 pub struct FlattenOptionData {
     pub label: Option<Html>,
     // pub data: OptionType;
-    pub key: std::string::String,
+    pub key: String,
     // pub value: Option<RawValueType>,
     pub group_option: Option<()>,
     pub group: Option<()>,

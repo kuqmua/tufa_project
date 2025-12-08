@@ -51,7 +51,7 @@ pub fn back_top(_props: &BackTopProps) -> Html {
     // let visible = use_state(|| false);
     // let setVisible = use_state(|| SetVisible { value: props.visible.is_some().clone()});
 
-    // let render_children = |prefix_cls_handle: std::string::String, root_prefix_cls_handle: std::string::String| {
+    // let render_children = |prefix_cls_handle: String, root_prefix_cls_handle: String| {
     //     let default_element = html!{
     //       <div className={format!("{}-content", prefix_cls_handle)}>
     //         <div className={format!("{}-icon", root_prefix_cls_handle)}>

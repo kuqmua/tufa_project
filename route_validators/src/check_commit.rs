@@ -2,9 +2,9 @@
 pub enum CheckCommitErrorNamed {
     CommitNotEqual {
         #[eo_to_std_string_string_serialize_deserialize]
-        commit_not_equal: std::string::String,
+        commit_not_equal: String,
         #[eo_to_std_string_string_serialize_deserialize]
-        commit_to_use: std::string::String,
+        commit_to_use: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     CommitToStrConversion {
@@ -14,7 +14,7 @@ pub enum CheckCommitErrorNamed {
     },
     NoCommitHeader {
         #[eo_to_std_string_string_serialize_deserialize]
-        no_commit_header: std::string::String,
+        no_commit_header: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -38,7 +38,7 @@ pub fn check_commit(
         headers.get(naming::CommitSnakeCase.to_string()).map_or_else(
             || {
                 Err(CheckCommitErrorNamed::NoCommitHeader {
-                    no_commit_header: std::string::String::from("no_commit_header"),
+                    no_commit_header: String::from("no_commit_header"),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             },
@@ -48,7 +48,7 @@ pub fn check_commit(
                         Ok(())
                     } else {
                         Err(CheckCommitErrorNamed::CommitNotEqual {
-                            commit_not_equal: std::string::String::from("different project commit provided, services must work only with equal project commits"),
+                            commit_not_equal: String::from("different project commit provided, services must work only with equal project commits"),
                             commit_to_use: git_info::GetGitCommitLink::get_git_commit_link(&git_info::PROJECT_GIT_INFO),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         })

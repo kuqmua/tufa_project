@@ -14,20 +14,20 @@ pub enum BadgeStatus {
 }
 
 impl BadgeStatus {
-    pub fn get_sup_class(&self) -> std::string::String {
+    pub fn get_sup_class(&self) -> String {
         match self {
-            BadgeStatus::Success(_) => std::string::String::from("ant-badge-status-success"),
-            BadgeStatus::Processing(_) => std::string::String::from("ant-badge-status-processing"),
-            BadgeStatus::Default(_) => std::string::String::from("ant-badge-status-default"),
-            BadgeStatus::Error(_) => std::string::String::from("ant-badge-status-error"),
-            BadgeStatus::Warning(_) => std::string::String::from("ant-badge-status-warning"),
+            BadgeStatus::Success(_) => String::from("ant-badge-status-success"),
+            BadgeStatus::Processing(_) => String::from("ant-badge-status-processing"),
+            BadgeStatus::Default(_) => String::from("ant-badge-status-default"),
+            BadgeStatus::Error(_) => String::from("ant-badge-status-error"),
+            BadgeStatus::Warning(_) => String::from("ant-badge-status-warning"),
         }
     }
-    pub fn get_span_class(&self) -> std::string::String {
-        std::string::String::from("ant-badge-status")
+    pub fn get_span_class(&self) -> String {
+        String::from("ant-badge-status")
     }
-    pub fn get_class(&self) -> std::string::String {
-        std::string::String::from("ant-badge-status-dot")
+    pub fn get_class(&self) -> String {
+        String::from("ant-badge-status-dot")
     }
 }
 
@@ -50,7 +50,7 @@ pub struct BadgeProps {
 #[function_component(Badge)]
 pub fn badge(props: &BadgeProps) -> Html {
     let offset_style = match props.offset.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(badge_offset) => {
             let right_or_left = match badge_offset.x.is_positive() {
                 true => format!("right: -{}px;", badge_offset.x),
@@ -64,49 +64,49 @@ pub fn badge(props: &BadgeProps) -> Html {
         }
     };
     let title = match (props.title.clone(), props.count) {
-        (None, None) => std::string::String::from(""),
+        (None, None) => String::from(""),
         (None, Some(count)) => count.to_string(),
         (Some(title), None) => title,
         (Some(title), Some(_)) => title,
     };
     let color_style = match props.color.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(color) => format!("background: {};", color.to_css_string()),
     };
     let sup_style = format!("{} {}", color_style, offset_style);
     let count_class = match props.count {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(count) => match (props.dot.clone(), count == 0, props.show_zero.clone()) {
-            (None, true, None) => std::string::String::from(""),
-            (None, true, Some(_)) => std::string::String::from("ant-badge-count"),
-            (None, false, None) => std::string::String::from("ant-badge-count"),
-            (None, false, Some(_)) => std::string::String::from("ant-badge-count"),
-            (Some(_), true, None) => std::string::String::from(""),
-            (Some(_), true, Some(_)) => std::string::String::from(""),
-            (Some(_), false, None) => std::string::String::from(""),
-            (Some(_), false, Some(_)) => std::string::String::from(""),
+            (None, true, None) => String::from(""),
+            (None, true, Some(_)) => String::from("ant-badge-count"),
+            (None, false, None) => String::from("ant-badge-count"),
+            (None, false, Some(_)) => String::from("ant-badge-count"),
+            (Some(_), true, None) => String::from(""),
+            (Some(_), true, Some(_)) => String::from(""),
+            (Some(_), false, None) => String::from(""),
+            (Some(_), false, Some(_)) => String::from(""),
         },
     };
     let scroll_class = match props.count {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(count) => match (props.dot.clone(), count == 0, props.show_zero.clone()) {
-            (None, true, None) => std::string::String::from(""),
-            (None, true, Some(_)) => std::string::String::from("ant-scroll-number"),
-            (None, false, None) => std::string::String::from("ant-scroll-number"),
-            (None, false, Some(_)) => std::string::String::from("ant-scroll-number"),
-            (Some(_), true, None) => std::string::String::from(""),
-            (Some(_), true, Some(_)) => std::string::String::from(""),
-            (Some(_), false, None) => std::string::String::from(""),
-            (Some(_), false, Some(_)) => std::string::String::from(""),
+            (None, true, None) => String::from(""),
+            (None, true, Some(_)) => String::from("ant-scroll-number"),
+            (None, false, None) => String::from("ant-scroll-number"),
+            (None, false, Some(_)) => String::from("ant-scroll-number"),
+            (Some(_), true, None) => String::from(""),
+            (Some(_), true, Some(_)) => String::from(""),
+            (Some(_), false, None) => String::from(""),
+            (Some(_), false, Some(_)) => String::from(""),
         },
     };
     let (status_sup_class, status_span_class, dot_class) = match props.dot.clone() {
-        None => (String::from(""), std::string::String::from(""), std::string::String::from("")),
+        None => (String::from(""), String::from(""), String::from("")),
         Some(option_badge_status) => match option_badge_status {
             None => (
-                std::string::String::from(""),
-                std::string::String::from(""),
-                std::string::String::from("ant-badge-dot"),
+                String::from(""),
+                String::from(""),
+                String::from("ant-badge-dot"),
             ),
             Some(status) => (
                 status.get_sup_class(),
@@ -116,15 +116,15 @@ pub fn badge(props: &BadgeProps) -> Html {
         },
     };
     let multiple_words_class = match props.count.clone() {
-        None => std::string::String::from(""),
+        None => String::from(""),
         Some(count) => match count.to_string().len() > 1 {
-            false => std::string::String::from(""),
-            true => std::string::String::from("ant-badge-multiple-words"),
+            false => String::from(""),
+            true => String::from("ant-badge-multiple-words"),
         },
     };
     let not_a_wrapper_class = match props.children.len() {
-        0 => std::string::String::from("ant-badge-not-a-wrapper"),
-        _ => std::string::String::from(""),
+        0 => String::from("ant-badge-not-a-wrapper"),
+        _ => String::from(""),
     };
     let sup_class = format!(
         "{} {} {} {} {}",
@@ -300,8 +300,8 @@ pub fn badge_numbers(props: &BadgeNumbersProps) -> Html {
           <p class="ant-scroll-number-only-unit">{"9"}</p>
         </>
     };
-    let current = std::string::String::from("current");
-    let p_class = std::string::String::from("ant-scroll-number-only-unit");
+    let current = String::from("current");
+    let p_class = String::from("ant-scroll-number-only-unit");
     let mut zero_class = p_class.clone();
     let mut one_class = p_class.clone();
     let mut two_class = p_class.clone();

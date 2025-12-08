@@ -2,7 +2,7 @@
 // pub enum GetLocalProvidersLinkPartsErrorNamed {
 //     GetLinkPartsFromLocalJsonFile {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         get_link_parts_from_local_json_file: std::collections::HashMap<std::string::String, GetLocalProvidersLinkPartsErrorUnnamed<'a>>,
+//         get_link_parts_from_local_json_file: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -42,7 +42,7 @@
 //             }),
 //     )
 //     .await;
-//     let mut errors_hashmap: std::collections::HashMap<std::string::String, GetLocalProvidersLinkPartsErrorUnnamed<'a>> =
+//     let mut errors_hashmap: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'a>> =
 //         std::collections::HashMap::new();
 //     let mut success_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
 //         std::collections::HashMap::with_capacity(result_vec.len());

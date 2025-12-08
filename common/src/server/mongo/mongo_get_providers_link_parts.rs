@@ -7,12 +7,12 @@
 //     },
 //     NoSuchCollections {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display_with_serialize_deserialize]
-//         no_such_collections: std::collections::HashMap<std::string::String, std::string::String>,
+//         no_such_collections: std::collections::HashMap<String, String>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     GetDocuments {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         get_documents: std::collections::HashMap<std::string::String, MongoGetDocumentsAsStringVectorErrorUnnamed<'a>>,
+//         get_documents: std::collections::HashMap<String, MongoGetDocumentsAsStringVectorErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -59,7 +59,7 @@
 //                         }
 //                         None
 //                     })
-//                     .collect::<std::collections::HashMap<String, std::string::String>>()
+//                     .collect::<std::collections::HashMap<String, String>>()
 //                 };
 //                 if !no_collection_error_hashmap.is_empty() {
 //                     return Err(
@@ -88,7 +88,7 @@
 //                 let mut success_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
 //                     std::collections::HashMap::with_capacity(result_get_documents_hashmap.len());
 //                 let mut error_hashmap: std::collections::HashMap<
-//                     std::string::String,
+//                     String,
 //                     crate::server::mongo::mongo_get_providers_link_parts::MongoGetDocumentsAsStringVectorErrorUnnamed,
 //                 > = std::collections::HashMap::new();
 //                 for (pk, result) in result_get_documents_hashmap.into_iter() {

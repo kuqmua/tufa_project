@@ -56,7 +56,7 @@ pub struct Overflow {
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct TooltipAlignConfig {
-    pub points: Option<(String, std::string::String)>,
+    pub points: Option<(String, String)>,
     pub offset: Option<Offset>,
     pub target_offset: Option<Offset>,
     pub overflow: Option<Overflow>,
@@ -180,10 +180,10 @@ pub struct SplittedObject {
 
 pub fn split_object(element: ElementType, omitted_keys_array: Vec<&str>) -> SplittedObject {
     let mut picked = PseudoCssWrapper {
-        style: HashMap::<String, std::string::String>::new(),
+        style: HashMap::<String, String>::new(),
     };
     let mut omitted = PseudoCssWrapper {
-        style: HashMap::<String, std::string::String>::new(),
+        style: HashMap::<String, String>::new(),
     };
     match element.clone().get_style_option() {
         None => (),
@@ -243,7 +243,7 @@ impl ElementType {
     }
 }
 
-pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: std::string::String) -> Html {
+pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: String) -> Html {
     //Html //ElementType
     match element_type.clone() {
         ElementType::Button(props) => match props.disabled {
@@ -269,8 +269,8 @@ pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: s
                 let overrided_props = props.clone();
                 let block = overrided_props.block;
                 let width = match block {
-                    None => std::string::String::from("null"),
-                    Some(_) => std::string::String::from("100%"),
+                    None => String::from("null"),
+                    Some(_) => String::from("100%"),
                 };
                 let omitted_str_array = vec![
                     "position", "left", "right", "top", "bottom", "float", "display", "zIndex",
@@ -305,17 +305,17 @@ pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: s
                 let mut span_style = splitted_object.picked;
                 span_style
                     .style
-                    .insert(String::from("display"), std::string::String::from("inline-block"));
+                    .insert(String::from("display"), String::from("inline-block"));
                 span_style
                     .style
-                    .insert(String::from("cursor"), std::string::String::from("not-allowed"));
+                    .insert(String::from("cursor"), String::from("not-allowed"));
                 span_style
                     .style
                     .insert(String::from("width"), width.to_string());
                 let mut button_style = splitted_object.omitted;
                 button_style
                     .style
-                    .insert(String::from("pointerEvents"), std::string::String::from("none"));
+                    .insert(String::from("pointerEvents"), String::from("none"));
                 // const buttonStyle = {
                 //   ...omitted,
                 //   pointerEvents: 'none',
@@ -341,7 +341,7 @@ pub fn get_disabled_compatible_children(element_type: ElementType, prefix_cls: s
                 };
                 let class = format!("{}-disabled-compatible-wrapper", prefix_cls); //todo //classNames(element.props.className, `${prefixCls}-disabled-compatible-wrapper`)
                 let style = match overrided_props.style {
-                    None => std::string::String::from(""),
+                    None => String::from(""),
                     Some(pseudo_css_wrapper) => pseudo_css_wrapper.to_string(),
                 };
                 html! {

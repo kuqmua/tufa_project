@@ -5,7 +5,7 @@
 // pub const TRACING: std::sync::OnceLock<()> = std::sync::OnceLock::new();
 
 // pub struct TestApp {
-//     pub address: std::string::String,
+//     pub address: String,
 //     pub port: u16,
 //     pub db_pool: sqlx::PgPool,
 //     pub email_server: wiremock::MockServer,
@@ -31,7 +31,7 @@
 //             }
 //         }
 //     }
-//     pub async fn post_subscriptions(&self, body: std::string::String) -> reqwest::Response {
+//     pub async fn post_subscriptions(&self, body: String) -> reqwest::Response {
 //         self.api_client
 //             .post(&format!("{}/subscriptions", &self.address))
 //             .header("Content-Type", "application/x-www-form-urlencoded")
@@ -51,7 +51,7 @@
 //             .await
 //             .expect("Failed to execute request.")
 //     }
-//     pub async fn get_login_html(&self) -> std::string::String {
+//     pub async fn get_login_html(&self) -> String {
 //         self.api_client
 //             .get(&format!("{}/login", &self.address))
 //             .send()
@@ -68,7 +68,7 @@
 //             .await
 //             .expect("Failed to execute request.")
 //     }
-//     pub async fn get_admin_dashboard_html(&self) -> std::string::String {
+//     pub async fn get_admin_dashboard_html(&self) -> String {
 //         self.get_admin_dashboard()
 //             .await
 //             .text()
@@ -82,7 +82,7 @@
 //             .await
 //             .expect("Failed to execute request.")
 //     }
-//     pub async fn get_change_password_html(&self) -> std::string::String {
+//     pub async fn get_change_password_html(&self) -> String {
 //         self.get_change_password().await.text().await.expect(
 //             "inside get_change_password_html get_change_password().await.text().await failed",
 //         )
@@ -112,7 +112,7 @@
 //             .await
 //             .expect("Failed to execute request.")
 //     }
-//     pub async fn get_publish_newsletter_html(&self) -> std::string::String {
+//     pub async fn get_publish_newsletter_html(&self) -> String {
 //         self.get_publish_newsletter().await.text().await.expect(
 //             "inside get_publish_newsletter_html get_publish_newsletter().await.text().await failed",
 //         )
@@ -287,8 +287,8 @@
 
 // pub struct TestUser {
 //     user_id: uuid::Uuid,
-//     pub username: std::string::String,
-//     pub password: std::string::String,
+//     pub username: String,
+//     pub password: String,
 // }
 
 // impl TestUser {

@@ -14,7 +14,7 @@ use yew_router::prelude::*;
 
 #[derive(Properties, PartialEq)]
 pub struct SecureProps {
-    pub first: std::string::String,
+    pub first: String,
     pub color: Color,
     pub on_load: Callback<String>,
     pub onsubmit: Callback<SecureProps>,
@@ -22,7 +22,7 @@ pub struct SecureProps {
 
 #[derive(Default, Clone)]
 pub struct SecureState {
-    username: std::string::String,
+    username: String,
 }
 
 const STYLE_FILE: &str = include_str!("example.css");
@@ -42,7 +42,7 @@ impl std::fmt::Display for Color {
 
 #[derive(Clone, PartialEq, Eq, Default)]
 pub struct ContextProviderStruct {
-    pub data: std::string::String,
+    pub data: String,
 }
 #[styled_component(Secure)]
 pub fn secure(props: &SecureProps) -> Html {
@@ -68,7 +68,7 @@ pub fn secure(props: &SecureProps) -> Html {
     props.on_load.emit("i loaded".to_string());
     let state = use_state(SecureState::default);
     let cloned_state = state.clone();
-    let username_changed = Callback::from(move |new_username: std::string::String| {
+    let username_changed = Callback::from(move |new_username: String| {
         // let mut data = cloned_state.deref().clone();
         // data.username = new_username;
         // log!("username changed", data);
@@ -82,7 +82,7 @@ pub fn secure(props: &SecureProps) -> Html {
         log!("onsubmit")
     });
     let context = ContextProviderStruct {
-        data: std::string::String::from("fff"),
+        data: String::from("fff"),
     };
     let first_load = use_state(|| true);
     use_effect(move || {

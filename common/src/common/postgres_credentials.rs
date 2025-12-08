@@ -1,5 +1,5 @@
 #[derive(Debug)]
 pub struct PostgresCredentials {
-    pub username: std::string::String,
+    pub username: String,
     pub password: secrecy::Secret<String>,
 }

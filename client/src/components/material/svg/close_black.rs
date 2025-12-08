@@ -2,9 +2,9 @@ use yew::{function_component, html, Properties};
 
 #[derive(Properties, PartialEq)]
 pub struct CloseBlackProps {
-    pub height: std::string::String,
-    pub width: std::string::String,
-    pub fill: std::string::String,
+    pub height: String,
+    pub width: String,
+    pub fill: String,
 }
 
 #[function_component(CloseBlack)]

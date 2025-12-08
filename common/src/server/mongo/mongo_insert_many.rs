@@ -2,7 +2,7 @@
 // pub enum MongoInsertManyErrorNamed {
 //     InsertMany {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         insert_many: std::collections::HashMap<std::string::String, MongoInsertManyErrorUnnamed<'a>>,
+//         insert_many: std::collections::HashMap<String, MongoInsertManyErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }

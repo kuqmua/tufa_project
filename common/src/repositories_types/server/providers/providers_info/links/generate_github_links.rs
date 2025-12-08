@@ -3,7 +3,7 @@
 //     + std::marker::Send
 //     + std::marker::Sync
 // >(
-//     github_names: &[std::string::String],
+//     github_names: &[String],
 //     config: &T,
 // ) -> Vec<String> {
 //     github_names

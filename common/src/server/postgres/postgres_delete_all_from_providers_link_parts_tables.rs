@@ -2,7 +2,7 @@
 // pub enum PostgresDeleteAllFromProvidersTablesErrorNamed {
 //     DeleteTables {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_display]
-//         error_hashmap: std::collections::HashMap<std::string::String, sqlx::Error>,
+//         error_hashmap: std::collections::HashMap<String, sqlx::Error>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -27,7 +27,7 @@
 //             }
 //             None
 //         })
-//         .collect::<std::collections::HashMap<std::string::String, sqlx::Error>>();
+//         .collect::<std::collections::HashMap<String, sqlx::Error>>();
 //     if !delete_from_tables_error_hashmap.is_empty() {
 //         return Err(Box::new(
 //             crate::server::postgres::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesErrorNamed::DeleteTables {

@@ -100,7 +100,7 @@ impl quote::ToTokens for RefStdPrimitiveStr {
 pub struct StdStringString;
 impl quote::ToTokens for StdStringString {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {std::string::String}.to_tokens(tokens);
+        quote::quote! {String}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

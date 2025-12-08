@@ -5,11 +5,11 @@
 
 // #[derive(Debug)]
 // pub enum CleanLogsDirError {
-//     PathIsNotDir { path: std::string::String },
+//     PathIsNotDir { path: String },
 //     CannotRemoveDir { error: RemoveDirError },
 // }
 // impl From<String> for CleanLogsDirError {
-//     fn from(e: std::string::String) -> Self {
+//     fn from(e: String) -> Self {
 //         CleanLogsDirError::PathIsNotDir { path: e }
 //     }
 // }
@@ -25,12 +25,12 @@
 // pub enum FetchAndParseProviderDataErrorNamed {
 //     // AsyncFetchLinks {
 //     //     #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//     //     fetch_links: std::collections::HashMap<std::string::String, crate::server::http_request::http_request_error::HttpRequestErrorNamed>, //link, error
+//     //     fetch_links: std::collections::HashMap<String, crate::server::http_request::http_request_error::HttpRequestErrorNamed>, //link, error
 //     //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     // },
 //     NoItems {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         no_items: std::collections::HashMap<std::string::String, FetchAndParseProviderDataErrorUnnamed<'a>>, //link, error
+//         no_items: std::collections::HashMap<String, FetchAndParseProviderDataErrorUnnamed<'a>>, //link, error
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -49,7 +49,7 @@
 //         let capacity = links.len();
 //         let vec_to_return = futures::future::join_all(links.iter().map(|url| async move {
 //             let result = crate::server::http_request::wrappers::text::async_http_request_text::async_http_request_text_wrapper::<
-//                 std::string::String,
+//                 String,
 //                 reqwest::cookie::Jar,
 //                 core::time::Duration,
 //                 u32,
@@ -58,16 +58,16 @@
 //                 std::time::Duration,
 //                 std::net::IpAddr,
 //                 std::time::Duration,
-//                 std::string::String, //todo - dyn std::any::Any
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
-//                 std::string::String,
+//                 String, //todo - dyn std::any::Any
+//                 String,
+//                 String,
+//                 String,
+//                 String,
+//                 String,
+//                 String,
+//                 String,
+//                 String,
+//                 String,
 //             >(
 //                 url,
 //                 None,

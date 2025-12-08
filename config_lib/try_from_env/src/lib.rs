@@ -38,7 +38,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 },
                 #std_env_var_error_upper_camel_case {
                     #std_env_var_error_snake_case: std::env::VarError,
-                    env_var_name: std::string::String,
+                    env_var_name: String,
                 },
                 #(#variants_token_stream),*
             }
@@ -78,7 +78,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let element_ident_wrapper_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
                 let #element_ident = {
-                    let env_var_name = std::string::String::from(#element_ident_quotes_screaming_snake_case_string);
+                    let env_var_name = String::from(#element_ident_quotes_screaming_snake_case_string);
                     match std::env::var(&env_var_name) {
                         Err(error) => {
                             return Err(#ident_try_from_env_error_named_upper_camel_case::#std_env_var_error_upper_camel_case {

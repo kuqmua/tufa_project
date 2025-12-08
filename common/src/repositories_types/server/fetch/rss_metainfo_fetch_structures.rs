@@ -2,19 +2,19 @@
 pub enum NoItemsErrorNamed {
     ThereIsTag {
         #[eo_to_std_string_string_serialize_deserialize]
-        tag: std::string::String,
+        tag: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     ConversionFromStrError {
         #[eo_to_std_string_string_serialize_deserialize]
-        string: std::string::String,
+        string: String,
         #[eo_to_std_string_string_serialize_deserialize]
-        error: std::string::String,
+        error: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NoTag {
         #[eo_to_std_string_string_serialize_deserialize]
-        no_tag: std::string::String,
+        no_tag: String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }

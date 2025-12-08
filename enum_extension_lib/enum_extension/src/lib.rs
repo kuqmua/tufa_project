@@ -48,8 +48,8 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 }
                 self_vec
             }
-            pub fn into_string_name_and_variant_hashmap() -> std::collections::HashMap<std::string::String, Self> {
-                let mut variants_hashmap: std::collections::HashMap<std::string::String, Self> =
+            pub fn into_string_name_and_variant_hashmap() -> std::collections::HashMap<String, Self> {
+                let mut variants_hashmap: std::collections::HashMap<String, Self> =
                     std::collections::HashMap::with_capacity(Self::get_length());
                 for element in {
                     use enum_extension_lib::IntoEnumIterator;
@@ -59,7 +59,7 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 }
                 variants_hashmap
             }
-            pub fn into_string_name_and_variant_tuple_vec() -> std::vec::Vec<(std::string::String, Self)> {
+            pub fn into_string_name_and_variant_tuple_vec() -> std::vec::Vec<(String, Self)> {
                 let mut variants_vec = std::vec::Vec::with_capacity(Self::get_length());
                 for element in {
                     use enum_extension_lib::IntoEnumIterator;
@@ -70,11 +70,11 @@ pub fn enum_extension(input: proc_macro::TokenStream) -> proc_macro::TokenStream
                 variants_vec
             }
             //todo - it can be done in compile time
-            pub fn to_upper_camel_case(&self) -> std::string::String {
+            pub fn to_upper_camel_case(&self) -> String {
                 enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::UpperCamel)
             }
             //todo - it can be done in compile time
-            pub fn to_snake_case(&self) -> std::string::String {
+            pub fn to_snake_case(&self) -> String {
                 enum_extension_lib::Casing::to_case(&format!("{:?}", self),enum_extension_lib::Case::Snake)
             }
         }

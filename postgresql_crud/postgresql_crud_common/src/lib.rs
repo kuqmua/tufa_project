@@ -30,32 +30,32 @@ pub trait PostgresqlType {
     type TableTypeDeclaration: TableTypeDeclarationAlias;
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: bool) -> impl std::fmt::Display;
     type Create: CreateAlias;
-    fn create_query_part(value: &Self::Create, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn create_query_part(value: &Self::Create, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
     type Select: SelectAlias;
     //todo change trait fn select_query_part( to Result String CheckedAdd
-    fn select_query_part(value: &Self::Select, column: &str) -> std::string::String;
+    fn select_query_part(value: &Self::Select, column: &str) -> String;
     type Where: WhereAlias;
     type Read: ReadAlias + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: ReadOnlyIdsAlias;
-    fn select_only_ids_query_part(column: &str) -> std::string::String;
+    fn select_only_ids_query_part(column: &str) -> String;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias;
     type UpdateForQuery: UpdateForQueryAlias;
-    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
-    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &str, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
 }
 
@@ -72,7 +72,7 @@ pub trait PostgresqlJsonType {
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &str,
         is_postgresql_type: bool,
-    ) -> std::string::String;
+    ) -> String;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
         + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
@@ -81,25 +81,25 @@ pub trait PostgresqlJsonType {
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: ReadOnlyIdsAlias;
-    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &str) -> std::string::String;
+    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &str) -> String;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     type UpdateForQuery: UpdateForQueryAlias + std::convert::From<Self::Update>;
-    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
-    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
-    fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
 }
 
@@ -137,14 +137,14 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
     fn query_bind_string_as_postgresql_text_update_for_query(
         value: <Self::PostgresqlJsonType as PostgresqlJsonType>::UpdateForQuery,
         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
     ) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
     fn get_inner(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery) -> &Self::ReadInner;
     fn increment_checked_add_one(increment: &mut u64) -> Result<u64, QueryPartErrorNamed>;
@@ -327,10 +327,10 @@ pub trait PostgresqlJsonTypeTestCases {
 }
 
 pub trait PostgresqlTypeWhereFilter<'a> {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, QueryPartErrorNamed>;
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     >;
 }
 //todo custom deserialization - must not contain more than one element
@@ -340,7 +340,7 @@ impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWh
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         match &self.0 {
             Some(value) => {
                 value.query_part(
@@ -354,7 +354,7 @@ where
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     > {
         match self.0 {
             Some(value) => value.query_bind(query),
@@ -366,7 +366,7 @@ impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlT
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
-    fn to_std_string_string(&self) -> std::string::String {
+    fn to_std_string_string(&self) -> String {
         format!("{self:#?}")
     }
 }
@@ -381,7 +381,7 @@ where
     }
 }
 
-pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> std::string::String {
+pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {
     format!("jsonb_build_object('{field}',{value})||")
 }
 
@@ -579,8 +579,8 @@ const _: () = {
     }
 };
 impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<T> {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        let mut acc = std::string::String::default();
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
+        let mut acc = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
             match PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
@@ -598,7 +598,7 @@ impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for Pos
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     > {
         for element in self.value {
             match PostgresqlTypeWhereFilter::query_bind(element, query) {
@@ -644,10 +644,10 @@ impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVe
     }
 }
 impl Order {
-    pub fn to_upper_camel_case_stringified(&self) -> std::string::String {
+    pub fn to_upper_camel_case_stringified(&self) -> String {
         naming::DisplayToUpperCamelCaseStringified::case(&self)
     }
-    pub fn to_snake_case_stringified(&self) -> std::string::String {
+    pub fn to_snake_case_stringified(&self) -> String {
         naming::DisplayToSnakeCaseStringified::case(&self)
     }
 }
@@ -675,7 +675,7 @@ impl PaginationBase {
     }
 }
 impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
-    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<String, QueryPartErrorNamed> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(error) => {
@@ -692,7 +692,7 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     > {
         if let Err(error) = query.try_bind(self.limit) {
             return Err(error.to_string());
@@ -899,12 +899,12 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
     }
 }
 impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     > {
         self.0.query_bind(query)
     }
@@ -1070,8 +1070,8 @@ impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        let mut acc = std::string::String::default();
+    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
+        let mut acc = String::default();
         for (index, element) in self.0.iter().enumerate() {
             match element.query_part(
                 increment,
@@ -1095,7 +1095,7 @@ where
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        std::string::String
+        String
     > {
         for element in self.0 {
             match element.query_bind(query) {
@@ -1212,9 +1212,9 @@ pub const fn std_primitive_bool_test_cases_vec() -> [bool;2] {
         false
     ]
 }
-pub fn std_string_string_test_cases_vec() -> [std::string::String;12] {
+pub fn std_string_string_test_cases_vec() -> [String;12] {
     [
-        std::string::String::new(),
+        String::new(),
         "a".to_string(),
         "Hello, world!".to_string(),
         "   ".to_string(),
@@ -1225,7 +1225,7 @@ pub fn std_string_string_test_cases_vec() -> [std::string::String;12] {
         "🌍🚀✨ Rust 💖🦀".to_string(),
         "a".repeat(1024),
         "line1\nline2\nline3".to_string(),
-        std::string::String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string()
+        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string()
     ]
 }
 pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid;1] {
@@ -1361,7 +1361,7 @@ const _: () = {
     }
 };
 impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
-    fn to_std_string_string(&self) -> std::string::String {
+    fn to_std_string_string(&self) -> String {
         self.0.to_string()
     }
 }
@@ -1480,7 +1480,7 @@ const _: () = {
     }
 };
 impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiveI32 {
-    fn to_std_string_string(&self) -> std::string::String {
+    fn to_std_string_string(&self) -> String {
         self.0.to_std_string_string()
     }
 }

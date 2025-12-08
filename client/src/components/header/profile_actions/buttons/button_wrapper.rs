@@ -6,7 +6,7 @@ use yew::{function_component, html, Callback, Html, Properties};
 pub struct ButtonWrapperProps {
     pub inner_html: Html,
     pub callback: Callback<MouseEvent>,
-    pub placeholder: std::string::String,
+    pub placeholder: String,
 }
 
 #[function_component(ButtonWrapper)]

@@ -47,7 +47,7 @@ pub struct RefOptionListProps {
 
 #[derive(PartialEq, Eq, Clone)]
 pub enum TitleType {
-    std::string::String(String),
+    String(String),
     Number(i32),
 }
 

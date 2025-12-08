@@ -18,7 +18,7 @@ pub fn yewdux_functional_edit_username() -> Html {
             //     .unwrap()
             //     .unchecked_into::<HtmlInputElement>()
             //     .value();
-            state.username = std::string::String::from("kekw");
+            state.username = String::from("kekw");
             log!("handle_form_submit username", state.username.clone());
         });
     let handle_username_change = store

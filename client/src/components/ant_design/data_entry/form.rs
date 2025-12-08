@@ -617,7 +617,7 @@
 //   if (typeof label === 'string') {
 //     variables.label = label;
 //   } else if (name) {
-//     variables.label = std::string::String(name);
+//     variables.label = String(name);
 //   }
 //   if (messageVariables) {
 //     variables = { ...variables, ...messageVariables };

@@ -11,25 +11,25 @@ pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> = compile_time_git_info::compile_
 //     };
 
 pub trait GetGitCommitLink {
-    fn get_git_commit_link(&self) -> std::string::String;
+    fn get_git_commit_link(&self) -> String;
 }
 
 impl<T> GetGitCommitLink for T
 where
     T: GetGitCommitId, //todo wtf
 {
-    fn get_git_commit_link(&self) -> std::string::String {
+    fn get_git_commit_link(&self) -> String {
         format!("{}/tree/{}", naming::GITHUB_URL, self.get_git_commit_id())
     }
 }
 
 pub trait GetGitCommitId {
     //todo remove
-    fn get_git_commit_id(&self) -> std::string::String;
+    fn get_git_commit_id(&self) -> String;
 }
 
 // pub trait GetGitRepoLink {
-//     fn get_git_repo_link(&self) -> std::string::String;
+//     fn get_git_repo_link(&self) -> String;
 // }
 
 // pub trait GetGitAuthor<'a> {
@@ -54,7 +54,7 @@ pub trait GetGitCommitId {
 
 impl GetGitCommitId for ProjectGitInfo<'_> {
     //todo
-    fn get_git_commit_id(&self) -> std::string::String {
+    fn get_git_commit_id(&self) -> String {
         self.commit.to_owned()
     }
 }

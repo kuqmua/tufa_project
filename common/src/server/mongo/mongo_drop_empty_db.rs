@@ -7,7 +7,7 @@ pub enum MongoDropEmptyDbErrorNamed {
     },
     CollectionNamesListIsNotEmpty {
         #[eo_to_std_string_string_serialize_deserialize]
-        database: std::string::String, //todo conversion to_string() for with_serialize_deserialize
+        database: String, //todo conversion to_string() for with_serialize_deserialize
         #[eo_to_std_string_string_serialize_deserialize]
         list_collection_names_len: usize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,

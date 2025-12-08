@@ -89,7 +89,7 @@
 // import { presetPrimaryColors } from '@ant-design/colors';
 // import * as React from 'react';
 // import type { DirectionType } from '../config-provider';
-// import type { ProgressGradient, ProgressProps, std::string::StringGradients } from './progress';
+// import type { ProgressGradient, ProgressProps, StringGradients } from './progress';
 // import { getSuccessPercent, validProgress } from './utils';
 
 // interface LineProps extends ProgressProps {
@@ -109,7 +109,7 @@
 //  *     "100%": "#ffffff"
 //  *   }
 //  */
-// export const sortGradient = (gradients: std::string::StringGradients) => {
+// export const sortGradient = (gradients: StringGradients) => {
 //   let tempArr: any[] = [];
 //   Object.keys(gradients).forEach(key => {
 //     const formattedKey = parseFloat(key.replace(/%/g, ''));
@@ -145,7 +145,7 @@
 //     ...rest
 //   } = strokeColor;
 //   if (Object.keys(rest).length !== 0) {
-//     const sortedGradients = sortGradient(rest as std::string::StringGradients);
+//     const sortedGradients = sortGradient(rest as StringGradients);
 //     return { backgroundImage: `linear-gradient(${direction}, ${sortedGradients})` };
 //   }
 //   return { backgroundImage: `linear-gradient(${direction}, ${from}, ${to})` };
@@ -290,7 +290,7 @@
 // export type ProgressType = typeof ProgressTypes[number];
 // const ProgressStatuses = tuple('normal', 'exception', 'active', 'success');
 // export type ProgressSize = 'default' | 'small';
-// export type std::string::StringGradients = { [percentage: string]: string };
+// export type StringGradients = { [percentage: string]: string };
 // type FromToGradients = { from: string; to: string };
 // export type ProgressGradient = { direction?: string } & (StringGradients | FromToGradients);
 

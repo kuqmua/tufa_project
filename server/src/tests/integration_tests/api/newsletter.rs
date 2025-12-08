@@ -1,8 +1,8 @@
 async fn create_unconfirmed_subscriber(
     app: &crate::tests::integration_tests::api::helpers::TestApp,
 ) -> crate::tests::integration_tests::api::helpers::ConfirmationLinks {
-    let name: std::string::String = fake::Fake::fake(&fake::faker::name::en::Name());
-    let email: std::string::String = fake::Fake::fake(&fake::faker::internet::en::SafeEmail());
+    let name: String = fake::Fake::fake(&fake::faker::name::en::Name());
+    let email: String = fake::Fake::fake(&fake::faker::internet::en::SafeEmail());
     let body = serde_urlencoded::to_string(&serde_json::json!({
         "name": name,
         "email": email

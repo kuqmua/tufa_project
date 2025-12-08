@@ -1,16 +1,16 @@
-fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String
+fn to_upper_camel_case_stringified<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
     convert_case::Casing::to_case(value, convert_case::Case::UpperCamel)
 }
-fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String
+fn to_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
     convert_case::Casing::to_case(value, convert_case::Case::Snake)
 }
-fn to_screaming_snake_case_stringified<T: AsRef<str>>(value: &T) -> std::string::String
+fn to_screaming_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
@@ -22,14 +22,14 @@ fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::Token
 
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
 pub trait AsRefStrToUpperCamelCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T: Sized> AsRefStrToUpperCamelCaseStringified for T
 where
-    std::string::String: PartialEq<T>,
+    String: PartialEq<T>,
     Self: AsRef<str>,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_upper_camel_case_stringified(self)
     }
 }
@@ -47,14 +47,14 @@ where
 }
 
 pub trait AsRefStrToSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T: Sized> AsRefStrToSnakeCaseStringified for T
 where
-    std::string::String: PartialEq<T>,
+    String: PartialEq<T>,
     Self: AsRef<str>,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_snake_case_stringified(self)
     }
 }
@@ -72,14 +72,14 @@ where
 }
 
 pub trait AsRefStrToScreamingSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T: Sized> AsRefStrToScreamingSnakeCaseStringified for T
 where
-    std::string::String: PartialEq<T>,
+    String: PartialEq<T>,
     Self: AsRef<str>,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_screaming_snake_case_stringified(self)
     }
 }
@@ -98,13 +98,13 @@ where
 
 ////////////
 pub trait DisplayToUpperCamelCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> DisplayToUpperCamelCaseStringified for T
 where
     T: std::fmt::Display,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_upper_camel_case_stringified(&self.to_string())
     }
 }
@@ -122,13 +122,13 @@ where
 }
 
 pub trait DisplayToSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> DisplayToSnakeCaseStringified for T
 where
     T: std::fmt::Display,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_snake_case_stringified(&self.to_string())
     }
 }
@@ -146,13 +146,13 @@ where
 }
 
 pub trait DisplayToScreamingSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> DisplayToScreamingSnakeCaseStringified for T
 where
     T: std::fmt::Display,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_screaming_snake_case_stringified(&self.to_string())
     }
 }
@@ -171,13 +171,13 @@ where
 ////////////
 
 pub trait ToTokensToUpperCamelCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> ToTokensToUpperCamelCaseStringified for T
 where
     T: quote::ToTokens,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_upper_camel_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
@@ -195,13 +195,13 @@ where
 }
 
 pub trait ToTokensToSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> ToTokensToSnakeCaseStringified for T
 where
     T: quote::ToTokens,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_snake_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
@@ -219,13 +219,13 @@ where
 }
 
 pub trait ToTokensToScreamingSnakeCaseStringified {
-    fn case(&self) -> std::string::String;
+    fn case(&self) -> String;
 }
 impl<T> ToTokensToScreamingSnakeCaseStringified for T
 where
     T: quote::ToTokens,
 {
-    fn case(&self) -> std::string::String {
+    fn case(&self) -> String {
         to_screaming_snake_case_stringified(&quote::quote! {#self}.to_string())
     }
 }

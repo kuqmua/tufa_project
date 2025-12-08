@@ -18,8 +18,8 @@ pub fn can_use_dom() -> bool {
 
 // const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 
-pub fn make_prefix_map(style_prop: &str, event_name: &str) -> HashMap<String, std::string::String> {
-    let mut prefixes = HashMap::<String, std::string::String>::new();
+pub fn make_prefix_map(style_prop: &str, event_name: &str) -> HashMap<String, String> {
+    let mut prefixes = HashMap::<String, String>::new();
     prefixes.insert(
         convert_case::Casing::to_case(style_prop, convert_case::Case::Lower),
         convert_case::Casing::to_case(event_name, convert_case::Case::Lower),
@@ -50,17 +50,17 @@ pub fn make_prefix_map(style_prop: &str, event_name: &str) -> HashMap<String, st
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct Prefixes {
-    pub animationend: HashMap<String, std::string::String>,
-    pub transitionend: HashMap<String, std::string::String>,
+    pub animationend: HashMap<String, String>,
+    pub transitionend: HashMap<String, String>,
 }
 
 #[derive(PartialEq, Eq, Clone)]
 pub struct Win {
-    pub animationend: HashMap<String, std::string::String>,
-    pub transitionend: HashMap<String, std::string::String>,
+    pub animationend: HashMap<String, String>,
+    pub transitionend: HashMap<String, String>,
 }
 
-pub fn get_vendor_prefixes(dom_support: bool, win: HashMap<String, std::string::String>) -> Prefixes {
+pub fn get_vendor_prefixes(dom_support: bool, win: HashMap<String, String>) -> Prefixes {
     let mut prefixes = Prefixes {
         animationend: make_prefix_map("Animation", "AnimationEnd"),
         transitionend: make_prefix_map("Transition", "TransitionEnd"),

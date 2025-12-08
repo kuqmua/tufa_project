@@ -2,7 +2,7 @@
 // pub enum MongoInsertDataErrorNamed {
 //     Errors {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         errors_hashmap: std::collections::HashMap<std::string::String, MongoInsertDataErrorUnnamed<'a>>,
+//         errors_hashmap: std::collections::HashMap<String, MongoInsertDataErrorUnnamed<'a>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -54,7 +54,7 @@
 //         }
 //         None
 //     })
-//     .collect::<std::collections::HashMap<std::string::String, crate::server::mongo::mongo_insert_data::MongoInsertDataErrorUnnamed>>();
+//     .collect::<std::collections::HashMap<String, crate::server::mongo::mongo_insert_data::MongoInsertDataErrorUnnamed>>();
 //     if !error_hashmap.is_empty() {
 //         return Err(Box::new(
 //             crate::server::mongo::mongo_insert_data::MongoInsertDataErrorNamed::Errors {

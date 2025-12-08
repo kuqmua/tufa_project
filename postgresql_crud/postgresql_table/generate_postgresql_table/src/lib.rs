@@ -414,7 +414,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let pub_async_fn_prepare_postgresql_table_token_stream = {
             let prepare_postgresql_double_quotes_token_stream = {
                 let acc = {
-                    let mut acc = std::string::String::new();
+                    let mut acc = String::new();
                     for _ in &fields {
                         acc.push_str("{},");
                     }
@@ -671,7 +671,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         fn operation_error_named_with_serialize_deserialize_snake_case(self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
             naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
         }
-        fn self_snake_case_stringified(self) -> std::string::String {
+        fn self_snake_case_stringified(self) -> String {
             naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
         }
         fn self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
@@ -825,7 +825,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 });
                 quote::quote! {
                     fn #create_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#std_string_string, postgresql_crud::#query_part_error_named_upper_camel_case> {
-                        let mut #acc_snake_case = std::string::String::default();
+                        let mut #acc_snake_case = String::default();
                         #primary_key_content_token_stream
                         #column_increments_token_stream
                         let _: std::option::Option<char> = #acc_snake_case.pop();
@@ -860,7 +860,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {
                     fn #create_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                        std::string::String
+                        String
                     > {
                         #primary_key_content_token_stream
                         #binded_query_modifications_token_stream
@@ -1411,7 +1411,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         CommonAdditionalLogic,
     }
     impl GeneratePostgresqlTableAttribute {
-        fn generate_path_to_attribute(self) -> std::string::String {
+        fn generate_path_to_attribute(self) -> String {
             let value = match self {
                 Self::CreateManyAdditionalErrorVariants => naming::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
                 Self::CreateOneAdditionalErrorVariants => naming::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
@@ -1667,7 +1667,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 });
                 quote::quote! {
                     fn #select_only_updated_ids_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#std_string_string_token_stream, postgresql_crud::QueryPartErrorNamed> {
-                        let mut #acc_snake_case = std::string::String::new();
+                        let mut #acc_snake_case = String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
                         let _: std::option::Option<char> = #acc_snake_case.pop();
@@ -2496,7 +2496,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: u64 = 0;};
     let column_names = {
-        let mut value = fields.iter().fold(std::string::String::default(), |mut acc, element| {
+        let mut value = fields.iter().fold(String::default(), |mut acc, element| {
             acc.push_str(&format!("{}", &element.field_ident));
             acc.push(',');
             acc
@@ -3348,7 +3348,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             //todo refactor\reuse
                             let return_columns = {
-                                let mut #acc_snake_case = std::string::String::new();
+                                let mut #acc_snake_case = String::new();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     match #element_snake_case.select_only_updated_ids_query_part(&mut #increment_snake_case) {
                                         Ok(#value_snake_case) => {

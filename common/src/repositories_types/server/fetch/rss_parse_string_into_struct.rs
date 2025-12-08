@@ -1,5 +1,5 @@
 // pub fn rss_parse_string_into_struct<'a>(
-//     mut fetch_result_string: std::string::String,
+//     mut fetch_result_string: String,
 //     value: &'a str,
 //     pk: crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 // ) -> Result<crate::repositories_types::server::fetch::info_structures::common_rss_structures::CommonRssPostStruct, crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed> {
@@ -23,13 +23,13 @@
 //                                                 .to_string();
 //                                         }
 //                                         _ => {
-//                                             let warning_message: std::string::String =
+//                                             let warning_message: String =
 //                                                 format!("no </channel> in response link: {value}");
 //                                         }
 //                                     }
 //                                 }
 //                                 _ => {
-//                                     let warning_message: std::string::String =
+//                                     let warning_message: String =
 //                                         format!("no <channel> in response link: {value}");
 //                                 }
 //                             }

@@ -27,7 +27,7 @@ impl Component for Button {
 
         let text = match ctx.props().placeholder.clone() {
             Some(text) => text,
-            None => std::string::String::from("Button"),
+            None => String::from("Button"),
         };
 
         html! {

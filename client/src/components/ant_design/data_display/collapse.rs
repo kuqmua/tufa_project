@@ -121,7 +121,7 @@
 //     const { children } = props;
 //     return toArray(children).map((child: React.ReactElement, index: number) => {
 //       if (child.props?.disabled) {
-//         const key = child.key || std::string::String(index);
+//         const key = child.key || String(index);
 //         const { disabled, collapsible } = child.props;
 //         const childProps: CollapseProps & { key: React.Key } = {
 //           ...omit(child.props, ['disabled']),

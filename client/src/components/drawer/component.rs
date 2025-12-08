@@ -80,8 +80,8 @@ pub fn drawer(props: &DrawerProps) -> Html {
         changing_style.transform
     );
     let justify_content_value = match props.drawer_position {
-        DrawerPosition::Left => std::string::String::from("flex-end"),
-        DrawerPosition::Right => std::string::String::from("flex-start"),
+        DrawerPosition::Left => String::from("flex-end"),
+        DrawerPosition::Right => String::from("flex-start"),
     };
     let close_button_wrapper_style = format!(
         "

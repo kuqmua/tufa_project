@@ -25,7 +25,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             #variant_ident_snake_case_token_stream => Ok(Self::#variant_ident),
         }
     });
-    let error_variants_stringified = variant_idents.iter().fold(std::string::String::default(), |mut acc, variant_ident| {
+    let error_variants_stringified = variant_idents.iter().fold(String::default(), |mut acc, variant_ident| {
         let variant_ident_snake_case_stringified = convert_case::Casing::to_case(&format!("{variant_ident}"), convert_case::Case::Snake);
         acc.push_str(&format!("\'{variant_ident_snake_case_stringified}\',"));
         acc
@@ -36,7 +36,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let generated = quote::quote! {
         impl std::str::FromStr for #ident {
-            type Err = std::string::String;
+            type Err = String;
             fn from_str(value: &str) -> Result<Self, Self::Err> {
                 match value {
                     #(#variants_token_stream)*

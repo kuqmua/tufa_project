@@ -10,7 +10,7 @@ use yewdux_functional::use_store;
 
 #[derive(Default, Clone)]
 pub struct GetDataFromServerButtonState {
-    username: std::string::String,
+    username: String,
 }
 
 #[function_component(GetDataFromServerButton)]

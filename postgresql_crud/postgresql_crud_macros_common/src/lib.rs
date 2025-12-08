@@ -34,10 +34,10 @@ impl NotNullOrNullable {
         }
     }
     //json
-    pub fn prefix_stringified(&self) -> std::string::String {
+    pub fn prefix_stringified(&self) -> String {
         match &self {
-            Self::NotNull => std::string::String::default(),
-            Self::Nullable => std::string::String::from("StdOptionOption"),
+            Self::NotNull => String::default(),
+            Self::Nullable => String::from("StdOptionOption"),
         }
     }
 }
@@ -686,7 +686,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
             }
             fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
                 sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                std::string::String
+                String
             > {
                 #query_bind_content_token_stream
             }
@@ -921,7 +921,7 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #is_create_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
             ) -> Result<
                 #query_postgres_arguments_token_stream,
-                std::string::String
+                String
             > {
                 #create_query_bind_content_token_stream
             }
@@ -963,7 +963,7 @@ pub fn generate_impl_postgresql_type_token_stream(
                 #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
                 sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
-                std::string::String
+                String
             > {
                 #update_query_bind_content_token_stream
             }
@@ -977,7 +977,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             fn #select_only_updated_ids_query_bind_snake_case<'a>(
                 #value_snake_case: &'a Self::#update_for_query_upper_camel_case,
                 #is_select_only_updated_ids_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, std::string::String> {
+            ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_query_bind_token_stream
             }
         }

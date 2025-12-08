@@ -4,8 +4,8 @@ pub trait NotFoundRouteParameters: git_info::GetGitCommitLink {}
 
 #[derive(Debug, serde::Serialize)]
 struct NotFoundHandle {
-    message: std::string::String,
-    commit: std::string::String,
+    message: String,
+    commit: String,
     open_api_specification: &'static str,
 }
 

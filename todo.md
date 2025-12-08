@@ -596,7 +596,7 @@ But description is depreciated
 
 * hashmaps into vecs
 
-* &str instead of std::string::String everywhere if possible
+* &str instead of String everywhere if possible
 
 * 'static remove if possible or maybe add if its better 
 
@@ -644,7 +644,7 @@ thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Any', sr
 Find out about it 
 crate-type = ["dylib"]
 
-* difference between "".to_string() and std::string::String::new()
+* difference between "".to_string() and String::new()
 
 * refactor project into rust workspaces to reuse dependencies
 
@@ -1064,7 +1064,7 @@ fn capitalize(name: &str) -> Cow<str> {
         Some(first_char) => {
             // An allocation is necessary, as the old string
             // does not start with an uppercase char
-            let new_string: std::string::String = first_char.to_uppercase()
+            let new_string: String = first_char.to_uppercase()
               .chain(name.chars().skip(1))
               .collect();
             Cow::Owned(new_string)

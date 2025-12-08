@@ -1,4 +1,4 @@
-pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &std::string::String, proc_macro_name_ident_stringified: &std::string::String) -> &'a syn::Attribute {
+pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &String, proc_macro_name_ident_stringified: &String) -> &'a syn::Attribute {
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
@@ -9,7 +9,7 @@ pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &std
     option_attribute.unwrap_or_else(||panic!("{proc_macro_name_ident_stringified} no {attribute_path}"))
 }
 
-pub fn get_macro_attribute_meta_list_token_stream<'a>(attrs: &'a [syn::Attribute], attribute_path: &std::string::String) -> &'a proc_macro2::TokenStream {
+pub fn get_macro_attribute_meta_list_token_stream<'a>(attrs: &'a [syn::Attribute], attribute_path: &String) -> &'a proc_macro2::TokenStream {
     let option_attribute = attrs.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();

@@ -49,7 +49,7 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
     }
 }
 impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
-    type Error = std::string::String;
+    type Error = String;
     fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;
         for attr in &value.attrs {
@@ -92,7 +92,7 @@ impl ErrorOccurenceFieldAttribute {
         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
-pub fn attribute_view(attribute: &str) -> std::string::String {
+pub fn attribute_view(attribute: &str) -> String {
     format!("attribute #[{attribute}]")
 }
 

@@ -482,7 +482,7 @@ impl StatusCode {
 }
 
 // impl TryFrom<&syn::Variant> for StatusCode {
-//     type Error = std::string::String;
+//     type Error = String;
 //     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
 //         let mut option_self: Option<Self> = None;
 //         for element in &value.attrs {
@@ -502,19 +502,19 @@ impl StatusCode {
 //                         }
 //                     }
 //                     None => {
-//                         return Err(std::string::String::from(
+//                         return Err(String::from(
 //                             "element.path().segments.first() is None",
 //                         ));
 //                     }
 //                 }
 //             }
 //         }
-//         option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
+//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
 //     }
 // }
 
 // impl TryFrom<&&syn::Variant> for StatusCode {
-//     type Error = std::string::String;
+//     type Error = String;
 //     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
 //         let mut option_self: Option<Self> = None;
 //         for element in &value.attrs {
@@ -534,20 +534,20 @@ impl StatusCode {
 //                         }
 //                     }
 //                     None => {
-//                         return Err(std::string::String::from(
+//                         return Err(String::from(
 //                             "element.path().segments.first() is None",
 //                         ));
 //                     }
 //                 }
 //             }
 //         }
-//         option_self.map_or_else(|| Err(std::string::String::from("status_code attribute not found")), |value| Ok(value))
+//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
 //     }
 // }
 
-impl TryFrom<&std::string::String> for StatusCode {
+impl TryFrom<&String> for StatusCode {
     type Error = ();
-    fn try_from(value: &std::string::String) -> Result<Self, Self::Error> {
+    fn try_from(value: &String) -> Result<Self, Self::Error> {
         if value == "continue_100" {
             Ok(Self::Continue100)
         } else if value == "switching_protocols_101" {
@@ -674,7 +674,7 @@ impl TryFrom<&std::string::String> for StatusCode {
     }
 }
 
-pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &std::string::String) -> StatusCode {
+pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &String) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {

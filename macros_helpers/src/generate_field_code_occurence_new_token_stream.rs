@@ -15,7 +15,7 @@ pub fn generate_field_code_occurence_new_token_stream(file: &'static str, line: 
                 line!(),
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
-                    file: std::string::String::from(#file_token_stream),
+                    file: String::from(#file_token_stream),
                     line: #line_token_stream,
                     column: #column_token_stream,
                 })

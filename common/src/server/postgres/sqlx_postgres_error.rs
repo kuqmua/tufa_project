@@ -25,13 +25,13 @@
 //     #[tvfrr_500_internal_server_error]
 //     Configuration {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         configuration: std::string::String,
+//         configuration: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     Database {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         database: std::string::String,
+//         database: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
@@ -43,25 +43,25 @@
 //     #[tvfrr_500_internal_server_error]
 //     Tls {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         tls: std::string::String,
+//         tls: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     Protocol {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         protocol: std::string::String,
+//         protocol: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_404_not_found]
 //     RowNotFound {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         row_not_found: std::string::String,
+//         row_not_found: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_400_bad_request]
 //     TypeNotFound {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         type_not_found: std::string::String,
+//         type_not_found: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
@@ -75,39 +75,39 @@
 //     #[tvfrr_400_bad_request]
 //     ColumnNotFound {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         column_not_found: std::string::String,
+//         column_not_found: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     ColumnDecode {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         column_decode_index: std::string::String,
+//         column_decode_index: String,
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         source_handle: std::string::String,
+//         source_handle: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     Decode {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         decode: std::string::String,
+//         decode: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_408_request_timeout]
 //     PoolTimedOut {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         pool_timed_out: std::string::String,
+//         pool_timed_out: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     PoolClosed {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         pool_closed: std::string::String,
+//         pool_closed: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
 //     WorkerCrashed {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         worker_crashed: std::string::String,
+//         worker_crashed: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     #[tvfrr_500_internal_server_error]
@@ -120,7 +120,7 @@
 //     #[tvfrr_500_internal_server_error]
 //     UnexpectedCase {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         unexpected_case: std::string::String,
+//         unexpected_case: String,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
@@ -151,7 +151,7 @@
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::RowNotFound => Self::RowNotFound {
-//                 row_not_found: std::string::String::from("row_not_found"),
+//                 row_not_found: String::from("row_not_found"),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::TypeNotFound { type_name } => Self::TypeNotFound {
@@ -177,15 +177,15 @@
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::PoolTimedOut => Self::PoolTimedOut {
-//                 pool_timed_out: std::string::String::from("pool timed out"),
+//                 pool_timed_out: String::from("pool timed out"),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::PoolClosed => Self::PoolClosed {
-//                 pool_closed: std::string::String::from("pool closed"),
+//                 pool_closed: String::from("pool closed"),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::WorkerCrashed => Self::WorkerCrashed {
-//                 worker_crashed: std::string::String::from("worker crashed"),
+//                 worker_crashed: String::from("worker crashed"),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             sqlx::Error::Migrate(migrate_error) => Self::Migrate {
@@ -193,7 +193,7 @@
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //             _ => Self::UnexpectedCase {
-//                 unexpected_case: std::string::String::from("unexpected_case"),
+//                 unexpected_case: String::from("unexpected_case"),
 //                 code_occurence: error_occurence_lib::code_occurence!(),
 //             },
 //         }
