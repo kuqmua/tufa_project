@@ -14,7 +14,7 @@ enum Command {
 #[tokio::main]
 pub async fn start_bot() {
     let bot = teloxide::Bot::from_env();
-    Box::pin(teloxide::repl(bot, |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| async move {
+    Box::pin(teloxide::repl(bot, async |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| {
         log::info!("answer");
         let _unused = teloxide::prelude::Requester::send_message(
             &bot,

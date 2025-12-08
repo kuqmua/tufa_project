@@ -12,7 +12,7 @@ struct NotFoundHandle {
 //todo maybe use swagger instead
 pub fn not_found_route(app_state: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
     axum::Router::new()
-        .fallback(|uri: axum::http::Uri, axum::extract::State(app_state): axum::extract::State<DynArcNotFoundRouteParametersSendSync>| async move {
+        .fallback(async |uri: axum::http::Uri, axum::extract::State(app_state): axum::extract::State<DynArcNotFoundRouteParametersSendSync>| {
             (
                 axum::http::StatusCode::NOT_FOUND,
                 axum::Json(NotFoundHandle {
