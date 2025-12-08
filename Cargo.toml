@@ -84,7 +84,7 @@ unused_extern_crates = { level = "deny", priority = 0 }
 unused_import_braces = { level = "deny", priority = 0 }
 unused_lifetimes = { level = "deny", priority = 0 }
 unused_macro_rules = { level = "deny", priority = 0 }
-unused_qualifications = { level = "allow", priority = 0 }
+unused_qualifications = { level = "deny", priority = 0 }
 unused_results = { level = "deny", priority = 0 }
 dead_code = { level = "warn", priority = 0 }
 variant_size_differences = { level = "deny", priority = 0 }
