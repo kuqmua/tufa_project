@@ -3464,7 +3464,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
                                     match Self::#try_new_snake_case #scopes_value_token_stream {
                                         Ok(#value_snake_case) => Ok(#value_snake_case),
-                                        Err(#error_snake_case) => Err(std::boxed::Box::#new_snake_case(error)),
+                                        Err(#error_snake_case) => Err(Box::#new_snake_case(error)),
                                     }
                                 },
                             },

@@ -747,7 +747,7 @@ pub trait SwaggerUrlPathSelfQuotesStringified {
 
 impl<T> SwaggerUrlPathSelfQuotesStringified for T
 where
-    T: naming_common::AsRefStrToSnakeCaseStringified,
+    T: AsRefStrToSnakeCaseStringified,
 {
     fn swagger_url_path_self_quotes_stringified(&self, table_name_stringified: &str) -> String {
         generate_quotes::double_quotes_stringified(&format!("/{}/{}", table_name_stringified, self.case(),))

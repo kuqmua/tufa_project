@@ -154,14 +154,14 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).expect("error 2db209a8-2f57-4474-a9c6-9743aaaed57d") {
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
+        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element).expect("error 2db209a8-2f57-4474-a9c6-9743aaaed57d") {
+            ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string
                 }
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
+            ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
+            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                 let element_type_with_serialize_deserialize_token_stream = {
                     let value = format!(
                         "{}{}",
@@ -177,12 +177,12 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     #element_type_with_serialize_deserialize_token_stream
                 }
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
+            ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote! {
                     Vec<#std_string_string>
                 }
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
+            ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                 let segments = if let syn::Type::Path(value) = &element.ty {
                     &value.path.segments
                 } else {
@@ -208,17 +208,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     Vec<#element_vec_type_with_serialize_deserialize_token_stream>
                 }
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
+            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                 let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                 element_type_token_stream
             }
-            crate::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
+            ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
                     let value = format!("{}{}", quote::quote! {#second_argument}, naming::WithSerializeDeserializeUpperCamelCase,);

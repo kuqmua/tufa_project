@@ -43,10 +43,10 @@ impl NotNullOrNullable {
 }
 
 pub fn generate_postgresql_type_where_token_stream(
-    variants: &Vec<&dyn crate::PostgresqlFilter>,
+    variants: &Vec<&dyn PostgresqlFilter>,
     prefix: &dyn quote::ToTokens,
-    should_derive_utoipa_to_schema: &crate::ShouldDeriveUtoipaToSchema,
-    should_derive_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
+    should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
+    should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable
 ) -> proc_macro2::TokenStream {
     let ident = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&prefix);
@@ -115,10 +115,10 @@ pub fn generate_postgresql_type_where_token_stream(
                 }
             }
         },
-        &crate::ImportPath::PostgresqlCrudCommon,
+        &ImportPath::PostgresqlCrudCommon,
     );
     let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:#?}")});
-    let impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = crate::generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
+    let impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
         let variants_token_stream = variants.iter().map(|element| {
             let element_upper_camel_case = element.upper_camel_case();
             let default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -2160,12 +2160,12 @@ pub enum Dimension {
     Four
 }
 impl Dimension {
-    pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(&self) -> std::boxed::Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
+    pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(&self) -> Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
         match self {
-            Self::One => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase),
-            Self::Two => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase),
-            Self::Three => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase),
-            Self::Four => std::boxed::Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase),
+            Self::One => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase),
+            Self::Two => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase),
+            Self::Three => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase),
+            Self::Four => Box::new(naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase),
         }
     }
 }

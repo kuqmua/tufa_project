@@ -122,7 +122,7 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
 }
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct TracingLevel(pub crate::types::TracingLevel);
+pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
     AppStateTracingLevelParsing { app_state_tracing_type_parsing: String },
@@ -130,7 +130,7 @@ pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
 impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<crate::types::TracingLevel>() {
+        let value = match value.parse::<types::TracingLevel>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateTracingLevelParsing { app_state_tracing_type_parsing: error });
@@ -141,7 +141,7 @@ impl TryFromStdEnvVarOk for TracingLevel {
 }
 
 #[derive(Debug, Clone, Copy, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct SourcePlaceType(pub crate::types::SourcePlaceType);
+pub struct SourcePlaceType(pub types::SourcePlaceType);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
     AppStateSourcePlaceTypeParsing { app_state_source_place_type_parsing: String },
@@ -149,7 +149,7 @@ pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
 impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<crate::types::SourcePlaceType>() {
+        let value = match value.parse::<types::SourcePlaceType>() {
             Ok(value) => value,
             Err(error) => {
                 return Err(Self::Error::AppStateSourcePlaceTypeParsing { app_state_source_place_type_parsing: error });

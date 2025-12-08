@@ -22,5 +22,5 @@ pub fn generate_simple_syn_punctuated_punctuated(parts_vec: &[&str]) -> syn::pun
 }
 
 pub fn std_string_string_syn_punctuated_punctuated() -> syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep> {
-    crate::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"])
+    generate_simple_syn_punctuated_punctuated(&["std", "string", "String"])
 }
