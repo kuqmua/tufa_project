@@ -146,7 +146,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
         Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
     }
 }
-impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
+impl<T> Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
@@ -618,7 +618,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
         Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
     }
 }
-impl<T> std::default::Default for PostgresqlTypeNotEmptyUniqueVec<T> {
+impl<T> Default for PostgresqlTypeNotEmptyUniqueVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }

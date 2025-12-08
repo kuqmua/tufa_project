@@ -703,7 +703,7 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
         Ok(query)
     }
 }
-impl std::default::Default for PaginationBase {
+impl Default for PaginationBase {
     fn default() -> Self {
         Self::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0)
     }
@@ -1045,7 +1045,7 @@ impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultBut
         Self(postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
-impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {
+impl<T> Default for NotEmptyUniqueEnumVec<T> {
     fn default() -> Self {
         Self(Vec::default())
     }
@@ -1252,7 +1252,7 @@ impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl std::default::Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
+impl Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn default() -> Self {
         Self(Value{ value: None })
     }
