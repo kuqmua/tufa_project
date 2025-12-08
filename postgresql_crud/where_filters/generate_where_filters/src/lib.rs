@@ -173,7 +173,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         }),
     };
-    let value_between_t_token_stream = quote::quote! {#value_snake_case: crate::Between<T>};
+    let value_between_t_token_stream = quote::quote! {#value_snake_case: Between<T>};
     let pub_value_between_t_token_stream = quote::quote! {pub #value_between_t_token_stream};
     let query_self_value_query_bind_token_stream = quote::quote! {
         match #self_snake_case.#value_snake_case.query_bind(#query_snake_case) {
@@ -349,7 +349,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(sqlx_type_postgresq_encode_token_stream.clone()),
                 };
-                let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub #value_snake_case: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
+                let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub #value_snake_case: PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType);
                 let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> String| {
                     let (maybe_dimensions_declaration_token_stream, maybe_dimensions_default_initialization_token_stream, maybe_dimensions_indexes_initialization_token_stream, postgresql_type_kind, maybe_additional_parameters_token_stream, maybe_dimensions_query_bind_content_token_stream) = generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle);
@@ -433,7 +433,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                     for _ in #self_snake_case.#value_snake_case.to_vec() {
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                             Ok(#value_snake_case) => {
-                                                #acc_snake_case.push_str(&format!("${},", #value_snake_case));
+                                                use std::fmt::Write as _;
+                                                if let Err(error) = write!(#acc_snake_case, "${value},") {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -571,7 +574,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote::quote! {
                             #maybe_dimensions_declaration_token_stream
-                            pub encode_format: crate::EncodeFormat,
+                            pub encode_format: EncodeFormat,
                             pub encoded_string_representation: String,
                         },
                         quote::quote! {
