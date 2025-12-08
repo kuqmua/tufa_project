@@ -125,7 +125,7 @@
 //     },
 // }
 
-// impl std::convert::From<sqlx::Error> for SqlxPostgresErrorNamed {
+// impl From<sqlx::Error> for SqlxPostgresErrorNamed {
 //     fn from(e: sqlx::Error) -> Self {
 //         // todo https://github.com/cschaible/actix-web-security-samples/blob/46bb7aa62ada7cb176d8765e2f60b497392b1840/oauth-resource-server/backend/src/error/mod.rs#L46
 //         // todo https://www.postgresql.org/docs/current/errcodes-appendix.html

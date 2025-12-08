@@ -2176,7 +2176,7 @@ pub enum DimensionIndexNumber {
     Two,
     Three
 }
-impl std::convert::From<&Dimension> for DimensionIndexNumber {
+impl From<&Dimension> for DimensionIndexNumber {
     fn from(value: &Dimension) -> Self {
         match &value {
             Dimension::One => Self::Zero,

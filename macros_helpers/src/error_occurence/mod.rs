@@ -48,7 +48,7 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
         }
     }
 }
-impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
+impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
     type Error = String;
     fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;

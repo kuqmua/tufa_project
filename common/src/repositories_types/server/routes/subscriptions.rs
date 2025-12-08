@@ -4,7 +4,7 @@
 //     pub name: String,
 // }
 
-// impl std::convert::TryFrom<FormData>
+// impl TryFrom<FormData>
 //     for crate::repositories_types::server::domain::NewSubscriber
 // {
 //     type Error = String;

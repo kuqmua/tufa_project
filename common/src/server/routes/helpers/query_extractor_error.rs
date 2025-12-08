@@ -23,7 +23,7 @@
 //     },
 // }
 
-// impl std::convert::From<axum::extract::rejection::QueryRejection> for QueryExtractorErrorNamed {
+// impl From<axum::extract::rejection::QueryRejection> for QueryExtractorErrorNamed {
 //     fn from(e: axum::extract::rejection::QueryRejection) -> QueryExtractorErrorNamed {
 //         match e {
 //             axum::extract::rejection::QueryRejection::FailedToDeserializeQueryString(
@@ -51,7 +51,7 @@
 // impl<OkGeneric, ErrorGeneric> QueryValueResultExtractor<OkGeneric, ErrorGeneric>
 //     for Result<axum::extract::Query<OkGeneric>, axum::extract::rejection::QueryRejection>
 // where
-//     ErrorGeneric: std::convert::From<
+//     ErrorGeneric: From<
 //             crate::server::routes::helpers::query_extractor_error::QueryExtractorErrorNamed,
 //         > + axum::response::IntoResponse,
 // {
@@ -74,7 +74,7 @@
 // }
 
 // ///////////////////
-// impl std::convert::From<QueryExtractorErrorNamed>
+// impl From<QueryExtractorErrorNamed>
 //     for crate::repositories_types::server::routes::api::cats::TryReadManyResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
@@ -96,7 +96,7 @@
 //         }
 //     }
 // }
-// impl std::convert::From<QueryExtractorErrorNamed>
+// impl From<QueryExtractorErrorNamed>
 //     for crate::repositories_types::server::routes::api::cats::TryReadOneResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
@@ -118,7 +118,7 @@
 //         }
 //     }
 // }
-// impl std::convert::From<QueryExtractorErrorNamed>
+// impl From<QueryExtractorErrorNamed>
 //     for crate::repositories_types::server::routes::api::cats::TryDeleteManyResponseVariants
 // {
 //     fn from(val: QueryExtractorErrorNamed) -> Self {
@@ -210,7 +210,7 @@
 //     FailedToDeserializeQueryStringTvfrr400BadRequest,
 //     UnexpectedCaseTvfrr500InternalServerError,
 // }
-// impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
+// impl From<QueryExtractorErrorNamedStatusCodesChecker>
 //     for crate::repositories_types::server::routes::api::cats::TryReadManyStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {
@@ -229,7 +229,7 @@
 //         }
 //     }
 // }
-// impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
+// impl From<QueryExtractorErrorNamedStatusCodesChecker>
 //     for crate::repositories_types::server::routes::api::cats::TryReadOneStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {
@@ -248,7 +248,7 @@
 //         }
 //     }
 // }
-// impl std::convert::From<QueryExtractorErrorNamedStatusCodesChecker>
+// impl From<QueryExtractorErrorNamedStatusCodesChecker>
 //     for crate::repositories_types::server::routes::api::cats::TryDeleteManyStatusCodesChecker
 // {
 //     fn from(val: QueryExtractorErrorNamedStatusCodesChecker) -> Self {

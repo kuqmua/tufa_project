@@ -62,7 +62,7 @@ pub trait PostgresqlType {
 pub trait PostgresqlJsonType {
     type TableTypeDeclaration: TableTypeDeclarationAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     type Create: CreateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
-    type CreateForQuery: CreateForQueryAlias + std::convert::From<Self::Create>;
+    type CreateForQuery: CreateForQueryAlias + From<Self::Create>;
     type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
@@ -85,7 +85,7 @@ pub trait PostgresqlJsonType {
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
-    type UpdateForQuery: UpdateForQueryAlias + std::convert::From<Self::Update>;
+    type UpdateForQuery: UpdateForQueryAlias + From<Self::Update>;
     fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
     fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
         sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
@@ -128,8 +128,8 @@ pub trait PostgresqlTypeNotPrimaryKey {
 pub trait PostgresqlJsonTypeObjectVecElementId {
     type PostgresqlJsonType: PostgresqlJsonType;
     type CreateForQuery: CreateForQueryAlias
-        + std::convert::From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>
-        + std::convert::From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>;
+        + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>
+        + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + error_occurence_lib::ToStdStringString;
     type ReadInner: ReadInnerAlias;
     fn query_bind_string_as_postgresql_text_create_for_query(
@@ -1050,13 +1050,13 @@ impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {
         Self(Vec::default())
     }
 }
-impl<T> std::convert::From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
+impl<T> From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
     fn from(value: NotEmptyUniqueEnumVec<T>) -> Self {
         value.0
     }
 }
 impl<T1> NotEmptyUniqueEnumVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: Self) -> NotEmptyUniqueEnumVec<T2> {
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> NotEmptyUniqueEnumVec<T2> {
         NotEmptyUniqueEnumVec(
             value.0
             .into_iter()
@@ -1296,7 +1296,7 @@ pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
+impl TryFrom<i32> for UnsignedPartOfStdPrimitiveI32 {
     type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         if value >= 0 { Ok(Self(value)) } else { Err(Self::Error::LessThanZero { value, code_occurence: error_occurence_lib::code_occurence!() }) }
@@ -1402,7 +1402,7 @@ pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl std::convert::TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         match UnsignedPartOfStdPrimitiveI32::try_from(value) {

@@ -194,7 +194,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         ArrayDimension3,
         ArrayDimension4,
     }
-    impl std::convert::TryFrom<&PostgresqlTypePatternHandle> for DimensionNumber {
+    impl TryFrom<&PostgresqlTypePatternHandle> for DimensionNumber {
         type Error = ();
         fn try_from(value: &PostgresqlTypePatternHandle) -> Result<Self, Self::Error> {
             match &value {

@@ -108,14 +108,14 @@ impl<T> std::default::Default for UniqueVec<T> {
         Self(Vec::default())
     }
 }
-impl<T> std::convert::From<UniqueVec<T>> for Vec<T> {
+impl<T> From<UniqueVec<T>> for Vec<T> {
     fn from(value: UniqueVec<T>) -> Self {
         value.0
     }
 }
 
 impl<T1> UniqueVec<T1> {
-    pub fn from_t1_impl_from_t2<T2: std::convert::From<T1>>(value: Self) -> UniqueVec<T2> {
+    pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> UniqueVec<T2> {
         UniqueVec(
             value.0
             .into_iter()

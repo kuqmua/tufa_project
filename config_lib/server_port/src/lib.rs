@@ -20,7 +20,7 @@ impl std::fmt::Display for ServerPortErrorNamed {
     }
 }
 impl std::error::Error for ServerPortErrorNamed {}
-impl std::convert::TryFrom<u16> for ServerPort {
+impl TryFrom<u16> for ServerPort {
     type Error = ServerPortErrorNamed;
     fn try_from(value: u16) -> Result<Self, Self::Error> {
         if value < server_port_common::SERVER_PORT_MIN_VALUE {

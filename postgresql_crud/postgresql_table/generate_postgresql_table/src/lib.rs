@@ -1063,7 +1063,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ReadMany,
         DeleteMany,
     }
-    impl std::convert::From<&ReadManyOrDeleteMany> for Operation {
+    impl From<&ReadManyOrDeleteMany> for Operation {
         fn from(value: &ReadManyOrDeleteMany) -> Self {
             match &value {
                 ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
@@ -1129,7 +1129,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ReadMany,
         ReadOne,
     }
-    impl std::convert::From<&ReadManyOrReadOne> for Operation {
+    impl From<&ReadManyOrReadOne> for Operation {
         fn from(value: &ReadManyOrReadOne) -> Self {
             match &value {
                 ReadManyOrReadOne::ReadMany => Self::ReadMany,
@@ -2428,7 +2428,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         UpdateMany,
         DeleteMany,
     }
-    impl std::convert::From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
+    impl From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
         fn from(value: &CreateManyOrUpdateManyOrDeleteMany) -> Self {
             match &value {
                 CreateManyOrUpdateManyOrDeleteMany::CreateMany => Self::CreateMany,
@@ -2458,7 +2458,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         UpdateOne,
         DeleteOne,
     }
-    impl std::convert::From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
+    impl From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
         fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
             match &value {
                 CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,

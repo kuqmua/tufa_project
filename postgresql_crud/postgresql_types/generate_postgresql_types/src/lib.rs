@@ -28,7 +28,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
     }
-    impl std::convert::From<&PostgresqlType> for RustTypeName {
+    impl From<&PostgresqlType> for RustTypeName {
         fn from(value: &PostgresqlType) -> Self {
             match &value {
                 PostgresqlType::StdPrimitiveF32AsFloat4 => Self::StdPrimitiveF32,
@@ -90,7 +90,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         TimestampRange,
         TimestampTzRange,
     }
-    impl std::convert::From<&PostgresqlType> for PostgresqlTypeName {
+    impl From<&PostgresqlType> for PostgresqlTypeName {
         fn from(value: &PostgresqlType) -> Self {
             match &value {
                 PostgresqlType::StdPrimitiveI16AsInt2 => Self::Int2,
@@ -234,7 +234,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream")).to_tokens(tokens);
         }
     }
-    impl std::convert::From<&PostgresqlTypeRange> for PostgresqlType {
+    impl From<&PostgresqlTypeRange> for PostgresqlType {
         fn from(value: &PostgresqlTypeRange) -> Self {
             match value {
                 PostgresqlTypeRange::StdPrimitiveI32AsInt4 => Self::StdPrimitiveI32AsInt4,
@@ -252,7 +252,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
     }
-    impl std::convert::TryFrom<&PostgresqlType> for PostgresqlTypeRange {
+    impl TryFrom<&PostgresqlType> for PostgresqlTypeRange {
         type Error = ();
         fn try_from(value: &PostgresqlType) -> Result<Self, Self::Error> {
             match &value {
@@ -520,7 +520,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     };
-    impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
+    impl TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
         type Error = String;
         fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Result<Self, Self::Error> {
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
@@ -636,7 +636,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
     }
-    impl std::convert::TryFrom<&PostgresqlType> for PostgresqlTypeInitializationTryNew {
+    impl TryFrom<&PostgresqlType> for PostgresqlTypeInitializationTryNew {
         type Error = ();
         fn try_from(value: &PostgresqlType) -> Result<Self, Self::Error> {
             match value {
@@ -670,7 +670,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
-    impl std::convert::From<&PostgresqlTypeInitializationTryNew> for PostgresqlType {
+    impl From<&PostgresqlTypeInitializationTryNew> for PostgresqlType {
         fn from(value: &PostgresqlTypeInitializationTryNew) -> Self {
             match value {
                 PostgresqlTypeInitializationTryNew::StdStringStringAsText => Self::StdStringStringAsText,
@@ -715,7 +715,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         Derive,
         ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize),
     }
-    impl std::convert::From<&PostgresqlType> for PostgresqlTypeDeserialize {
+    impl From<&PostgresqlType> for PostgresqlTypeDeserialize {
         fn from(value: &PostgresqlType) -> Self {
             match value {
                 PostgresqlType::StdPrimitiveI16AsInt2 |

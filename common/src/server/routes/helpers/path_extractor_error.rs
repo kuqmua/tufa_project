@@ -29,7 +29,7 @@
 //     },
 // }
 
-// impl std::convert::From<axum::extract::rejection::PathRejection> for PathExtractorErrorNamed {
+// impl From<axum::extract::rejection::PathRejection> for PathExtractorErrorNamed {
 //     fn from(e: axum::extract::rejection::PathRejection) -> PathExtractorErrorNamed {
 //         match e {
 //             axum::extract::rejection::PathRejection::FailedToDeserializePathParams(
@@ -63,7 +63,7 @@
 // impl<OkGeneric, ErrorGeneric> PathValueResultExtractor<OkGeneric, ErrorGeneric>
 //     for Result<axum::extract::Path<OkGeneric>, axum::extract::rejection::PathRejection>
 // where
-//     ErrorGeneric: std::convert::From<
+//     ErrorGeneric: From<
 //             crate::server::routes::helpers::path_extractor_error::PathExtractorErrorNamed,
 //         > + axum::response::IntoResponse,
 // {
@@ -85,7 +85,7 @@
 //     }
 // }
 // // //////////////////////////(rust analyzer does not work if type_variants_from_reqwest_response::TypeVariantsFromReqwestResponseFromChecker macro works for some reason)
-// // impl std::convert::From<PathExtractorErrorNamed>
+// // impl From<PathExtractorErrorNamed>
 // //     for crate::repositories_types::server::routes::api::cats::TryReadOneResponseVariants
 // // {
 // //     fn from(val: PathExtractorErrorNamed) -> Self {
@@ -114,7 +114,7 @@
 // //         }
 // //     }
 // // }
-// // impl std::convert::From<PathExtractorErrorNamed>
+// // impl From<PathExtractorErrorNamed>
 // //     for crate::repositories_types::server::routes::api::cats::TryUpdateOneResponseVariants
 // // {
 // //     fn from(val: PathExtractorErrorNamed) -> Self {
@@ -143,7 +143,7 @@
 // //         }
 // //     }
 // // }
-// // impl std::convert::From<PathExtractorErrorNamed>
+// // impl From<PathExtractorErrorNamed>
 // //     for crate::repositories_types::server::routes::api::cats::TryDeleteOneResponseVariants
 // // {
 // //     fn from(val: PathExtractorErrorNamed) -> Self {
@@ -253,7 +253,7 @@
 // //     MissingPathParamsTvfrr400BadRequest,
 // //     UnexpectedCaseTvfrr500InternalServerError,
 // // }
-// // impl std::convert::From<PathExtractorErrorNamedStatusCodesChecker>
+// // impl From<PathExtractorErrorNamedStatusCodesChecker>
 // //     for crate::repositories_types::server::routes::api::cats::TryReadOneStatusCodesChecker
 // // {
 // //     fn from(val: PathExtractorErrorNamedStatusCodesChecker) -> Self {
@@ -277,7 +277,7 @@
 // //         }
 // //     }
 // // }
-// // impl std::convert::From<PathExtractorErrorNamedStatusCodesChecker>
+// // impl From<PathExtractorErrorNamedStatusCodesChecker>
 // //     for crate::repositories_types::server::routes::api::cats::TryUpdateOneStatusCodesChecker
 // // {
 // //     fn from(val: PathExtractorErrorNamedStatusCodesChecker) -> Self {
@@ -301,7 +301,7 @@
 // //         }
 // //     }
 // // }
-// // impl std::convert::From<PathExtractorErrorNamedStatusCodesChecker>
+// // impl From<PathExtractorErrorNamedStatusCodesChecker>
 // //     for crate::repositories_types::server::routes::api::cats::TryDeleteOneStatusCodesChecker
 // // {
 // //     fn from(val: PathExtractorErrorNamedStatusCodesChecker) -> Self {

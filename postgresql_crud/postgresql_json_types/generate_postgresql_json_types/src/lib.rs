@@ -17,7 +17,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         StdStringString,
         UuidUuid,
     }
-    impl std::convert::From<&PostgresqlJsonType> for RustTypeName {
+    impl From<&PostgresqlJsonType> for RustTypeName {
         fn from(value: &PostgresqlJsonType) -> Self {
             match &value {
                 PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => Self::StdPrimitiveI8,
@@ -55,7 +55,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             )
         }
     }
-    impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeName {
+    impl From<&PostgresqlJsonType> for PostgresqlJsonTypeName {
         fn from(value: &PostgresqlJsonType) -> Self {
             match &value {
                 PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
@@ -209,7 +209,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         }
     }
-    impl std::convert::TryFrom<&PostgresqlJsonTypePattern> for ArrayDimension {
+    impl TryFrom<&PostgresqlJsonTypePattern> for ArrayDimension {
         type Error = ();
         fn try_from(value: &PostgresqlJsonTypePattern) -> Result<Self, Self::Error> {
             match &value {
@@ -271,7 +271,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         }
     }
-    impl std::convert::TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
+    impl TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
         type Error = ();
         fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
             match &value {
@@ -1306,7 +1306,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Bool,
                             String,
                         }
-                        impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeSpecific {
+                        impl From<&PostgresqlJsonType> for PostgresqlJsonTypeSpecific {
                             fn from(value: &PostgresqlJsonType) -> Self {
                                 match value {
                                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber

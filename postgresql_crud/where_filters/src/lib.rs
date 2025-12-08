@@ -151,7 +151,7 @@ impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         Self(Vec::default())
     }
 }
-impl<T> std::convert::From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
+impl<T> From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
     fn from(value: PostgresqlJsonTypeNotEmptyUniqueVec<T>) -> Self {
         value.0
     }
@@ -623,7 +623,7 @@ impl<T> std::default::Default for PostgresqlTypeNotEmptyUniqueVec<T> {
         Self(Vec::default())
     }
 }
-impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
+impl<T> From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
     fn from(value: PostgresqlTypeNotEmptyUniqueVec<T>) -> Self {
         value.0
     }
@@ -703,7 +703,7 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
         Ok(query)
     }
 }
-impl<T, const LENGTH: usize> std::convert::TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
+impl<T, const LENGTH: usize> TryFrom<Vec<T>> for BoundedStdVecVec<T, LENGTH> {
     type Error = BoundedStdVecVecTryNewErrorNamed;
     fn try_from(value: Vec<T>) -> Result<Self, Self::Error> {
         let len = value.len();
