@@ -29,8 +29,8 @@
 //         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
 //         + app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
 //         + app_state::GetMongoClient
-//         + std::marker::Send
-//         + std::marker::Sync
+//         + Send
+//         + Sync
 //     )
 // ) -> Result<
 //         std::collections::HashMap<

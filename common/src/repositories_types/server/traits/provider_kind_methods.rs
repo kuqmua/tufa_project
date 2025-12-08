@@ -2,8 +2,8 @@
 //     fn get_item_handle(&self) -> Option<&'static str>;
 //     fn get_mongo_log_collection_name(&self, config: &'static (
 // impl app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 // ) -> String;
 //     fn get_init_local_data_file_path(
@@ -11,8 +11,8 @@
 //         config: &'static (
 //             impl app_state::GetPathToProviderLinkPartsFolder
 //             + app_state::GetLogFileExtension
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //         )
 //     ) -> String;
 //     fn generate_provider_links(
@@ -20,8 +20,8 @@
 //         names_vector: Vec<String>,
 //         config: &'static (
 //  impl app_state::GetGithubToken
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 //     ) -> Vec<String>;
 //     fn generate_hashmap_with_empty_string_vecs_for_enabled_providers() -> std::collections::HashMap<Self, Vec<String>>

@@ -1,4 +1,4 @@
-pub fn get_subscriber<Sink, Config: app_state::GetTracingLevel + std::marker::Send + std::marker::Sync>(name: &str, config: &Config, sink: Sink) -> impl tracing::Subscriber + Send + Sync
+pub fn get_subscriber<Sink, Config: app_state::GetTracingLevel + Send + Sync>(name: &str, config: &Config, sink: Sink) -> impl tracing::Subscriber + Send + Sync
 where
     // This "weird" syntax is a higher-ranked trait bound (HRTB)
     // It basically means that Sink implements the `MakeWriter`

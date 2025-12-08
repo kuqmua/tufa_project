@@ -352,7 +352,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         extern crate serde as _serde;
         #[automatically_derived]
         impl<'de> _serde::Deserialize<'de> for PostgresqlTypeRecord {
-            fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
             where
                 __D: _serde::Deserializer<'de>,
             {
@@ -372,44 +372,44 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                         _serde::__private::Formatter::write_str(__f, "field identifier")
                     }
-                    fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                    fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                     where
                         __E: _serde::de::Error,
                     {
                         match __value {
-                            0u64 => _serde::__private::Ok(__Field::__field0),
-                            1u64 => _serde::__private::Ok(__Field::__field1),
-                            2u64 => _serde::__private::Ok(__Field::__field2),
-                            _ => _serde::__private::Ok(__Field::__ignore),
+                            0u64 => Ok(__Field::__field0),
+                            1u64 => Ok(__Field::__field1),
+                            2u64 => Ok(__Field::__field2),
+                            _ => Ok(__Field::__ignore),
                         }
                     }
-                    fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                    fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
                     where
                         __E: _serde::de::Error,
                     {
                         match __value {
-                            "postgresql_type" => _serde::__private::Ok(__Field::__field0),
-                            "not_null_or_nullable" => _serde::__private::Ok(__Field::__field1),
-                            "postgresql_type_pattern" => _serde::__private::Ok(__Field::__field2),
-                            _ => _serde::__private::Ok(__Field::__ignore),
+                            "postgresql_type" => Ok(__Field::__field0),
+                            "not_null_or_nullable" => Ok(__Field::__field1),
+                            "postgresql_type_pattern" => Ok(__Field::__field2),
+                            _ => Ok(__Field::__ignore),
                         }
                     }
-                    fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                    fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
                     where
                         __E: _serde::de::Error,
                     {
                         match __value {
-                            b"postgresql_type" => _serde::__private::Ok(__Field::__field0),
-                            b"not_null_or_nullable" => _serde::__private::Ok(__Field::__field1),
-                            b"postgresql_type_pattern" => _serde::__private::Ok(__Field::__field2),
-                            _ => _serde::__private::Ok(__Field::__ignore),
+                            b"postgresql_type" => Ok(__Field::__field0),
+                            b"not_null_or_nullable" => Ok(__Field::__field1),
+                            b"postgresql_type_pattern" => Ok(__Field::__field2),
+                            _ => Ok(__Field::__ignore),
                         }
                     }
                 }
                 #[automatically_derived]
                 impl<'de> _serde::Deserialize<'de> for __Field {
                     #[inline]
-                    fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                     where
                         __D: _serde::Deserializer<'de>,
                     {
@@ -428,60 +428,60 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
                     }
                     #[inline]
-                    fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                    fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                     where
                         __A: _serde::de::SeqAccess<'de>,
                     {
                         let __field0 = match _serde::de::SeqAccess::next_element::<PostgresqlType>(&mut __seq)? {
-                            _serde::__private::Some(__value) => __value,
-                            _serde::__private::None => {
-                                return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                            Some(__value) => __value,
+                            None => {
+                                return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
                         let __field1 = match _serde::de::SeqAccess::next_element::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __seq)? {
-                            _serde::__private::Some(__value) => __value,
-                            _serde::__private::None => {
-                                return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                            Some(__value) => __value,
+                            None => {
+                                return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
                         let __field2 = match _serde::de::SeqAccess::next_element::<PostgresqlTypePattern>(&mut __seq)? {
-                            _serde::__private::Some(__value) => __value,
-                            _serde::__private::None => {
-                                return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                            Some(__value) => __value,
+                            None => {
+                                return Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
                         match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
-                            Ok(value) => serde::__private::Ok(value),
+                            Ok(value) => Ok(value),
                             Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                         }
                     }
                     #[inline]
-                    fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                    fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
                     where
                         __A: _serde::de::MapAccess<'de>,
                     {
-                        let mut __field0: _serde::__private::Option<PostgresqlType> = _serde::__private::None;
-                        let mut __field1: _serde::__private::Option<postgresql_crud_macros_common::NotNullOrNullable> = _serde::__private::None;
-                        let mut __field2: _serde::__private::Option<PostgresqlTypePattern> = _serde::__private::None;
-                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        let mut __field0: Option<PostgresqlType> = None;
+                        let mut __field1: Option<postgresql_crud_macros_common::NotNullOrNullable> = None;
+                        let mut __field2: Option<PostgresqlTypePattern> = None;
+                        while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                             match __key {
                                 __Field::__field0 => {
-                                    if _serde::__private::Option::is_some(&__field0) {
-                                        return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type"));
+                                    if Option::is_some(&__field0) {
+                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type"));
                                     }
-                                    __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<PostgresqlType>(&mut __map)?);
+                                    __field0 = Some(_serde::de::MapAccess::next_value::<PostgresqlType>(&mut __map)?);
                                 }
                                 __Field::__field1 => {
-                                    if _serde::__private::Option::is_some(&__field1) {
-                                        return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("not_null_or_nullable"));
+                                    if Option::is_some(&__field1) {
+                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("not_null_or_nullable"));
                                     }
-                                    __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __map)?);
+                                    __field1 = Some(_serde::de::MapAccess::next_value::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __map)?);
                                 }
                                 __Field::__field2 => {
-                                    if _serde::__private::Option::is_some(&__field2) {
-                                        return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type_pattern"));
+                                    if Option::is_some(&__field2) {
+                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type_pattern"));
                                     }
-                                    __field2 = _serde::__private::Some(_serde::de::MapAccess::next_value::<PostgresqlTypePattern>(&mut __map)?);
+                                    __field2 = Some(_serde::de::MapAccess::next_value::<PostgresqlTypePattern>(&mut __map)?);
                                 }
                                 __Field::__ignore => {
                                     let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
@@ -489,19 +489,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                         let __field0 = match __field0 {
-                            _serde::__private::Some(__field0) => __field0,
-                            _serde::__private::None => _serde::__private::de::missing_field("postgresql_type")?,
+                            Some(__field0) => __field0,
+                            None => _serde::__private::de::missing_field("postgresql_type")?,
                         };
                         let __field1 = match __field1 {
-                            _serde::__private::Some(__field1) => __field1,
-                            _serde::__private::None => _serde::__private::de::missing_field("not_null_or_nullable")?,
+                            Some(__field1) => __field1,
+                            None => _serde::__private::de::missing_field("not_null_or_nullable")?,
                         };
                         let __field2 = match __field2 {
-                            _serde::__private::Some(__field2) => __field2,
-                            _serde::__private::None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
+                            Some(__field2) => __field2,
+                            None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
                         match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
-                            Ok(value) => serde::__private::Ok(value),
+                            Ok(value) => Ok(value),
                             Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                         }
                     }
@@ -1236,7 +1236,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 extern crate serde as _serde;
                                 #[automatically_derived]
                                 impl _serde::Serialize for #ident_standart_not_null_origin_upper_camel_case {
-                                    fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
+                                    fn serialize<__S>(&self, __serializer: __S) -> Result<__S::Ok, __S::Error>
                                     where
                                         __S: _serde::Serializer,
                                     {
@@ -1482,7 +1482,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 impl<'de> _serde::Deserialize<'de> for #ident_standart_not_null_origin_upper_camel_case {
                                     fn deserialize<__D>(
                                         __deserializer: __D,
-                                    ) -> _serde::__private::Result<Self, __D::Error>
+                                    ) -> Result<Self, __D::Error>
                                     where
                                         __D: _serde::Deserializer<'de>,
                                     {
@@ -1522,7 +1522,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let field_0_token_stream = generate_field_index_token_stream(parameter_number_one.get_index());
                     let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {serde::__private::Ok(#content_token_stream)}
+                        quote::quote! {Ok(#content_token_stream)}
                     };
                     let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
                     let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_token_stream) {
@@ -1538,7 +1538,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
                                 match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#(#fields_token_stream),*) {
-                                    Ok(#value_snake_case) => _serde::__private::Ok(#value_snake_case),
+                                    Ok(#value_snake_case) => Ok(#value_snake_case),
                                     Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                 }
                             }
@@ -1554,7 +1554,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_origin_new_for_deserialize_token_stream = |length: usize| {
                             let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index, _)| generate_field_index_token_stream(index));
                             quote::quote! {
-                                _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
+                                Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
                             }
                         };
                         (generate_origin_new_for_deserialize_token_stream(2), generate_origin_new_for_deserialize_token_stream(3))
@@ -1563,7 +1563,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, serde_private_ok_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 #[inline]
-                                fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+                                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                                 where
                                     __E: serde::Deserializer<'de>,
                                 {
@@ -1587,9 +1587,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();
                             quote::quote! {
                                 let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#element>(&mut __seq)? {
-                                    serde::__private::Some(__value) => __value,
-                                    serde::__private::None => {
-                                        return serde::__private::Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
+                                    Some(__value) => __value,
+                                    None => {
+                                        return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
                                     }
                                 };
                             }
@@ -1616,7 +1616,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 #[inline]
-                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                                 where
                                     __A: serde::de::SeqAccess<'de>,
                                 {
@@ -1741,17 +1741,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|element| {
                                     let index_variant_token_stream = format!("{element}u64").parse::<proc_macro2::TokenStream>().unwrap();
                                     let field_index_token_stream = generate_field_index_token_stream(element);
-                                    quote::quote! {#index_variant_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
+                                    quote::quote! {#index_variant_token_stream => Ok(__Field::#field_index_token_stream)}
                                 })
                             };
                             quote::quote! {
-                                fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                                 where
                                     __E: serde::de::Error,
                                 {
                                     match __value {
                                         #(#fields_token_stream),*,
-                                        _ => serde::__private::Ok(__Field::__ignore),
+                                        _ => Ok(__Field::__ignore),
                                     }
                                 }
                             }
@@ -1764,20 +1764,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
                                 let field_index_name_token_stream = generate_field_index_token_stream(index);
                                 quote::quote! {
-                                    #element_double_quotes_token_stream => _serde::__private::Ok(__Field::#field_index_name_token_stream)
+                                    #element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)
                                 }
                             });
                             quote::quote! {
                                 fn visit_str<__E>(
                                     self,
                                     __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
+                                ) -> Result<Self::Value, __E>
                                 where
                                     __E: _serde::de::Error,
                                 {
                                     match __value {
                                         #(#fields_token_stream),*,
-                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                        _ => Ok(__Field::__ignore),
                                     }
                                 }
                             }
@@ -1797,17 +1797,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element)).parse::<proc_macro2::TokenStream>().unwrap();
                                 let field_index_name_token_stream = generate_field_index_token_stream(index);
                                 quote::quote! {
-                                    #b_element_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_name_token_stream)
+                                    #b_element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)
                                 }
                             });
                             quote::quote! {
-                                fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
                                 where
                                     __E: serde::de::Error,
                                 {
                                     match __value {
                                         #(#fields_token_stream),*,
-                                        _ => serde::__private::Ok(__Field::__ignore),
+                                        _ => Ok(__Field::__ignore),
                                     }
                                 }
                             }
@@ -1832,7 +1832,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #[inline]
                             fn deserialize<__D>(
                                 __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
+                            ) -> Result<Self, __D::Error>
                             where
                                 __D: _serde::Deserializer<'de>,
                             {
@@ -1855,7 +1855,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_fn_visit_map_token_stream = |field_option_none_initialization_token_stream: &dyn quote::ToTokens, while_some_next_key_field_token_stream: &dyn quote::ToTokens, match_field_initialization_token_stream: &dyn quote::ToTokens, serde_private_ok_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 #[inline]
-                                fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
                                 where
                                     __A: serde::de::MapAccess<'de>,
                                 {
@@ -1882,7 +1882,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                                     let field_index_name_token_stream = generate_field_index_token_stream(index);
                                     quote::quote! {
-                                        let mut #field_index_name_token_stream: serde::__private::Option<#element> = serde::__private::None;
+                                        let mut #field_index_name_token_stream: Option<#element> = None;
                                     }
                                 });
                                 quote::quote! {#(#fields_initialization_token_stream)*}
@@ -1919,15 +1919,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     let field_index_name_token_stream = generate_field_index_token_stream(index);
                                     quote::quote! {
                                         __Field::#field_index_name_token_stream => {
-                                            if serde::__private::Option::is_some(&#field_index_name_token_stream) {
-                                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_double_quotes_token_stream));
+                                            if Option::is_some(&#field_index_name_token_stream) {
+                                                return Err(<__A::Error as serde::de::Error>::duplicate_field(#field_name_double_quotes_token_stream));
                                             }
-                                            #field_index_name_token_stream = serde::__private::Some(serde::de::MapAccess::next_value::<#field_type_token_stream>(&mut __map)?);
+                                            #field_index_name_token_stream = Some(serde::de::MapAccess::next_value::<#field_type_token_stream>(&mut __map)?);
                                         }
                                     }
                                 });
                                 quote::quote! {
-                                    while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                    while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                         match __key {
                                             #(#fields_initialization_token_stream)*
                                             __Field::__ignore => {
@@ -1960,8 +1960,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     let field_index_name_token_stream = generate_field_index_token_stream(index);
                                     quote::quote! {
                                         let #field_index_name_token_stream = match #field_index_name_token_stream {
-                                            serde::__private::Some(#field_index_name_token_stream) => #field_index_name_token_stream,
-                                            serde::__private::None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
+                                            Some(#field_index_name_token_stream) => #field_index_name_token_stream,
+                                            None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
                                         };
                                     }
                                 });

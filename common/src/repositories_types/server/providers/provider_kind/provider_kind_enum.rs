@@ -236,8 +236,8 @@
 //         config: &'static (
 //             impl app_state::GetPathToProviderLinkPartsFolder
 //             + app_state::GetLogFileExtension
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //         )
 //     ) -> Result<Vec<String>, Box<GetLinkPartsFromLocalJsonFileErrorNamed>> {
 //         match tokio::fs::File::open(&{

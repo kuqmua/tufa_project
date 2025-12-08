@@ -10,7 +10,7 @@ macro_rules! trait_alias {
 trait_alias!(DebugClonePartialEqAlias = std::fmt::Debug + Clone + PartialEq);
 trait_alias!(DebugClonePartialEqSerializeAlias = DebugClonePartialEqAlias + serde::Serialize);
 trait_alias!(DebugClonePartialEqSerializeDeserializeAlias = DebugClonePartialEqSerializeAlias + for<'__> serde::Deserialize<'__>);
-trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
+trait_alias!(DebugClonePartialEqSerializeDeserializeDefaultSomeOneAlias = DebugClonePartialEqSerializeDeserializeAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement);
 trait_alias!(SqlxEncodePostgresSqlxTypePostgresAlias = for<'__> sqlx::Encode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>);
 trait_alias!(UtoipaToSchemaAndSchemarsJsonSchemaAlias = for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema);
 
@@ -75,11 +75,11 @@ pub trait PostgresqlJsonType {
     ) -> String;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
-    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: ReadOnlyIdsAlias;
     fn select_only_ids_query_part(column_name_and_maybe_field_getter: &str) -> String;
     type ReadInner: ReadInnerAlias;
@@ -153,7 +153,7 @@ pub trait PostgresqlJsonTypeObjectVecElementId {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlTypeTestCases {
     type PostgresqlType: PostgresqlType;
-    type Select: SelectAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: SelectAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     fn option_vec_create() -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> Vec<Vec<<Self::PostgresqlType as PostgresqlType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
@@ -252,7 +252,7 @@ pub struct PostgresqlJsonTypeLengthGreaterThanTest<T: PostgresqlJsonType> {
 #[cfg(feature = "test-utils")]
 pub trait PostgresqlJsonTypeTestCases {
     type PostgresqlJsonType: PostgresqlJsonType;
-    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
+    type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize;
     fn option_vec_create() -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>>;
     fn read_only_ids_to_two_dimensional_vec_read_inner(read_only_ids: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> Vec<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
@@ -335,10 +335,10 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub Option<NotEmptyUniqueEnumVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         match &self.0 {
@@ -364,19 +364,19 @@ where
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn to_std_string_string(&self) -> String {
         format!("{self:#?}")
     }
 }
-impl<T> postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
+impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Vec<Self> {
         vec![
-            Self(Some(postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
+            Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
         ]
     }
 }
@@ -392,7 +392,7 @@ pub enum QueryPartErrorNamed {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<T> {
-    logical_operator: postgresql_crud_common_and_macros_common::LogicalOperator,
+    logical_operator: LogicalOperator,
     value: Vec<T>,
 }
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -406,8 +406,8 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<T> {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<T> {
-    pub fn try_new(logical_operator: postgresql_crud_common_and_macros_common::LogicalOperator, value: Vec<T>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<T>> {
+impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
+    pub fn try_new(logical_operator: LogicalOperator, value: Vec<T>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
@@ -425,7 +425,7 @@ impl<T: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<T> {
         }
         Ok(Self { logical_operator, value })
     }
-    pub const fn get_logical_operator(&self) -> &postgresql_crud_common_and_macros_common::LogicalOperator {
+    pub const fn get_logical_operator(&self) -> &LogicalOperator {
         &self.logical_operator
     }
 }
@@ -433,8 +433,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeWhere<T> {
-        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeWhere<T> {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -452,40 +452,40 @@ const _: () = {
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "field identifier")
                 }
-                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
                     match __value {
-                        0u64 => _serde::__private::Ok(__Field::__field0),
-                        1u64 => _serde::__private::Ok(__Field::__field1),
-                        _ => _serde::__private::Ok(__Field::__ignore),
+                        0u64 => Ok(__Field::__field0),
+                        1u64 => Ok(__Field::__field1),
+                        _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
                     match __value {
-                        "logical_operator" => _serde::__private::Ok(__Field::__field0),
-                        "value" => _serde::__private::Ok(__Field::__field1),
-                        _ => _serde::__private::Ok(__Field::__ignore),
+                        "logical_operator" => Ok(__Field::__field0),
+                        "value" => Ok(__Field::__field1),
+                        _ => Ok(__Field::__ignore),
                     }
                 }
-                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
                 where
                     __E: _serde::de::Error,
                 {
                     match __value {
-                        b"logical_operator" => _serde::__private::Ok(__Field::__field0),
-                        b"value" => _serde::__private::Ok(__Field::__field1),
-                        _ => _serde::__private::Ok(__Field::__ignore),
+                        b"logical_operator" => Ok(__Field::__field0),
+                        b"value" => Ok(__Field::__field1),
+                        _ => Ok(__Field::__ignore),
                     }
                 }
             }
             impl<'de> _serde::Deserialize<'de> for __Field {
                 #[inline]
-                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                 where
                     __D: _serde::Deserializer<'de>,
                 {
@@ -497,53 +497,53 @@ const _: () = {
                 marker: _serde::__private::PhantomData<PostgresqlTypeWhere>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
-            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
                 type Value = PostgresqlTypeWhere<T>;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeWhere")
                 }
                 #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<postgresql_crud_common_and_macros_common::LogicalOperator>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                    let __field0 = match _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)? {
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
                         }
                     };
                     let __field1 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
                         }
                     };
                     match PostgresqlTypeWhere::try_new(__field0, __field1) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: _serde::__private::Option<postgresql_crud_common_and_macros_common::LogicalOperator> = _serde::__private::None;
-                    let mut __field1: _serde::__private::Option<Vec<T>> = _serde::__private::None;
-                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    let mut __field0: Option<LogicalOperator> = None;
+                    let mut __field1: Option<Vec<T>> = None;
+                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                         match __key {
                             __Field::__field0 => {
-                                if _serde::__private::Option::is_some(&__field0) {
-                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
+                                if Option::is_some(&__field0) {
+                                    return Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
                                 }
-                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<postgresql_crud_common_and_macros_common::LogicalOperator>(&mut __map)?);
+                                __field0 = Some(_serde::de::MapAccess::next_value::<LogicalOperator>(&mut __map)?);
                             }
                             __Field::__field1 => {
-                                if _serde::__private::Option::is_some(&__field1) {
-                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("value"));
+                                if Option::is_some(&__field1) {
+                                    return Err(<__A::Error as _serde::de::Error>::duplicate_field("value"));
                                 }
-                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<Vec<T>>(&mut __map)?);
+                                __field1 = Some(_serde::de::MapAccess::next_value::<Vec<T>>(&mut __map)?);
                             }
                             __Field::__ignore => {
                                 let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
@@ -551,15 +551,15 @@ const _: () = {
                         }
                     }
                     let __field0 = match __field0 {
-                        _serde::__private::Some(__field0) => __field0,
-                        _serde::__private::None => _serde::__private::de::missing_field("logical_operator")?,
+                        Some(__field0) => __field0,
+                        None => _serde::__private::de::missing_field("logical_operator")?,
                     };
                     let __field1 = match __field1 {
-                        _serde::__private::Some(__field1) => __field1,
-                        _serde::__private::None => _serde::__private::de::missing_field("value")?,
+                        Some(__field1) => __field1,
+                        None => _serde::__private::de::missing_field("value")?,
                     };
                     match PostgresqlTypeWhere::try_new(__field0, __field1) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
@@ -613,11 +613,11 @@ impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for Pos
         Ok(query)
     }
 }
-impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T> {
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            logical_operator: postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
         }
     }
 }
@@ -638,7 +638,7 @@ impl std::fmt::Display for Order {
         }
     }
 }
-impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self::default()
     }
@@ -755,7 +755,7 @@ impl PaginationStartsWithZero {
     }
 }
 impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
         __D: serde::Deserializer<'de>,
     {
@@ -773,40 +773,40 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
             fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(__f, "field identifier")
             }
-            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    0u64 => Ok(__Field::__field0),
+                    1u64 => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    "limit" => serde::__private::Ok(__Field::__field0),
-                    "offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    "limit" => Ok(__Field::__field0),
+                    "offset" => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    b"limit" => serde::__private::Ok(__Field::__field0),
-                    b"offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    b"limit" => Ok(__Field::__field0),
+                    b"offset" => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
         }
         impl<'de> serde::Deserialize<'de> for __Field {
             #[inline]
-            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
             where
                 __D: serde::Deserializer<'de>,
             {
@@ -824,47 +824,47 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                 serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithZero")
             }
             #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
             where
                 __A: serde::de::SeqAccess<'de>,
             {
                 let __field0 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithZero with 2 elements"));
+                    Some(__value) => __value,
+                    None => {
+                        return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithZero with 2 elements"));
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithZero with 2 elements"));
+                    Some(__value) => __value,
+                    None => {
+                        return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithZero with 2 elements"));
                     }
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
+                    Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))), //todo use serde_json::to_string(&error).unwrap_or_else(|_|"failed to serialize error".into())
                 }
             }
             #[inline]
-            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: serde::__private::Option<i64> = serde::__private::None;
-                let mut __field1: serde::__private::Option<i64> = serde::__private::None;
-                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                let mut __field0: Option<i64> = None;
+                let mut __field1: Option<i64> = None;
+                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
                         __Field::__field0 => {
-                            if serde::__private::Option::is_some(&__field0) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
+                            if Option::is_some(&__field0) {
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
                             }
-                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
-                            if serde::__private::Option::is_some(&__field1) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
+                            if Option::is_some(&__field1) {
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
                             }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -872,15 +872,15 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                     }
                 }
                 let __field0 = match __field0 {
-                    serde::__private::Some(__field0) => __field0,
-                    serde::__private::None => serde::__private::de::missing_field("limit")?,
+                    Some(__field0) => __field0,
+                    None => serde::__private::de::missing_field("limit")?,
                 };
                 let __field1 = match __field1 {
-                    serde::__private::Some(__field1) => __field1,
-                    serde::__private::None => serde::__private::de::missing_field("offset")?,
+                    Some(__field1) => __field1,
+                    None => serde::__private::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
+                    Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
             }
@@ -909,13 +909,13 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
         self.0.query_bind(query)
     }
 }
-impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(PaginationBase::new_unchecked(DEFAULT_PAGINATION_LIMIT, 0))
     }
 }
-impl postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
         Self(PaginationBase::new_unchecked(
@@ -950,7 +950,7 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct NotEmptyUniqueEnumVec<T>(Vec<T>);
-impl<T: std::cmp::PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
+impl<T: PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
@@ -980,8 +980,8 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for NotEmptyUniqueEnumVec<T> {
-        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for NotEmptyUniqueEnumVec<T> {
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -994,32 +994,32 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
                 type Value = NotEmptyUniqueEnumVec<T>;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "tuple struct NotEmptyUniqueEnumVec")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    _serde::__private::Ok(NotEmptyUniqueEnumVec(__field0))
+                    Ok(NotEmptyUniqueEnumVec(__field0))
                 }
                 #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueEnumVec with 1 element"));
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueEnumVec with 1 element"));
                         }
                     };
                     match NotEmptyUniqueEnumVec::try_new(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
@@ -1035,14 +1035,14 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T: postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> postgresql_crud_common_and_macros_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
+impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        Self(postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
+        Self(AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_with_max_page_size())
     }
 }
 impl<T> Default for NotEmptyUniqueEnumVec<T> {
@@ -1068,7 +1068,7 @@ impl<T1> NotEmptyUniqueEnumVec<T1> {
 
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + postgresql_crud_common_and_macros_common::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         let mut acc = String::default();
@@ -1306,7 +1306,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
-        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -1322,29 +1322,29 @@ const _: () = {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct UnsignedPartOfStdPrimitiveI32")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element"));
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element"));
                         }
                     };
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
@@ -1425,7 +1425,7 @@ const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfStdPrimitiveI32 {
-        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -1441,29 +1441,29 @@ const _: () = {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct NotZeroUnsignedPartOfStdPrimitiveI32")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: i32 = <i32 as _serde::Deserialize>::deserialize(__e)?;
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element"));
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element"));
                         }
                     };
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-                        Ok(value) => serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }

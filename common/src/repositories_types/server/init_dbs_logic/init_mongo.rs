@@ -28,8 +28,8 @@
 //         impl app_state::GetMongoProvidersLinkPartsDbName
 //         + app_state::GetMongoUrl
 //         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //     ),
 // ) -> Result<(), Box<crate::repositories_types::server::init_dbs_logic::init_mongo::InitMongoErrorNamed>>{
 //     match crate::server::mongo::mongo_client_options_parse::mongo_client_options_parse(config).await {

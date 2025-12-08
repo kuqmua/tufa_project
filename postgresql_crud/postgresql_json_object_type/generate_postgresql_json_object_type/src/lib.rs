@@ -2730,7 +2730,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident_update_upper_camel_case, &quote::quote! {__field0, __field1, __field2});
                             quote::quote! {
                                 impl<'de> serde::Deserialize<'de> for #ident_update_upper_camel_case {
-                                    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                                    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                                     where
                                         __D: serde::Deserializer<'de>,
                                     {
@@ -2749,43 +2749,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                                                 serde::__private::Formatter::write_str(__f, "field identifier")
                                             }
-                                            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                            fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                                             where
                                                 __E: serde::de::Error,
                                             {
                                                 match __value {
-                                                    0u64 => serde::__private::Ok(__Field::__field0),
-                                                    1u64 => serde::__private::Ok(__Field::__field1),
-                                                    2u64 => serde::__private::Ok(__Field::__field2),
-                                                    _ => serde::__private::Ok(__Field::__ignore),
+                                                    0u64 => Ok(__Field::__field0),
+                                                    1u64 => Ok(__Field::__field1),
+                                                    2u64 => Ok(__Field::__field2),
+                                                    _ => Ok(__Field::__ignore),
                                                 }
                                             }
-                                            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+                                            fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
                                             where
                                                 __E: serde::de::Error,
                                             {
                                                 match __value {
-                                                    "create" => serde::__private::Ok(__Field::__field0),
-                                                    "update" => serde::__private::Ok(__Field::__field1),
-                                                    "delete" => serde::__private::Ok(__Field::__field2),
-                                                    _ => serde::__private::Ok(__Field::__ignore),
+                                                    "create" => Ok(__Field::__field0),
+                                                    "update" => Ok(__Field::__field1),
+                                                    "delete" => Ok(__Field::__field2),
+                                                    _ => Ok(__Field::__ignore),
                                                 }
                                             }
-                                            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                            fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
                                             where
                                                 __E: serde::de::Error,
                                             {
                                                 match __value {
-                                                    b"create" => serde::__private::Ok(__Field::__field0),
-                                                    b"update" => serde::__private::Ok(__Field::__field1),
-                                                    b"delete" => serde::__private::Ok(__Field::__field2),
-                                                    _ => serde::__private::Ok(__Field::__ignore),
+                                                    b"create" => Ok(__Field::__field0),
+                                                    b"update" => Ok(__Field::__field1),
+                                                    b"delete" => Ok(__Field::__field2),
+                                                    _ => Ok(__Field::__ignore),
                                                 }
                                             }
                                         }
                                         impl<'de> serde::Deserialize<'de> for __Field {
                                             #[inline]
-                                            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+                                            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
                                             where
                                                 __D: serde::Deserializer<'de>,
                                             {
@@ -2803,57 +2803,57 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 serde::__private::Formatter::write_str(__f, #tuple_struct_ident_update_double_quotes_token_stream)
                                             }
                                             #[inline]
-                                            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                            fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                                             where
                                                 __A: serde::de::SeqAccess<'de>,
                                             {
                                                 let __field0 = match serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __seq)? {
-                                                    serde::__private::Some(__value) => __value,
-                                                    serde::__private::None => {
+                                                    Some(__value) => __value,
+                                                    None => {
                                                         vec![]
                                                     }
                                                 };
                                                 let __field1 = match serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream>(&mut __seq)? {
-                                                    serde::__private::Some(__value) => __value,
-                                                    serde::__private::None => {
+                                                    Some(__value) => __value,
+                                                    None => {
                                                         #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::default()
                                                     }
                                                 };
                                                 let __field2 = match serde::de::SeqAccess::next_element::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __seq)? {
-                                                    serde::__private::Some(__value) => __value,
-                                                    serde::__private::None => {
+                                                    Some(__value) => __value,
+                                                    None => {
                                                         vec![]
                                                     }
                                                 };
                                                 #match_try_new_in_deserialize_token_stream
                                             }
                                             #[inline]
-                                            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                            fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
                                             where
                                                 __A: serde::de::MapAccess<'de>,
                                             {
-                                                let mut __field0: serde::__private::Option<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream> = serde::__private::None;
-                                                let mut __field1: serde::__private::Option<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream> = serde::__private::None;
-                                                let mut __field2: serde::__private::Option<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream> = serde::__private::None;
-                                                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                let mut __field0: Option<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream> = None;
+                                                let mut __field1: Option<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream> = None;
+                                                let mut __field2: Option<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream> = None;
+                                                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                                     match __key {
                                                         __Field::__field0 => {
-                                                            if serde::__private::Option::is_some(&__field0) {
-                                                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
+                                                            if Option::is_some(&__field0) {
+                                                                return Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
                                                             }
-                                                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __map)?);
+                                                            __field0 = Some(serde::de::MapAccess::next_value::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __map)?);
                                                         }
                                                         __Field::__field1 => {
-                                                            if serde::__private::Option::is_some(&__field1) {
-                                                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
+                                                            if Option::is_some(&__field1) {
+                                                                return Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
                                                             }
-                                                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream>(&mut __map)?);
+                                                            __field1 = Some(serde::de::MapAccess::next_value::<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream>(&mut __map)?);
                                                         }
                                                         __Field::__field2 => {
-                                                            if serde::__private::Option::is_some(&__field2) {
-                                                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
+                                                            if Option::is_some(&__field2) {
+                                                                return Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
                                                             }
-                                                            __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __map)?);
+                                                            __field2 = Some(serde::de::MapAccess::next_value::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __map)?);
                                                         }
                                                         __Field::__ignore => {
                                                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -2861,20 +2861,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     }
                                                 }
                                                 let __field0 = match __field0 {
-                                                    serde::__private::Some(__field0) => __field0,
-                                                    serde::__private::None => {
+                                                    Some(__field0) => __field0,
+                                                    None => {
                                                         vec![]
                                                     }
                                                 };
                                                 let __field1 = match __field1 {
-                                                    serde::__private::Some(__field1) => __field1,
-                                                    serde::__private::None => {
+                                                    Some(__field1) => __field1,
+                                                    None => {
                                                         #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::default()
                                                     }
                                                 };
                                                 let __field2 = match __field2 {
-                                                    serde::__private::Some(__field2) => __field2,
-                                                    serde::__private::None => {
+                                                    Some(__field2) => __field2,
+                                                    None => {
                                                         vec![]
                                                     }
                                                 };

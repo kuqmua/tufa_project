@@ -21,8 +21,8 @@
 //     config: &'static (
 //         impl app_state::GetPathToProviderLinkPartsFolder
 //         + app_state::GetLogFileExtension
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //     )
 // ) -> Result<std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<GetLocalProvidersLinkPartsErrorNamed>> {
 //     let result_vec = futures::future::join_all(

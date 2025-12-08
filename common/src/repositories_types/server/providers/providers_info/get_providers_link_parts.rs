@@ -27,8 +27,8 @@
 //         + app_state::GetMongoProvidersLinkPartsDbName
 //         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
 //         + app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //     )
 // ) -> Result<std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<GetProvidersLinkPartsErrorNamed>> {
 //     match

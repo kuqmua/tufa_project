@@ -19,8 +19,8 @@
 //     config: &'static (
 //         impl app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
 //         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //     )
 // ) -> Result<(), Box<crate::server::mongo::mongo_insert_data::MongoInsertDataErrorNamed>> {
 //     let error_hashmap = futures::future::join_all(vec_of_link_parts_hashmap.into_iter().map(

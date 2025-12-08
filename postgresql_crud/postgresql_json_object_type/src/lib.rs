@@ -11,7 +11,7 @@ pub enum UniqueVecTryNewErrorNamed<T> {
 }
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct UniqueVec<T>(Vec<T>);
-impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
+impl<T: PartialEq + Clone> UniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
         let mut acc = vec![];
         for element in &value {
@@ -38,9 +38,9 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
     {
-        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -53,36 +53,36 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
             {
                 type Value = UniqueVec<T>;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: Vec<T> = <Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     match UniqueVec::try_new(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }
                 #[inline]
-                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
+                        Some(__value) => __value,
+                        None => {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
                         }
                     };
                     match UniqueVec::try_new(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
+                        Ok(value) => Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
                 }

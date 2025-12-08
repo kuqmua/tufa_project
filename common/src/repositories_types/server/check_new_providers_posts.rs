@@ -2,8 +2,8 @@
 //     providers_link_parts: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     config: &'static (
 //     impl app_state::GetGithubToken
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 // ) -> std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Result<Vec<crate::repositories_types::server::fetch::info_structures::common_rss_structures::CommonRssPostStruct>, crate::repositories_types::server::providers::provider_kind::functions::rss_part::RssPartErrorNamed>> {
 //     let tasks_vec = providers_link_parts

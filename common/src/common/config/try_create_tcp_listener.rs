@@ -15,10 +15,10 @@ impl<SelfGeneric> TryCreateTcpListener<'_> for SelfGeneric
 where
     Self: app_state::GetServiceSocketAddress,
 {
-    fn try_create_tcp_listener(&self) -> Result<std::net::TcpListener, Box<crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed>> {
+    fn try_create_tcp_listener(&self) -> Result<std::net::TcpListener, Box<TryCreateTcpListenerErrorNamed>> {
         match std::net::TcpListener::bind(self.get_service_socket_address()) {
             Ok(listener) => Ok(listener),
-            Err(error) => Err(Box::new(crate::common::config::try_create_tcp_listener::TryCreateTcpListenerErrorNamed::TcpListenerBind {
+            Err(error) => Err(Box::new(TryCreateTcpListenerErrorNamed::TcpListenerBind {
                 tcp_listener_bind: error,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })),

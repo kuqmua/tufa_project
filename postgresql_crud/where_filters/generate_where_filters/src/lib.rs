@@ -99,7 +99,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
                     ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
-                        let send_and_lifetime_token_stream = quote::quote! {std::marker::Send + 'a};
+                        let send_and_lifetime_token_stream = quote::quote! {Send + 'a};
                         let serde_serialize_token_stream = quote::quote! {serde::Serialize};
                         let content_token_stream = match (&filter_type, &maybe_additional_traits_token_stream) {
                             (FilterType::PostgresqlType, Some(value)) => &quote::quote! {#value + #send_and_lifetime_token_stream},
@@ -161,14 +161,14 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         };
     };
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone = ShouldAddDeclarationOfStructIdentGeneric::True {
-        maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone}),
+        maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + PartialEq + Clone}),
     };
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
         maybe_additional_traits_token_stream: Some(quote::quote! {
             std::fmt::Debug
-            + std::cmp::PartialEq
+            + PartialEq
             + PartialOrd
-            + std::clone::Clone
+            + Clone
             + sqlx::Type<sqlx::Postgres>
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         }),
@@ -350,7 +350,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                     maybe_additional_traits_token_stream: Some(sqlx_type_postgresq_encode_token_stream.clone()),
                 };
                 let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
-                    maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + std::cmp::PartialEq + Clone + #sqlx_type_postgresq_encode_token_stream}),
+                    maybe_additional_traits_token_stream: Some(quote::quote! {std::fmt::Debug + PartialEq + Clone + #sqlx_type_postgresq_encode_token_stream}),
                 };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote! {pub #value_snake_case: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| generate_postgresql_type_dimensions_helpers(postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType);

@@ -26,8 +26,8 @@
 //     db: mongodb::Database,
 //     config: &'static (
 // impl app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 // ) -> Result<(), Box<crate::server::mongo::mongo_insert_many::MongoInsertManyErrorNamed>> {
 //     let error_vec_insert_many = futures::future::join_all(

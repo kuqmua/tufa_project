@@ -1789,7 +1789,7 @@ pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn qu
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
-            Ok(value) => serde::__private::Ok(value),
+            Ok(value) => Ok(value),
             Err(error) => Err(serde::de::Error::custom(format!("{error:?}")))
         }
     }
@@ -1821,7 +1821,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                 };
                 let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
                 acc.push(quote::quote! {
-                    #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+                    #index_u64_token_stream => Ok(__Field::#field_index_token_stream)
                 });
             }
             acc
@@ -1830,7 +1830,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
     };
     fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: usize) -> proc_macro2::TokenStream {
         let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-        quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
+        quote::quote! {#field_name_double_quotes_token_stream => Ok(__Field::#field_index_token_stream)}
     }
     let visit_str_value_enum_variants_token_stream = {
         let visit_str_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
@@ -1858,9 +1858,9 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"));
             quote::quote! {
                 let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(
+                    Some(__value) => __value,
+                    None => {
+                        return Err(
                             serde::de::Error::invalid_length(
                                 0usize,
                                 &#struct_ident_options_with_double_quotes_token_stream,
@@ -1887,7 +1887,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             let type_token_stream = generate_type_token_stream(element_ident, element_type);
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
             quote::quote! {
-                let mut #field_index_token_stream: serde::__private::Option<#type_token_stream> = serde::__private::None;
+                let mut #field_index_token_stream: Option<#type_token_stream> = None;
             }
         });
         quote::quote! {#(#content_token_stream)*}
@@ -1899,12 +1899,12 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             let type_token_stream = generate_type_token_stream(element_ident, element_type);
             quote::quote! {
                 __Field::#field_index_token_stream => {
-                    if serde::__private::Option::is_some(&#field_index_token_stream) {
-                        return serde::__private::Err(
+                    if Option::is_some(&#field_index_token_stream) {
+                        return Err(
                             <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
                         );
                     }
-                    #field_index_token_stream = serde::__private::Some(
+                    #field_index_token_stream = Some(
                         serde::de::MapAccess::next_value::<#type_token_stream>(&mut __map)?,
                     );
                 }
@@ -1918,8 +1918,8 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
             quote::quote! {
                 let #field_index_token_stream = match #field_index_token_stream {
-                    serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
-                    serde::__private::None => {
+                    Some(#field_index_token_stream) => #field_index_token_stream,
+                    None => {
                         serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
                     }
                 };
@@ -1940,7 +1940,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             impl<'de> _serde::Deserialize<'de> for #ident {
                 fn deserialize<__D>(
                     __deserializer: __D,
-                ) -> _serde::__private::Result<Self, __D::Error>
+                ) -> Result<Self, __D::Error>
                 where
                     __D: _serde::Deserializer<'de>,
                 {
@@ -1967,37 +1967,37 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         fn visit_u64<__E>(
                             self,
                             __value: u64,
-                        ) -> _serde::__private::Result<Self::Value, __E>
+                        ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
                             match __value {
                                 #visit_u64_value_enum_variants_token_stream,
-                                _ => _serde::__private::Ok(__Field::__ignore),
+                                _ => Ok(__Field::__ignore),
                             }
                         }
                         fn visit_str<__E>(
                             self,
                             __value: &str,
-                        ) -> _serde::__private::Result<Self::Value, __E>
+                        ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
                             match __value {
                                 #visit_str_value_enum_variants_token_stream
-                                _ => _serde::__private::Ok(__Field::__ignore),
+                                _ => Ok(__Field::__ignore),
                             }
                         }
                         fn visit_bytes<__E>(
                             self,
                             __value: &[u8],
-                        ) -> _serde::__private::Result<Self::Value, __E>
+                        ) -> Result<Self::Value, __E>
                         where
                             __E: _serde::de::Error,
                         {
                             match __value {
                                 #visit_bytes_value_enum_variants_token_stream
-                                _ => _serde::__private::Ok(__Field::__ignore),
+                                _ => Ok(__Field::__ignore),
                             }
                         }
                     }
@@ -2006,7 +2006,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         #[inline]
                         fn deserialize<__D>(
                             __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
+                        ) -> Result<Self, __D::Error>
                         where
                             __D: _serde::Deserializer<'de>,
                         {
@@ -2037,7 +2037,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         fn visit_seq<__A>(
                             self,
                             mut __seq: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        ) -> Result<Self::Value, __A::Error>
                         where
                             __A: _serde::de::SeqAccess<'de>,
                         {
@@ -2048,12 +2048,12 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
                         fn visit_map<__A>(
                             self,
                             mut __map: __A,
-                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                        ) -> Result<Self::Value, __A::Error>
                         where
                             __A: _serde::de::MapAccess<'de>,
                         {
                             #visit_map_fields_initialization_token_stream
-                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                            while let Some(__key) = _serde::de::MapAccess::next_key::<
                                 __Field,
                             >(&mut __map)? {
                                 match __key {

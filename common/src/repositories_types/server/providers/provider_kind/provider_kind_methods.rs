@@ -14,8 +14,8 @@
 //         &self,
 //         config: &'static (
 // impl app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 //     ) -> String {
 //         format!(
@@ -34,8 +34,8 @@
 //         names_vector: Vec<String>,
 //         config: &'static (
 // impl app_state::GetGithubToken
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 // )
 //     ) -> Vec<String> {
 //         match self {

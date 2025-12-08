@@ -1140,7 +1140,7 @@ impl PaginationStartsWithOne {
     }
 }
 impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
     where
         __D: serde::Deserializer<'de>,
     {
@@ -1158,40 +1158,40 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(__f, "field identifier")
             }
-            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    0u64 => Ok(__Field::__field0),
+                    1u64 => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            fn visit_str<__E>(self, __value: &str) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    "limit" => serde::__private::Ok(__Field::__field0),
-                    "offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    "limit" => Ok(__Field::__field0),
+                    "offset" => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
-            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            fn visit_bytes<__E>(self, __value: &[u8]) -> Result<Self::Value, __E>
             where
                 __E: serde::de::Error,
             {
                 match __value {
-                    b"limit" => serde::__private::Ok(__Field::__field0),
-                    b"offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
+                    b"limit" => Ok(__Field::__field0),
+                    b"offset" => Ok(__Field::__field1),
+                    _ => Ok(__Field::__ignore),
                 }
             }
         }
         impl<'de> serde::Deserialize<'de> for __Field {
             #[inline]
-            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
             where
                 __D: serde::Deserializer<'de>,
             {
@@ -1209,47 +1209,47 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                 serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithOne")
             }
             #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
             where
                 __A: serde::de::SeqAccess<'de>,
             {
                 let __field0 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    Some(__value) => __value,
+                    None => {
+                        return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    Some(__value) => __value,
+                    None => {
+                        return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
                     }
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
+                    Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
             }
             #[inline]
-            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            fn visit_map<__A>(self, mut __map: __A) -> Result<Self::Value, __A::Error>
             where
                 __A: serde::de::MapAccess<'de>,
             {
-                let mut __field0: serde::__private::Option<i64> = serde::__private::None;
-                let mut __field1: serde::__private::Option<i64> = serde::__private::None;
-                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                let mut __field0: Option<i64> = None;
+                let mut __field1: Option<i64> = None;
+                while let Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
                         __Field::__field0 => {
-                            if serde::__private::Option::is_some(&__field0) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
+                            if Option::is_some(&__field0) {
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
                             }
-                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
-                            if serde::__private::Option::is_some(&__field1) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
+                            if Option::is_some(&__field1) {
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
                             }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
+                            __field1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
                             let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
@@ -1257,15 +1257,15 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                     }
                 }
                 let __field0 = match __field0 {
-                    serde::__private::Some(__field0) => __field0,
-                    serde::__private::None => serde::__private::de::missing_field("limit")?,
+                    Some(__field0) => __field0,
+                    None => serde::__private::de::missing_field("limit")?,
                 };
                 let __field1 = match __field1 {
-                    serde::__private::Some(__field1) => __field1,
-                    serde::__private::None => serde::__private::de::missing_field("offset")?,
+                    Some(__field1) => __field1,
+                    None => serde::__private::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
+                    Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
             }

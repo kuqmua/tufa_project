@@ -59,8 +59,8 @@
 //         + app_state::GetMongoProvidersLinkPartsDbName
 //         + app_state::GetMongoProvidersLogsDbCollectionDocumentFieldNameHandle
 //         + app_state::GetMongoProvidersLogsDbCollectionHandleSecondPart
-// + std::marker::Send
-// + std::marker::Sync
+// + Send
+// + Sync
 //     )
 // ) -> Result<(), Box<GetProviderPostsErrorNamed>> {
 //     todo!()

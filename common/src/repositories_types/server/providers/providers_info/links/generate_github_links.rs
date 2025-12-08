@@ -1,7 +1,7 @@
 // pub fn generate_github_links<
 //     T: app_state::GetGithubToken
-//     + std::marker::Send
-//     + std::marker::Sync
+//     + Send
+//     + Sync
 // >(
 //     github_names: &[String],
 //     config: &T,

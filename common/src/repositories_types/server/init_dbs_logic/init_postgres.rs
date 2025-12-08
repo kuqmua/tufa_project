@@ -31,8 +31,8 @@
 //     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     config: &'static (
 //         impl app_state::GetPostgresPool
-//         + std::marker::Send
-//         + std::marker::Sync
+//         + Send
+//         + Sync
 //     )
 // ) -> Result<(), Box<crate::repositories_types::server::init_dbs_logic::init_postgres::PostgresInitErrorNamed>> {
 //     if let Err(error) = crate::server::postgres::postgres_create_providers_tables_if_not_exists::postgres_create_providers_tables_if_not_exists(

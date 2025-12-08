@@ -3183,7 +3183,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         impl<'de> _serde::Deserialize<'de> for #ident_operation_payload_upper_camel_case {
                             fn deserialize<__D>(
                                 __deserializer: __D,
-                            ) -> _serde::__private::Result<Self, __D::Error>
+                            ) -> Result<Self, __D::Error>
                             where
                                 __D: _serde::Deserializer<'de>,
                             {
@@ -3208,7 +3208,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     fn visit_newtype_struct<__E>(
                                         self,
                                         __e: __E,
-                                    ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                    ) -> Result<Self::Value, __E::Error>
                                     where
                                         __E: _serde::Deserializer<'de>,
                                     {
@@ -3219,14 +3219,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     fn visit_seq<__A>(
                                         self,
                                         mut __seq: __A,
-                                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                    ) -> Result<Self::Value, __A::Error>
                                     where
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
                                         let __field0 = match _serde::de::SeqAccess::next_element::<#std_vec_vec_ident_update_token_stream>(&mut __seq)? {
-                                            _serde::__private::Some(__value) => __value,
-                                            _serde::__private::None => {
-                                                return _serde::__private::Err(
+                                            Some(__value) => __value,
+                                            None => {
+                                                return Err(
                                                     _serde::de::Error::invalid_length(
                                                         0usize,
                                                         &#tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream,
