@@ -980,7 +980,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_array_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_nullable_upper_camel_case);
             let ident_token_stream = {
                 quote::quote! {
-                    #[derive(Debug)]
+                    #[derive(Debug, Clone, Copy)]
                     pub struct #ident;
                 }
             };
@@ -3535,9 +3535,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     ImplDefault::True => &quote::quote! {Default,},
                     ImplDefault::False => &proc_macro2_token_stream_new,
                 };
-                let maybe_impl_copy_token_stream: &dyn quote::ToTokens = match &impl_default {
-                    ImplDefault::True => &quote::quote! {Copy,},
-                    ImplDefault::False => &proc_macro2_token_stream_new,
+                let maybe_impl_copy_token_stream: &dyn quote::ToTokens = match &impl_copy {
+                    ImplCopy::True => &quote::quote! {Copy,},
+                    ImplCopy::False => &proc_macro2_token_stream_new,
                 };
                 quote::quote! {
                     #[derive(
@@ -3741,7 +3741,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_create_upper_camel_case,
                     &{
                         let content_token_stream: &dyn quote::ToTokens = match &can_be_primary_key {
-                            CanBePrimaryKey::True => &core_default_default_default_token_stream,
+                            CanBePrimaryKey::True => &quote::quote!{()},
                             CanBePrimaryKey::False => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                         };
                         quote::quote! {Self(#content_token_stream)}
@@ -3797,7 +3797,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 ) = {
                     let generate_default_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                         match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
+                            PostgresqlTypePattern::Standart => quote::quote! {Self::default()},
                             PostgresqlTypePattern::ArrayDimension1 { .. } => {
                                 let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                                     postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
