@@ -3520,31 +3520,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 True,
                 False,
             }
-            enum ImplCopy {
-                True,
-                False,
-            }
             let generate_pub_struct_tokens_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens,
                 impl_default: ImplDefault,
-                impl_copy: ImplCopy,
             | {
                 let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
                 let maybe_impl_default_token_stream: &dyn quote::ToTokens = match &impl_default {
                     ImplDefault::True => &quote::quote! {Default,},
                     ImplDefault::False => &proc_macro2_token_stream_new,
                 };
-                let maybe_impl_copy_token_stream: &dyn quote::ToTokens = match &impl_copy {
-                    ImplCopy::True => &quote::quote! {Copy,},
-                    ImplCopy::False => &proc_macro2_token_stream_new,
-                };
                 quote::quote! {
                     #[derive(
                         Debug,
                         #maybe_impl_default_token_stream
                         Clone,
-                        #maybe_impl_copy_token_stream
+                        Copy,
                         PartialEq,
                         serde::Serialize,
                         serde::Deserialize,
@@ -3700,7 +3691,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &ident_create_upper_camel_case,
                         &quote::quote! {(());},
                         ImplDefault::False,
-                        ImplCopy::False,
                     ),
                     CanBePrimaryKey::False => {
                         quote::quote! {
@@ -3789,7 +3779,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     ImplDefault::True,
-                    ImplCopy::True,
                 );
                 let (
                     impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream,
@@ -4266,7 +4255,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                     &ident_read_only_ids_upper_camel_case,
                     &ident_read_upper_camel_case,
-                    &quote::quote!{Ok(#ident_read_only_ids_upper_camel_case(#value_snake_case))}
+                    &quote::quote!{Ok(Self(#value_snake_case))}
                 );
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                     &ident_read_only_ids_upper_camel_case,
@@ -4378,7 +4367,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let mut #acc_snake_case = String::default();
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                         Ok(#value_snake_case) => {
-                            #acc_snake_case.push_str(&format!("${value}"));
+                            use std::fmt::Write as _;
+                            if let Err(error) = write!(#acc_snake_case, "${value}") {
+                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                            }
                         },
                         Err(#error_snake_case) => {
                             return Err(#error_snake_case);
