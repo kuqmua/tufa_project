@@ -1468,7 +1468,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             __deserializer,
                             #ident_standart_not_null_origin_double_quotes_token_stream,
                             __Visitor {
-                                marker: serde::__private::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
+                                marker: serde::__private::PhantomData::<Self>,
                                 lifetime: serde::__private::PhantomData,
                             },
                         )
