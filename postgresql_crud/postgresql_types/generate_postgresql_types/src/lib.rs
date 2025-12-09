@@ -4928,7 +4928,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         positive_more_typical_token_stream: &dyn quote::ToTokens,
                         max_token_stream: &dyn quote::ToTokens
                     | {
-                        quote::quote! {
+                        quote::quote! {{
                             let min = #min_token_stream;
                             let negative_less_typical = #negative_less_typical_token_stream;
                             let negative_more_typical = #negative_more_typical_token_stream;
@@ -4991,7 +4991,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded},
                             ]
-                        }
+                        }}
                     };
                     let generate_int_pgrange_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = |int_range_type: &IntRangeType| {
                         let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(int_range_type);
@@ -5278,11 +5278,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     else {
                                         quote::quote!{new(#element_snake_case)}
                                     };
-                                    quote::quote!{Some({
+                                    quote::quote!{Some(
                                         #content_token_stream.into_iter().map(|#element_snake_case|
                                             #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
                                         ).collect()
-                                    })}
+                                    )}
                                 },
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_some_acc_content_token_stream(
