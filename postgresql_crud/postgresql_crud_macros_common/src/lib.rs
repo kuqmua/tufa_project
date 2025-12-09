@@ -958,11 +958,11 @@ pub fn generate_impl_postgresql_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #update_query_part_content_token_stream
             }
-            fn #update_query_bind_snake_case<'a>(
+            fn #update_query_bind_snake_case(
                 #value_snake_case: Self::#update_for_query_upper_camel_case,
-                #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> Result<
-                sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+                sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
                 #update_query_bind_content_token_stream
