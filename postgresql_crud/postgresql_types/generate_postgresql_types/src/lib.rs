@@ -3286,7 +3286,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     quote::quote! {
-                        impl std::convert::Into<#ident_inner_type_token_stream> for #ident_origin_upper_camel_case {
+                        impl Into<#ident_inner_type_token_stream> for #ident_origin_upper_camel_case {
                             fn into(#self_snake_case) -> #ident_inner_type_token_stream {
                                 #content_token_stream
                             }
@@ -3388,7 +3388,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
                                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => &quote::quote!{#field_type_handle::default()},
                                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
                                     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#inner_type_standart_not_null_token_stream(#core_default_default_default_token_stream)},
                                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
@@ -3786,7 +3786,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 ) = {
                     let generate_default_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize|{
                         match &postgresql_type_pattern {
-                            PostgresqlTypePattern::Standart => quote::quote! {Self::default()},
+                            PostgresqlTypePattern::Standart => quote::quote! {Self},
                             PostgresqlTypePattern::ArrayDimension1 { .. } => {
                                 let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
                                     postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -4368,8 +4368,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                         Ok(#value_snake_case) => {
                             use std::fmt::Write as _;
-                            if let Err(error) = write!(#acc_snake_case, "${value}") {
-                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                            if write!(#acc_snake_case, "${value}").is_err() {
+                                return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                    code_occurence: error_occurence_lib::code_occurence!()
+                                });
                             }
                         },
                         Err(#error_snake_case) => {
@@ -4475,7 +4477,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => String::new(),
                             },
                         };
-                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
+                        let maybe_primary_key_is_primary_key_token_stream = quote::quote! {maybe_primary_key(is_primary_key)};
                         let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
                         let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
                         let space_additional_parameter = " {}";

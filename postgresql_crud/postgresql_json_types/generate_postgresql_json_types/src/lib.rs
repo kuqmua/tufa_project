@@ -1003,7 +1003,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream = {
                     let content_token_stream = generate_into_inner_content_token_stream(&quote::quote! {self.0});
                     quote::quote! {
-                        impl std::convert::Into<#ident_read_inner_upper_camel_case> for #ident_origin_upper_camel_case {
+                        impl Into<#ident_read_inner_upper_camel_case> for #ident_origin_upper_camel_case {
                             fn into(self) -> #ident_read_inner_upper_camel_case {
                                 #content_token_stream
                             }
