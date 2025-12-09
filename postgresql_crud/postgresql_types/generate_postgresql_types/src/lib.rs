@@ -5665,11 +5665,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         greater_than_variant_token_stream: &postgresql_crud_common_and_macros_common::PostgresqlTypeGreaterThanVariant,
                         create_content_token_stream: &dyn quote::ToTokens,
                         table_type_declaration_content_token_stream: &dyn quote::ToTokens,
-                    |quote::quote!{
-                        #import_path::PostgresqlTypeGreaterThanTest {
-                            variant: #import_path::PostgresqlTypeGreaterThanVariant::#greater_than_variant_token_stream,
-                            create: #ident_as_postgresql_type_token_stream::Create::#create_content_token_stream,
-                            greater_than: #ident_as_postgresql_type_token_stream::TableTypeDeclaration::#table_type_declaration_content_token_stream,
+                    |{
+                        let self_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident);
+                        quote::quote!{
+                            #import_path::PostgresqlTypeGreaterThanTest {
+                                variant: #import_path::PostgresqlTypeGreaterThanVariant::#greater_than_variant_token_stream,
+                                create: #self_as_postgresql_type_token_stream::Create::#create_content_token_stream,
+                                greater_than: #self_as_postgresql_type_token_stream::TableTypeDeclaration::#table_type_declaration_content_token_stream,
+                            }
                         }
                     };
                     let generate_greater_than_test_new_new_token_stream = |

@@ -994,7 +994,7 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     quote::quote! {
         impl #import_path::#postgresql_type_not_primary_key_upper_camel_case for #ident {
-            type #postgresql_type_upper_camel_case = #ident;
+            type #postgresql_type_upper_camel_case = Self;
             type #create_upper_camel_case = #ident_create_upper_camel_case;
         }
     }
