@@ -5558,7 +5558,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let read_only_ids_merged_with_create_into_option_value_read_token_stream = {
                     let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote!{
-                        <#ident as #import_path::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
+                        <Self as #import_path::PostgresqlTypeTestCases>::#read_only_ids_merged_with_create_into_read_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )
@@ -5905,7 +5905,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                match <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test() {
+                                match <Self as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test() {
                                     Some(#value_snake_case) => Some(
                                         #value_snake_case
                                         .into_iter()
