@@ -3520,10 +3520,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 True,
                 False,
             }
-            let generate_pub_struct_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault| {
+            enum ImplCopy {
+                True,
+                False,
+            }
+            let generate_pub_struct_tokens_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens,
+                impl_default: ImplDefault,
+                impl_copy: ImplCopy,
+            | {
                 let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
                 let maybe_impl_default_token_stream: &dyn quote::ToTokens = match &impl_default {
                     ImplDefault::True => &quote::quote! {Default,},
+                    ImplDefault::False => &proc_macro2_token_stream_new,
+                };
+                let maybe_impl_copy_token_stream: &dyn quote::ToTokens = match &impl_default {
+                    ImplDefault::True => &quote::quote! {Copy,},
                     ImplDefault::False => &proc_macro2_token_stream_new,
                 };
                 quote::quote! {
@@ -3531,6 +3544,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         Debug,
                         #maybe_impl_default_token_stream
                         Clone,
+                        #maybe_impl_copy_token_stream
                         PartialEq,
                         serde::Serialize,
                         serde::Deserialize,
@@ -3682,7 +3696,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_create_token_stream = {
                 let ident_create_token_stream = match &can_be_primary_key {
-                    CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False),
+                    CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(
+                        &ident_create_upper_camel_case,
+                        &quote::quote! {(());},
+                        ImplDefault::False,
+                        ImplCopy::False,
+                    ),
                     CanBePrimaryKey::False => {
                         quote::quote! {
                             #[derive(
@@ -3770,6 +3789,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     ImplDefault::True,
+                    ImplCopy::True,
                 );
                 let (
                     impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream,
@@ -6053,7 +6073,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let value_as_read_only_ids_token_stream = quote::quote!{#value_snake_case: #self_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case};
                 quote::quote! {
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
-                        type #postgresql_type_upper_camel_case = #ident_standart_not_null_upper_camel_case;
+                        type #postgresql_type_upper_camel_case = Self;
                         type #table_type_declaration_upper_camel_case = #ident_standart_not_null_table_type_declaration_upper_camel_case;
                         fn #read_only_ids_into_table_type_declaration_snake_case(#value_as_read_only_ids_token_stream) -> #self_as_postgresql_type_token_stream::#table_type_declaration_upper_camel_case {
                             #ident_table_type_declaration_upper_camel_case(#value_snake_case.0.0)
