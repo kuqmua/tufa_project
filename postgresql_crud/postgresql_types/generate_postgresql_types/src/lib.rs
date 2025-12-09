@@ -3244,9 +3244,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     }
                 };
-                let impl_std_convert_into_ident_origin_impl_new_or_try_new_value_type_for_ident_origin_token_stream = {
+                let impl_std_convert_from_ident_origin_for_ident_inner_type_token_stream = {
                     let content_token_stream = {
-                        let self_dot_zero_token_stream = quote::quote!{#self_snake_case.0};
+                        let value_dot_zero = quote::quote!{#value_snake_case.0};
                         let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
                         let generate_match_token_stream = |match_content_token_stream: &dyn quote::ToTokens, some_content_token_stream: &dyn quote::ToTokens|{
                             quote::quote! {
@@ -3258,9 +3258,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_dot_zero_token_stream,
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => value_dot_zero,
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
-                                    &self_dot_zero_token_stream,
+                                    &value_dot_zero,
                                     &proc_macro2::TokenStream::new(),
                                 )
                             },
@@ -3275,10 +3275,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let into_iter_dimension1_token_stream = quote::quote!{.into_iter().map(|#element_snake_case|#dimension1_token_stream).collect()};
                                 match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                        #self_dot_zero_token_stream #into_iter_dimension1_token_stream
+                                        #value_dot_zero #into_iter_dimension1_token_stream
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
-                                        &self_dot_zero_token_stream,
+                                        &value_dot_zero,
                                         &into_iter_dimension1_token_stream,
                                     )
                                 }
@@ -3286,8 +3286,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     quote::quote! {
-                        impl Into<#ident_inner_type_token_stream> for #ident_origin_upper_camel_case {
-                            fn into(#self_snake_case) -> #ident_inner_type_token_stream {
+                        impl From<#ident_origin_upper_camel_case> for #ident_inner_type_token_stream {
+                            fn from(#value_snake_case: #ident_origin_upper_camel_case) -> Self {
                                 #content_token_stream
                             }
                         }
@@ -3501,7 +3501,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream
                     #maybe_pub_enum_ident_standart_not_null_origin_try_new_for_deserialize_error_named_token_stream
                     #impl_ident_origin_token_stream
-                    #impl_std_convert_into_ident_origin_impl_new_or_try_new_value_type_for_ident_origin_token_stream
+                    #impl_std_convert_from_ident_origin_for_ident_inner_type_token_stream
 
                     #maybe_impl_is_string_empty_for_ident_origin_token_stream
                     #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream
