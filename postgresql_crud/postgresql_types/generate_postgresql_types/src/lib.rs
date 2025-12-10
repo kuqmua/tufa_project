@@ -970,6 +970,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &PostgresqlTypeOrPostgresqlTypeTestCases::PostgresqlTypeTestCases
             );
             let ident_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident);
+            let self_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&self_upper_camel_case);
             let ident_standart_not_null_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_standart_nullable_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_nullable_upper_camel_case);
             let self_postgresql_type_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&quote::quote!{Self::#postgresql_type_upper_camel_case});
@@ -5216,18 +5217,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
                                 quote::quote!{try_new(Some(#element_snake_case.0.into())).expect("error b244d498-527d-4332-98c9-770d27e7af35")},
-                                quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
+                                quote::quote!{#acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::try_new(None).expect("error 31878971-17fc-4526-ab01-42c8332e641f"));}
                             ),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (
                                 quote::quote!{new(Some(#element_snake_case.0.into()))},
-                                quote::quote!{#acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::new(None));}
+                                quote::quote!{#acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::new(None));}
                             ),
                         };
                         let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
                         quote::quote! {Some({
                             let mut #acc_snake_case = vec![];
                             for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]) {
-                                #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
+                                #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
                             }
                             #maybe_acc_push_none_token_stream
                             #additonal_content_token_stream
@@ -5634,7 +5635,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         create_content_token_stream: &dyn quote::ToTokens,
                         table_type_declaration_content_token_stream: &dyn quote::ToTokens,
                     |{
-                        let self_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident);
                         quote::quote!{
                             #import_path::PostgresqlTypeGreaterThanTest {
                                 variant: #import_path::PostgresqlTypeGreaterThanVariant::#greater_than_variant_token_stream,
