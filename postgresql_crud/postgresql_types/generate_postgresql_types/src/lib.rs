@@ -5249,7 +5249,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     };
                                     quote::quote!{Some(
                                         #content_token_stream.into_iter().map(|#element_snake_case|
-                                            #ident_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
+                                            #self_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
                                         ).collect()
                                     )}
                                 },
