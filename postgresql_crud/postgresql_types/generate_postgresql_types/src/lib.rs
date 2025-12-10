@@ -3697,13 +3697,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_postgresql_type_equal_operator_for_ident_table_type_declaration_token_stream
                 }
             };
-            let self_ident_origin_new_value_token_stream = quote::quote!{Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))};
-            let pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_new_value_ident_inner_type_token_stream(
-                &self_ident_origin_new_value_token_stream
-            );
-            let pub_const_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = generate_pub_const_new_value_ident_inner_type_token_stream(
-                &self_ident_origin_new_value_token_stream
-            );
+            let pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream = {
+                let self_ident_origin_new_value_token_stream = quote::quote!{Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))};
+                if let PostgresqlTypePattern::Standart = &postgresql_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+                {
+                    generate_pub_const_new_value_ident_inner_type_token_stream(
+                        &self_ident_origin_new_value_token_stream
+                    )
+                }
+                else {
+                    generate_pub_new_value_ident_inner_type_token_stream(
+                        &self_ident_origin_new_value_token_stream
+                    )
+                }
+            };
             let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_create_token_stream = {
@@ -3739,7 +3746,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         } else {
-                            &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
+                            &pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                         };
                         quote::quote! {
                             impl #ident_create_upper_camel_case {
@@ -4217,7 +4224,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     } else {
-                        &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
+                        &pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                     };
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
@@ -4321,12 +4328,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         )
                     } else {
-                        if let PostgresqlTypePattern::Standart = &postgresql_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
-                            &pub_const_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
-                        }
-                        else {
-                            &pub_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
-                        }
+                        &pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                     };
                     quote::quote! {
                         impl #ident_update_upper_camel_case {
