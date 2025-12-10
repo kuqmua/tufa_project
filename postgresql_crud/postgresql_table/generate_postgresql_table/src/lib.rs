@@ -917,7 +917,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_ident_where_many_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
+        let impl_pub_try_new_for_ident_where_many_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(
             &ident_where_many_upper_camel_case,
             &fields_declaration_token_stream,
             &ident_where_many_try_new_error_named_upper_camel_case,
@@ -958,7 +958,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         quote::quote! {
             #ident_where_many_token_stream
             #ident_where_many_try_new_error_named_token_stream
-            #impl_ident_where_many_token_stream
+            #impl_pub_try_new_for_ident_where_many_token_stream
             #impl_serde_deserialize_for_ident_where_many_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream
         }
@@ -1498,7 +1498,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_ident_update_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
+        let impl_pub_try_new_for_ident_update_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(
             &ident_update_upper_camel_case,
             &fields_declaration_token_stream,
             &ident_update_try_new_error_named_upper_camel_case,
@@ -1556,7 +1556,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         quote::quote! {
             #ident_update_token_stream
             #ident_update_try_new_error_named_token_stream
-            #impl_ident_update_token_stream
+            #impl_pub_try_new_for_ident_update_token_stream
             #impl_serde_deserialize_for_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
@@ -3154,7 +3154,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             };
-            let impl_ident_operation_payload_vec_token_stream = macros_helpers::generate_impl_try_new_for_ident_token_stream::generate_impl_try_new_for_ident_token_stream(
+            let impl_pub_try_new_for_ident_operation_payload_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(
                 &generate_ident_operation_payload_upper_camel_case(&operation),
                 &quote::quote!{#value_snake_case: #std_vec_vec_ident_update_token_stream},
                 &ident_operation_payload_try_new_error_named_upper_camel_case,
@@ -3261,7 +3261,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 #ident_operation_payload_vec_token_stream
                 #ident_operation_payload_try_new_error_named_token_stream
-                #impl_ident_operation_payload_vec_token_stream
+                #impl_pub_try_new_for_ident_operation_payload_token_stream
                 #impl_serde_deserialize_for_ident_update_many_payload_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
             }
