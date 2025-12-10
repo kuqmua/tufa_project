@@ -3731,14 +3731,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
                     CanBePrimaryKey::False => {
                         let pub_fn_new_or_try_new_token_stream: &dyn quote::ToTokens = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                            &quote::quote! {
-                                pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                            &macros_helpers::generate_pub_try_new_token_stream(
+                                &value_ident_inner_type_token_stream,
+                                &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
+                                &quote::quote!{
                                     match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
                                         Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 }
-                            }
+                            )
                         } else {
                             &pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                         };
@@ -4209,14 +4211,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let impl_ident_read_token_stream = {
                     let pub_fn_new_or_try_new_token_stream: &dyn quote::ToTokens = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                        &quote::quote! {
-                            pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                        &macros_helpers::generate_pub_try_new_token_stream(
+                            &value_ident_inner_type_token_stream,
+                            &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
+                            &quote::quote!{
                                 match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
                                     Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
                                     Err(#error_snake_case) => Err(#error_snake_case)
                                 }
                             }
-                        }
+                        )
                     } else {
                         &pub_const_new_or_new_value_ident_inner_type_self_ident_origin_new_value_token_stream
                     };
