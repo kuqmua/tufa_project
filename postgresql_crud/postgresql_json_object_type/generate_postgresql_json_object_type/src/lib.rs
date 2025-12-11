@@ -5415,16 +5415,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     });
                                     let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Read);
                                     quote::quote! {
-                                        #self_element_as_postgresql_type_read_token_stream::new(match #value_snake_case {
-                                            Some(#value_snake_case) => Some(
-                                                #value_snake_case.into_iter().map(|#element_snake_case|{
-                                                    #ident_with_id_standart_not_null_read_upper_camel_case {
-                                                        #(#content_token_stream),*
-                                                    }
+                                        #self_element_as_postgresql_type_read_token_stream::new(
+                                            #value_snake_case.map(|#value_snake_case|
+                                                #value_snake_case
+                                                .into_iter()
+                                                .map(|#element_snake_case|#ident_with_id_standart_not_null_read_upper_camel_case {
+                                                    #(#content_token_stream),*
                                                 }).collect()
-                                            ),
-                                            None => None,
-                                        })
+                                            )
+                                        )
                                     }
                                 }
                             },
