@@ -3370,37 +3370,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                     &quote::quote!{#ident_as_import_path_postgresql_json_type_token_stream::Update},
                     &quote::quote!{#ident_as_import_path_postgresql_json_type_token_stream::UpdateForQuery},
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => quote::quote!{
                                 Self(#import_path::NotEmptyUniqueEnumVec::from_t1_impl_from_t2(#value_snake_case.0))
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                Self(match #value_snake_case.0 {
-                                    Some(#value_snake_case) => Some(#ident_standart_not_null_as_import_path_postgresql_json_type_token_stream::UpdateForQuery::from(#value_snake_case)),
-                                    None => None,
-                                })
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                            PostgresqlJsonObjectTypePattern::Array => quote::quote!{
                                 Self {
-                                    #create_snake_case: #value_snake_case.#create_snake_case.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
-                                        #element_snake_case
-                                    )).collect(),
+                                    #create_snake_case: #value_snake_case.#create_snake_case.into_iter().map(|#element_snake_case|
+                                        #ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(#element_snake_case)
+                                    ).collect(),
                                     #update_snake_case: #import_path::UniqueVec::from_t1_impl_from_t2(#value_snake_case.#update_snake_case),
                                     #delete_snake_case: #value_snake_case.#delete_snake_case.into_iter().map(|#element_snake_case|#element_snake_case.into()).collect(),
                                 }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{
-                                    Self(match #value_snake_case.0 {
-                                        Some(#value_snake_case) => Some(#ident_array_not_null_as_import_path_postgresql_json_type_token_stream::UpdateForQuery::from(#value_snake_case)),
-                                        None => None,
-                                    })
-                                }
-                            },
+                            }
                         },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let content_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_import_path_postgresql_json_type_token_stream,
+                                PostgresqlJsonObjectTypePattern::Array => &ident_array_not_null_as_import_path_postgresql_json_type_token_stream
+                            };
+                            quote::quote!{Self(#value_snake_case.0.map(#content_token_stream::UpdateForQuery::from))}
+                        }
                     }
                 );
                 let maybe_ident_update_for_query_element_token_stream = if is_standart_not_null {
@@ -3719,7 +3710,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_with_id_array_not_null_as_postgresql_json_type_token_stream::select_query_part(
                                                 #value_snake_case,
                                                 field_ident,
-                                                &column_name_and_maybe_field_getter,
+                                                column_name_and_maybe_field_getter,
                                                 column_name_and_maybe_field_getter_for_error_message,
                                                 true
                                             )
@@ -3919,7 +3910,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #query_snake_case
                                     ),
                                     None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_as_postgresql_json_type_update_token_stream::new(None))) {
-                                        return Err(#error_snake_case.to_string());
+                                        Err(#error_snake_case.to_string())
                                     }
                                     else {
                                         Ok(#query_snake_case)
@@ -3982,7 +3973,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #query_snake_case
                                     ),
                                     None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_as_postgresql_json_type_update_token_stream::new(None))) {
-                                        return Err(#error_snake_case.to_string());
+                                        Err(#error_snake_case.to_string())
                                     }
                                     else {
                                         Ok(#query_snake_case)
