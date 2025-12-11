@@ -2116,31 +2116,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             };
-                            let generate_match_option_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                                quote::quote! {
-                                    match self.0 {
-                                        Some(#value_snake_case) => Some(#content_token_stream),
-                                        None => None
-                                    }
-                                }
-                            };
                             match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::False),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&generate_into_inner_token_stream(
-                                        &generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case),
-                                        &value_snake_case
-                                    )),
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        let current_ident = generate_type_as_postgresql_json_type_token_stream(&ident_standart_not_null_upper_camel_case);
+                                        quote::quote! {
+                                            self.0.map(#current_ident::into_inner)
+                                        }
+                                    }
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let content_token_stream = generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::True);
                                         quote::quote! {self.0.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
                                     },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&generate_into_inner_token_stream(
-                                        &ident_array_not_null_read_upper_camel_case,
-                                        &value_snake_case
-                                    ))
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                        self.0.map(#ident_array_not_null_read_upper_camel_case::into_inner)
+                                    }
                                 },
                             }
                         };
