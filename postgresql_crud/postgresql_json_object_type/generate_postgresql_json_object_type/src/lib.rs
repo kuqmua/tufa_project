@@ -3336,8 +3336,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Some(#value_snake_case) => format!(
                                             "jsonb_build_object('value',{})",
                                             match #ident_array_not_null_update_for_query_upper_camel_case::#select_only_updated_ids_query_part_snake_case(
-                                                &#value_snake_case,
-                                                &column_name_and_maybe_field_getter,
+                                                #value_snake_case,
+                                                column_name_and_maybe_field_getter,
                                                 #increment_snake_case
                                             ) {
                                                 Ok(#value_snake_case) => #value_snake_case,
