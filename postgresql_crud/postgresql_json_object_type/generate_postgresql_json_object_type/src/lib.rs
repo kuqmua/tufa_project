@@ -4316,8 +4316,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Ok(mut #value_snake_case) => {
                                                 let _: Option<char> = #value_snake_case.pop();
                                                 use std::fmt::Write as _;
-                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                    });
                                                 }
                                             }
                                             Err(#error_snake_case) => {
@@ -4348,8 +4350,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                             Ok(#value_snake_case) => {
                                                                 use std::fmt::Write as _;
-                                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
-                                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                                if write!(#acc_snake_case, "${value},").is_err() {
+                                                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                                    });
                                                                 }
                                                             },
                                                             Err(#error_snake_case) => {
