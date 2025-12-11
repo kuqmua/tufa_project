@@ -999,6 +999,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_type_as_postgresql_json_type_update_for_query_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_update_for_query);
             let self_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&self_upper_camel_case);
             let ident_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident);
+            let self_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&self_upper_camel_case);
             let self_as_postgresql_json_type_create_for_query_token_stream = generate_type_as_postgresql_json_type_create_for_query_token_stream(&self_upper_camel_case);
             let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&uuid_uuid_as_not_null_jsonb_string_token_stream);
             let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_for_query_token_stream = generate_type_as_postgresql_json_type_update_for_query_token_stream(&uuid_uuid_as_not_null_jsonb_string_token_stream);
@@ -3556,7 +3557,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     match ident_with_id_handle {
                                         Ok(#value_snake_case) => {
                                             use std::fmt::Write as _;
-                                            if let Err(#error_snake_case) = write!(#acc_snake_case, "{value}") {
+                                            if write!(#acc_snake_case, "{value}").is_err() {
                                                 return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
@@ -3582,8 +3583,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 };
                                 let maybe_space_and_space = if #acc_snake_case.is_empty() { "" } else { " and " };
                                 use std::fmt::Write as _;
-                                if let Err(#error_snake_case) = write!(#acc_snake_case, "{maybe_space_and_space}elem->>'id' <> ${increment}") {
-                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                if write!(#acc_snake_case, "{maybe_space_and_space}elem->>'id' <> ${increment}").is_err() {
+                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    });
                                 }
                             }
                             #acc_snake_case
@@ -3598,8 +3601,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 use std::fmt::Write as _;
-                                if let Err(#error_snake_case) = write!(#acc_snake_case, "${increment},") {
-                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                if write!(#acc_snake_case, "${increment},").is_err() {
+                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    });
                                 }
                             }
                             let _: Option<char> = #acc_snake_case.pop();
@@ -3914,7 +3919,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #value_snake_case,
                                         #query_snake_case
                                     ),
-                                    None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#ident_as_postgresql_json_type_update_token_stream::new(None))) {
+                                    None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_as_postgresql_json_type_update_token_stream::new(None))) {
                                         return Err(#error_snake_case.to_string());
                                     }
                                     else {
@@ -3977,7 +3982,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #value_snake_case,
                                         #query_snake_case
                                     ),
-                                    None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#ident_as_postgresql_json_type_update_token_stream::new(None))) {
+                                    None => if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#self_as_postgresql_json_type_update_token_stream::new(None))) {
                                         return Err(#error_snake_case.to_string());
                                     }
                                     else {
@@ -3992,7 +3997,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                             #increment_snake_case
                         ) {
-                            Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{}),", #value_snake_case)),
+                            Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{value}),")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4125,7 +4130,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                 if let Some(#value_snake_case) = &#value_snake_case.0 {
-                                    match #ident_array_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(&#value_snake_case, #query_snake_case) {
+                                    match #ident_array_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(#value_snake_case, #query_snake_case) {
                                         Ok(#value_snake_case) => {
                                             #query_snake_case = #value_snake_case;
                                         },
