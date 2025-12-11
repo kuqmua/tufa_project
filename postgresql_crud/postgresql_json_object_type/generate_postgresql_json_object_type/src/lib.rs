@@ -3238,8 +3238,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {
                                             match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                                 &#element_snake_case.#field_ident,
-                                                &#field_ident_double_quotes_token_stream,
-                                                &"elem",
+                                                #field_ident_double_quotes_token_stream,
+                                                "elem",
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
@@ -3557,7 +3557,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Ok(#value_snake_case) => {
                                             use std::fmt::Write as _;
                                             if let Err(#error_snake_case) = write!(#acc_snake_case, "{value}") {
-                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                });
                                             }
                                         }
                                         Err(#error_snake_case) => {
@@ -4151,7 +4153,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                             &#value_snake_case.#field_ident,
-                                            &#field_ident_double_quotes_token_stream,
+                                            #field_ident_double_quotes_token_stream,
                                             &format!(#column_name_and_maybe_field_getter_field_ident_double_quotes_token_stream),
                                             #increment_snake_case
                                         ) {
@@ -4194,7 +4196,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                             &#value_snake_case.#field_ident,
-                                            &#field_ident_double_quotes_token_stream,
+                                            #field_ident_double_quotes_token_stream,
                                             &format!(#column_name_and_maybe_field_getter_field_ident_double_quotes_token_stream),
                                             #increment_snake_case
                                         ) {
@@ -4242,8 +4244,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                             &#element_snake_case.#field_ident,
-                                            &#field_ident_double_quotes_token_stream,
-                                            &"elem",
+                                            #field_ident_double_quotes_token_stream,
+                                            "elem",
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
@@ -4303,8 +4305,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
                                             &#element_snake_case.#field_ident,
-                                            &#field_ident_double_quotes_token_stream,
-                                            &"elem",
+                                            #field_ident_double_quotes_token_stream,
+                                            "elem",
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
