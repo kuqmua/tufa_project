@@ -1044,12 +1044,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 quote::quote!{
                     for #element_snake_case in #in_token_stream #self_field_vec_token_stream {
-                        #acc_snake_case.push_str(&format!(
+                        use std::fmt::Write as _;
+                        if let Err(#error_snake_case) = write!(
+                            #acc_snake_case,
                             "{}||",
                             match #element_snake_case {
                                 #(#content_token_stream),*
                             }
-                        ));
+                        ) {
+                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        }
                     }
                 }
             };
@@ -3126,8 +3130,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #increment_snake_case
                                                 ) {
                                                     Ok(mut #value_snake_case) => {
-                                                        let _ = #value_snake_case.pop();
-                                                        #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                        let _: Option<char> = #value_snake_case.pop();
+                                                        use std::fmt::Write as _;
+                                                        if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        }
                                                     },
                                                     Err(#error_snake_case) => {
                                                         return Err(#error_snake_case);
@@ -3166,8 +3173,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
-                                                    let _ = #value_snake_case.pop();
-                                                    #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                    let _: Option<char> = #value_snake_case.pop();
+                                                    use std::fmt::Write as _;
+                                                    if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    }
                                                 }
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3210,7 +3220,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
-                                                    let _ = #value_snake_case.pop();
+                                                    let _: Option<char> = #value_snake_case.pop();
                                                     current_acc.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                                 }
                                                 Err(#error_snake_case) => {
@@ -3233,8 +3243,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
-                                                    let _ = #value_snake_case.pop();
-                                                     #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                    let _: Option<char> = #value_snake_case.pop();
+                                                    use std::fmt::Write as _;
+                                                    if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    }
                                                 },
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3257,7 +3270,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #increment_snake_case
                                                     ) {
                                                         Ok(mut #value_snake_case) => {
-                                                            let _ = #value_snake_case.pop();
+                                                            let _: Option<char> = #value_snake_case.pop();
                                                             current_acc.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
                                                         }
                                                         Err(#error_snake_case) => {
@@ -3269,9 +3282,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             #(#match_variants_token_stream),*
                                                         }
                                                     }
-                                                    let _ = current_acc.pop();
-                                                    let _ = current_acc.pop();
-                                                    #acc_snake_case.push_str(&format!("{}||", current_acc));
+                                                    let _: Option<char> = current_acc.pop();
+                                                    let _: Option<char> = current_acc.pop();
+                                                    use std::fmt::Write as _;
+                                                    if let Err(#error_snake_case) = write!(#acc_snake_case, "{current_acc}||") {
+                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    }
                                                 }
                                                 for #element_snake_case in &self.create {
                                                     #(#select_only_created_ids_query_part_content_token_stream)*
@@ -3286,7 +3302,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 for _ in self.#update_snake_case.to_vec() {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                         Ok(#value_snake_case) => {
-                                                             #acc_snake_case.push_str(&format!("${value},"));
+                                                            use std::fmt::Write as _;
+                                                            if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
+                                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                            }
                                                         },
                                                         Err(#error_snake_case) => {
                                                             return Err(#error_snake_case);
@@ -3296,7 +3315,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 for #element_snake_case in &self.#create_snake_case {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                         Ok(#value_snake_case) => {
-                                                             #acc_snake_case.push_str(&format!("${value},"));
+                                                            use std::fmt::Write as _;
+                                                            if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
+                                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                            }
                                                         },
                                                         Err(#error_snake_case) => {
                                                             return Err(#error_snake_case);
@@ -3533,7 +3555,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     };
                                     match ident_with_id_handle {
                                         Ok(#value_snake_case) => {
-                                            #acc_snake_case.push_str(&#value_snake_case);
+                                            use std::fmt::Write as _;
+                                            if let Err(#error_snake_case) = write!(#acc_snake_case, "{}", #value_snake_case) {
+                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                            }
                                         }
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -3554,7 +3579,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 };
                                 let maybe_space_and_space = if #acc_snake_case.is_empty() { "" } else { " and " };
-                                #acc_snake_case.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                                use std::fmt::Write as _;
+                                if let Err(#error_snake_case) = write!(#acc_snake_case, "{maybe_space_and_space}elem->>'id' <> ${increment}") {
+                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                }
                             }
                             #acc_snake_case
                         };
@@ -3567,7 +3595,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         return Err(#error_snake_case);
                                     }
                                 };
-                                #acc_snake_case.push_str(&format!("${increment},"));
+                                use std::fmt::Write as _;
+                                if let Err(#error_snake_case) = write!(#acc_snake_case, "${increment},") {
+                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                }
                             }
                             let _: Option<char> = #acc_snake_case.pop();
                             #acc_snake_case
@@ -3713,10 +3744,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Array => generate_quotes::double_quotes_token_stream(&format!("elem->'{field_ident}'")),
                                 };
                                 quote::quote! {
-                                    #acc_snake_case.push_str(&format!(
-                                        #format_handle_token_stream,
-                                        #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#content_token_stream)
-                                    ));
+                                    use std::fmt::Write as _;
+                                    if let Err(#error_snake_case) = write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#content_token_stream)) {
+                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    }
                                 }
                             });
                             quote::quote! {
@@ -4125,8 +4156,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
-                                                let _ = #value_snake_case.pop();
-                                                 #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                let _: Option<char> = #value_snake_case.pop();
+                                                use std::fmt::Write as _;
+                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4165,8 +4199,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
-                                                let _ = #value_snake_case.pop();
-                                                #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                let _: Option<char> = #value_snake_case.pop();
+                                                use std::fmt::Write as _;
+                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4210,8 +4247,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
-                                                let _ = #value_snake_case.pop();
-                                                #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                let _: Option<char> = #value_snake_case.pop();
+                                                use std::fmt::Write as _;
+                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4237,7 +4277,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             for _ in &#value_snake_case.0 {
                                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                     Ok(#value_snake_case) => {
-                                                        #acc_snake_case.push_str(&format!("${value},"));
+                                                        use std::fmt::Write as _;
+                                                        if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
+                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        }
                                                     },
                                                     Err(#error_snake_case) => {
                                                         return Err(#error_snake_case);
@@ -4265,8 +4308,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #increment_snake_case
                                         ) {
                                             Ok(mut #value_snake_case) => {
-                                                let _ = #value_snake_case.pop();
-                                                #acc_snake_case.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                let _: Option<char> = #value_snake_case.pop();
+                                                use std::fmt::Write as _;
+                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
+                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                }
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4295,7 +4341,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     for _ in &#value_snake_case.0 {
                                                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                             Ok(#value_snake_case) => {
-                                                                #acc_snake_case.push_str(&format!("${value},"));
+                                                                use std::fmt::Write as _;
+                                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
+                                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                                }
                                                             },
                                                             Err(#error_snake_case) => {
                                                                 return Err(#error_snake_case);
