@@ -342,6 +342,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 generate_type_as_import_path_token_stream(&type_token_stream, &naming::PostgresqlTypeTestCasesUpperCamelCase)
             };
             let ident_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident);
+            let self_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&self_upper_camel_case);
             let ident_standart_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(
                 &ident_standart_not_null_upper_camel_case
             );
@@ -6459,39 +6460,39 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     {
                         let generate_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
                             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case = dimension.read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case();
-                            quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
+                            quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
                                 #read_only_ids_snake_case,
                                 #create_snake_case
                             )}
                         };
-                        let option_vec_create_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case()};
-                        let read_only_ids_to_two_dimensional_vec_read_inner_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case)};
-                        let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case)};
-                        let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case)};
-                        let update_to_read_only_ids_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(#value_snake_case)};
-                        let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(#value_snake_case)};
-                        let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#previous_read_merged_with_option_update_into_read_snake_case(#read_snake_case, #option_update_snake_case)};
-                        let read_only_ids_merged_with_create_into_read_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_read_snake_case(
+                        let option_vec_create_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case()};
+                        let read_only_ids_to_two_dimensional_vec_read_inner_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case)};
+                        let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case)};
+                        let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case)};
+                        let update_to_read_only_ids_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(#value_snake_case)};
+                        let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(#value_snake_case)};
+                        let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#previous_read_merged_with_option_update_into_read_snake_case(#read_snake_case, #option_update_snake_case)};
+                        let read_only_ids_merged_with_create_into_read_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_read_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )};
-                        let read_only_ids_merged_with_create_into_option_value_read_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
+                        let read_only_ids_merged_with_create_into_option_value_read_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )};
-                        let read_only_ids_merged_with_create_into_table_type_declaration_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
+                        let read_only_ids_merged_with_create_into_table_type_declaration_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )};
-                        let read_only_ids_merged_with_create_into_where_equal_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_equal_snake_case(
+                        let read_only_ids_merged_with_create_into_where_equal_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_where_equal_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )};
-                        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
+                        let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         )};
-                        let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = quote::quote!{Some(#ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case(
+                        let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = quote::quote!{Some(#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         ))};
@@ -6502,11 +6503,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream = generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Two);
                         let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream = generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Three);
                         let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four);
-                        let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
+                        let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
                             #create_snake_case
                         )};
                         let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote!{todo!()};
-                        let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote!{#ident_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
+                        let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
                             #create_snake_case
                         )};
                         postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
