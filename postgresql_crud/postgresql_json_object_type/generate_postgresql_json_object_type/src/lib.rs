@@ -998,7 +998,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_type_as_postgresql_json_type_update_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_update);
             let generate_type_as_postgresql_json_type_update_for_query_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_update_for_query);
             let self_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&self_upper_camel_case);
-            let ident_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&ident);
             let self_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&self_upper_camel_case);
             let self_as_postgresql_json_type_create_for_query_token_stream = generate_type_as_postgresql_json_type_create_for_query_token_stream(&self_upper_camel_case);
             let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = generate_type_as_postgresql_json_type_update_token_stream(&uuid_uuid_as_not_null_jsonb_string_token_stream);
@@ -3751,7 +3750,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Array => generate_quotes::double_quotes_token_stream(&format!("elem->'{field_ident}'")),
                                 };
                                 quote::quote! {
-                                    use std::fmt::Write as _;
                                     if let Err(#error_snake_case) = write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#content_token_stream)) {
                                         panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
                                     }
@@ -3759,6 +3757,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             });
                             quote::quote! {
                                 let mut #acc_snake_case = #std_string_string_token_stream::default();
+                                use std::fmt::Write as _;
                                 #(#acc_push_token_stream)*
                                 let _: Option<char> = #acc_snake_case.pop();
                                 let _: Option<char> = #acc_snake_case.pop();
