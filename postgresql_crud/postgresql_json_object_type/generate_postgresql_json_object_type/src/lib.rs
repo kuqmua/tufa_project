@@ -4743,7 +4743,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let mut #acc_snake_case = vec![];
                                     for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
                                         .zip(#create_snake_case.0.into_iter())
-                                        .collect::<Vec<(#ident_with_id_standart_not_null_read_only_ids_upper_camel_case, #ident_with_id_standart_not_null_create_upper_camel_case)>>()
                                         .into_iter()
                                         .enumerate()
                                     {
@@ -4854,7 +4853,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let element_field_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                     quote::quote! {
-                                        for (index, #create_snake_case) in #create_snake_case.0.clone().into_iter().into_iter().enumerate() {
+                                        for (index, #create_snake_case) in #create_snake_case.0.clone().into_iter().enumerate() {
                                             if let Some(#value_snake_case) = #field_type_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
                                                 #create_snake_case.#field_ident
                                             ) {
@@ -4999,7 +4998,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let element_field_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
                                     quote::quote! {
-                                        for (index, #create_snake_case) in #create_snake_case.0.clone().into_iter().into_iter().enumerate() {
+                                        for (index, #create_snake_case) in #create_snake_case.0.clone().into_iter().enumerate() {
                                             if let Some(#value_snake_case) = #field_type_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
                                                 #create_snake_case.#field_ident
                                             ) {
@@ -6047,10 +6046,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_read_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 90d33ddd-e08d-488c-8577-c75febe97301");
                                                 let mut #acc_snake_case = vec![];
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
-                                                    #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
-                                                    #ident_with_id_standart_not_null_create_upper_camel_case,
-                                                )>>() {
+                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
@@ -6153,10 +6149,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_table_type_declaration_upper_camel_case::new({
                                                 assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 7776a146-06a8-4972-8e16-371d41ee164c");
                                                 let mut #acc_snake_case = vec![];
-                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
-                                                    #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
-                                                    #ident_with_id_standart_not_null_create_upper_camel_case,
-                                                )>>() {
+                                                for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     #acc_snake_case.push(#ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
@@ -6234,10 +6227,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 logical_operator: #import_path::LogicalOperator::And,
                                                 #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                     let mut #acc_snake_case = vec![];
-                                                    for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
-                                                        #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
-                                                        #ident_with_id_standart_not_null_create_upper_camel_case,
-                                                    )>>() {
+                                                    for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                         #acc_snake_case.push(
                                                             #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                                 #ident_token_stream,
@@ -6339,10 +6329,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     logical_operator: #import_path::LogicalOperator::And,
                                                     #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
                                                         let mut #acc_snake_case = vec![];
-                                                        for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()).collect::<Vec<(
-                                                            #ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
-                                                            #ident_with_id_standart_not_null_create_upper_camel_case,
-                                                        )>>() {
+                                                        for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                             #acc_snake_case.push(
                                                                 #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                                     #ident_token_stream,
