@@ -2572,32 +2572,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let impl_ident_update_token_stream = {
                     let maybe_pub_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => {
-                            let (
-                                parameters_token_stream,
-                                content_token_stream
-                            ): (
-                                &dyn quote::ToTokens,
-                                &dyn quote::ToTokens
-                            ) = match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                    &generate_value_type_token_stream(&generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case)),
-                                    &self_value_token_stream
-                                ),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
-                                    &generate_value_type_token_stream(
-                                        &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                            &ident_standart_not_null_as_postgresql_json_type_update_token_stream
-                                        )
-                                    ),
-                                    &self_value_token_stream
-                                ),
-                            };
-                            macros_helpers::generate_pub_new_token_stream(
-                                &parameters_token_stream,
-                                &content_token_stream
-                            )
-                        },
+                        PostgresqlJsonObjectTypePattern::Standart => macros_helpers::generate_pub_const_new_token_stream(
+                            &generate_value_type_token_stream(&match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_update_element_upper_camel_case),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_as_postgresql_json_type_update_token_stream)
+                            }),
+                            &self_value_token_stream
+                        ),
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_try_new_token_stream(
                                 &generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False),
@@ -3147,8 +3128,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 Ok(mut #value_snake_case) => {
                                                     let _: Option<char> = #value_snake_case.pop();
                                                     use std::fmt::Write as _;
-                                                    if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                        return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                            code_occurence: error_occurence_lib::code_occurence!()
+                                                        });
                                                     }
                                                 }
                                                 Err(#error_snake_case) => {
