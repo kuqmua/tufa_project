@@ -2820,24 +2820,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             where
                                                 __A: serde::de::SeqAccess<'de>,
                                             {
-                                                let __field0 = match serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __seq)? {
-                                                    Some(__value) => __value,
-                                                    None => {
-                                                        vec![]
-                                                    }
-                                                };
-                                                let __field1 = match serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream>(&mut __seq)? {
-                                                    Some(__value) => __value,
-                                                    None => {
-                                                        #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::default()
-                                                    }
-                                                };
-                                                let __field2 = match serde::de::SeqAccess::next_element::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __seq)? {
-                                                    Some(__value) => __value,
-                                                    None => {
-                                                        vec![]
-                                                    }
-                                                };
+                                                let __field0 = serde::de::SeqAccess::next_element::<#std_vec_vec_ident_with_id_standart_not_null_create_token_stream>(&mut __seq)?.unwrap_or_default();
+                                                let __field1 = serde::de::SeqAccess::next_element::<#import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream>(&mut __seq)?.unwrap_or_default();
+                                                let __field2 = serde::de::SeqAccess::next_element::<#std_vec_vec_postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>(&mut __seq)?.unwrap_or_default();
                                                 #match_try_new_in_deserialize_token_stream
                                             }
                                             #[inline]
@@ -2873,35 +2858,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         }
                                                     }
                                                 }
-                                                let __field0 = match __field0 {
-                                                    Some(__field0) => __field0,
-                                                    None => {
-                                                        vec![]
-                                                    }
-                                                };
-                                                let __field1 = match __field1 {
-                                                    Some(__field1) => __field1,
-                                                    None => {
-                                                        #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::default()
-                                                    }
-                                                };
-                                                let __field2 = match __field2 {
-                                                    Some(__field2) => __field2,
-                                                    None => {
-                                                        vec![]
-                                                    }
-                                                };
+                                                let __field0 = __field0.unwrap_or_default();
+                                                let __field1 = __field1.unwrap_or_default();
+                                                let __field2 = __field2.unwrap_or_default();
                                                 #match_try_new_in_deserialize_token_stream
                                             }
                                         }
                                         #[doc(hidden)]
-                                        const FIELDS: &'static [&'static str] = &["create", "update", "delete"];
+                                        const FIELDS: &[&str] = &["create", "update", "delete"];
                                         serde::Deserializer::deserialize_struct(
                                             __deserializer,
                                             #ident_update_double_quotes_token_stream,
                                             FIELDS,
                                             __Visitor {
-                                                marker: serde::__private::PhantomData::<#ident_update_upper_camel_case>,
+                                                marker: serde::__private::PhantomData::<#self_upper_camel_case>,
                                                 lifetime: serde::__private::PhantomData,
                                             },
                                         )
