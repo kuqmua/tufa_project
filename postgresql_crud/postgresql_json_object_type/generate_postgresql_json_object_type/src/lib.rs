@@ -1372,9 +1372,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     });
                                     let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                    quote::quote! {
-                                        #ident_select_element_or_ident_with_id_select_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(#content_token_stream)
-                                    }
+                                    quote::quote! {#self_upper_camel_case::#field_ident_upper_camel_case_token_stream(#content_token_stream)}
                                 });
                                 quote::quote! {#(#elements_token_stream),*}
                             };
@@ -2922,9 +2920,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let value_content_token_stream = wrap_into_value_initialization_token_stream(
                                 &postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                             );
-                            quote::quote! {
-                                #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_content_token_stream)
-                            }
+                            quote::quote! {#self_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_content_token_stream)}
                         });
                         quote::quote! {vec![#(#elements_token_stream),*]}
                     });
