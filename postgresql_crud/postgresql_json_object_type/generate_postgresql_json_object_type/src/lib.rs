@@ -3483,7 +3483,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let value_into_inner_token_stream = quote::quote! {#value_snake_case.into_inner()};
-            let (maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream) = {
+            let (impl_postgresql_crud_postgresql_json_type_for_ident_token_stream, maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream) = {
                 let postgresql_type_or_postgresql_json_type_postgresql_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType;
                 let postgresql_type_or_postgresql_json_type_postgresql_json_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType;
                 let generate_update_query_part_standart_nullable_token_stream = |postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType|{
@@ -3723,14 +3723,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let content_token_stream = match &postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => {
                                         let select_only_ids_query_part_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column_name_and_maybe_field_getter}}->'{field_ident}'"));
-                                        quote::quote! {
-                                            format!(#select_only_ids_query_part_format_handle_token_stream)
-                                        }
+                                        quote::quote! {&format!(#select_only_ids_query_part_format_handle_token_stream)}
                                     },
-                                    PostgresqlJsonObjectTypePattern::Array => generate_quotes::double_quotes_token_stream(&format!("elem->'{field_ident}'")),
+                                    PostgresqlJsonObjectTypePattern::Array => generate_quotes::double_quotes_token_stream(&format!("elem->'{field_ident}'"))
                                 };
                                 quote::quote! {
-                                    if let Err(#error_snake_case) = write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(&#content_token_stream)) {
+                                    if let Err(#error_snake_case) = write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(#content_token_stream)) {
                                         panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
                                     }
                                 }
@@ -3947,9 +3945,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                                 for #element_snake_case in #value_snake_case.#create_snake_case {
-                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(
-                                        #ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(#element_snake_case)
-                                    )) {
+                                    if let Err(#error_snake_case) = #query_snake_case.try_bind(sqlx::types::Json(#element_snake_case)) {
                                         return Err(#error_snake_case.to_string());
                                     }
                                 }
@@ -6570,7 +6566,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #ident_read_inner_token_stream
                 #ident_update_token_stream
                 #ident_update_for_query_token_stream
-                #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
+                #impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
                 #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
                 #impl_postgresql_json_type_test_cases_for_ident_token_stream
                 #impl_postgresql_type_test_cases_for_ident_token_stream
