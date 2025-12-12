@@ -3140,8 +3140,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #value_snake_case
                                             ) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
                                                 &#value_snake_case.#value_snake_case,
-                                                &#field_ident_double_quotes_token_stream,
-                                                &column_name_and_maybe_field_getter,
+                                                #field_ident_double_quotes_token_stream,
+                                                column_name_and_maybe_field_getter,
                                                 #increment_snake_case
                                             ) {
                                                 Ok(mut #value_snake_case) => {
@@ -4014,7 +4014,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                 if let Some(#value_snake_case) = &#value_snake_case.0 {
-                                    match #ident_standart_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(&#value_snake_case, #query_snake_case) {
+                                    match #ident_standart_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(#value_snake_case, #query_snake_case) {
                                         Ok(#value_snake_case) => {
                                             #query_snake_case = #value_snake_case;
                                         },
@@ -4389,7 +4389,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{
                                     if let Some(#value_snake_case) = &#value_snake_case.0 {
                                         match #ident_standart_not_null_as_import_path_postgresql_json_type_token_stream::#select_only_created_ids_query_bind_snake_case(
-                                            &#value_snake_case,
+                                            #value_snake_case,
                                             #query_snake_case
                                         ) {
                                             Ok(#value_snake_case) => {
@@ -5294,7 +5294,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         let mut #acc_snake_case = vec![];
                                         if let Some(#value_snake_case) = &#read_only_ids_snake_case.0.#value_snake_case {
-                                            for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#value_snake_case) {
+                                            for element0 in #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#value_snake_case) {
                                                 for element1 in element0 {
                                                     #acc_snake_case.push(vec![Some(element1)]);
                                                 }
