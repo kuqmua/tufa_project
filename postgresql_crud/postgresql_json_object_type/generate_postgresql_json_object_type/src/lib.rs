@@ -3210,7 +3210,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             ) {
                                                 Ok(mut #value_snake_case) => {
                                                     let _: Option<char> = #value_snake_case.pop();
-                                                    current_acc.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                    current_acc.push_str(&format!("jsonb_build_object({value})||"));
                                                 }
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3260,7 +3260,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     ) {
                                                         Ok(mut #value_snake_case) => {
                                                             let _: Option<char> = #value_snake_case.pop();
-                                                            current_acc.push_str(&format!("jsonb_build_object({})||", #value_snake_case));
+                                                            current_acc.push_str(&format!("jsonb_build_object({value})||"));
                                                         }
                                                         Err(#error_snake_case) => {
                                                             return Err(#error_snake_case);
@@ -3370,7 +3370,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(#element_snake_case)
                                     ).collect(),
                                     #update_snake_case: #import_path::UniqueVec::from_t1_impl_from_t2(#value_snake_case.#update_snake_case),
-                                    #delete_snake_case: #value_snake_case.#delete_snake_case.into_iter().map(|#element_snake_case|#element_snake_case.into()).collect(),
+                                    #delete_snake_case: #value_snake_case.#delete_snake_case.into_iter().map(Into::into).collect(),
                                 }
                             }
                         },
