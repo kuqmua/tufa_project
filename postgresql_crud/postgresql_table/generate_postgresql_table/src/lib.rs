@@ -807,7 +807,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #increment_snake_case
                         ) {
                             Ok(#value_snake_case) => {
-                                #acc_snake_case.push_str(&format!("{value},"));
+                                use std::fmt::Write as _;
+                                if let Err(error) = write!(#acc_snake_case, "{value},") {
+                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                }
                             }
                             Err(#error_0_token_stream) => {
                                 return Err(#error_0_token_stream);
@@ -1168,6 +1171,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #serde_deserialize,
                     PartialEq,
                     Clone,
+                    Copy,
                 )]
                 pub enum #ident_select_upper_camel_case {
                     #variants
@@ -2569,7 +2573,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
                                     Ok(#value_snake_case) => {
-                                        #acc_snake_case.push_str(&format!("({value}),"));
+                                        use std::fmt::Write as _;
+                                        if let Err(error) = write!(#acc_snake_case, "({value}),") {
+                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                        }
                                     },
                                     Err(#error_0_token_stream) => {
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -2892,7 +2899,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     },
                                 };
-                                #additional_parameters_snake_case.push_str(&format!("{prefix}{value}"));
+                                use std::fmt::Write as _;
+                                if let Err(error) = write!(#additional_parameters_snake_case, "{prefix}{value}") {
+                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                }
                             };
                             #additional_parameters_snake_case
                         }
@@ -6775,9 +6785,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #acc_snake_case
                                 }),
                                 100,
-                                |fut| async move {
-                                    fut.await;
-                                },
+                                async |fut| { fut.await; },
                             )
                             .await;
                             drop_all_test_tables().await;

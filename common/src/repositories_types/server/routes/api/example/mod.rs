@@ -39,7 +39,7 @@ pub struct Example {
     pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
     pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
-    // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
+    pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
     // pub column_4: postgresql_crud::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
@@ -181,46 +181,46 @@ pub struct Example {
     // pub column_139: postgresql_crud::OptionVecOfSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTzRange,
     // pub column_140: postgresql_crud::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
-    pub column_142: AnimalAsNotNullJsonbObject,
-    pub column_143: OptionAnimalAsNullableJsonbObject,
-    pub column_144: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    pub column_145: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    // pub column_142: AnimalAsNotNullJsonbObject,
+    // pub column_143: OptionAnimalAsNullableJsonbObject,
+    // pub column_144: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub column_145: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
+    // , postgresql_crud::GeneratePostgresqlJsonObjectType
 )] //
-#[postgresql_crud::postgresql_json_object_type_pattern{
-    // "All"
-    {
-        "Concrete":
-        // [
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            // {
-            //     "not_null_or_nullable": "NotNull",
-            //     "postgresql_json_object_type_pattern": "Array",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
-            // ,
-            {
-                "not_null_or_nullable": "Nullable",
-                "postgresql_json_object_type_pattern": "Array",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
-        // ]
-    }
-}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{
+//     // "All"
+//     {
+//         "Concrete":
+//         // [
+//             // {
+//             //     "not_null_or_nullable": "NotNull",
+//             //     "postgresql_json_object_type_pattern": "Standart",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             // {
+//             //     "not_null_or_nullable": "Nullable",
+//             //     "postgresql_json_object_type_pattern": "Standart",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             // {
+//             //     "not_null_or_nullable": "NotNull",
+//             //     "postgresql_json_object_type_pattern": "Array",
+//             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             // }
+//             // ,
+//             {
+//                 "not_null_or_nullable": "Nullable",
+//                 "postgresql_json_object_type_pattern": "Array",
+//                 "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//             }
+//         // ]
+//     }
+// }]
 pub struct Animal {
     pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
