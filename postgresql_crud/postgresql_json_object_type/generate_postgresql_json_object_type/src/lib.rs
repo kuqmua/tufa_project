@@ -3210,7 +3210,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             ) {
                                                 Ok(mut #value_snake_case) => {
                                                     let _: Option<char> = #value_snake_case.pop();
-                                                    current_acc.push_str(&format!("jsonb_build_object({value})||"));
+                                                    use std::fmt::Write as _;
+                                                    if let Err(#error_snake_case) = write!(current_acc, "jsonb_build_object({value})||") {
+                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    }
                                                 }
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3260,7 +3263,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     ) {
                                                         Ok(mut #value_snake_case) => {
                                                             let _: Option<char> = #value_snake_case.pop();
-                                                            current_acc.push_str(&format!("jsonb_build_object({value})||"));
+                                                            use std::fmt::Write as _;
+                                                            if let Err(#error_snake_case) = write!(current_acc, "jsonb_build_object({value})||") {
+                                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                            }
                                                         }
                                                         Err(#error_snake_case) => {
                                                             return Err(#error_snake_case);
