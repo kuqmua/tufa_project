@@ -833,7 +833,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
-            let ident_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(&ident_standart_not_null_upper_camel_case);
+            let self_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(&self_upper_camel_case);
             let ident_standart_not_null_as_postgresql_json_type_create_for_query_token_stream = generate_type_as_postgresql_json_type_create_for_query_token_stream(&ident_standart_not_null_upper_camel_case);
             let ident_array_not_null_as_postgresql_json_type_create_for_query_token_stream = generate_type_as_postgresql_json_type_create_for_query_token_stream(&ident_array_not_null_upper_camel_case);
             let ident_array_not_null_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
@@ -1173,7 +1173,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #select_query_part_for_loop_token_stream
                                 let _: Option<char> = #acc_snake_case.pop();
                                 let _: Option<char> = #acc_snake_case.pop();
-                                format!("{acc}")
+                                #acc_snake_case
                             }
                         }
                     }
@@ -3610,7 +3610,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     },
                                     &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
                                 );
-                                if is_postgresql_type { format!("{acc}") } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
+                                if is_postgresql_type { #acc_snake_case } else { format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{acc}))") }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
@@ -5058,7 +5058,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             quote::quote! {
                                                 if let Some(#value_snake_case) = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case() {
                                                     for #element_snake_case in #value_snake_case {
-                                                        let #value_snake_case = #ident_standart_not_null_as_postgresql_json_type_create_token_stream::new(
+                                                        let #value_snake_case = #self_as_postgresql_json_type_create_token_stream::new(
                                                             #(#parameters_token_stream),*
                                                         );
                                                         if !#acc_snake_case.contains(&#value_snake_case) {
