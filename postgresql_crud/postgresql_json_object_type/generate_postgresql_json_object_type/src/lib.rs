@@ -4144,8 +4144,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Ok(mut #value_snake_case) => {
                                                 let _: Option<char> = #value_snake_case.pop();
                                                 use std::fmt::Write as _;
-                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                    });
                                                 }
                                             },
                                             Err(#error_snake_case) => {
@@ -4187,8 +4189,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Ok(mut #value_snake_case) => {
                                                 let _: Option<char> = #value_snake_case.pop();
                                                 use std::fmt::Write as _;
-                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                    });
                                                 }
                                             },
                                             Err(#error_snake_case) => {
@@ -4235,8 +4239,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Ok(mut #value_snake_case) => {
                                                 let _: Option<char> = #value_snake_case.pop();
                                                 use std::fmt::Write as _;
-                                                if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                    });
                                                 }
                                             }
                                             Err(#error_snake_case) => {
@@ -4264,8 +4270,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                     Ok(#value_snake_case) => {
                                                         use std::fmt::Write as _;
-                                                        if let Err(#error_snake_case) = write!(#acc_snake_case, "${value},") {
-                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        if write!(#acc_snake_case, "${value},").is_err() {
+                                                            return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                                code_occurence: error_occurence_lib::code_occurence!()
+                                                            });
                                                         }
                                                     },
                                                     Err(#error_snake_case) => {
@@ -4743,7 +4751,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let mut #acc_snake_case = vec![];
                                     for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
                                         .zip(#create_snake_case.0.into_iter())
-                                        .into_iter()
                                         .enumerate()
                                     {
                                         #(#content_token_stream)*
@@ -5326,7 +5333,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }
                                         });
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                        let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element0.0.#value_snake_case.#id_snake_case.0.#value_snake_case.clone()});
+                                        let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element0.0.#value_snake_case.#id_snake_case.0.#value_snake_case});
                                         quote::quote! {
                                             for element1 in #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
                                                 &element0.0.#value_snake_case.#field_ident.clone()
@@ -5410,12 +5417,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                             #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case.#value_snake_case)
                                         });
-                                        quote::quote! {
-                                            #field_ident: match #element_snake_case.#field_ident {
-                                                Some(#value_snake_case) => Some(#value_content_token_stream),
-                                                None => None,
-                                            }
-                                        }
+                                        quote::quote! {#field_ident: #element_snake_case.#field_ident.map(|#value_snake_case|#value_content_token_stream)}
                                     });
                                     quote::quote!{
                                         #ident_read_upper_camel_case::new({
