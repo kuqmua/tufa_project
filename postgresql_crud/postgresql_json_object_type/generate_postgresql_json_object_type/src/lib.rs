@@ -665,9 +665,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     });
                     quote::quote! {Self {#(#content_token_stream),*}}
                 };
-                let impl_pub_new_for_ident_table_type_declaration_or_ident_create_token_stream = macros_helpers::generate_impl_pub_new_for_ident_token_stream(
-                    &ident_table_type_declaration_or_ident_create_upper_camel_case,
-                    &{
+                let impl_pub_new_for_ident_table_type_declaration_or_ident_create_token_stream = {
+                    let parameters_token_stream = {
                         let generate_wrap_into_value_parameter_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {value: #type_token_stream}
                         };
@@ -683,8 +682,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 )))),
                             },
                         }
-                    },
-                    &match &postgresql_json_object_type_pattern {
+                    };
+                    let content_token_stream = match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_value_token_stream.clone(),
@@ -696,8 +695,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote! {Self(#value_snake_case.map(#ident_array_not_null_with_id_postfix_upper_camel_case::new))}
                             }
                         },
-                    },
-                );
+                    };
+                    if let PostgresqlJsonObjectTypePattern::Array = &postgresql_json_object_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &not_null_or_nullable {
+                        macros_helpers::generate_impl_pub_new_for_ident_token_stream(
+                            &ident_table_type_declaration_or_ident_create_upper_camel_case,
+                            &parameters_token_stream,
+                            &content_token_stream,
+                        )
+                    }
+                    else {
+                        macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
+                            &ident_table_type_declaration_or_ident_create_upper_camel_case,
+                            &parameters_token_stream,
+                            &content_token_stream,
+                        )
+                    }
+                };
                 let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream = |
                     ident_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens
@@ -1639,7 +1652,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Self::#element_field_ident_upper_camel_case(#value_snake_case) => generate_element_query(
                                                 #value_snake_case.get_logical_operator(),
                                                 #value_snake_case,
-                                                &#field_ident_double_quotes_token_stream
+                                                #field_ident_double_quotes_token_stream
                                             )
                                         }
                                     });
