@@ -5397,10 +5397,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Read);
                                     quote::quote! {
-                                        #self_element_as_postgresql_type_read_token_stream::new(match #value_snake_case {
-                                            Some(#value_snake_case) => Some(#ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case)),
-                                            None => None
-                                        })
+                                        #self_element_as_postgresql_type_read_token_stream::new(
+                                            #value_snake_case.map(#ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case)
+                                        )
                                     }
                                 }
                             },
