@@ -467,7 +467,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
-                                        #acc_snake_case.push(#ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
+                                        #ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
                                             #import_path::PostgresqlTypeWhere::try_new(
                                                 #import_path::LogicalOperator::Or,
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case(
@@ -476,7 +476,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 ),
                                             )
                                             .expect("error 187ece1f-7c99-437b-80a3-ed1a416731a3"),
-                                        ));
+                                        )
                                     }
                                 };
                                 let id_token_stream = generate_token_stream(
@@ -494,12 +494,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         &quote::quote!{#create_snake_case.#field_ident}
                                     )
                                 });
-                                quote::quote!{
-                                    let mut #acc_snake_case = vec![];
-                                    #id_token_stream
-                                    #(#content_token_stream)*
-                                    #acc_snake_case
-                                }
+                                quote::quote!{vec![
+                                    #id_token_stream,
+                                    #(#content_token_stream),*
+                                ]}
                             },
                         );
                         quote::quote! {
