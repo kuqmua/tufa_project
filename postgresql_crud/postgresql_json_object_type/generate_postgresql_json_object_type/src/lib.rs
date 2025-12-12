@@ -2050,7 +2050,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_pub_try_new_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&is_standart_with_id_false),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_new_token_stream(
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_pub_const_new_token_stream(
                                     &generate_value_type_token_stream(
                                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                             &ident_standart_not_null_as_postgresql_json_type_read_token_stream
@@ -2060,7 +2060,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 ),
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_new_token_stream(
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_const_new_token_stream(
                                     &generate_value_type_token_stream(
                                         &std_vec_vec_ident_with_id_standart_not_null_read_token_stream
                                     ),
