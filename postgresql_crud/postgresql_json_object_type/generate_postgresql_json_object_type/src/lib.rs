@@ -2621,9 +2621,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }
-                                                else {
-                                                    #acc_snake_case.push(&#element_snake_case.#id_snake_case);
-                                                }
+                                                #acc_snake_case.push(&#element_snake_case.#id_snake_case);
                                             }
                                             for #element_snake_case in &delete {
                                                 if #acc_snake_case.contains(&#element_snake_case) {
@@ -2632,9 +2630,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }
-                                                else {
-                                                    #acc_snake_case.push(#element_snake_case);
-                                                }
+                                                #acc_snake_case.push(#element_snake_case);
                                             }
                                         }}
                                     };
@@ -2655,15 +2651,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                                 #error_snake_case: format!(
                                                                     #not_unique_id_in_json_delete_array_double_quotes_token_stream,
                                                                     #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(
-                                                                        //// &#element_snake_case
                                                                         &#element_snake_case.clone().into()
                                                                     )
                                                                 ),
                                                                 code_occurence: error_occurence_lib::code_occurence!()
                                                             });
-                                                        } else {
-                                                            delete_acc.push(#element_snake_case);
                                                         }
+                                                        delete_acc.push(#element_snake_case);
                                                     }
                                                     delete_acc
                                                 };
