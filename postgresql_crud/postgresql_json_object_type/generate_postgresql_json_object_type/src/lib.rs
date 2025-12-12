@@ -1023,10 +1023,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     quote::quote! {
                         #ident_or_ident_with_id_standart_not_null_select_element_upper_camel_case::#variant_name_token_stream(#value_snake_case) => #field_type_as_crud_postgresql_json_type_from_field_token_stream::#select_query_part_snake_case(
-                            &#value_snake_case,
+                            #value_snake_case,
                             #field_ident_double_quotes_token_stream,
-                            &#column_name_and_maybe_field_getter_field_ident_token_stream,
-                            &#column_name_and_maybe_field_getter_for_error_message_field_ident_token_stream,
+                            #column_name_and_maybe_field_getter_field_ident_token_stream,
+                            #column_name_and_maybe_field_getter_for_error_message_field_ident_token_stream,
                             false,
                         )
                     }
