@@ -2611,12 +2611,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }
                                             let generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream = |update_or_delete: &UpdateOrDelete|{
                                                 let content_token_stream: &dyn quote::ToTokens = match &update_or_delete {
-                                                    UpdateOrDelete::Update => &quote::quote!{#element_snake_case.#id_snake_case},
+                                                    UpdateOrDelete::Update => &quote::quote!{&#element_snake_case.#id_snake_case},
                                                     UpdateOrDelete::Delete => &element_snake_case
                                                 };
                                                 quote::quote!{
                                                     <#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream as error_occurence_lib::ToStdStringString>::to_std_string_string(
-                                                        &#content_token_stream
+                                                        #content_token_stream
                                                     )
                                                 }
                                             };
@@ -2646,7 +2646,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     });
                                                 }
                                                 else {
-                                                    #acc_snake_case.push(&#element_snake_case);
+                                                    #acc_snake_case.push(#element_snake_case);
                                                 }
                                             }
                                         }}
@@ -2686,7 +2686,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json update and delete arrays: {{}}"));
                                             quote::quote! {
                                                 for #element_snake_case in update_acc {
-                                                    if delete_acc.contains(&&#element_snake_case) {
+                                                    if delete_acc.contains(&#element_snake_case) {
                                                         return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
                                                             #error_snake_case: format!(
                                                                 #not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream,
