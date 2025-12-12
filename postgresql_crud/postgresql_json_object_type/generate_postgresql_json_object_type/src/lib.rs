@@ -1106,8 +1106,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ),
                 };
                 let impl_ident_select_token_stream = {
-                    let pub_new_token_stream = macros_helpers::generate_pub_new_token_stream(
-                        &{
+                    let pub_new_token_stream = {
+                        let parameters_token_stream = {
                             let unique_vec_ident_select_element_standart_not_null_token_stream = generate_unique_vec_wrapper_token_stream(&ident_standart_not_null_select_element_upper_camel_case);
                             match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -1122,8 +1122,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_type_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream)),
                                 },
                             }
-                        },
-                        &match &postgresql_json_object_type_pattern {
+                        };
+                        let content_token_stream = match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream.clone(),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
@@ -1142,8 +1142,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_value_token_stream.clone(),
                             },
+                        };
+                        if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern && let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &not_null_or_nullable {
+                            macros_helpers::generate_pub_new_token_stream(
+                                &parameters_token_stream,
+                                &content_token_stream
+                            )
                         }
-                    );
+                        else {
+                             macros_helpers::generate_pub_const_new_token_stream(
+                                &parameters_token_stream,
+                                &content_token_stream
+                            )
+                        }
+                    };
                     let maybe_select_query_part_token_stream = if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern &&
                     let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
                         let select_query_part_for_loop_token_stream = generate_select_query_part_for_loop_token_stream(
@@ -2071,12 +2083,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             &std_vec_vec_ident_with_id_standart_not_null_read_token_stream
                                         )
                                     ),
-                                    &quote::quote! {
-                                        Self(match #value_snake_case {
-                                            Some(#value_snake_case) => Some(#ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream::new(#value_snake_case)),
-                                            None => None
-                                        })
-                                    },
+                                    &quote::quote! {Self(#value_snake_case.map(#ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream::new))},
                                 ),
                             },
                         }
