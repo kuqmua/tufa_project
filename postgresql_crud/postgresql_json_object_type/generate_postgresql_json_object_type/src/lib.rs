@@ -1129,10 +1129,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream.clone(),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                    Self(match #value_snake_case {
-                                        Some(#value_snake_case) => Some(#ident_standart_not_null_as_postgresql_json_type_select_token_stream::new(#value_snake_case)),
-                                        None => None
-                                    })
+                                    Self(#value_snake_case.map(#ident_standart_not_null_as_postgresql_json_type_select_token_stream::new))
                                 },
                             },
                             PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -5368,14 +5365,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                             #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case.#value_snake_case)
                                         });
-                                        quote::quote! {
-                                            match #value_snake_case.#field_ident {
-                                                Some(#value_snake_case) => Some(#value_content_token_stream),
-                                                None => None
-                                            }
-                                        }
+                                        quote::quote! {#value_snake_case.#field_ident.map(|#value_snake_case|#value_content_token_stream)}
                                     });
-                                    quote::quote! {#self_element_as_postgresql_type_read_token_stream::try_new(#(#parameters_token_stream),*).unwrap()}
+                                    quote::quote! {#self_element_as_postgresql_type_read_token_stream::try_new(#(#parameters_token_stream),*).expect("error 3aeeabba-3ffc-4df2-a3bf-e389c40ec566")}
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Read);
