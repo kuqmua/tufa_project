@@ -3075,15 +3075,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             #ident_standart_not_null_update_for_query_element_upper_camel_case::#field_ident_upper_camel_case(#value_snake_case) => {
                                                 match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
                                                     &#value_snake_case.#value_snake_case,
-                                                    &#field_ident_double_quotes_token_stream,
-                                                    &column_name_and_maybe_field_getter,
+                                                    #field_ident_double_quotes_token_stream,
+                                                    column_name_and_maybe_field_getter,
                                                     #increment_snake_case
                                                 ) {
                                                     Ok(mut #value_snake_case) => {
                                                         let _: Option<char> = #value_snake_case.pop();
                                                         use std::fmt::Write as _;
-                                                        if let Err(#error_snake_case) = write!(#acc_snake_case, "jsonb_build_object({value})||") {
-                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        if write!(#acc_snake_case, "jsonb_build_object({value})||").is_err() {
+                                                            return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                                code_occurence: error_occurence_lib::code_occurence!()
+                                                            });
                                                         }
                                                     },
                                                     Err(#error_snake_case) => {
@@ -3401,7 +3403,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 });
                                 quote::quote! {
-                                    #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => #ident_standart_not_null_update_for_query_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_initialization_token_stream)
+                                    #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => #self_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_initialization_token_stream)
                                 }
                             });
                             quote::quote!{
