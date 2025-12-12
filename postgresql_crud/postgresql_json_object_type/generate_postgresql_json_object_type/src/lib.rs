@@ -3427,7 +3427,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
                         &quote::quote!{{#ident_with_id_standart_not_null_update_for_query_element_fields_declaration_token_stream}}
                     );
-                    let impl_pub_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_pub_new_for_ident_token_stream(
+                    let impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_pub_const_new_for_ident_token_stream(
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
                         &ident_with_id_standart_not_null_update_for_query_element_fields_declaration_token_stream,
                         &quote::quote! {Self {
@@ -3449,7 +3449,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     );
                     quote::quote! {
                         #ident_with_id_standart_not_null_update_for_query_element_token_stream
-                        #impl_pub_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream
+                        #impl_pub_const_new_for_ident_with_id_standart_not_null_update_for_query_element_token_stream
                         #impl_std_convert_from_ident_with_id_standart_not_null_update_element_for_ident_with_id_standart_not_null_update_for_query_element_token_stream
                     }
                 } else {
