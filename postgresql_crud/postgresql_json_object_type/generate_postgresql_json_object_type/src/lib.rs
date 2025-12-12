@@ -693,13 +693,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream.clone(),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let ident_array_not_null_with_id_postfix_upper_camel_case = generate_tokens_table_type_declaration_or_create_token_stream(&generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId));
-                                quote::quote! {Self(
-                                    match #value_snake_case {
-                                        Some(#value_snake_case) => Some(#ident_array_not_null_with_id_postfix_upper_camel_case::new(#value_snake_case)),
-                                        None => None
-                                    }
-
-                                )}
+                                quote::quote! {Self(#value_snake_case.map(#ident_array_not_null_with_id_postfix_upper_camel_case::new))}
                             }
                         },
                     },
@@ -746,7 +740,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_or_ident_create_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                     &ident_table_type_declaration_or_ident_create_upper_camel_case,
-                    &quote::quote!{sqlx::types::Json<#ident_table_type_declaration_or_ident_create_upper_camel_case>}
+                    &quote::quote!{sqlx::types::Json<#self_upper_camel_case>}
                 );
                 let maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
                     let ident_with_id_table_type_declaration_or_ident_with_id_standart_not_null_create_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
@@ -801,7 +795,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_type_as_postgresql_json_type_create_for_query_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_create_for_query);
             let ident_create_token_stream = {
                 let ident_create_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create);
-                let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", self)});
+                let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(
+                    &proc_macro2::TokenStream::new(),
+                    &ident_token_stream, &proc_macro2::TokenStream::new(),
+                    &quote::quote! {write!(formatter, "{self:?}")}
+                );
                 let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(&ident_create_upper_camel_case);
                 let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_create_upper_camel_case);
                 let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
