@@ -2065,10 +2065,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_where_upper_camel_case,
                     &ident_read_upper_camel_case,
                     &ident_read_only_ids_upper_camel_case,
-                    &if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
-                        quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
-                    } else {
-                        quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
+                    &{
+                        let content_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
+                            quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
+                        } else {
+                            quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
+                        };
+                        quote::quote!{Ok(#content_token_stream)}
                     },
                     &ident_read_inner_upper_camel_case,
                     &generate_into_inner_content_token_stream(&quote::quote! {#value_snake_case.0.0}),

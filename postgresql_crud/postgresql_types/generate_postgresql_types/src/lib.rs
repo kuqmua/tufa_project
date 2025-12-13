@@ -4391,11 +4391,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let select_only_ids_and_select_only_updated_ids_query_common_token_stream = {
-                    if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                        quote::quote! {format!("{column},")}
-                    } else {
-                        quote::quote! {format!("'{{\"value\": null}}'::jsonb as {column},")}
-                    }
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
+                        let column_comma = "{column},";
+                        if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
+                            column_comma.to_string()
+                        } else {
+                            format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}")
+                        }
+                    });
+                    quote::quote! {Ok(format!(#format_handle_token_stream))}
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_token_stream(
                     &import_path,
@@ -4868,7 +4872,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
-                    &quote::quote!{Ok(#select_only_ids_and_select_only_updated_ids_query_common_token_stream)},
+                    &select_only_ids_and_select_only_updated_ids_query_common_token_stream,
                     &postgresql_crud_macros_common::IsSelectOnlyUpdatedIdsQueryBindMutable::False,
                     &quote::quote!{Ok(#query_snake_case)}
                 )

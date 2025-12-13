@@ -41,7 +41,7 @@ pub trait PostgresqlType {
     type Read: ReadAlias + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
     type ReadOnlyIds: ReadOnlyIdsAlias;
-    fn select_only_ids_query_part(column: &str) -> String;
+    fn select_only_ids_query_part(column: &str) -> Result<String, QueryPartErrorNamed>;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias;
@@ -79,7 +79,7 @@ pub trait PostgresqlJsonType {
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: ReadOnlyIdsAlias;
-    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &str) -> String;
+    fn select_only_ids_query_part(column_name_and_maybe_field_getter: &str) -> Result<String, QueryPartErrorNamed>;
     type ReadInner: ReadInnerAlias;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;

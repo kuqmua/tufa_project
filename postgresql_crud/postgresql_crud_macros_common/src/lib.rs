@@ -423,7 +423,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             type #read_only_ids_upper_camel_case = #read_only_ids_type_token_stream;
             fn #select_only_ids_query_part_snake_case(
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
-            ) -> #std_string_string_token_stream {
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_ids_query_part_token_stream
             }
             type #read_inner_upper_camel_case = #read_inner_type_token_stream;
@@ -940,7 +940,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             type #read_only_ids_upper_camel_case = #read_only_ids_token_stream;
             fn #select_only_ids_query_part_snake_case(
                 #column_snake_case: #reference_std_primitive_str_token_stream
-            ) -> #std_string_string_token_stream {
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_ids_query_part_token_stream
             }
             type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;

@@ -200,6 +200,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
     let routes_snake_case = naming::RoutesSnakeCase;
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
+    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
     let error_2_token_stream = token_patterns::Error2;
@@ -2537,9 +2538,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
             quote::quote! {
-                #acc_snake_case.push_str(&#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_only_ids_query_part(
-                    #field_ident_double_quotes_token_stream
-                ));
+                match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_ids_query_part_snake_case(#field_ident_double_quotes_token_stream) {
+                    Ok(#value_snake_case) => {
+                        #acc_snake_case.push_str(&#value_snake_case);
+                    },
+                    Err(#error_snake_case) => {
+                        todo!()
+                    }
+                }
             }
         });
         quote::quote! {
