@@ -828,8 +828,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ) {
                             Ok(#value_snake_case) => {
                                 use std::fmt::Write as _;
-                                if let Err(error) = write!(#acc_snake_case, "{value},") {
-                                    let f: std::fmt::Error =  error;
+                                if write!(#acc_snake_case, "{value},").is_err() {
                                     return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
                                         code_occurence: error_occurence_lib::code_occurence!()
                                     });
@@ -2596,7 +2595,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Ok(#value_snake_case) => {
                                         use std::fmt::Write as _;
                                         if write!(#acc_snake_case, "({value}),").is_err() {
-                                            panic!("error 4de733d5-63c8-46b1-b17c-0995cb7dd19f");
+                                            let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                code_occurence: error_occurence_lib::code_occurence!()
+                                            };
+                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     },
                                     Err(#error_0_token_stream) => {
@@ -2909,7 +2911,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                     #order_snake_case,
                                 ).is_err() {
-                                    panic!("error fbb822be-a58f-4350-8108-9589da17823b");
+                                    let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    };
+                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             };
                             {
@@ -2927,7 +2932,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 };
                                 use std::fmt::Write as _;
                                 if write!(#additional_parameters_snake_case, "{prefix}{value}").is_err() {
-                                    panic!("error f383357c-3429-427d-80cc-b36f7349e801");
+                                    let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    };
+                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             };
                             #additional_parameters_snake_case
@@ -3382,7 +3390,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     use std::fmt::Write as _;
                                     if write!(#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream).is_err() {
-                                        panic!("error 87c6ffca-dc23-4f9b-b3ae-137cb7549739");
+                                        let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        };
+                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
                                 }
                                 let _: Option<char> = #acc_snake_case.pop();
