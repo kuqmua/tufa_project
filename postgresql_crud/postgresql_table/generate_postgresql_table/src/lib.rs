@@ -658,7 +658,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     );
     let generate_select_query_part_parameters_payload_select_token_stream = |operation: &Operation|{
         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-            &operation,
+            operation,
             &query_part_syn_variant_wrapper,
             file!(),
             line!(),
