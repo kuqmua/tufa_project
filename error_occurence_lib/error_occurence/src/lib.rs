@@ -89,9 +89,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(&fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).fold(String::new(), |mut acc, element| {
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
                         use std::fmt::Write as _;
-                        if writeln!(acc, "{element_ident}: {{}}").is_err() {
-                            panic!("error ab44c70f-092e-46a0-8daa-56fe44395228");
-                        }
+                        assert!(writeln!(acc, "{element_ident}: {{}}").is_ok(), "error ab44c70f-092e-46a0-8daa-56fe44395228");
                         acc
                     }));
                     let fields_format_values_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {

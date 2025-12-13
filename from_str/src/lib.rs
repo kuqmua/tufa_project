@@ -28,9 +28,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let error_variants_stringified = variant_idents.iter().fold(String::default(), |mut acc, variant_ident| {
         let variant_ident_snake_case_stringified = convert_case::Casing::to_case(&format!("{variant_ident}"), convert_case::Case::Snake);
         use std::fmt::Write as _;
-        if write!(acc, "\'{variant_ident_snake_case_stringified}\',").is_err() {
-            panic!("error 491d4b30-5cf7-45db-88dc-d851e70cd0a9");
-        }
+        assert!(write!(acc, "\'{variant_ident_snake_case_stringified}\',").is_ok(), "error 491d4b30-5cf7-45db-88dc-d851e70cd0a9");
         acc
     });
     let error_token_stream = {

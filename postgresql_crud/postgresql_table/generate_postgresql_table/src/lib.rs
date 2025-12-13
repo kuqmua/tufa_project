@@ -2504,9 +2504,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let column_names = {
         let mut value = fields.iter().fold(String::default(), |mut acc, element| {
             use std::fmt::Write as _;
-            if write!(acc, "{}", &element.field_ident).is_err() {
-                panic!("error b9fe50dc-69a2-4af1-801d-69b7839a1471");
-            }
+            assert!(write!(acc, "{}", &element.field_ident).is_ok(), "error b9fe50dc-69a2-4af1-801d-69b7839a1471");
             acc.push(',');
             acc
         });
