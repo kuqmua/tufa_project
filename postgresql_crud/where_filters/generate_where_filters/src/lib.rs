@@ -434,8 +434,8 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                             Ok(#value_snake_case) => {
                                                 use std::fmt::Write as _;
-                                                if let Err(error) = write!(#acc_snake_case, "${value},") {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "${value},").is_err() {
+                                                    panic!("error 87f47f75-b2db-4d88-a0f0-e254ac7d14a3");
                                                 }
                                             },
                                             Err(#error_snake_case) => {

@@ -808,7 +808,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ) {
                             Ok(#value_snake_case) => {
                                 use std::fmt::Write as _;
-                                if write!(#acc_snake_case, "{value},").is_err() {
+                                if let Err(error) = write!(#acc_snake_case, "{value},") {
+                                    let f: std::fmt::Error =  error;
                                     return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
                                         code_occurence: error_occurence_lib::code_occurence!()
                                     });
@@ -2503,8 +2504,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let column_names = {
         let mut value = fields.iter().fold(String::default(), |mut acc, element| {
             use std::fmt::Write as _;
-            if let Err(error) = write!(acc, "{}", &element.field_ident) {
-                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+            if write!(acc, "{}", &element.field_ident).is_err() {
+                panic!("error b9fe50dc-69a2-4af1-801d-69b7839a1471");
             }
             acc.push(',');
             acc
@@ -2576,8 +2577,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
                                     Ok(#value_snake_case) => {
                                         use std::fmt::Write as _;
-                                        if let Err(error) = write!(#acc_snake_case, "({value}),") {
-                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                        if write!(#acc_snake_case, "({value}),").is_err() {
+                                            panic!("error 4de733d5-63c8-46b1-b17c-0995cb7dd19f");
                                         }
                                     },
                                     Err(#error_0_token_stream) => {
@@ -2880,7 +2881,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
                                 };
                                 use std::fmt::Write as _;
-                                if let Err(error) = write!(
+                                if write!(
                                     #additional_parameters_snake_case,
                                     #additional_parameters_order_by_handle_token_stream,
                                     #prefix_snake_case,
@@ -2888,8 +2889,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #order_by_column_match_token_stream
                                     },
                                     #order_snake_case,
-                                ) {
-                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                ).is_err() {
+                                    panic!("error fbb822be-a58f-4350-8108-9589da17823b");
                                 }
                             };
                             {
@@ -2906,8 +2907,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     },
                                 };
                                 use std::fmt::Write as _;
-                                if let Err(error) = write!(#additional_parameters_snake_case, "{prefix}{value}") {
-                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                if write!(#additional_parameters_snake_case, "{prefix}{value}").is_err() {
+                                    panic!("error f383357c-3429-427d-80cc-b36f7349e801");
                                 }
                             };
                             #additional_parameters_snake_case
@@ -3360,8 +3361,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let mut #acc_snake_case = #string_token_stream::default();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     use std::fmt::Write as _;
-                                    if let Err(error) = write!(#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream) {
-                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    if write!(#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream).is_err() {
+                                        panic!("error 87c6ffca-dc23-4f9b-b3ae-137cb7549739");
                                     }
                                 }
                                 let _: Option<char> = #acc_snake_case.pop();

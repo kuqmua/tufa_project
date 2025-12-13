@@ -1045,14 +1045,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 quote::quote!{
                     for #element_snake_case in #in_token_stream #self_field_vec_token_stream {
                         use std::fmt::Write as _;
-                        if let Err(#error_snake_case) = write!(
+                        if write!(
                             #acc_snake_case,
                             "{}||",
                             match #element_snake_case {
                                 #(#content_token_stream),*
                             }
-                        ) {
-                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        ).is_err() {
+                            panic!("error 6e8d7374-9e6c-4963-b49c-8e9ee7b4bd3f");
                         }
                     }
                 }
@@ -3699,8 +3699,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Array => generate_quotes::double_quotes_token_stream(&format!("elem->'{field_ident}'"))
                                 };
                                 quote::quote! {
-                                    if let Err(#error_snake_case) = write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(#content_token_stream)) {
-                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    if write!(#acc_snake_case, #format_handle_token_stream, #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(#content_token_stream)).is_err() {
+                                        panic!("error 448834a3-8271-4416-babe-abae2ad1c63b");
                                     }
                                 }
                             });

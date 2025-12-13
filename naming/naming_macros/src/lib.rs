@@ -21,8 +21,8 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
                 acc.push_str(&element_snake_case_stringified);
             } else {
                 use std::fmt::Write as _;
-                if let Err(error) = write!(acc, "_{element_snake_case_stringified}") {
-                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                if write!(acc, "_{element_snake_case_stringified}").is_err() {
+                    panic!("error 9cd16003-da96-45c7-b261-049f6e062776");
                 }
             }
             acc
@@ -119,13 +119,13 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                     let symbol = '_';
                     if element == "self" {
                         use std::fmt::Write as _;
-                        if let Err(error) = write!(acc, "{{value}}{symbol}") {
-                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        if write!(acc, "{{value}}{symbol}").is_err() {
+                            panic!("error f58bba77-30d8-4019-a084-577a3fda0d4a");
                         }
                     } else {
                         use std::fmt::Write as _;
-                        if let Err(error) = write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element)) {
-                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        if write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element)).is_err() {
+                            panic!("error 7b9f8bb3-cefa-4863-a612-8e3b889d1e6e");
                         }
                     }
                     acc
@@ -199,8 +199,8 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                             syn::Type::Path(type_path) => {
                                 let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc, elem| {
                                     use std::fmt::Write as _;
-                                    if let Err(error) = write!(acc, "{}::", elem.ident) {
-                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    if write!(acc, "{}::", elem.ident).is_err() {
+                                        panic!("error 67c90ce9-beea-4a81-99a2-874b8f04aa0a");
                                     }
                                     acc
                                 });

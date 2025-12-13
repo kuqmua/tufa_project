@@ -32,6 +32,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum);
+    let acc_snake_case = naming::AccSnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
+    let element_snake_case = naming::ElementSnakeCase;
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case = naming::CodeOccurenceSnakeCase;
     let code_occurence_snake_case_stringified = code_occurence_snake_case.to_string();
@@ -86,8 +89,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(&fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).fold(String::new(), |mut acc, element| {
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
                         use std::fmt::Write as _;
-                        if let Err(error) = writeln!(acc, "{element_ident}: {{}}") {
-                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                        if writeln!(acc, "{element_ident}: {{}}").is_err() {
+                            panic!("error ab44c70f-092e-46a0-8daa-56fe44395228");
                         }
                         acc
                     }));
@@ -105,8 +108,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         #std_string_string::new(),
                                         |mut acc, element| {
                                             use std::fmt::Write as _;
-                                            if let Err(error) = write!(acc, "\n {element}") {
-                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                            if write!(acc, "\n {element}").is_err() {
+                                                panic!("error c751d54a-b008-493f-a97d-2f8e381780d5");
                                             }
                                             acc
                                         }
@@ -125,8 +128,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                     #std_string_string::new(),
                                                     |mut acc, element| {
                                                         use std::fmt::Write as _;
-                                                        if let Err(error) = write!(acc, "\n {element}") {
-                                                            panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                        if write!(acc, "\n {element}").is_err() {
+                                                            panic!("error b35ed9f5-525b-4287-9d6e-0be1d72a0874");
                                                         }
                                                         acc
                                                     }
@@ -146,8 +149,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                                 #std_string_string::new(),
                                                 |mut acc, element| {
                                                     use std::fmt::Write as _;
-                                                    if let Err(error) = write!(acc, "\n {element}") {
-                                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                    if write!(acc, "\n {element}").is_err() {
+                                                        panic!("error 4dfdd18d-5fca-41ba-b556-36ceb1b18b60");
                                                     }
                                                     acc
                                                 },
@@ -163,12 +166,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         .iter()
                                         .fold(
                                             #std_string_string::new(),
-                                            |mut acc, (key, value)| {
+                                            |mut #acc_snake_case, (key, #value_snake_case)| {
                                                 use std::fmt::Write as _;
-                                                if let Err(error) = write!(acc, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(value)) {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                if write!(#acc_snake_case, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_snake_case)).is_err() {
+                                                    panic!("error d030580a-6c03-4913-9088-b77316b9f285");
                                                 }
-                                                acc
+                                                #acc_snake_case
                                             }
                                         )
                                 }
@@ -179,25 +182,25 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                         .iter()
                                         .fold(
                                             #std_string_string::new(),
-                                            |mut acc, (key, value)| {
+                                            |mut #acc_snake_case, (key, #value_snake_case)| {
                                                 use std::fmt::Write as _;
-                                                if let Err(error) = write!(
-                                                    acc,
+                                                if write!(
+                                                    #acc_snake_case,
                                                     "\n {key}: {}",
-                                                    value.to_string().lines().fold(
+                                                    #value_snake_case.to_string().lines().fold(
                                                         #std_string_string::new(),
-                                                        |mut acc, element| {
+                                                        |mut #acc_snake_case, #element_snake_case| {
                                                             use std::fmt::Write as _;
-                                                            if let Err(error) = write!(acc, "\n  {element}") {
-                                                                panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                            if write!(#acc_snake_case, "\n  {element}").is_err() {
+                                                                panic!("error d0492fbf-2da0-4b02-bec3-9d011bf08999");
                                                             }
-                                                            acc
+                                                            #acc_snake_case
                                                         }
                                                     )
-                                                ) {
-                                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                                ).is_err() {
+                                                    panic!("error 75f6432a-9854-48cc-9a0d-c1dbf6774433");
                                                 }
-                                                acc
+                                                #acc_snake_case
                                             }
                                         )
                                 }
