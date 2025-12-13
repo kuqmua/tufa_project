@@ -808,8 +808,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ) {
                             Ok(#value_snake_case) => {
                                 use std::fmt::Write as _;
-                                if let Err(error) = write!(#acc_snake_case, "{value},") {
-                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                if write!(#acc_snake_case, "{value},").is_err() {
+                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    });
                                 }
                             }
                             Err(#error_0_token_stream) => {
