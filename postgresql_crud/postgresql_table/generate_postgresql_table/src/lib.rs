@@ -1174,7 +1174,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #serde_deserialize,
                     PartialEq,
                     Clone,
-                    Copy,
+                    // Copy,
                 )]
                 pub enum #ident_select_upper_camel_case {
                     #variants

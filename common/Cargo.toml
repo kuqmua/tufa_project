@@ -36,7 +36,7 @@ tracing-log = {version = "=0.2.0"}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 # uuid = {version = "=1.10.0", features = ["serde"]}
 # utoipa-swagger-ui = {version = "=5.0.0", features=["axum"]}
-# schemars = {version = "=0.8.22"}
+schemars = {version = "=0.8.22"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 git_info = {path = "../git_info"}
 from_str = {path = "../from_str"}
