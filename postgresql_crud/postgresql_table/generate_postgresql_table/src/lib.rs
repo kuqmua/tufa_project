@@ -2532,18 +2532,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         value
     };
     let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
-    let select_only_ids_query_part_token_stream = {
+    let generate_select_only_ids_query_part_token_stream = |operation: &Operation|{
         let select_only_ids_query_part_initialization_token_stream = fields.iter().map(|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
+            let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                &operation,
+                &query_part_syn_variant_wrapper,
+                file!(),
+                line!(),
+                column!()
+            );
             quote::quote! {
                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_ids_query_part_snake_case(#field_ident_double_quotes_token_stream) {
                     Ok(#value_snake_case) => {
                         #acc_snake_case.push_str(&#value_snake_case);
                     },
-                    Err(#error_snake_case) => {
-                        todo!()
+                    Err(#error_0_token_stream) => {
+                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
                 }
             }
@@ -2590,6 +2597,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let select_only_ids_query_part_token_stream = generate_select_only_ids_query_part_token_stream(&operation);
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
                         #table_snake_case,
                         #column_names_double_quotes_token_stream,
@@ -2731,6 +2739,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let select_only_ids_query_part_token_stream = generate_select_only_ids_query_part_token_stream(&operation);
                     quote::quote! {
                         #postgresql_crud_snake_case::generate_create_one_query_string(
                             #table_snake_case,
