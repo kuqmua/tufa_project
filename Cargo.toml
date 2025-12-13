@@ -445,7 +445,7 @@ for_kv_map = { level = "deny", priority = 0 }
 forget_non_drop = { level = "deny", priority = 0 }
 format_collect = { level = "deny", priority = 0 }
 format_in_format_args = { level = "deny", priority = 0 }
-format_push_string = { level = "allow", priority = 0 }
+format_push_string = { level = "deny", priority = 0 }
 four_forward_slashes = { level = "deny", priority = 0 }
 from_iter_instead_of_collect = { level = "deny", priority = 0 }
 from_over_into = { level = "deny", priority = 0 }

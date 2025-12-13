@@ -2879,14 +2879,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Some(#value_snake_case) => #value_snake_case.to_snake_case_stringified(),
                                     None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
                                 };
-                                #additional_parameters_snake_case.push_str(&format!(
+                                use std::fmt::Write as _;
+                                if let Err(error) = write!(
+                                    #additional_parameters_snake_case,
                                     #additional_parameters_order_by_handle_token_stream,
                                     #prefix_snake_case,
                                     &match &#value_snake_case.#column_snake_case {
                                         #order_by_column_match_token_stream
                                     },
                                     #order_snake_case,
-                                ));
+                                ) {
+                                    panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                }
                             };
                             {
                                 #prefix_to_additional_parameters_token_stream
@@ -3355,7 +3359,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let primary_keys = {
                                 let mut #acc_snake_case = #string_token_stream::default();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
-                                    #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
+                                    use std::fmt::Write as _;
+                                    if let Err(error) = write!(#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream) {
+                                        panic!("error 9f50a356-2f57-44cd-876e-f1af7e293fd2 {error:#?}");
+                                    }
                                 }
                                 let _: Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case
