@@ -36,8 +36,7 @@ pub trait PostgresqlType {
         String
     >;
     type Select: SelectAlias;
-    //todo change trait fn select_query_part( to Result String CheckedAdd
-    fn select_query_part(value: &Self::Select, column: &str) -> String;
+    fn select_query_part(value: &Self::Select, column: &str) -> Result<String, QueryPartErrorNamed>;
     type Where: WhereAlias;
     type Read: ReadAlias + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
     fn normalize(value: Self::Read) -> Self::Read;
@@ -64,7 +63,6 @@ pub trait PostgresqlJsonType {
     type Create: CreateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     type CreateForQuery: CreateForQueryAlias + From<Self::Create>;
     type Select: SelectAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
-    //todo change trait fn select_query_part( to Result String CheckedAdd
     fn select_query_part(
         value: &Self::Select,
         field_ident: &str,
@@ -72,7 +70,7 @@ pub trait PostgresqlJsonType {
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &str,
         is_postgresql_type: bool,
-    ) -> String;
+    ) -> Result<String, QueryPartErrorNamed>;
     type Where: WhereAlias
         + UtoipaToSchemaAndSchemarsJsonSchemaAlias
         + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement

@@ -2059,7 +2059,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                         quote::quote! {
                             #(#maybe_dimensions_start_end_initialization)*
-                            format!(#format_handle_token_stream)
+                            Ok(format!(#format_handle_token_stream))
                         }
                     },
                     &ident_where_upper_camel_case,

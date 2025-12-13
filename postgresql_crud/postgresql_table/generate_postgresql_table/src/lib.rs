@@ -199,6 +199,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let postgresql_type_option_vec_where_greater_than_test_snake_case = naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
     let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
     let routes_snake_case = naming::RoutesSnakeCase;
+    let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
     let error_2_token_stream = token_patterns::Error2;
@@ -477,17 +478,23 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                     let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
                     quote::quote! {
-                        => #as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_query_part(
+                        => match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_query_part_snake_case(
                             #value_snake_case,
                             #field_ident_string_double_quotes_token_stream
-                        )
+                        ) {
+                            Ok(#value_snake_case) => #value_snake_case,
+                            Err(#error_snake_case) => {
+                                //todo
+                                todo!()
+                            }
+                        }
                     }
                 };
                 quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
             });
             let std_option_option_std_primitive_char_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_patterns::StdPrimitiveChar);
             quote::quote! {
-                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> #string_token_stream {
+                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> Result<#string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                     let mut #value_snake_case = #string_token_stream::default();
                     for #element_snake_case in #select_snake_case.to_vec() {
                         #value_snake_case.push_str(&match #element_snake_case {
@@ -496,7 +503,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #value_snake_case.push(',');
                     }
                     let _: #std_option_option_std_primitive_char_token_stream = #value_snake_case.pop();
-                    #value_snake_case
+                    Ok(#value_snake_case)
                 }
             }
         };
@@ -514,7 +521,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let generate_select_query_part_parameters_payload_select_call_token_stream = quote::quote! {
-        Self::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case)
+        match Self::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case) {
+            Ok(#value_snake_case) => #value_snake_case,
+            Err(#error_snake_case) => {
+                //todo
+                todo!()
+            }
+        }
     };
     let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
     let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);

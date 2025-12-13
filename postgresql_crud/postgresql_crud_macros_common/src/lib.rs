@@ -415,7 +415,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #reference_std_primitive_str_token_stream,
                 #is_select_query_part_is_postgresql_type_used: #std_primitive_bool_token_stream,
-            ) -> #std_string_string_token_stream {
+            ) -> Result<#std_string_string_token_stream, #path_token_stream #query_part_error_named_upper_camel_case> {
                 #select_query_part_token_stream
             }
             type #where_upper_camel_case = #where_type_token_stream;
@@ -929,7 +929,7 @@ pub fn generate_impl_postgresql_type_token_stream(
             fn #select_query_part_snake_case(
                 #select_query_part_value_underscore: &Self::#select_upper_camel_case,
                 #column_snake_case: #reference_std_primitive_str_token_stream,
-            ) -> #std_string_string_token_stream {
+            ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_query_part_content_token_stream
             }
             type #where_upper_camel_case = #ident_where_upper_camel_case;

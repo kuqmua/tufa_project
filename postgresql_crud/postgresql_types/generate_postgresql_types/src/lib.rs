@@ -818,7 +818,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     };
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlTypesJsonVariants",
-    //     &serde_json::to_string(&postgresql_type_record_vec).unwrap(),
+    //     &serde_json::to_string(&postgresql_type_record_vec).expect("error 430ae18a-ac16-4968-a94c-792455d44d5f"),
     // );
     use rayon::iter::IntoParallelRefIterator as _;
     use rayon::iter::ParallelIterator as _;
@@ -936,7 +936,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{not_null_or_nullable}{postgresql_part}")
             };
-            let generate_ident_token_stream = |postgresql_type: &PostgresqlType, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_type_pattern: &PostgresqlTypePattern| generate_ident_stringified(postgresql_type, not_null_or_nullable, postgresql_type_pattern).parse::<proc_macro2::TokenStream>().unwrap();
+            let generate_ident_token_stream = |postgresql_type: &PostgresqlType, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_type_pattern: &PostgresqlTypePattern| generate_ident_stringified(postgresql_type, not_null_or_nullable, postgresql_type_pattern).parse::<proc_macro2::TokenStream>().expect("error ff3eb7a6-8369-46fd-82f5-2afdf752365f");
             let ident = &generate_ident_token_stream(postgresql_type, not_null_or_nullable, postgresql_type_pattern);
             let generate_ident_standart_not_null_token_stream = |postgresql_type: &PostgresqlType| generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart);
             let ident_standart_not_null_upper_camel_case = generate_ident_standart_not_null_token_stream(postgresql_type);
@@ -1050,7 +1050,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified),
                     }
                 };
-                value.parse::<proc_macro2::TokenStream>().unwrap()
+                value.parse::<proc_macro2::TokenStream>().expect("error 2555843f-283f-4bc8-8c93-48e6fe68ae6a")
             };
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern));
             let field_type_handle: &dyn quote::ToTokens = {
@@ -1290,8 +1290,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &start_or_end_token_stream,
                                 &quote::quote! {
                                     &match self.0.#start_or_end_token_stream {
-                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#ident_token_stream::#try_new_snake_case(#value_snake_case).unwrap()),
-                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#ident_token_stream::#try_new_snake_case(#value_snake_case).unwrap()),
+                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#ident_token_stream::#try_new_snake_case(#value_snake_case).expect("error c2e28cbe-e5cf-4300-a7ad-d6d67dc7c490")),
+                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#ident_token_stream::#try_new_snake_case(#value_snake_case).expect("error 19d5d4f4-e686-4cff-b80e-8b37c50baf14")),
                                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                     }
                                 },
@@ -1386,7 +1386,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                         DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
                                     };
-                                    quote::quote! {&#ident_token_stream::#try_new_snake_case(self.0.#date_or_time_token_stream()).unwrap()}
+                                    quote::quote! {&#ident_token_stream::#try_new_snake_case(self.0.#date_or_time_token_stream()).expect("error cbe9e399-6145-49eb-978c-ed84d1176e4a")}
                                 })
                             };
                             let date_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateOrTime::Date);
@@ -1413,7 +1413,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                         DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
                                     };
-                                    quote::quote! {&#ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).unwrap()}
+                                    quote::quote! {&#ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).expect("error cbe9e399-6145-49eb-978c-ed84d1176e4a")}
                                 })
                             };
                             let date_naive_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateNaiveOrTime::Date);
@@ -1493,7 +1493,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                         }
                     };
-                    let generate_field_index_token_stream = |index: usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
+                    let generate_field_index_token_stream = |index: usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().expect("error a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
                     let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                         let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
@@ -1585,7 +1585,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case, vec_token_stream.len());
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                             let field_index_token_stream = generate_field_index_token_stream(index);
-                            let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();
+                            let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().expect("error ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
                             quote::quote! {
                                 let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#element>(&mut __seq)? {
                                     Some(__value) => __value,
@@ -1740,7 +1740,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
                                 parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|element| {
-                                    let index_variant_token_stream = format!("{element}u64").parse::<proc_macro2::TokenStream>().unwrap();
+                                    let index_variant_token_stream = format!("{element}u64").parse::<proc_macro2::TokenStream>().expect("error 5aee0393-2f04-42ca-87d6-bb4209d41ee1");
                                     let field_index_token_stream = generate_field_index_token_stream(element);
                                     quote::quote! {#index_variant_token_stream => Ok(__Field::#field_index_token_stream)}
                                 })
@@ -1795,7 +1795,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let (fn_visit_bytes_start_end_token_stream, fn_visit_bytes_hour_min_sec_micro_token_stream, fn_visit_bytes_hour_minute_second_microsecond_token_stream, fn_visit_bytes_date_time_token_stream, fn_visit_bytes_date_naive_time_token_stream, fn_visit_bytes_months_days_microseconds_token_stream) = {
                         let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
-                                let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element)).parse::<proc_macro2::TokenStream>().unwrap();
+                                let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element)).parse::<proc_macro2::TokenStream>().expect("error c76c976b-9009-43d2-8d4b-1ec559b76008");
                                 let field_index_name_token_stream = generate_field_index_token_stream(index);
                                 quote::quote! {
                                     #b_element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)
@@ -2341,7 +2341,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {sqlx::types::chrono::NaiveDateTime::#new_snake_case(#content_token_stream)}
             };
             let generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {sqlx::types::time::Time::from_hms_micro(#content_token_stream).unwrap()}
+                quote::quote! {sqlx::types::time::Time::from_hms_micro(#content_token_stream).expect("error 7a1a18fa-c0cf-45e4-8b52-60f58a793c36")}
             };
             let generate_pub_const_new_or_pub_try_new_token_stream = |current_ident: &dyn quote::ToTokens|{
                 let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
@@ -2869,7 +2869,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 Ok(Self(#value_snake_case))
                                             },
                                             PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote::quote! {
-                                                let #earliest_supported_date_snake_case = #inner_type_standart_not_null_token_stream::from_ymd_opt(-4713, 12, 31).unwrap();
+                                                let #earliest_supported_date_snake_case = #inner_type_standart_not_null_token_stream::from_ymd_opt(-4713, 12, 31).expect("error 9f6241e5-a3ce-4ade-b33c-37432d4cafd3");
                                                 if #value_snake_case >= #earliest_supported_date_snake_case {
                                                     Ok(Self(#value_snake_case))
                                                 }
@@ -3456,7 +3456,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
                                     })),
                                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
-                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
+                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).expect("error 9e9c9b57-1a39-4674-a112-5e009fcbab0f"))
                                     },
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_token_stream,
@@ -3773,7 +3773,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             let mut arguments_token_stream = vec![];
                             for element in 1..=array_dimensions_number {
-                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
                                 arguments_token_stream.push(quote::quote! {
                                     #dimension_number_pagination_token_stream: crate::PaginationStartsWithOne
                                 });
@@ -3799,7 +3799,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 let mut arguments_token_stream = vec![];
                                 for element in 1..=array_dimensions_number {
-                                    let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                                    let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error e5250a98-89d6-4a58-90ea-39b04a708c1c");
                                     arguments_token_stream.push(quote::quote! {
                                         #dimension_number_pagination_token_stream: #content_token_stream
                                     });
@@ -4498,32 +4498,34 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePattern::Standart => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::True,
                         PostgresqlTypePattern::ArrayDimension1 {..} => postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                     },
-                    &match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_string()},
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                            //todo change trait fn select_query_part( to Result String CheckedAdd
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                                let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
-                                format!("{{column}}{acc}")
-                            });
-                            let arguments_token_stream = {
-                                let mut acc = vec![];
-                                for element in 1..=array_dimensions_number {
-                                    let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
-                                    acc.push(quote::quote! {
-                                        #value_snake_case.#dimension_number_pagination_token_stream.start(),
-                                        #value_snake_case.#dimension_number_pagination_token_stream.end(),
-                                    });
+                    &{
+                        let content_token_stream = match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_string()},
+                            PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
+                                    let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
+                                    format!("{{column}}{acc}")
+                                });
+                                let arguments_token_stream = {
+                                    let mut acc = vec![];
+                                    for element in 1..=array_dimensions_number {
+                                        let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 6f2305ee-85e9-4dce-9a14-9e299586668a");
+                                        acc.push(quote::quote! {
+                                            #value_snake_case.#dimension_number_pagination_token_stream.start(),
+                                            #value_snake_case.#dimension_number_pagination_token_stream.end(),
+                                        });
+                                    }
+                                    acc
+                                };
+                                quote::quote! {
+                                    format!(
+                                        #format_handle_token_stream,
+                                        #(#arguments_token_stream)*
+                                    )
                                 }
-                                acc
-                            };
-                            quote::quote! {
-                                format!(
-                                    #format_handle_token_stream,
-                                    #(#arguments_token_stream)*
-                                )
                             }
-                        }
+                        };
+                        quote::quote! {Ok(#content_token_stream)}
                     },
                     &ident_where_upper_camel_case,
                     &ident_read_upper_camel_case,
@@ -4875,7 +4877,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                     let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                        quote::quote! {#try_new_snake_case(#value_snake_case).unwrap()}
+                        quote::quote! {#try_new_snake_case(#value_snake_case).expect("error 69477d2f-1c78-4a08-bdb7-c84022352dee")}
                     } else {
                         quote::quote! {#new_snake_case(#value_snake_case)}
                     };
@@ -4969,7 +4971,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let empty_vec_token_stream = quote::quote! {vec![]};
                     let (sqlx_types_chrono_naive_time_min_token_stream, sqlx_types_chrono_naive_time_ten_token_stream, sqlx_types_chrono_naive_time_twenty_token_stream, sqlx_types_chrono_naive_time_max_token_stream) = {
                         let generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream = |parameters_token_stream: &dyn quote::ToTokens| {
-                            quote::quote! {sqlx::types::chrono::NaiveTime::from_hms_micro_opt(#parameters_token_stream).unwrap()}
+                            quote::quote! {sqlx::types::chrono::NaiveTime::from_hms_micro_opt(#parameters_token_stream).expect("error d25ee0e9-4a6b-4b20-b8e3-3f703e121088")}
                         };
                         (
                             generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote! {0,0,0,0}),
@@ -4991,7 +4993,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {sqlx::types::chrono::NaiveDate::#content_token_stream}
                         };
                         let generate_from_ymd_opt_unwrap_token_stream = |parameters_token_stream: &dyn quote::ToTokens| {
-                            quote::quote! {from_ymd_opt(#parameters_token_stream).unwrap()}
+                            quote::quote! {from_ymd_opt(#parameters_token_stream).expect("error f0b76e36-fe9c-4d97-9893-69aaf8a307f7")}
                         };
                         (
                             generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {-4713, 12, 31})),
@@ -5146,17 +5148,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             sqlx::types::Uuid::new_v4()
                         ]},
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote! {vec![
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("192.168.0.0/24").unwrap(),
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("10.0.0.0/8").unwrap(),
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("172.16.0.0/12").unwrap(),
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").unwrap(),
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").unwrap(),
-                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").unwrap(),
-                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(192, 168, 0, 0), 24).unwrap()),
-                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(10, 0, 0, 0), 8).unwrap()),
-                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(127, 0, 0, 1), 32).unwrap()),
-                            sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case(std::net::Ipv6Addr::LOCALHOST, 128).unwrap()),
-                            sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case("2001:db8::".parse().unwrap(), 32).unwrap()),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("192.168.0.0/24").expect("error 478dbded-0912-4cb9-88e4-caddf5106628"),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("10.0.0.0/8").expect("error 8af9e27e-8491-477d-821a-facc6e6344e3"),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("172.16.0.0/12").expect("error ba86505f-24fd-4f23-b2d0-3d873c357058"),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").expect("error 32c744a0-38d5-45b6-a0b8-f744d7c7947e"),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").expect("error 560815f8-60a6-42e2-9c9d-0edcbcc22457"),
+                            <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").expect("error 793db0ef-c8ea-4683-9782-34e304730d02"),
+                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(192, 168, 0, 0), 24).expect("error c44934f2-335e-44b7-bb4d-0a91374b4a85")),
+                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(10, 0, 0, 0), 8).expect("error 39e588d9-b32b-4611-a2f3-3ce500b93db0")),
+                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(127, 0, 0, 1), 32).expect("error 43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
+                            sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case(std::net::Ipv6Addr::LOCALHOST, 128).expect("error b443be46-1805-4fda-b24b-71dba8d8b9d4")),
+                            sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case("2001:db8::".parse().expect("error d4e6df27-fdb6-4e66-898c-abcfc41c5e49"), 32).expect("error a7486c5e-6577-4b80-a3ec-097002698431")),
                         ]},
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote! {vec![
                             sqlx::types::mac_address::MacAddress::#new_snake_case([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
@@ -5175,7 +5177,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &sqlx_types_chrono_naive_date_near_zero_token_stream,
                             &sqlx_types_chrono_naive_date_positive_less_typical_token_stream,
                             &sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
-                            &quote::quote! {#sqlx_types_chrono_naive_date_max_token_stream.pred_opt().unwrap()},
+                            &quote::quote! {#sqlx_types_chrono_naive_date_max_token_stream.pred_opt().expect("error da1f311c-1ca1-41b2-9342-50f0b92567f2")},
                         ),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
                             &sqlx_types_chrono_naive_date_time_min_token_stream,
@@ -5297,7 +5299,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             quote::quote!{new(#content_token_stream)}
                                         };
                                         let generate_vec_value_clone_zero_into_number_token_stream = |value: usize|{
-                                            let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().unwrap();
+                                            let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().expect("error 50c87202-4038-4b27-85bd-c0593552bb89");
                                             quote::quote!{vec![#value_snake_case.clone().0.into(); #number_token_stream]}
                                         };
                                         (
@@ -5838,36 +5840,54 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &quote::quote!{2.0 - 1.0}
                                     )),
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("error dbdd9f7a-85d8-424b-9124-1e93a559436b")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("error d81d1eae-747f-416f-aa9d-288212b4ae73")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("error be06a120-2bbf-445c-a242-1aaffa121af3")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("error 30d2c08a-82e2-4a5b-8d6b-b01bd58a00bd")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("error bf537b26-f99c-4f1e-a7f5-df224bdfb4fc")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("error e7a13c77-47ba-4fe2-a08d-d257d1dbd2b8")},
                                     )),
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).unwrap()},
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).unwrap()},
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).unwrap()},
-                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).unwrap()},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("error d267f56d-c59b-4476-b7e4-1747aa9b4952")},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("error 34bf1b76-006c-4555-b6d9-2f51c4eb9077")},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("error ff1e7a13-9b5c-4c22-afb5-71d083828bbf")},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("error 126d0de8-116d-4620-9bb5-96eed23b99f5")},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).expect("error f3d895bb-64a0-47c5-819d-f31b9b5f4ba3")},
+                                        &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).expect("error 1e71f8c6-49a0-47cd-80e4-a4f92666af78")},
                                     )),
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).unwrap()},//todo not sure about this values. maybe reuse
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).expect("error 42b5d349-449f-499f-b456-f5670993a767")},//todo not sure about this values. maybe reuse
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).expect("error 8ccd5702-e11b-4b2f-bf6b-9245396412e3")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("error 4f4d7790-f760-4ea4-861e-e2b383585b1e")},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).expect("error 6be0d837-eb33-45c7-b062-8dfac94f7edf")},
                                         &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).unwrap()},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).expect("error 3d6d30fc-20eb-42ba-8f1a-b67257f4eaeb")},
                                     )),
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap())},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(), sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).unwrap())},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).unwrap())},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(sqlx::types::chrono::NaiveDate::MAX, sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).unwrap())},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).expect("error 22bd692f-3ba1-42a9-a053-4cfb3892db7d"),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("error ae30636e-1432-430e-9ffc-a7c7767f5a99")
+                                        )},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).expect("error 44c79b13-f4f2-4246-b6eb-7841024e8e3d"),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("error 053b3611-6094-42c0-ad56-eb4c5218b925")
+                                        )},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("error f75ab479-3d69-41c4-8e0f-c3a02852466b"),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("error 34db2475-c4ce-44d2-848b-84efadd2769f")
+                                        )},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("error 9081aea2-a9d3-4aa5-bb88-c188269f86f2"),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("error 00db92a8-f1bb-427c-abcb-62c259589840")
+                                        )},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::MAX,
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("error f8dc04ce-285a-4b40-86c9-12d20fe90073")
+                                        )},
+                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::MAX,
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("error ab27057c-f47b-4999-bbf7-d0543eabb82e")
+                                        )},
                                     )),
                                     PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |//todo diffrent test logic for autogenerated?
                                     PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |//todo diffrent test logic for autogenerated?
@@ -6085,7 +6105,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             (
                 {
-                    let field_ident = format!("column_{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                    let field_ident = format!("column_{index}").parse::<proc_macro2::TokenStream>().expect("error 2e15af68-48bd-4192-bd45-aacf8086d76b");
                     quote::quote! {
                         pub #field_ident: postgresql_crud::postgresql_type:: #ident,
                     }
@@ -6097,7 +6117,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         .collect::<(Vec<String>, Vec<String>)>();
     //this need only for better development experience
     if false {
-        let columns_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<Vec<proc_macro2::TokenStream>>();
+        let columns_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 79ee6381-c845-4762-a6f6-1c6b38806535")).collect::<Vec<proc_macro2::TokenStream>>();
         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             "GeneratePostgresqlTypesExample",
             &quote::quote! {
@@ -6109,7 +6129,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         );
     }
     let generated = {
-        let postgresql_type_array = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().unwrap()).collect::<Vec<proc_macro2::TokenStream>>();
+        let postgresql_type_array = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error e0c9257d-e554-4147-8174-b431c364c1ac")).collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#postgresql_type_array)*}
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
