@@ -123,11 +123,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlJsonTypeNotEmptyUniqueVec with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlJsonTypeNotEmptyUniqueVec with 1 element"));
                     };
                     match PostgresqlJsonTypeNotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -244,11 +241,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<String>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct RegexRegex with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct RegexRegex with 1 element"));
                     };
                     Ok(RegexRegex(match regex::Regex::new(&__field0) {
                         Ok(value) => value,
@@ -422,17 +416,11 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(1usize, &"struct Between with 2 elements"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(1usize, &"struct Between with 2 elements"));
                     };
-                    let __field1 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(2usize, &"struct Between with 2 elements"));
-                        }
+                    let Some(__field1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(2usize, &"struct Between with 2 elements"));
                     };
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => Ok(value),
@@ -595,11 +583,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element"));
                     };
                     match PostgresqlTypeNotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -776,11 +761,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct BoundedStdVecVec with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct BoundedStdVecVec with 1 element"));
                     };
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => Ok(value),

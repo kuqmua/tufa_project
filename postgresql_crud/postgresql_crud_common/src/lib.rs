@@ -506,17 +506,11 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<LogicalOperator>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
                     };
-                    let __field1 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
-                        }
+                    let Some(__field1) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
                     };
                     match PostgresqlTypeWhere::try_new(__field0, __field1) {
                         Ok(value) => Ok(value),
@@ -830,17 +824,11 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
             where
                 __A: serde::de::SeqAccess<'de>,
             {
-                let __field0 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    Some(__value) => __value,
-                    None => {
-                        return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithZero with 2 elements"));
-                    }
+                let Some(__field0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithZero with 2 elements"));
                 };
-                let __field1 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    Some(__value) => __value,
-                    None => {
-                        return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithZero with 2 elements"));
-                    }
+                let Some(__field1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithZero with 2 elements"));
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
@@ -1014,11 +1002,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueEnumVec with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueEnumVec with 1 element"));
                     };
                     match NotEmptyUniqueEnumVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -1339,11 +1324,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element"));
                     };
                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => Ok(value),
@@ -1461,11 +1443,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<i32>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element"));
                     };
                     match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => Ok(value),

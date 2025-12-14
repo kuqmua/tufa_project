@@ -208,10 +208,7 @@ mod tests {
                                 let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
                                     if let toml::Value::String(value) = version_value {
                                         fn is_valid_version(value: &str) -> bool {
-                                            let version = match value.strip_prefix('=') {
-                                                Some(value) => value,
-                                                None => return false,
-                                            };
+                                            let Some(version) = value.strip_prefix('=') else { return false };
                                             let parts: Vec<&str> = version.split('.').collect();
                                             if parts.len() != 3 {
                                                 return false;

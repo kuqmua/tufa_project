@@ -1213,17 +1213,11 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             where
                 __A: serde::de::SeqAccess<'de>,
             {
-                let __field0 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    Some(__value) => __value,
-                    None => {
-                        return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
-                    }
+                let Some(__field0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
                 };
-                let __field1 = match serde::de::SeqAccess::next_element::<i64>(&mut __seq)? {
-                    Some(__value) => __value,
-                    None => {
-                        return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
-                    }
+                let Some(__field1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
+                    return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),

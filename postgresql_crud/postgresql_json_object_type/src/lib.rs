@@ -75,11 +75,8 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? {
-                        Some(__value) => __value,
-                        None => {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
-                        }
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
+                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
                     };
                     match UniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),

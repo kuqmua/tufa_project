@@ -430,23 +430,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     where
                         __A: _serde::de::SeqAccess<'de>,
                     {
-                        let __field0 = match _serde::de::SeqAccess::next_element::<PostgresqlType>(&mut __seq)? {
-                            Some(__value) => __value,
-                            None => {
-                                return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeRecord with 3 elements"));
-                            }
+                        let Some(__field0) = _serde::de::SeqAccess::next_element::<PostgresqlType>(&mut __seq)? else {
+                            return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeRecord with 3 elements"));
                         };
-                        let __field1 = match _serde::de::SeqAccess::next_element::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __seq)? {
-                            Some(__value) => __value,
-                            None => {
-                                return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeRecord with 3 elements"));
-                            }
+                        let Some(__field1) = _serde::de::SeqAccess::next_element::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __seq)? else {
+                            return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeRecord with 3 elements"));
                         };
-                        let __field2 = match _serde::de::SeqAccess::next_element::<PostgresqlTypePattern>(&mut __seq)? {
-                            Some(__value) => __value,
-                            None => {
-                                return Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
-                            }
+                        let Some(__field2) = _serde::de::SeqAccess::next_element::<PostgresqlTypePattern>(&mut __seq)? else {
+                            return Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
                         };
                         match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
                             Ok(value) => Ok(value),
