@@ -524,7 +524,7 @@ join_absolute_paths = { level = "deny", priority = 0 }
 just_underscores_and_digits = { level = "deny", priority = 0 }
 large_const_arrays = { level = "deny", priority = 0 }
 large_digit_groups = { level = "deny", priority = 0 }
-large_enum_variant = { level = "allow", priority = 0 }
+large_enum_variant = { level = "deny", priority = 0 }
 large_futures = { level = "deny", priority = 0 }
 large_include_file = { level = "deny", priority = 0 }
 large_stack_arrays = { level = "deny", priority = 0 }
