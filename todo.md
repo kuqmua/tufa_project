@@ -199,12 +199,12 @@ static ARRAY: Mutex<Vec<u8>> = Mutex::new(vec![]);
  
 fn main() {
   {
-    let mut arr = ARRAY.lock().unwrap();
+    let mut arr = ARRAY.lock().expect("error ab1cc416-8e8b-40f5-aa1f-b2f5b3f471cb");
     for _ in 0..10 {
       arr.push(1);
     }
   }
-  println!("Called push {} times", ARRAY.lock().unwrap().len());
+  println!("Called push {} times", ARRAY.lock().expect("error dc16e55f-a200-4a04-b396-4a892545e420").len());
 }
  ```
 Wrapper around component or do not use function component also there is a way to use html without html!{} Macro
@@ -334,7 +334,7 @@ Or tokio tasks
 
 * if let Ok(something) = something.lock() {}
 instead of 
-something.lock().unwrap();
+something.lock().expect("error c64fe78e-e494-4142-9036-4c79a96931a0");
 or match some none
 
 * generate_biorxiv_hashmap_links and others rename this - remove hashmap
@@ -857,7 +857,7 @@ mod test {
     fn test_positive() {
         let x = PositiveNonzeroInteger::new(42);
         assert!(x.is_ok());
-        assert_eq!(PositiveNonzeroInteger::from_str("42"), Ok(x.unwrap()));
+        assert_eq!(PositiveNonzeroInteger::from_str("42"), Ok(x.expect("error fd29d73e-f7a4-49f3-9bd7-5792a48a6140")));
     }
 }
 ```
@@ -1035,9 +1035,9 @@ We can sort of simulate an operating system level crash (or having the plug pull
 ```
 pub fn reboot_kernel() {
     File::create("/proc/sysrq-trigger")
-        .unwrap()
+        .expect("error 48a571e6-de2c-4012-be31-5e7e2bb90c50")
         .write_all(b"b")
-        .unwrap();
+        .expect("error 2e535916-81a6-4fe2-9936-8fa79a89c1ef");
 }
 ```
 

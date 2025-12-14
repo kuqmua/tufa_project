@@ -4,7 +4,7 @@
 //     let mut error_html = String::new();
 //     for m in flash_messages.iter() {
 //         use std::fmt::Write;
-//         writeln!(error_html, "<p><i>{}</i></p>", m.content()).unwrap();
+//         writeln!(error_html, "<p><i>{}</i></p>", m.content()).expect("error 23128266-e307-4356-9f0e-851fe9dfa807");
 //     }
 //     actix_web::HttpResponse::Ok()
 //         .content_type(actix_web::http::header::ContentType::html())

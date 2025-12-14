@@ -142,7 +142,7 @@ fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrec
         &argon2::Argon2::new(
             argon2::Algorithm::Argon2id,
             argon2::Version::V0x13,
-            argon2::Params::new(15000, 2, 1, None).unwrap(),
+            argon2::Params::new(15000, 2, 1, None).expect("error c4fcf60c-1277-4aa9-a10e-c8cd538f1a4f"),
         ), 
         secrecy::ExposeSecret::expose_secret(&password).as_bytes(), 
         &argon2::password_hash::SaltString::generate(&mut rand::thread_rng())

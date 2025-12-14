@@ -261,7 +261,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let fields_idents_token_stream = fields.iter().map(|element| &element.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        let conversion_token_stream = match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).unwrap() {
+                        let conversion_token_stream = match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).expect("error 449c3781-1900-4ed4-b784-485db5a08508") {
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote! {
                                     #element_ident: {

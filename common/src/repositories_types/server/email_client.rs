@@ -13,7 +13,7 @@
 //         authorization_token: secrecy::Secret<String>,
 //         timeout: std::time::Duration,
 //     ) -> Self {
-//         let http_client = reqwest::Client::builder().timeout(timeout).build().unwrap();
+//         let http_client = reqwest::Client::builder().timeout(timeout).build().expect("error 79d7b4f7-10b0-4d89-8edc-5728d3e374db");
 //         Self {
 //             http_client,
 //             base_url,
@@ -97,7 +97,7 @@
 // //         crate::repositories_types::server::domain::SubscriberEmail::try_from(
 // //             SafeEmail().fake(),
 // //         )
-// //         .unwrap()
+// //         .expect("error 8384615d-ab9d-4947-8baf-8172ef3a17ff")
 // //     }
 // //     fn email_client(base_url: String) -> EmailClient {
 // //         EmailClient::new(

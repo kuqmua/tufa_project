@@ -33,7 +33,7 @@
 //                                         format!("no <channel> in response link: {value}");
 //                                 }
 //                             }
-//                             let re = regex::Regex::new("<dc:creator>").unwrap();
+//                             let re = regex::Regex::new("<dc:creator>").expect("error c18619d0-b83b-4c79-9369-727503d89911");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
@@ -41,14 +41,14 @@
 //                                 )
 //                                 .to_string();
 //                             //todo: replace .replace_all with algorithm what do not reallocate memory
-//                             let re = regex::Regex::new("</dc:creator>").unwrap();
+//                             let re = regex::Regex::new("</dc:creator>").expect("error f1715bf4-62f6-45a4-baf5-1d56a7b841b1");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
 //                                     "bbb</creator>",
 //                                 )
 //                                 .to_string();
-//                             let re = regex::Regex::new("<atom:link").unwrap();
+//                             let re = regex::Regex::new("<atom:link").expect("error 52177487-76ee-400b-837b-f7702d8904e5");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
@@ -58,14 +58,14 @@
 //                         }
 //                         crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::Medrxiv => {
 //                             fetch_result_string.remove(0);
-//                             let re = regex::Regex::new("<dc:title>").unwrap();
+//                             let re = regex::Regex::new("<dc:title>").expect("error 19c74ac7-da42-4aa1-bfc3-05ba11ccf3dc");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
 //                                     "<dccfifle>",
 //                                 )
 //                                 .to_string();
-//                             let re = regex::Regex::new("</dc:title>").unwrap();
+//                             let re = regex::Regex::new("</dc:title>").expect("error 7b1bd03d-8935-4796-86a3-20fba4add124");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
@@ -74,14 +74,14 @@
 //                                 .to_string();
 //                         }
 //                         crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::Biorxiv => {
-//                             let re = regex::Regex::new("<dc:title>").unwrap();
+//                             let re = regex::Regex::new("<dc:title>").expect("error b9176575-f448-4266-bfe4-f533c84c14b9");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
 //                                     "<dcstitle>",
 //                                 )
 //                                 .to_string();
-//                             let re = regex::Regex::new("</dc:title>").unwrap();
+//                             let re = regex::Regex::new("</dc:title>").expect("error ce330427-ce8a-465e-ac72-35a5102672fd");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
@@ -90,14 +90,14 @@
 //                                 .to_string();
 //                         }
 //                         crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind::Habr => {
-//                             let re = regex::Regex::new("<channel>").unwrap();
+//                             let re = regex::Regex::new("<channel>").expect("error 1ad0459e-676f-4462-bf8b-1002aa307be7");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
 //                                     "         ",
 //                                 )
 //                                 .to_string();
-//                             let re = regex::Regex::new("</channel>").unwrap();
+//                             let re = regex::Regex::new("</channel>").expect("error 8586319c-f295-4416-8a64-558582873305");
 //                             fetch_result_string = re
 //                                 .replace_all(
 //                                     &fetch_result_string,
@@ -129,7 +129,7 @@
 //                                                     rss_struct.items[count].link.clone(),
 //                                                     rss_struct.items[count].description.clone(),
 //                                                     rss_struct.items[count].creator.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error b039ff23-e3ac-45fd-b225-834e7556b037").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     None,
@@ -249,7 +249,7 @@
 //                                                     rss_struct.items[count].link.clone(),
 //                                                     rss_struct.items[count].description.clone(),
 //                                                     rss_struct.items[count].creator.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error e82db8ff-e0bf-4434-9447-fe85e9cb7050").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     rss_struct.items[count].date.clone(),
@@ -375,7 +375,7 @@
 //                                                     rss_struct.entries[count].link.clone(),
 //                                                     Some("fff".to_string()), //todo: content is html now, need parsing
 //                                                     rss_struct.entries[count].author.name.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error 22f1915e-f5d9-4be9-8553-c2e8f7442854").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     None,
@@ -495,7 +495,7 @@
 //                                                     rss_struct.items[count].link.clone(),
 //                                                     rss_struct.items[count].description.clone(),
 //                                                     rss_struct.items[count].creator.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error 183b3e07-3934-454f-a087-7fdb81f5e25c").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     None,
@@ -615,7 +615,7 @@
 //                                                     rss_struct.items[count].link.clone(),
 //                                                     rss_struct.items[count].description.clone(),
 //                                                     rss_struct.items[count].creator.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error 933d3a21-69af-4598-9cf5-3bbaf9d714a0").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     None,
@@ -740,7 +740,7 @@
 //                                                     rss_struct.items[count].link.clone(),
 //                                                     rss_struct.items[count].description.clone(),
 //                                                     rss_struct.items[count].creator.clone(),
-//                                                     // pk.get_message().unwrap().to_string(),
+//                                                     // pk.get_message().expect("error 9beb5bfd-4649-4695-8182-11c8afd8cea0").to_string(),
 //                                                     pk,
 //                                                     //biorxiv specific
 //                                                     None,
@@ -872,7 +872,7 @@
 //                                     rss_struct.data.children[count].data.url.clone(),
 //                                     rss_struct.data.children[count].data.selftext.clone(),
 //                                     rss_struct.data.children[count].data.author.clone(),
-//                                     // pk.get_message().unwrap().to_string(),
+//                                     // pk.get_message().expect("error a69afe4f-a38b-49fe-ab35-316da3bfc538").to_string(),
 //                                     pk,
 //                                     //biorxiv specific
 //                                     None,

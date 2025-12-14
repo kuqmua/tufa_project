@@ -198,7 +198,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                                     }
                                     acc
                                 });
-                                let last = type_path.path.segments.iter().last().unwrap();
+                                let last = type_path.path.segments.iter().last().expect("error 19f6e1a6-2e06-4043-8732-03f3807d58c4");
                                 Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
                             },
                             _ => panic!("syn::Type is not syn::Type::Path")

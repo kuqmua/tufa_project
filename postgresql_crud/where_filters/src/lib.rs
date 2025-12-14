@@ -290,7 +290,7 @@ impl std::fmt::Display for RegexRegex {
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(regex::Regex::new("[a-z]+").unwrap())
+        Self(regex::Regex::new("[a-z]+").expect("error 22a9eda5-7898-41d7-8176-8acb97786e1e"))
     }
 }
 

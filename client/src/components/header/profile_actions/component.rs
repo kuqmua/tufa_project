@@ -36,7 +36,7 @@ pub fn profile_actions() -> Html {
       ",
         INTERFACE_LINES_COLOR, INTERFACE_LINES_COLOR, BACKGROUND_COLOR, padding_bottom
     );
-    let history = use_history().unwrap();
+    let history = use_history().expect("error dfa41f61-bf0e-4eab-ab94-83bf3efc7dde");
     let go_to_sign_in: Callback<MouseEvent> = Callback::once(move |_| {
         history.push(Routes::SignIn);
     });

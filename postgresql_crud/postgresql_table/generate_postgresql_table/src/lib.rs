@@ -239,7 +239,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let mut fields = vec![];
             let mut fields_without_primary_key = vec![];
             for element in &fields_named.named {
-                let field_ident = element.ident.clone().unwrap();
+                let field_ident = element.ident.clone().expect("error 915ef2ce-d4d5-4943-997a-a2a004807452");
                 let field_ident_len = field_ident.to_string().len();
                 let max_postgresql_column_length = 63;
                 //todo write runtime check
@@ -542,8 +542,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
-    let generate_ident_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
-    let generate_ident_operation_response_variants_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ResponseVariants").parse::<proc_macro2::TokenStream>().unwrap();
+    let generate_ident_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 79ab147e-f603-4cb7-81af-2e35344780fe");
+    let generate_ident_operation_response_variants_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ResponseVariants").parse::<proc_macro2::TokenStream>().expect("error f386c0d4-6704-475a-8045-91431f1da815");
     let generate_initialization_token_stream = |syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: u32, column: u32| -> proc_macro2::TokenStream {
         let variant_ident = &syn_variant_wrapper.variant.ident;
         let fields_token_stream = if let syn::Fields::Named(value) = &syn_variant_wrapper.variant.fields {
@@ -1413,8 +1413,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     // println!("{ident_read_only_ids_token_stream}");
-    let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
-    let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().unwrap();
+    let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 6a5468b2-c8d6-4c5e-88a6-adce2bfe7467");
+    let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().expect("error f9e053d1-c5ce-4a8e-ac79-6cc30ba19bb9");
     #[derive(Debug, strum_macros::Display)]
     enum GeneratePostgresqlTableAttribute {
         CreateManyAdditionalErrorVariants,
@@ -2108,9 +2108,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_ident_operation_payload_upper_camel_case = |operation: &Operation| match &operation {
         Operation::CreateOne => quote::quote! {#ident_create_upper_camel_case},
         Operation::UpdateOne => quote::quote! {#ident_update_upper_camel_case},
-        Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::UpdateMany | Operation::DeleteMany | Operation::DeleteOne => format!("{ident}{operation}{}", naming::PayloadUpperCamelCase).parse::<proc_macro2::TokenStream>().unwrap(),
+        Operation::CreateMany | Operation::ReadMany | Operation::ReadOne | Operation::UpdateMany | Operation::DeleteMany | Operation::DeleteOne => format!("{ident}{operation}{}", naming::PayloadUpperCamelCase).parse::<proc_macro2::TokenStream>().expect("error c042f504-5275-4388-80cc-a141c066daf8"),
     };
-    let generate_ident_operation_parameters_upper_camel_case = |operation: &Operation| format!("{ident}{operation}Parameters").parse::<proc_macro2::TokenStream>().unwrap();
+    let generate_ident_operation_parameters_upper_camel_case = |operation: &Operation| format!("{ident}{operation}Parameters").parse::<proc_macro2::TokenStream>().expect("error c1203fc6-3dbd-4a37-a407-f9913aa7964d");
     let generate_parameters_pattern_token_stream = |operation: &Operation, payload_token_stream: proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let parameters_token_stream = {
             let ident_operation_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(operation);
@@ -3197,7 +3197,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
                 pub struct #ident_operation_payload_upper_camel_case(#std_vec_vec_ident_update_token_stream);
             };
-            let ident_operation_payload_try_new_error_named_upper_camel_case = format!("{ident}{operation}PayloadTryNewErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
+            let ident_operation_payload_try_new_error_named_upper_camel_case = format!("{ident}{operation}PayloadTryNewErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 3da248bb-84ba-48c9-9b7c-e0853198e0aa");
             let not_unique_primary_key_upper_camel_case = naming::NotUniquePrimaryKeyUpperCamelCase;
             let not_unique_primary_key_snake_case = naming::NotUniquePrimaryKeySnakeCase;
             let ident_operation_payload_try_new_error_named_token_stream = {
@@ -6456,7 +6456,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             read_only_ids_from_try_create_many.iter().map(|#element_snake_case|
                                 <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                     &#element_snake_case.#primary_key_field_ident
-                                ).unwrap().#value_snake_case
+                                ).expect("error 3ee5ee86-05dc-4dc8-9262-8ffa1855d5e4").#value_snake_case
                             ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>()
                         },
                         "error db5e88a6-c75b-421b-acfb-56931b97ba3b"

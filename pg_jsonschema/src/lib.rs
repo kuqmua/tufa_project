@@ -100,8 +100,8 @@ mod tests {
             select json_matches_schema('{"type": "object"}', '{}')
         "#,
         )
-        .unwrap()
-        .unwrap();
+        .expect("error cab62f67-e33a-4336-ae3c-58c4c865c2a2")
+        .expect("error c53ed424-57ea-4c5a-9d14-dec8336816d3");
         assert!(result);
     }
 
@@ -112,8 +112,8 @@ mod tests {
             select json_matches_schema('{"type": "object"}', '1')
         "#,
         )
-        .unwrap()
-        .unwrap();
+        .expect("error 62986157-b899-4c8b-860d-375896485906")
+        .expect("error 9731c253-2039-4272-8cd4-e5f7614819b6");
         assert!(!result);
     }
 
@@ -124,8 +124,8 @@ mod tests {
             select jsonb_matches_schema('{"type": "object"}', '{}')
         "#,
         )
-        .unwrap()
-        .unwrap();
+        .expect("error 0d43e545-ca2a-48b3-bce3-425bf0db97e0")
+        .expect("error 26261b4b-5e56-475a-9c2e-39d9f1b080ff");
         assert!(result);
     }
 
@@ -136,8 +136,8 @@ mod tests {
             select jsonb_matches_schema('{"type": "object"}', '1')
         "#,
         )
-        .unwrap()
-        .unwrap();
+        .expect("error 31d3de50-7c6b-406f-8595-78dfd3475cfa")
+        .expect("error ab3f90d0-36d6-4f92-bec8-5b42692dc9f7");
         assert!(!result);
     }
 

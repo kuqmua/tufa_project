@@ -4,7 +4,7 @@
 //     let mut msg_html = String::new();
 //     for m in flash_messages.iter() {
 //         use std::fmt::Write;
-//         writeln!(msg_html, "<p><i>{}</i></p>", m.content()).unwrap();
+//         writeln!(msg_html, "<p><i>{}</i></p>", m.content()).expect("error 1bd886af-b7f0-41fa-aa7f-faf1707c23c8");
 //     }
 //     let idempotency_key = uuid::Uuid::new_v4();
 //     Ok(actix_web::HttpResponse::Ok()

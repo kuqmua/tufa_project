@@ -119,7 +119,7 @@ pub fn home() -> Html {
         }
       />
     };
-    // let rotate = crate::helpers::rotate::Rotate::new(60).unwrap();
+    // let rotate = crate::helpers::rotate::Rotate::new(60).expect("error b2ac122d-9201-439b-ae89-749946df8cbc");
     let _g = yew::html! {
       <crate::components::ant_design::general::icon::Icon
         svg_type={

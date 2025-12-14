@@ -15,7 +15,7 @@ pub fn text_input(props: &TextInputProps) -> Html {
     let onchange = Callback::from(move |event: Event| {
         let value = event
             .target()
-            .unwrap()
+            .expect("error 1f42cfed-90b8-47c0-a0a9-d62449821f60")
             .unchecked_into::<HtmlInputElement>()
             // .value_of()
             .value();

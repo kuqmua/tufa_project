@@ -673,7 +673,7 @@ impl PaginationBase {
         self.offset
     }
     pub const fn end(&self) -> i64 {
-        self.offset.checked_add(self.limit).unwrap()
+        self.offset.checked_add(self.limit).expect("error 8a297b66-4f42-4b48-8e18-cc1f35302e0a")
     }
 }
 impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {

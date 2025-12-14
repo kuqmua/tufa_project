@@ -228,7 +228,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             }
         }
         fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
-            self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
+            self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().expect("error 18c32bc0-2e55-4b4d-a6a8-b8680e5fe463")
         }
     }
     enum KindOfUnsignedPartOfStdPrimitiveI32 {
