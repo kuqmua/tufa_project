@@ -3732,7 +3732,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     }
                                                 }
                                             ).is_err() {
-                                                panic!("error 448834a3-8271-4416-babe-abae2ad1c63b");//todo
+                                                return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                });
                                             }
                                         }
                                     });
