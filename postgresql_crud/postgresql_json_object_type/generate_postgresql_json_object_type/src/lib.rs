@@ -116,7 +116,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     ;
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
-    //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
+    //     &serde_json::to_string(&postgresql_json_object_type_record_vec).expect("error efc7a263-f6cd-44ca-aacf-470a37971f7f"),
     // );
 
     // element.iter().enumerate().fold(String::new(), |mut acc, (index, element)| {
@@ -267,7 +267,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IdentPattern::ArrayNullableWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
-                format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().unwrap()
+                format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().expect("error 43784dd3-f37a-438d-8bc8-d17f63feac66")
             };
 
             let ident = &generate_ident_upper_camel_case(&match (&not_null_or_nullable, &postgresql_json_object_type_pattern) {
@@ -537,7 +537,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             impl quote::ToTokens for PostgresqlJsonTypeSubtype {
                 fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().unwrap().to_tokens(tokens);
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
                 }
             }
             #[derive(Debug, Clone, strum_macros::Display)]
@@ -553,7 +553,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             impl quote::ToTokens for PostgresqlTypeSubtype {
                 fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().unwrap().to_tokens(tokens);
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
                 }
             }
             let ident_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_array_not_null_upper_camel_case);
@@ -2162,12 +2162,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let generate_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
-                    postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(&generate_ident_read_or_ident_with_id_standart_not_null_read_upper_camel_case(is_standart_with_id), &current_vec_syn_field.iter().map(|element| (element.ident.as_ref().unwrap(), &element.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(), current_vec_syn_field.len(), &|_: &syn::Ident, syn_type: &syn::Type| {
-                        let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
-                        postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                            &wrap_into_value_declaration_token_stream(&type_read_token_stream)
-                        )
-                    })
+                    postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(
+                        &generate_ident_read_or_ident_with_id_standart_not_null_read_upper_camel_case(is_standart_with_id),
+                        &current_vec_syn_field.iter().map(|element| (element.ident.as_ref().expect("error dd245060-a98c-4fb4-a16d-74262259fcd6"), &element.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(),
+                        current_vec_syn_field.len(),
+                        &|_: &syn::Ident, syn_type: &syn::Type| {
+                            let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
+                            postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                &wrap_into_value_declaration_token_stream(&type_read_token_stream)
+                            )
+                        }
+                    )
                 };
                 let maybe_impl_serde_deserialize_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -4474,7 +4479,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &{
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
                         quote::quote! {
-                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).unwrap())
+                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).expect("error 59a1654b-cbde-40a6-a958-383d263ee19d"))
                         }
                     },
                     &ident_create_upper_camel_case,
@@ -5484,7 +5489,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut #acc_snake_case = vec![];
                                                 #(#parameters_token_stream)*
                                                 #acc_snake_case
-                                            }).unwrap()
+                                            }).expect("error a06dbdc5-296c-48a8-ba00-913e1fe82ebf")
                                         )
                                     }
                                 },
@@ -5500,7 +5505,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             vec![],
                                             #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::try_new(
                                                 #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_standart_not_null_update_element_upper_camel_case {
-                                                    #id_snake_case: #uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().unwrap().#value_snake_case),
+                                                    #id_snake_case: #uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().expect("error f04a2c6d-bc0b-4693-b7e5-ede348cb229e").#value_snake_case),
                                                     fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(
                                                         #ident_standart_not_null_read_inner_upper_camel_case {
                                                             #(#fields_token_stream),*
@@ -5512,7 +5517,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             .expect("error ca51d559-d3d1-4855-8d9a-0f799cccd3e4"),
                                             vec![],
                                         )
-                                        .unwrap()
+                                        .expect("error 0449fe82-4acc-4c83-9753-18f313b278d1")
                                     }
                                 }
                             },
@@ -6589,7 +6594,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // }
             (
                 {
-                    let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                    let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("error 7f9a06a5-db0f-420d-ae83-581ccc02c99f");
                     quote::quote! {
                         pub #field_ident: #ident,
                     }
