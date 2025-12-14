@@ -6,7 +6,6 @@ pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item:
 }
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
 pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
         PostgresqlJsonType,
@@ -42,6 +41,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         All,
         Concrete(PostgresqlJsonObjectTypeRecord),
     }
+    panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream.clone()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let postgresql_json_object_type_record_vec = {
@@ -133,6 +133,88 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         .into_iter()
         .enumerate()
         .map(|(index, element)| {
+            #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+            enum IsStandartWithId {
+                False,
+                True,
+            }
+            enum IdentPattern {
+                StandartNotNullWithoutId,
+                StandartNotNullWithId,
+                StandartNullableWithoutId,
+                ArrayNotNullWithId,
+                ArrayNullableWithId,
+            }
+            #[derive(Debug, Clone, strum_macros::Display)]
+            enum PostgresqlJsonTypeSubtype {
+                TableTypeDeclaration,
+                Create,
+                CreateForQuery,
+                Select,
+                Where,
+                Read,
+                ReadOnlyIds,
+                ReadInner,
+                Update,
+                UpdateForQuery,
+            }
+            impl quote::ToTokens for PostgresqlJsonTypeSubtype {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
+                }
+            }
+            #[derive(Debug, Clone, strum_macros::Display)]
+            enum PostgresqlTypeSubtype {
+                // TableTypeDeclaration,
+                // Create,
+                // Select,
+                // Where,
+                Read,
+                // ReadOnlyIds,
+                // ReadInner,
+                Update,
+            }
+            impl quote::ToTokens for PostgresqlTypeSubtype {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
+                }
+            }
+            enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
+                TableTypeDeclaration,
+                Create,
+            }
+            impl From<&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate> for PostgresqlJsonTypeSubtype {
+                fn from(value: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate) -> Self {
+                    match &value {
+                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => Self::TableTypeDeclaration,
+                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => Self::Create,
+                    }
+                }
+            }
+            enum ShouldDeriveSerdeDeserialize {
+                True,
+                False,
+            }
+            impl quote::ToTokens for ShouldDeriveSerdeDeserialize {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    if let Self::True = &self {
+                        quote::quote! {serde::Deserialize,}.to_tokens(tokens);
+                    }
+                }
+            }
+            enum ReadOrReadInner {
+                ReadWithSerdeOptionIsNoneAnnotation,
+                ReadWithoutSerdeOptionIsNoneAnnotation,
+                ReadInner,
+            }
+            enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
+                True,
+                False,
+            }
+            enum StructDeclarationOrNewType {
+                StructDeclaration,
+                NewType,
+            }
             let not_null_or_nullable = &element.not_null_or_nullable;
             let postgresql_json_object_type_pattern = &element.postgresql_json_object_type_pattern;
             let trait_gen = &element.trait_gen;
@@ -236,20 +318,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             } else {
                 panic!("does work only on structs!");
             };
-            #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-            enum IsStandartWithId {
-                False,
-                True,
-            }
             let is_standart_with_id_false = IsStandartWithId::False;
             let is_standart_with_id_true = IsStandartWithId::True;
-            enum IdentPattern {
-                StandartNotNullWithoutId,
-                StandartNotNullWithId,
-                StandartNullableWithoutId,
-                ArrayNotNullWithId,
-                ArrayNullableWithId,
-            }
             let generate_ident_upper_camel_case = |ident_pattern: &IdentPattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
                 let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -522,40 +592,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #maybe_ident_with_id_standart_not_null_token_stream
                 }
             };
-            #[derive(Debug, Clone, strum_macros::Display)]
-            enum PostgresqlJsonTypeSubtype {
-                TableTypeDeclaration,
-                Create,
-                CreateForQuery,
-                Select,
-                Where,
-                Read,
-                ReadOnlyIds,
-                ReadInner,
-                Update,
-                UpdateForQuery,
-            }
-            impl quote::ToTokens for PostgresqlJsonTypeSubtype {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
-                }
-            }
-            #[derive(Debug, Clone, strum_macros::Display)]
-            enum PostgresqlTypeSubtype {
-                // TableTypeDeclaration,
-                // Create,
-                // Select,
-                // Where,
-                Read,
-                // ReadOnlyIds,
-                // ReadInner,
-                Update,
-            }
-            impl quote::ToTokens for PostgresqlTypeSubtype {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
-                }
-            }
             let ident_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_array_not_null_upper_camel_case);
             let ident_with_id_array_not_null_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&ident_with_id_array_not_null_upper_camel_case);
             let postgresql_json_type_subtype_table_type_declaration = PostgresqlJsonTypeSubtype::TableTypeDeclaration;
@@ -578,18 +614,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_type_as_postgresql_json_type_token_stream(&field.ty);
             let generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_token_stream, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:?}")});
             let ident_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(&ident, &postgresql_json_type_subtype_table_type_declaration);
-            enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
-                TableTypeDeclaration,
-                Create,
-            }
-            impl From<&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate> for PostgresqlJsonTypeSubtype {
-                fn from(value: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate) -> Self {
-                    match &value {
-                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => Self::TableTypeDeclaration,
-                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => Self::Create,
-                    }
-                }
-            }
             let self_value_token_stream = quote::quote! {Self(#value_snake_case)};
             let postgresql_type_where_filter_query_bind_value_query_token_stream = quote::quote!{#import_path::PostgresqlTypeWhereFilter::query_bind(#value_snake_case, #query_snake_case)};
 
@@ -612,10 +636,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub struct #ident_token_stream #content_token_stream
                     }
                 };
-                enum StructDeclarationOrNewType {
-                    StructDeclaration,
-                    NewType,
-                }
                 let struct_declaration_or_new_type_struct_declaration = StructDeclarationOrNewType::StructDeclaration;
                 let struct_declaration_or_new_type_new_type = StructDeclarationOrNewType::NewType;
                 let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId, postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate, struct_declaration_or_new_type: &StructDeclarationOrNewType| {
@@ -1892,24 +1912,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                 }))
             };
-            enum ShouldDeriveSerdeDeserialize {
-                True,
-                False,
-            }
-            impl quote::ToTokens for ShouldDeriveSerdeDeserialize {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    if let Self::True = &self {
-                        quote::quote! {serde::Deserialize,}.to_tokens(tokens);
-                    }
-                }
-            }
             let generate_type_as_postgresql_json_type_read_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_read);
             let generate_type_as_postgresql_json_type_read_inner_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_read_inner);
-            enum ReadOrReadInner {
-                ReadWithSerdeOptionIsNoneAnnotation,
-                ReadWithoutSerdeOptionIsNoneAnnotation,
-                ReadInner,
-            }
             let generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream = |is_standart_with_id: &IsStandartWithId, read_or_read_inner: &ReadOrReadInner| {
                 let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let maybe_serde_skip_serializing_if_option_is_none_token_stream = match &read_or_read_inner {
@@ -2489,10 +2493,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let import_path_unique_vec_ident_with_id_standart_not_null_update_for_query_element_token_stream = quote::quote!{
                 #import_path::UniqueVec::<#ident_with_id_standart_not_null_update_for_query_element_upper_camel_case>
             };
-            enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
-                True,
-                False,
-            }
             let ident_update_token_stream = {
                 let generate_ident_update_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId| {
                     generate_unique_vec_wrapper_token_stream(match &is_standart_with_id {
@@ -5117,35 +5117,42 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                             });
                                             let field_type_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&element.ty);
-                                            #[derive(Clone)]
-                                            enum ShouldAddDotClone {
-                                                True,
-                                                False
-                                            }
-                                            let generate_parameters_token_stream = |should_add_dot_clone: ShouldAddDotClone|{
-                                                let mut acc = vec![];
-                                                for element in get_vec_syn_field(&is_standart_with_id_false) {
-                                                    let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                                    });
-                                                    acc.push(if field_ident == current_field_ident {
-                                                        let maybe_dot_clone_token_stream = match should_add_dot_clone.clone() {
-                                                            ShouldAddDotClone::True => quote::quote!{.clone()},
-                                                            ShouldAddDotClone::False => proc_macro2::TokenStream::new()
-                                                        };
-                                                        quote::quote! {
-                                                            #element_snake_case #maybe_dot_clone_token_stream
-                                                        }
-                                                    } else {
-                                                        quote::quote! {
-                                                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                        }
-                                                    });
+                                            let (
+                                                option_additional_parameters_token_stream,
+                                                parameters_token_stream
+                                            ) = {
+                                                #[derive(Clone)]
+                                                enum ShouldAddDotClone {
+                                                    True,
+                                                    False
                                                 }
-                                                acc
+                                                let generate_parameters_token_stream = |should_add_dot_clone: ShouldAddDotClone|{
+                                                    let mut acc = vec![];
+                                                    for element in get_vec_syn_field(&is_standart_with_id_false) {
+                                                        let current_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                                        });
+                                                        acc.push(if field_ident == current_field_ident {
+                                                            let maybe_dot_clone_token_stream = match should_add_dot_clone.clone() {
+                                                                ShouldAddDotClone::True => quote::quote!{.clone()},
+                                                                ShouldAddDotClone::False => proc_macro2::TokenStream::new()
+                                                            };
+                                                            quote::quote! {
+                                                                #element_snake_case #maybe_dot_clone_token_stream
+                                                            }
+                                                        } else {
+                                                            quote::quote! {
+                                                                #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                            }
+                                                        });
+                                                    }
+                                                    acc
+                                                };
+                                                (
+                                                    generate_parameters_token_stream(ShouldAddDotClone::True),
+                                                    generate_parameters_token_stream(ShouldAddDotClone::False)
+                                                )
                                             };
-                                            let option_additional_parameters_token_stream = generate_parameters_token_stream(ShouldAddDotClone::True);
-                                            let parameters_token_stream = generate_parameters_token_stream(ShouldAddDotClone::False);
                                             quote::quote! {
                                                 if let Some(vec_create) = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case() {
                                                     let mut inner_acc = vec![];

@@ -101,46 +101,44 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Clippy;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
         let clippy_lints_from_docs = {
-            let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3");
-            fn parse_article_ids_from_file(html: &str) -> Vec<String> {
-                let document = scraper::Html::parse_document(html);
-                let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
-                let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
-                let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("error eb483b13-e70e-40f4-b83a-3eeb00413d57");
-                let article_selector = scraper::Selector::parse("article").expect("error d21dbe55-6f9f-4695-bf08-78da4f2424ea");
-                let label_selector = scraper::Selector::parse("label").expect("error fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7");
-                let h2_lint_title_selector = scraper::Selector::parse(r#"h2[class="lint-title"]"#).expect("error f1473d4e-e26a-491d-9980-e1874301a6b2");
-                let span_label_label_default_lint_group_group_deprecated_selector = scraper::Selector::parse(r#"span[class="label label-default lint-group group-deprecated"]"#).expect("error e86d5496-f62b-428c-ac6c-d533e0f6f775");
-                let mut ids = Vec::new();
-                for html_element in document.select(&html_selector) {
-                    for body_element in html_element.select(&body_selector) {
-                        for div_container_element in body_element.select(&div_container_selector) {
-                            for article_element in div_container_element.select(&article_selector) {
-                                let mut is_deprecated = false;
-                                for label_selector_element in article_element.select(&label_selector) {
+            let document = scraper::Html::parse_document(
+                &reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3")
+            );
+            let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
+            let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
+            let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("error eb483b13-e70e-40f4-b83a-3eeb00413d57");
+            let article_selector = scraper::Selector::parse("article").expect("error d21dbe55-6f9f-4695-bf08-78da4f2424ea");
+            let label_selector = scraper::Selector::parse("label").expect("error fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7");
+            let h2_lint_title_selector = scraper::Selector::parse(r#"h2[class="lint-title"]"#).expect("error f1473d4e-e26a-491d-9980-e1874301a6b2");
+            let span_label_label_default_lint_group_group_deprecated_selector = scraper::Selector::parse(r#"span[class="label label-default lint-group group-deprecated"]"#).expect("error e86d5496-f62b-428c-ac6c-d533e0f6f775");
+            let mut ids = Vec::new();
+            for html_element in document.select(&html_selector) {
+                for body_element in html_element.select(&body_selector) {
+                    for div_container_element in body_element.select(&div_container_selector) {
+                        for article_element in div_container_element.select(&article_selector) {
+                            let mut is_deprecated = false;
+                            for label_selector_element in article_element.select(&label_selector) {
+                                if is_deprecated {
+                                    break;
+                                }
+                                for h2_lint_title_selector_element in label_selector_element.select(&h2_lint_title_selector) {
                                     if is_deprecated {
                                         break;
                                     }
-                                    for h2_lint_title_selector_element in label_selector_element.select(&h2_lint_title_selector) {
-                                        if is_deprecated {
-                                            break;
-                                        }
-                                        if h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector).next().is_some() {
-                                            is_deprecated = true;
-                                            break;
-                                        }
+                                    if h2_lint_title_selector_element.select(&span_label_label_default_lint_group_group_deprecated_selector).next().is_some() {
+                                        is_deprecated = true;
+                                        break;
                                     }
                                 }
-                                if let Some(id) = article_element.value().attr("id") && !is_deprecated {
-                                    ids.push(id.to_string());
-                                }
+                            }
+                            if let Some(id) = article_element.value().attr("id") && !is_deprecated {
+                                ids.push(id.to_string());
                             }
                         }
                     }
                 }
-                ids
             }
-            parse_article_ids_from_file(&body)
+            ids
         };
         compare_lints_vec_from_cargo_toml_with_lints_to_check(
             rust_or_clippy,
@@ -154,7 +152,6 @@ mod tests {
     }
     #[test]
     fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspace_true() {
-        let path = std::path::Path::new(&"../");
         fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> Vec<String> {
             let mut acc = vec![];
             if path.is_dir() {
@@ -176,7 +173,6 @@ mod tests {
             }
             acc
         }
-        let cargo_toml_string_vec = get_cargo_toml_contents_recursive(path);
         #[derive(Debug, serde::Deserialize)]
         struct Name {
             name: String,
@@ -195,6 +191,7 @@ mod tests {
             build_dependencies: Option<std::collections::HashMap<String, toml::Value>>,
             lints: Option<Lints>,
         }
+        let cargo_toml_string_vec = get_cargo_toml_contents_recursive(std::path::Path::new(&"../"));
         let mut acc: Vec<(String, toml::Value)> = vec![];
         for cargo_toml_string in &cargo_toml_string_vec {
             let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");

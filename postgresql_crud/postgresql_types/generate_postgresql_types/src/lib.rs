@@ -1,7 +1,5 @@
 #[proc_macro]
 pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
-
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI16,
@@ -748,6 +746,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
+    use rayon::iter::IntoParallelRefIterator as _;
+    use rayon::iter::ParallelIterator as _;
+    panic_location::panic_location();
     let postgresql_type_record_vec = {
         let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_type");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
@@ -820,8 +821,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //     "GeneratePostgresqlTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_type_record_vec).expect("error 430ae18a-ac16-4968-a94c-792455d44d5f"),
     // );
-    use rayon::iter::IntoParallelRefIterator as _;
-    use rayon::iter::ParallelIterator as _;
     let (columns_token_stream, postgresql_type_array) = postgresql_type_record_vec
         .into_iter()
         .enumerate()
@@ -829,7 +828,51 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         .par_iter()
         // .into_iter() //just for console prints ordering
         .map(|(index, element)| {
-            // println!("{element:#?}");
+            enum PostgresqlTypeOrPostgresqlTypeTestCases {
+                PostgresqlType,
+                PostgresqlTypeTestCases
+            }
+            enum CanBePrimaryKey {
+                True,
+                False,
+            }
+            enum IsStandartNotNull {
+                True,
+                False,
+            }
+            enum IsNotNullStandartCanBePrimaryKey {
+                True,
+                False,
+            }
+            enum StartOrEnd {
+                Start,
+                End,
+            }
+            enum IntRangeType {
+                SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+                SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
+            }
+            enum ImplDefault {
+                True,
+                False,
+            }
+            type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
+            fn generate_pg_range_conversion_token_stream(match_content_token_stream: &dyn quote::ToTokens, input_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                quote::quote! {
+                    sqlx::postgres::types::PgRange {
+                        start: match #match_content_token_stream.start {
+                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
+                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                        },
+                        end: match #match_content_token_stream.end {
+                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
+                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                        },
+                    }
+                }
+            }
             let postgresql_type = &element.postgresql_type;
             let not_null_or_nullable = &element.not_null_or_nullable;
             let postgresql_type_pattern = &element.postgresql_type_pattern;
@@ -947,10 +990,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_array_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::ArrayDimension1 {
                 dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable
             });
-            enum PostgresqlTypeOrPostgresqlTypeTestCases {
-                PostgresqlType,
-                PostgresqlTypeTestCases
-            }
             let generate_token_stream = |
                 content_token_stream: &dyn quote::ToTokens,
                 postgresql_type_or_postgresql_type_test_cases: &PostgresqlTypeOrPostgresqlTypeTestCases
@@ -1111,10 +1150,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
                 },
             };
-            enum CanBePrimaryKey {
-                True,
-                False,
-            }
             let can_be_primary_key = match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsInt2 |
                 PostgresqlType::StdPrimitiveI32AsInt4 |
@@ -1144,44 +1179,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBePrimaryKey::True,
             };
-            fn generate_pg_range_conversion_token_stream(match_content_token_stream: &dyn quote::ToTokens, input_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-                quote::quote! {
-                    sqlx::postgres::types::PgRange {
-                        start: match #match_content_token_stream.start {
-                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
-                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
-                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                        },
-                        end: match #match_content_token_stream.end {
-                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
-                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
-                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                        },
-                    }
-                }
-            }
-            enum IsStandartNotNull {
-                True,
-                False,
-            }
             let is_standart_not_null = if let (PostgresqlTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&postgresql_type_pattern, &not_null_or_nullable) {
                 IsStandartNotNull::True
             } else {
                 IsStandartNotNull::False
             };
-            enum IsNotNullStandartCanBePrimaryKey {
-                True,
-                False,
-            }
             let is_not_null_standart_can_be_primary_key = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart, CanBePrimaryKey::True) = (&not_null_or_nullable, &postgresql_type_pattern, &can_be_primary_key) {
                 IsNotNullStandartCanBePrimaryKey::True
             } else {
                 IsNotNullStandartCanBePrimaryKey::False
             };
-            enum StartOrEnd {
-                Start,
-                End,
-            }
             let generate_start_or_end_upper_camel_case = |start_or_end: &StartOrEnd| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
                 match &start_or_end {
                     StartOrEnd::Start => &start_upper_camel_case,
@@ -1195,7 +1202,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let IsStandartNotNull::True = &is_standart_not_null {
-                let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                 enum ParameterNumber {
                     One,
                     Two,
@@ -1215,6 +1221,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (0..=self.get_index()).collect()
                     }
                 }
+                let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                 let parameter_number_one = ParameterNumber::One;
                 let parameter_number_two = ParameterNumber::Two;
                 let parameter_number_three = ParameterNumber::Three;
@@ -2321,10 +2328,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
-            enum IntRangeType {
-                SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
-                SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
-            }
             let int_range_type_to_range_inner_type_token_stream = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
                 match &int_range_type {
                     IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote! {#std_primitive_i32_token_stream},
@@ -3562,10 +3565,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream
                 }
             };
-            enum ImplDefault {
-                True,
-                False,
-            }
             let generate_pub_struct_tokens_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens,
@@ -4350,7 +4349,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Ok(#acc_snake_case)
                 };
                 let ok_query_token_stream = quote::quote!{Ok(#query_snake_case)};
-                type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
                 let (query_part_create_token_stream, bind_value_to_query_create_token_stream): Handle<'_> = {
                     let typical: Handle<'_> = { (&typical_query_part_token_stream, &typical_query_bind_token_stream) };
                     let default_initialized_by_postgresql: Handle<'_> = (
@@ -4878,6 +4876,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {
+                enum IsNeedToUseInto {
+                    True,
+                    False
+                }
                 let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                     let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                     let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
@@ -4889,10 +4891,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         as
                     #import_path::#postgresql_type_upper_camel_case>::#read_or_update_upper_camel_case:: #content_token_stream}
                 };
-                enum IsNeedToUseInto {
-                    True,
-                    False
-                }
                 let generate_standart_not_null_test_case_handle_token_stream = |is_need_to_use_into: &IsNeedToUseInto|{
                     let generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = |
                         min_token_stream: &dyn quote::ToTokens,
@@ -5938,6 +5936,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             TrueFromCreate,
                             False
                         }
+                        enum ReadOnlyIdsCreate {
+                            ReadOnlyIds,
+                            Create,
+                        }
                         let is_need_to_impl_greater_than_test = match &postgresql_type {
                             PostgresqlType::StdPrimitiveI16AsInt2 |
                             PostgresqlType::StdPrimitiveI32AsInt4 |
@@ -5967,10 +5969,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => IsNeedToImplPostgresqlTypeGreaterThanTest::False,
                         };
-                        enum ReadOnlyIdsCreate {
-                            ReadOnlyIds,
-                            Create,
-                        }
                         let generate_some_token_stream = |read_only_ids_create: &ReadOnlyIdsCreate|{
                             match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {

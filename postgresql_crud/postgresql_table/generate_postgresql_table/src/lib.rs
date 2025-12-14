@@ -102,6 +102,236 @@ pub fn common_additional_logic(_attr: proc_macro::TokenStream, item: proc_macro:
 
 #[proc_macro_derive(GeneratePostgresqlTable, attributes(generate_postgresql_table_primary_key))]
 pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    #[derive(Debug, Clone)]
+    struct SynFieldWrapper {
+        syn_field: syn::Field,
+        field_ident: syn::Ident,
+    }
+    #[derive(Debug)]
+    struct SynVariantWrapper {
+        variant: syn::Variant,
+        status_code: Option<macros_helpers::status_code::StatusCode>,
+    }
+    impl SynVariantWrapper {
+        const fn get_syn_variant(&self) -> &syn::Variant {
+            &self.variant
+        }
+        const fn get_option_status_code(&self) -> Option<&macros_helpers::status_code::StatusCode> {
+            self.status_code.as_ref()
+        }
+    }
+    enum ShouldAddBorrow {
+        True,
+        False,
+    }
+    impl quote::ToTokens for ShouldAddBorrow {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            match &self {
+                Self::True => quote::quote! {&}.to_tokens(tokens),
+                Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+            }
+        }
+    }
+    enum ShouldAddReturn {
+        True,
+        False
+    }
+    #[derive(Debug, Clone, Copy, naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    enum Operation {
+        CreateMany,
+        CreateOne,
+        ReadMany,
+        ReadOne,
+        UpdateMany,
+        UpdateOne,
+        DeleteMany,
+        DeleteOne,
+    }
+    impl Operation {
+        const fn http_method(self) -> OperationHttpMethod {
+            match self {
+                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
+                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
+            }
+        }
+        const fn desirable_status_code(self) -> macros_helpers::status_code::StatusCode {
+            match self {
+                Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
+                Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
+            }
+        }
+        const fn generate_postgresql_table_attribute_additional_error_variants(self) -> GeneratePostgresqlTableAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalErrorVariants,
+            }
+        }
+        const fn generate_postgresql_table_attribute_additional_logic(self) -> GeneratePostgresqlTableAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalLogic,
+                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalLogic,
+                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalLogic,
+                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalLogic,
+                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalLogic,
+                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalLogic,
+                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalLogic,
+                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalLogic,
+            }
+        }
+        fn operation_error_named_with_serialize_deserialize_snake_case(self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
+            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
+        }
+        fn self_snake_case_stringified(self) -> String {
+            naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
+        }
+        fn self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
+        }
+        fn self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
+            quote::quote!{#value}
+        }
+        fn try_self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::TrySelfSnakeCase::from_tokens(&self.self_snake_case_token_stream());
+            quote::quote!{#value}
+        }
+        fn try_self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
+            let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
+            quote::quote!{#value}
+        }
+        fn operation_payload_example_snake_case(self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
+        }
+    }
+    impl std::fmt::Display for Operation {
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match &self {
+                Self::CreateMany => write!(formatter, "CreateMany"),
+                Self::CreateOne => write!(formatter, "CreateOne"),
+                Self::ReadMany => write!(formatter, "ReadMany"),
+                Self::ReadOne => write!(formatter, "ReadOne"),
+                Self::UpdateMany => write!(formatter, "UpdateMany"),
+                Self::UpdateOne => write!(formatter, "UpdateOne"),
+                Self::DeleteMany => write!(formatter, "DeleteMany"),
+                Self::DeleteOne => write!(formatter, "DeleteOne"),
+            }
+        }
+    }
+    #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    enum OperationHttpMethod {
+        Post,
+        Patch,
+        Delete,
+    }
+    enum ReadManyOrDeleteMany {
+        ReadMany,
+        DeleteMany,
+    }
+    impl From<&ReadManyOrDeleteMany> for Operation {
+        fn from(value: &ReadManyOrDeleteMany) -> Self {
+            match &value {
+                ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
+                ReadManyOrDeleteMany::DeleteMany => Self::DeleteMany,
+            }
+        }
+    }
+    enum ReadManyOrReadOne {
+        ReadMany,
+        ReadOne,
+    }
+    impl From<&ReadManyOrReadOne> for Operation {
+        fn from(value: &ReadManyOrReadOne) -> Self {
+            match &value {
+                ReadManyOrReadOne::ReadMany => Self::ReadMany,
+                ReadManyOrReadOne::ReadOne => Self::ReadOne,
+            }
+        }
+    }
+    #[derive(Debug, strum_macros::Display)]
+    enum GeneratePostgresqlTableAttribute {
+        CreateManyAdditionalErrorVariants,
+        CreateOneAdditionalErrorVariants,
+        ReadManyAdditionalErrorVariants,
+        ReadOneAdditionalErrorVariants,
+        UpdateManyAdditionalErrorVariants,
+        UpdateOneAdditionalErrorVariants,
+        DeleteManyAdditionalErrorVariants,
+        DeleteOneAdditionalErrorVariants,
+        CommonAdditionalErrorVariants,
+        CreateManyAdditionalLogic,
+        CreateOneAdditionalLogic,
+        ReadManyAdditionalLogic,
+        ReadOneAdditionalLogic,
+        UpdateManyAdditionalLogic,
+        UpdateOneAdditionalLogic,
+        DeleteManyAdditionalLogic,
+        DeleteOneAdditionalLogic,
+        CommonAdditionalLogic,
+    }
+    impl GeneratePostgresqlTableAttribute {
+        fn generate_path_to_attribute(self) -> String {
+            let value = match self {
+                Self::CreateManyAdditionalErrorVariants => naming::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateOneAdditionalErrorVariants => naming::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadManyAdditionalErrorVariants => naming::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::ReadOneAdditionalErrorVariants => naming::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateManyAdditionalErrorVariants => naming::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::UpdateOneAdditionalErrorVariants => naming::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteManyAdditionalErrorVariants => naming::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::DeleteOneAdditionalErrorVariants => naming::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CommonAdditionalErrorVariants => naming::CommonAdditionalErrorVariantsSnakeCase.to_string(),
+                Self::CreateManyAdditionalLogic => naming::CreateManyAdditionalLogicSnakeCase.to_string(),
+                Self::CreateOneAdditionalLogic => naming::CreateOneAdditionalLogicSnakeCase.to_string(),
+                Self::ReadManyAdditionalLogic => naming::ReadManyAdditionalLogicSnakeCase.to_string(),
+                Self::ReadOneAdditionalLogic => naming::ReadOneAdditionalLogicSnakeCase.to_string(),
+                Self::UpdateManyAdditionalLogic => naming::UpdateManyAdditionalLogicSnakeCase.to_string(),
+                Self::UpdateOneAdditionalLogic => naming::UpdateOneAdditionalLogicSnakeCase.to_string(),
+                Self::DeleteManyAdditionalLogic => naming::DeleteManyAdditionalLogicSnakeCase.to_string(),
+                Self::DeleteOneAdditionalLogic => naming::DeleteOneAdditionalLogicSnakeCase.to_string(),
+                Self::CommonAdditionalLogic => naming::CommonAdditionalLogicSnakeCase.to_string(),
+            };
+            format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
+        }
+    }
+    enum ShouldWrapIntoValue {
+        True,
+        False
+    }
+    enum CreateManyOrUpdateManyOrDeleteMany {
+        CreateMany,
+        UpdateMany,
+        DeleteMany,
+    }
+    impl From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
+        fn from(value: &CreateManyOrUpdateManyOrDeleteMany) -> Self {
+            match &value {
+                CreateManyOrUpdateManyOrDeleteMany::CreateMany => Self::CreateMany,
+                CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Self::UpdateMany,
+                CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Self::DeleteMany,
+            }
+        }
+    }
+    enum CreateOneOrUpdateOneOrDeleteOne {
+        CreateOne,
+        UpdateOne,
+        DeleteOne,
+    }
+    impl From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
+        fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
+            match &value {
+                CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,
+                CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Self::UpdateOne,
+                CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Self::DeleteOne,
+            }
+        }
+    }
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
     let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
@@ -228,11 +458,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
     let self_table_name_call_token_stream = quote::quote!{Self::#table_name_snake_case()};
-    #[derive(Debug, Clone)]
-    struct SynFieldWrapper {
-        syn_field: syn::Field,
-        field_ident: syn::Ident,
-    }
     let (primary_key_field, fields, fields_without_primary_key) = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
             let mut option_primary_key_field: Option<SynFieldWrapper> = None;
@@ -317,18 +542,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(primary_key_field_type);
     let primary_key_field_type_update_for_query_token_stream = &naming::parameter::SelfUpdateForQueryUpperCamelCase::from_type_last_segment(primary_key_field_type);
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
-    enum ShouldAddBorrow {
-        True,
-        False,
-    }
-    impl quote::ToTokens for ShouldAddBorrow {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            match &self {
-                Self::True => quote::quote! {&}.to_tokens(tokens),
-                Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-            }
-        }
-    }
     let generate_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream = |should_add_borrow: &ShouldAddBorrow| {
         quote::quote! {#select_snake_case: #should_add_borrow postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>}
     };
@@ -520,10 +733,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #ident_prepare_postgresql_error_named_token_stream
         }
     };
-    enum ShouldAddReturn {
-        True,
-        False
-    }
     let wrap_into_axum_response_token_stream = |
         axum_json_content_token_stream: &dyn quote::ToTokens,
         status_code_token_stream: &dyn quote::ToTokens,
@@ -686,113 +895,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream =
         |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &proc_macro2::TokenStream::new(), &content_token_stream);
-    #[derive(Debug)]
-    struct SynVariantWrapper {
-        variant: syn::Variant,
-        status_code: Option<macros_helpers::status_code::StatusCode>,
-    }
-    impl SynVariantWrapper {
-        const fn get_syn_variant(&self) -> &syn::Variant {
-            &self.variant
-        }
-        const fn get_option_status_code(&self) -> Option<&macros_helpers::status_code::StatusCode> {
-            self.status_code.as_ref()
-        }
-    }
-    #[derive(Debug, Clone, Copy, naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-    enum Operation {
-        CreateMany,
-        CreateOne,
-        ReadMany,
-        ReadOne,
-        UpdateMany,
-        UpdateOne,
-        DeleteMany,
-        DeleteOne,
-    }
-    impl Operation {
-        const fn http_method(self) -> OperationHttpMethod {
-            match self {
-                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
-                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
-                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
-            }
-        }
-        const fn desirable_status_code(self) -> macros_helpers::status_code::StatusCode {
-            match self {
-                Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
-                Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
-            }
-        }
-        const fn generate_postgresql_table_attribute_additional_error_variants(self) -> GeneratePostgresqlTableAttribute {
-            match self {
-                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalErrorVariants,
-                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalErrorVariants,
-                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalErrorVariants,
-                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalErrorVariants,
-                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalErrorVariants,
-                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalErrorVariants,
-                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalErrorVariants,
-                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalErrorVariants,
-            }
-        }
-        const fn generate_postgresql_table_attribute_additional_logic(self) -> GeneratePostgresqlTableAttribute {
-            match self {
-                Self::CreateMany => GeneratePostgresqlTableAttribute::CreateManyAdditionalLogic,
-                Self::CreateOne => GeneratePostgresqlTableAttribute::CreateOneAdditionalLogic,
-                Self::ReadMany => GeneratePostgresqlTableAttribute::ReadManyAdditionalLogic,
-                Self::ReadOne => GeneratePostgresqlTableAttribute::ReadOneAdditionalLogic,
-                Self::UpdateMany => GeneratePostgresqlTableAttribute::UpdateManyAdditionalLogic,
-                Self::UpdateOne => GeneratePostgresqlTableAttribute::UpdateOneAdditionalLogic,
-                Self::DeleteMany => GeneratePostgresqlTableAttribute::DeleteManyAdditionalLogic,
-                Self::DeleteOne => GeneratePostgresqlTableAttribute::DeleteOneAdditionalLogic,
-            }
-        }
-        fn operation_error_named_with_serialize_deserialize_snake_case(self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
-            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(&self)
-        }
-        fn self_snake_case_stringified(self) -> String {
-            naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
-        }
-        fn self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
-        }
-        fn self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::SelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
-            quote::quote!{#value}
-        }
-        fn try_self_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::TrySelfSnakeCase::from_tokens(&self.self_snake_case_token_stream());
-            quote::quote!{#value}
-        }
-        fn try_self_handle_snake_case_token_stream(self) -> proc_macro2::TokenStream {
-            let value = naming::parameter::TrySelfHandleSnakeCase::from_tokens(&self.self_snake_case_token_stream());
-            quote::quote!{#value}
-        }
-        fn operation_payload_example_snake_case(self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
-            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
-        }
-    }
-    impl std::fmt::Display for Operation {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match &self {
-                Self::CreateMany => write!(formatter, "CreateMany"),
-                Self::CreateOne => write!(formatter, "CreateOne"),
-                Self::ReadMany => write!(formatter, "ReadMany"),
-                Self::ReadOne => write!(formatter, "ReadOne"),
-                Self::UpdateMany => write!(formatter, "UpdateMany"),
-                Self::UpdateOne => write!(formatter, "UpdateOne"),
-                Self::DeleteMany => write!(formatter, "DeleteMany"),
-                Self::DeleteOne => write!(formatter, "DeleteOne"),
-            }
-        }
-    }
-    #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-    enum OperationHttpMethod {
-        Post,
-        Patch,
-        Delete,
-    }
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     let ident_create_token_stream = {
         let ident_create_token_stream = {
@@ -1084,18 +1186,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let where_many_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote! {
         #where_many_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
-    enum ReadManyOrDeleteMany {
-        ReadMany,
-        DeleteMany,
-    }
-    impl From<&ReadManyOrDeleteMany> for Operation {
-        fn from(value: &ReadManyOrDeleteMany) -> Self {
-            match &value {
-                ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
-                ReadManyOrDeleteMany::DeleteMany => Self::DeleteMany,
-            }
-        }
-    }
     let generate_read_or_delete_many_additional_paramaters_initialization_token_stream = |read_many_or_delete_many: &ReadManyOrDeleteMany| {
         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&Operation::from(read_many_or_delete_many), &query_part_syn_variant_wrapper, file!(), line!(), column!());
         quote::quote! {
@@ -1150,18 +1240,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
         vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &naming::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
     );
-    enum ReadManyOrReadOne {
-        ReadMany,
-        ReadOne,
-    }
-    impl From<&ReadManyOrReadOne> for Operation {
-        fn from(value: &ReadManyOrReadOne) -> Self {
-            match &value {
-                ReadManyOrReadOne::ReadMany => Self::ReadMany,
-                ReadManyOrReadOne::ReadOne => Self::ReadOne,
-            }
-        }
-    }
     let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = |read_many_or_read_one: &ReadManyOrReadOne| {
         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&Operation::from(read_many_or_read_one), &postgresql_syn_variant_wrapper, file!(), line!(), column!());
         quote::quote! {
@@ -1415,52 +1493,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // println!("{ident_read_only_ids_token_stream}");
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 6a5468b2-c8d6-4c5e-88a6-adce2bfe7467");
     let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().expect("error f9e053d1-c5ce-4a8e-ac79-6cc30ba19bb9");
-    #[derive(Debug, strum_macros::Display)]
-    enum GeneratePostgresqlTableAttribute {
-        CreateManyAdditionalErrorVariants,
-        CreateOneAdditionalErrorVariants,
-        ReadManyAdditionalErrorVariants,
-        ReadOneAdditionalErrorVariants,
-        UpdateManyAdditionalErrorVariants,
-        UpdateOneAdditionalErrorVariants,
-        DeleteManyAdditionalErrorVariants,
-        DeleteOneAdditionalErrorVariants,
-        CommonAdditionalErrorVariants,
-        CreateManyAdditionalLogic,
-        CreateOneAdditionalLogic,
-        ReadManyAdditionalLogic,
-        ReadOneAdditionalLogic,
-        UpdateManyAdditionalLogic,
-        UpdateOneAdditionalLogic,
-        DeleteManyAdditionalLogic,
-        DeleteOneAdditionalLogic,
-        CommonAdditionalLogic,
-    }
-    impl GeneratePostgresqlTableAttribute {
-        fn generate_path_to_attribute(self) -> String {
-            let value = match self {
-                Self::CreateManyAdditionalErrorVariants => naming::CreateManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CreateOneAdditionalErrorVariants => naming::CreateOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::ReadManyAdditionalErrorVariants => naming::ReadManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::ReadOneAdditionalErrorVariants => naming::ReadOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::UpdateManyAdditionalErrorVariants => naming::UpdateManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::UpdateOneAdditionalErrorVariants => naming::UpdateOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::DeleteManyAdditionalErrorVariants => naming::DeleteManyAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::DeleteOneAdditionalErrorVariants => naming::DeleteOneAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CommonAdditionalErrorVariants => naming::CommonAdditionalErrorVariantsSnakeCase.to_string(),
-                Self::CreateManyAdditionalLogic => naming::CreateManyAdditionalLogicSnakeCase.to_string(),
-                Self::CreateOneAdditionalLogic => naming::CreateOneAdditionalLogicSnakeCase.to_string(),
-                Self::ReadManyAdditionalLogic => naming::ReadManyAdditionalLogicSnakeCase.to_string(),
-                Self::ReadOneAdditionalLogic => naming::ReadOneAdditionalLogicSnakeCase.to_string(),
-                Self::UpdateManyAdditionalLogic => naming::UpdateManyAdditionalLogicSnakeCase.to_string(),
-                Self::UpdateOneAdditionalLogic => naming::UpdateOneAdditionalLogicSnakeCase.to_string(),
-                Self::DeleteManyAdditionalLogic => naming::DeleteManyAdditionalLogicSnakeCase.to_string(),
-                Self::DeleteOneAdditionalLogic => naming::DeleteOneAdditionalLogicSnakeCase.to_string(),
-                Self::CommonAdditionalLogic => naming::CommonAdditionalLogicSnakeCase.to_string(),
-            };
-            format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
-        }
-    }
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
     //todo
@@ -1925,10 +1957,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
         }
     };
-    enum ShouldWrapIntoValue {
-        True,
-        False
-    }
     let generate_fetch_token_stream = |
         value_handle_token_stream: &dyn quote::ToTokens,
         try_next_error_initialization_token_stream: &dyn quote::ToTokens,
@@ -2449,20 +2477,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    enum CreateManyOrUpdateManyOrDeleteMany {
-        CreateMany,
-        UpdateMany,
-        DeleteMany,
-    }
-    impl From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
-        fn from(value: &CreateManyOrUpdateManyOrDeleteMany) -> Self {
-            match &value {
-                CreateManyOrUpdateManyOrDeleteMany::CreateMany => Self::CreateMany,
-                CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Self::UpdateMany,
-                CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Self::DeleteMany,
-            }
-        }
-    }
     let generate_create_update_delete_many_fetch_token_stream = |create_many_or_update_many_or_delete_many: &CreateManyOrUpdateManyOrDeleteMany| {
         let current_operation = match &create_many_or_update_many_or_delete_many {
             CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
@@ -2479,20 +2493,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &ShouldWrapIntoValue::True,
         )
     };
-    enum CreateOneOrUpdateOneOrDeleteOne {
-        CreateOne,
-        UpdateOne,
-        DeleteOne,
-    }
-    impl From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
-        fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
-            match &value {
-                CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,
-                CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Self::UpdateOne,
-                CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Self::DeleteOne,
-            }
-        }
-    }
     let generate_create_update_delete_one_fetch_token_stream = |create_one_or_update_one_or_delete_one: &CreateOneOrUpdateOneOrDeleteOne| {
         let current_operation = match &create_one_or_update_one_or_delete_one {
             CreateOneOrUpdateOneOrDeleteOne::CreateOne => Operation::CreateOne,

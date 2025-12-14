@@ -1,6 +1,5 @@
 #[proc_macro]
 pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    panic_location::panic_location();
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI8,
@@ -389,6 +388,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         All,
         Concrete(Vec<PostgresqlJsonTypeRecord>),
     }
+    use rayon::iter::IntoParallelRefIterator as _;
+    use rayon::iter::ParallelIterator as _;
+    panic_location::panic_location();
     let postgresql_json_type_record_vec = {
         let generate_postgresql_json_types_config = serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
         let postgresql_json_type_record_vec = match generate_postgresql_json_types_config {
@@ -484,8 +486,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     "GeneratePostgresqlJsonTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).expect("error 5480b910-d98e-414a-a273-1a9bf44cc515"),
     // );
-    use rayon::iter::IntoParallelRefIterator as _;
-    use rayon::iter::ParallelIterator as _;
     let (_fields_token_stream, postgresql_json_type_array) = postgresql_json_type_record_vec
         .into_iter()
         .enumerate()
@@ -493,24 +493,42 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         .par_iter()
         // .into_iter() //just for console prints ordering
         .map(|(index, element)| {
+            enum IsStandartNotNull {
+                True,
+                False,
+            }
+            enum IsStandartNotNullUuid {
+                True,
+                False,
+            }
+            struct SchemaObjectTokenStream<'a> {
+                metadata: &'a dyn quote::ToTokens,
+                instance_type: &'a dyn quote::ToTokens,
+                format: &'a dyn quote::ToTokens,
+                enum_values: &'a dyn quote::ToTokens,
+                const_value: &'a dyn quote::ToTokens,
+                subschemas: &'a dyn quote::ToTokens,
+                number: &'a dyn quote::ToTokens,
+                string: &'a dyn quote::ToTokens,
+                array: &'a dyn quote::ToTokens,
+                object: &'a dyn quote::ToTokens,
+                reference: &'a dyn quote::ToTokens,
+                extensions: &'a dyn quote::ToTokens,
+            }
+            enum SchemarsJsonSchema<'a> {
+                Derive,
+                Impl(SchemaObjectTokenStream<'a>),
+            }
             let postgresql_json_type = &element.postgresql_json_type;
             let not_null_or_nullable = &element.not_null_or_nullable;
             let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
             let rust_type_name = RustTypeName::from(postgresql_json_type);
             let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
-            enum IsStandartNotNull {
-                True,
-                False,
-            }
             let is_standart_not_null = if let (PostgresqlJsonTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&postgresql_json_type_pattern, &not_null_or_nullable) {
                 IsStandartNotNull::True
             } else {
                 IsStandartNotNull::False
             };
-            enum IsStandartNotNullUuid {
-                True,
-                False,
-            }
             let is_standart_not_null_uuid = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart, PostgresqlJsonType::UuidUuidAsJsonbString) = (&not_null_or_nullable, &postgresql_json_type_pattern, &postgresql_json_type) {
                 IsStandartNotNullUuid::True
             } else {
@@ -737,24 +755,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }))
                 };
                 let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream = quote::quote! {schemars::Map::default()};
-                struct SchemaObjectTokenStream<'a> {
-                    metadata: &'a dyn quote::ToTokens,
-                    instance_type: &'a dyn quote::ToTokens,
-                    format: &'a dyn quote::ToTokens,
-                    enum_values: &'a dyn quote::ToTokens,
-                    const_value: &'a dyn quote::ToTokens,
-                    subschemas: &'a dyn quote::ToTokens,
-                    number: &'a dyn quote::ToTokens,
-                    string: &'a dyn quote::ToTokens,
-                    array: &'a dyn quote::ToTokens,
-                    object: &'a dyn quote::ToTokens,
-                    reference: &'a dyn quote::ToTokens,
-                    extensions: &'a dyn quote::ToTokens,
-                }
-                enum SchemarsJsonSchema<'a> {
-                    Derive,
-                    Impl(SchemaObjectTokenStream<'a>),
-                }
                 let (instance_type_number_token_stream, instance_type_string_token_stream) = {
                     let generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
                         let instance_type_token_stream: &dyn quote::ToTokens = match &instance_type {

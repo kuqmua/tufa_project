@@ -1,5 +1,78 @@
 #[proc_macro]
 pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    #[derive(Clone)]
+    enum ShouldAddDeclarationOfStructIdentGeneric {
+        True { maybe_additional_traits_token_stream: Option<proc_macro2::TokenStream> },
+        False,
+    }
+    enum FilterType {
+        PostgresqlType,
+        PostgresqlJsonType,
+    }
+    #[derive(Clone)]
+    enum PostgresqlTypePatternHandle {
+        Standart,
+        ArrayDimension1,
+        ArrayDimension2,
+        ArrayDimension3,
+        ArrayDimension4,
+    }
+    impl TryFrom<&PostgresqlTypePatternHandle> for DimensionNumber {
+        type Error = ();
+        fn try_from(value: &PostgresqlTypePatternHandle) -> Result<Self, Self::Error> {
+            match &value {
+                PostgresqlTypePatternHandle::Standart => Err(()),
+                PostgresqlTypePatternHandle::ArrayDimension1 => Ok(Self::One),
+                PostgresqlTypePatternHandle::ArrayDimension2 => Ok(Self::Two),
+                PostgresqlTypePatternHandle::ArrayDimension3 => Ok(Self::Three),
+                PostgresqlTypePatternHandle::ArrayDimension4 => Ok(Self::Four),
+            }
+        }
+    }
+    #[derive(Clone)]
+    enum DimensionNumber {
+        One,
+        Two,
+        Three,
+        Four,
+    }
+    impl DimensionNumber {
+        const fn dimension_std_primitive_u8(&self) -> u8 {
+            match &self {
+                Self::One => 1,
+                Self::Two => 2,
+                Self::Three => 3,
+                Self::Four => 4,
+            }
+        }
+        fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
+            self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().expect("error 18c32bc0-2e55-4b4d-a6a8-b8680e5fe463")
+        }
+    }
+    enum KindOfUnsignedPartOfStdPrimitiveI32 {
+        CanBeZero,
+        CanNotBeZero,
+    }
+    impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            match &self {
+                Self::CanBeZero => quote::quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                Self::CanNotBeZero => quote::quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+            }
+        }
+    }
+    enum PostgresqlTypeKind {
+        Standart,
+        ArrayDimension,
+    }
+    impl PostgresqlTypeKind {
+        const fn format_argument(&self) -> &'static str {
+            match &self {
+                Self::Standart => "",
+                Self::ArrayDimension => "{}",
+            }
+        }
+    }
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -19,22 +92,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
     let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let pub_value_t_token_stream = quote::quote! {pub #value_snake_case: T};
-    //todo rewrite it as UniqueVec
-    fn generate_unsigned_part_of_std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32}
-    }
-    let unsigned_part_of_std_primitive_i32_token_stream = generate_unsigned_part_of_std_primitive_i32_token_stream();
-    fn generate_not_zero_unsigned_part_of_std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
-        quote::quote! {postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32}
-    }
-    let not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_not_zero_unsigned_part_of_std_primitive_i32_token_stream();
+    let unsigned_part_of_std_primitive_i32_token_stream = quote::quote! {postgresql_crud_common::UnsignedPartOfStdPrimitiveI32};
+    let not_zero_unsigned_part_of_std_primitive_i32_token_stream = quote::quote! {postgresql_crud_common::NotZeroUnsignedPartOfStdPrimitiveI32};
     let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {#value_snake_case: #not_zero_unsigned_part_of_std_primitive_i32_token_stream};
     let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream};
-    #[derive(Clone)]
-    enum ShouldAddDeclarationOfStructIdentGeneric {
-        True { maybe_additional_traits_token_stream: Option<proc_macro2::TokenStream> },
-        False,
-    }
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
         #value_snake_case: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
@@ -81,10 +142,6 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             },
         )
     };
-    enum FilterType {
-        PostgresqlType,
-        PostgresqlJsonType,
-    }
     let generate_impl_postgresql_type_where_filter_token_stream = |
         filter_type: &FilterType,
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
@@ -186,63 +243,11 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         }
         Ok(#query_snake_case)
     };
-    #[derive(Clone)]
-    enum PostgresqlTypePatternHandle {
-        Standart,
-        ArrayDimension1,
-        ArrayDimension2,
-        ArrayDimension3,
-        ArrayDimension4,
-    }
-    impl TryFrom<&PostgresqlTypePatternHandle> for DimensionNumber {
-        type Error = ();
-        fn try_from(value: &PostgresqlTypePatternHandle) -> Result<Self, Self::Error> {
-            match &value {
-                PostgresqlTypePatternHandle::Standart => Err(()),
-                PostgresqlTypePatternHandle::ArrayDimension1 => Ok(Self::One),
-                PostgresqlTypePatternHandle::ArrayDimension2 => Ok(Self::Two),
-                PostgresqlTypePatternHandle::ArrayDimension3 => Ok(Self::Three),
-                PostgresqlTypePatternHandle::ArrayDimension4 => Ok(Self::Four),
-            }
-        }
-    }
     let postgresql_type_pattern_handle_standart = PostgresqlTypePatternHandle::Standart;
     let postgresql_type_pattern_handle_array_dimension1 = PostgresqlTypePatternHandle::ArrayDimension1;
     let postgresql_type_pattern_handle_array_dimension2 = PostgresqlTypePatternHandle::ArrayDimension2;
     let postgresql_type_pattern_handle_array_dimension3 = PostgresqlTypePatternHandle::ArrayDimension3;
     let postgresql_type_pattern_handle_array_dimension4 = PostgresqlTypePatternHandle::ArrayDimension4;
-    #[derive(Clone)]
-    enum DimensionNumber {
-        One,
-        Two,
-        Three,
-        Four,
-    }
-    impl DimensionNumber {
-        const fn dimension_std_primitive_u8(&self) -> u8 {
-            match &self {
-                Self::One => 1,
-                Self::Two => 2,
-                Self::Three => 3,
-                Self::Four => 4,
-            }
-        }
-        fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
-            self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().expect("error 18c32bc0-2e55-4b4d-a6a8-b8680e5fe463")
-        }
-    }
-    enum KindOfUnsignedPartOfStdPrimitiveI32 {
-        CanBeZero,
-        CanNotBeZero,
-    }
-    impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
-        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            match &self {
-                Self::CanBeZero => quote::quote! {UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
-                Self::CanNotBeZero => quote::quote! {NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
-            }
-        }
-    }
     let generate_pub_dimensions_bounded_vec_token_stream = |vec_length_token_stream: &dyn quote::ToTokens, kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32| {
         quote::quote! {pub #dimensions_snake_case: BoundedStdVecVec<postgresql_crud_common::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_token_stream>}
     };
@@ -274,18 +279,6 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             }
         }
     };
-    enum PostgresqlTypeKind {
-        Standart,
-        ArrayDimension,
-    }
-    impl PostgresqlTypeKind {
-        const fn format_argument(&self) -> &'static str {
-            match &self {
-                Self::Standart => "",
-                Self::ArrayDimension => "{}",
-            }
-        }
-    }
     let dimensions_indexes_comma_token_stream = quote::quote! {#dimensions_indexes_snake_case,};
     let generate_maybe_dimensions_declaration_pub_value_t_token_stream = |maybe_dimensions_declaration_token_stream: &dyn quote::ToTokens| {
         quote::quote! {

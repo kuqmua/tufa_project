@@ -468,7 +468,7 @@ impl_hash_borrow_with_str_and_bytes = { level = "deny", priority = 0 }
 impl_trait_in_params = { level = "deny", priority = 0 }
 implicit_clone = { level = "deny", priority = 0 }
 implicit_hasher = { level = "deny", priority = 0 }
-implicit_return = { level = "allow", priority = 0 }
+implicit_return = { level = "allow", priority = 0 } #not need
 implicit_saturating_add = { level = "deny", priority = 0 }
 implicit_saturating_sub = { level = "deny", priority = 0 }
 implied_bounds_in_impls = { level = "deny", priority = 0 }
@@ -500,7 +500,7 @@ invalid_regex = { level = "deny", priority = 0 }
 invalid_upcast_comparisons = { level = "deny", priority = 0 }
 invisible_characters = { level = "deny", priority = 0 }
 is_digit_ascii_radix = { level = "deny", priority = 0 }
-items_after_statements = { level = "allow", priority = 0 }
+items_after_statements = { level = "deny", priority = 0 }
 items_after_test_module = { level = "deny", priority = 0 }
 iter_cloned_collect = { level = "deny", priority = 0 }
 iter_count = { level = "deny", priority = 0 }
