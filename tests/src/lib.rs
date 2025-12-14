@@ -92,8 +92,7 @@ mod tests {
                 String::from("default_overrides_default_fields"),
                 String::from("test_unstable_lint"),
                 String::from("resolving_to_items_shadowing_supertrait_items"),
-                String::from("shadowing_supertrait_items"),
-                String::from("inline_always_mismatching_target_features")
+                String::from("shadowing_supertrait_items")
             ]
         );
     }
@@ -149,10 +148,7 @@ mod tests {
             clippy_lints_from_docs,
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
             vec![
-                String::from("decimal_bitwise_operands"),
-                String::from("manual_ilog2"),
-                String::from("ptr_offset_by_literal"),
-                String::from("needless_type_cast")
+                // String::from(""),
             ]
         );
     }
