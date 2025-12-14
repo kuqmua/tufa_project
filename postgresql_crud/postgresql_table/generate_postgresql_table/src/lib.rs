@@ -2538,7 +2538,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
             let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
             let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-                &operation,
+                operation,
                 &query_part_syn_variant_wrapper,
                 file!(),
                 line!(),
