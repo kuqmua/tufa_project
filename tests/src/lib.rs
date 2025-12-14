@@ -92,7 +92,8 @@ mod tests {
                 String::from("default_overrides_default_fields"),
                 String::from("test_unstable_lint"),
                 String::from("resolving_to_items_shadowing_supertrait_items"),
-                String::from("shadowing_supertrait_items")
+                String::from("shadowing_supertrait_items"),
+                String::from("inline_always_mismatching_target_features")
             ]
         );
     }
