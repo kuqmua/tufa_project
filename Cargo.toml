@@ -848,9 +848,9 @@ temporary_assignment = { level = "deny", priority = 0 }
 tests_outside_test_module = { level = "deny", priority = 0 }
 to_digit_is_some = { level = "deny", priority = 0 }
 to_string_in_format_args = { level = "deny", priority = 0 }
-todo = { level = "allow", priority = 0 }
-too_many_arguments = { level = "allow", priority = 0 }
-too_many_lines = { level = "allow", priority = 0 }
+todo = { level = "deny", priority = 0 }
+too_many_arguments = { level = "allow", priority = 0 } #useless
+too_many_lines = { level = "allow", priority = 0 } #useless
 toplevel_ref_arg = { level = "deny", priority = 0 }
 trailing_empty_array = { level = "deny", priority = 0 }
 trait_duplication_in_bounds = { level = "deny", priority = 0 }
@@ -909,9 +909,9 @@ unreachable = { level = "deny", priority = 0 }
 unreadable_literal = { level = "deny", priority = 0 }
 unsafe_derive_deserialize = { level = "deny", priority = 0 }
 unsafe_removed_from_name = { level = "deny", priority = 0 }
-unseparated_literal_suffix = { level = "allow", priority = 0 }
+unseparated_literal_suffix = { level = "allow", priority = 0 }#separated_literal_suffix deny, unseparated_literal_suffix allow
 unsound_collection_transmute = { level = "deny", priority = 0 }
-unused_async = { level = "allow", priority = 0 }
+unused_async = { level = "deny", priority = 0 }
 unused_enumerate_index = { level = "deny", priority = 0 }
 unused_format_specs = { level = "deny", priority = 0 }
 unused_io_amount = { level = "deny", priority = 0 }
