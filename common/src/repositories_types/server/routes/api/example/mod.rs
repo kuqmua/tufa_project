@@ -1032,10 +1032,10 @@ pub struct Animal {
     // pub field_803: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbString,
     // pub field_804: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
-    // pub field_806: DoggieAsNotNullJsonbObject,
-    // pub field_808: OptionDoggieAsNullableJsonbObject,
-    // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_806: DoggieAsNotNullJsonbObject,
+    pub field_808: OptionDoggieAsNullableJsonbObject,
+    pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1073,7 +1073,7 @@ pub struct Animal {
     }
 }]
 pub struct Doggie {
-    // pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,

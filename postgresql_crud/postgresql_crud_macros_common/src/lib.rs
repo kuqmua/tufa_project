@@ -1857,16 +1857,8 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
             let type_token_stream = generate_type_token_stream(element_ident, element_type);
             let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"));
             quote::quote! {
-                let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
-                    Some(__value) => __value,
-                    None => {
-                        return Err(
-                            serde::de::Error::invalid_length(
-                                0usize,
-                                &#struct_ident_options_with_double_quotes_token_stream,
-                            ),
-                        );
-                    }
+                let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? else {
+                    return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_options_with_double_quotes_token_stream));
                 };
             }
         });
