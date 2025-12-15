@@ -627,10 +627,10 @@ pub enum Order {
     Desc,
 }
 impl std::fmt::Display for Order {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Asc => write!(formatter, "{}", naming::AscUpperCamelCase),
-            Self::Desc => write!(formatter, "{}", naming::DescUpperCamelCase),
+            Self::Asc => write!(f, "{}", naming::AscUpperCamelCase),
+            Self::Desc => write!(f, "{}", naming::DescUpperCamelCase),
         }
     }
 }

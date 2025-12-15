@@ -829,7 +829,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens| macros_helpers::generate_impl_std_fmt_display_token_stream(
                     &proc_macro2::TokenStream::new(),
                     &ident_token_stream, &proc_macro2::TokenStream::new(),
-                    &quote::quote! {write!(formatter, "{self:?}")}
+                    &quote::quote! {write!(f, "{self:?}")}
                 );
                 let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(&ident_create_upper_camel_case);
                 let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_create_upper_camel_case);

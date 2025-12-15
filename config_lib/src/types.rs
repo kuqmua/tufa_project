@@ -8,8 +8,8 @@ pub enum TracingLevel {
     Error,
 }
 impl std::fmt::Display for TracingLevel {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.to_snake_case())
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.to_snake_case())
     }
 }
 

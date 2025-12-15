@@ -211,16 +211,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     }
     impl std::fmt::Display for Operation {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match &self {
-                Self::CreateMany => write!(formatter, "CreateMany"),
-                Self::CreateOne => write!(formatter, "CreateOne"),
-                Self::ReadMany => write!(formatter, "ReadMany"),
-                Self::ReadOne => write!(formatter, "ReadOne"),
-                Self::UpdateMany => write!(formatter, "UpdateMany"),
-                Self::UpdateOne => write!(formatter, "UpdateOne"),
-                Self::DeleteMany => write!(formatter, "DeleteMany"),
-                Self::DeleteOne => write!(formatter, "DeleteOne"),
+                Self::CreateMany => write!(f, "CreateMany"),
+                Self::CreateOne => write!(f, "CreateOne"),
+                Self::ReadMany => write!(f, "ReadMany"),
+                Self::ReadOne => write!(f, "ReadOne"),
+                Self::UpdateMany => write!(f, "UpdateMany"),
+                Self::UpdateOne => write!(f, "UpdateOne"),
+                Self::DeleteMany => write!(f, "DeleteMany"),
+                Self::DeleteOne => write!(f, "DeleteOne"),
             }
         }
     }
@@ -1279,7 +1279,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
-        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|element|format!("cannot serialize into json: {element:?}")))});
+        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|element|format!("cannot serialize into json: {element:?}")))});
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
         let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
             let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {

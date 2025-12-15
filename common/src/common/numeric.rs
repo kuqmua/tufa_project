@@ -13,18 +13,18 @@ pub enum Numeric {
 }
 
 impl std::fmt::Display for Numeric {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Zero => write!(formatter, "0"),
-            Self::One => write!(formatter, "1"),
-            Self::Two => write!(formatter, "2"),
-            Self::Three => write!(formatter, "3"),
-            Self::Four => write!(formatter, "4"),
-            Self::Five => write!(formatter, "5"),
-            Self::Six => write!(formatter, "6"),
-            Self::Seven => write!(formatter, "7"),
-            Self::Eight => write!(formatter, "8"),
-            Self::Nine => write!(formatter, "9"),
+            Self::Zero => write!(f, "0"),
+            Self::One => write!(f, "1"),
+            Self::Two => write!(f, "2"),
+            Self::Three => write!(f, "3"),
+            Self::Four => write!(f, "4"),
+            Self::Five => write!(f, "5"),
+            Self::Six => write!(f, "6"),
+            Self::Seven => write!(f, "7"),
+            Self::Eight => write!(f, "8"),
+            Self::Nine => write!(f, "9"),
         }
     }
 }

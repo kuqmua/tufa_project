@@ -8,11 +8,11 @@ pub enum EncodeFormat {
     Escape,
 }
 impl std::fmt::Display for EncodeFormat {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
-            Self::Base64 => write!(formatter, "base64"),
-            Self::Hex => write!(formatter, "hex"),
-            Self::Escape => write!(formatter, "escape"),
+            Self::Base64 => write!(f, "base64"),
+            Self::Hex => write!(f, "hex"),
+            Self::Escape => write!(f, "escape"),
         }
     }
 }
@@ -278,8 +278,8 @@ const _: () = {
     }
 };
 impl std::fmt::Display for RegexRegex {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{}", self.0)
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
