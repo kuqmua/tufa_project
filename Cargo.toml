@@ -922,7 +922,7 @@ unused_unit = { level = "deny", priority = 0 }
 unusual_byte_groupings = { level = "deny", priority = 0 }
 unwrap_in_result = { level = "deny", priority = 0 }
 unwrap_or_default = { level = "deny", priority = 0 }
-unwrap_used = { level = "allow", priority = 0 }
+unwrap_used = { level = "deny", priority = 0 }
 upper_case_acronyms = { level = "deny", priority = 0 }
 use_debug = { level = "allow", priority = 0 }
 use_self = { level = "deny", priority = 0 }
