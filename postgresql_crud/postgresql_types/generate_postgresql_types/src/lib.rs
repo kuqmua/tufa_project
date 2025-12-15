@@ -4322,22 +4322,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"default"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
-                let typical_query_part_token_stream = quote::quote! {
-                    let mut #acc_snake_case = String::default();
-                    match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                        Ok(#value_snake_case) => {
-                            use std::fmt::Write as _;
-                            if write!(#acc_snake_case, "${value}").is_err() {
-                                return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                    code_occurence: error_occurence_lib::code_occurence!()
-                                });
+                let typical_query_part_token_stream = {
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote!{#acc_snake_case, "${value}"},
+                        &postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path)
+                    );
+                    quote::quote! {
+                        let mut #acc_snake_case = String::default();
+                        match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
+                            Ok(#value_snake_case) => {
+                                #if_write_is_err_token_stream
+                            },
+                            Err(#error_snake_case) => {
+                                return Err(#error_snake_case);
                             }
-                        },
-                        Err(#error_snake_case) => {
-                            return Err(#error_snake_case);
                         }
+                        Ok(#acc_snake_case)
                     }
-                    Ok(#acc_snake_case)
                 };
                 let ok_query_token_stream = quote::quote!{Ok(#query_snake_case)};
                 let (query_part_create_token_stream, bind_value_to_query_create_token_stream): Handle<'_> = {

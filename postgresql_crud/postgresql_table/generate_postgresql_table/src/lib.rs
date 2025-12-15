@@ -451,6 +451,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let string_token_stream = token_patterns::StdStringString;
 
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
+    let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
 
     // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -924,18 +925,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let fn_create_query_part_token_stream = {
                 let generate_match_as_postgresql_crud_postgresql_type_postgresql_type_create_query_part_token_stream = |field_type: &syn::Type, content_token_stream: &dyn quote::ToTokens| {
                     let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote!{#acc_snake_case, "{value},"},
+                        &return_err_query_part_error_named_write_into_buffer_token_stream
+                    );
                     quote::quote! {
                         match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #create_query_part_snake_case(
                             &#content_token_stream,
                             #increment_snake_case
                         ) {
                             Ok(#value_snake_case) => {
-                                use std::fmt::Write as _;
-                                if write!(#acc_snake_case, "{value},").is_err() {
-                                    return Err(#import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                        code_occurence: error_occurence_lib::code_occurence!()
-                                    });
-                                }
+                                #if_write_is_err_token_stream
                             }
                             Err(#error_0_token_stream) => {
                                 return Err(#error_0_token_stream);
@@ -2564,6 +2564,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
+    let generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation|{
+        let query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_query_part_error_named_write_into_buffer_token_stream(import_path);
+        let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+            operation,
+            &query_part_syn_variant_wrapper,
+            file!(),
+            line!(),
+            column!()
+        );
+        quote::quote!{
+            let #error_0_token_stream = #query_part_error_named_write_into_buffer_token_stream;
+            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+        }
+    };
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2596,6 +2610,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote!{#acc_snake_case, "({value}),"},
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation)
+                    );
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let select_only_ids_query_part_token_stream = generate_select_only_ids_query_part_token_stream(&operation);
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
@@ -2607,13 +2625,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
                                     Ok(#value_snake_case) => {
-                                        use std::fmt::Write as _;
-                                        if write!(#acc_snake_case, "({value}),").is_err() {
-                                            let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                                code_occurence: error_occurence_lib::code_occurence!()
-                                            };
-                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                        }
+                                        #if_write_is_err_token_stream
                                     },
                                     Err(#error_0_token_stream) => {
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -2903,6 +2915,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream
                         }
                     });
+                    let if_write_is_err_curly_braces_0_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
+                        &quote::quote!{
+                            #additional_parameters_snake_case,
+                            #additional_parameters_order_by_handle_token_stream,
+                            #prefix_snake_case,
+                            &match &#value_snake_case.#column_snake_case {
+                                #order_by_column_match_token_stream
+                            },
+                            #order_snake_case,
+                        },
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation)
+                    );
+                    let if_write_is_err_curly_braces_1_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
+                        &quote::quote!{#additional_parameters_snake_case, "{prefix}{value}"},
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation)
+                    );
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
                         #table_snake_case,
                         &#select_query_part_parameters_payload_select_token_stream,
@@ -2916,21 +2944,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Some(#value_snake_case) => #value_snake_case.to_snake_case_stringified(),
                                     None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
                                 };
-                                use std::fmt::Write as _;
-                                if write!(
-                                    #additional_parameters_snake_case,
-                                    #additional_parameters_order_by_handle_token_stream,
-                                    #prefix_snake_case,
-                                    &match &#value_snake_case.#column_snake_case {
-                                        #order_by_column_match_token_stream
-                                    },
-                                    #order_snake_case,
-                                ).is_err() {
-                                    let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                        code_occurence: error_occurence_lib::code_occurence!()
-                                    };
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                }
+                                #if_write_is_err_curly_braces_0_token_stream
                             };
                             {
                                 #prefix_to_additional_parameters_token_stream
@@ -2945,13 +2959,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     },
                                 };
-                                use std::fmt::Write as _;
-                                if write!(#additional_parameters_snake_case, "{prefix}{value}").is_err() {
-                                    let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                        code_occurence: error_occurence_lib::code_occurence!()
-                                    };
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                }
+                                #if_write_is_err_curly_braces_1_token_stream
                             };
                             #additional_parameters_snake_case
                         }
@@ -3391,6 +3399,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     });
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote!{#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream},
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation)
+                    );
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
@@ -3403,13 +3415,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let primary_keys = {
                                 let mut #acc_snake_case = #string_token_stream::default();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
-                                    use std::fmt::Write as _;
-                                    if write!(#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream).is_err() {
-                                        let #error_0_token_stream = #import_path::QueryPartErrorNamed::WriteIntoBuffer {
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        };
-                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
+                                    #if_write_is_err_token_stream
                                 }
                                 let _: Option<char> = #acc_snake_case.pop();
                                 #acc_snake_case

@@ -419,6 +419,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
+                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                                &quote::quote!{#acc_snake_case, "${value},"},
+                                &quote::quote!{panic!("error 87f47f75-b2db-4d88-a0f0-e254ac7d14a3");}
+                            );
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let #value_snake_case = {
@@ -426,10 +430,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                                     for _ in #self_snake_case.#value_snake_case.to_vec() {
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                             Ok(#value_snake_case) => {
-                                                use std::fmt::Write as _;
-                                                if write!(#acc_snake_case, "${value},").is_err() {
-                                                    panic!("error 87f47f75-b2db-4d88-a0f0-e254ac7d14a3");
-                                                }
+                                                #if_write_is_err_token_stream
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);

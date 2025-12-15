@@ -2178,3 +2178,15 @@ impl From<&Dimension> for DimensionIndexNumber {
         }
     }
 }
+
+pub fn generate_query_part_error_named_write_into_buffer_token_stream(import_path: ImportPath) -> proc_macro2::TokenStream {
+    quote::quote!{
+        #import_path::QueryPartErrorNamed::WriteIntoBuffer {
+            code_occurence: error_occurence_lib::code_occurence!()
+        }
+    }
+}
+pub fn generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path: ImportPath) -> proc_macro2::TokenStream {
+    let content_token_stream = generate_query_part_error_named_write_into_buffer_token_stream(import_path);
+    quote::quote!{return Err(#content_token_stream);}
+}

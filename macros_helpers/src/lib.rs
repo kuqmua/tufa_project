@@ -3,6 +3,9 @@ pub mod code_occurence_syn_field;
 pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
+mod generate_if_write_is_err_token_stream;
+pub use generate_if_write_is_err_token_stream::generate_if_write_is_err_token_stream;
+pub use generate_if_write_is_err_token_stream::generate_if_write_is_err_curly_braces_token_stream;
 mod generate_impl_error_occurence_lib_to_std_string_string_token_stream;
 pub use generate_impl_error_occurence_lib_to_std_string_string_token_stream::generate_impl_error_occurence_lib_to_std_string_string_token_stream;
 pub mod generate_impl_std_convert_from_token_stream;
@@ -18,7 +21,6 @@ pub mod status_code;
 pub mod wrap_derive;
 pub mod write_string_into_file;
 pub mod write_token_stream_into_file;
-
 mod generate_new_or_try_new;
 pub use generate_new_or_try_new::{
     generate_new_token_stream,
