@@ -7,7 +7,7 @@ pub enum WriteJsonIntoFileSyncErrorNamed {
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
-        error: crate::server::file_system::write_bytes_into_file::write_bytes_into_file_sync::WriteBytesIntoFileSyncErrorNamed,
+        error: crate::file_system::write_bytes_into_file::write_bytes_into_file_sync::WriteBytesIntoFileSyncErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -22,7 +22,7 @@ pub fn write_json_into_file_async(
             code_occurence: error_occurence_lib::code_occurence!(),
         }),
         Ok(stringified_json) => {
-            if let Err(error) = crate::server::file_system::write_bytes_into_file::write_bytes_into_file_sync::write_bytes_into_file_sync(
+            if let Err(error) = crate::file_system::write_bytes_into_file::write_bytes_into_file_sync::write_bytes_into_file_sync(
                 path,
                 stringified_json,
             ) {

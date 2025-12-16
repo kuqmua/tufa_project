@@ -39,13 +39,10 @@ utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 schemars = {version = "=0.8.22"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 git_info = {path = "../git_info"}
-from_str = {path = "../from_str"}
-# from_sqlx_postgres_error = {path = "../from_sqlx_postgres_error"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
-constants = {path = "../constants"}
 common_routes = {path = "../common_routes"}
 
 [dev-dependencies]

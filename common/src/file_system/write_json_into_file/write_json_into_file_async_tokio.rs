@@ -7,7 +7,7 @@ pub enum WriteJsonIntoFileAsyncTokioErrorNamed {
     },
     WriteBytesIntoFile {
         #[eo_error_occurence] 
-        error: crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::WriteBytesIntoFileAsyncTokioErrorNamed,
+        error: crate::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::WriteBytesIntoFileAsyncTokioErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }, 
 }
@@ -21,7 +21,7 @@ pub async fn write_json_into_file_async_tokio(
             error,
             code_occurence: error_occurence_lib::code_occurence!() 
         }),
-        Ok(stringified_json) => match crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::write_bytes_into_file_async_tokio(
+        Ok(stringified_json) => match crate::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::write_bytes_into_file_async_tokio(
             path,
             stringified_json.as_bytes(),
         )
