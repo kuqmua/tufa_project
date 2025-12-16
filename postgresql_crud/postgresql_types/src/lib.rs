@@ -1281,30 +1281,21 @@ impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
-    fn query_bind(self, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         self.0.query_bind(query)
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithOne {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(postgresql_crud_common::PaginationBase::new_unchecked(
-            postgresql_crud_common::DEFAULT_PAGINATION_LIMIT,
-            1
-        ))
+        Self(postgresql_crud_common::PaginationBase::new_unchecked(postgresql_crud_common::DEFAULT_PAGINATION_LIMIT, 1))
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithOne {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
         let one: i32 = 1;
-        Self(postgresql_crud_common::PaginationBase::new_unchecked(
-            i32::MAX.checked_sub(one).expect("error c0f03c51-d565-4377-ad4e-f38ee636909b").into(),
-            one.into()
-        ))
+        Self(postgresql_crud_common::PaginationBase::new_unchecked(i32::MAX.checked_sub(one).expect("error c0f03c51-d565-4377-ad4e-f38ee636909b").into(), one.into()))
     }
 }
 /////////////

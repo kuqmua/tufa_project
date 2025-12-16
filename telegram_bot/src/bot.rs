@@ -23,9 +23,10 @@ pub async fn start_bot() {
                 Command::Help => <Command as teloxide::utils::command::BotCommands>::descriptions().to_string(),
                 Command::Username(username) => format!("Your username is @{username}."),
                 Command::UsernameAndAge { username, age } => format!("Your username is @{username} and age is {age}."),
-                Command::GitInfo => "123message".to_owned()
-            }
-        ).await?;
+                Command::GitInfo => "123message".to_owned(),
+            },
+        )
+        .await?;
         Ok(())
     }))
     .await;

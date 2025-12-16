@@ -19,9 +19,7 @@ fn main() {
                 //     panic!("common::repositories_types::server::telemetry::init_subscriber::init_subscriber failed, error: {error:#?}")
                 // }
                 println!("trying to create postgres pool...");
-                let postgres_pool = sqlx::postgres::PgPoolOptions::new()
-                .max_connections(50)
-                .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
+                let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
                 common::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 // println!("trying to create redis session storage...");
@@ -76,7 +74,6 @@ fn main() {
                         //     //     components(
                         //     //             schemas(
                         //     //                 common::server::routes::git_info::GitInfo,
-
                         //     //                 common::common::utoipa::std::time::StdTimeDuration,
                         //     //                 error_occurence_lib::code_occurence::CodeOccurence,
                         //     //                 //

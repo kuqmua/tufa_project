@@ -1,9 +1,4 @@
-#[derive(
-    Debug,
-    Clone,
-    Copy
-    , postgresql_crud::GeneratePostgresqlTable
-)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -187,9 +182,7 @@ pub struct Example {
     pub column_145: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)] //
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)] //
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
     {
@@ -1038,9 +1031,7 @@ pub struct Animal {
     pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
@@ -1198,16 +1189,13 @@ pub struct Doggie {
     // pub field_121: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbNumber,
     // pub field_122: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     // pub field_123: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
     pub field_806: CatAsNotNullJsonbObject,
     pub field_807: OptionCatAsNullableJsonbObject,
     pub field_808: VecOfCatWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"

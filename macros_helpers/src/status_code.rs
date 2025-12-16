@@ -688,5 +688,5 @@ pub fn get_only_one(variant: &syn::Variant, proc_macro_name_ident_stringified: &
             }
         }
     });
-    option_self.unwrap_or_else(||panic!("{proc_macro_name_ident_stringified} not supported status_code attribute"))
+    option_self.unwrap_or_else(|| panic!("{proc_macro_name_ident_stringified} not supported status_code attribute"))
 }

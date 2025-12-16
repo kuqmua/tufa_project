@@ -59,23 +59,18 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(acc, "${value},").is_err() {
-                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
-                            code_occurence: error_occurence_lib::code_occurence!()
-                        });
+                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!() });
                     }
-                },
+                }
                 Err(error) => {
                     return Err(error);
-                },
+                }
             }
         }
         let _: Option<char> = acc.pop();
         Ok(acc)
     }
-    pub fn query_bind_one_by_one<'query_lifetime>(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >
+    pub fn query_bind_one_by_one<'query_lifetime>(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
     where
         T: 'query_lifetime,
     {
@@ -165,13 +160,10 @@ where
     fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
-            Err(error) => Err(error)
+            Err(error) => Err(error),
         }
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
             return Err(error.to_string());
         }
@@ -495,20 +487,17 @@ impl<'lifetime, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__
             Ok(value) => value,
             Err(error) => {
                 return Err(error);
-            },
+            }
         };
         let end_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
             Err(error) => {
                 return Err(error);
-            },
+            }
         };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         if let Err(error) = query.try_bind(self.start) {
             return Err(error.to_string());
         }
@@ -665,15 +654,15 @@ impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
                                 format!("->${value}")
                             }
                         }
-                    ).is_err() {
-                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
-                            code_occurence: error_occurence_lib::code_occurence!()
-                        });
+                    )
+                    .is_err()
+                    {
+                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!() });
                     }
-                },
+                }
                 Err(error) => {
                     return Err(error);
-                },
+                }
             }
         }
         Ok(acc)
@@ -690,10 +679,7 @@ impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
     pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
-    pub fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    pub fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         for element in self.0 {
             if let Err(error) = query.try_bind(element) {
                 return Err(error.to_string());

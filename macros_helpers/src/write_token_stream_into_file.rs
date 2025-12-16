@@ -1,7 +1,7 @@
 #[derive(Debug, Clone, Copy)]
 pub enum FormatWithRustfmt {
     True,
-    False
+    False,
 }
 pub fn write_token_stream_into_file(file_name: &str, token_stream: &proc_macro2::TokenStream, format_with_rustfmt: &FormatWithRustfmt) {
     let path_stringified = format!("{file_name}.rs");
@@ -16,7 +16,8 @@ pub fn write_token_stream_into_file(file_name: &str, token_stream: &proc_macro2:
             .arg(dash_dash_emit)
             .arg(files) //overwrite file in place
             .arg(&path_stringified)
-            .status().unwrap_or_else(|_| panic!("error 741f1cce-76db-4529-b25e-5d00078f952a, cannot get execution status of {command}"));
+            .status()
+            .unwrap_or_else(|_| panic!("error 741f1cce-76db-4529-b25e-5d00078f952a, cannot get execution status of {command}"));
         assert!(status.success(), "error f59653b5-5a66-4626-a75d-ef38d6fd8e29, execution of {command} status is not success: {status:#?}");
     }
 }

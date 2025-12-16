@@ -60,18 +60,18 @@ impl PostgresqlTypeGreaterThanVariant {
     pub const fn logical_operator(&self) -> LogicalOperator {
         match &self {
             Self::GreaterThan => LogicalOperator::Or,
-            Self::NotGreaterThan |
-            Self::EqualNotGreaterThan => LogicalOperator::OrNot,
+            Self::NotGreaterThan | Self::EqualNotGreaterThan => LogicalOperator::OrNot,
         }
     }
 }
 impl quote::ToTokens for PostgresqlTypeGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::GreaterThan => quote::quote!{GreaterThan},
-            Self::NotGreaterThan => quote::quote!{NotGreaterThan},
-            Self::EqualNotGreaterThan => quote::quote!{EqualNotGreaterThan},
-        }.to_tokens(tokens);
+            Self::GreaterThan => quote::quote! {GreaterThan},
+            Self::NotGreaterThan => quote::quote! {NotGreaterThan},
+            Self::EqualNotGreaterThan => quote::quote! {EqualNotGreaterThan},
+        }
+        .to_tokens(tokens);
     }
 }
 
@@ -85,17 +85,17 @@ impl PostgresqlJsonTypeLengthGreaterThanVariant {
     pub const fn logical_operator(&self) -> LogicalOperator {
         match &self {
             Self::LengthGreaterThan => LogicalOperator::Or,
-            Self::NotLengthGreaterThan |
-            Self::EqualNotLengthGreaterThan => LogicalOperator::OrNot,
+            Self::NotLengthGreaterThan | Self::EqualNotLengthGreaterThan => LogicalOperator::OrNot,
         }
     }
 }
 impl quote::ToTokens for PostgresqlJsonTypeLengthGreaterThanVariant {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::LengthGreaterThan => quote::quote!{LengthGreaterThan},
-            Self::NotLengthGreaterThan => quote::quote!{NotLengthGreaterThan},
-            Self::EqualNotLengthGreaterThan => quote::quote!{EqualNotLengthGreaterThan},
-        }.to_tokens(tokens);
+            Self::LengthGreaterThan => quote::quote! {LengthGreaterThan},
+            Self::NotLengthGreaterThan => quote::quote! {NotLengthGreaterThan},
+            Self::EqualNotLengthGreaterThan => quote::quote! {EqualNotLengthGreaterThan},
+        }
+        .to_tokens(tokens);
     }
 }

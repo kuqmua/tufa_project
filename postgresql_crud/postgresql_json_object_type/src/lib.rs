@@ -38,8 +38,7 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
-    {
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T> {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -53,8 +52,7 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
-            {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
                 type Value = UniqueVec<T>;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
@@ -113,11 +111,6 @@ impl<T> From<UniqueVec<T>> for Vec<T> {
 
 impl<T1> UniqueVec<T1> {
     pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> UniqueVec<T2> {
-        UniqueVec(
-            value.0
-            .into_iter()
-            .map(T2::from)
-            .collect::<Vec<T2>>()
-        )
+        UniqueVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }

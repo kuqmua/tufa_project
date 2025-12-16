@@ -31,10 +31,7 @@ pub trait PostgresqlType {
     fn create_table_column_query_part(column: &dyn std::fmt::Display, _: bool) -> impl std::fmt::Display;
     type Create: CreateAlias;
     fn create_query_part(value: &Self::Create, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
     type Select: SelectAlias;
     fn select_query_part(value: &Self::Select, column: &str) -> Result<String, QueryPartErrorNamed>;
     type Where: WhereAlias;
@@ -47,18 +44,9 @@ pub trait PostgresqlType {
     type Update: UpdateAlias;
     type UpdateForQuery: UpdateForQueryAlias;
     fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
     fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_updated_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::UpdateForQuery,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn select_only_updated_ids_query_bind<'lifetime>(value: &'lifetime Self::UpdateForQuery, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
 }
 
 pub trait PostgresqlJsonType {
@@ -74,10 +62,7 @@ pub trait PostgresqlJsonType {
         column_name_and_maybe_field_getter_for_error_message: &str,
         is_postgresql_type: bool,
     ) -> Result<String, QueryPartErrorNamed>;
-    type Where: WhereAlias
-        + UtoipaToSchemaAndSchemarsJsonSchemaAlias
-        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-        + error_occurence_lib::ToStdStringString;
+    type Where: WhereAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + error_occurence_lib::ToStdStringString;
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: ReadAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
@@ -88,43 +73,20 @@ pub trait PostgresqlJsonType {
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias;
     type UpdateForQuery: UpdateForQueryAlias + From<Self::Update>;
     fn update_query_part(value: &Self::UpdateForQuery, jsonb_set_accumulator: &str, jsonb_set_target: &str, jsonb_set_path: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn update_query_bind(value: Self::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
     fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_updated_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::UpdateForQuery,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn select_only_updated_ids_query_bind<'lifetime>(value: &'lifetime Self::UpdateForQuery, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
     fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_created_ids_query_bind<'lifetime>(
-        value: &'lifetime Self::CreateForQuery,
-        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn select_only_created_ids_query_bind<'lifetime>(value: &'lifetime Self::CreateForQuery, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
 }
 
 pub trait PostgresqlTypePrimaryKey {
     type PostgresqlType: PostgresqlType;
     type TableTypeDeclaration: TableTypeDeclarationAlias + PartialOrd;
-    fn read_only_ids_into_table_type_declaration(
-        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
-    fn read_only_ids_into_read(
-        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
-    fn read_only_ids_into_update(
-        value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
-    ) -> <Self::PostgresqlType as PostgresqlType>::Update;
-    fn read_into_table_type_declaration(
-        value: <Self::PostgresqlType as PostgresqlType>::Read
-    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
+    fn read_only_ids_into_table_type_declaration(value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
+    fn read_only_ids_into_read(value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> <Self::PostgresqlType as PostgresqlType>::Read;
+    fn read_only_ids_into_update(value: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> <Self::PostgresqlType as PostgresqlType>::Update;
+    fn read_into_table_type_declaration(value: <Self::PostgresqlType as PostgresqlType>::Read) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
 }
 
 pub trait PostgresqlTypeNotPrimaryKey {
@@ -134,25 +96,11 @@ pub trait PostgresqlTypeNotPrimaryKey {
 
 pub trait PostgresqlJsonTypeObjectVecElementId {
     type PostgresqlJsonType: PostgresqlJsonType;
-    type CreateForQuery: CreateForQueryAlias
-        + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create>
-        + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>;
+    type CreateForQuery: CreateForQueryAlias + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Create> + From<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>;
     type Update: UpdateAlias + UtoipaToSchemaAndSchemarsJsonSchemaAlias + error_occurence_lib::ToStdStringString;
     type ReadInner: ReadInnerAlias;
-    fn query_bind_string_as_postgresql_text_create_for_query(
-        value: <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery,
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
-    fn query_bind_string_as_postgresql_text_update_for_query(
-        value: <Self::PostgresqlJsonType as PostgresqlJsonType>::UpdateForQuery,
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn query_bind_string_as_postgresql_text_create_for_query(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
+    fn query_bind_string_as_postgresql_text_update_for_query(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::UpdateForQuery, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
     fn get_inner(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::CreateForQuery) -> &Self::ReadInner;
     fn increment_checked_add_one(increment: &mut u64) -> Result<u64, QueryPartErrorNamed>;
 }
@@ -166,82 +114,36 @@ pub trait PostgresqlTypeTestCases {
     fn read_inner_into_read_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Read;
     fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlType as PostgresqlType>::ReadInner) -> <Self::PostgresqlType as PostgresqlType>::Update;
     fn update_to_read_only_ids(value: &<Self::PostgresqlType as PostgresqlType>::Update) -> <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds
-    ) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
-    fn previous_read_merged_with_option_update_into_read(
-        read: <Self::PostgresqlType as PostgresqlType>::Read,
-        option_update: Option<<Self::PostgresqlType as PostgresqlType>::Update>,
-    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
-    fn read_only_ids_merged_with_create_into_read(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as PostgresqlType>::Read;
-    fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
-    fn read_only_ids_merged_with_create_into_table_type_declaration(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value: &<Self::PostgresqlType as PostgresqlType>::ReadOnlyIds) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
+    fn previous_read_merged_with_option_update_into_read(read: <Self::PostgresqlType as PostgresqlType>::Read, option_update: Option<<Self::PostgresqlType as PostgresqlType>::Update>) -> <Self::PostgresqlType as PostgresqlType>::Read;
+    fn read_only_ids_merged_with_create_into_read(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> <Self::PostgresqlType as PostgresqlType>::Read;
+    fn read_only_ids_merged_with_create_into_option_value_read(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Value<<Self::PostgresqlType as PostgresqlType>::Read>>;
+    fn read_only_ids_merged_with_create_into_table_type_declaration(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration;
 
     //todo add prefix postgresql_type or postgresql_json_type ?
-    fn read_only_ids_merged_with_create_into_where_equal(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> <Self::PostgresqlType as PostgresqlType>::Where;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Vec<<Self::PostgresqlType as PostgresqlType>::Where>;
-    fn read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn read_only_ids_merged_with_create_into_where_equal(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> <Self::PostgresqlType as PostgresqlType>::Where;
+    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Vec<<Self::PostgresqlType as PostgresqlType>::Where>;
+    fn read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 
-    fn create_into_postgresql_type_option_vec_where_dimension_one_equal(
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn create_into_postgresql_type_option_vec_where_dimension_one_equal(create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn postgresql_type_option_vec_where_greater_than_test() -> Option<Vec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
-    fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than(
-        greater_than_variant: PostgresqlTypeGreaterThanVariant,
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        table_type_declaration: <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration,
-    ) -> Option<<Self::PostgresqlType as PostgresqlType>::Where>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
-        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than(greater_than_variant: PostgresqlTypeGreaterThanVariant, read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, table_type_declaration: <Self::PostgresqlType as PostgresqlType>::TableTypeDeclaration) -> Option<<Self::PostgresqlType as PostgresqlType>::Where>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds, create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 
-    fn create_into_postgresql_json_type_option_vec_where_length_equal(
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_length_equal(create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn postgresql_json_type_option_vec_where_length_greater_than_test() -> Option<Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
-    fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
-        create: <Self::PostgresqlType as PostgresqlType>::Create
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_length_greater_than(create: <Self::PostgresqlType as PostgresqlType>::Create) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 }
 
 #[derive(Debug)]
 pub struct PostgresqlTypeGreaterThanTest<T: PostgresqlType> {
     pub variant: PostgresqlTypeGreaterThanVariant,
     pub create: <T as PostgresqlType>::Create,
-    pub greater_than: <T as PostgresqlType>::TableTypeDeclaration
+    pub greater_than: <T as PostgresqlType>::TableTypeDeclaration,
 }
-
 
 #[derive(Debug)]
 pub struct PostgresqlTypeLengthGreaterThanTest<T: PostgresqlType> {
@@ -266,54 +168,19 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_inner_into_update_with_new_or_try_new_unwraped(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Update;
     fn read_only_ids_into_option_value_read_inner(value: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadInner>>;
     fn update_to_read_only_ids(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::Update) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds;
-    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-        value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds
-    ) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
-    fn previous_read_merged_with_option_update_into_read(
-        read: <Self::PostgresqlJsonType as PostgresqlJsonType>::Read,
-        option_update: Option<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>,
-    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
-    fn read_only_ids_merged_with_create_into_read(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
-    fn read_only_ids_merged_with_create_into_option_value_read(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
-    fn read_only_ids_merged_with_create_into_table_type_declaration(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::TableTypeDeclaration;
+    fn read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(value: &<Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
+    fn previous_read_merged_with_option_update_into_read(read: <Self::PostgresqlJsonType as PostgresqlJsonType>::Read, option_update: Option<<Self::PostgresqlJsonType as PostgresqlJsonType>::Update>) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
+    fn read_only_ids_merged_with_create_into_read(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Read;
+    fn read_only_ids_merged_with_create_into_option_value_read(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Value<<Self::PostgresqlJsonType as PostgresqlJsonType>::Read>>;
+    fn read_only_ids_merged_with_create_into_table_type_declaration(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::TableTypeDeclaration;
 
-    fn read_only_ids_merged_with_create_into_where_equal(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Where;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
-    fn read_only_ids_merged_with_create_into_vec_where_equal_to_json_field(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(
-        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn read_only_ids_merged_with_create_into_where_equal(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> <Self::PostgresqlJsonType as PostgresqlJsonType>::Where;
+    fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
+    fn read_only_ids_merged_with_create_into_vec_where_equal_to_json_field(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal(read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds, create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
 
     //todo
     // LengthGreaterThan
@@ -324,21 +191,14 @@ pub trait PostgresqlJsonTypeTestCases {
     // RegularExpression
     // ContainsElementRegularExpression
 
-    fn create_into_postgresql_json_type_option_vec_where_length_equal(
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_length_equal(create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     fn postgresql_json_type_option_vec_where_length_greater_than_test() -> Option<Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>>;
-    fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
-        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_length_greater_than(create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
 }
 
 pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed>;
-    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    >;
+    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>;
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -349,23 +209,11 @@ where
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         match &self.0 {
-            Some(value) => {
-                value.query_part(
-                    increment,
-                    column,
-                    is_need_to_add_logical_operator
-                )
-            },
+            Some(value) => value.query_part(increment, column, is_need_to_add_logical_operator),
             None => Ok(format!("{column} = 'null'")), //todo fix
         }
     }
-    fn query_bind(
-        self,
-        query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
-    ) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         match self.0 {
             Some(value) => value.query_bind(query),
             None => Ok(query), //todo maybe wrong
@@ -395,7 +243,7 @@ pub fn wrap_into_jsonb_build_object(field: &str, value: &str) -> String {
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
-    WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence::CodeOccurence},
+    WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
 
@@ -590,7 +438,7 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>> PostgresqlT
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(acc, "{value} ").is_err() {
-                        return Err(QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!()});
+                        return Err(QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!() });
                     }
                     is_need_to_add_logical_operator_inner_handle = true;
                 }
@@ -602,15 +450,12 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>> PostgresqlT
         let _: Option<char> = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         for element in self.value {
             match PostgresqlTypeWhereFilter::query_bind(element, query) {
                 Ok(value) => {
                     query = value;
-                },
+                }
                 Err(error) => {
                     return Err(error);
                 }
@@ -696,10 +541,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationB
         };
         Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         if let Err(error) = query.try_bind(self.limit) {
             return Err(error.to_string());
         }
@@ -902,10 +744,7 @@ impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationS
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
-    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         self.0.query_bind(query)
     }
 }
@@ -918,10 +757,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationSt
 impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size() -> Self {
-        Self(PaginationBase::new_unchecked(
-            i32::MAX.into(),
-            0
-        ))
+        Self(PaginationBase::new_unchecked(i32::MAX.into(), 0))
     }
 }
 
@@ -1054,12 +890,7 @@ impl<T> From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
 }
 impl<T1> NotEmptyUniqueEnumVec<T1> {
     pub fn from_t1_impl_from_t2<T2: From<T1>>(value: Self) -> NotEmptyUniqueEnumVec<T2> {
-        NotEmptyUniqueEnumVec(
-            value.0
-            .into_iter()
-            .map(T2::from)
-            .collect::<Vec<T2>>()
-        )
+        NotEmptyUniqueEnumVec(value.0.into_iter().map(T2::from).collect::<Vec<T2>>())
     }
 }
 
@@ -1070,16 +901,7 @@ where
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         let mut acc = String::default();
         for (index, element) in self.0.iter().enumerate() {
-            match element.query_part(
-                increment,
-                column,
-                if index == 0 {
-                    is_need_to_add_logical_operator
-                }
-                else {
-                    true
-                }
-            ) {
+            match element.query_part(increment, column, if index == 0 { is_need_to_add_logical_operator } else { true }) {
                 Ok(value) => {
                     acc.push_str(&value);
                 }
@@ -1090,15 +912,12 @@ where
         }
         Ok(acc)
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
-        String
-    > {
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         for element in self.0 {
             match element.query_bind(query) {
                 Ok(value) => {
                     query = value;
-                },
+                }
                 Err(error) => {
                     return Err(error);
                 }
@@ -1115,101 +934,40 @@ pub struct JsonFieldRights {
     can_update: bool,
 }
 
-pub const fn std_primitive_i8_test_cases_vec() -> [i8;3] {
-    [
-        i8::MIN,
-        0,
-        i8::MAX
-    ]
+pub const fn std_primitive_i8_test_cases_vec() -> [i8; 3] {
+    [i8::MIN, 0, i8::MAX]
 }
-pub const fn std_primitive_i16_test_cases_vec() -> [i16;3] {
-    [
-        i16::MIN,
-        0,
-        i16::MAX
-    ]
+pub const fn std_primitive_i16_test_cases_vec() -> [i16; 3] {
+    [i16::MIN, 0, i16::MAX]
 }
-pub const fn std_primitive_i32_test_cases_vec() -> [i32;3] {
-    [
-        i32::MIN,
-        0,
-        i32::MAX
-    ]
+pub const fn std_primitive_i32_test_cases_vec() -> [i32; 3] {
+    [i32::MIN, 0, i32::MAX]
 }
-pub const fn std_primitive_i64_test_cases_vec() -> [i64;3] {
-    [
-        i64::MIN,
-        0,
-        i64::MAX
-    ]
+pub const fn std_primitive_i64_test_cases_vec() -> [i64; 3] {
+    [i64::MIN, 0, i64::MAX]
 }
-pub const fn std_primitive_u8_test_cases_vec() -> [u8;3] {
-    [
-        u8::MIN,
-        0,
-        u8::MAX
-    ]
+pub const fn std_primitive_u8_test_cases_vec() -> [u8; 3] {
+    [u8::MIN, 0, u8::MAX]
 }
-pub const fn std_primitive_u16_test_cases_vec() -> [u16;3] {
-    [
-        u16::MIN,
-        0,
-        u16::MAX
-    ]
+pub const fn std_primitive_u16_test_cases_vec() -> [u16; 3] {
+    [u16::MIN, 0, u16::MAX]
 }
-pub const fn std_primitive_u32_test_cases_vec() -> [u32;3] {
-    [
-        u32::MIN,
-        0,
-        u32::MAX
-    ]
+pub const fn std_primitive_u32_test_cases_vec() -> [u32; 3] {
+    [u32::MIN, 0, u32::MAX]
 }
-pub const fn std_primitive_u64_test_cases_vec() -> [u64;3] {
-    [
-        u64::MIN,
-        0,
-        u64::MAX
-    ]
+pub const fn std_primitive_u64_test_cases_vec() -> [u64; 3] {
+    [u64::MIN, 0, u64::MAX]
 }
-pub const fn std_primitive_f32_test_cases_vec() -> [f32;12] {
-    [
-        f32::EPSILON,
-        f32::MAX,
-        f32::MIN,
-        f32::MIN_POSITIVE,
-        -1e30,
-        -1e-30,
-        -1.0,
-        -0.0,
-        0.0,
-        1.0,
-        1e-30,
-        1e30
-    ]
+pub const fn std_primitive_f32_test_cases_vec() -> [f32; 12] {
+    [f32::EPSILON, f32::MAX, f32::MIN, f32::MIN_POSITIVE, -1e30, -1e-30, -1.0, -0.0, 0.0, 1.0, 1e-30, 1e30]
 }
-pub const fn std_primitive_f64_test_cases_vec() -> [f64;12] {
-    [
-        f64::EPSILON,
-        f64::MAX,
-        f64::MIN,
-        f64::MIN_POSITIVE,
-        -1e300,
-        -1e-300,
-        -1.0,
-        -0.0,
-        0.0,
-        1.0,
-        1e-300,
-        1e300
-    ]
+pub const fn std_primitive_f64_test_cases_vec() -> [f64; 12] {
+    [f64::EPSILON, f64::MAX, f64::MIN, f64::MIN_POSITIVE, -1e300, -1e-300, -1.0, -0.0, 0.0, 1.0, 1e-300, 1e300]
 }
-pub const fn std_primitive_bool_test_cases_vec() -> [bool;2] {
-    [
-        true,
-        false
-    ]
+pub const fn std_primitive_bool_test_cases_vec() -> [bool; 2] {
+    [true, false]
 }
-pub fn std_string_string_test_cases_vec() -> [String;12] {
+pub fn std_string_string_test_cases_vec() -> [String; 12] {
     [
         String::new(),
         "a".to_owned(),
@@ -1222,13 +980,11 @@ pub fn std_string_string_test_cases_vec() -> [String;12] {
         "🌍🚀✨ Rust 💖🦀".to_owned(),
         "a".repeat(1024),
         "line1\nline2\nline3".to_owned(),
-        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string()
+        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(),
     ]
 }
-pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid;1] {
-    [
-        uuid::Uuid::new_v4()
-    ]
+pub fn uuid_uuid_test_cases_vec() -> [uuid::Uuid; 1] {
+    [uuid::Uuid::new_v4()]
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
@@ -1251,7 +1007,7 @@ impl sqlx::Type<sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
 }
 impl Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn default() -> Self {
-        Self(Value{ value: None })
+        Self(Value { value: None })
     }
 }
 pub fn increment_checked_add_one_returning_increment(increment: &mut u64) -> Result<u64, QueryPartErrorNamed> {
@@ -1260,16 +1016,14 @@ pub fn increment_checked_add_one_returning_increment(increment: &mut u64) -> Res
             *increment = value;
             Ok(value)
         }
-        None => Err(QueryPartErrorNamed::CheckedAdd {
-            code_occurence: error_occurence_lib::code_occurence!()
-        })
+        None => Err(QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
     }
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum EqualOperator {
     Equal,
-    IsNull
+    IsNull,
 }
 impl EqualOperator {
     pub const fn to_query_str(&self) -> &'static str {
@@ -1283,7 +1037,7 @@ pub trait PostgresqlTypeEqualOperator {
     fn operator(&self) -> EqualOperator;
 }
 
-#[derive(Debug, Default, Clone, Copy,PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
 pub struct UnsignedPartOfStdPrimitiveI32(i32); //todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
@@ -1403,18 +1157,14 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         match UnsignedPartOfStdPrimitiveI32::try_from(value) {
-            Ok(value) => if value.0 == 0 {
-                Err(Self::Error::IsZero {
-                    code_occurence: error_occurence_lib::code_occurence!()
-                })
+            Ok(value) => {
+                if value.0 == 0 {
+                    Err(Self::Error::IsZero { code_occurence: error_occurence_lib::code_occurence!() })
+                } else {
+                    Ok(Self(value))
+                }
             }
-            else {
-                Ok(Self(value))
-            },
-            Err(error) => Err(Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
-                value: error,
-                code_occurence: error_occurence_lib::code_occurence!()
-            })
+            Err(error) => Err(Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed { value: error, code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
 }

@@ -100,19 +100,9 @@ fn main() {
                 code_occurence: error_occurence_lib::code_occurence!(),
             }),
         ],
-        hashmap_string_string: std::collections::HashMap::from([
-            (String::from("kesdfsfdsfsd"), DisplayStruct { display: String::from("vasfdsdfsdflue"), something: true }),
-            (String::from("ksdfsdfsdfsdfey"), DisplayStruct { display: String::from("valsfdsfdsfdsue"), something: true }),
-        ]),
+        hashmap_string_string: std::collections::HashMap::from([(String::from("kesdfsfdsfsd"), DisplayStruct { display: String::from("vasfdsdfsdflue"), something: true }), (String::from("ksdfsdfsdfsdfey"), DisplayStruct { display: String::from("valsfdsfdsfdsue"), something: true })]),
         hashmap_string_serde: std::collections::HashMap::from([
-            (
-                String::from("kdfgsdfgdsfgey"),
-                SerializeDeserializeStruct {
-                    one: String::from("valusdfgdsgdsfgde"),
-                    two: true,
-                    three: 42,
-                },
-            ),
+            (String::from("kdfgsdfgdsfgey"), SerializeDeserializeStruct { one: String::from("valusdfgdsgdsfgde"), two: true, three: 42 }),
             (String::from("ksdfgdsfgsdfgey"), SerializeDeserializeStruct { one: String::from("valsdfgdsgdue"), two: true, three: 42 }),
         ]),
         hashmap_string_error_occurence: std::collections::HashMap::from([

@@ -4,14 +4,15 @@ pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 mod generate_if_write_is_err_token_stream;
-pub use generate_if_write_is_err_token_stream::generate_if_write_is_err_token_stream;
 pub use generate_if_write_is_err_token_stream::generate_if_write_is_err_curly_braces_token_stream;
+pub use generate_if_write_is_err_token_stream::generate_if_write_is_err_token_stream;
 mod generate_impl_error_occurence_lib_to_std_string_string_token_stream;
 pub use generate_impl_error_occurence_lib_to_std_string_string_token_stream::generate_impl_error_occurence_lib_to_std_string_string_token_stream;
 pub mod generate_impl_std_convert_from_token_stream;
 pub mod generate_impl_std_convert_try_from_token_stream;
 mod generate_impl_std_fmt_display_token_stream;
 pub use generate_impl_std_fmt_display_token_stream::generate_impl_std_fmt_display_token_stream;
+mod generate_new_or_try_new;
 pub mod generate_pub_type_alias_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod generate_std_default_default_token_stream;
@@ -21,25 +22,7 @@ pub mod status_code;
 pub mod wrap_derive;
 pub mod write_string_into_file;
 pub mod write_token_stream_into_file;
-mod generate_new_or_try_new;
 pub use generate_new_or_try_new::{
-    generate_new_token_stream,
-    generate_const_new_token_stream,
-    generate_pub_new_token_stream,
-    generate_pub_const_new_token_stream,
-    generate_impl_new_for_ident_token_stream,
-    generate_impl_const_new_for_ident_token_stream,
-    generate_impl_pub_new_for_ident_token_stream,
-    generate_impl_pub_const_new_for_ident_token_stream,
-    
-    generate_try_new_token_stream,
-    generate_const_try_new_token_stream,
-    generate_pub_try_new_token_stream,
-    generate_pub_const_try_new_token_stream,
-    generate_impl_try_new_for_ident_token_stream,
-    generate_impl_const_try_new_for_ident_token_stream,
-    generate_impl_pub_try_new_for_ident_token_stream,
-    generate_impl_pub_const_try_new_for_ident_token_stream
+    generate_const_new_token_stream, generate_const_try_new_token_stream, generate_impl_const_new_for_ident_token_stream, generate_impl_const_try_new_for_ident_token_stream, generate_impl_new_for_ident_token_stream, generate_impl_pub_const_new_for_ident_token_stream, generate_impl_pub_const_try_new_for_ident_token_stream, generate_impl_pub_new_for_ident_token_stream,
+    generate_impl_pub_try_new_for_ident_token_stream, generate_impl_try_new_for_ident_token_stream, generate_new_token_stream, generate_pub_const_new_token_stream, generate_pub_const_try_new_token_stream, generate_pub_new_token_stream, generate_pub_try_new_token_stream, generate_try_new_token_stream,
 };
-
-

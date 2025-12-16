@@ -3,13 +3,13 @@ mod tests {
     #[derive(Debug, Clone, Copy)]
     enum RustOrClippy {
         Rust,
-        Clippy
+        Clippy,
     }
     impl RustOrClippy {
         fn name(&self) -> &str {
             match self {
                 Self::Rust => "rust",
-                Self::Clippy => "clippy"
+                Self::Clippy => "clippy",
             }
         }
     }
@@ -26,20 +26,14 @@ mod tests {
         };
         toml_value_table.keys().cloned().collect::<Vec<String>>()
     }
-    fn compare_lints_vec_from_cargo_toml_with_lints_to_check(
-        rust_or_clippy: RustOrClippy,
-        lints_vec_from_cargo_toml: Vec<String>,
-        lints_to_check: Vec<String>,
-        lints_not_in_cargo_toml_vec_exceptions: Vec<String>
-    ) {
+    fn compare_lints_vec_from_cargo_toml_with_lints_to_check(rust_or_clippy: RustOrClippy, lints_vec_from_cargo_toml: Vec<String>, lints_to_check: Vec<String>, lints_not_in_cargo_toml_vec_exceptions: Vec<String>) {
         let rust_or_clippy_name = rust_or_clippy.name();
         let mut lints_not_in_cargo_toml = vec![];
         for element in &lints_to_check {
             if !lints_vec_from_cargo_toml.contains(element) {
                 if lints_not_in_cargo_toml_vec_exceptions.contains(element) {
                     println!("todo!() {rust_or_clippy_name} {element} 158b5c43-05fa-4b8f-b6fe-9cda49d26997");
-                }
-                else {
+                } else {
                     lints_not_in_cargo_toml.push(element);
                 }
             }
@@ -58,11 +52,7 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Rust;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
         let lints_from_command = {
-            let output = std::process::Command::new("rustc")
-                .args(["-W", "help"])
-                .stdout(std::process::Stdio::piped())
-                .output()
-                .expect("error 7c939ff3-1c10-4188-afe8-36bb5c769ea2");
+            let output = std::process::Command::new("rustc").args(["-W", "help"]).stdout(std::process::Stdio::piped()).output().expect("error 7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(output.status.success(), "error 0c000f24-afad-4397-88a4-913d0c113a34");
             {
                 let stderr = String::from_utf8_lossy(&output.stderr);
@@ -70,10 +60,10 @@ mod tests {
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
             regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
-            .expect("error 60d99c87-273a-48ac-8daa-4f0a853d16bd")
-            .captures_iter(&stdout)
-            .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
-            .collect::<Vec<String>>()
+                .expect("error 60d99c87-273a-48ac-8daa-4f0a853d16bd")
+                .captures_iter(&stdout)
+                .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
+                .collect::<Vec<String>>()
         };
         compare_lints_vec_from_cargo_toml_with_lints_to_check(
             rust_or_clippy,
@@ -92,8 +82,8 @@ mod tests {
                 String::from("default_overrides_default_fields"),
                 String::from("test_unstable_lint"),
                 String::from("resolving_to_items_shadowing_supertrait_items"),
-                String::from("shadowing_supertrait_items")
-            ]
+                String::from("shadowing_supertrait_items"),
+            ],
         );
     }
     #[test]
@@ -101,9 +91,7 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Clippy;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
         let clippy_lints_from_docs = {
-            let document = scraper::Html::parse_document(
-                &reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3")
-            );
+            let document = scraper::Html::parse_document(&reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3"));
             let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
             let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
             let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("error eb483b13-e70e-40f4-b83a-3eeb00413d57");
@@ -131,7 +119,9 @@ mod tests {
                                     }
                                 }
                             }
-                            if let Some(id) = article_element.value().attr("id") && !is_deprecated {
+                            if let Some(id) = article_element.value().attr("id")
+                                && !is_deprecated
+                            {
                                 ids.push(id.to_owned());
                             }
                         }
@@ -147,7 +137,7 @@ mod tests {
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
             vec![
                 // String::from(""),
-            ]
+            ],
         );
     }
     #[test]
@@ -196,16 +186,18 @@ mod tests {
         for cargo_toml_string in &cargo_toml_string_vec {
             let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
             //todo after fix issue with pg_jsonschema remove this check
-            if let Some(package) = &cargo_toml.package && package.name != "pg_jsonschema" {
-                assert!(cargo_toml.lints == Some(Lints {workspace: true}), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
-                let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>|{
+            if let Some(package) = &cargo_toml.package
+                && package.name != "pg_jsonschema"
+            {
+                assert!(cargo_toml.lints == Some(Lints { workspace: true }), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
+                let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>| {
                     if let Some(value) = deps {
                         let mut keys = value.keys().clone().collect::<Vec<_>>();
                         keys.sort();
                         for key in keys {
                             let value = &value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91");
                             if let toml::Value::Table(value) = value {
-                                let mut handle_toml_value_string_valid_version = |version_value: &toml::Value|{
+                                let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
                                     if let toml::Value::String(value) = version_value {
                                         fn is_valid_version(value: &str) -> bool {
                                             let Some(version) = value.strip_prefix('=') else { return false };
@@ -228,8 +220,7 @@ mod tests {
                                             true
                                         }
                                         assert!(is_valid_version(value), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
-                                    }
-                                    else {
+                                    } else {
                                         panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
                                     }
                                     {
@@ -238,8 +229,7 @@ mod tests {
                                             if key == acc_key {
                                                 if version_value == acc_version_value {
                                                     is_found = true;
-                                                }
-                                                else {
+                                                } else {
                                                     panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
                                                 }
                                             }
@@ -252,34 +242,32 @@ mod tests {
                                 if value.len() == 1 {
                                     if let Some(version_value) = value.get("version") {
                                         handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else if value.get("path").is_some() {}
-                                    else {
+                                    } else if value.get("path").is_some() {
+                                    } else {
                                         panic!("error a2ac9215-0d83-428b-b572-355bd19f6211");
                                     }
-                                }
-                                else if value.len() == 2 {
-                                    if let Some(version_value) = value.get("version") && value.get("features").is_some() {
+                                } else if value.len() == 2 {
+                                    if let Some(version_value) = value.get("version")
+                                        && value.get("features").is_some()
+                                    {
                                         handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else if value.get("path").is_some() && value.get("features").is_some() {}
-                                    else {
+                                    } else if value.get("path").is_some() && value.get("features").is_some() {
+                                    } else {
                                         panic!("error 029bed67-2e36-4403-aead-9f415bdb20d9");
                                     }
-                                }
-                                else if value.len() == 3 {
-                                    if let Some(version_value) = value.get("version") && value.get("features").is_some() && value.get("default-features").is_some() {
+                                } else if value.len() == 3 {
+                                    if let Some(version_value) = value.get("version")
+                                        && value.get("features").is_some()
+                                        && value.get("default-features").is_some()
+                                    {
                                         handle_toml_value_string_valid_version(version_value);
-                                    }
-                                    else {
+                                    } else {
                                         panic!("error 2233a0a2-c162-42ae-afb5-3b714d63612b");
                                     }
-                                }
-                                else {
+                                } else {
                                     panic!("error fc975adf-98f9-4f91-9e97-bff3245e06bb");
                                 }
-                            }
-                            else {
+                            } else {
                                 panic!("error c61368cc-42b8-4de4-9df2-3bb30cc2ad79");
                             }
                         }

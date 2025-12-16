@@ -42,13 +42,7 @@ impl NotNullOrNullable {
     }
 }
 
-pub fn generate_postgresql_type_where_token_stream(
-    variants: &Vec<&dyn PostgresqlFilter>,
-    prefix: &dyn quote::ToTokens,
-    should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema,
-    should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
-    is_query_bind_mutable: &IsQueryBindMutable
-) -> proc_macro2::TokenStream {
+pub fn generate_postgresql_type_where_token_stream(variants: &Vec<&dyn PostgresqlFilter>, prefix: &dyn quote::ToTokens, should_derive_utoipa_to_schema: &ShouldDeriveUtoipaToSchema, should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema, is_query_bind_mutable: &IsQueryBindMutable) -> proc_macro2::TokenStream {
     let ident = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -165,11 +159,7 @@ pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming:
     let struct_postgresql_type_ident_where_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(ident);
     let struct_postgresql_type_ident_where_tokens_with_number_elements_double_quotes_token_stream = generate_struct_ident_with_number_elements_double_quotes_token_stream(ident, length);
     let postgresql_type_ident_where_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
-    (
-        struct_postgresql_type_ident_where_tokens_double_quotes_token_stream,
-        struct_postgresql_type_ident_where_tokens_with_number_elements_double_quotes_token_stream,
-        postgresql_type_ident_where_tokens_double_quotes_token_stream,
-    )
+    (struct_postgresql_type_ident_where_tokens_double_quotes_token_stream, struct_postgresql_type_ident_where_tokens_with_number_elements_double_quotes_token_stream, postgresql_type_ident_where_tokens_double_quotes_token_stream)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -694,10 +684,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     }
 }
 
-pub fn generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(
-    ident_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         impl sqlx::Encode<'_, sqlx::Postgres> for #ident_token_stream {
             fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
@@ -984,10 +971,7 @@ pub fn generate_impl_postgresql_type_token_stream(
     }
 }
 
-pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
-    import_path: &ImportPath,
-    ident: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(import_path: &ImportPath, ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let postgresql_type_not_primary_key_upper_camel_case = naming::PostgresqlTypeNotPrimaryKeyUpperCamelCase;
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
@@ -1031,27 +1015,21 @@ pub fn generate_impl_postgresql_type_not_primary_key_for_ident_token_stream(
 //     }
 // }
 
-fn generate_option_vec_create_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_option_vec_create_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #option_vec_create_snake_case() -> Option<Vec<#path_token_stream::#create_upper_camel_case>> {
             #content_token_stream
         }
     }
 }
-fn generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
             #read_only_ids_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
         ) -> Vec<Vec<#path_token_stream::#read_inner_upper_camel_case>> {
@@ -1059,15 +1037,11 @@ fn generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
         }
     }
 }
-fn generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(
-    type_token_stream: &dyn quote::ToTokens,
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(type_token_stream: &dyn quote::ToTokens, path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_inner_into_read_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoReadWithNewOrTryNewUnwrapedSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_inner_into_read_with_new_or_try_new_unwraped_snake_case(
             #value_snake_case: #type_token_stream
         ) -> #path_token_stream::#read_upper_camel_case {
@@ -1075,29 +1049,22 @@ fn generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(
         }
     }
 }
-fn generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(
-    type_token_stream: &dyn quote::ToTokens,
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(type_token_stream: &dyn quote::ToTokens, path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_inner_into_update_with_new_or_try_new_unwraped_snake_case = naming::ReadInnerIntoUpdateWithNewOrTryNewUnwrapedSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_inner_into_update_with_new_or_try_new_unwraped_snake_case(#value_snake_case: #type_token_stream) -> #path_token_stream::#update_upper_camel_case {
             #content_token_stream
         }
     }
 }
-fn generate_update_to_read_only_ids_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_update_to_read_only_ids_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let update_to_read_only_ids_snake_case = naming::UpdateToReadOnlyIdsSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #update_to_read_only_ids_snake_case(
             #value_snake_case: &#path_token_stream::#update_upper_camel_case
         ) -> #path_token_stream::#read_only_ids_upper_camel_case {
@@ -1105,17 +1072,13 @@ fn generate_update_to_read_only_ids_token_stream(
         }
     }
 }
-fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-    import_path: ImportPath,
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(import_path: ImportPath, path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::ReadOnlyIdsToOptionValueReadDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(
             #value_snake_case: &#path_token_stream::#read_only_ids_upper_camel_case
         ) -> Option<#import_path::#value_upper_camel_case<#path_token_stream::#read_upper_camel_case>> {
@@ -1123,16 +1086,13 @@ fn generate_read_only_ids_to_option_value_read_default_but_option_is_always_some
         }
     }
 }
-fn generate_previous_read_merged_with_option_update_into_read_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_previous_read_merged_with_option_update_into_read_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let previous_read_merged_with_option_update_into_read_snake_case = naming::PreviousReadMergedWithOptionUpdateIntoReadSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_snake_case = naming::ReadSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let option_update_snake_case = naming::OptionUpdateSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #previous_read_merged_with_option_update_into_read_snake_case(
             #read_snake_case: #path_token_stream::#read_upper_camel_case,
             #option_update_snake_case: Option<#path_token_stream::#update_upper_camel_case>,
@@ -1141,17 +1101,14 @@ fn generate_previous_read_merged_with_option_update_into_read_token_stream(
         }
     }
 }
-fn generate_read_only_ids_merged_with_create_into_read_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_merged_with_create_into_read_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoReadSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_merged_with_create_into_read_snake_case(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
@@ -1160,11 +1117,7 @@ fn generate_read_only_ids_merged_with_create_into_read_token_stream(
         }
     }
 }
-fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-    import_path: ImportPath,
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(import_path: ImportPath, path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_option_value_read_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoOptionValueReadSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
@@ -1172,7 +1125,7 @@ fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream
     let create_snake_case = naming::CreateSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_merged_with_create_into_option_value_read_snake_case(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
@@ -1181,17 +1134,14 @@ fn generate_read_only_ids_merged_with_create_into_option_value_read_token_stream
         }
     }
 }
-fn generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
@@ -1201,16 +1151,11 @@ fn generate_read_only_ids_merged_with_create_into_table_type_declaration_token_s
     }
 }
 
-pub fn generate_read_only_ids_merged_with_create_into_where_equal_token_stream(
-    read_only_ids_token_stream: &dyn quote::ToTokens,
-    create_token_stream: &dyn quote::ToTokens,
-    where_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_read_only_ids_merged_with_create_into_where_equal_token_stream(read_only_ids_token_stream: &dyn quote::ToTokens, create_token_stream: &dyn quote::ToTokens, where_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_where_equal_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoWhereEqualSnakeCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_merged_with_create_into_where_equal_snake_case(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
@@ -1219,16 +1164,11 @@ pub fn generate_read_only_ids_merged_with_create_into_where_equal_token_stream(
         }
     }
 }
-pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(
-    read_only_ids_token_stream: &dyn quote::ToTokens,
-    create_token_stream: &dyn quote::ToTokens,
-    where_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(read_only_ids_token_stream: &dyn quote::ToTokens, create_token_stream: &dyn quote::ToTokens, where_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualUsingFieldsSnakeCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
-    quote::quote!{
+    quote::quote! {
         fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
@@ -1248,7 +1188,7 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
     let return_type_token_stream = {
-        let return_type_handle_token_stream = quote::quote!{Vec<#where_token_stream>};
+        let return_type_handle_token_stream = quote::quote! {Vec<#where_token_stream>};
         match &postgresql_type_or_postgresql_json_type {
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => generate_std_option_option_tokens_declaration_token_stream(&return_type_handle_token_stream),
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => return_type_handle_token_stream,
@@ -1258,7 +1198,7 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => &naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase,
         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => &naming::ReadOnlyIdsMergedWithCreateIntoVecWhereEqualToJsonFieldSnakeCase,
     };
-    quote::quote!{
+    quote::quote! {
         fn #name_token_stream(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
@@ -1267,31 +1207,16 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
         }
     }
 }
-pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_token_stream(
-    read_only_ids_token_stream: &dyn quote::ToTokens,
-    create_token_stream: &dyn quote::ToTokens,
-    where_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_postgresql_type_or_postgresql_json_type_token_stream(
-        &read_only_ids_token_stream,
-        &create_token_stream,
-        &where_token_stream,
-        &content_token_stream,
-        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
-    )
+pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_token_stream(read_only_ids_token_stream: &dyn quote::ToTokens, create_token_stream: &dyn quote::ToTokens, where_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_postgresql_type_or_postgresql_json_type_token_stream(&read_only_ids_token_stream, &create_token_stream, &where_token_stream, &content_token_stream, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
 }
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-    name_token_stream: &dyn quote::ToTokens,
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(name_token_stream: &dyn quote::ToTokens, path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let where_upper_camel_case = naming::WhereUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #name_token_stream(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
@@ -1300,56 +1225,25 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         }
     }
 }
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase,
-        &path_token_stream,
-        &content_token_stream,
-    )
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(&naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionOneEqualSnakeCase, &path_token_stream, &content_token_stream)
 }
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase,
-        &path_token_stream,
-        &content_token_stream,
-    )
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(&naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionTwoEqualSnakeCase, &path_token_stream, &content_token_stream)
 }
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase,
-        &path_token_stream,
-        &content_token_stream,
-    )
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(&naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionThreeEqualSnakeCase, &path_token_stream, &content_token_stream)
 }
-fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-        &naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase,
-        &path_token_stream,
-        &content_token_stream,
-    )
+fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(&naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereDimensionFourEqualSnakeCase, &path_token_stream, &content_token_stream)
 }
 
-fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let where_upper_camel_case = naming::WhereUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> Option<Vec<#path_token_stream::#where_upper_camel_case>> {
@@ -1358,15 +1252,12 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_equal_token
     }
 }
 
-fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(path_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_snake_case = naming::CreateSnakeCase;
     let where_upper_camel_case = naming::WhereUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         fn #create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
             #create_snake_case: #path_token_stream::#create_upper_camel_case
         ) -> Option<Vec<#path_token_stream::#where_upper_camel_case>> {
@@ -1375,17 +1266,13 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
     }
 }
 
-fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-    postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType,
-    import_path: ImportPath,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType, import_path: ImportPath, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let postgresql_json_type_option_vec_where_length_greater_than_test_snake_case = naming::PostgresqlJsonTypeOptionVecWhereLengthGreaterThanTestSnakeCase;
     let (first_token_stream, second_token_stream) = match &postgresql_type_or_postgresql_json_type {
-        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => (quote::quote!{PostgresqlTypeLengthGreaterThanTest},quote::quote!{PostgresqlType}),
-        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (quote::quote!{PostgresqlJsonTypeLengthGreaterThanTest},quote::quote!{PostgresqlJsonType}),
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => (quote::quote! {PostgresqlTypeLengthGreaterThanTest}, quote::quote! {PostgresqlType}),
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (quote::quote! {PostgresqlJsonTypeLengthGreaterThanTest}, quote::quote! {PostgresqlJsonType}),
     };
-    quote::quote!{
+    quote::quote! {
         fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
             #content_token_stream
         }
@@ -1437,50 +1324,17 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let self_postgresql_type_as_postgresql_type_create_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case};
     let self_postgresql_type_as_postgresql_type_where_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case};
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
-    let option_vec_create_content_token_stream = generate_option_vec_create_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &option_vec_create_token_stream,
-    );
-    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
-    );
-    let read_inner_into_read_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(
-        &type_token_stream,
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_inner_into_read_with_new_or_try_new_unwraped_token_stream,
-    );
-    let read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(
-        &type_token_stream,
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_inner_into_update_with_new_or_try_new_unwraped_token_stream
-    );
-    let update_to_read_only_ids_content_token_stream = generate_update_to_read_only_ids_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &update_to_read_only_ids_token_stream,
-    );
-    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        *import_path,
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-    );
-    let previous_read_merged_with_option_update_into_read_content_token_stream = generate_previous_read_merged_with_option_update_into_read_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &previous_read_merged_with_option_update_into_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_read_content_token_stream = generate_read_only_ids_merged_with_create_into_read_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_only_ids_merged_with_create_into_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        *import_path,
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_only_ids_merged_with_create_into_option_value_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_table_type_declaration_content_token_stream = generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &read_only_ids_merged_with_create_into_table_type_declaration_token_stream,
-    );
+    let option_vec_create_content_token_stream = generate_option_vec_create_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &option_vec_create_token_stream);
+    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &read_only_ids_to_two_dimensional_vec_read_inner_token_stream);
+    let read_inner_into_read_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(&type_token_stream, &self_postgresql_type_as_postgresql_type_token_stream, &read_inner_into_read_with_new_or_try_new_unwraped_token_stream);
+    let read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&type_token_stream, &self_postgresql_type_as_postgresql_type_token_stream, &read_inner_into_update_with_new_or_try_new_unwraped_token_stream);
+    let update_to_read_only_ids_content_token_stream = generate_update_to_read_only_ids_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &update_to_read_only_ids_token_stream);
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream =
+        generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(*import_path, &self_postgresql_type_as_postgresql_type_token_stream, &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream);
+    let previous_read_merged_with_option_update_into_read_content_token_stream = generate_previous_read_merged_with_option_update_into_read_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &previous_read_merged_with_option_update_into_read_token_stream);
+    let read_only_ids_merged_with_create_into_read_content_token_stream = generate_read_only_ids_merged_with_create_into_read_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &read_only_ids_merged_with_create_into_read_token_stream);
+    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(*import_path, &self_postgresql_type_as_postgresql_type_token_stream, &read_only_ids_merged_with_create_into_option_value_read_token_stream);
+    let read_only_ids_merged_with_create_into_table_type_declaration_content_token_stream = generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &read_only_ids_merged_with_create_into_table_type_declaration_token_stream);
     let read_only_ids_merged_with_create_into_where_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_equal_token_stream(
         &self_postgresql_type_as_postgresql_type_read_only_ids_token_stream,
         &self_postgresql_type_as_postgresql_type_create_token_stream,
@@ -1503,35 +1357,13 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case = naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let postgresql_type_option_vec_where_greater_than_test_snake_case = naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
-    );
-    let create_into_postgresql_json_type_option_vec_where_length_equal_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
-    );
-    let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
-        *import_path,
-        &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
-    );
-    let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
-        &self_postgresql_type_as_postgresql_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream
-    );
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream);
+    let create_into_postgresql_json_type_option_vec_where_length_equal_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream);
+    let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, *import_path, &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream);
+    let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(&self_postgresql_type_as_postgresql_type_token_stream, &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream);
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_type_test_cases_upper_camel_case for #ident {
@@ -1619,50 +1451,17 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
     let self_postgresql_json_type_as_postgresql_json_type_create_token_stream = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_token_stream::#create_upper_camel_case};
     let self_postgresql_json_type_as_postgresql_json_type_where_token_stream = quote::quote! {#self_postgresql_json_type_as_postgresql_json_type_token_stream::#where_upper_camel_case};
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
-    let option_vec_create_content_token_stream = generate_option_vec_create_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &option_vec_create_token_stream,
-    );
-    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_only_ids_to_two_dimensional_vec_read_inner_token_stream,
-    );
-    let read_inner_into_read_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(
-        &type_token_stream,
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_inner_into_read_with_new_or_try_new_unwraped_token_stream,
-    );
-    let read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(
-        &type_token_stream,
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_inner_into_update_with_new_or_try_new_unwraped_token_stream
-    );
-    let update_to_read_only_ids_content_token_stream = generate_update_to_read_only_ids_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &update_to_read_only_ids_token_stream,
-    );
-    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream = generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
-        *import_path,
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-    );
-    let previous_read_merged_with_option_update_into_read_content_token_stream = generate_previous_read_merged_with_option_update_into_read_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &previous_read_merged_with_option_update_into_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_read_content_token_stream = generate_read_only_ids_merged_with_create_into_read_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_only_ids_merged_with_create_into_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(
-        *import_path,
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_only_ids_merged_with_create_into_option_value_read_token_stream,
-    );
-    let read_only_ids_merged_with_create_into_table_type_declaration_content_token_stream = generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &read_only_ids_merged_with_create_into_table_type_declaration_token_stream,
-    );
+    let option_vec_create_content_token_stream = generate_option_vec_create_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &option_vec_create_token_stream);
+    let read_only_ids_to_two_dimensional_vec_read_inner_content_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_only_ids_to_two_dimensional_vec_read_inner_token_stream);
+    let read_inner_into_read_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_read_with_new_or_try_new_unwraped_token_stream(&type_token_stream, &self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_inner_into_read_with_new_or_try_new_unwraped_token_stream);
+    let read_inner_into_update_with_new_or_try_new_unwraped_content_token_stream = generate_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&type_token_stream, &self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_inner_into_update_with_new_or_try_new_unwraped_token_stream);
+    let update_to_read_only_ids_content_token_stream = generate_update_to_read_only_ids_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &update_to_read_only_ids_token_stream);
+    let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_content_token_stream =
+        generate_read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(*import_path, &self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream);
+    let previous_read_merged_with_option_update_into_read_content_token_stream = generate_previous_read_merged_with_option_update_into_read_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &previous_read_merged_with_option_update_into_read_token_stream);
+    let read_only_ids_merged_with_create_into_read_content_token_stream = generate_read_only_ids_merged_with_create_into_read_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_only_ids_merged_with_create_into_read_token_stream);
+    let read_only_ids_merged_with_create_into_option_value_read_content_token_stream = generate_read_only_ids_merged_with_create_into_option_value_read_token_stream(*import_path, &self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_only_ids_merged_with_create_into_option_value_read_token_stream);
+    let read_only_ids_merged_with_create_into_table_type_declaration_content_token_stream = generate_read_only_ids_merged_with_create_into_table_type_declaration_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &read_only_ids_merged_with_create_into_table_type_declaration_token_stream);
     let read_only_ids_merged_with_create_into_where_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_where_equal_token_stream(
         &self_postgresql_json_type_as_postgresql_json_type_read_only_ids_token_stream,
         &self_postgresql_json_type_as_postgresql_json_type_create_token_stream,
@@ -1681,35 +1480,14 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         &self_postgresql_json_type_as_postgresql_json_type_where_token_stream,
         &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_token_stream,
     );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
-    );
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
-    );
-    let create_into_postgresql_json_type_option_vec_where_length_equal_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
-    );
-    let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(
-        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
-        *import_path,
-        &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream
-    );
-    let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(
-        &self_postgresql_json_type_as_postgresql_json_type_token_stream,
-        &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream
-    );
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream =
+        generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream);
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream);
+    let create_into_postgresql_json_type_option_vec_where_length_equal_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_equal_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream);
+    let postgresql_json_type_option_vec_where_length_greater_than_test_content_token_stream = generate_postgresql_json_type_option_vec_where_length_greater_than_test_token_stream(PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, *import_path, &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream);
+    let create_into_postgresql_json_type_option_vec_where_length_greater_than_content_token_stream = generate_create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream(&self_postgresql_json_type_as_postgresql_json_type_token_stream, &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream);
     quote::quote! {
         #cfg_token_stream
         impl #import_path::#postgresql_json_type_test_cases_upper_camel_case for #ident {
@@ -2099,43 +1877,39 @@ pub enum PostgresqlTypeOrPostgresqlJsonType {
 #[derive(Debug, Clone, Copy)]
 pub enum DefaultSomeOneOrDefaultSomeOneWithMaxPageSize {
     DefaultSomeOne,
-    DefaultSomeOneWithMaxPageSize
+    DefaultSomeOneWithMaxPageSize,
 }
 
 pub fn generate_value_initialization_token_stream(import_path: &ImportPath, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
-    quote::quote!{#import_path::Value { #value_snake_case: #content_token_stream }}
+    quote::quote! {#import_path::Value { #value_snake_case: #content_token_stream }}
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum EqualOrEqualUsingFields {
     Equal,
-    EqualUsingFields
+    EqualUsingFields,
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum EqualOperatorHandle {
     Equal,
-    IsNull
+    IsNull,
 }
 impl EqualOperatorHandle {
     pub fn to_tokens_path(&self, import_path: &ImportPath) -> proc_macro2::TokenStream {
         let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
         let content_token_stream = match &self {
-            Self::Equal => quote::quote!{Equal},
-            Self::IsNull => quote::quote!{IsNull},
+            Self::Equal => quote::quote! {Equal},
+            Self::IsNull => quote::quote! {IsNull},
         };
-        quote::quote!{#import_path::#equal_operator_upper_camel_case::#content_token_stream}
+        quote::quote! {#import_path::#equal_operator_upper_camel_case::#content_token_stream}
     }
 }
-pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(
-    import_path: &ImportPath,
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens
-) -> proc_macro2::TokenStream {
+pub fn impl_postgresql_type_equal_operator_for_ident_token_stream(import_path: &ImportPath, ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let postgresql_type_equal_operator_upper_camel_case = naming::PostgresqlTypeEqualOperatorUpperCamelCase;
     let equal_operator_upper_camel_case = naming::EqualOperatorUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         impl #import_path::#postgresql_type_equal_operator_upper_camel_case for #ident {
             fn operator(&self) -> #import_path::#equal_operator_upper_camel_case {
                 #content_token_stream
@@ -2149,7 +1923,7 @@ pub enum Dimension {
     One,
     Two,
     Three,
-    Four
+    Four,
 }
 impl Dimension {
     pub fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(&self) -> Box<dyn naming::StdFmtDisplayPlusQuoteToTokens> {
@@ -2166,7 +1940,7 @@ pub enum DimensionIndexNumber {
     Zero,
     One,
     Two,
-    Three
+    Three,
 }
 impl From<&Dimension> for DimensionIndexNumber {
     fn from(value: &Dimension) -> Self {
@@ -2174,13 +1948,13 @@ impl From<&Dimension> for DimensionIndexNumber {
             Dimension::One => Self::Zero,
             Dimension::Two => Self::One,
             Dimension::Three => Self::Two,
-            Dimension::Four => Self::Three
+            Dimension::Four => Self::Three,
         }
     }
 }
 
 pub fn generate_query_part_error_named_write_into_buffer_token_stream(import_path: ImportPath) -> proc_macro2::TokenStream {
-    quote::quote!{
+    quote::quote! {
         #import_path::QueryPartErrorNamed::WriteIntoBuffer {
             code_occurence: error_occurence_lib::code_occurence!()
         }
@@ -2188,5 +1962,5 @@ pub fn generate_query_part_error_named_write_into_buffer_token_stream(import_pat
 }
 pub fn generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path: ImportPath) -> proc_macro2::TokenStream {
     let content_token_stream = generate_query_part_error_named_write_into_buffer_token_stream(import_path);
-    quote::quote!{return Err(#content_token_stream);}
+    quote::quote! {return Err(#content_token_stream);}
 }

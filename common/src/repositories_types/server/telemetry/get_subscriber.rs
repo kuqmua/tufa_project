@@ -9,16 +9,5 @@ where
 {
     let env_filter = tracing_subscriber::EnvFilter::try_from_default_env().unwrap_or_else(|_| tracing_subscriber::EnvFilter::new(config.get_tracing_level().to_string()));
     let formatting_layer = tracing_bunyan_formatter::BunyanFormattingLayer::new(name.to_owned(), sink);
-    {
-        tracing_subscriber::layer::SubscriberExt::with(
-            tracing_subscriber::layer::SubscriberExt::with(
-                tracing_subscriber::layer::SubscriberExt::with(
-                    tracing_subscriber::Registry::default(),
-                    env_filter
-                ),
-                tracing_bunyan_formatter::JsonStorageLayer
-            ),
-            formatting_layer
-        )
-    }
+    { tracing_subscriber::layer::SubscriberExt::with(tracing_subscriber::layer::SubscriberExt::with(tracing_subscriber::layer::SubscriberExt::with(tracing_subscriber::Registry::default(), env_filter), tracing_bunyan_formatter::JsonStorageLayer), formatting_layer) }
 }

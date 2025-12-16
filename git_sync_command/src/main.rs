@@ -15,15 +15,10 @@ fn main() {
     let contents = std::fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("cannot read .gitmodules file");
     let _unused = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
-    let paths_vec: Vec<String> = contents.lines()
-        .filter_map(|element| {
-            element.find("path = ")
-            .map(|index| {
-                element.get(index.checked_add(substring_value.len()).expect("error 62d029a8-1f60-490b-bb70-5e51c1034af2")..)
-                .expect("error dde185ef-97fc-4652-b67c-76064cff7091")
-                .to_owned()
-            })
-        }).collect();
+    let paths_vec: Vec<String> = contents
+        .lines()
+        .filter_map(|element| element.find("path = ").map(|index| element.get(index.checked_add(substring_value.len()).expect("error 62d029a8-1f60-490b-bb70-5e51c1034af2")..).expect("error dde185ef-97fc-4652-b67c-76064cff7091").to_owned()))
+        .collect();
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
     let _unused = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
