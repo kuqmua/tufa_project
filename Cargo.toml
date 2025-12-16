@@ -42,6 +42,7 @@ members = [
   "tests",
   "impl_display_as_debug",
   "error_occurence_test",
+  "file_system",
   "token_patterns",
   "naming",
   "naming/naming_common",
