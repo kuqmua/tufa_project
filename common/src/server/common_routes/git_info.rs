@@ -5,7 +5,6 @@ pub struct GitInfo {
     #[schema(example = "https://github.com/kuqmua/tufa_project/tree/f7de4c3c218579600cd0737d5a6b6c8362cbd88b")]
     commit: String,
 }
-
 #[utoipa::path(
     get,
     path = "/git_info",
@@ -16,7 +15,6 @@ pub struct GitInfo {
 pub async fn git_info(axum::extract::State(app_state): axum::extract::State<DynArcGitInfoRouteParametersSendSync>) -> impl axum::response::IntoResponse {
     (axum::http::StatusCode::OK, axum::Json(GitInfo { commit: app_state.get_git_commit_link() }))
 }
-
 pub(crate) fn git_info_route(app_state: DynArcGitInfoRouteParametersSendSync) -> axum::Router {
     axum::Router::new().route("/git_info", axum::routing::get(git_info)).with_state(app_state)
 }

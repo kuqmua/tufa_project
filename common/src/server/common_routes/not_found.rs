@@ -6,7 +6,6 @@ struct NotFoundHandle {
     commit: String,
     open_api_specification: &'static str,
 }
-
 //todo maybe use swagger instead
 pub fn not_found_route(app_state: DynArcNotFoundRouteParametersSendSync) -> axum::Router {
     axum::Router::new()

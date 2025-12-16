@@ -367,8 +367,6 @@ get concrete number of provider links as function or command line or env
 * get_providers_link_parts whole and for each provider
 and maybe rewrite it as struct with methods
 
-* Resource::PostgreSql => { 
-
 * rename this check_new_posts_threads_parts
 
 * 5 => {

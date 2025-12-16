@@ -1,6 +1,5 @@
 pub mod git_info;
 mod health_check;
-pub mod helpers;
 pub mod not_found;
 
 type DynArcCommonRoutesParametersSendSync = std::sync::Arc<dyn CommonRoutesParameters>;

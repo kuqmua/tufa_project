@@ -3,6 +3,7 @@ resolver = "2"
 members = [
   "app_state",
   "common",
+  "common_routes",
   "config_lib",
   "constants",
   "to_std_string_string",
