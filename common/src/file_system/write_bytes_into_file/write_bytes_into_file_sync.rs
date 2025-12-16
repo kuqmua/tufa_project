@@ -7,7 +7,7 @@ pub enum WriteBytesIntoFileSyncErrorNamed {
     },
 }
 
-pub fn write_bytes_into_file_sync(path: &std::path::Path, bytes: String) -> Result<(), WriteBytesIntoFileSyncErrorNamed> {
+pub fn write_bytes_into_file_sync(path: &std::path::Path, bytes: &[u8]) -> Result<(), WriteBytesIntoFileSyncErrorNamed> {
     if let Some(prefix) = path.parent() && let Err(error) = std::fs::create_dir_all(prefix) {
         return Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
             error,
@@ -16,7 +16,7 @@ pub fn write_bytes_into_file_sync(path: &std::path::Path, bytes: String) -> Resu
     }
     match std::fs::File::create(path) {
         Ok(mut file) => {
-            if let Err(error) = std::io::Write::write_all(&mut file, bytes.as_bytes()) {
+            if let Err(error) = std::io::Write::write_all(&mut file, bytes) {
                 return Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
                     error,
                     code_occurence: error_occurence_lib::code_occurence!(),

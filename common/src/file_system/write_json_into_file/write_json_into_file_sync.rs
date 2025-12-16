@@ -17,7 +17,7 @@ pub fn write_json_into_file_async(path: &std::path::Path, json_object: serde_jso
         Ok(stringified_json) => {
             if let Err(error) = crate::file_system::write_bytes_into_file::write_bytes_into_file_sync::write_bytes_into_file_sync(
                 path,
-                stringified_json,
+                stringified_json.as_bytes(),
             ) {
                 return Err(WriteJsonIntoFileSyncErrorNamed::WriteBytesIntoFile{
                     error,
