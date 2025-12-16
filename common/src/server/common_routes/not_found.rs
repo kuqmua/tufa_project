@@ -1,7 +1,5 @@
-pub(crate) type DynArcNotFoundRouteParametersSendSync = std::sync::Arc<dyn NotFoundRouteParameters + Send + Sync>;
-
-pub trait NotFoundRouteParameters: git_info::GetGitCommitLink {}
-
+type DynArcNotFoundRouteParametersSendSync = std::sync::Arc<dyn NotFoundRouteParameters>;
+pub trait NotFoundRouteParameters: git_info::GetGitCommitLink + Send + Sync {}
 #[derive(Debug, serde::Serialize)]
 struct NotFoundHandle {
     message: String,

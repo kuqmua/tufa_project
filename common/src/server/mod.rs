@@ -2,4 +2,4 @@
 // pub mod mongo;
 pub mod postgres;
 pub mod resource;
-pub mod routes;
+pub mod common_routes;

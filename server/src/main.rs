@@ -45,10 +45,8 @@ fn main() {
                 axum::serve(
                     tokio::net::TcpListener::bind(service_socket_address).await.expect("error 3f294e7c-3386-497f-b76c-c0364d59a60d"),
                     axum::Router::new()
-                        .merge(common::server::routes::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common::server::common_routes::common_routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                         .merge(common::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-                        .merge(common::server::routes::not_found::not_found_route(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-                        // .fallback_service(routes_static())
                         .layer(
                             tower_http::cors::CorsLayer::new()
                                 // .allow_methods([

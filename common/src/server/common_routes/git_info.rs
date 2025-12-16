@@ -1,7 +1,5 @@
-pub(crate) type DynArcGitInfoRouteParametersSendSync = std::sync::Arc<dyn GitInfoRouteParameters + Send + Sync>;
-
-pub trait GitInfoRouteParameters: git_info::GetGitCommitLink {}
-
+type DynArcGitInfoRouteParametersSendSync = std::sync::Arc<dyn GitInfoRouteParameters>;
+pub trait GitInfoRouteParameters: git_info::GetGitCommitLink + Send + Sync {}
 #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
 pub struct GitInfo {
     #[schema(example = "https://github.com/kuqmua/tufa_project/tree/f7de4c3c218579600cd0737d5a6b6c8362cbd88b")]
