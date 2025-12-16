@@ -7,15 +7,13 @@ pub enum CreateDirIfItDoesntExistErrorNamed {
     },
 }
 
-pub fn create_dir_if_it_doesnt_exist(
-    path: &str,
-) -> Result<(), Box<CreateDirIfItDoesntExistErrorNamed>> {
+pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), Box<CreateDirIfItDoesntExistErrorNamed>> {
     if std::path::Path::new(path).exists() {
         return Ok(());
     }
     if let Err(error) = std::fs::create_dir_all(path) {
         return Err(Box::new(CreateDirIfItDoesntExistErrorNamed::CreateDirAll {
-            error: error,
+            error,
             code_occurence: error_occurence_lib::code_occurence!(),
         }));
     }

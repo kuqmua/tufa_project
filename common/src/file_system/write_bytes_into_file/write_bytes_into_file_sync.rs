@@ -7,23 +7,14 @@ pub enum WriteBytesIntoFileSyncErrorNamed {
     },
 }
 
-pub fn write_bytes_into_file_sync(
-    path: &std::path::Path,
-    bytes: String,
-) -> Result<(), WriteBytesIntoFileSyncErrorNamed> {
-    if let Some(prefix) = path.parent() {
-        if let Err(error) = std::fs::create_dir_all(prefix) {
-            return Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
-                error,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-    }
-    match std::fs::File::create(path) {
-        Err(error) => Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
+pub fn write_bytes_into_file_sync(path: &std::path::Path, bytes: String) -> Result<(), WriteBytesIntoFileSyncErrorNamed> {
+    if let Some(prefix) = path.parent() && let Err(error) = std::fs::create_dir_all(prefix) {
+        return Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
             error,
             code_occurence: error_occurence_lib::code_occurence!(),
-        }),
+        });
+    }
+    match std::fs::File::create(path) {
         Ok(mut file) => {
             if let Err(error) = std::io::Write::write_all(&mut file, bytes.as_bytes()) {
                 return Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
@@ -38,6 +29,10 @@ pub fn write_bytes_into_file_sync(
                 });
             }
             Ok(())
-        }
+        },
+        Err(error) => Err(WriteBytesIntoFileSyncErrorNamed::StdIo {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }),
     }
 }

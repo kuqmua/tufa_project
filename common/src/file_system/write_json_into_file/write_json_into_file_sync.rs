@@ -12,15 +12,8 @@ pub enum WriteJsonIntoFileSyncErrorNamed {
     },
 }
 
-pub fn write_json_into_file_async(
-    path: &std::path::Path,
-    json_object: serde_json::Value,
-) -> Result<(), WriteJsonIntoFileSyncErrorNamed> {
+pub fn write_json_into_file_async(path: &std::path::Path, json_object: serde_json::Value) -> Result<(), WriteJsonIntoFileSyncErrorNamed> {
     match serde_json::to_string_pretty(&json_object) {
-        Err(error) => Err(WriteJsonIntoFileSyncErrorNamed::SerdeJson {
-            error,
-            code_occurence: error_occurence_lib::code_occurence!(),
-        }),
         Ok(stringified_json) => {
             if let Err(error) = crate::file_system::write_bytes_into_file::write_bytes_into_file_sync::write_bytes_into_file_sync(
                 path,
@@ -32,6 +25,10 @@ pub fn write_json_into_file_async(
                 });
             }
             Ok(())
-        }
+        },
+        Err(error) => Err(WriteJsonIntoFileSyncErrorNamed::SerdeJson {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        })
     }
 }
