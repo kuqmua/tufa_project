@@ -1,4 +1,3 @@
-pub mod crud_rule;
 pub mod git_info;
 mod health_check;
 pub mod helpers;

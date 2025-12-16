@@ -22,20 +22,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern,
         trait_gen: TraitGen,
     }
-    impl PostgresqlJsonObjectTypeRecord {
-        fn all() -> Vec<Self> {
-            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
-                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
-                    acc.push(Self {
-                        not_null_or_nullable,
-                        postgresql_json_object_type_pattern,
-                        trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
-                    });
-                }
-                acc
-            })
-        }
-    }
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlJsonObjectTypeConfig {
         All,
@@ -56,7 +42,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             .to_string()
         ).expect("failed to get Config for generate_postgresql_json_object_type");
         match generate_postgresql_json_object_type_config {
-            GeneratePostgresqlJsonObjectTypeConfig::All => PostgresqlJsonObjectTypeRecord::all(),
+            GeneratePostgresqlJsonObjectTypeConfig::All => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
+                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
+                    acc.push(PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable,
+                        postgresql_json_object_type_pattern,
+                        trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
+                    });
+                }
+                acc
+            }),
             GeneratePostgresqlJsonObjectTypeConfig::Concrete(postgresql_json_object_type_record) => match (&postgresql_json_object_type_record.not_null_or_nullable, &postgresql_json_object_type_record.postgresql_json_object_type_pattern) {
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => vec![postgresql_json_object_type_record],
                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) |

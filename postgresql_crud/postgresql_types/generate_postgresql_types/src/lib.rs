@@ -323,21 +323,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::ArrayDimension1 { .. } => 1,
             }
         }
-        fn all() -> Vec<Self> {
-            Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
-                match &postgresql_type_pattern {
-                    Self::Standart => {
-                        acc.push(postgresql_type_pattern);
-                    }
-                    Self::ArrayDimension1 { .. } => {
-                        for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                            acc.push(Self::ArrayDimension1 { dimension1_not_null_or_nullable });
-                        }
-                    }
-                }
-                acc
-            })
-        }
     }
     #[derive(Debug, PartialEq, serde::Serialize)]
     struct PostgresqlTypeRecord {
@@ -556,56 +541,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
-    impl PostgresqlTypeRecord {
-        fn all() -> Vec<Self> {
-            PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
-                for postgresql_type_pattern in PostgresqlTypePattern::all() {
-                    match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &postgresql_type.can_be_nullable() {
-                            CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                acc.push(Self {
-                                    postgresql_type: postgresql_type.clone(),
-                                    not_null_or_nullable,
-                                    postgresql_type_pattern: postgresql_type_pattern.clone(),
-                                });
-                            }),
-                            CanBeNullable::False => {
-                                acc.push(Self {
-                                    postgresql_type: postgresql_type.clone(),
-                                    not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    postgresql_type_pattern,
-                                });
-                            }
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &postgresql_type.can_be_an_array_element() {
-                            CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
-                                CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                    acc.push(Self {
-                                        postgresql_type: postgresql_type.clone(),
-                                        not_null_or_nullable,
-                                        postgresql_type_pattern: postgresql_type_pattern.clone(),
-                                    });
-                                }),
-                                CanBeNullable::False => {
-                                    if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
-                                        for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                            acc.push(Self {
-                                                postgresql_type: postgresql_type.clone(),
-                                                not_null_or_nullable,
-                                                postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
-                                            });
-                                        }
-                                    }
-                                }
-                            },
-                            CanBeAnArrayElement::False => (),
-                        },
-                    }
-                }
-                acc
-            })
-        }
-    }
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlTypesConfig {
         All,
@@ -743,7 +678,67 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     let postgresql_type_record_vec = {
         let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_type");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
-            GeneratePostgresqlTypesConfig::All => PostgresqlTypeRecord::all(),
+            GeneratePostgresqlTypesConfig::All => {
+                PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
+                    let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => {
+                                acc.push(postgresql_type_pattern);
+                            }
+                            PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                                for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    acc.push(PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable });
+                                }
+                            }
+                        }
+                        acc
+                    });
+                    for postgresql_type_pattern in postgresql_type_pattern_all {
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &postgresql_type.can_be_nullable() {
+                                CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                                    acc.push(PostgresqlTypeRecord {
+                                        postgresql_type: postgresql_type.clone(),
+                                        not_null_or_nullable,
+                                        postgresql_type_pattern: postgresql_type_pattern.clone(),
+                                    });
+                                }),
+                                CanBeNullable::False => {
+                                    acc.push(PostgresqlTypeRecord {
+                                        postgresql_type: postgresql_type.clone(),
+                                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                        postgresql_type_pattern,
+                                    });
+                                }
+                            },
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &postgresql_type.can_be_an_array_element() {
+                                CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
+                                    CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                                        acc.push(PostgresqlTypeRecord {
+                                            postgresql_type: postgresql_type.clone(),
+                                            not_null_or_nullable,
+                                            postgresql_type_pattern: postgresql_type_pattern.clone(),
+                                        });
+                                    }),
+                                    CanBeNullable::False => {
+                                        if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
+                                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                                acc.push(PostgresqlTypeRecord {
+                                                    postgresql_type: postgresql_type.clone(),
+                                                    not_null_or_nullable,
+                                                    postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
+                                                });
+                                            }
+                                        }
+                                    }
+                                },
+                                CanBeAnArrayElement::False => (),
+                            },
+                        }
+                    }
+                    acc
+                })
+            },
             GeneratePostgresqlTypesConfig::Concrete(value) => value,
         };
         {

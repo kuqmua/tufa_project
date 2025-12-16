@@ -27,91 +27,28 @@ fn main() {
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
     let _unused = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
-    // let mut threads_vector = Vec::with_capacity(paths_vec.len());
-    // let error_vec_arc_mutex =
-    //     std::sync::Arc::new(std::sync::Mutex::new(Vec::<CommandError>::new()));
     for path in paths_vec {
-        // let error_vec_arc_mutex_arc_cloned = std::sync::Arc::clone(&error_vec_arc_mutex);
-        let canonicalize_pathbuf_as_string_cloned = canonicalize_pathbuf_as_string.clone();
-        // let handle = std::thread::spawn(move || {
-        if let Err(error) = commands(&canonicalize_pathbuf_as_string_cloned, &path) {
-            // let mut error_vec_arc_mutex_arc_cloned_locked = error_vec_arc_mutex_arc_cloned
-            //     .lock()
-            //     .expect("cannot lock error_vec_arc_mutex_arc_cloned");
-            // error_vec_arc_mutex_arc_cloned_locked.push(e);
-            panic!("command error: {error:#?}")
+        let path = format!("{canonicalize_pathbuf_as_string}/{path}");
+        println!("start {path}");
+        if let Err(error) = std::process::Command::new("git").args(["checkout", "."]).current_dir(&path).output() {
+            panic!("git checkout . error: {error}, path: {path}")
         }
-        // });
-        // threads_vector.push(handle);
-    }
-    // threads_vector.into_iter().for_each(|t| {
-    //     t.join().expect("cannot join one of the threads");
-    // });
-    // let error_vec_arc_mutex_done = error_vec_arc_mutex
-    //     .lock()
-    //     .expect("cannot lock error_vec_arc_mutex")
-    //     .to_vec();
-    // match error_vec_arc_mutex_done.is_empty() {
-    //     true => println!("done!"),
-    //     false => {
-    //         eprint!("{:#?}", error_vec_arc_mutex_done)
-    //     }
-    // }
-}
-
-#[derive(Clone, Debug)]
-enum CommandError {
-    CheckoutDot { path: String, error: String },
-    SubmoduleUpdate { path: String, error: String },
-    CheckoutMain { path: String, error: String },
-    Pull { path: String, error: String },
-    CargoBuild { path: String, error: String },
-}
-
-impl std::fmt::Display for CommandError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Self::CheckoutDot { path, error } => {
-                write!(f, "git checkout . error: {error}, path: {path}")
-            }
-            Self::SubmoduleUpdate { path, error } => {
-                write!(f, "git submodule update error: {error}, path: {path}")
-            }
-            Self::CheckoutMain { path, error } => {
-                write!(f, "git checkout main error: {error}, path: {path}")
-            }
-            Self::Pull { path, error } => {
-                write!(f, "git pull error: {error}, path: {path}")
-            }
-            Self::CargoBuild { path, error } => {
-                write!(f, "cargo build error: {error}, path: {path}")
-            }
+        println!("git checkout . {path}");
+        if let Err(error) = std::process::Command::new("git").args(["submodule", "update", "--init", "--recursive"]).current_dir(&path).output() {
+            panic!("git submodule update error: {error}, path: {path}");
         }
+        println!("git submodule update --init --recursive {path}");
+        if let Err(error) = std::process::Command::new("git").args(["pull"]).current_dir(&path).output() {
+            panic!("git pull error: {error}, path: {path}");
+        }
+        println!("git pull {path}");
+        if let Err(error) = std::process::Command::new("git").args(["checkout", "main"]).current_dir(&path).output() {
+            panic!("git checkout main error: {error}, path: {path}");
+        }
+        println!("git checkout main {path}");
+        if let Err(error) = std::process::Command::new("cargo").args(["build"]).current_dir(&path).output() {
+            panic!("cargo build error: {error}, path: {path}");
+        }
+        println!("cargo build {path}");
     }
-}
-
-fn commands(canonicalize_pathbuf_as_string: &str, path: &str) -> Result<(), CommandError> {
-    let path = format!("{canonicalize_pathbuf_as_string}/{path}");
-    println!("start {path}");
-    if let Err(error) = std::process::Command::new("git").args(["checkout", "."]).current_dir(&path).output() {
-        return Err(CommandError::CheckoutDot { path, error: format!("{error}") });
-    }
-    println!("git checkout . {path}");
-    if let Err(error) = std::process::Command::new("git").args(["submodule", "update", "--init", "--recursive"]).current_dir(&path).output() {
-        return Err(CommandError::SubmoduleUpdate { path, error: format!("{error}") });
-    }
-    println!("git submodule update --init --recursive {path}");
-    if let Err(error) = std::process::Command::new("git").args(["pull"]).current_dir(&path).output() {
-        return Err(CommandError::Pull { path, error: format!("{error}") });
-    }
-    println!("git pull {path}");
-    if let Err(error) = std::process::Command::new("git").args(["checkout", "main"]).current_dir(&path).output() {
-        return Err(CommandError::CheckoutMain { path, error: format!("{error}") });
-    }
-    println!("git checkout main {path}");
-    if let Err(error) = std::process::Command::new("cargo").args(["build"]).current_dir(&path).output() {
-        return Err(CommandError::CargoBuild { path, error: format!("{error}") });
-    }
-    println!("cargo build {path}");
-    Ok(())
 }

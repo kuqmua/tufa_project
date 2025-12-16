@@ -298,91 +298,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_json_type_pattern: PostgresqlJsonTypePattern,
     }
-    impl PostgresqlJsonTypeRecord {
-        fn all() -> Vec<Self> {
-            PostgresqlJsonType::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type| {
-                for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
-                    match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => {
-                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                acc.push(Self {
-                                    postgresql_json_type: postgresql_json_type.clone(),
-                                    not_null_or_nullable,
-                                    postgresql_json_type_pattern: postgresql_json_type_pattern.clone(),
-                                });
-                            }
-                        }
-                        PostgresqlJsonTypePattern::ArrayDimension1 { .. } => {
-                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                    acc.push(Self {
-                                        postgresql_json_type: postgresql_json_type.clone(),
-                                        not_null_or_nullable,
-                                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable },
-                                    });
-                                }
-                            }
-                        }
-                        PostgresqlJsonTypePattern::ArrayDimension2 { .. } => {
-                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                    for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                        acc.push(Self {
-                                            postgresql_json_type: postgresql_json_type.clone(),
-                                            not_null_or_nullable,
-                                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable },
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                        PostgresqlJsonTypePattern::ArrayDimension3 { .. } => {
-                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                    for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                        for dimension3_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                            acc.push(Self {
-                                                postgresql_json_type: postgresql_json_type.clone(),
-                                                not_null_or_nullable,
-                                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
-                                                    dimension1_not_null_or_nullable,
-                                                    dimension2_not_null_or_nullable,
-                                                    dimension3_not_null_or_nullable,
-                                                },
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        PostgresqlJsonTypePattern::ArrayDimension4 { .. } => {
-                            for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                    for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                        for dimension3_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                            for dimension4_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                                acc.push(Self {
-                                                    postgresql_json_type: postgresql_json_type.clone(),
-                                                    not_null_or_nullable,
-                                                    postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
-                                                        dimension1_not_null_or_nullable,
-                                                        dimension2_not_null_or_nullable,
-                                                        dimension3_not_null_or_nullable,
-                                                        dimension4_not_null_or_nullable,
-                                                    },
-                                                });
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                acc
-            })
-        }
-    }
     #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlJsonTypesConfig {
         All,
@@ -394,7 +309,89 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     let postgresql_json_type_record_vec = {
         let generate_postgresql_json_types_config = serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
         let postgresql_json_type_record_vec = match generate_postgresql_json_types_config {
-            GeneratePostgresqlJsonTypesConfig::All => PostgresqlJsonTypeRecord::all(),
+            GeneratePostgresqlJsonTypesConfig::All => {
+                PostgresqlJsonType::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type| {
+                    for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
+                        match &postgresql_json_type_pattern {
+                            PostgresqlJsonTypePattern::Standart => {
+                                for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    acc.push(PostgresqlJsonTypeRecord {
+                                        postgresql_json_type: postgresql_json_type.clone(),
+                                        not_null_or_nullable,
+                                        postgresql_json_type_pattern: postgresql_json_type_pattern.clone(),
+                                    });
+                                }
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => {
+                                for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                        acc.push(PostgresqlJsonTypeRecord {
+                                            postgresql_json_type: postgresql_json_type.clone(),
+                                            not_null_or_nullable,
+                                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable },
+                                        });
+                                    }
+                                }
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => {
+                                for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                        for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                            acc.push(PostgresqlJsonTypeRecord {
+                                                postgresql_json_type: postgresql_json_type.clone(),
+                                                not_null_or_nullable,
+                                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable },
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => {
+                                for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                        for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                            for dimension3_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                                acc.push(PostgresqlJsonTypeRecord {
+                                                    postgresql_json_type: postgresql_json_type.clone(),
+                                                    not_null_or_nullable,
+                                                    postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+                                                        dimension1_not_null_or_nullable,
+                                                        dimension2_not_null_or_nullable,
+                                                        dimension3_not_null_or_nullable,
+                                                    },
+                                                });
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            PostgresqlJsonTypePattern::ArrayDimension4 { .. } => {
+                                for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                    for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                        for dimension2_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                            for dimension3_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                                for dimension4_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+                                                    acc.push(PostgresqlJsonTypeRecord {
+                                                        postgresql_json_type: postgresql_json_type.clone(),
+                                                        not_null_or_nullable,
+                                                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+                                                            dimension1_not_null_or_nullable,
+                                                            dimension2_not_null_or_nullable,
+                                                            dimension3_not_null_or_nullable,
+                                                            dimension4_not_null_or_nullable,
+                                                        },
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    acc
+                })
+            },
             GeneratePostgresqlJsonTypesConfig::Concrete(value) => value,
         };
         {
