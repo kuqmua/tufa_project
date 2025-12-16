@@ -132,7 +132,7 @@ mod tests {
                                 }
                             }
                             if let Some(id) = article_element.value().attr("id") && !is_deprecated {
-                                ids.push(id.to_string());
+                                ids.push(id.to_owned());
                             }
                         }
                     }

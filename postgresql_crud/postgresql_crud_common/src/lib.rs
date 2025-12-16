@@ -1202,16 +1202,16 @@ pub const fn std_primitive_bool_test_cases_vec() -> [bool;2] {
 pub fn std_string_string_test_cases_vec() -> [String;12] {
     [
         String::new(),
-        "a".to_string(),
-        "Hello, world!".to_string(),
-        "   ".to_string(),
-        "\n\r\t".to_string(),
-        "1234567890".to_string(),
-        "😀".to_string(),
-        "こんにちは".to_string(),
-        "🌍🚀✨ Rust 💖🦀".to_string(),
+        "a".to_owned(),
+        "Hello, world!".to_owned(),
+        "   ".to_owned(),
+        "\n\r\t".to_owned(),
+        "1234567890".to_owned(),
+        "😀".to_owned(),
+        "こんにちは".to_owned(),
+        "🌍🚀✨ Rust 💖🦀".to_owned(),
         "a".repeat(1024),
-        "line1\nline2\nline3".to_string(),
+        "line1\nline2\nline3".to_owned(),
         String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string()
     ]
 }

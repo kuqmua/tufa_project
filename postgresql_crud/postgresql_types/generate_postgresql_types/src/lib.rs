@@ -1032,24 +1032,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
             let inner_type_standart_not_null_token_stream = {
                 let value = {
-                    let std_primitive_i16_stringified = "i16".to_string();
-                    let std_primitive_i32_stringified = "i32".to_string();
-                    let std_primitive_i64_stringified = "i64".to_string();
-                    let std_primitive_f32_stringified = "f32".to_string();
-                    let std_primitive_f64_stringified = "f64".to_string();
-                    let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
-                    let std_primitive_bool_stringified = "bool".to_string();
-                    let std_string_string_stringified = "String".to_string();
-                    let std_vec_vec_std_primitive_u8_stringified = "Vec<u8>".to_string();
-                    let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
-                    let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
-                    let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
-                    let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
-                    let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
-                    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_string();
-                    let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
-                    let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
-                    let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
+                    let std_primitive_i16_stringified = "i16".to_owned();
+                    let std_primitive_i32_stringified = "i32".to_owned();
+                    let std_primitive_i64_stringified = "i64".to_owned();
+                    let std_primitive_f32_stringified = "f32".to_owned();
+                    let std_primitive_f64_stringified = "f64".to_owned();
+                    let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_owned();
+                    let std_primitive_bool_stringified = "bool".to_owned();
+                    let std_string_string_stringified = "String".to_owned();
+                    let std_vec_vec_std_primitive_u8_stringified = "Vec<u8>".to_owned();
+                    let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_owned();
+                    let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_owned();
+                    let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_owned();
+                    let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_owned();
+                    let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_owned();
+                    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_owned();
+                    let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_owned();
+                    let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_owned();
+                    let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_owned();
                     match &postgresql_type {
                         PostgresqlType::StdPrimitiveF32AsFloat4 => std_primitive_f32_stringified,
                         PostgresqlType::StdPrimitiveF64AsFloat8 => std_primitive_f64_stringified,
@@ -4384,7 +4384,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
                         let column_comma = "{column},";
                         if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                            column_comma.to_string()
+                            column_comma.to_owned()
                         } else {
                             format!("'{{{{\\\"value\\\": null}}}}'::jsonb as {column_comma}")
                         }
@@ -4436,7 +4436,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let maybe_constraint_part = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => String::new(),
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_owned(),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => String::new(),
                             },
                         };

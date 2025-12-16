@@ -43,7 +43,7 @@ impl std::fmt::Display for CodeOccurence {
             },
             match (std::time::UNIX_EPOCH.checked_add(self.duration), chrono::FixedOffset::east_opt(10800)) {
                 (Some(epoch), Some(offset)) => chrono::DateTime::<chrono::Utc>::from(epoch).with_timezone(&offset).format("%Y-%m-%d %H:%M:%S").to_string(),
-                _ => "incorrect datetime".to_string(),
+                _ => "incorrect datetime".to_owned(),
             }
         )
     }

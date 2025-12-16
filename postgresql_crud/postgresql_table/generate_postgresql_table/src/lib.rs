@@ -4201,7 +4201,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     )
                 }
             });
-            let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&"error 8f42ee4f-00d9-4b67-8ead-adddf5bcdf94".to_string());
+            let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&"error 8f42ee4f-00d9-4b67-8ead-adddf5bcdf94".to_owned());
             quote::quote! {
                 let select_default_all_with_max_page_size = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                     #content_token_stream

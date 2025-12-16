@@ -21,7 +21,7 @@ fn main() {
             .map(|index| {
                 element.get(index.checked_add(substring_value.len()).expect("error 62d029a8-1f60-490b-bb70-5e51c1034af2")..)
                 .expect("error dde185ef-97fc-4652-b67c-76064cff7091")
-                .to_string()
+                .to_owned()
             })
         }).collect();
     println!("{:#?} {}", paths_vec, paths_vec.len());

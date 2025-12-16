@@ -4460,7 +4460,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_table_type_declaration_upper_camel_case,
                     &postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                     &{
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                         quote::quote! {
                             format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).expect("error 59a1654b-cbde-40a6-a958-383d263ee19d"))
                         }

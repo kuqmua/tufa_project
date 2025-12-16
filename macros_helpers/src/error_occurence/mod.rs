@@ -57,18 +57,18 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                 let first_segment_ident = match &attr.path().segments.first() {
                     Some(value) => &value.ident,
                     None => {
-                        return Err("no first value in punctuated".to_string());
+                        return Err("no first value in punctuated".to_owned());
                     }
                 };
                 if let Ok(value) = std::str::FromStr::from_str(&first_segment_ident.to_string()) {
                     if option_attribute.is_some() {
-                        return Err("two or more supported attributes!".to_string());
+                        return Err("two or more supported attributes!".to_owned());
                     }
                     option_attribute = Some(value);
                 }
             } //other attributes are not for this proc_macro
         }
-        option_attribute.map_or_else(|| Err("option attribute is None".to_string()), Ok)
+        option_attribute.map_or_else(|| Err("option attribute is None".to_owned()), Ok)
     }
 }
 impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
