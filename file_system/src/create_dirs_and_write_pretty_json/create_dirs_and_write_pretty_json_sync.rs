@@ -7,7 +7,7 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
     },
     WriteBytesIntoFile {
         #[eo_error_occurence]
-        error: crate::write_bytes_into_file::create_dirs_and_write_file_sync::CreateDirsAndWriteFileSyncErrorNamed,
+        error: crate::CreateDirsAndWriteFileSyncErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
@@ -15,7 +15,7 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
 pub fn create_dirs_and_write_pretty_json_sync(path: &std::path::Path, serde_json_value: serde_json::Value) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
     match serde_json::to_string_pretty(&serde_json_value) {
         Ok(value) => {
-            if let Err(error) = crate::write_bytes_into_file::create_dirs_and_write_file_sync::create_dirs_and_write_file_sync(
+            if let Err(error) = crate::create_dirs_and_write_file_sync(
                 path,
                 value.as_bytes(),
             ) {
