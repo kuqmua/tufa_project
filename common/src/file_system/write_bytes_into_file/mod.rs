@@ -1,2 +1,2 @@
-pub mod create_dir_all_tokio_fs_file_open_tokio_io_async_write_ext_write_all;
-pub mod create_dir_all_std_fs_file_create_std_io_write_write_all_sync_all;
+pub mod create_dirs_and_write_file_tokio_async;
+pub mod create_dirs_and_write_file_sync;

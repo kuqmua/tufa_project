@@ -1,2 +1,2 @@
-pub mod write_pretty_json_into_file_async_tokio;
-pub mod write_pretty_json_into_file_sync;
+pub mod create_dirs_and_write_pretty_json_tokio_async;
+pub mod create_dirs_and_write_pretty_json_sync;
