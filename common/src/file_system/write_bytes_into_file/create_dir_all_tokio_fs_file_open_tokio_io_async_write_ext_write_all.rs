@@ -1,5 +1,5 @@
 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum WriteBytesIntoFileAsyncTokioErrorNamed {
+pub enum CreateDirAllTokioFsFileOpenTokioIoAsyncWriteExtWriteAllErrorNamed {
     StdIoError {
         #[eo_to_std_string_string]
         error: std::io::Error,
@@ -7,9 +7,9 @@ pub enum WriteBytesIntoFileAsyncTokioErrorNamed {
     },
 }
 
-pub async fn write_bytes_into_file_async_tokio(path: &std::path::Path, bytes: &[u8]) -> Result<(), WriteBytesIntoFileAsyncTokioErrorNamed> {
+pub async fn create_dir_all_tokio_fs_file_open_tokio_io_async_write_ext_write_all(path: &std::path::Path, bytes: &[u8]) -> Result<(), CreateDirAllTokioFsFileOpenTokioIoAsyncWriteExtWriteAllErrorNamed> {
     if let Some(prefix) = path.parent() && let Err(error) = std::fs::create_dir_all(prefix) {
-        return Err(WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
+        return Err(CreateDirAllTokioFsFileOpenTokioIoAsyncWriteExtWriteAllErrorNamed::StdIoError {
             error,
             code_occurence: error_occurence_lib::code_occurence!(),
         });
@@ -17,14 +17,14 @@ pub async fn write_bytes_into_file_async_tokio(path: &std::path::Path, bytes: &[
     match tokio::fs::File::open(path).await {
         Ok(mut file) => {
             if let Err(error) = tokio::io::AsyncWriteExt::write_all(&mut file, bytes).await {
-                return Err(WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
+                return Err(CreateDirAllTokioFsFileOpenTokioIoAsyncWriteExtWriteAllErrorNamed::StdIoError {
                     error,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
             Ok(())
         },
-        Err(error) => Err(WriteBytesIntoFileAsyncTokioErrorNamed::StdIoError {
+        Err(error) => Err(CreateDirAllTokioFsFileOpenTokioIoAsyncWriteExtWriteAllErrorNamed::StdIoError {
             error,
             code_occurence: error_occurence_lib::code_occurence!(),
         })
