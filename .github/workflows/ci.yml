@@ -1,4 +1,4 @@
-name: PostgreSQL Service
+name: CI
 
 on: [push, pull_request]
 
