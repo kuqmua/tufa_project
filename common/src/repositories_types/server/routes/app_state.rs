@@ -4,9 +4,9 @@ pub struct AppState<'lifetime> {
     pub config: &'lifetime crate::repositories_types::server::config::Config,
     pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
 }
-impl crate::server::common_routes::CommonRoutesParameters for AppState<'_> {}
-impl crate::server::common_routes::git_info::GitInfoRouteParameters for AppState<'_> {}
-impl crate::server::common_routes::not_found::NotFoundRouteParameters for AppState<'_> {}
+impl common_routes::CommonRoutesParameters for AppState<'_> {}
+impl common_routes::git_info::GitInfoRouteParameters for AppState<'_> {}
+impl common_routes::not_found::NotFoundRouteParameters for AppState<'_> {}
 impl postgresql_crud::CombinationOfAppStateLogicTraits for AppState<'_> {}
 impl app_state::GetEnableApiGitCommitCheck for AppState<'_> {
     fn get_enable_api_git_commit_check(&self) -> &bool {

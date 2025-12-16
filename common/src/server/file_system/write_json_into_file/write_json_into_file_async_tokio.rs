@@ -2,12 +2,12 @@
 pub enum WriteJsonIntoFileAsyncTokioErrorNamed {
     SerdeJson {
         #[eo_to_std_string_string]
-        serde_json_error: serde_json::Error,
+        error: serde_json::Error,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     WriteBytesIntoFile {
         #[eo_error_occurence] 
-        write_bytes_into_file: crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::WriteBytesIntoFileAsyncTokioErrorNamed,
+        error: crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::WriteBytesIntoFileAsyncTokioErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }, 
 }
@@ -15,33 +15,22 @@ pub enum WriteJsonIntoFileAsyncTokioErrorNamed {
 pub async fn write_json_into_file_async_tokio(
     path: &std::path::Path,
     json_object: serde_json::Value,
-) -> Result<(), Box<WriteJsonIntoFileAsyncTokioErrorNamed>> {
+) -> Result<(), WriteJsonIntoFileAsyncTokioErrorNamed> {
     match serde_json::to_string_pretty(&json_object) {
-        Err(error) => {
-            Err(Box::new(
-                WriteJsonIntoFileAsyncTokioErrorNamed::SerdeJson {
-                    serde_json_error: error, 
-                    code_occurence: error_occurence_lib::code_occurence!() 
-                },
-            ))
+        Err(error) => Err(WriteJsonIntoFileAsyncTokioErrorNamed::SerdeJson {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!() 
+        }),
+        Ok(stringified_json) => match crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::write_bytes_into_file_async_tokio(
+            path,
+            stringified_json.as_bytes(),
+        )
+        .await {
+            Err(error) => Err(WriteJsonIntoFileAsyncTokioErrorNamed::WriteBytesIntoFile {
+                error,
+                code_occurence: error_occurence_lib::code_occurence!() 
+            }),
+            Ok(_) => Ok(())
         }
-        Ok(stringified_json) => {
-            match crate::server::file_system::write_bytes_into_file::write_bytes_into_file_async_tokio::write_bytes_into_file_async_tokio(
-                path,
-                stringified_json.as_bytes(),
-            )
-            .await {
-                Err(error) => {
-                    Err(Box::new(
-                        WriteJsonIntoFileAsyncTokioErrorNamed::WriteBytesIntoFile {
-                            write_bytes_into_file: *e, 
-                            code_occurence: error_occurence_lib::code_occurence!() 
-                        },
-                    ))
-                },
-                Ok(_) => Ok(())
-            }
-        },
     }
 }
-///////////////////

@@ -69,6 +69,7 @@ common = {path = "../common"}# local dev test without commits version
 # enum_extension_lib = {path = "../enum_extension_lib"}
 # error_occurence_lib = {path = "../error_occurence_lib"}
 app_state = {path = "../app_state"}
+common_routes = {path = "../common_routes"}
 # constants = {path = "../constants"}
 #
 # async-std = "1.10.0"
