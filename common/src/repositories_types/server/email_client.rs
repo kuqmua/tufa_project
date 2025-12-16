@@ -53,12 +53,12 @@
 
 // #[derive(serde::Serialize)]
 // #[serde(rename_all = "PascalCase")]
-// struct SendEmailRequest<'a> {
-//     from: &'a str,
-//     to: &'a str,
-//     subject: &'a str,
-//     html_body: &'a str,
-//     text_body: &'a str,
+// struct SendEmailRequest<'lifetime> {
+//     from: &'lifetime str,
+//     to: &'lifetime str,
+//     subject: &'lifetime str,
+//     html_body: &'lifetime str,
+//     text_body: &'lifetime str,
 // }
 
 // // #[cfg(test)]

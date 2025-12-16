@@ -1,9 +1,9 @@
-// pub async fn change_password<'a>(
+// pub async fn change_password<'lifetime>(
 //     form: actix_web::web::Form<
 //         common::common::change_password_form_data::ChangePasswordFormData,
 //     >,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 //     user_id: actix_web::web::ReqData<
 //         common::repositories_types::server::authentication::UserId,

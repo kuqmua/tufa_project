@@ -2,13 +2,13 @@
 // pub enum GetLocalProvidersLinkPartsErrorNamed {
 //     GetLinkPartsFromLocalJsonFile {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         get_link_parts_from_local_json_file: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'a>>,
+//         get_link_parts_from_local_json_file: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum GetLocalProvidersLinkPartsErrorUnnamed<'a> {
+// pub enum GetLocalProvidersLinkPartsErrorUnnamed<'lifetime> {
 //     GetLinkPartsFromLocalJsonFile(crate::repositories_types::server::providers::provider_kind::provider_kind_enum::GetLinkPartsFromLocalJsonFileErrorNamed),
 // }
 
@@ -17,7 +17,7 @@
 //     pub vec: Vec<String>,
 // }
 
-// pub async fn get_local_providers_link_parts<'a>(
+// pub async fn get_local_providers_link_parts<'lifetime>(
 //     config: &'static (
 //         impl app_state::GetPathToProviderLinkPartsFolder
 //         + app_state::GetLogFileExtension
@@ -42,7 +42,7 @@
 //             }),
 //     )
 //     .await;
-//     let mut errors_hashmap: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'a>> =
+//     let mut errors_hashmap: std::collections::HashMap<String, GetLocalProvidersLinkPartsErrorUnnamed<'lifetime>> =
 //         std::collections::HashMap::new();
 //     let mut success_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>> =
 //         std::collections::HashMap::with_capacity(result_vec.len());

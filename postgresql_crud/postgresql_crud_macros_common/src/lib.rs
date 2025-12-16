@@ -74,7 +74,7 @@ pub fn generate_postgresql_type_where_token_stream(
         }
     };
     let impl_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_token_stream = impl_postgresql_type_where_filter_for_ident_token_stream(
-        &quote::quote! {<'a>},
+        &quote::quote! {<'lifetime>},
         &ident,
         &proc_macro2::TokenStream::new(),
         &IncrementParameterUnderscore::False,
@@ -401,7 +401,7 @@ pub fn generate_impl_postgresql_json_type_token_stream(
     let std_string_string_token_stream = token_patterns::StdStringString;
     let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let query_lifetime_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
+    let query_lifetime_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>};
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
@@ -455,8 +455,8 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_updated_ids_query_part_token_stream
             }
-            fn #select_only_updated_ids_query_bind_snake_case<'a>(
-                #value_snake_case: &'a Self::#update_for_query_upper_camel_case,
+            fn #select_only_updated_ids_query_bind_snake_case<'lifetime>(
+                #value_snake_case: &'lifetime Self::#update_for_query_upper_camel_case,
                 #is_select_only_updated_ids_query_bind_mutable #query_snake_case: #query_lifetime_postgres_arguments_token_stream
             ) -> Result<#query_lifetime_postgres_arguments_token_stream, #std_string_string_token_stream> {
                 #select_only_updated_ids_query_bind_token_stream
@@ -470,8 +470,8 @@ pub fn generate_impl_postgresql_json_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_created_ids_query_part_token_stream
             }
-            fn #select_only_created_ids_query_bind_snake_case<'a>(
-                #value_snake_case: &'a Self::#create_for_query_upper_camel_case,
+            fn #select_only_created_ids_query_bind_snake_case<'lifetime>(
+                #value_snake_case: &'lifetime Self::#create_for_query_upper_camel_case,
                 #is_select_only_created_ids_query_bind_mutable #query_snake_case: #query_lifetime_postgres_arguments_token_stream
             ) -> Result<#query_lifetime_postgres_arguments_token_stream, #std_string_string_token_stream> {
                 #select_only_created_ids_query_bind_token_stream
@@ -675,7 +675,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     let query_bind_snake_case = naming::QueryBindSnakeCase;
     let postgresql_type_where_filter_upper_camel_case = naming::PostgresqlTypeWhereFilterUpperCamelCase;
     quote::quote! {
-        impl #impl_generic_token_stream #import_path ::#postgresql_type_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
+        impl #impl_generic_token_stream #import_path ::#postgresql_type_where_filter_upper_camel_case<'lifetime> for #ident_token_stream #ident_generic_token_stream {
             fn #query_part_snake_case(
                 &self,
                 #increment_parameter_underscore: &mut #std_primitive_u64_token_stream,
@@ -684,8 +684,8 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
                 #query_part_content_token_stream
             }
-            fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-                sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+            fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+                sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
                 String
             > {
                 #query_bind_content_token_stream
@@ -974,10 +974,10 @@ pub fn generate_impl_postgresql_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
                 #select_only_updated_ids_query_part_token_stream
             }
-            fn #select_only_updated_ids_query_bind_snake_case<'a>(
-                #value_snake_case: &'a Self::#update_for_query_upper_camel_case,
-                #is_select_only_updated_ids_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
-            ) -> Result<sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+            fn #select_only_updated_ids_query_bind_snake_case<'lifetime>(
+                #value_snake_case: &'lifetime Self::#update_for_query_upper_camel_case,
+                #is_select_only_updated_ids_query_bind_mutable #query_snake_case: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+            ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
                 #select_only_updated_ids_query_bind_token_stream
             }
         }

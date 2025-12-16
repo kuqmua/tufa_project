@@ -7,7 +7,7 @@
 //     },
 // }
 
-// pub async fn postgres_delete_all_from_providers_link_parts_tables<'a>(
+// pub async fn postgres_delete_all_from_providers_link_parts_tables<'lifetime>(
 //     providers_json_local_data_hashmap: &std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     postgres_pool: &sqlx::Pool<sqlx::Postgres>,
 // ) -> Result<(), Box<crate::server::postgres::postgres_delete_all_from_providers_link_parts_tables::PostgresDeleteAllFromProvidersTablesErrorNamed>> {

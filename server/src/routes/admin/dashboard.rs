@@ -1,7 +1,7 @@
-// pub async fn admin_dashboard<'a>(
+// pub async fn admin_dashboard<'lifetime>(
 //     session: common::repositories_types::server::session_state::TypedSession,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let username = if let Some(user_id) = session
@@ -41,14 +41,12 @@
 //         )))
 // }
 
-// pub async fn get_username<'a>(
+// pub async fn get_username<'lifetime>(
 //     user_id: uuid::Uuid,
 //     pool: &sqlx::PgPool,
 // ) -> Result<
 //     String,
-//     common::repositories_types::server::routes::admin::dashboard::GetUsernameErrorNamed<
-//         'a,
-//     >,
+//     common::repositories_types::server::routes::admin::dashboard::GetUsernameErrorNamed<'lifetime>,
 // > {
 //     match sqlx::query!(
 //         r#"

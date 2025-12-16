@@ -501,23 +501,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 True,
                 False,
             }
-            struct SchemaObjectTokenStream<'a> {
-                metadata: &'a dyn quote::ToTokens,
-                instance_type: &'a dyn quote::ToTokens,
-                format: &'a dyn quote::ToTokens,
-                enum_values: &'a dyn quote::ToTokens,
-                const_value: &'a dyn quote::ToTokens,
-                subschemas: &'a dyn quote::ToTokens,
-                number: &'a dyn quote::ToTokens,
-                string: &'a dyn quote::ToTokens,
-                array: &'a dyn quote::ToTokens,
-                object: &'a dyn quote::ToTokens,
-                reference: &'a dyn quote::ToTokens,
-                extensions: &'a dyn quote::ToTokens,
+            struct SchemaObjectTokenStream<'lifetime> {
+                metadata: &'lifetime dyn quote::ToTokens,
+                instance_type: &'lifetime dyn quote::ToTokens,
+                format: &'lifetime dyn quote::ToTokens,
+                enum_values: &'lifetime dyn quote::ToTokens,
+                const_value: &'lifetime dyn quote::ToTokens,
+                subschemas: &'lifetime dyn quote::ToTokens,
+                number: &'lifetime dyn quote::ToTokens,
+                string: &'lifetime dyn quote::ToTokens,
+                array: &'lifetime dyn quote::ToTokens,
+                object: &'lifetime dyn quote::ToTokens,
+                reference: &'lifetime dyn quote::ToTokens,
+                extensions: &'lifetime dyn quote::ToTokens,
             }
-            enum SchemarsJsonSchema<'a> {
+            enum SchemarsJsonSchema<'schema_object_token_stream_tifetime> {
                 Derive,
-                Impl(SchemaObjectTokenStream<'a>),
+                Impl(SchemaObjectTokenStream<'schema_object_token_stream_tifetime>),
             }
             let postgresql_json_type = &element.postgresql_json_type;
             let not_null_or_nullable = &element.not_null_or_nullable;
@@ -2157,7 +2157,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;
                         #query_bind_string_as_postgresql_text_create_for_query_token_stream
                         #query_bind_string_as_postgresql_text_update_for_query_token_stream
-                        fn get_inner<'a>(#value_snake_case: &'a <Self::PostgresqlJsonType as #import_path::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'a Self::#read_inner_upper_camel_case {
+                        fn get_inner<'lifetime>(#value_snake_case: &'lifetime <Self::PostgresqlJsonType as #import_path::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'lifetime Self::#read_inner_upper_camel_case {
                             &#value_snake_case.0.0
                         }
                         fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {

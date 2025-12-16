@@ -157,14 +157,14 @@ impl quote::ToTokens for DeriveDebugThisErrorErrorOccurence {
 pub struct StdPrimitiveStrSqlxColumnIndex;
 impl quote::ToTokens for StdPrimitiveStrSqlxColumnIndex {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {&'a str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
+        quote::quote! {&'lifetime str: sqlx::ColumnIndex<R>,}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]
 pub struct SqlxDecodeDecodeDatabase;
 impl quote::ToTokens for SqlxDecodeDecodeDatabase {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        quote::quote! {sqlx::decode::Decode<'a, R::Database>}.to_tokens(tokens);
+        quote::quote! {sqlx::decode::Decode<'lifetime, R::Database>}.to_tokens(tokens);
     }
 }
 #[derive(Debug, Clone, Copy)]

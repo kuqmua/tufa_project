@@ -12,7 +12,7 @@ pub enum MongoCheckCollectionIsEmptyErrorNamed {
     },
 }
 
-pub async fn mongo_check_collection_is_empty<'a>(
+pub async fn mongo_check_collection_is_empty<'lifetime>(
     mongo_client: &mongodb::Client,
     db_name: &str,
     db_collection_name: &str,

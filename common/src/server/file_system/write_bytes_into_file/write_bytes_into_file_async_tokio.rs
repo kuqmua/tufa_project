@@ -7,8 +7,8 @@ pub enum WriteBytesIntoFileAsyncTokioErrorNamed {
     },
 }
 
-pub async fn write_bytes_into_file_async_tokio<'a>(
-    path: &'a std::path::Path,
+pub async fn write_bytes_into_file_async_tokio<'lifetime>(
+    path: &'lifetime std::path::Path,
     bytes: &[u8],
 ) -> Result<(), Box<WriteBytesIntoFileAsyncTokioErrorNamed>> {
     if let Some(prefix) = path.parent() {

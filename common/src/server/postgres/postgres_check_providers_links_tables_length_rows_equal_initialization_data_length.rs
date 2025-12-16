@@ -2,26 +2,26 @@
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorNamed {
 //     SelectCountOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'a>>,
+//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     ProviderLinksTablesRowsLengthNotEqualOrigin {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<'a>>,
+//         inner_errors: std::collections::HashMap<String, PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxUnnamed<
-//     'a,
+//     'lifetime,
 // > {
-//     Postgres(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxNamed<'a>),
+//     Postgres(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxNamed<'lifetime>),
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorSqlxNamed<
-//     'a,
+//     'lifetime,
 // > {
 //     Postgres {
 //         #[eo_to_std_string_string]
@@ -32,14 +32,14 @@
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorUnnamed<
-//     'a,
+//     'lifetime,
 // > {
 //     Postgres(PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorNamed),
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 // pub enum PostgresCheckProvidersLinksTablesLengthRowsEqualInitializationDataLengthWrapperErrorSelectCountOriginErrorNamed<
-//     'a,
+//     'lifetime,
 // > {
 //     Postgres {
 //         #[eo_to_std_string_string_serialize_deserialize]
@@ -50,7 +50,7 @@
 //     },
 // }
 
-// pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length<'a>(
+// pub async fn postgres_check_providers_links_tables_length_rows_equal_initialization_data_length<'lifetime>(
 //     providers_json_local_data_hashmap: &std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     postgres_pool: &sqlx::Pool<sqlx::Postgres>,
 // ) -> Result<

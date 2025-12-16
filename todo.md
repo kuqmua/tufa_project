@@ -66,8 +66,8 @@ impl HasNumbers for IHaveOtherNumbers {
 ```
 * const destructors
 ```
-struct WillSayGoodbye<'a>(&'a str);
-impl<'a> Drop for WillSayGoodbye<'a> {
+struct WillSayGoodbye<'lifetime>(&'lifetime str);
+impl<'lifetime> Drop for WillSayGoodbye<'lifetime> {
   fn drop(&mut self) {
     println!("{}", self.0);
   }
@@ -127,8 +127,8 @@ fn main() {
 * trait bounds on generic parameters for constant function
 ```
 #[derive(Debug, Clone, Copy)]
-struct Customer<'a> {
-  name: &'a str,
+struct Customer<'lifetime> {
+  name: &'lifetime str,
   age: i32,
 }
 
@@ -159,24 +159,24 @@ fn main() {
 * dynamic dispatching
 ```
 trait Animal {
-  fn make_sound<'a>(&self) -> &'a str;
+  fn make_sound<'lifetime>(&self) -> &'lifetime str;
 }
 struct Cat {}
 struct Dog {}
 impl Animal for Cat {
-  fn make_sound<'a>(&self) -> &'a str {
+  fn make_sound<'lifetime>(&self) -> &'lifetime str {
     "meow"
   }
 }
 impl Animal for Cat {
-  fn make_sound<'a>(&self) -> &'a str {
+  fn make_sound<'lifetime>(&self) -> &'lifetime str {
     "woof"
   }
 }
 const fn favorite_animal() -> Animal {
   Cat {}
 }
-const fn animal_by_sound<'a>(can_purr: bool) -> &'a dyn Animal {
+const fn animal_by_sound<'lifetime>(can_purr: bool) -> &'lifetime dyn Animal {
   match can_purr {
     true => &Cat {},
     false => &Dog {},

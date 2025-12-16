@@ -2,13 +2,13 @@
 // pub enum MongoInsertManyErrorNamed {
 //     InsertMany {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         insert_many: std::collections::HashMap<String, MongoInsertManyErrorUnnamed<'a>>,
+//         insert_many: std::collections::HashMap<String, MongoInsertManyErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum MongoInsertManyErrorUnnamed<'a> {
+// pub enum MongoInsertManyErrorUnnamed<'lifetime> {
 //     InsertMany(MongoInsertManyHandleErrorNamed),
 // }
 
@@ -21,7 +21,7 @@
 //     },
 // }
 
-// pub async fn mongo_insert_many<'a>(
+// pub async fn mongo_insert_many<'lifetime>(
 //     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     db: mongodb::Database,
 //     config: &'static (

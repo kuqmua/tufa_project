@@ -804,7 +804,7 @@ significant_drop_tightening = { level = "deny", priority = 0 }
 similar_names = { level = "allow", priority = 0 }
 single_call_fn = { level = "allow", priority = 0 }
 single_char_add_str = { level = "deny", priority = 0 }
-single_char_lifetime_names = { level = "allow", priority = 0 }
+single_char_lifetime_names = { level = "deny", priority = 0 }
 single_char_pattern = { level = "deny", priority = 0 }
 single_component_path_imports = { level = "deny", priority = 0 }
 single_element_loop = { level = "deny", priority = 0 }
@@ -816,8 +816,8 @@ size_of_ref = { level = "deny", priority = 0 }
 skip_while_next = { level = "deny", priority = 0 }
 slow_vector_initialization = { level = "deny", priority = 0 }
 stable_sort_primitive = { level = "deny", priority = 0 }
-std_instead_of_alloc = { level = "allow", priority = 0 }
-std_instead_of_core = { level = "allow", priority = 0 }
+std_instead_of_alloc = { level = "allow", priority = 0 } #not using no_std
+std_instead_of_core = { level = "allow", priority = 0 } #not using no_std
 str_to_string = { level = "deny", priority = 0 }
 string_add = { level = "deny", priority = 0 }
 string_add_assign = { level = "deny", priority = 0 }

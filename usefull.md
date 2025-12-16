@@ -112,12 +112,12 @@ mod something {
         one: String,
         two: i32,
     }
-    pub struct InputCheckedSomething<'a> {
-        one: &'a str,
+    pub struct InputCheckedSomething<'lifetime> {
+        one: &'lifetime str,
         two: i32,
     }
-    pub struct UncheckedSomething<'a> {
-        pub one: &'a str,
+    pub struct UncheckedSomething<'lifetime> {
+        pub one: &'lifetime str,
         pub two: i32,
     }
     #[derive(Debug)]

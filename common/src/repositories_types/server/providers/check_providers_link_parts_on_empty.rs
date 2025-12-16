@@ -2,7 +2,7 @@
 // pub enum CheckProvidersLinkPartsEmptyErrorNamed {
 //     Full {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         message: &'a str,
+//         message: &'lifetime str,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 //     Partially {
@@ -12,7 +12,7 @@
 //     },
 // }
 
-// pub fn check_providers_link_parts_on_empty<'a>(
+// pub fn check_providers_link_parts_on_empty<'lifetime>(
 //     providers_link_parts: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 // ) -> Result<std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>, Box<CheckProvidersLinkPartsEmptyErrorNamed>> {
 //     if providers_link_parts.is_empty() {

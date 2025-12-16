@@ -3,7 +3,7 @@
 //     skip_all,
 //     fields(user_id=%*user_id)
 // )]
-// pub async fn publish_newsletter<'a>(
+// pub async fn publish_newsletter<'lifetime>(
 //     form: actix_web::web::Form<
 //         common::repositories_types::server::routes::admin::newsletter::post::FormData,
 //     >,
@@ -11,7 +11,7 @@
 //         common::repositories_types::server::authentication::UserId,
 //     >,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 // ) -> Result<actix_web::HttpResponse, actix_web::Error> {
 //     let user_id = user_id.into_inner();

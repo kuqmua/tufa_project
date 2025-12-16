@@ -14,9 +14,9 @@ pub enum MongoDropEmptyDbErrorNamed {
     },
 }
 
-pub async fn mongo_drop_empty_db<'a>(
+pub async fn mongo_drop_empty_db<'lifetime>(
     mongo_client: &mongodb::Client,
-    db_name: &'a str,
+    db_name: &'lifetime str,
 ) -> Result<(), Box<crate::server::mongo::mongo_drop_empty_db::MongoDropEmptyDbErrorNamed>> {
     let db = mongo_client.database(db_name);
     match db.list_collection_names(None).await {

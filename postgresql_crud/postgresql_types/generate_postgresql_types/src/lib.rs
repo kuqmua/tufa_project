@@ -847,7 +847,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 True,
                 False,
             }
-            type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
+            type Handle<'lifetime> = (&'lifetime dyn quote::ToTokens, &'lifetime dyn quote::ToTokens);
             fn generate_pg_range_conversion_token_stream(match_content_token_stream: &dyn quote::ToTokens, input_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
                 quote::quote! {
                     sqlx::postgres::types::PgRange {
@@ -4192,7 +4192,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
                 let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                     postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                        &quote::quote! {<'a>},
+                        &quote::quote! {<'lifetime>},
                         &ident_standart_not_null_read_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &postgresql_crud_macros_common::IncrementParameterUnderscore::False,

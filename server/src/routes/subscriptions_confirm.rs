@@ -1,10 +1,10 @@
 // #[tracing::instrument(name = "Confirm a pending subscriber", skip(parameters, app_state))]
-// pub async fn confirm<'a>(
+// pub async fn confirm<'lifetime>(
 //     parameters: actix_web::web::Query<
 //         common::repositories_types::server::routes::Parameters,
 //     >,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 // ) -> actix_web::HttpResponse {
 //     let id =

@@ -7,10 +7,10 @@ pub enum MongoDropCollectionErrorNamed {
     },
 }
 
-pub async fn mongo_drop_collection<'a>(
+pub async fn mongo_drop_collection<'lifetime>(
     mongo_client: &mongodb::Client,
-    db_name: &'a str,
-    db_collection_name: &'a str,
+    db_name: &'lifetime str,
+    db_collection_name: &'lifetime str,
 ) -> Result<(), Box<crate::server::mongo::mongo_drop_collection::MongoDropCollectionErrorNamed>> {
     let collection: mongodb::Collection<mongodb::bson::Document> = mongo_client
         .database(db_name)

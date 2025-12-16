@@ -1,4 +1,4 @@
-// pub async fn get_saved_response<'a>(
+// pub async fn get_saved_response<'lifetime>(
 //     pool: &sqlx::PgPool,
 //     idempotency_key: &common::repositories_types::server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
@@ -55,16 +55,14 @@
 //     }
 // }
 
-// pub async fn save_response<'a>(
+// pub async fn save_response<'lifetime>(
 //     mut transaction: sqlx::Transaction<'static, sqlx::Postgres>,
 //     idempotency_key: &common::repositories_types::server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
 //     http_response: actix_web::HttpResponse,
 // ) -> Result<
 //     actix_web::HttpResponse,
-//     common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed<
-//         'a,
-//     >,
+//     common::repositories_types::server::idempotency::persistence::SaveResponseErrorNamed<'lifetime>,
 // > {
 //     let (response_head, body) = http_response.into_parts();
 //     // `MessageBody::Error` is not `Send` + `Sync`,
@@ -124,15 +122,13 @@
 //     Ok(http_response)
 // }
 
-// pub async fn try_processing<'a>(
+// pub async fn try_processing<'lifetime>(
 //     pool: &sqlx::PgPool,
 //     idempotency_key: &common::repositories_types::server::idempotency::IdempotencyKey,
 //     user_id: uuid::Uuid,
 // ) -> Result<
 //     common::repositories_types::server::idempotency::NextAction,
-//     common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed<
-//         'a,
-//     >,
+//     common::repositories_types::server::idempotency::persistence::TryProcessingErrorNamed<'lifetime>,
 // > {
 //     let mut transaction = match pool.begin().await {
 //         Err(error) => {

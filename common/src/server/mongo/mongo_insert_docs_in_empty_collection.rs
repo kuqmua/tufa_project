@@ -12,11 +12,11 @@ pub enum MongoInsertDocsInEmptyCollectionErrorNamed {
     },
 }
 
-pub async fn mongo_insert_docs_in_empty_collection<'a>(
+pub async fn mongo_insert_docs_in_empty_collection<'lifetime>(
     mongo_client: &mongodb::Client,
     db_name_handle: &str,
     db_collection_handle: String,
-    collection_field_name: &'a String,
+    collection_field_name: &'lifetime String,
     vec_of_values: Vec<String>,
 ) -> Result<(), Box<MongoInsertDocsInEmptyCollectionErrorNamed>> {
     let collection = mongo_client

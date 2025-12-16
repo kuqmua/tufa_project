@@ -1,9 +1,9 @@
-// pub async fn login<'a>(
+// pub async fn login<'lifetime>(
 //     form: actix_web::web::Form<
 //         common::repositories_types::server::routes::login::post::FormData,
 //     >,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 //     session: common::repositories_types::server::session_state::TypedSession,
 // ) -> Result<

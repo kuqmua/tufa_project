@@ -51,7 +51,7 @@
 //     },
 // }
 
-// impl<'a> actix_web::ResponseError for SubscribeErrorNamed {
+// impl<'lifetime> actix_web::ResponseError for SubscribeErrorNamed {
 //     fn status_code(&self) -> actix_web::http::StatusCode {
 //         match self {
 //             SubscribeErrorNamed::TryIntoNewSubscriber {..} => actix_web::http::StatusCode::BAD_REQUEST,

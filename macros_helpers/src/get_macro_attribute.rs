@@ -1,5 +1,9 @@
-pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &String, proc_macro_name_ident_stringified: &String) -> &'a syn::Attribute {
-    let option_attribute = attrs.iter().find(|attr| {
+pub fn get_macro_attribute<'attributes_litime>(
+    attributes: &'attributes_litime [syn::Attribute],
+    attribute_path: &String,
+    proc_macro_name_ident_stringified: &String
+) -> &'attributes_litime syn::Attribute {
+    let option_attribute = attributes.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
             stringified_path.retain(|value| !value.is_whitespace());
@@ -9,8 +13,11 @@ pub fn get_macro_attribute<'a>(attrs: &'a [syn::Attribute], attribute_path: &Str
     option_attribute.unwrap_or_else(||panic!("{proc_macro_name_ident_stringified} no {attribute_path}"))
 }
 
-pub fn get_macro_attribute_meta_list_token_stream<'a>(attrs: &'a [syn::Attribute], attribute_path: &String) -> &'a proc_macro2::TokenStream {
-    let option_attribute = attrs.iter().find(|attr| {
+pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
+    attributes: &'attributes_lifetime [syn::Attribute],
+    attribute_path: &String
+) -> &'attributes_lifetime proc_macro2::TokenStream {
+    let option_attribute = attributes.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
             stringified_path.retain(|value| !value.is_whitespace());

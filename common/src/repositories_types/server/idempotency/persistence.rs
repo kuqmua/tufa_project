@@ -73,7 +73,7 @@
 //     },
 //     SavedResponseIsNone {
 //         #[eo_to_std_string_string_serialize_deserialize]
-//         message: &'a str,
+//         message: &'lifetime str,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }

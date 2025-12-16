@@ -12,7 +12,7 @@ pub enum MongoCheckDbIsEmptyErrorNamed {
     },
 }
 
-pub async fn mongo_check_db_is_empty<'a>(
+pub async fn mongo_check_db_is_empty<'lifetime>(
     mongo_client: &mongodb::Client,
     db_name: &str,
 ) -> Result<(), Box<MongoCheckDbIsEmptyErrorNamed>> {

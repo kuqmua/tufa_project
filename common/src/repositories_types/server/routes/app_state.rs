@@ -1,8 +1,8 @@
 #[derive(Debug)]
-pub struct AppState<'a> {
+pub struct AppState<'lifetime> {
     pub postgres_pool: sqlx::PgPool,
-    pub config: &'a crate::repositories_types::server::config::Config,
-    pub project_git_info: &'a git_info::ProjectGitInfo<'a>,
+    pub config: &'lifetime crate::repositories_types::server::config::Config,
+    pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
 }
 impl crate::server::routes::git_info::GitInfoRouteParameters for AppState<'_> {}
 impl crate::server::routes::not_found::NotFoundRouteParameters for AppState<'_> {}

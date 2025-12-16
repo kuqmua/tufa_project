@@ -38,17 +38,17 @@
 //     // },
 //     GetNewProvidersPosts {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         hashmap_provider_kind_rss_part: std::collections::HashMap<String, GetProviderPostsErrorUnnamed<'a>>,
+//         hashmap_provider_kind_rss_part: std::collections::HashMap<String, GetProviderPostsErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum GetProviderPostsErrorUnnamed<'a> {
+// pub enum GetProviderPostsErrorUnnamed<'lifetime> {
 //     GetNewProvidersPosts(crate::repositories_types::server::providers::provider_kind::functions::rss_part::RssPartErrorNamed),
 // }
 
-// pub async fn get_providers_posts<'a>(
+// pub async fn get_providers_posts<'lifetime>(
 //     config: &'static (
 //         impl app_state::GetGithubToken
 //         + app_state::GetProvidersLinkPartsSource

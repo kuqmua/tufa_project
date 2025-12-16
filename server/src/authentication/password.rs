@@ -1,5 +1,5 @@
 #[tracing::instrument(name = "Get stored credentials", skip(username, pool))]
-async fn get_stored_credentials<'a>(
+async fn get_stored_credentials<'lifetime>(
     username: &str,
     pool: &sqlx::PgPool,
 ) -> Result<Option<(uuid::Uuid, secrecy::Secret<String>)>, common::repositories_types::server::authentication::password::GetStoredCredentialsErrorNamed>{
@@ -22,7 +22,7 @@ async fn get_stored_credentials<'a>(
     }
 }
 
-pub async fn validate_credentials<'a>(
+pub async fn validate_credentials<'lifetime>(
     credentials: common::common::postgres_credentials::PostgresCredentials,
     pool: &sqlx::PgPool,
 ) -> Result<uuid::Uuid, common::repositories_types::server::authentication::password::ValidateCredentialsErrorNamed>{
@@ -76,7 +76,7 @@ pub async fn validate_credentials<'a>(
     name = "Validate credentials",
     skip(expected_password_hash, password_candidate)
 )]
-fn verify_password_hash<'a>(
+fn verify_password_hash<'lifetime>(
     expected_password_hash: secrecy::Secret<String>,
     password_candidate: secrecy::Secret<String>,
 ) -> Result<(), common::repositories_types::server::authentication::password::VerifyPasswordHashErrorNamed>{
@@ -99,7 +99,7 @@ fn verify_password_hash<'a>(
     }
 }
 
-pub async fn change_password<'a>(
+pub async fn change_password<'lifetime>(
     user_id: uuid::Uuid,
     password: secrecy::Secret<String>,
     pool: &sqlx::PgPool,
@@ -137,7 +137,7 @@ pub async fn change_password<'a>(
     }
 }
 
-fn compute_password_hash<'a>(password: secrecy::Secret<String>) -> Result<secrecy::Secret<String>, common::repositories_types::server::authentication::password::ComputePasswordHashErrorNamed>{
+fn compute_password_hash<'lifetime>(password: secrecy::Secret<String>) -> Result<secrecy::Secret<String>, common::repositories_types::server::authentication::password::ComputePasswordHashErrorNamed>{
     match argon2::PasswordHasher::hash_password(
         &argon2::Argon2::new(
             argon2::Algorithm::Argon2id,

@@ -22,7 +22,7 @@
 //     }
 // }
 
-// pub async fn init_mongo<'a>(
+// pub async fn init_mongo<'lifetime>(
 //     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     config: &'static (
 //         impl app_state::GetMongoProvidersLinkPartsDbName

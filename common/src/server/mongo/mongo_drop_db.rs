@@ -7,9 +7,9 @@ pub enum MongoDropDbErrorNamed {
     },
 }
 
-pub async fn mongo_drop_db<'a>(
+pub async fn mongo_drop_db<'lifetime>(
     mongo_client: &mongodb::Client,
-    db_name: &'a str,
+    db_name: &'lifetime str,
 ) -> Result<(), Box<crate::server::mongo::mongo_drop_db::MongoDropDbErrorNamed>> {
     if let Err(error) = mongo_client.database(db_name).drop(None).await {
         return Err(Box::new(

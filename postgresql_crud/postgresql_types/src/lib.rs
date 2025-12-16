@@ -1277,12 +1277,12 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-impl<'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithOne {
+impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         self.0.query_bind(query)

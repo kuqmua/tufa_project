@@ -1,7 +1,7 @@
-// pub async fn subscribe<'a>(
+// pub async fn subscribe<'lifetime>(
 //     form: actix_web::web::Form<common::repositories_types::server::routes::FormData>,
 //     app_state: actix_web::web::Data<
-//         common::repositories_types::server::routes::app_state::AppInfo<'a>,
+//         common::repositories_types::server::routes::app_state::AppInfo<'lifetime>,
 //     >,
 //     email_client: actix_web::web::Data<
 //         common::repositories_types::server::email_client::EmailClient,

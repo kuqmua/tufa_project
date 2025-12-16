@@ -16,7 +16,7 @@
 //     // },
 // }
 
-// pub async fn rss_part<'a>(
+// pub async fn rss_part<'lifetime>(
 //     pk: crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind,
 //     vec_of_provider_links: Vec<String>,
 // ) -> Result<Vec<crate::repositories_types::server::fetch::info_structures::common_rss_structures::CommonRssPostStruct>, Box<RssPartErrorNamed>> {

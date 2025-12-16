@@ -1,6 +1,6 @@
 #[derive(Debug, serde_derive::Serialize, serde_derive::Deserialize, Clone, Hash, PartialEq, Eq, Default)]
-pub struct ProjectGitInfo<'a> {
-    pub commit: &'a str,
+pub struct ProjectGitInfo<'commit_lifetime> {
+    pub commit: &'commit_lifetime str,
 }
 
 pub const PROJECT_GIT_INFO: ProjectGitInfo<'_> = compile_time_git_info::compile_time_project_git_info!();
@@ -32,24 +32,24 @@ pub trait GetGitCommitId {
 //     fn get_git_repo_link(&self) -> String;
 // }
 
-// pub trait GetGitAuthor<'a> {
-//     fn get_git_author(&self) -> &'a str;
+// pub trait GetGitAuthor<'lifetime> {
+//     fn get_git_author(&self) -> &'lifetime str;
 // }
 
-// pub trait GetGitAuthorEmail<'a> {
-//     fn get_git_author_email(&self) -> &'a str;
+// pub trait GetGitAuthorEmail<'lifetime> {
+//     fn get_git_author_email(&self) -> &'lifetime str;
 // }
 
-// pub trait GetGitCommitUnixTime<'a> {
-//     fn get_git_commit_unix_time(&self) -> &'a str;
+// pub trait GetGitCommitUnixTime<'lifetime> {
+//     fn get_git_commit_unix_time(&self) -> &'lifetime str;
 // }
 
-// pub trait GetGitTimezone<'a> {
-//     fn get_git_timezone(&self) -> &'a str;
+// pub trait GetGitTimezone<'lifetime> {
+//     fn get_git_timezone(&self) -> &'lifetime str;
 // }
 
-// pub trait GetGitMessage<'a> {
-//     fn get_git_message(&self) -> &'a str;
+// pub trait GetGitMessage<'lifetime> {
+//     fn get_git_message(&self) -> &'lifetime str;
 // }
 
 impl GetGitCommitId for ProjectGitInfo<'_> {

@@ -72,12 +72,12 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         let _: Option<char> = acc.pop();
         Ok(acc)
     }
-    pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    pub fn query_bind_one_by_one<'query_lifetime>(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     >
     where
-        T: 'a,
+        T: 'query_lifetime,
     {
         for element in self.0 {
             if let Err(error) = query.try_bind(sqlx::types::Json(element)) {
@@ -158,9 +158,9 @@ impl<T> From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
-impl<'a, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeNotEmptyUniqueVec<T>
+impl<'lifetime, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 where
-    T: serde::Serialize + 'a,
+    T: serde::Serialize + 'lifetime,
 {
     fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
@@ -168,8 +168,8 @@ where
             Err(error) => Err(error)
         }
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
@@ -489,7 +489,7 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
         }
     }
 }
-impl<'a, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a> postgresql_crud_common::PostgresqlTypeWhereFilter<'a> for Between<T> {
+impl<'lifetime, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for Between<T> {
     fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         let start_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
@@ -505,8 +505,8 @@ impl<'a, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
         };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         if let Err(error) = query.try_bind(self.start) {
@@ -639,7 +639,7 @@ enum Variant {
     Normal,
     MinusOne,
 }
-impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: usize> BoundedStdVecVec<T, LENGTH> {
+impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime, const LENGTH: usize> BoundedStdVecVec<T, LENGTH> {
     pub const fn to_inner(&self) -> &Vec<T> {
         &self.0
     }
@@ -690,8 +690,8 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgr
     pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
-    pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    pub fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         for element in self.0 {

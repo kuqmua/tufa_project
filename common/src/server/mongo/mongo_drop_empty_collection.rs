@@ -14,9 +14,9 @@ pub enum MongoDropEmptyCollectionErrorNamed {
     },
 }
 
-pub async fn mongo_drop_empty_collection<'a>(
+pub async fn mongo_drop_empty_collection<'lifetime>(
     mongo_client: &mongodb::Client,
-    db_name: &'a str,
+    db_name: &'lifetime str,
     db_collection_name: String,
 ) -> Result<
     (),

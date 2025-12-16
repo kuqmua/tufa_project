@@ -1622,7 +1622,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     let generate_impl_postgresql_type_where_filter_token_stream = |ident_token_stream: &dyn quote::ToTokens, query_part_content_token_stream: &dyn quote::ToTokens, is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable, query_bind_content_token_stream: &dyn quote::ToTokens| {
                         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote! {<'a>},
+                            &quote::quote! {<'lifetime>},
                             &ident_token_stream,
                             &proc_macro2::TokenStream::new(),
                             &postgresql_crud_macros_common::IncrementParameterUnderscore::False,

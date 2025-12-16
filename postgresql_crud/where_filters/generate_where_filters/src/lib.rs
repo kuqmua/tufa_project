@@ -156,7 +156,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
                     ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
-                        let send_and_lifetime_token_stream = quote::quote! {Send + 'a};
+                        let send_and_lifetime_token_stream = quote::quote! {Send + 'lifetime};
                         let serde_serialize_token_stream = quote::quote! {serde::Serialize};
                         let content_token_stream = match (&filter_type, &maybe_additional_traits_token_stream) {
                             (FilterType::PostgresqlType, Some(value)) => &quote::quote! {#value + #send_and_lifetime_token_stream},
@@ -168,7 +168,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                     }
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
                 };
-                quote::quote! {<'a #maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream>}
+                quote::quote! {<'lifetime #maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream>}
             },
             &ident,
             &match &should_add_declaration_of_struct_ident_generic {

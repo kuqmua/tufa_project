@@ -7,7 +7,7 @@ pub enum MongoCheckAvailabilityErrorNamed {
     },
 }
 
-pub async fn mongo_check_availability<'a>(
+pub async fn mongo_check_availability<'lifetime>(
     mongo_client: &mongodb::Client,
     db_name: &str,
 ) -> Result<(), Box<MongoCheckAvailabilityErrorNamed>> {

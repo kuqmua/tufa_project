@@ -16,7 +16,7 @@
 //     // },
 // }
 
-// pub async fn get_providers_link_parts<'a>(
+// pub async fn get_providers_link_parts<'lifetime>(
 //     config: &'static (
 //         impl app_state::GetProvidersLinkPartsSource
 

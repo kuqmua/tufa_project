@@ -96,7 +96,11 @@ pub fn attribute_view(attribute: &str) -> String {
     format!("attribute #[{attribute}]")
 }
 
-pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(value: &'a syn::Field, std_snake_case: &naming::StdSnakeCase, std_string_string: &token_patterns::StdStringString) -> &'a syn::GenericArgument {
+pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
+    value: &'value_lifetime syn::Field,
+    std_snake_case: &naming::StdSnakeCase,
+    std_string_string: &token_patterns::StdStringString
+) -> &'value_lifetime syn::GenericArgument {
     let segments = if let syn::Type::Path(value) = &value.ty {
         &value.path.segments
     } else {

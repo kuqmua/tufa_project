@@ -52,8 +52,11 @@ pub trait PostgresqlType {
         String
     >;
     fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, column: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn select_only_updated_ids_query_bind<'lifetime>(
+        value: &'lifetime Self::UpdateForQuery,
+        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     >;
 }
@@ -90,13 +93,19 @@ pub trait PostgresqlJsonType {
         String
     >;
     fn select_only_updated_ids_query_part(value: &Self::UpdateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_updated_ids_query_bind<'a>(value: &'a Self::UpdateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn select_only_updated_ids_query_bind<'lifetime>(
+        value: &'lifetime Self::UpdateForQuery,
+        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     >;
     fn select_only_created_ids_query_part(value: &Self::CreateForQuery, field_ident: &str, column_name_and_maybe_field_getter: &str, increment: &mut u64) -> Result<String, QueryPartErrorNamed>;
-    fn select_only_created_ids_query_bind<'a>(value: &'a Self::CreateForQuery, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn select_only_created_ids_query_bind<'lifetime>(
+        value: &'lifetime Self::CreateForQuery,
+        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     >;
 }
@@ -324,19 +333,19 @@ pub trait PostgresqlJsonTypeTestCases {
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
 }
 
-pub trait PostgresqlTypeWhereFilter<'a> {
+pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed>;
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     >;
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub Option<NotEmptyUniqueEnumVec<T>>);
-impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'lifetime> PostgresqlTypeWhereFilter<'lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub Option<NotEmptyUniqueEnumVec<T>>);
+impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         match &self.0 {
@@ -350,8 +359,11 @@ where
             None => Ok(format!("{column} = 'null'")), //todo fix
         }
     }
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(
+        self,
+        query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         match self.0 {
@@ -362,7 +374,7 @@ where
 }
 impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn to_std_string_string(&self) -> String {
         format!("{self:#?}")
@@ -370,12 +382,10 @@ where
 }
 impl<T> AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> Vec<Self> {
-        vec![
-            Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), // , Self(None)
-        ]
+        vec![Self(Some(DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))]
     }
 }
 
@@ -571,7 +581,7 @@ const _: () = {
         }
     }
 };
-impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<T> {
+impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>> PostgresqlTypeWhereFilter<'query_lifetime> for PostgresqlTypeWhere<T> {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         let mut acc = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
@@ -592,8 +602,8 @@ impl<'a, T: PostgresqlTypeWhereFilter<'a>> PostgresqlTypeWhereFilter<'a> for Pos
         let _: Option<char> = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         for element in self.value {
@@ -670,7 +680,7 @@ impl PaginationBase {
         self.offset.checked_add(self.limit).expect("error 8a297b66-4f42-4b48-8e18-cc1f35302e0a")
     }
 }
-impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
+impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationBase {
     fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<String, QueryPartErrorNamed> {
         let limit_increment = match increment_checked_add_one_returning_increment(increment) {
             Ok(value) => value,
@@ -686,8 +696,8 @@ impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationBase {
         };
         Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         if let Err(error) = query.try_bind(self.limit) {
@@ -888,12 +898,12 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
         )
     }
 }
-impl<'a> PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
+impl<'query_lifetime> PostgresqlTypeWhereFilter<'query_lifetime> for PaginationStartsWithZero {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         self.0.query_bind(query)
@@ -1053,9 +1063,9 @@ impl<T1> NotEmptyUniqueEnumVec<T1> {
     }
 }
 
-impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
+impl<'query_lifetime, T> PostgresqlTypeWhereFilter<'query_lifetime> for NotEmptyUniqueEnumVec<T>
 where
-    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    T: std::fmt::Debug + PartialEq + Clone + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
         let mut acc = String::default();
@@ -1080,8 +1090,8 @@ where
         }
         Ok(acc)
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
-        sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    fn query_bind(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String
     > {
         for element in self.0 {

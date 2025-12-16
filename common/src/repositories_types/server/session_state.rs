@@ -14,7 +14,7 @@
 //     pub fn renew(&self) {
 //         self.0.renew();
 //     }
-//     pub fn insert_user_id<'a>(
+//     pub fn insert_user_id<'lifetime>(
 //         &self,
 //         user_id: uuid::Uuid,
 //     ) -> Result<(), InsertUserIdErrorNamed> {

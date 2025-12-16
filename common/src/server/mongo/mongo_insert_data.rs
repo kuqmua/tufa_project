@@ -2,18 +2,18 @@
 // pub enum MongoInsertDataErrorNamed {
 //     Errors {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         errors_hashmap: std::collections::HashMap<String, MongoInsertDataErrorUnnamed<'a>>,
+//         errors_hashmap: std::collections::HashMap<String, MongoInsertDataErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum MongoInsertDataErrorUnnamed<'a> {
+// pub enum MongoInsertDataErrorUnnamed<'lifetime> {
 //     MongoInsertDocsInEmptyCollection(crate::server::mongo::mongo_insert_docs_in_empty_collection::MongoInsertDocsInEmptyCollectionErrorNamed)
 // }
 
-// pub async fn mongo_insert_data<'a>(
-//     db_name_handle: &'a str,
+// pub async fn mongo_insert_data<'lifetime>(
+//     db_name_handle: &'lifetime str,
 //     vec_of_link_parts_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,//todo impl Display instead of ProviderKind
 //     mongodb_options_client_options: mongodb::options::ClientOptions,
 //     config: &'static (

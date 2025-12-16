@@ -1102,7 +1102,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let impl_postgresql_type_where_filter_for_std_option_option_ident_where_many_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-            &quote::quote! {<'a>},
+            &quote::quote! {<'lifetime>},
             &std_option_option_ident_where_many_upper_camel_case,
             &proc_macro2::TokenStream::new(),
             &postgresql_crud_macros_common::IncrementParameterUnderscore::False,

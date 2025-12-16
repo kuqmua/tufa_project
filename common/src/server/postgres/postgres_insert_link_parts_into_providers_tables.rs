@@ -4,14 +4,14 @@
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         inner_errors: std::collections::HashMap<
 //             String,
-//             PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'a>,
+//             PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'lifetime>,
 //         >,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'a> {
+// pub enum PostgresInsertLinkPartsIntoProvidersTablesOriginErrorEnumUnnamed<'lifetime> {
 //     PostgresInsertLinkPartsIntoProvidersTablesOriginHandle(PostgresInsertLinkPartsIntoProvidersTablesOriginHandleErrorNamed),
 // }
 
@@ -24,7 +24,7 @@
 //     },
 // }
 
-// pub async fn postgres_insert_link_parts_into_providers_tables<'a>(
+// pub async fn postgres_insert_link_parts_into_providers_tables<'lifetime>(
 //     providers_json_local_data_hashmap: &std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     postgres_pool: &sqlx::Pool<sqlx::Postgres>,
 // ) -> Result<(), Box<crate::server::postgres::postgres_insert_link_parts_into_providers_tables::PostgresInsertLinkPartsIntoProvidersTablesOriginErrorNamed>>{

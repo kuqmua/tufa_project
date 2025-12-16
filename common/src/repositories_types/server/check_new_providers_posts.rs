@@ -1,4 +1,4 @@
-// pub async fn check_new_providers_posts<'a>(
+// pub async fn check_new_providers_posts<'lifetime>(
 //     providers_link_parts: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     config: &'static (
 //     impl app_state::GetGithubToken

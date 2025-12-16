@@ -30,18 +30,18 @@
 //     // },
 //     NoItems {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         no_items: std::collections::HashMap<String, FetchAndParseProviderDataErrorUnnamed<'a>>, //link, error
+//         no_items: std::collections::HashMap<String, FetchAndParseProviderDataErrorUnnamed<'lifetime>>, //link, error
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum FetchAndParseProviderDataErrorUnnamed<'a> {
+// pub enum FetchAndParseProviderDataErrorUnnamed<'lifetime> {
 //     NoItems(crate::repositories_types::server::fetch::rss_metainfo_fetch_structures::NoItemsErrorNamed),
 // }
 
 // impl ProviderKind {
-//     pub async fn fetch_and_parse_provider_data<'a>(
+//     pub async fn fetch_and_parse_provider_data<'lifetime>(
 //         self,
 //         links: Vec<String>,
 //     ) -> Result<Vec<crate::repositories_types::server::fetch::info_structures::common_rss_structures::CommonRssPostStruct>, Box<FetchAndParseProviderDataErrorNamed>> {
@@ -231,7 +231,7 @@
 // }
 
 // impl ProviderKind {
-//     pub async fn get_link_parts_from_local_json_file<'a>(
+//     pub async fn get_link_parts_from_local_json_file<'lifetime>(
 //         self,
 //         config: &'static (
 //             impl app_state::GetPathToProviderLinkPartsFolder

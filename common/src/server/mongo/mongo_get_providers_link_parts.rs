@@ -12,17 +12,17 @@
 //     },
 //     GetDocuments {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
-//         get_documents: std::collections::HashMap<String, MongoGetDocumentsAsStringVectorErrorUnnamed<'a>>,
+//         get_documents: std::collections::HashMap<String, MongoGetDocumentsAsStringVectorErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum MongoGetDocumentsAsStringVectorErrorUnnamed<'a> {
+// pub enum MongoGetDocumentsAsStringVectorErrorUnnamed<'lifetime> {
 //     MongoGetDocumentsAsStringVector(crate::server::mongo::mongo_get_documents_as_string_vector::MongoGetDocumentsAsStringVectorErrorNamed),
 // }
 
-// pub async fn mongo_get_providers_link_parts<'a>(
+// pub async fn mongo_get_providers_link_parts<'lifetime>(
 //     config: &'static (
 //         impl app_state::GetMongoUrl
 //         + app_state::GetMongoProvidersLinkPartsDbName

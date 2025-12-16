@@ -3,13 +3,13 @@
 //     Mongo {
 //         #[eo_hashmap_key_display_with_serialize_deserialize_value_error_occurence]
 //         inner_errors:
-//             std::collections::HashMap<String, MongoCheckCollectionIsNotEmptyErrorUnnamed<'a>>,
+//             std::collections::HashMap<String, MongoCheckCollectionIsNotEmptyErrorUnnamed<'lifetime>>,
 //         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
 //     },
 // }
 
 // #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-// pub enum MongoCheckCollectionIsNotEmptyErrorUnnamed<'a> {
+// pub enum MongoCheckCollectionIsNotEmptyErrorUnnamed<'lifetime> {
 //     CountDocumentsOrigin(MongoCheckCollectionIsNotEmptyErrorCountDocumentsErrorNamed),
 //     IsNotEmptyOrigin(MongoCheckCollectionIsNotEmptyErrorIsNotEmptyOriginErrorNamed),
 // }
@@ -32,7 +32,7 @@
 //     },
 // }
 
-// pub async fn mongo_check_collections_is_not_empty<'a>(
+// pub async fn mongo_check_collections_is_not_empty<'lifetime>(
 //     providers_json_local_data_hashmap: std::collections::HashMap<crate::repositories_types::server::providers::provider_kind::provider_kind_enum::ProviderKind, Vec<String>>,
 //     db: &mongodb::Database,
 // ) -> Result<(), Box<crate::server::mongo::mongo_check_collection_is_not_empty::MongoCheckCollectionIsNotEmptyErrorNamed>>{

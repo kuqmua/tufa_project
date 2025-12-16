@@ -1,4 +1,4 @@
-pub trait TryCreateTcpListener<'a> {
+pub trait TryCreateTcpListener {
     fn try_create_tcp_listener(&self) -> Result<std::net::TcpListener, Box<TryCreateTcpListenerErrorNamed>>;
 }
 
@@ -11,7 +11,7 @@ pub enum TryCreateTcpListenerErrorNamed {
     },
 }
 
-impl<SelfGeneric> TryCreateTcpListener<'_> for SelfGeneric
+impl<SelfGeneric> TryCreateTcpListener for SelfGeneric
 where
     Self: app_state::GetServiceSocketAddress,
 {
