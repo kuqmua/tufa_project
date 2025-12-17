@@ -30,6 +30,7 @@ members = [
   "generate_quotes",
   "macros_helpers",
   "server",
+  "server_config",
   "server_types",
   "telegram_bot",
   "config_lib/generate_getter_traits_for_struct_fields",

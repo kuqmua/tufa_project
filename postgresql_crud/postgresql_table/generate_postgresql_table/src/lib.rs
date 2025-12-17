@@ -3920,7 +3920,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_read_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadOne);
         let ident_read_one_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::ReadOne);
         let ident_update_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::UpdateOne);
-        let config_path_token_stream = quote::quote! {crate::config::Config};
+        let config_path_token_stream = quote::quote! {server_config::Config};
         let config_upper_case_token_stream = quote::quote! {CONFIG};
         let underscore_unused_token_stream = quote::quote! {_unused};
         let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {

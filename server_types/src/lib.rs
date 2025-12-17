@@ -1,4 +1,3 @@
-pub mod config;
 pub mod server_app_state;
 
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]

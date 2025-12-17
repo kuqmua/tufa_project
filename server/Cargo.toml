@@ -70,7 +70,7 @@ server_types = {path = "../server_types"}# local dev test without commits versio
 # error_occurence_lib = {path = "../error_occurence_lib"}
 app_state = {path = "../app_state"}
 common_routes = {path = "../common_routes"}
-# constants = {path = "../constants"}
+server_config = {path = "../server_config"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"

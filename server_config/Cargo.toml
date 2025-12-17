@@ -1,0 +1,15 @@
+[package]
+name = "server_config"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = {version = "=0.4.42", features = ["serde"]}
+thiserror = {version = "=1.0.48"}
+dotenv = {version = "=0.15.0"}
+secrecy = {version = "=0.8.0", features = ["serde"]}
+config_lib = {path = "../config_lib"}
+app_state = {path = "../app_state"}
+
+[lints]
+workspace = true
