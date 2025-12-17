@@ -346,7 +346,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let additional_parameters_snake_case = naming::AdditionalParametersSnakeCase;
     let postgresql_crud_snake_case = &naming::PostgresqlCrudSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let from_snake_case = naming::FromSnakeCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let parameters_snake_case = naming::ParametersSnakeCase;
@@ -430,6 +429,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let routes_handle_snake_case = naming::RoutesHandleSnakeCase;
     let routes_snake_case = naming::RoutesSnakeCase;
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
+    let from_handle_snake_case = naming::FromHandleSnakeCase;
     let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
     let error_1_token_stream = token_patterns::Error1;
@@ -543,6 +543,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(primary_key_field_type);
     let primary_key_field_type_update_for_query_token_stream = &naming::parameter::SelfUpdateForQueryUpperCamelCase::from_type_last_segment(primary_key_field_type);
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+    let generate_from_handle_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|quote::quote!{
+        fn #from_handle_snake_case(#value_snake_case: #ident_token_stream) -> Self {
+            #content_token_stream
+        }
+    };
     let generate_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream = |should_add_borrow: &ShouldAddBorrow| {
         quote::quote! {#select_snake_case: #should_add_borrow postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>}
     };
@@ -772,7 +777,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let syn_variant_initialization_token_stream = generate_initialization_token_stream(syn_variant_wrapper, file, line, column);
         let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap_or_else(|| panic!("option_status_code is None")).to_axum_http_status_code_token_stream();
-        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(&quote::quote! {#ident_operation_response_variants_upper_camel_case::#from_snake_case(#error_snake_case)}, &status_code_token_stream, &ShouldAddReturn::True);
+        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(&quote::quote! {#ident_operation_response_variants_upper_camel_case::#from_handle_snake_case(#error_snake_case)}, &status_code_token_stream, &ShouldAddReturn::True);
         quote::quote! {
             let #error_snake_case = #ident_operation_error_named_upper_camel_case::#syn_variant_initialization_token_stream;
             #eprintln_error_token_stream
@@ -1686,42 +1691,45 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
             };
+            let update_handle_token_stream = generate_from_handle_token_stream(
+                &ident_update_upper_camel_case,
+                &{
+                    let primary_key_field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&primary_key_field_type);
+                    let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                        let field_ident = &element.field_ident;
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
+                            let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
+                            quote::quote! {
+                                 #field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
+                            }
+                        });
+                        quote::quote! {
+                            #field_ident: match #value_snake_case.#field_ident {
+                                Some(#value_snake_case) => Some(#value_initialization_token_stream),
+                                None => None
+                            }
+                        }
+                    });
+                    quote::quote! {
+                        Self {
+                            #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#primary_key_field_ident),
+                            #fields_named_without_primary_key_token_stream
+                        }
+                    }
+                }
+            );
             quote::quote! {
                 impl #ident_update_for_query_upper_camel_case {
                     #update_query_part_primary_key_token_stream
                     #update_query_part_fields_token_stream
                     #select_only_updated_ids_query_part_token_stream
+                    #update_handle_token_stream
                 }
             }
         };
-        let impl_std_convert_from_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &{
-            let primary_key_field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&primary_key_field_type);
-            let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                let field_ident = &element.field_ident;
-                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
-                    let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
-                    quote::quote! {
-                         #field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
-                    }
-                });
-                quote::quote! {
-                    #field_ident: match #value_snake_case.#field_ident {
-                        Some(#value_snake_case) => Some(#value_initialization_token_stream),
-                        None => None
-                    }
-                }
-            });
-            quote::quote! {
-                Self {
-                    #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#primary_key_field_ident),
-                    #fields_named_without_primary_key_token_stream
-                }
-            }
-        });
         quote::quote! {
             #ident_update_for_query_token_stream
             #impl_ident_update_for_query_token_stream
-            #impl_std_convert_from_for_ident_update_for_query_token_stream
         }
     };
     let generate_match_update_query_part_primary_key_token_stream = |operation: &Operation, content_token_stream: &dyn quote::ToTokens| {
@@ -2024,34 +2032,40 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let ident_operation_error_named_upper_camel_case = generate_ident_operation_error_named_upper_camel_case(operation);
-        let impl_std_convert_from_ident_operation_error_named_for_ident_operation_response_variants_token_stream = {
-            let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
-                let variant_ident = &element.ident;
-                let syn::Fields::Named(fields_named) = &element.fields else {
-                    panic!("expected fields would be named");
-                };
-                let fields_mapped_into_token_stream = {
-                    let fields_token_stream = fields_named.named.iter().map(|field| &field.ident);
-                    quote::quote! {#(#fields_token_stream),*}
-                };
-                let ident_operation_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
-                quote::quote! {
-                    #ident_operation_error_named_with_serialize_deserialize_upper_camel_case::#variant_ident {
-                        #fields_mapped_into_token_stream
-                    } => Self::#variant_ident {
-                        #fields_mapped_into_token_stream
+        let impl_ident_operation_response_variants_token_stream = {
+            let from_handle_token_stream = generate_from_handle_token_stream(
+                &ident_operation_error_named_upper_camel_case,
+                &{
+                    let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
+                        let variant_ident = &element.ident;
+                        let syn::Fields::Named(fields_named) = &element.fields else {
+                            panic!("expected fields would be named");
+                        };
+                        let fields_mapped_into_token_stream = {
+                            let fields_token_stream = fields_named.named.iter().map(|field| &field.ident);
+                            quote::quote! {#(#fields_token_stream),*}
+                        };
+                        let ident_operation_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
+                        quote::quote! {
+                            #ident_operation_error_named_with_serialize_deserialize_upper_camel_case::#variant_ident {
+                                #fields_mapped_into_token_stream
+                            } => Self::#variant_ident {
+                                #fields_mapped_into_token_stream
+                            }
+                        }
+                    });
+                    quote::quote! {
+                        match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
+                            #(#variants_token_stream),*
+                        }
                     }
                 }
-            });
-            macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
-                &ident_operation_error_named_upper_camel_case,
-                &ident_operation_response_variants_upper_camel_case,
-                &quote::quote! {
-                    match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
-                        #(#variants_token_stream),*
-                    }
-                },
-            )
+            );
+            quote::quote!{
+                impl #ident_operation_response_variants_upper_camel_case {
+                    #from_handle_token_stream
+                }
+            }
         };
         let ident_operation_error_named_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
@@ -2064,7 +2078,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         quote::quote! {
             #ident_try_operation_logic_response_variants_token_stream
-            #impl_std_convert_from_ident_operation_error_named_for_ident_operation_response_variants_token_stream
+            #impl_ident_operation_response_variants_token_stream
             #ident_operation_error_named_token_stream
         }
     };
@@ -2493,6 +2507,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
         }
     };
+    let generate_match_ident_read_only_ids_as_from_row_from_row_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
+        match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&#value_snake_case) {
+            Ok(#value_snake_case) => #value_snake_case,
+            Err(#error_0_token_stream) => #content_token_stream
+        }
+    };
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2582,15 +2602,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };
                         generate_fetch_token_stream(
                             &{
-                                let drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                quote::quote! {
-                                    match #ident_read_only_ids_upper_camel_case::try_from(value) {
-                                        Ok(value) => Some(value),
-                                        Err(error_0) => {
-                                            #drop_rows_match_postgres_transaction_rollback_await_handle_token_stream
-                                        },
-                                    }
-                                }
+                                let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
+                                    let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
+                                    quote::quote!{{#content_token_stream}}
+                                });
+                                quote::quote! {Some(#content_token_stream)}
                             },
                             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                             &ShouldWrapIntoValue::True,
@@ -2686,22 +2702,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
                         };
                         wrap_into_value_token_stream(&generate_fetch_one_token_stream(
-                            // &generate_sqlx_row_try_get_primary_key_token_stream(
-                            //     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
-                            //     &value_snake_case,
-                            //     &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
-                            // ),
-                            &{
-                                let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                quote::quote! {
-                                    match #ident_read_only_ids_upper_camel_case::try_from(#value_snake_case) {
-                                        Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_0_token_stream) => {
-                                            #match_postgres_transaction_rollback_await_token_stream
-                                        }
-                                    }
-                                }
-                            },
+                            &generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
+                                let content_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
+                                quote::quote!{{#content_token_stream}}
+                            }),
                             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                         ))
                     },
@@ -3179,7 +3183,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {
                         #parameters_logic_token_stream
                         let #update_for_query_vec_snake_case = #parameters_snake_case.#payload_snake_case.0.into_iter()
-                        .map(|#element_snake_case|#ident_update_for_query_upper_camel_case::from(#element_snake_case))
+                        .map(|#element_snake_case|#ident_update_for_query_upper_camel_case::#from_handle_snake_case(#element_snake_case))
                         .collect::<Vec<#ident_update_for_query_upper_camel_case>>();
                     }
                 };
@@ -3378,15 +3382,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };
                         generate_fetch_token_stream(
                             &{
-                                let drop_rows_match_postgres_transaction_rollback_await_handle_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                quote::quote! {
-                                    match #ident_read_only_ids_upper_camel_case::try_from(value) {
-                                        Ok(value) => Some(value),
-                                        Err(error_0) => {
-                                            #drop_rows_match_postgres_transaction_rollback_await_handle_token_stream
-                                        },
-                                    }
-                                }
+                                let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
+                                    let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
+                                    quote::quote!{{#content_token_stream}}
+                                });
+                                quote::quote! {Some(#content_token_stream)}
                             },
                             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                             &ShouldWrapIntoValue::True,
@@ -3442,7 +3442,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                     quote::quote! {
                         #parameters_logic_token_stream
-                        let #update_for_query_snake_case = #ident_update_for_query_upper_camel_case::from(#parameters_snake_case.#payload_snake_case);
+                        let #update_for_query_snake_case = #ident_update_for_query_upper_camel_case::#from_handle_snake_case(#parameters_snake_case.#payload_snake_case);
                     }
                 };
                 let query_string_token_stream = {
@@ -3570,15 +3570,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
                         };
                         wrap_into_value_token_stream(&generate_fetch_one_token_stream(
-                            &{
-                                let match_postgres_transaction_rollback_await_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
-                                quote::quote! {
-                                    match #ident_read_only_ids_upper_camel_case::try_from(#value_snake_case) {
-                                        Ok(#value_snake_case) => #value_snake_case,
-                                        Err(#error_0_token_stream) => #match_postgres_transaction_rollback_await_token_stream
-                                    }
-                                }
-                            },
+                            &generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&generate_match_postgres_transaction_rollback_await_token_stream(
+                                &current_operation,
+                                file!(),
+                                line!(),
+                                column!(),
+                                file!(),
+                                line!(),
+                                column!()
+                            )),
                             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                         ))
                     },
