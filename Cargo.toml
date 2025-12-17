@@ -2,7 +2,6 @@
 resolver = "2"
 members = [
   "app_state",
-  "common",
   "common_routes",
   "config_lib",
   "constants",
@@ -31,6 +30,7 @@ members = [
   "generate_quotes",
   "macros_helpers",
   "server",
+  "server_types",
   "telegram_bot",
   "config_lib/generate_getter_traits_for_struct_fields",
   "config_lib/try_from_env",
