@@ -31,7 +31,6 @@ pub fn generate_getter_traits_for_struct_fields(input: proc_macro::TokenStream) 
     let generated = quote::quote! {
         #(#generated_traits_implementations)*
     };
-    // println!("{generated}");
     generated.into()
 }
 

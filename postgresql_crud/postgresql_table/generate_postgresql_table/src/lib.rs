@@ -6300,29 +6300,31 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
                             static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
                             //todo maybe refactor
-                            let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream {
-                                service_socket_address: <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "127.0.0.1:8080".to_string()
-                                ).expect("error b5b3915a-0e18-4815-a614-6b0e9a00d73f").0,
-                                database_url: <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_string()
-                                ).expect("error f9c20f05-3cdf-46ae-b6d3-5943c627f0df").0,
-                                timezone: <config_lib::Timezone as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "10800".to_string()
-                                ).expect("error d00d8998-52f9-45c1-a4b0-c93bc95a313e").0,
-                                tracing_level: <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "error".to_string()
-                                ).expect("error 957178c9-4d92-4110-b524-9dc21d147a7c").0,
-                                source_place_type: <config_lib::SourcePlaceType as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "source".to_string()
-                                ).expect("error bec0950e-e9de-42f3-b3a2-67d9d98ae8a6").0,
-                                enable_api_git_commit_check: <config_lib::EnableApiGitCommitCheck as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "true".to_string()
-                                ).expect("error 31f02640-d62b-41ca-837d-d61b707d4baf").0,
-                                maximum_size_of_http_body_in_bytes: <config_lib::MaximumSizeOfHttpBodyInBytes as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "1048576000".to_string()
-                                ).expect("error 93b2f818-18be-4bb6-8a02-53c6e55ded2d").0,
-                            });
+                            let #config_snake_case = #config_upper_case_token_stream.get_or_init(||
+                                #config_path_token_stream::from((
+                                    <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "127.0.0.1:8080".to_string()
+                                    ).expect("error b5b3915a-0e18-4815-a614-6b0e9a00d73f").0,
+                                    <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_string()
+                                    ).expect("error f9c20f05-3cdf-46ae-b6d3-5943c627f0df").0,
+                                    <config_lib::Timezone as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "10800".to_string()
+                                    ).expect("error d00d8998-52f9-45c1-a4b0-c93bc95a313e").0,
+                                    <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "error".to_string()
+                                    ).expect("error 957178c9-4d92-4110-b524-9dc21d147a7c").0,
+                                    <config_lib::SourcePlaceType as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "source".to_string()
+                                    ).expect("error bec0950e-e9de-42f3-b3a2-67d9d98ae8a6").0,
+                                    <config_lib::EnableApiGitCommitCheck as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "true".to_string()
+                                    ).expect("error 31f02640-d62b-41ca-837d-d61b707d4baf").0,
+                                    <config_lib::MaximumSizeOfHttpBodyInBytes as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                        "1048576000".to_string()
+                                    ).expect("error 93b2f818-18be-4bb6-8a02-53c6e55ded2d").0,
+                                ))
+                            );
                             let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new()
                             .max_connections(50)
                             .connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case)))
