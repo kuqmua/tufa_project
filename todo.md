@@ -399,11 +399,6 @@ rss_write_error_logs_into_file_for_provider(file_name, json_object);
 
 * if cannot connect to db then program not ending. just waiting. find out why and fix it
 
-* add area of visibility / scope like this for all private functions/methonds
-pub(in crate::get_project_information::get_config::structures_implementations::config_struct_impl)
-
-* todo: find out why cannot write this path crate::get_project_information::get_config::structures_implementations::config_struct_impl::wrap_config_checks_impl
-
 * https://github.com/rust-cv
 rust image detection libs/crates
 

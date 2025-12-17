@@ -1,3 +1,3 @@
-pub mod common;
-pub mod repositories_types;
-pub mod structs_for_parsing;
+pub mod config;
+pub mod app_state;
+pub mod example;

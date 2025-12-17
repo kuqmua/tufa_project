@@ -1,5 +1,5 @@
 //todo - maybe Arc<RwLock<Store>> ?
-pub static CONFIG: std::sync::OnceLock<common::repositories_types::server::config::Config> = std::sync::OnceLock::new();
+pub static CONFIG: std::sync::OnceLock<common::config::Config> = std::sync::OnceLock::new();
 fn main() {
     std::thread::Builder::new()
         .stack_size(16 * 1024 * 1024) // 16 MB
@@ -7,37 +7,23 @@ fn main() {
             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 5995c954-bb76-4620-b819-2b26f4b8f728").block_on(async {
                 tracing_subscriber::fmt::init();
                 println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
-                let config = CONFIG.get_or_init(|| common::repositories_types::server::config::Config::try_from_env().expect("error d74a6e5f-069a-49ea-9bac-19512e7b2bc5"));
+                let config = CONFIG.get_or_init(|| common::config::Config::try_from_env().expect("error d74a6e5f-069a-49ea-9bac-19512e7b2bc5"));
                 // if let Err(error) = common::repositories_types::server::telemetry::init_subscriber::init_subscriber(common::repositories_types::server::telemetry::get_subscriber::get_subscriber(env!("CARGO_PKG_VERSION"), config, std::io::stdout)) {
                 //     panic!("common::repositories_types::server::telemetry::init_subscriber::init_subscriber failed, error: {error:#?}")
                 // }
                 println!("trying to create postgres pool...");
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
-                common::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
+                common::example::Example::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 // println!("trying to create redis session storage...");
-                // let redis_session_storage = match {
-                //     use common::common::config::try_get_redis_session_storage::TryGetRedisSessionStorage;
-                //     config.try_get_redis_session_storage().await
-                // } {
-                //     Ok(redis_session_storage) => redis_session_storage,
-                //     Err(error) => {
-                //         return Err(Box::new(
-                //             common::repositories_types::server::server_wrapper::ServerWrapperErrorNamed::TryGetRedisSessionStorage {
-                //                 try_get_redis_session_storage: error,
-                //                 code_occurence: error_occurence_lib::code_occurence!(),
-                //             }
-                //         ))
-                //     },
-                // };
                 let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
                 println!("trying to up server on {service_socket_address}");
-                let app_state = std::sync::Arc::new(common::repositories_types::server::routes::app_state::AppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });
+                let app_state = std::sync::Arc::new(common::app_state::AppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });
                 axum::serve(
                     tokio::net::TcpListener::bind(service_socket_address).await.expect("error 3f294e7c-3386-497f-b76c-c0364d59a60d"),
                     axum::Router::new()
-                        .merge(common_routes::common_routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-                        .merge(common::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common_routes::common_routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common::example::Example::routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
                         .layer(
                             tower_http::cors::CorsLayer::new()
                                 // .allow_methods([
@@ -67,7 +53,7 @@ fn main() {
                         //     //     components(
                         //     //             schemas(
                         //     //                 common::server::routes::git_info::GitInfo,
-                        //     //                 common::common::utoipa::std::time::StdTimeDuration,
+                        //     //                 error_occurence_lib::code_occurence::StdTimeDuration,
                         //     //                 error_occurence_lib::code_occurence::CodeOccurence,
                         //     //                 //
                         //     //                 // postgresql_crud::TimeMonth,

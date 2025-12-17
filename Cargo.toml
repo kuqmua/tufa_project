@@ -48,6 +48,7 @@ members = [
   "naming/naming_common",
   "naming/naming_macros",
   "panic_location",
+  "providers",
 ]
 exclude = [
   "client",
