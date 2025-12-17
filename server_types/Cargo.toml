@@ -29,6 +29,7 @@ config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
 common_routes = {path = "../common_routes"}
 server_config = {path = "../server_config"}
+server_app_state = {path = "../server_app_state"}
 
 [dev-dependencies]
 num_cpus = {version = "=1.15.0"}

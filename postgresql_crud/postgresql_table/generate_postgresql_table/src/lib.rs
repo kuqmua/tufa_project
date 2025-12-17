@@ -4190,7 +4190,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(field_ident);
                     quote::quote! {
                         .merge(#ident::#routes_handle_snake_case(
-                            std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                            std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                             &#variable_name_cloned_token_stream
                         ))
                     }
@@ -6397,7 +6397,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_one_cloned).await.expect("error de8885ae-34f5-430b-a3b4-bf91c999b2c8");
                                 #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_many_cloned).await.expect("error 2bb3d5ec-1069-470c-a758-60afe3bd5224");
                                 #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_one_cloned).await.expect("error e5cc2f6f-65a2-472d-8a1e-56e23fbc165a");
-                                let #app_state_snake_case = std::sync::Arc::new(crate::server_app_state::ServerAppState {
+                                let #app_state_snake_case = std::sync::Arc::new(server_app_state::ServerAppState {
                                     #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
                                     #config_snake_case,
                                     project_git_info: &git_info::PROJECT_GIT_INFO,
@@ -6410,43 +6410,43 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     tcp_listener,
                                     axum::Router::new()
                                     .merge(#ident::#routes_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case)
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case)
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_create_many_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_create_one_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_test_read_many_by_non_existent_primary_keys_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_test_read_many_by_equal_to_created_primary_keys_cloned
                                     ))
                                     #(#table_field_idents_routes_handle_vec_token_stream)*
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_read_one_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_update_many_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_update_one_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_delete_many_cloned
                                     ))
                                     .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<crate::server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
+                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
                                         &table_delete_one_cloned
                                     ))
                                     .into_make_service(),

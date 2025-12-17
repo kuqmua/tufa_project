@@ -1,5 +1,3 @@
-pub mod server_app_state;
-
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]

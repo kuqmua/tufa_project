@@ -1,0 +1,17 @@
+[package]
+name = "server_app_state"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = {version = "=0.4.42", features = ["serde"]}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+config_lib = {path = "../config_lib"}
+common_routes = {path = "../common_routes"}
+git_info = {path = "../git_info"}
+app_state = {path = "../app_state"}
+server_config = {path = "../server_config"}
+postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
+
+[lints]
+workspace = true

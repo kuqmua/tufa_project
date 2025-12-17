@@ -71,6 +71,7 @@ server_types = {path = "../server_types"}# local dev test without commits versio
 app_state = {path = "../app_state"}
 common_routes = {path = "../common_routes"}
 server_config = {path = "../server_config"}
+server_app_state = {path = "../server_app_state"}
 #
 # async-std = "1.10.0"
 # displaydoc = "0.2.3"
