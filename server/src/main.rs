@@ -17,12 +17,12 @@ fn main() {
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
                 println!("trying to up server on {service_socket_address}");
-                let app_state = std::sync::Arc::new(common::app_state::AppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });
+                let app_state = std::sync::Arc::new(common::server_app_state::ServerAppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });
                 axum::serve(
                     tokio::net::TcpListener::bind(service_socket_address).await.expect("error 3f294e7c-3386-497f-b76c-c0364d59a60d"),
                     axum::Router::new()
-                        .merge(common_routes::common_routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
-                        .merge(common::table_example::TableExample::routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common_routes::common_routes(std::sync::Arc::<common::server_app_state::ServerAppState<'_>>::clone(&app_state)))
+                        .merge(common::table_example::TableExample::routes(std::sync::Arc::<common::server_app_state::ServerAppState<'_>>::clone(&app_state)))
                         .layer(
                             tower_http::cors::CorsLayer::new()
                                 // .allow_methods([
