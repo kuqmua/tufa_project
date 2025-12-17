@@ -7,13 +7,10 @@ version = "0.1.0"
 
 [dependencies]
 axum = {version = "=0.7.4", features = ["macros"]}
-chrono = {version = "=0.4.42", features = ["serde"]}
-dotenv = {version = "=0.15.0"}
 http = {version = "=0.2.9"}
 reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 secrecy = {version = "=0.8.0", features = ["serde"]}
 serde = {version = "=1.0.224", features = ["derive"]}
-serde_derive = {version = "=1.0.224"}
 serde_json = {version = "=1.0.145"}
 thiserror = {version = "=1.0.48"}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
@@ -27,7 +24,6 @@ error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
 config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
-common_routes = {path = "../common_routes"}
 server_config = {path = "../server_config"}
 server_app_state = {path = "../server_app_state"}
 
