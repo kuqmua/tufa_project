@@ -36,19 +36,19 @@ fn main() {
                         //         // #[derive(utoipa::OpenApi)]
                         //     //     #[openapi(
                         //     //     paths(
-                        //     //         server_types::server::routes::git_info::git_info,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::create_many,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::create_one,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::read_many,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::read_one,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::update_many,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::update_one,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::delete_many,
-                        //     //         // server_types::repositories_types::server::routes::api::cats::delete_one
+                        //     //         server_table_example::server::routes::git_info::git_info,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::create_many,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::create_one,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::read_many,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::read_one,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::update_many,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::update_one,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::delete_many,
+                        //     //         // server_table_example::repositories_types::server::routes::api::cats::delete_one
                         //     //     ),
                         //     //     components(
                         //     //             schemas(
-                        //     //                 server_types::server::routes::git_info::GitInfo,
+                        //     //                 server_table_example::server::routes::git_info::GitInfo,
                         //     //                 error_occurence_lib::code_occurence::StdTimeDuration,
                         //     //                 error_occurence_lib::code_occurence::CodeOccurence,
                         //     //                 //

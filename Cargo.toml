@@ -32,6 +32,7 @@ members = [
   "server",
   "server_app_state",
   "server_config",
+  "server_table_example",
   "server_types",
   "telegram_bot",
   "config_lib/generate_getter_traits_for_struct_fields",
