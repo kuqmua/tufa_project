@@ -269,7 +269,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -290,7 +290,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -313,7 +313,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -345,7 +345,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                 return response;
                             }
@@ -365,7 +365,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                             return response;
                         }
@@ -395,7 +395,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -419,7 +419,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -443,7 +443,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -474,7 +474,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -499,7 +499,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -521,7 +521,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -544,7 +544,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -554,7 +554,7 @@ impl TableExample {
                 let mut acc = Vec::new();
                 while let Some(value) = match postgresql_crud::TryStreamExt::try_next(&mut rows).await {
                     Ok(value) => match value {
-                        Some(value) => match TableExampleReadOnlyIds::try_from(value) {
+                        Some(value) => match <TableExampleReadOnlyIds as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value) {
                             Ok(value) => Some(value),
                             Err(error_0) => {
                                 drop(rows);
@@ -575,7 +575,7 @@ impl TableExample {
                                             ),
                                         };
                                         eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                         return response;
                                     }
@@ -593,7 +593,7 @@ impl TableExample {
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                     return response;
                                 }
@@ -620,7 +620,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -638,7 +638,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -663,7 +663,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateManyResponseVariants::from_handle(error)));//here
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -816,7 +816,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -837,7 +837,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -860,7 +860,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -886,7 +886,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -912,7 +912,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -936,7 +936,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -960,7 +960,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -990,7 +990,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -1014,7 +1014,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1036,7 +1036,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1059,14 +1059,14 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
             };
             let value = {
                 match binded_query.fetch_one(executor.as_mut()).await {
-                    Ok(value) => match TableExampleReadOnlyIds::try_from(value) {
+                    Ok(value) => match <TableExampleReadOnlyIds as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value) {
                         Ok(value) => value,
                         Err(error_0) => {
                             if let Err(error_1) = executor.rollback().await {
@@ -1085,7 +1085,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -1103,7 +1103,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -1125,7 +1125,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -1143,7 +1143,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -1164,7 +1164,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleCreateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1317,7 +1317,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -1338,7 +1338,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -1361,7 +1361,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -1386,7 +1386,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -1410,7 +1410,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -1453,7 +1453,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                 return response;
                             }
@@ -1479,7 +1479,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                             return response;
                         }
@@ -1503,7 +1503,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                 return response;
                             }
@@ -1534,7 +1534,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -1558,7 +1558,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -1582,7 +1582,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1604,7 +1604,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1632,7 +1632,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -1654,7 +1654,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -1814,7 +1814,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -1835,7 +1835,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -1858,7 +1858,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -1883,7 +1883,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -1905,7 +1905,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -1932,7 +1932,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -1956,7 +1956,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -1978,7 +1978,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -2002,7 +2002,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -2022,7 +2022,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleReadOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -2175,7 +2175,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -2196,7 +2196,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -2219,13 +2219,13 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
             },
         };
-        let update_for_query_vec = parameters.payload.0.into_iter().map(|element| TableExampleUpdateForQuery::from(element)).collect::<Vec<TableExampleUpdateForQuery>>();
+        let update_for_query_vec = parameters.payload.0.into_iter().map(|element| TableExampleUpdateForQuery::from_handle(element)).collect::<Vec<TableExampleUpdateForQuery>>();
         let query_string = {
             let mut increment: u64 = 0;
             let elements = {
@@ -2262,7 +2262,7 @@ impl TableExample {
                                                     ),
                                                 };
                                                 eprintln!("{error}");
-                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                                 return response;
                                             }
@@ -2284,7 +2284,7 @@ impl TableExample {
                                                     ),
                                                 };
                                                 eprintln!("{error}");
-                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                                 return response;
                                             }
@@ -2328,7 +2328,7 @@ impl TableExample {
                                                     ),
                                                 };
                                                 eprintln!("{error}");
-                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                                 return response;
                                             }
@@ -2350,7 +2350,7 @@ impl TableExample {
                                                     ),
                                                 };
                                                 eprintln!("{error}");
-                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                                 return response;
                                             }
@@ -2390,7 +2390,7 @@ impl TableExample {
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                     return response;
                                 }
@@ -2413,7 +2413,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                             return response;
                         }
@@ -2444,7 +2444,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                             return response;
                         }
@@ -2474,7 +2474,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -2497,7 +2497,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -2522,7 +2522,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -2545,7 +2545,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -2572,7 +2572,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -2599,7 +2599,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -2627,7 +2627,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -2653,7 +2653,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -2675,7 +2675,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -2698,7 +2698,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -2708,7 +2708,7 @@ impl TableExample {
                 let mut acc = Vec::new();
                 while let Some(value) = match postgresql_crud::TryStreamExt::try_next(&mut rows).await {
                     Ok(value) => match value {
-                        Some(value) => match TableExampleReadOnlyIds::try_from(value) {
+                        Some(value) => match <TableExampleReadOnlyIds as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value) {
                             Ok(value) => Some(value),
                             Err(error_0) => {
                                 drop(rows);
@@ -2729,7 +2729,7 @@ impl TableExample {
                                             ),
                                         };
                                         eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                         return response;
                                     }
@@ -2747,7 +2747,7 @@ impl TableExample {
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                     return response;
                                 }
@@ -2774,7 +2774,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -2792,7 +2792,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -2817,7 +2817,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -2970,7 +2970,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -2991,7 +2991,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -3014,13 +3014,13 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
             },
         };
-        let update_for_query = TableExampleUpdateForQuery::from(parameters.payload);
+        let update_for_query = TableExampleUpdateForQuery::from_handle(parameters.payload);
         let query_string = {
             let mut increment: u64 = 0;
             let columns = {
@@ -3045,7 +3045,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                 return response;
                             }
@@ -3072,7 +3072,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                                 return response;
                             }
@@ -3099,7 +3099,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -3121,7 +3121,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -3150,7 +3150,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -3176,7 +3176,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -3201,7 +3201,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -3226,7 +3226,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -3252,7 +3252,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -3277,7 +3277,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -3299,7 +3299,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -3322,14 +3322,14 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
             };
             let value = {
                 match binded_query.fetch_one(executor.as_mut()).await {
-                    Ok(value) => match TableExampleReadOnlyIds::try_from(value) {
+                    Ok(value) => match <TableExampleReadOnlyIds as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&value) {//here
                         Ok(value) => value,
                         Err(error_0) => {
                             if let Err(error_1) = executor.rollback().await {
@@ -3348,7 +3348,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -3366,7 +3366,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -3388,7 +3388,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -3406,7 +3406,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -3427,7 +3427,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleUpdateOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -3580,7 +3580,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -3601,7 +3601,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -3624,7 +3624,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -3651,7 +3651,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                         return response;
                     }
@@ -3680,7 +3680,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -3704,7 +3704,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -3726,7 +3726,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -3749,7 +3749,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -3780,7 +3780,7 @@ impl TableExample {
                                             ),
                                         };
                                         eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                         return response;
                                     }
@@ -3798,7 +3798,7 @@ impl TableExample {
                                         ),
                                     };
                                     eprintln!("{error}");
-                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                     return response;
                                 }
@@ -3825,7 +3825,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -3843,7 +3843,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -3868,7 +3868,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteManyResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -4021,7 +4021,7 @@ impl TableExample {
                 ),
             };
             eprintln!("{error}");
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
             *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
             return response;
         }
@@ -4042,7 +4042,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                 return response;
             }
@@ -4065,7 +4065,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
                     return response;
                 }
@@ -4093,7 +4093,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -4117,7 +4117,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -4139,7 +4139,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -4162,7 +4162,7 @@ impl TableExample {
                         ),
                     };
                     eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                     *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                     return response;
                 }
@@ -4188,7 +4188,7 @@ impl TableExample {
                                     ),
                                 };
                                 eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                                 return response;
                             }
@@ -4206,7 +4206,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -4228,7 +4228,7 @@ impl TableExample {
                                 ),
                             };
                             eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                             return response;
                         }
@@ -4246,7 +4246,7 @@ impl TableExample {
                             ),
                         };
                         eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                         *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                         return response;
                     }
@@ -4267,7 +4267,7 @@ impl TableExample {
                     ),
                 };
                 eprintln!("{error}");
-                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from(error)));
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(TableExampleDeleteOneResponseVariants::from_handle(error)));
                 *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
                 return response;
             }
@@ -5208,8 +5208,8 @@ impl TableExampleUpdateForQuery {
     }
 }
 //here
-impl From<TableExampleUpdate> for TableExampleUpdateForQuery {
-    fn from(value: TableExampleUpdate) -> Self {
+impl TableExampleUpdateForQuery {
+    fn from_handle(value: TableExampleUpdate) -> Self {
         Self {
             primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.primary_key_column),
             column_0: match value.column_0 {
@@ -5227,6 +5227,25 @@ impl From<TableExampleUpdate> for TableExampleUpdateForQuery {
         }
     }
 }
+// impl From<TableExampleUpdate> for TableExampleUpdateForQuery {
+//     fn from(value: TableExampleUpdate) -> Self {
+//         Self {
+//             primary_key_column: <postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.primary_key_column),
+//             column_0: match value.column_0 {
+//                 Some(value) => Some(postgresql_crud::Value {
+//                     value: <postgresql_crud::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.value),
+//                 }),
+//                 None => None,
+//             },
+//             column_142: match value.column_142 {
+//                 Some(value) => Some(postgresql_crud::Value {
+//                     value: <server_types::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::UpdateForQuery::from(value.value),
+//                 }),
+//                 None => None,
+//             },
+//         }
+//     }
+// }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct TableExampleCreateManyPayload(pub Vec<TableExampleCreate>);
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for TableExampleCreateManyPayload {
@@ -5250,8 +5269,9 @@ pub enum TableExampleCreateManyResponseVariants {
     RowAndRollback { row: String, rollback: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleCreateManyErrorNamed> for TableExampleCreateManyResponseVariants {
-    fn from(value: TableExampleCreateManyErrorNamed) -> Self {
+//here
+impl TableExampleCreateManyResponseVariants {
+    fn from_handle(value: TableExampleCreateManyErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleCreateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleCreateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5264,6 +5284,20 @@ impl From<TableExampleCreateManyErrorNamed> for TableExampleCreateManyResponseVa
         }
     }
 }
+// impl From<TableExampleCreateManyErrorNamed> for TableExampleCreateManyResponseVariants {
+//     fn from(value: TableExampleCreateManyErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleCreateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleCreateManyErrorNamed {
     CheckBodySize {
@@ -5361,8 +5395,9 @@ pub enum TableExampleCreateOneResponseVariants {
     QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleCreateOneErrorNamed> for TableExampleCreateOneResponseVariants {
-    fn from(value: TableExampleCreateOneErrorNamed) -> Self {
+//here
+impl TableExampleCreateOneResponseVariants {
+    fn from_handle(value: TableExampleCreateOneErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5375,6 +5410,20 @@ impl From<TableExampleCreateOneErrorNamed> for TableExampleCreateOneResponseVari
         }
     }
 }
+// impl From<TableExampleCreateOneErrorNamed> for TableExampleCreateOneResponseVariants {
+//     fn from(value: TableExampleCreateOneErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleCreateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleCreateOneErrorNamed {
     CheckBodySize {
@@ -5492,8 +5541,9 @@ pub enum TableExampleReadManyResponseVariants {
     NotUniqueField { not_unique_field: TableExampleSelect, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleReadManyErrorNamed> for TableExampleReadManyResponseVariants {
-    fn from(value: TableExampleReadManyErrorNamed) -> Self {
+//here
+impl TableExampleReadManyResponseVariants {
+    fn from_handle(value: TableExampleReadManyErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleReadManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleReadManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5506,6 +5556,20 @@ impl From<TableExampleReadManyErrorNamed> for TableExampleReadManyResponseVarian
         }
     }
 }
+// impl From<TableExampleReadManyErrorNamed> for TableExampleReadManyResponseVariants {
+//     fn from(value: TableExampleReadManyErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence } => Self::NotUniqueField { not_unique_field, code_occurence },
+//             TableExampleReadManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleReadManyErrorNamed {
     CheckBodySize {
@@ -5619,8 +5683,9 @@ pub enum TableExampleReadOneResponseVariants {
     QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleReadOneErrorNamed> for TableExampleReadOneResponseVariants {
-    fn from(value: TableExampleReadOneErrorNamed) -> Self {
+//here
+impl TableExampleReadOneResponseVariants {
+    fn from_handle(value: TableExampleReadOneErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleReadOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5633,6 +5698,20 @@ impl From<TableExampleReadOneErrorNamed> for TableExampleReadOneResponseVariants
         }
     }
 }
+// impl From<TableExampleReadOneErrorNamed> for TableExampleReadOneResponseVariants {
+//     fn from(value: TableExampleReadOneErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::NotUniqueField { not_unique_field, code_occurence } => Self::NotUniqueField { not_unique_field, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleReadOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleReadOneErrorNamed {
     CheckBodySize {
@@ -5816,8 +5895,9 @@ pub enum TableExampleUpdateManyResponseVariants {
     QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleUpdateManyErrorNamed> for TableExampleUpdateManyResponseVariants {
-    fn from(value: TableExampleUpdateManyErrorNamed) -> Self {
+//here
+impl TableExampleUpdateManyResponseVariants {
+    fn from_handle(value: TableExampleUpdateManyErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5830,6 +5910,20 @@ impl From<TableExampleUpdateManyErrorNamed> for TableExampleUpdateManyResponseVa
         }
     }
 }
+// impl From<TableExampleUpdateManyErrorNamed> for TableExampleUpdateManyResponseVariants {
+//     fn from(value: TableExampleUpdateManyErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleUpdateManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleUpdateManyErrorNamed {
     CheckBodySize {
@@ -5927,8 +6021,9 @@ pub enum TableExampleUpdateOneResponseVariants {
     QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleUpdateOneErrorNamed> for TableExampleUpdateOneResponseVariants {
-    fn from(value: TableExampleUpdateOneErrorNamed) -> Self {
+//here
+impl TableExampleUpdateOneResponseVariants {
+    fn from_handle(value: TableExampleUpdateOneErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -5941,6 +6036,20 @@ impl From<TableExampleUpdateOneErrorNamed> for TableExampleUpdateOneResponseVari
         }
     }
 }
+// impl From<TableExampleUpdateOneErrorNamed> for TableExampleUpdateOneResponseVariants {
+//     fn from(value: TableExampleUpdateOneErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleUpdateOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleUpdateOneErrorNamed {
     CheckBodySize {
@@ -6049,8 +6158,9 @@ pub enum TableExampleDeleteManyResponseVariants {
     QueryPart { error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleDeleteManyErrorNamed> for TableExampleDeleteManyResponseVariants {
-    fn from(value: TableExampleDeleteManyErrorNamed) -> Self {
+//here
+impl TableExampleDeleteManyResponseVariants {
+    fn from_handle(value: TableExampleDeleteManyErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -6063,6 +6173,20 @@ impl From<TableExampleDeleteManyErrorNamed> for TableExampleDeleteManyResponseVa
         }
     }
 }
+// impl From<TableExampleDeleteManyErrorNamed> for TableExampleDeleteManyResponseVariants {
+//     fn from(value: TableExampleDeleteManyErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+//             TableExampleDeleteManyErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleDeleteManyErrorNamed {
     CheckBodySize {
@@ -6170,8 +6294,9 @@ pub enum TableExampleDeleteOneResponseVariants {
     RowAndRollback { row: String, rollback: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
     TryBind { try_bind: String, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
-impl From<TableExampleDeleteOneErrorNamed> for TableExampleDeleteOneResponseVariants {
-    fn from(value: TableExampleDeleteOneErrorNamed) -> Self {
+//here
+impl TableExampleDeleteOneResponseVariants {
+    fn from_handle(value: TableExampleDeleteOneErrorNamed) -> Self {
         match value.into_serialize_deserialize_version() {
             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
@@ -6183,6 +6308,19 @@ impl From<TableExampleDeleteOneErrorNamed> for TableExampleDeleteOneResponseVari
         }
     }
 }
+// impl From<TableExampleDeleteOneErrorNamed> for TableExampleDeleteOneResponseVariants {
+//     fn from(value: TableExampleDeleteOneErrorNamed) -> Self {
+//         match value.into_serialize_deserialize_version() {
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+//             TableExampleDeleteOneErrorNamedWithSerializeDeserialize::TryBind { try_bind, code_occurence } => Self::TryBind { try_bind, code_occurence },
+//         }
+//     }
+// }
 #[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
 pub enum TableExampleDeleteOneErrorNamed {
     CheckBodySize {
