@@ -16,9 +16,7 @@
         },
     }
 }]
-#[postgresql_crud::create_many_additional_logic{
-    // println!("GeneratePostgresqlTypesExample create_many log");
-}]
+#[postgresql_crud::create_many_additional_logic{}]
 #[postgresql_crud::create_one_additional_logic{}]
 #[postgresql_crud::read_many_additional_logic{}]
 #[postgresql_crud::read_one_additional_logic{}]
@@ -27,7 +25,7 @@
 #[postgresql_crud::delete_many_additional_logic{}]
 #[postgresql_crud::delete_one_additional_logic{}]
 #[postgresql_crud::common_additional_logic{}]
-pub struct Example {
+pub struct TableExample {
     // #[generate_postgresql_crud_primary_key]
     // pub primary_key: postgresql_crud::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
     #[generate_postgresql_table_primary_key]

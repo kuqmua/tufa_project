@@ -13,7 +13,7 @@ fn main() {
                 // }
                 println!("trying to create postgres pool...");
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
-                common::example::Example::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
+                common::table_example::TableExample::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
                 println!("trying to up server on {service_socket_address}");
@@ -22,7 +22,7 @@ fn main() {
                     tokio::net::TcpListener::bind(service_socket_address).await.expect("error 3f294e7c-3386-497f-b76c-c0364d59a60d"),
                     axum::Router::new()
                         .merge(common_routes::common_routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
-                        .merge(common::example::Example::routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common::table_example::TableExample::routes(std::sync::Arc::<common::app_state::AppState<'_>>::clone(&app_state)))
                         .layer(
                             tower_http::cors::CorsLayer::new()
                                 // .allow_methods([
