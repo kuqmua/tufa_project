@@ -32,3 +32,6 @@ futures = {version = "=0.3.28"}
 
 [lints]
 workspace = true
+
+[features]
+test-utils = ["postgresql_crud/test-utils"]
