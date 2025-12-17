@@ -15,7 +15,6 @@ fn main() {
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
                 common::example::Example::prepare_postgresql(&postgres_pool).await.expect("error 647fa499-c465-432d-ba4a-498f3e943ada");
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
-                // println!("trying to create redis session storage...");
                 let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
                 println!("trying to up server on {service_socket_address}");
                 let app_state = std::sync::Arc::new(common::app_state::AppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });

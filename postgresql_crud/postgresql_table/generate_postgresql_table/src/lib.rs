@@ -6304,15 +6304,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 service_socket_address: <config_lib::ServiceSocketAddress as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                     "127.0.0.1:8080".to_string()
                                 ).expect("error b5b3915a-0e18-4815-a614-6b0e9a00d73f").0,
-                                timezone: <config_lib::Timezone as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "10800".to_string()
-                                ).expect("error d00d8998-52f9-45c1-a4b0-c93bc95a313e").0,
-                                redis_url: <config_lib::RedisUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
-                                    "redis://127.0.0.1:6379".to_string()
-                                ).expect("error 4a839f29-f8a7-4193-b1cc-84524e304c9f").0,
                                 database_url: <config_lib::DatabaseUrl as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                     "postgres://postgres:postgres@127.0.0.1:5432/postgres?connect_timeout=10".to_string()
                                 ).expect("error f9c20f05-3cdf-46ae-b6d3-5943c627f0df").0,
+                                timezone: <config_lib::Timezone as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
+                                    "10800".to_string()
+                                ).expect("error d00d8998-52f9-45c1-a4b0-c93bc95a313e").0,
                                 tracing_level: <config_lib::TracingLevel as config_lib::TryFromStdEnvVarOk>::try_from_std_env_var_ok(
                                     "error".to_string()
                                 ).expect("error 957178c9-4d92-4110-b524-9dc21d147a7c").0,

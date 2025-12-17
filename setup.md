@@ -316,10 +316,6 @@ rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld"]
 ```
 cargo watch -x check -x test -x "run"
 ```
-#### pull redis image <a name="heading2731"></a>
-```
-sudo docker pull redis
-```
 #### launch Postgres <a name="heading2732"></a>
 ```
 sudo ./scripts/init_db.sh
@@ -396,10 +392,6 @@ This is due to a limit enforced by the operating system on the maximum number of
 #### Error: I/O error: Permission denied (os error 13) fix <a name="heading2747"></a>
 ```
 sudo chown -R $(whoami) session_based_authentication/
-```
-#### The script needs to be marked as executable and then launched: <a name="heading2748"></a>
-```
-chmod +x ./scripts/init_redis.sh ./script/init_redis.sh
 ```
 #### see logs with cargo test <a name="heading2749"></a>
 ```
