@@ -1,12 +1,5 @@
-pub mod global_variables;
-pub mod routes;
-// #[cfg(test)]
-// mod tests;
-//query! containing mods
-// pub mod authentication;
-// pub mod idempotency;
-// pub mod issue_delivery_worker;
-
+//todo - maybe Arc<RwLock<Store>> ?
+pub static CONFIG: std::sync::OnceLock<common::repositories_types::server::config::Config> = std::sync::OnceLock::new();
 fn main() {
     std::thread::Builder::new()
         .stack_size(16 * 1024 * 1024) // 16 MB
@@ -14,7 +7,7 @@ fn main() {
             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 5995c954-bb76-4620-b819-2b26f4b8f728").block_on(async {
                 tracing_subscriber::fmt::init();
                 println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
-                let config = global_variables::runtime::config::CONFIG.get_or_init(|| common::repositories_types::server::config::Config::try_from_env().expect("error d74a6e5f-069a-49ea-9bac-19512e7b2bc5"));
+                let config = CONFIG.get_or_init(|| common::repositories_types::server::config::Config::try_from_env().expect("error d74a6e5f-069a-49ea-9bac-19512e7b2bc5"));
                 // if let Err(error) = common::repositories_types::server::telemetry::init_subscriber::init_subscriber(common::repositories_types::server::telemetry::get_subscriber::get_subscriber(env!("CARGO_PKG_VERSION"), config, std::io::stdout)) {
                 //     panic!("common::repositories_types::server::telemetry::init_subscriber::init_subscriber failed, error: {error:#?}")
                 // }
