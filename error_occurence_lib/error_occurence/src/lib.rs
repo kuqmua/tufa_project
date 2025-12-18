@@ -82,10 +82,18 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     } else {
                         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
                     };
-                    let fields_idents_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
-                        let element_ident = &element.ident;
-                        quote::quote! {#element_ident,}
-                    });
+                    let fields_idents_excluding_code_occurence_token_stream = {
+                        let acc_token_stream = fields.iter()
+                        .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
+                        .map(|current_element| &current_element.ident)
+                        .collect::<Vec<&syn::Ident>>();
+                        if acc_token_stream.is_empty() {
+                            proc_macro2::TokenStream::new()
+                        }
+                        else {
+                            quote::quote!{#(#acc_token_stream),*,}
+                        }
+                    };
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(&fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).fold(String::new(), |mut acc, element| {
                         use std::fmt::Write as _;
                         let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
@@ -196,7 +204,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     });
                     quote::quote! {
                         Self::#element_ident {
-                            #(#fields_idents_excluding_code_occurence_token_stream)*
+                            #fields_idents_excluding_code_occurence_token_stream
                             ..
                         } => {
                             format!(
