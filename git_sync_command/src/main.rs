@@ -13,7 +13,7 @@ fn main() {
     };
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf.into_os_string().into_string().expect("cannot convert canonicalize_pathbuf_as_string to string");
     let contents = std::fs::read_to_string(format!("{parent_dir_pathbuf_as_string}.gitmodules")).expect("cannot read .gitmodules file");
-    let _unused = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
+    let _unused_git_version = std::process::Command::new("git").args(["version"]).output().expect("failed use git version (just to check is there git installed or not)");
     let substring_value = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
@@ -21,7 +21,7 @@ fn main() {
         .collect();
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
-    let _unused = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
+    let _unused_git_reset_hard = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
     for path in paths_vec {
         let path = format!("{canonicalize_pathbuf_as_string}/{path}");
         println!("start {path}");

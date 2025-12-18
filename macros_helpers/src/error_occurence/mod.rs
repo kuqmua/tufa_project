@@ -50,9 +50,9 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
 }
 impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
     type Error = String;
-    fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
+    fn try_from(syn_field: &syn::Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;
-        for attr in &value.attrs {
+        for attr in &syn_field.attrs {
             if attr.path().segments.len() == 1 {
                 let first_segment_ident = match &attr.path().segments.first() {
                     Some(value) => &value.ident,
@@ -148,7 +148,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
     };
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
-        let element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+        let current_element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
         let element_type_token_stream = {
             let element_type = &element.ty;
             quote::quote! {#element_type}
@@ -161,30 +161,22 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 }
             }
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
-            ErrorOccurenceFieldAttribute::EoErrorOccurence => {
-                let element_type_with_serialize_deserialize_token_stream = {
-                    let value = format!(
-                        "{}{}",
-                        {
-                            let element_type = &element.ty;
-                            quote::quote! {#element_type}
-                        },
-                        naming::WithSerializeDeserializeUpperCamelCase
-                    );
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                quote::quote! {
-                    #element_type_with_serialize_deserialize_token_stream
-                }
-            }
+            ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
+                "{}{}",
+                {
+                    let element_type = &element.ty;
+                    quote::quote! {#element_type}
+                },
+                naming::WithSerializeDeserializeUpperCamelCase
+            ).parse::<proc_macro2::TokenStream>().expect("error 201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote! {
                     Vec<#std_string_string>
                 }
             }
             ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-                let segments = if let syn::Type::Path(value) = &element.ty {
-                    &value.path.segments
+                let segments = if let syn::Type::Path(path_value) = &element.ty {
+                    &path_value.path.segments
                 } else {
                     panic!("Type::Path(value) != &element.ty");
                 };
@@ -192,15 +184,14 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 let first_segment = segments.iter().next().expect("no .next() element");
                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "args.len() != 1");
-                    let value = format!(
+                    format!(
                         "{}{}",
                         {
                             let first_arg = args.iter().next().expect("args.iter().next() is None");
                             quote::quote! {#first_arg}
                         },
                         naming::WithSerializeDeserializeUpperCamelCase,
-                    );
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    ).parse::<proc_macro2::TokenStream>().expect("error 22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
                     panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
                 };
@@ -220,18 +211,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                 let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
-                let element_hashmap_value_type_with_serialize_deserialize_token_stream = {
-                    let value = format!("{}{}", quote::quote! {#second_argument}, naming::WithSerializeDeserializeUpperCamelCase,);
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
+                let element_hashmap_value_type_with_serialize_deserialize_token_stream = format!(
+                    "{}{}",
+                    quote::quote! {#second_argument},
+                    naming::WithSerializeDeserializeUpperCamelCase
+                ).parse::<proc_macro2::TokenStream>().expect("error 86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
                 }
             }
         };
-        quote::quote! {
-            #element_ident: #element_type_with_serialize_deserialize_token_stream,
-        }
+        quote::quote! {#current_element_ident: #element_type_with_serialize_deserialize_token_stream,}
     });
     let code_occurence_snake_case_token_stream = naming::CodeOccurenceSnakeCase;
     quote::quote! {

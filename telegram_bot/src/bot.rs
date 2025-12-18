@@ -13,21 +13,24 @@ enum Command {
 
 #[tokio::main]
 pub async fn start_bot() {
-    let bot = teloxide::Bot::from_env();
-    Box::pin(teloxide::repl(bot, async |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| {
-        log::info!("answer");
-        let _unused = teloxide::prelude::Requester::send_message(
-            &bot,
-            msg.chat.id,
-            match cmd {
-                Command::Help => <Command as teloxide::utils::command::BotCommands>::descriptions().to_string(),
-                Command::Username(username) => format!("Your username is @{username}."),
-                Command::UsernameAndAge { username, age } => format!("Your username is @{username} and age is {age}."),
-                Command::GitInfo => "123message".to_owned(),
-            },
+    Box::pin(
+        teloxide::repl(
+            teloxide::Bot::from_env(),
+            async |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| {
+                log::info!("answer");
+                let _unused = teloxide::prelude::Requester::send_message(
+                    &bot,
+                    msg.chat.id,
+                    match cmd {
+                        Command::Help => <Command as teloxide::utils::command::BotCommands>::descriptions().to_string(),
+                        Command::Username(username) => format!("Your username is @{username}."),
+                        Command::UsernameAndAge { username, age } => format!("Your username is @{username} and age is {age}."),
+                        Command::GitInfo => "123message".to_owned(),
+                    },
+                )
+                .await?;
+                Ok(())
+            }
         )
-        .await?;
-        Ok(())
-    }))
-    .await;
+    ).await;
 }

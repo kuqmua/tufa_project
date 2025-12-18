@@ -6,8 +6,8 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
     let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error 20948d87-2c38-4896-96b6-239d9c9a0a38");
-            for element in &element {
-                assert!(regex.is_match(element), "invalid element {element}, regex: {REGEX_VALUE}");
+            for inner_element in &element {
+                assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
             }
         }
         let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, element| {
@@ -82,15 +82,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
     let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("error cba1b5fb-6833-416b-96d9-b64b7a308008");
-            for element in &element {
-                assert!(regex.is_match(element), "invalid element {element}, regex: {REGEX_VALUE}");
+            for inner_element in &element {
+                assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
             }
         }
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for element in &element {
-                if element == self_match_name {
+            for inner_element in &element {
+                if inner_element == self_match_name {
                     is_self_exists_and_only_one = true;
                     break;
                 }

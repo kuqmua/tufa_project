@@ -148,14 +148,14 @@ mod tests {
             if path.is_dir() {
                 for entry in std::fs::read_dir(path).expect("error 81837dea-c20f-469a-b365-528f0b9f50a4") {
                     let entry = entry.expect("error bb7ee3cf-9f34-4d81-9160-496f7ca5e43b");
-                    let path = entry.path();
-                    if path.is_dir() {
-                        for element in get_cargo_toml_contents_recursive(&path) {
+                    let current_path = entry.path();
+                    if current_path.is_dir() {
+                        for element in get_cargo_toml_contents_recursive(&current_path) {
                             acc.push(element);
                         }
                     }
-                    if path.is_file() && path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
-                        let mut file = std::fs::File::open(&path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
+                    if current_path.is_file() && current_path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
+                        let mut file = std::fs::File::open(&current_path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
                         let mut contents = String::new();
                         let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
                         acc.push(contents);
@@ -199,7 +199,7 @@ mod tests {
                             let value = &value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91");
                             if let toml::Value::Table(value) = value {
                                 let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
-                                    if let toml::Value::String(value) = version_value {
+                                    if let toml::Value::String(version_value_string) = version_value {
                                         fn is_valid_version(value: &str) -> bool {
                                             let Some(version) = value.strip_prefix('=') else { return false };
                                             let parts: Vec<&str> = version.split('.').collect();
@@ -220,7 +220,7 @@ mod tests {
                                             }
                                             true
                                         }
-                                        assert!(is_valid_version(value), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
+                                        assert!(is_valid_version(version_value_string), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
                                     } else {
                                         panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
                                     }
