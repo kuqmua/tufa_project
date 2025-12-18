@@ -548,11 +548,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
 
             let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_token_stream(&import_path, &content_token_stream);
-            let generate_ident_token_stream = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
+            let generate_ident_token_stream = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                 let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
                 let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
                 let not_null_or_nullable_rust = current_not_null_or_nullable.rust();
-                let (rust_part, postgresql_part) = match &postgresql_json_type_pattern {
+                let (rust_part, postgresql_part) = match &current_postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => (rust_type_name.to_string(), postgresql_json_type_name.to_string()),
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                         let d1 = dimension1_not_null_or_nullable;
@@ -610,6 +610,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
+            let ident_not_null_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
             let ident_token_stream = {
                 let ident_token_stream = quote::quote! {
                     #[derive(Debug)]
@@ -641,28 +642,32 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let generate_current_ident_origin_non_wrapping = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
             let generate_into_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
+                let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, current_content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {match #match_token_stream {
-                        Some(#value_snake_case) => Some(#value_snake_case.0 #content_token_stream),
+                        Some(#value_snake_case) => Some(#value_snake_case.0 #current_content_token_stream),
                         None => None
                     }}
                 };
                 let element_dot_zero_token_stream = quote::quote! {#element_snake_case.0};
-                let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                    quote::quote! {.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
+                let generate_into_iter_map_element_collect_token_stream = |current_content_token_stream: &dyn quote::ToTokens| {
+                    quote::quote! {.into_iter().map(|#element_snake_case|#current_content_token_stream).collect()}
                 };
-                let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
-                    let content_token_stream = match &not_null_or_nullable {
+                let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
+                    generate_into_iter_map_element_collect_token_stream(&match &current_not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(&element_dot_zero_token_stream, &proc_macro2::TokenStream::new()),
-                    };
-                    generate_into_iter_map_element_collect_token_stream(&content_token_stream)
+                    })
                 };
-                let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(&quote::quote! {#element_dot_zero_token_stream #content_token_stream}),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                        let match_element_zero_token_stream = generate_match_element_zero_token_stream(&element_dot_zero_token_stream, &content_token_stream);
-                        quote::quote! {.into_iter().map(|#element_snake_case|#match_element_zero_token_stream).collect()}
+                let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |
+                    current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                    current_content_token_stream: &dyn quote::ToTokens
+                | {
+                    match &current_not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(&quote::quote! {#element_dot_zero_token_stream #current_content_token_stream}),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let match_element_zero_token_stream = generate_match_element_zero_token_stream(&element_dot_zero_token_stream, &current_content_token_stream);
+                            quote::quote! {.into_iter().map(|#element_snake_case|#match_element_zero_token_stream).collect()}
+                        }
                     }
                 };
                 let into_inner_content_token_stream = match &postgresql_json_type_pattern {
@@ -737,14 +742,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
                     )
                 };
-                let number_token_stream = quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
+                let number_validation_token_stream = quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
                     multiple_of: None,
                     maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
                     exclusive_maximum: None,
                     minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
                     exclusive_minimum: None,
                 }))};
-                let string_token_stream = quote::quote! {Some(Box::new(schemars::schema::StringValidation {
+                let string_validation_token_stream = quote::quote! {Some(Box::new(schemars::schema::StringValidation {
                     max_length: Some(36),
                     min_length: Some(36),
                     pattern: None,
@@ -757,7 +762,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         enum_values: &none_upper_camel_case,
                         const_value: &none_upper_camel_case,
                         subschemas: &none_upper_camel_case,
-                        number: &number_token_stream,
+                        number: &number_validation_token_stream,
                         string: &none_upper_camel_case,
                         array: &none_upper_camel_case,
                         object: &none_upper_camel_case,
@@ -782,7 +787,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             const_value: &none_upper_camel_case,
                             subschemas: &none_upper_camel_case,
                             number: &none_upper_camel_case,
-                            string: &string_token_stream,
+                            string: &string_validation_token_stream,
                             array: &none_upper_camel_case,
                             object: &none_upper_camel_case,
                             reference: &none_upper_camel_case,
@@ -1191,8 +1196,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let ident_select_token_stream = {
                     let content_token_stream = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
                         let mut arguments_token_stream = vec![];
-                        for element in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
+                        for current_element in 1..=array_dimension.to_usize() {
+                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
                             arguments_token_stream.push(quote::quote! {
                                 #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
                             });
@@ -1223,8 +1228,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                         };
                         let mut arguments_token_stream = vec![];
-                        for element in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 26ca29fb-fd98-466a-a380-974a6c5d4166");
+                        for current_element in 1..=array_dimension.to_usize() {
+                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 26ca29fb-fd98-466a-a380-974a6c5d4166");
                             arguments_token_stream.push(quote::quote! {
                                 #dimension_number_pagination_token_stream: #content_token_stream
                             });
@@ -1624,9 +1629,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                     .iter()
-                    .map(|element| {
-                        let element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = element;
-                        element_handle
+                    .map(|current_element| {
+                        let current_element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = current_element;
+                        current_element_handle
                     })
                     .collect(),
                     &ident,
@@ -1634,14 +1639,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                     &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 ),
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                    let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
-                    let ident_as_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
-                    quote::quote! {
-                        pub type #ident_where_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<
-                            <#ident_as_token_stream as #import_path::PostgresqlJsonType>::Where
-                        >;
-                    }
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                    pub type #ident_where_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<
+                        <#ident_not_null_token_stream as #import_path::PostgresqlJsonType>::Where
+                    >;
                 }
             };
             //exists because need to implement .into_inner() for fields (only for read subtype)
@@ -2612,7 +2613,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.0.clone().into()},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_iter_or_match_token_stream(not_null_or_nullable, &generate_update_to_read_only_ids_token_stream(&generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern), not_null_or_nullable)),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => 
+                                generate_iter_or_match_token_stream(
+                                    not_null_or_nullable,
+                                    &generate_update_to_read_only_ids_token_stream(
+                                        &ident_not_null_token_stream,
+                                        not_null_or_nullable
+                                    )
+                                ),
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_iter_or_match_token_stream(
                                 not_null_or_nullable,
@@ -2736,9 +2744,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             quote::quote! {#ident_where_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
-                            let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&current_ident);
-                            let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&current_ident);
+                            let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
+                            let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                             let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(#value_snake_case.into())});
                             quote::quote! {
                                 #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_snake_case.0.0 {
@@ -2791,8 +2798,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_token_stream},
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
-                                    let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&current_ident);
+                                    let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                                     quote::quote! {
                                         #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_dot_zero_dot_zero {
                                             Some(#value_snake_case) => Some(
@@ -2861,8 +2867,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#ident_where_upper_camel_case #content_token_stream},
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let current_ident = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
-                                    let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&current_ident);
+                                    let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                                     quote::quote! {
                                         #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_dot_zero_dot_zero {
                                             Some(#value_snake_case) => Some(
