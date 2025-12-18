@@ -5,34 +5,9 @@ GET http://127.0.0.1:8080/health_check HTTP/1.1
 
 GET http://127.0.0.1:8080/git_info HTTP/1.1
 
-###
-
-GET http://127.0.0.1:8080/src/main.rs HTTP/1.1
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
-
-###
-
-GET http://127.0.0.1:8080/header_extractor_example HTTP/1.1
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
-
-###
-
-GET http://127.0.0.1:8080/extract_custom_header_example HTTP/1.1
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
-
-###
-
-GET http://127.0.0.1:8080/middleware_message_example HTTP/1.1
-
-###
-
-GET http://127.0.0.1:8080/read_middleware_custom_header HTTP/1.1
-commit: 64bd54ae5431a4e8d959a57d1a733f71ef077786
-
-
 ######################################################
 
-POST http://127.0.0.1:8080/example/create_many HTTP/1.1
+POST http://127.0.0.1:8080/table_example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
@@ -49,13 +24,13 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 ###
 
-GET http://127.0.0.1:8080/example/create_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/create_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### 
 
-POST http://127.0.0.1:8080/example/create_one HTTP/1.1
+POST http://127.0.0.1:8080/table_example/create_one HTTP/1.1
 content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
@@ -63,13 +38,13 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 ###
  
-GET http://127.0.0.1:8080/example/create_one_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/create_one_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-POST http://127.0.0.1:8080/example/read_many HTTP/1.1
+POST http://127.0.0.1:8080/table_example/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
@@ -330,13 +305,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 ###
 
-GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/read_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-POST http://127.0.0.1:8080/example/read_one HTTP/1.1
+POST http://127.0.0.1:8080/table_example/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -344,13 +319,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-GET http://127.0.0.1:8080/example/read_one_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/read_one_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### fix this  
  
-PATCH http://127.0.0.1:8080/example/update_many HTTP/1.1 
+PATCH http://127.0.0.1:8080/table_example/update_many HTTP/1.1 
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
@@ -527,13 +502,13 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 ###
 
-GET http://127.0.0.1:8080/example/update_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/update_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ### 
 
-PATCH http://127.0.0.1:8080/example/update_one HTTP/1.1
+PATCH http://127.0.0.1:8080/table_example/update_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -627,13 +602,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/example/update_one_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/update_one_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ####"^first_test_name_create$"  
 
-DELETE http://127.0.0.1:8080/example/delete_many HTTP/1.1
+DELETE http://127.0.0.1:8080/table_example/delete_many HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -1119,13 +1094,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/example/delete_many_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/delete_many_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
 
-DELETE http://127.0.0.1:8080/example/delete_one HTTP/1.1
+DELETE http://127.0.0.1:8080/table_example/delete_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
@@ -1135,6 +1110,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 ###
  
-GET http://127.0.0.1:8080/example/delete_one_payload_example HTTP/1.1
+GET http://127.0.0.1:8080/table_example/delete_one_payload_example HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
