@@ -800,7 +800,7 @@ separated_literal_suffix = { level = "deny", priority = 0 }
 serde_api_misuse = { level = "deny", priority = 0 }
 shadow_reuse = { level = "allow", priority = 0 }
 shadow_same = { level = "deny", priority = 0 }
-shadow_unrelated = { level = "allow", priority = 0 }
+shadow_unrelated = { level = "deny", priority = 0 }
 short_circuit_statement = { level = "deny", priority = 0 }
 should_implement_trait = { level = "deny", priority = 0 }
 should_panic_without_expect = { level = "deny", priority = 0 }
