@@ -264,47 +264,49 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     } else {
                         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
                     };
-                    let fields_idents_token_stream = fields.iter().map(|element| &element.ident);
-                    let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified).map(|element| {
-                        let element_ident = &element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        let conversion_token_stream = match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).expect("error 449c3781-1900-4ed4-b784-485db5a08508") {
+                    let fields_idents_token_stream = fields.iter().map(|current_element| &current_element.ident);
+                    let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter()
+                    .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
+                    .map(|current_element| {
+                        let current_element_ident = &current_element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+                        let conversion_token_stream = match macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::try_from(current_element).expect("error 449c3781-1900-4ed4-b784-485db5a08508") {
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#element_ident)
+                                    #current_element_ident: {
+                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#current_element_ident)
                                     }
                                 }
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize | macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
-                                    #element_ident
+                                    #current_element_ident
                                 }
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        #element_ident.into_serialize_deserialize_version()
+                                    #current_element_ident: {
+                                        #current_element_ident.into_serialize_deserialize_version()
                                     }
                                 }
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        #element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
+                                    #current_element_ident: {
+                                        #current_element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
                                     }
                                 }
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        #element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
+                                    #current_element_ident: {
+                                        #current_element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        #element_ident.into_iter().map(|(key, value)|
+                                    #current_element_ident: {
+                                        #current_element_ident.into_iter().map(|(key, value)|
                                             (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
                                         ).collect()
                                     }
@@ -312,8 +314,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             }
                             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote::quote! {
-                                    #element_ident: {
-                                        #element_ident.into_iter().map(
+                                    #current_element_ident: {
+                                        #current_element_ident.into_iter().map(
                                             |(key, value)|(key, value.into_serialize_deserialize_version())
                                         ).collect()
                                     }
