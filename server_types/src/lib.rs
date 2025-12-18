@@ -1,6 +1,4 @@
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)] //
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)] //
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
     {
