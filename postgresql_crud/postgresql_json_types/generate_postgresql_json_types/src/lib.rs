@@ -1194,20 +1194,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let ident_select_token_stream = {
                 let ident_select_token_stream = {
-                    let content_token_stream = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                        let mut arguments_token_stream = vec![];
-                        for current_element in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
-                            arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
-                            });
+                    let content_token_stream = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
+                        |()| quote::quote! {;},
+                        |array_dimension| {
+                            let mut arguments_token_stream = vec![];
+                            for current_element in 1..=array_dimension.to_usize() {
+                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
+                                });
+                            }
+                            quote::quote! {{#(#arguments_token_stream),*}}
                         }
-                        quote::quote! {{
-                            #(#arguments_token_stream),*
-                        }}
-                    } else {
-                        quote::quote! {;}
-                    };
+                    );
                     quote::quote! {
                         #[derive(
                             Debug,
@@ -1222,22 +1221,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| {
-                    let content_token_stream = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                        let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
-                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
-                        };
-                        let mut arguments_token_stream = vec![];
-                        for current_element in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 26ca29fb-fd98-466a-a380-974a6c5d4166");
-                            arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: #content_token_stream
-                            });
+                    let content_token_stream = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
+                        |()| proc_macro2::TokenStream::new(),
+                        |array_dimension| {
+                            let content_token_stream: &dyn quote::ToTokens = match &default_some_one_or_default_some_one_with_max_page_size {
+                                postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
+                            };
+                            let mut arguments_token_stream = vec![];
+                            for current_element in 1..=array_dimension.to_usize() {
+                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 26ca29fb-fd98-466a-a380-974a6c5d4166");
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: #content_token_stream
+                                });
+                            }
+                            quote::quote! {#(#arguments_token_stream),*}
                         }
-                        quote::quote! {#(#arguments_token_stream),*}
-                    } else {
-                        proc_macro2::TokenStream::new()
-                    };
+                    );
                     quote::quote! {Self{#content_token_stream}}
                 };
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream =
@@ -1941,44 +1941,64 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             //last child dimension value does not matter - null or type - works both good
                             use postgresql_crud_macros_common::NotNullOrNullable;
                             let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
-                            let format_handle = if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                                let generate_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
-                                    let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
-                                    let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
-                                    format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
-                                };
-                                if let Ok(array_dimension_select_pattern) = ArrayDimensionSelectPattern::try_from(&array_dimension) {
-                                    //Dimension1 does not fit into pattern. its only for 2+ dimensions
-                                    let generate_d_number_elem = |content: usize| format!("d{content}_elem");
-                                    let generate_d_number_ord = |content: usize| format!("d{content}_elem");
-                                    let generate_dot_value = |content: &str| format!("{content}.value");
-                                    let generate_as_value_where = |first_content: &str, second_content: &str| format!("as {first_content}(value, {second_content}) where {second_content}");
-                                    let one = 1;
-                                    generate_jsonb_agg(
-                                        &{
-                                            let mut current_usize_value = array_dimension_select_pattern.to_usize();
-                                            array_dimension_select_pattern.select_array().into_iter().fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, current_not_null_or_nullable| {
-                                                let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("error a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
-                                                let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
-                                                let value = generate_jsonb_agg(&acc, &d_usize_minus_one_elem_value, &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)), current_usize_value);
-                                                acc = match &current_not_null_or_nullable {
-                                                    NotNullOrNullable::NotNull => value,
-                                                    NotNullOrNullable::Nullable => format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end"),
-                                                };
-                                                current_usize_value = current_usize_value_minus_one;
-                                                acc
-                                            })
+                            let format_handle = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
+                                |()| column_name_and_maybe_field_getter_field_ident.clone(),
+                                |array_dimension| {
+                                    let generate_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
+                                        let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
+                                        let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
+                                        format!(
+                                            "select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}"
+                                        )
+                                    };
+                                    ArrayDimensionSelectPattern::try_from(&array_dimension).map_or_else(
+                                        |()| generate_jsonb_agg(
+                                            "value",
+                                            &format!("select {column_name_and_maybe_field_getter_field_ident}"),
+                                            "where ordinality",
+                                            1,
+                                        ),
+                                        |array_dimension_select_pattern| {
+                                            // Dimension1 does not fit into pattern. its only for 2+ dimensions
+                                            let generate_d_number_elem = |content: usize| format!("d{content}_elem");
+                                            let generate_d_number_ord = |content: usize| format!("d{content}_elem");
+                                            let generate_dot_value = |content: &str| format!("{content}.value");
+                                            let generate_as_value_where =
+                                                |first_content: &str, second_content: &str| format!("as {first_content}(value, {second_content}) where {second_content}");
+                                            let one = 1;
+                                            generate_jsonb_agg(
+                                                &{
+                                                    let mut current_usize_value = array_dimension_select_pattern.to_usize();
+                                                    array_dimension_select_pattern
+                                                        .select_array()
+                                                        .into_iter()
+                                                        .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, current_not_null_or_nullable| {
+                                                            let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("error a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
+                                                            let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
+                                                            let value = generate_jsonb_agg(
+                                                                &acc,
+                                                                &d_usize_minus_one_elem_value,
+                                                                &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
+                                                                current_usize_value,
+                                                            );
+                                                            acc = match &current_not_null_or_nullable {
+                                                                NotNullOrNullable::NotNull => value,
+                                                                NotNullOrNullable::Nullable => {
+                                                                    format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
+                                                                }
+                                                            };
+                                                            current_usize_value = current_usize_value_minus_one;
+                                                            acc
+                                                        })
+                                                },
+                                                &column_name_and_maybe_field_getter_field_ident,
+                                                &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
+                                                one,
+                                            )
                                         },
-                                        &column_name_and_maybe_field_getter_field_ident,
-                                        &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
-                                        one,
                                     )
-                                } else {
-                                    generate_jsonb_agg("value", &format!("select {column_name_and_maybe_field_getter_field_ident}"), "where ordinality", 1)
-                                }
-                            } else {
-                                column_name_and_maybe_field_getter_field_ident.clone()
-                            };
+                                },
+                            );
                             match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => format_handle,
                                 NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),

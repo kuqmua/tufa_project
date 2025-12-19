@@ -208,10 +208,7 @@ where
     T: std::fmt::Debug + PartialEq + Clone + for<'t_lifetime> PostgresqlTypeWhereFilter<'t_lifetime> + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, QueryPartErrorNamed> {
-        match &self.0 {
-            Some(value) => value.query_part(increment, column, is_need_to_add_logical_operator),
-            None => Ok(format!("{column} = 'null'")), //todo fix
-        }
+        self.0.as_ref().map_or_else(|| Ok(format!("{column} = 'null'")), |value| value.query_part(increment, column, is_need_to_add_logical_operator))
     }
     fn query_bind(self, query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
         match self.0 {
@@ -1011,13 +1008,13 @@ impl Default for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     }
 }
 pub fn increment_checked_add_one_returning_increment(increment: &mut u64) -> Result<u64, QueryPartErrorNamed> {
-    match increment.checked_add(1) {
-        Some(value) => {
+    increment.checked_add(1).map_or_else(
+        || Err(QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+        |value| {
             *increment = value;
             Ok(value)
-        }
-        None => Err(QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-    }
+        },
+    )
 }
 
 #[derive(Debug, Clone, Copy)]
