@@ -5387,9 +5387,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 } else {
                     proc_macro2::TokenStream::new()
                 };
-                let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|current_element: &SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
-                    let current_field_type = &current_element.syn_field.ty;
+                let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|current_current_element: &SynFieldWrapper| {
+                    let current_field_ident = &current_current_element.field_ident;
+                    let current_field_type = &current_current_element.syn_field.ty;
                     if field_ident == current_field_ident {
                         quote::quote! {
                             if let Some(#value_snake_case) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
@@ -5404,9 +5404,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         proc_macro2::TokenStream::new()
                     }
                 });
-                let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
-                    let current_field_type = &current_element.syn_field.ty;
+                let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|syn_field_wrapper: &SynFieldWrapper| {
+                    let current_field_ident = &syn_field_wrapper.field_ident;
+                    let current_field_type = &syn_field_wrapper.syn_field.ty;
                     let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream);
                     quote::quote! {
                         #current_field_ident: match &#element_snake_case.#current_field_ident {
@@ -5415,17 +5415,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     }
                 });
-                let ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
-                    let current_field_type = &current_element.syn_field.ty;
+                let ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|syn_field_wrapper: &SynFieldWrapper| {
+                    let current_field_ident = &syn_field_wrapper.field_ident;
+                    let current_field_type = &syn_field_wrapper.syn_field.ty;
                     if field_ident == current_field_ident {
                         quote::quote! {#current_field_ident: Some(<#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::update_to_read_only_ids(&update))}
                     } else {
                         quote::quote! {#current_field_ident: None}
                     }
                 });
-                let ident_update_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
+                let ident_update_parameters_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|syn_field_wrapper: &SynFieldWrapper| {
+                    let current_field_ident = &syn_field_wrapper.field_ident;
                     if field_ident == current_field_ident {
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote! {
                             #update_snake_case.clone()
@@ -5435,11 +5435,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         none_token_stream.clone()
                     }
                 });
-                let ident_read_fields_initialization_without_primary_key_after_update_one_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
+                let ident_read_fields_initialization_without_primary_key_after_update_one_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|syn_field_wrapper: &SynFieldWrapper| {
+                    let current_field_ident = &syn_field_wrapper.field_ident;
                     if field_ident == current_field_ident {
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
-                            let current_field_type = &current_element.syn_field.ty;
+                            let current_field_type = &syn_field_wrapper.syn_field.ty;
                             quote::quote! {
                                 <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::previous_read_merged_with_option_update_into_read(
                                     <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
@@ -5481,12 +5481,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ]
                     }
                 };
-                let std_option_option_ident_where_many_content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let current_field_ident = &element.field_ident;
-                    quote::quote! {
-                        #current_field_ident: None
-                    }
-                });
                 quote::quote! {{
                     let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
                         let mut #acc_snake_case = vec![];
