@@ -2017,7 +2017,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let (const_fields_start_end_token_stream, const_fields_sqlx_types_chrono_naive_time_token_stream, const_fields_sqlx_types_time_time_token_stream, const_fields_sqlx_types_chrono_naive_date_time_token_stream, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream) = {
                         let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                            let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
+                            let field_names_token_stream = vec_token_stream.iter().map(|current_element| generate_quotes::double_quotes_token_stream(&current_element));
                             quote::quote! {
                                 #[doc(hidden)]
                                 const FIELDS: &'static [&'static str] = &[#(#field_names_token_stream),*];
@@ -2032,9 +2032,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
-                    let generate_impl_serde_de_visitor_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
+                    let generate_impl_serde_de_visitor_for_tokens_token_stream = |current_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
-                            impl<'de> _serde::de::Visitor<'de> for #ident_token_stream {
+                            impl<'de> _serde::de::Visitor<'de> for #current_ident_token_stream {
                                 #content_token_stream
                             }
                         }
@@ -2412,8 +2412,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let time_upper_camel_case = naming::TimeUpperCamelCase;
                 let date_naive_upper_camel_case = naming::DateNaiveUpperCamelCase;
                 let time_upper_camel_camel_case = naming::TimeUpperCamelCase;
-                let start_upper_camel_case = naming::StartUpperCamelCase;
-                let end_upper_camel_case = naming::EndUpperCamelCase;
                 let invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case = naming::InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase;
                 let nanosecond_precision_is_not_supported_upper_camel_case = naming::NanosecondPrecisionIsNotSupportedUpperCamelCase;
                 let included_start_greater_than_included_end_upper_camel_case = naming::IncludedStartGreaterThanIncludedEndUpperCamelCase;
@@ -2757,11 +2755,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 Ok(Self(sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }))
                                             }
                                         };
-                                        let generate_ok_self_sqlx_postgres_types_pg_range_token_stream = |ident_origin_token_stream: &dyn quote::ToTokens| {
+                                        let generate_ok_self_sqlx_postgres_types_pg_range_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
                                             quote::quote! {
                                                 let #value_snake_case = sqlx::postgres::types::PgRange {
                                                     #start_snake_case: match #value_snake_case.#start_snake_case {
-                                                        std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
+                                                        std::ops::Bound::Included(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
                                                             Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -2770,7 +2768,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         },
-                                                        std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
+                                                        std::ops::Bound::Excluded(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
                                                             Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -2782,7 +2780,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                     },
                                                     #end_snake_case: match #value_snake_case.#end_snake_case {
-                                                        std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
+                                                        std::ops::Bound::Included(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
                                                             Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -2791,7 +2789,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         },
-                                                        std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
+                                                        std::ops::Bound::Excluded(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
                                                             Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -2976,10 +2974,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(postgresql_type_impl_new_for_deserialize) => {
                                         let parameters_token_stream = {
-                                            let generate_start_end_std_std_ops_bound_token_stream = |ident_token_stream: &dyn quote::ToTokens| {
+                                            let generate_start_end_std_std_ops_bound_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
                                                 quote::quote! {
-                                                    #start_snake_case: std::ops::Bound<#ident_token_stream>,
-                                                    #end_snake_case: std::ops::Bound<#ident_token_stream>
+                                                    #start_snake_case: std::ops::Bound<#current_ident_token_stream>,
+                                                    #end_snake_case: std::ops::Bound<#current_ident_token_stream>
                                                 }
                                             };
                                             match &postgresql_type_impl_new_for_deserialize {
@@ -3084,9 +3082,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         };
                                         let content_token_stream = {
-                                            let generate_self_match_try_new_token_stream = |parameters_token_stream: &dyn quote::ToTokens, match_error_variants_token_stream: &dyn quote::ToTokens| {
+                                            let generate_self_match_try_new_token_stream = |current_parameters_token_stream: &dyn quote::ToTokens, match_error_variants_token_stream: &dyn quote::ToTokens| {
                                                 quote::quote! {
-                                                    match Self::#try_new_snake_case(#parameters_token_stream) {
+                                                    match Self::#try_new_snake_case(#current_parameters_token_stream) {
                                                         Ok(#value_snake_case) => Ok(#value_snake_case),
                                                         Err(#error_snake_case) => match #error_snake_case {
                                                             #match_error_variants_token_stream
@@ -3496,7 +3494,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream
                 }
             };
-            let generate_pub_struct_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault| {
+            let generate_pub_struct_tokens_token_stream = |current_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault| {
                 let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
                 let maybe_impl_default_token_stream: &dyn quote::ToTokens = match &impl_default {
                     ImplDefault::True => &quote::quote! {Default,},
@@ -3512,7 +3510,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         serde::Serialize,
                         serde::Deserialize,
                     )]
-                    pub struct #ident_token_stream #content_token_stream
+                    pub struct #current_ident_token_stream #content_token_stream
                 }
             };
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
@@ -3673,15 +3671,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePattern::Standart => quote::quote! {;},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             let mut arguments_token_stream = vec![];
-                            for element in 1..=array_dimensions_number {
-                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
+                            for current_element in 1..=array_dimensions_number {
+                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
                                 arguments_token_stream.push(quote::quote! {
                                     #dimension_number_pagination_token_stream: crate::PaginationStartsWithOne
                                 });
                             }
-                            quote::quote! {{
-                                #(#arguments_token_stream),*
-                            }}
+                            quote::quote! {{#(#arguments_token_stream),*}}
                         }
                     },
                     ImplDefault::True,
