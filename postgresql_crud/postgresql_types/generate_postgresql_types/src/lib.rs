@@ -668,18 +668,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_type");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
             GeneratePostgresqlTypesConfig::All => PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
-                let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
+                let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(vec![], |mut current_acc, postgresql_type_pattern| {
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
-                            acc.push(postgresql_type_pattern);
+                            current_acc.push(postgresql_type_pattern);
                         }
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                acc.push(PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable });
+                                current_acc.push(PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable });
                             }
                         }
                     }
-                    acc
+                    current_acc
                 });
                 for postgresql_type_pattern in postgresql_type_pattern_all {
                     match &postgresql_type_pattern {
