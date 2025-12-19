@@ -10,13 +10,13 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
                 assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
             }
         }
-        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, element| {
-            let element_upper_camel_case_stringified = naming_common::AsRefStrToUpperCamelCaseStringified::case(element);
+        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, current_element| {
+            let element_upper_camel_case_stringified = naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element);
             acc.push_str(&element_upper_camel_case_stringified);
             acc
         });
-        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc, (index, element)| {
-            let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
+        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc, (index, current_element)| {
+            let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(current_element);
             if index == 0 {
                 acc.push_str(&element_snake_case_stringified);
             } else {
@@ -100,27 +100,27 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, element| {
-                acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element));
+            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, current_element| {
+                acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
                 acc
             });
-            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc, element| {
-                if element == "self" {
+            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc, current_element| {
+                if current_element == "self" {
                     acc.push_str("{value}");
                 } else {
-                    acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element));
+                    acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
                 }
                 acc
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
-                let mut value = element.iter().fold(String::new(), |mut acc, element| {
+                let mut value = element.iter().fold(String::new(), |mut acc, current_element| {
                     let symbol = '_';
-                    if element == "self" {
+                    if current_element == "self" {
                         use std::fmt::Write as _;
                         assert!(write!(acc, "{{value}}{symbol}").is_ok(), "error f58bba77-30d8-4019-a084-577a3fda0d4a");
                     } else {
                         use std::fmt::Write as _;
-                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element)).is_ok(), "error 7b9f8bb3-cefa-4863-a612-8e3b889d1e6e");
+                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "error 7b9f8bb3-cefa-4863-a612-8e3b889d1e6e");
                     }
                     acc
                 });

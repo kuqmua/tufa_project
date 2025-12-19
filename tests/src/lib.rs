@@ -13,14 +13,14 @@ mod tests {
             }
         }
     }
-    fn lints_vec_from_cargo_toml(value: RustOrClippy) -> Vec<String> {
+    fn lints_vec_from_cargo_toml(rust_or_clippy: RustOrClippy) -> Vec<String> {
         let mut file = std::fs::File::open("../Cargo.toml").expect("error 39a0d238-d776-4b4e-ac2a-62f76a60f527");
         let mut contents = String::new();
         let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 2f5914f2-bff0-40d3-9948-07f2c562779b");
         let table = contents.parse::<toml::Table>().expect("error beb11586-c73d-4686-9ae2-a219f3a3ef4a");
         let workspace = table.get("workspace").expect("error f728192d-b3e6-470a-b304-8c58adabada5");
         let lints = workspace.get("lints").expect("error 82eaea37-3726-4e28-837f-a3063ff3d3fc");
-        let toml_value_table = match lints.get(value.name()).expect("error dbd02f72-2647-4e41-a26f-a04cef447957") {
+        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("error dbd02f72-2647-4e41-a26f-a04cef447957") {
             toml::Value::Table(value) => value,
             toml::Value::String(_) | toml::Value::Integer(_) | toml::Value::Float(_) | toml::Value::Boolean(_) | toml::Value::Datetime(_) | toml::Value::Array(_) => panic!("not ok"),
         };
@@ -146,8 +146,8 @@ mod tests {
         fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> Vec<String> {
             let mut acc = vec![];
             if path.is_dir() {
-                for entry in std::fs::read_dir(path).expect("error 81837dea-c20f-469a-b365-528f0b9f50a4") {
-                    let entry = entry.expect("error bb7ee3cf-9f34-4d81-9160-496f7ca5e43b");
+                for entry_dir in std::fs::read_dir(path).expect("error 81837dea-c20f-469a-b365-528f0b9f50a4") {
+                    let entry = entry_dir.expect("error bb7ee3cf-9f34-4d81-9160-496f7ca5e43b");
                     let current_path = entry.path();
                     if current_path.is_dir() {
                         for element in get_cargo_toml_contents_recursive(&current_path) {
@@ -192,12 +192,11 @@ mod tests {
             {
                 assert!(cargo_toml.lints == Some(Lints { workspace: true }), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
                 let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>| {
-                    if let Some(value) = deps {
-                        let mut keys = value.keys().clone().collect::<Vec<_>>();
+                    if let Some(deps_value) = deps {
+                        let mut keys = deps_value.keys().clone().collect::<Vec<_>>();
                         keys.sort();
                         for key in keys {
-                            let value = &value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91");
-                            if let toml::Value::Table(value) = value {
+                            if let toml::Value::Table(value) = &deps_value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91") {
                                 let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
                                     if let toml::Value::String(version_value_string) = version_value {
                                         fn is_valid_version(value: &str) -> bool {

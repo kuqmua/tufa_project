@@ -29,7 +29,7 @@ impl SourcePlaceType {
         }
         let name = "SOURCE_PLACE_TYPE";
         match std::env::var(name) {
-            Ok(value) => match <Self as std::str::FromStr>::from_str(&value) {
+            Ok(env_value) => match <Self as std::str::FromStr>::from_str(&env_value) {
                 Ok(value) => value,
                 Err(error) => {
                     let default = Self::default();

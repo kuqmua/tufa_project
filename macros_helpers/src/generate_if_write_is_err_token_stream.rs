@@ -7,6 +7,6 @@ pub fn generate_if_write_is_err_token_stream(parameters_token_stream: &dyn quote
     }}
 }
 pub fn generate_if_write_is_err_curly_braces_token_stream(parameters_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    let content_token_stream = generate_if_write_is_err_token_stream(parameters_token_stream, content_token_stream);
-    quote::quote! {{#content_token_stream}}
+    let token_stream = generate_if_write_is_err_token_stream(parameters_token_stream, content_token_stream);
+    quote::quote! {{#token_stream}}
 }

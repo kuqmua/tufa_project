@@ -47,13 +47,14 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
     where
         D: serde::Deserializer<'de>,
     {
-        let value = match u16::deserialize(deserializer) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(error);
+        match Self::try_from(
+            match u16::deserialize(deserializer) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
             }
-        };
-        match Self::try_from(value) {
+        ) {
             Ok(value) => Ok(value),
             Err(error) => Err(serde::de::Error::custom(error)),
         }

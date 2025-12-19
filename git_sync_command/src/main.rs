@@ -22,8 +22,8 @@ fn main() {
     println!("{:#?} {}", paths_vec, paths_vec.len());
     println!("working..");
     let _unused_git_reset_hard = std::process::Command::new("git").args(["reset", "--hard"]).output().expect("failed use git reset --hard");
-    for path in paths_vec {
-        let path = format!("{canonicalize_pathbuf_as_string}/{path}");
+    for path_element in paths_vec {
+        let path = format!("{canonicalize_pathbuf_as_string}/{path_element}");
         println!("start {path}");
         if let Err(error) = std::process::Command::new("git").args(["checkout", "."]).current_dir(&path).output() {
             panic!("git checkout . error: {error}, path: {path}")

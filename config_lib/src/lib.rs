@@ -16,13 +16,11 @@ pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match <std::net::SocketAddr as std::str::FromStr>::from_str(&value) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdNetSocketAddr { std_net_socket_addr: error });
-            }
-        };
-        Ok(Self(value))
+        <std::net::SocketAddr as std::str::FromStr>::from_str(&value)
+            .map(Self)
+            .map_err(|error| Self::Error::StdNetSocketAddr {
+                std_net_socket_addr: error,
+            })
     }
 }
 
@@ -36,16 +34,17 @@ pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<i32>() {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(Self::Error::StdPrimitiveI32Parsing { std_primitive_i32_parsing: error });
+        let Some(fixed_offset) = chrono::FixedOffset::east_opt(
+            match value.parse::<i32>() {
+                Ok(value_i32) => value_i32,
+                Err(error) => {
+                    return Err(Self::Error::StdPrimitiveI32Parsing { std_primitive_i32_parsing: error });
+                }
             }
-        };
-        let Some(value) = chrono::FixedOffset::east_opt(value) else {
+        ) else {
             return Err(Self::Error::ChronoFixedOffset { chrono_fixed_offset: String::from("not east") });
         };
-        Ok(Self(value))
+        Ok(Self(fixed_offset))
     }
 }
 
@@ -58,12 +57,11 @@ pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
 impl TryFromStdEnvVarOk for RedisUrl {
     type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
+        Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
         } else {
             secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -76,12 +74,11 @@ pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
 impl TryFromStdEnvVarOk for MongoUrl {
     type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
+        Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
         } else {
             secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -94,12 +91,11 @@ pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
 impl TryFromStdEnvVarOk for DatabaseUrl {
     type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
+        Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
         } else {
             secrecy::Secret::new(value)
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -112,12 +108,11 @@ pub enum TryFromStdEnvVarOkStartingCheckLinkErrorNamed {
 impl TryFromStdEnvVarOk for StartingCheckLink {
     type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = if value.is_empty() {
+        Ok(Self(if value.is_empty() {
             return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
         } else {
             value
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -130,13 +125,12 @@ pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
 impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<types::TracingLevel>() {
-            Ok(value) => value,
+        Ok(Self(match value.parse::<types::TracingLevel>() {
+            Ok(handle) => handle,
             Err(error) => {
                 return Err(Self::Error::AppStateTracingLevelParsing { app_state_tracing_type_parsing: error });
             }
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -149,13 +143,12 @@ pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
 impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<types::SourcePlaceType>() {
-            Ok(value) => value,
+        Ok(Self(match value.parse::<types::SourcePlaceType>() {
+            Ok(handle) => handle,
             Err(error) => {
                 return Err(Self::Error::AppStateSourcePlaceTypeParsing { app_state_source_place_type_parsing: error });
             }
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -168,13 +161,12 @@ pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<bool>() {
-            Ok(value) => value,
+        Ok(Self(match value.parse::<bool>() {
+            Ok(handle) => handle,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveBoolParsing { std_primitive_bool_parsing: error });
             }
-        };
-        Ok(Self(value))
+        }))
     }
 }
 
@@ -187,12 +179,11 @@ pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let value = match value.parse::<usize>() {
-            Ok(value) => value,
+        Ok(Self(match value.parse::<usize>() {
+            Ok(handle) => handle,
             Err(error) => {
                 return Err(Self::Error::StdPrimitiveUsizeParsing { std_primitive_usize_parsing: error });
             }
-        };
-        Ok(Self(value))
+        }))
     }
 }

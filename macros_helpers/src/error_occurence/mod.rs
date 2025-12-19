@@ -97,10 +97,10 @@ pub fn attribute_view(attribute: &str) -> String {
 }
 
 pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(value: &'value_lifetime syn::Field, std_snake_case: &naming::StdSnakeCase, std_string_string: &token_patterns::StdStringString) -> &'value_lifetime syn::GenericArgument {
-    let segments = if let syn::Type::Path(value) = &value.ty {
-        &value.path.segments
+    let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
+        &syn_type_path.path.segments
     } else {
-        panic!("Type::Path(value) != &element.ty");
+        panic!("Type::Path(syn_type_path) != &element.ty");
     };
     assert!(segments.len() == 3, "segments.len() != 3");
     let first_segment = segments.iter().next().expect("no .next()) element");
