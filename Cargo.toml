@@ -768,7 +768,7 @@ redundant_guards = { level = "deny", priority = 0 }
 redundant_locals = { level = "deny", priority = 0 }
 redundant_pattern = { level = "deny", priority = 0 }
 redundant_pattern_matching = { level = "deny", priority = 0 }
-redundant_pub_crate = { level = "allow", priority = 0 }
+redundant_pub_crate = { level = "allow", priority = 0 } #dont understand how to use correctly. conflicts with "unreachable pub"
 redundant_slicing = { level = "deny", priority = 0 }
 redundant_static_lifetimes = { level = "deny", priority = 0 }
 redundant_type_annotations = { level = "deny", priority = 0 }
