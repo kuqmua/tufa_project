@@ -6,7 +6,7 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = {version = "=1.0.224", features = ["derive"]}
+serde.workspace = true
 serde_derive = {version = "=1.0.224"}
 compile_time_git_info = {path = "./compile_time_git_info"}
 naming = {path = "../naming"}

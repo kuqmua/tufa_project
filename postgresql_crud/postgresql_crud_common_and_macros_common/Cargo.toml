@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
-serde = {version = "=1.0.224", features = ["derive"]}
+serde.workspace = true
 schemars = {version = "=0.8.22"}
 naming = {path = "../../naming"}
 

@@ -35,7 +35,7 @@ num_cpus = {version = "=1.15.0"}
 # rand = {version = "=0.8", features = ["std_rng"]}
 # regex = {version = "=1.9.3"}
 # reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
-# serde = {version = "=1.0.224", features = ["derive"]}
+# serde.workspace = true
 # serde-aux = {version = "=4.0.0"}
 # serde-xml-rs = {version = "=0.6.0"}
 # serde_derive = {version = "=1.0.224"}

@@ -8,7 +8,7 @@ generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
-serde = {version = "=1.0.224", features = ["derive"]}
+serde.workspace = true
 schemars = {version = "=0.8.22"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}

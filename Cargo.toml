@@ -635,7 +635,7 @@ module_name_repetitions = { level = "allow", priority = 0 }
 modulo_arithmetic = { level = "deny", priority = 0 }
 modulo_one = { level = "deny", priority = 0 }
 multi_assignments = { level = "deny", priority = 0 }
-multiple_crate_versions = { level = "allow", priority = 0 }
+multiple_crate_versions = { level = "allow", priority = 0 } #dont know how to fix it #here
 multiple_inherent_impl = { level = "deny", priority = 0 }
 multiple_unsafe_ops_per_block = { level = "deny", priority = 0 }
 must_use_candidate = { level = "allow", priority = 0 }
@@ -1084,3 +1084,6 @@ decimal_bitwise_operands = { level = "deny", priority = 0 }
 manual_ilog2 = { level = "deny", priority = 0 }
 ptr_offset_by_literal = { level = "deny", priority = 0 }
 needless_type_cast = { level = "deny", priority = 0 }
+
+[workspace.dependencies]
+serde = {version = "=1.0.224", features = ["derive"]}
