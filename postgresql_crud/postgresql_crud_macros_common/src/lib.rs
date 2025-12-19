@@ -54,10 +54,7 @@ pub fn generate_postgresql_type_where_token_stream(variants: &Vec<&dyn Postgresq
             let element_upper_camel_case = element.upper_camel_case();
             let prefix_where_self_upper_camel_case = element.prefix_where_self_upper_camel_case();
             let option_type_token_stream: Option<proc_macro2::TokenStream> = element.maybe_generic();
-            let type_token_stream = match option_type_token_stream {
-                Some(value) => quote::quote! {<#value>},
-                None => proc_macro2::TokenStream::new(),
-            };
+            let type_token_stream = option_type_token_stream.map_or_else(proc_macro2::TokenStream::new, |value| quote::quote! {<#value>});
             quote::quote! {#element_upper_camel_case(where_filters::#prefix_where_self_upper_camel_case #type_token_stream)}
         });
         quote::quote! {

@@ -112,11 +112,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         let maybe_derive_serde_deserialize_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
-                &if let Some(value) = maybe_additional_traits_token_stream {
-                    quote::quote! {<#t_token_stream: #value>}
-                } else {
-                    quote::quote! {<#t_token_stream>}
-                }
+                &maybe_additional_traits_token_stream.as_ref().map_or_else(|| quote::quote! {<#t_token_stream>}, |value| quote::quote! {<#t_token_stream: #value>})
             }
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
         };
@@ -132,11 +128,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
-                    if let Some(value) = &maybe_additional_traits_token_stream {
-                        quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>}
-                    } else {
-                        quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>}
-                    }
+                    maybe_additional_traits_token_stream.as_ref().map_or_else(
+                        || quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
+                        |value| quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>}
+                    )
                 }
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
             },
@@ -313,8 +308,9 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,}
     };
     let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType| {
-        if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
-            (
+        DimensionNumber::try_from(postgresql_type_pattern_handle).map_or_else(
+            |_| (proc_macro2::TokenStream::new(),proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new()),
+            |dimension_number| (
                 match &postgresql_type_or_postgresql_json_type {
                     postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                     postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
@@ -332,9 +328,7 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
                 dimensions_indexes_comma_token_stream.clone(),
                 query_self_dimensions_query_bind_query_token_stream.clone(),
             )
-        } else {
-            (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new(), PostgresqlTypeKind::Standart, proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new())
-        }
+        )
     };
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
