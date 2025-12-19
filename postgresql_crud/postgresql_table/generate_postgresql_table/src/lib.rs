@@ -793,27 +793,31 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     | -> SynVariantWrapper {
         SynVariantWrapper {
             variant: syn::Variant {
-                attrs: status_code.as_ref().map_or_else(
-                    || vec![],
-                    |value| {
-                        vec![syn::Attribute {
-                            pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
+                attrs: {
+                    let mut attributes = Vec::new();
+                    if let Some(value) = status_code.as_ref() {
+                        let mut segments = syn::punctuated::Punctuated::new();
+                        segments.push(syn::PathSegment {
+                            ident: proc_macro2::Ident::new(
+                                &naming::AsRefStrToSnakeCaseStringified::case(value),
+                                proc_macro2::Span::call_site(),
+                            ),
+                            arguments: syn::PathArguments::None,
+                        });
+                        attributes.push(syn::Attribute {
+                            pound_token: syn::token::Pound {
+                                spans: [proc_macro2::Span::call_site()],
+                            },
                             style: syn::AttrStyle::Outer,
                             bracket_token: syn::token::Bracket::default(),
                             meta: syn::Meta::Path(syn::Path {
                                 leading_colon: None,
-                                segments: {
-                                    let mut handle = syn::punctuated::Punctuated::new();
-                                    handle.push(syn::PathSegment {
-                                        ident: proc_macro2::Ident::new(&naming::AsRefStrToSnakeCaseStringified::case(value), proc_macro2::Span::call_site()),
-                                        arguments: syn::PathArguments::None,
-                                    });
-                                    handle
-                                },
+                                segments,
                             }),
-                        }]
-                    },
-                ),
+                        });
+                    }
+                    attributes
+                },
                 ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
                 fields: syn::Fields::Named(syn::FieldsNamed {
                     brace_token: syn::token::Brace::default(),
@@ -2045,7 +2049,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream = |operation: &Operation, desirable_type_token_stream: &dyn quote::ToTokens, type_variants_from_request_response_syn_variants: &Vec<syn::Variant>| -> proc_macro2::TokenStream {
         let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(operation);
         let ident_try_operation_logic_response_variants_token_stream = {
-            let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(element));
+            let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant);
             quote::quote! {
                 #derive_debug_serde_serialize_serde_deserialize
                 pub enum #ident_operation_response_variants_upper_camel_case {
