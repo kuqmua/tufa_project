@@ -137,7 +137,7 @@ mod tests {
             clippy_lints_from_docs,
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
             vec![
-                // String::from(""),
+                String::from("same_length_and_capacity")
             ],
         );
     }
