@@ -401,15 +401,15 @@ const _: () = {
                             }
                         }
                     }
-                    let __field0 = match __field0 {
-                        Some(__field0) => __field0,
+                    let __field0_value = match __field0 {
+                        Some(value) => value,
                         None => _serde::__private::de::missing_field("logical_operator")?,
                     };
-                    let __field1 = match __field1 {
-                        Some(__field1) => __field1,
+                    let __field1_value = match __field1 {
+                        Some(value) => value,
                         None => _serde::__private::de::missing_field("value")?,
                     };
-                    match PostgresqlTypeWhere::try_new(__field0, __field1) {
+                    match PostgresqlTypeWhere::try_new(__field0_value, __field1_value) {
                         Ok(value) => Ok(value),
                         Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -713,15 +713,15 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                         }
                     }
                 }
-                let __field0 = match __field0 {
-                    Some(__field0) => __field0,
+                let __field0_value = match __field0 {
+                    Some(value) => value,
                     None => serde::__private::de::missing_field("limit")?,
                 };
-                let __field1 = match __field1 {
-                    Some(__field1) => __field1,
+                let __field1_value = match __field1 {
+                    Some(value) => value,
                     None => serde::__private::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithZero::try_new(__field0, __field1) {
+                match PaginationStartsWithZero::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
@@ -992,7 +992,7 @@ pub struct NonPrimaryKeyPostgresqlTypeReadOnlyIds(pub Value<Option<()>>);
 impl sqlx::Decode<'_, sqlx::Postgres> for NonPrimaryKeyPostgresqlTypeReadOnlyIds {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(value.0),
+            Ok(decode_value) => Ok(decode_value.0),
             Err(error) => Err(error),
         }
     }
@@ -1157,14 +1157,17 @@ impl TryFrom<i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
     type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: i32) -> Result<Self, Self::Error> {
         match UnsignedPartOfStdPrimitiveI32::try_from(value) {
-            Ok(value) => {
-                if value.0 == 0 {
+            Ok(handle) => {
+                if handle.0 == 0 {
                     Err(Self::Error::IsZero { code_occurence: error_occurence_lib::code_occurence!() })
                 } else {
-                    Ok(Self(value))
+                    Ok(Self(handle))
                 }
             }
-            Err(error) => Err(Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed { value: error, code_occurence: error_occurence_lib::code_occurence!() }),
+            Err(error) => Err(Self::Error::UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+                value: error,
+                code_occurence: error_occurence_lib::code_occurence!()
+            }),
         }
     }
 }

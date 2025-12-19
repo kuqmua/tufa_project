@@ -451,19 +451,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         }
-                        let __field0 = match __field0 {
-                            Some(__field0) => __field0,
+                        let __field0_value = match __field0 {
+                            Some(value) => value,
                             None => _serde::__private::de::missing_field("postgresql_type")?,
                         };
-                        let __field1 = match __field1 {
-                            Some(__field1) => __field1,
+                        let __field1_value = match __field1 {
+                            Some(value) => value,
                             None => _serde::__private::de::missing_field("not_null_or_nullable")?,
                         };
-                        let __field2 = match __field2 {
-                            Some(__field2) => __field2,
+                        let __field2_value = match __field2 {
+                            Some(value) => value,
                             None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
-                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
+                        match PostgresqlTypeRecord::try_from((__field0_value, __field1_value, __field2_value)) {
                             Ok(value) => Ok(value),
                             Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                         }
@@ -1342,10 +1342,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         })),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
-                            let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
-                            let days_serialize_field_token_stream = generate_serialize_field_token_stream(&days_snake_case);
-                            let microseconds_serialize_field_token_stream = generate_serialize_field_token_stream(&microseconds_snake_case);
+                            let generate_serialize_field_handle_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
+                            let months_serialize_field_token_stream = generate_serialize_field_handle_token_stream(&months_snake_case);
+                            let days_serialize_field_token_stream = generate_serialize_field_handle_token_stream(&days_snake_case);
+                            let microseconds_serialize_field_token_stream = generate_serialize_field_handle_token_stream(&microseconds_snake_case);
                             quote::quote! {
                                 #serde_state_initialization_three_fields_token_stream
                                 #months_serialize_field_token_stream
@@ -4918,11 +4918,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     microseconds: #microseconds_token_stream
                                 }}
                             };
-                            let min_token_stream = generate_sqlx_postgres_types_pg_interval_token_stream(&std_primitive_i32_min_token_stream, &std_primitive_i32_min_token_stream, &quote::quote! {#std_primitive_i64_token_stream::#min_token_stream});
-                            let max_token_stream = generate_sqlx_postgres_types_pg_interval_token_stream(&std_primitive_i32_max_token_stream, &std_primitive_i32_max_token_stream, &quote::quote! {#std_primitive_i64_token_stream::#max_token_stream});
+                            let min_content_token_stream = generate_sqlx_postgres_types_pg_interval_token_stream(&std_primitive_i32_min_token_stream, &std_primitive_i32_min_token_stream, &quote::quote! {#std_primitive_i64_token_stream::#min_token_stream});
+                            let max_content_token_stream = generate_sqlx_postgres_types_pg_interval_token_stream(&std_primitive_i32_max_token_stream, &std_primitive_i32_max_token_stream, &quote::quote! {#std_primitive_i64_token_stream::#max_token_stream});
                             quote::quote! {vec![
-                                #min_token_stream,
-                                #max_token_stream
+                                #min_content_token_stream,
+                                #max_content_token_stream
                             ]}
                         }
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote! {vec![
@@ -5794,20 +5794,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         .collect::<(Vec<String>, Vec<String>)>();
     //this need only for better development experience
     if false {
-        let columns_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 79ee6381-c845-4762-a6f6-1c6b38806535")).collect::<Vec<proc_macro2::TokenStream>>();
+        let content_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 79ee6381-c845-4762-a6f6-1c6b38806535")).collect::<Vec<proc_macro2::TokenStream>>();
         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             "GeneratePostgresqlTypesExample",
             &quote::quote! {
                 struct GeneratePostgresqlTypesExample {
-                    #(#columns_token_stream)*
+                    #(#content_token_stream)*
                 }
             },
             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True,
         );
     }
     let generated = {
-        let postgresql_type_array = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error e0c9257d-e554-4147-8174-b431c364c1ac")).collect::<Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#postgresql_type_array)*}
+        let content_token_stream = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error e0c9257d-e554-4147-8174-b431c364c1ac")).collect::<Vec<proc_macro2::TokenStream>>();
+        quote::quote! {#(#content_token_stream)*}
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "GeneratePostgresqlTypes",

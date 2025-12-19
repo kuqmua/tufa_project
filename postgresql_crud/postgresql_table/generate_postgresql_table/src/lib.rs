@@ -2151,7 +2151,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let generate_ident_try_operation_error_named_token_stream = |operation: &Operation, syn_variants: &Vec<syn::Variant>| -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(operation);
-        let syn_variants = {
+        let variants = {
             let mut value = vec![];
             for element in syn_variants {
                 value.push(element.clone());
@@ -2172,7 +2172,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             });
             value
         };
-        let variants_token_stream = syn_variants.iter().map(generate_error_occurence_variant_token_stream);
+        let variants_token_stream = variants.iter().map(generate_error_occurence_variant_token_stream);
         quote::quote! {
             #derive_debug_thiserror_error_occurence
             pub enum #ident_try_operation_error_named_upper_camel_case {

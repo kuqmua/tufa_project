@@ -798,7 +798,7 @@ semicolon_inside_block = { level = "allow", priority = 0 }#thought it useless
 semicolon_outside_block = { level = "deny", priority = 0 }
 separated_literal_suffix = { level = "deny", priority = 0 }
 serde_api_misuse = { level = "deny", priority = 0 }
-shadow_reuse = { level = "allow", priority = 0 }
+shadow_reuse = { level = "deny", priority = 0 }
 shadow_same = { level = "deny", priority = 0 }
 shadow_unrelated = { level = "deny", priority = 0 }
 short_circuit_statement = { level = "deny", priority = 0 }

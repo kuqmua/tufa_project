@@ -1250,15 +1250,15 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                         }
                     }
                 }
-                let __field0 = match __field0 {
-                    Some(__field0) => __field0,
+                let __field0_value = match __field0 {
+                    Some(value) => value,
                     None => serde::__private::de::missing_field("limit")?,
                 };
-                let __field1 = match __field1 {
-                    Some(__field1) => __field1,
+                let __field1_value = match __field1 {
+                    Some(value) => value,
                     None => serde::__private::de::missing_field("offset")?,
                 };
-                match PaginationStartsWithOne::try_new(__field0, __field1) {
+                match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }

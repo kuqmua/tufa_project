@@ -2164,10 +2164,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         },
                     };
                     let generate_acc_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        let content_token_stream = generate_maybe_if_some_token_stream(not_null_or_nullable, &create_dot_zero_dot_zero_token_stream, &content_token_stream);
+                        let token_stream = generate_maybe_if_some_token_stream(not_null_or_nullable, &create_dot_zero_dot_zero_token_stream, &content_token_stream);
                         quote::quote! {
                             let mut #acc_snake_case = vec![];
-                            #content_token_stream
+                            #token_stream
                             if #acc_snake_case.is_empty() {
                                 None
                             }
@@ -2239,8 +2239,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let generate_for_index_element_into_iter_enumerate_zero_token_stream = |in_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| generate_for_index_element_into_iter_enumerate_token_stream(&postgresql_crud_macros_common::DimensionIndexNumber::Zero, &in_token_stream, &content_token_stream);
                     let generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_for_index_element_into_iter_enumerate_zero_token_stream(&starting_value_token_stream, &content_token_stream);
                     let generate_for_maybe_if_some_token_stream = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber, current_not_null_or_nullable: &NotNullOrNullable, content_token_stream: &dyn quote::ToTokens| {
-                        let content_token_stream = generate_for_index_element_into_iter_enumerate_token_stream(dimension_index_number, &value_dot_zero_token_stream, &content_token_stream);
-                        generate_maybe_if_some_value_dot_zero_token_stream(current_not_null_or_nullable, &content_token_stream)
+                        generate_maybe_if_some_value_dot_zero_token_stream(
+                            current_not_null_or_nullable,
+                            &generate_for_index_element_into_iter_enumerate_token_stream(dimension_index_number, &value_dot_zero_token_stream, &content_token_stream)
+                        )
                     };
                     let generate_down_postgresql_json_type_pattern = || match dimension_index_number_max {
                         postgresql_crud_macros_common::DimensionIndexNumber::Zero => postgresql_json_type_pattern.down_by_1(),
@@ -2966,9 +2968,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     );
     // }
     let generated = {
-        let postgresql_json_type_array = postgresql_json_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")).collect::<Vec<proc_macro2::TokenStream>>();
+        let content_token_stream = postgresql_json_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")).collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {
-            #(#postgresql_json_type_array)*
+            #(#content_token_stream)*
             // #example_token_stream
         }
     };

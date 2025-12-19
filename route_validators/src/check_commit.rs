@@ -43,8 +43,8 @@ pub fn check_commit(
                 })
             },
             |value| match value.to_str() {
-                Ok(value) => {
-                    if value == git_info::PROJECT_GIT_INFO.commit {
+                Ok(str_value) => {
+                    if str_value == git_info::PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
                         Err(CheckCommitErrorNamed::CommitNotEqual {
