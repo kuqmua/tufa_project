@@ -5707,9 +5707,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };}
         };
         let update_one_tests_token_stream = {
-            let update_one_only_one_column_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                let field_ident = &element.field_ident;
-                let field_type = &element.syn_field.ty;
+            let update_one_only_one_column_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|current_element: &SynFieldWrapper| {
+                let field_ident = &current_element.field_ident;
+                let field_type = &current_element.syn_field.ty;
                 let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&format!("PostgresqlTypeTestCases read_only_ids_to_two_dimensional_vec_read_inner is empty for {field_ident}"));
                 // let try_create_one_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 870927ab-3ba2-445f-96b5-0f7b8618fc63 {field_ident}"));
                 // let update_try_new_error_message_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2 {field_ident}"));
