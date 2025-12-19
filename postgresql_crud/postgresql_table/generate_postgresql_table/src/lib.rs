@@ -697,7 +697,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
                     quote::quote! {
                         => match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_query_part_snake_case(
-                            #value_snake_case,
+                            #column_snake_case,
                             #field_ident_string_double_quotes_token_stream
                         ) {
                             Ok(#value_snake_case) => #value_snake_case,
@@ -707,20 +707,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     }
                 };
-                quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
+                quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#column_snake_case) #initialization_token_stream}
             });
             let std_option_option_std_primitive_char_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_patterns::StdPrimitiveChar);
             quote::quote! {
                 fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> Result<#string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
-                    let mut #value_snake_case = #string_token_stream::default();
+                    let mut #acc_snake_case = #string_token_stream::default();
                     for #element_snake_case in #select_snake_case.to_vec() {
-                        #value_snake_case.push_str(&match #element_snake_case {
+                        #acc_snake_case.push_str(&match #element_snake_case {
                             #variants_token_stream
                         });
-                        #value_snake_case.push(',');
+                        #acc_snake_case.push(',');
                     }
-                    let _: #std_option_option_std_primitive_char_token_stream = #value_snake_case.pop();
-                    Ok(#value_snake_case)
+                    let _: #std_option_option_std_primitive_char_token_stream = #acc_snake_case.pop();
+                    Ok(#acc_snake_case)
                 }
             }
         };
@@ -1422,7 +1422,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let field_type = &element.syn_field.ty;
                 let element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream = generate_as_postgresql_type_read_only_ids_token_stream(&field_type);
                 quote::quote! {
-                    #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream: ::sqlx::decode::Decode<'a, R::Database>,
+                    #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream: ::sqlx::decode::Decode<'lifetime, R::Database>,
                     #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream: ::sqlx::types::Type<R::Database>
                 }
             });
@@ -1458,12 +1458,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 quote::quote! {#field_ident}
             });
             quote::quote! {
-                impl<'a, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'a, R> for #ident_read_only_ids_upper_camel_case
+                impl<'lifetime, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lifetime, R> for #ident_read_only_ids_upper_camel_case
                 where
-                    &'a ::std::primitive::str: ::sqlx::ColumnIndex<R>,
+                    &'lifetime ::std::primitive::str: ::sqlx::ColumnIndex<R>,
                     #where_field_types_token_stream
                 {
-                    fn from_row(#undescore_underscore_row: &'a R) -> ::sqlx::Result<Self> {
+                    fn from_row(#undescore_underscore_row: &'lifetime R) -> ::sqlx::Result<Self> {
                         #primary_key_token_stream
                         #fields_initialization_token_stream
                         Ok(Self { #self_fields_token_stream })

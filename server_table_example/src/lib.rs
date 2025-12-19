@@ -1,4 +1,6 @@
-#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
+#[derive(Debug, Clone, Copy
+    , postgresql_crud::GeneratePostgresqlTable
+)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -174,8 +176,8 @@ pub struct TableExample {
     // pub column_139: postgresql_crud::OptionVecOfSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTzRange,
     // pub column_140: postgresql_crud::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
-    pub column_142: server_types::AnimalAsNotNullJsonbObject,
-    pub column_143: server_types::OptionAnimalAsNullableJsonbObject,
-    pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    pub column_145: server_types::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    // pub column_142: server_types::AnimalAsNotNullJsonbObject,
+    // pub column_143: server_types::OptionAnimalAsNullableJsonbObject,
+    // pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub column_145: server_types::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
