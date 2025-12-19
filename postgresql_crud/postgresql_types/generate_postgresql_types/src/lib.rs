@@ -3691,15 +3691,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                             };
                             let mut arguments_token_stream = vec![];
-                            for element in 1..=array_dimensions_number {
-                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error e5250a98-89d6-4a58-90ea-39b04a708c1c");
+                            for current_element in 1..=array_dimensions_number {
+                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error e5250a98-89d6-4a58-90ea-39b04a708c1c");
                                 arguments_token_stream.push(quote::quote! {
                                     #dimension_number_pagination_token_stream: #content_token_stream
                                 });
                             }
-                            quote::quote! {Self {
-                                #(#arguments_token_stream),*
-                            }}
+                            quote::quote! {Self {#(#arguments_token_stream),*}}
                         }
                     };
                     (
@@ -4038,9 +4036,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 }
                 .iter()
-                .map(|element| {
-                    let element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = element;
-                    element_handle
+                .map(|current_element| {
+                    let current_element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = current_element;
+                    current_element_handle
                 })
                 .collect(),
                 &ident,
@@ -4342,8 +4340,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 let arguments_token_stream = {
                                     let mut acc = vec![];
-                                    for element in 1..=array_dimensions_number {
-                                        let dimension_number_pagination_token_stream = format!("dimension{element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 6f2305ee-85e9-4dce-9a14-9e299586668a");
+                                    for current_element in 1..=array_dimensions_number {
+                                        let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("error 6f2305ee-85e9-4dce-9a14-9e299586668a");
                                         acc.push(quote::quote! {
                                             #value_snake_case.#dimension_number_pagination_token_stream.start(),
                                             #value_snake_case.#dimension_number_pagination_token_stream.end(),
@@ -4536,8 +4534,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }).collect()
                                 }),
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => generate_ident_read_ident_origin_token_stream(&{
-                                    let ident_standart_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlTypePattern::Standart);
-                                    let ident_array_standart_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_nullable_upper_camel_case);
+                                    let current_ident_token_stream = generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::Nullable, &PostgresqlTypePattern::Standart);
+                                    let ident_array_standart_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&current_ident_token_stream);
                                     quote::quote! {
                                         #value_snake_case.0.0.into_iter().map(|#element_snake_case|{
                                             #ident_standart_nullable_as_postgresql_type_token_stream::normalize(
@@ -5011,8 +5009,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let option_vec_create_token_stream = {
-                    let generate_some_acc_content_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, ident_token_stream: &dyn quote::ToTokens, additonal_content_token_stream: &dyn quote::ToTokens| {
-                        let (new_or_try_new_content_token_stream, maybe_acc_push_none_token_stream) = match (&not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
+                    let generate_some_acc_content_token_stream = |
+                        current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                        current_ident_token_stream: &dyn quote::ToTokens,
+                        additonal_content_token_stream: &dyn quote::ToTokens
+                    | {
+                        let (new_or_try_new_content_token_stream, maybe_acc_push_none_token_stream) = match (&current_not_null_or_nullable, postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok()) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, true) => (quote::quote! {try_new(vec![#element_snake_case.0.into()]).expect("error adbae6b3-1542-4f81-89bf-48a9b895b488")}, proc_macro2::TokenStream::new()),
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (quote::quote! {new(vec![#element_snake_case.0.into()])}, proc_macro2::TokenStream::new()),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
@@ -5021,7 +5023,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (quote::quote! {new(Some(#element_snake_case.0.into()))}, quote::quote! {#acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::new(None));}),
                         };
-                        let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_token_stream);
+                        let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&current_ident_token_stream);
                         quote::quote! {Some({
                             let mut #acc_snake_case = vec![];
                             for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]) {
@@ -5072,11 +5074,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_standart_nullable_as_postgresql_type_test_cases_token_stream,
                                     };
                                     let (first_token_stream, second_token_stream, third_token_stream) = {
-                                        let generate_new_or_try_new_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+                                        let generate_new_or_try_new_token_stream = |current_content_token_stream: &dyn quote::ToTokens| {
                                             if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                                quote::quote! {try_new(#content_token_stream).expect("error 75ad9383-b257-4a0b-bd8d-c931950bf745")}
+                                                quote::quote! {try_new(#current_content_token_stream).expect("error 75ad9383-b257-4a0b-bd8d-c931950bf745")}
                                             } else {
-                                                quote::quote! {new(#content_token_stream)}
+                                                quote::quote! {new(#current_content_token_stream)}
                                             }
                                         };
                                         let generate_vec_value_clone_zero_into_number_token_stream = |value: usize| {
@@ -5732,8 +5734,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                 let postgresql_type_primary_key_upper_camel_case = naming::PostgresqlTypePrimaryKeyUpperCamelCase;
-                let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-                let self_as_postgresql_type_token_stream = quote::quote! {<Self::#postgresql_type_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>};
                 let value_as_read_only_ids_token_stream = quote::quote! {#value_snake_case: #self_as_postgresql_type_token_stream::#read_only_ids_upper_camel_case};
                 quote::quote! {
                     impl #import_path::#postgresql_type_primary_key_upper_camel_case for #ident_standart_not_null_upper_camel_case {
