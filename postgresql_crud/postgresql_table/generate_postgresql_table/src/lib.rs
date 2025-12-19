@@ -5154,8 +5154,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.syn_field.ty;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                        let current_field_ident = &element.field_ident;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
+                        let current_field_ident = &current_element.field_ident;
                         if current_field_ident == primary_key_field_ident {
                             some_primary_key_where_initialization_token_stream.clone()
                         } else if current_field_ident == field_ident {
@@ -5187,8 +5187,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     generate_read_test_token_stream(test_name, &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream, &generate_ident_create_content_element_token_stream, &|element: &SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.syn_field.ty;
-                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                            let current_field_ident = &element.field_ident;
+                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &SynFieldWrapper| {
+                            let current_field_ident = &current_element.field_ident;
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             } else if current_field_ident == field_ident {
