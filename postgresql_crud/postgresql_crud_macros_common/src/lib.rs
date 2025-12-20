@@ -1578,6 +1578,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
         let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
         quote::quote! {#field_name_double_quotes_token_stream => Ok(__Field::#field_index_token_stream)}
     }
+    let value_snake_case = naming::ValueSnakeCase;
     let vec_ident = vec_ident_type.iter().map(|element| element.0).collect::<Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {
@@ -1680,19 +1681,19 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(ident: &dyn namin
         quote::quote! {#(#visit_map_match_variants_token_stream)*}
     };
     let visit_map_missing_fields_check_token_stream = {
-        let visit_map_missing_fields_check_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+        let content_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
             quote::quote! {
                 let #field_index_token_stream = match #field_index_token_stream {
-                    Some(#field_index_token_stream) => #field_index_token_stream,
+                    Some(#value_snake_case) => #value_snake_case,
                     None => {
                         serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
                     }
                 };
             }
         });
-        quote::quote! {#(#visit_map_missing_fields_check_token_stream)*}
+        quote::quote! {#(#content_token_stream)*}
     };
     let fields_array_elements_token_stream = {
         let fields_array_elements_token_stream = vec_ident.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));

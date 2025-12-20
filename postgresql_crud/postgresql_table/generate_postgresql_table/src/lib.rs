@@ -1700,7 +1700,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #field_ident_double_quotes_token_stream,
                                 increment,
                             ){
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(value1) => value1,
                                 Err(#error_snake_case) => {
                                     return Err(#error_snake_case);
                                 }
@@ -1725,12 +1725,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
                         let field_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
                         quote::quote! {
-                             #field_type_as_postgresql_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
+                             #field_type_as_postgresql_type_update_for_query_token_stream::from(value1.#value_snake_case)
                         }
                     });
                     quote::quote! {
                         #field_ident: match #value_snake_case.#field_ident {
-                            Some(#value_snake_case) => Some(#value_initialization_token_stream),
+                            Some(value1) => Some(#value_initialization_token_stream),
                             None => None
                         }
                     }
