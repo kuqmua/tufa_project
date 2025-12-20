@@ -2,6 +2,12 @@
 edition = "2024"
 name = "generate_getter_traits_for_struct_fields"
 version = "0.1.0"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]

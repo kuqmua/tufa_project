@@ -374,7 +374,7 @@ branches_sharing_code = { level = "deny", priority = 0 }
 builtin_type_shadow = { level = "deny", priority = 0 }
 bytes_count_to_len = { level = "deny", priority = 0 }
 bytes_nth = { level = "deny", priority = 0 }
-cargo_common_metadata = { level = "allow", priority = 0 } #too lazy to add it and not necessary
+cargo_common_metadata = { level = "deny", priority = 0 }
 case_sensitive_file_extension_comparisons = { level = "deny", priority = 0 }
 cast_abs_to_unsigned = { level = "deny", priority = 0 }
 cast_enum_constructor = { level = "deny", priority = 0 }

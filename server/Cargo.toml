@@ -3,6 +3,12 @@ authors = ["sergey shmakov <tyfaproject@gmail.com>"]
 edition = "2024" #maybe cant compile but switch from 2018 to 2021
 name = "server" 
 version = "0.1.0" 
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

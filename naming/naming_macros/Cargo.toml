@@ -2,6 +2,12 @@
 name = "naming_macros"
 version = "0.1.0"
 edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
 
 [lib]
 proc-macro = true

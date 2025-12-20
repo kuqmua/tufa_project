@@ -2,6 +2,12 @@
 name = "pg_jsonschema"
 version = "0.3.3"
 edition = "2021"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
 
 [lib]
 crate-type = ["cdylib", "lib"]

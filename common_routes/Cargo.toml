@@ -2,6 +2,12 @@
 name = "common_routes"
 version = "0.1.0"
 edition = "2024"
+description = "description"
+repository = "repository"
+readme = "readme"
+license = "license"
+keywords = ["keyword"]
+categories = ["category"]
 
 [dependencies]
 axum.workspace = true
