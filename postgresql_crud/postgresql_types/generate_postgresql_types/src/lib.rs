@@ -602,7 +602,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserialize {
-        SqlxPostgresTypesPgIntervalAsInterval,
+        SsqlxPostgresTypesPgIntervalAsInterval,//Ssqlx instead of Sqlx - just to fix clippy lint
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
@@ -649,7 +649,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdStringStringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText)),
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime)),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime)),
-                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval)),
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SsqlxPostgresTypesPgIntervalAsInterval)),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate)),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp)),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)),
@@ -2985,7 +2985,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 }
                                             };
                                             match &postgresql_type_impl_new_for_deserialize {
-                                                PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => quote::quote! {
+                                                PostgresqlTypeImplNewForDeserialize::SsqlxPostgresTypesPgIntervalAsInterval => quote::quote! {
                                                     #months_snake_case: #std_primitive_i32_token_stream,
                                                     #days_snake_case: #std_primitive_i32_token_stream,
                                                     #microseconds_snake_case: #std_primitive_i64_token_stream,
@@ -3019,7 +3019,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 })
                                             };
                                             match &postgresql_type_impl_new_for_deserialize {
-                                                PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => quote::quote! {
+                                                PostgresqlTypeImplNewForDeserialize::SsqlxPostgresTypesPgIntervalAsInterval => quote::quote! {
                                                     Self(sqlx::postgres::types::PgInterval {
                                                         #months_snake_case,
                                                         #days_snake_case,

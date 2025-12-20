@@ -135,7 +135,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 StandartNotNullWithId,
                 StandartNullableWithoutId,
                 ArrayNotNullWithId,
-                ArrayNullableWithId,
+                ArrayNullableWithIdentifier,//Identifier instead of Id - just to fix clippy lint
             }
             #[derive(Debug, Clone, strum_macros::Display)]
             enum PostgresqlJsonTypeSubtype {
@@ -327,7 +327,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IdentPattern::StandartNotNullWithId => (format!("{syn_derive_input_ident}{with_id_upper_camel_case}"), format!("{jsonb_object_upper_camel_case}{with_id_upper_camel_case}"), postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                     IdentPattern::StandartNullableWithoutId => (syn_derive_input_ident_stringified, jsonb_object_upper_camel_case_stringified, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                     IdentPattern::ArrayNotNullWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                    IdentPattern::ArrayNullableWithId => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
+                    IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
                 format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().expect("error 43784dd3-f37a-438d-8bc8-d17f63feac66")
@@ -337,7 +337,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::StandartNotNullWithoutId,
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::ArrayNotNullWithId,
                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => IdentPattern::StandartNullableWithoutId,
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::ArrayNullableWithId,
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => IdentPattern::ArrayNullableWithIdentifier,
             });
             let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::StandartNotNullWithoutId);
             let ident_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(&IdentPattern::ArrayNotNullWithId);
