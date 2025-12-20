@@ -15,7 +15,7 @@ strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 schemars = {version = "=0.8.22"}
 serde.workspace = true
-serde_json = {version = "=1.0.145"}
+serde_json.workspace = true
 rayon = {version = "=1.10.0"}
 postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
 enum_extension_lib = {path = "../../../enum_extension_lib"}

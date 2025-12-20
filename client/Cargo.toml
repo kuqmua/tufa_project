@@ -7,9 +7,9 @@ version = "0.1.0"
 
 [dependencies]
 log.workspace = true
-reqwasm = {version = "=0.2.0"}
+reqwasm.workspace = true
 serde.workspace = true
-serde_json = {version = "=1.0.145"}
+serde_json.workspace = true
 colorsys = {version = "=0.6.5"}
 # derive_more = "0.99.17"//for children components 
 convert_case = {version = "=0.6.0"}

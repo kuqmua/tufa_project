@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 thiserror = {version = "=1.0.48"}
 serde.workspace = true
-serde_json = {version = "=1.0.145"}
+serde_json.workspace = true
 # config_lib = {path = "../config_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 

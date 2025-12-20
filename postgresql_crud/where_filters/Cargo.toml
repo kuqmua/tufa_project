@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 generate_where_filters = {path = "./generate_where_filters"}
-sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+sqlx.workspace = true
 serde.workspace = true
 schemars = {version = "=0.8.22"}
 error_occurence_lib = {path = "../../error_occurence_lib"}

@@ -1095,5 +1095,7 @@ teloxide = {version = "=0.13.0", features = ["macros"]}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 toml = {version = "=0.9.6"}
 scraper = {version = "=0.24.0"}
-sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 regex = {version = "=1.9.3"}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+reqwasm = {version = "=0.2.0"}
+serde_json = {version = "=1.0.145"}
