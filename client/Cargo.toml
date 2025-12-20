@@ -23,7 +23,7 @@ yew.workspace = true
 yew-router.workspace = true
 # yew-stdweb = "0.18.0" // web_sys alternative
 yewdux.workspace = true
-yewdux-functional = {version = "=0.1.0"}
+yewdux-functional.workspace = true
 common = {path = "../common"}# local dev test without commits version
 svg_component = {path = "../svg_component"}
 

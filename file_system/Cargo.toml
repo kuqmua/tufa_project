@@ -7,7 +7,7 @@ edition = "2024"
 serde.workspace = true
 serde_json.workspace = true
 tokio.workspace = true
-thiserror = {version = "=1.0.48"}
+thiserror.workspace = true
 error_occurence_lib = {path = "../error_occurence_lib"}
 
 [lints]

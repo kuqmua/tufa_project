@@ -6,10 +6,10 @@ edition = "2024"
 [dependencies]
 generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 uuid.workspace = true
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+utoipa.workspace = true
 sqlx.workspace = true
 serde.workspace = true
-schemars = {version = "=0.8.22"}
+schemars.workspace = true
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}

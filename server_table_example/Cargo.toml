@@ -4,30 +4,30 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-axum = {version = "=0.7.4", features = ["macros"]}
-http = {version = "=0.2.9"}
+axum.workspace = true
+http.workspace = true
 reqwest.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-thiserror = {version = "=1.0.48"}
+thiserror.workspace = true
 sqlx.workspace = true
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+utoipa.workspace = true
 git_info = {path = "../git_info"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
 server_types = {path = "../server_types"}
 
 [dev-dependencies]
-num_cpus = {version = "=1.15.0"}
-futures = {version = "=0.3.28"}
+num_cpus.workspace = true
+futures.workspace = true
+secrecy.workspace = true
+tokio.workspace = true
+tracing-subscriber.workspace = true
+uuid.workspace = true
 app_state = {path = "../app_state"}
 config_lib = {path = "../config_lib"}
-secrecy = {version = "=0.8.0", features = ["serde"]}
 server_app_state = {path = "../server_app_state"}
 server_config = {path = "../server_config"}
-tokio.workspace = true
-tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]}
-uuid.workspace = true
 
 [lints]
 workspace = true

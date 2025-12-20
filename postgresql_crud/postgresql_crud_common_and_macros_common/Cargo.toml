@@ -5,9 +5,9 @@ edition = "2024"
 
 [dependencies]
 proc-macro2.workspace = true
-quote = {version = "=1.0.36"}
+quote.workspace = true
 serde.workspace = true
-schemars = {version = "=0.8.22"}
+schemars.workspace = true
 naming = {path = "../../naming"}
 
 [lints]

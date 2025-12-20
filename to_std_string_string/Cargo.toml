@@ -6,14 +6,14 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-tracing = {version = "=0.1.43", features = ["log", "valuable"]}
+tracing.workspace = true
 reqwest.workspace = true
-http-body = {version = "=1.0.0"}
-axum = {version = "=0.7.4", features = ["macros"]}
-time = {version = "=0.3.36", features = ["serde"]}
+http-body.workspace = true
+axum.workspace = true
+time.workspace = true
 sqlx.workspace = true
 serde_json.workspace = true
-http = {version = "=0.2.9"}
+http.workspace = true
 
 [lints]
 workspace = true

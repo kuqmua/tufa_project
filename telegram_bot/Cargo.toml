@@ -7,17 +7,8 @@ version = "0.1.0"
 
 [dependencies]
 log.workspace = true
-# pretty_env_logger = {version = "=0.4"}
 teloxide.workspace = true
 tokio.workspace = true
-# reqwest.workspace = true
-# serde.workspace = true
-# serde-aux = {version = "=4.0.0"}
-# serde-xml-rs = {version = "=0.6.0"}
-# serde_derive = {version = "=1.0.224"}
-# serde_json.workspace = true
-# common = {path = "../common"}# local dev test without commits version
-# error_occurence_lib = {path = "../error_occurence_lib"}
 
 [lints]
 workspace = true

@@ -7,7 +7,7 @@ edition = "2024"
 
 [dependencies]
 enum_extension = {path = "./enum_extension"}
-strum = {version = "=0.24.1"}
+strum.workspace = true
 convert_case.workspace = true
 
 [lints]

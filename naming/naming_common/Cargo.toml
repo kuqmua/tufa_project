@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 proc-macro2.workspace = true
-quote = {version = "=1.0.36"}
+quote.workspace = true
 convert_case.workspace = true
 constants = {path = "../../constants"}
 

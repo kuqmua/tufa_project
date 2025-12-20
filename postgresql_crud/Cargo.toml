@@ -6,8 +6,8 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-strum_macros = {version = "=0.24.3"}
-futures = {version = "=0.3.28"}
+strum_macros.workspace = true
+futures.workspace = true
 uuid.workspace = true
 postgresql_crud_common = {path = "./postgresql_crud_common", features = ["test-utils"]}
 postgresql_table = {path = "./postgresql_table"}

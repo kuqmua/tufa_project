@@ -5,11 +5,11 @@ edition = "2024"
 
 [dependencies]
 proc-macro2.workspace = true
-quote = {version = "=1.0.36"}
-syn = {version = "=2.0.100"}
+quote.workspace = true
+syn.workspace = true
 serde.workspace = true
-strum = {version = "=0.24.1"}
-strum_macros = {version = "=0.24.3"}
+strum.workspace = true
+strum_macros.workspace = true
 naming = {path = "../../naming"}
 token_patterns = {path = "../../token_patterns"}
 constants = {path = "../../constants"}

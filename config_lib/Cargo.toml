@@ -6,16 +6,15 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-secrecy = {version = "=0.8.0", features = ["serde"]}
-chrono = {version = "=0.4.42", features = ["serde"]}
+secrecy.workspace = true
+chrono.workspace = true
 serde.workspace = true
-strum = {version = "=0.24.1"}
-strum_macros = {version = "=0.24.3"}
-thiserror = {version = "=1.0.48"}
-dotenv = {version = "=0.15.0"}
+strum.workspace = true
+strum_macros.workspace = true
+thiserror.workspace = true
+dotenv.workspace = true
 enum_extension_lib = {path = "../enum_extension_lib"}
 from_str = {path = "../from_str"}
-# server_port = {path = "./server_port"}
 try_from_env = {path = "./try_from_env"}
 generate_getter_traits_for_struct_fields = {path = "./generate_getter_traits_for_struct_fields"}
 impl_display_as_debug = {path = "../impl_display_as_debug"}

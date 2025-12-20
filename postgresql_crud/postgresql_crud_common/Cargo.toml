@@ -4,12 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+utoipa.workspace = true
 uuid.workspace = true
 sqlx.workspace = true
 serde.workspace = true
-thiserror = {version = "=1.0.48"}
-schemars = {version = "=0.8.22"}
+thiserror.workspace = true
+schemars.workspace = true
 error_occurence_lib = {path = "../../error_occurence_lib"}
 from_str = {path = "../../from_str"}
 naming = {path = "../../naming"}

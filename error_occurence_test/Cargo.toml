@@ -4,10 +4,9 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-thiserror = {version = "=1.0.48"}
+thiserror.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-# config_lib = {path = "../config_lib"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 
 [lints]

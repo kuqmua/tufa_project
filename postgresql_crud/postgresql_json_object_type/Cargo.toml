@@ -6,10 +6,10 @@ edition = "2024"
 [dependencies]
 generate_postgresql_json_object_type = {path = "./generate_postgresql_json_object_type"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+utoipa.workspace = true
 serde.workspace = true
-thiserror = {version = "=1.0.48"}
-schemars = {version = "=0.8.22"}
+thiserror.workspace = true
+schemars.workspace = true
 error_occurence_lib = {path = "../../error_occurence_lib"}
 
 [lints]

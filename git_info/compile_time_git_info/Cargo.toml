@@ -9,7 +9,7 @@ proc-macro = true
 
 [dependencies]
 proc-macro2.workspace = true
-quote = {version = "=1.0.36"}
+quote.workspace = true
 panic_location = {path = "../../panic_location"}
 
 [lints]

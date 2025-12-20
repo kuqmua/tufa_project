@@ -10,7 +10,7 @@ proc-macro = true
 
 [dependencies]
 proc-macro2.workspace = true
-quote = {version = "=1.0.36"}
+quote.workspace = true
 postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
 generate_quotes = {path = "../../../generate_quotes"}
 panic_location = {path = "../../../panic_location"}
