@@ -224,6 +224,40 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     }
+    impl From<&CreateOrUpdateOrDeleteMany> for Operation {
+        fn from(value: &CreateOrUpdateOrDeleteMany) -> Self {
+            match &value {
+                CreateOrUpdateOrDeleteMany::Create => Self::CreateMany,
+                CreateOrUpdateOrDeleteMany::Update => Self::UpdateMany,
+                CreateOrUpdateOrDeleteMany::Delete => Self::DeleteMany,
+            }
+        }
+    }
+    impl From<&ReadManyOrDeleteMany> for Operation {
+        fn from(value: &ReadManyOrDeleteMany) -> Self {
+            match &value {
+                ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
+                ReadManyOrDeleteMany::DeleteMany => Self::DeleteMany,
+            }
+        }
+    }
+    impl From<&ReadManyOrReadOne> for Operation {
+        fn from(value: &ReadManyOrReadOne) -> Self {
+            match &value {
+                ReadManyOrReadOne::ReadMany => Self::ReadMany,
+                ReadManyOrReadOne::ReadOne => Self::ReadOne,
+            }
+        }
+    }
+    impl From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
+        fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
+            match &value {
+                CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,
+                CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Self::UpdateOne,
+                CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Self::DeleteOne,
+            }
+        }
+    }
     #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
     enum OperationHttpMethod {
         Post,
@@ -234,25 +268,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ReadMany,
         DeleteMany,
     }
-    impl From<&ReadManyOrDeleteMany> for Operation {
-        fn from(value: &ReadManyOrDeleteMany) -> Self {
-            match &value {
-                ReadManyOrDeleteMany::ReadMany => Self::ReadMany,
-                ReadManyOrDeleteMany::DeleteMany => Self::DeleteMany,
-            }
-        }
-    }
     enum ReadManyOrReadOne {
         ReadMany,
         ReadOne,
-    }
-    impl From<&ReadManyOrReadOne> for Operation {
-        fn from(value: &ReadManyOrReadOne) -> Self {
-            match &value {
-                ReadManyOrReadOne::ReadMany => Self::ReadMany,
-                ReadManyOrReadOne::ReadOne => Self::ReadOne,
-            }
-        }
     }
     #[derive(Debug, strum_macros::Display)]
     enum GeneratePostgresqlTableAttribute {
@@ -304,33 +322,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         True,
         False,
     }
-    enum CreateManyOrUpdateManyOrDeleteMany {
-        CreateMany,
-        UpdateMany,
-        DeleteMany,
-    }
-    impl From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
-        fn from(value: &CreateManyOrUpdateManyOrDeleteMany) -> Self {
-            match &value {
-                CreateManyOrUpdateManyOrDeleteMany::CreateMany => Self::CreateMany,
-                CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Self::UpdateMany,
-                CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Self::DeleteMany,
-            }
-        }
+    enum CreateOrUpdateOrDeleteMany {
+        Create,
+        Update,
+        Delete,
     }
     enum CreateOneOrUpdateOneOrDeleteOne {
         CreateOne,
         UpdateOne,
         DeleteOne,
-    }
-    impl From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
-        fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
-            match &value {
-                CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,
-                CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Self::UpdateOne,
-                CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Self::DeleteOne,
-            }
-        }
     }
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
@@ -2445,12 +2445,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    let generate_create_update_delete_many_fetch_token_stream = |create_many_or_update_many_or_delete_many: &CreateManyOrUpdateManyOrDeleteMany| {
-        let current_operation = match &create_many_or_update_many_or_delete_many {
-            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
-            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
-            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
-        };
+    let generate_create_update_delete_many_fetch_token_stream = |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
+        let current_operation = Operation::from(create_or_update_or_delete_many);
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
@@ -2623,16 +2619,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
                     // &generate_create_update_delete_many_fetch_token_stream(
-                    //     &CreateManyOrUpdateManyOrDeleteMany::CreateMany
+                    //     &CreateOrUpdateOrDeleteMany::Create
                     // )
                     //todo reuse
                     &{
-                        let create_many_or_update_many_or_delete_many = &CreateManyOrUpdateManyOrDeleteMany::CreateMany;
-                        let current_operation = match &create_many_or_update_many_or_delete_many {
-                            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
-                            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
-                            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
-                        };
+                        let current_operation = Operation::from(&CreateOrUpdateOrDeleteMany::Create);
                         generate_fetch_token_stream(
                             &{
                                 let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
@@ -3387,14 +3378,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    // &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::UpdateMany)
+                    // &generate_create_update_delete_many_fetch_token_stream(&CreateOrUpdateOrDeleteMany::UpdateMany)
                     // &{
-                    //     let create_many_or_update_many_or_delete_many = CreateManyOrUpdateManyOrDeleteMany::UpdateMany;
-                    //     let current_operation = match &create_many_or_update_many_or_delete_many {
-                    //         CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
-                    //         CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
-                    //         CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
-                    //     };
+                    //     let current_operation = Operation::from(&CreateOrUpdateOrDeleteMany::Update);
                     //     generate_fetch_token_stream(
                     //         &generate_sqlx_row_try_get_primary_key_token_stream(
                     //             &ident_read_only_ids_upper_camel_case,
@@ -3406,12 +3392,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     //     )
                     // }
                     &{
-                        let create_many_or_update_many_or_delete_many = &CreateManyOrUpdateManyOrDeleteMany::UpdateMany;
-                        let current_operation = match &create_many_or_update_many_or_delete_many {
-                            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
-                            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
-                            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
-                        };
+                        let current_operation = Operation::from(&CreateOrUpdateOrDeleteMany::Update);
                         generate_fetch_token_stream(
                             &{
                                 let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
@@ -3676,7 +3657,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_many_fetch_token_stream(&CreateOrUpdateOrDeleteMany::Delete)
+                );
                 impl_ident_vec_token_stream.push(generate_operation_token_stream(&operation, &common_additional_logic_token_stream, &parameters_logic_token_stream, &proc_macro2::TokenStream::new(), &query_string_token_stream, &binded_query_token_stream, &postgresql_logic_token_stream));
             };
             quote::quote! {
