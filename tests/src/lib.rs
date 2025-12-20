@@ -13,20 +13,28 @@ mod tests {
             }
         }
     }
-    fn lints_vec_from_cargo_toml(rust_or_clippy: RustOrClippy) -> Vec<String> {
+    fn toml_value_from_from_cargo_toml_workspace() -> toml::Value {
         let mut file = std::fs::File::open("../Cargo.toml").expect("error 39a0d238-d776-4b4e-ac2a-62f76a60f527");
         let mut contents = String::new();
         let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 2f5914f2-bff0-40d3-9948-07f2c562779b");
         let table = contents.parse::<toml::Table>().expect("error beb11586-c73d-4686-9ae2-a219f3a3ef4a");
-        let workspace = table.get("workspace").expect("error f728192d-b3e6-470a-b304-8c58adabada5");
+        table.get("workspace").expect("error f728192d-b3e6-470a-b304-8c58adabada5").clone()
+    }
+    fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
+        let workspace = toml_value_from_from_cargo_toml_workspace();
         let lints = workspace.get("lints").expect("error 82eaea37-3726-4e28-837f-a3063ff3d3fc");
         let toml_value_table = match lints.get(rust_or_clippy.name()).expect("error dbd02f72-2647-4e41-a26f-a04cef447957") {
             toml::Value::Table(value) => value,
-            toml::Value::String(_) | toml::Value::Integer(_) | toml::Value::Float(_) | toml::Value::Boolean(_) | toml::Value::Datetime(_) | toml::Value::Array(_) => panic!("not ok"),
+            toml::Value::String(_) |
+            toml::Value::Integer(_) |
+            toml::Value::Float(_) |
+            toml::Value::Boolean(_) |
+            toml::Value::Datetime(_) |
+            toml::Value::Array(_) => panic!("error cae226cd-1876-4aa2-a46e-8de0698d15bb"),
         };
         toml_value_table.keys().cloned().collect::<Vec<String>>()
     }
-    fn compare_lints_vec_from_cargo_toml_with_lints_to_check(rust_or_clippy: RustOrClippy, lints_vec_from_cargo_toml: Vec<String>, lints_to_check: Vec<String>, lints_not_in_cargo_toml_vec_exceptions: Vec<String>) {
+    fn compare_lints_vecs(rust_or_clippy: RustOrClippy, lints_vec_from_cargo_toml: Vec<String>, lints_to_check: Vec<String>, lints_not_in_cargo_toml_vec_exceptions: Vec<String>) {
         let rust_or_clippy_name = rust_or_clippy.name();
         let mut lints_not_in_cargo_toml = vec![];
         for element in &lints_to_check {
@@ -50,7 +58,7 @@ mod tests {
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
         let rust_or_clippy = RustOrClippy::Rust;
-        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
+        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let lints_from_command = {
             let output = std::process::Command::new("rustc").args(["-W", "help"]).stdout(std::process::Stdio::piped()).output().expect("error 7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(output.status.success(), "error 0c000f24-afad-4397-88a4-913d0c113a34");
@@ -65,7 +73,7 @@ mod tests {
                 .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
                 .collect::<Vec<String>>()
         };
-        compare_lints_vec_from_cargo_toml_with_lints_to_check(
+        compare_lints_vecs(
             rust_or_clippy,
             lints_vec_from_cargo_toml,
             lints_from_command,
@@ -90,7 +98,7 @@ mod tests {
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lints() {
         let rust_or_clippy = RustOrClippy::Clippy;
-        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml(rust_or_clippy);
+        let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let clippy_lints_from_docs = {
             let document = scraper::Html::parse_document(&reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3"));
             let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
@@ -131,7 +139,7 @@ mod tests {
             }
             ids
         };
-        compare_lints_vec_from_cargo_toml_with_lints_to_check(
+        compare_lints_vecs(
             rust_or_clippy,
             lints_vec_from_cargo_toml,
             clippy_lints_from_docs,
@@ -141,142 +149,186 @@ mod tests {
             ],
         );
     }
-    // #[test]
-    // fn check_dependencies_having_same_exact_version_in_the_project_and_lints_workspace_true() {
-    //     fn get_cargo_toml_contents_recursive(path: &std::path::Path) -> Vec<String> {
-    //         let mut acc = vec![];
-    //         if path.is_dir() {
-    //             for entry_dir in std::fs::read_dir(path).expect("error 81837dea-c20f-469a-b365-528f0b9f50a4") {
-    //                 let entry = entry_dir.expect("error bb7ee3cf-9f34-4d81-9160-496f7ca5e43b");
-    //                 let current_path = entry.path();
-    //                 if current_path.is_dir() {
-    //                     for element in get_cargo_toml_contents_recursive(&current_path) {
-    //                         acc.push(element);
-    //                     }
-    //                 }
-    //                 if current_path.is_file() && current_path.file_name().expect("error 9f17bfed-4612-4644-8551-f4547874ff16") == "Cargo.toml" {
-    //                     let mut file = std::fs::File::open(&current_path).expect("error d211d2ff-8217-4270-b4e6-8a718a140363");
-    //                     let mut contents = String::new();
-    //                     let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 38d0aeb2-eb33-447f-8843-af674b4eeabb");
-    //                     acc.push(contents);
-    //                 }
-    //             }
-    //         }
-    //         acc
-    //     }
-    //     #[derive(Debug, serde::Deserialize)]
-    //     struct Name {
-    //         name: String,
-    //     }
-    //     #[derive(Debug, PartialEq, serde::Deserialize)]
-    //     struct Lints {
-    //         workspace: bool,
-    //     }
-    //     #[derive(Debug, serde::Deserialize)]
-    //     struct CargoToml {
-    //         package: Option<Name>,
-    //         dependencies: Option<std::collections::HashMap<String, toml::Value>>,
-    //         #[serde(rename = "dev-dependencies")]
-    //         dev_dependencies: Option<std::collections::HashMap<String, toml::Value>>,
-    //         #[serde(rename = "build-dependencies")]
-    //         build_dependencies: Option<std::collections::HashMap<String, toml::Value>>,
-    //         lints: Option<Lints>,
-    //     }
-    //     let cargo_toml_string_vec = get_cargo_toml_contents_recursive(std::path::Path::new(&"../"));
-    //     let mut acc: Vec<(String, toml::Value)> = vec![];
-    //     for cargo_toml_string in &cargo_toml_string_vec {
-    //         let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
-    //         //todo after fix issue with pg_jsonschema remove this check
-    //         if let Some(package) = &cargo_toml.package
-    //             && package.name != "pg_jsonschema"
-    //         {
-    //             assert!(cargo_toml.lints == Some(Lints { workspace: true }), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
-    //             let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>| {
-    //                 if let Some(deps_value) = deps {
-    //                     let mut keys = deps_value.keys().clone().collect::<Vec<_>>();
-    //                     keys.sort();
-    //                     for key in keys {
-    //                         if let toml::Value::Table(value) = &deps_value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91") {
-    //                             let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
-    //                                 if let toml::Value::String(version_value_string) = version_value {
-    //                                     fn is_valid_version(value: &str) -> bool {
-    //                                         let Some(version) = value.strip_prefix('=') else { return false };
-    //                                         let parts: Vec<&str> = version.split('.').collect();
-    //                                         if parts.len() != 3 {
-    //                                             return false;
-    //                                         }
-    //                                         // parse each part as u64 (ensures it's a valid unsigned number)
-    //                                         for part in parts {
-    //                                             if part.is_empty() {
-    //                                                 return false; // prevents "=1..2"
-    //                                             }
-    //                                             if part.starts_with('0') && part != "0" {
-    //                                                 return false; // optional: forbid leading zeros
-    //                                             }
-    //                                             if part.parse::<u64>().is_err() {
-    //                                                 return false;
-    //                                             }
-    //                                         }
-    //                                         true
-    //                                     }
-    //                                     assert!(is_valid_version(version_value_string), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
-    //                                 } else {
-    //                                     panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
-    //                                 }
-    //                                 {
-    //                                     let mut is_found = false;
-    //                                     for (acc_key, acc_version_value) in &acc {
-    //                                         if key == acc_key {
-    //                                             if version_value == acc_version_value {
-    //                                                 is_found = true;
-    //                                             } else {
-    //                                                 panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
-    //                                             }
-    //                                         }
-    //                                     }
-    //                                     if !is_found {
-    //                                         acc.push((key.clone(), version_value.clone()));
-    //                                     }
-    //                                 }
-    //                             };
-    //                             if value.len() == 1 {
-    //                                 if let Some(version_value) = value.get("version") {
-    //                                     handle_toml_value_string_valid_version(version_value);
-    //                                 } else if value.get("path").is_some() {
-    //                                 } else {
-    //                                     panic!("error a2ac9215-0d83-428b-b572-355bd19f6211 {value:#?}");
-    //                                 }
-    //                             } else if value.len() == 2 {
-    //                                 if let Some(version_value) = value.get("version")
-    //                                     && value.get("features").is_some()
-    //                                 {
-    //                                     handle_toml_value_string_valid_version(version_value);
-    //                                 } else if value.get("path").is_some() && value.get("features").is_some() {
-    //                                 } else {
-    //                                     panic!("error 029bed67-2e36-4403-aead-9f415bdb20d9");
-    //                                 }
-    //                             } else if value.len() == 3 {
-    //                                 if let Some(version_value) = value.get("version")
-    //                                     && value.get("features").is_some()
-    //                                     && value.get("default-features").is_some()
-    //                                 {
-    //                                     handle_toml_value_string_valid_version(version_value);
-    //                                 } else {
-    //                                     panic!("error 2233a0a2-c162-42ae-afb5-3b714d63612b");
-    //                                 }
-    //                             } else {
-    //                                 panic!("error fc975adf-98f9-4f91-9e97-bff3245e06bb");
-    //                             }
-    //                         } else {
-    //                             panic!("error c61368cc-42b8-4de4-9df2-3bb30cc2ad79");
-    //                         }
-    //                     }
-    //                 }
-    //             };
-    //             handle_dependencies(cargo_toml.dependencies);
-    //             handle_dependencies(cargo_toml.dev_dependencies);
-    //             handle_dependencies(cargo_toml.build_dependencies);
-    //         }
-    //     }
-    // }
+    #[test]
+    fn check_workspace_dependencies_having_exact_version() {
+        let workspace = toml_value_from_from_cargo_toml_workspace();
+        let dependencies = workspace.get("dependencies").expect("error 2376f58e-394d-4759-96c1-e5379fdbb0b1");
+        let table_value = match dependencies {
+            toml::Value::Table(value) => value,
+            toml::Value::String(_) |
+            toml::Value::Integer(_) |
+            toml::Value::Float(_) |
+            toml::Value::Boolean(_) |
+            toml::Value::Datetime(_) |
+            toml::Value::Array(_) => panic!("error e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
+        };
+        for (_, value) in table_value {
+            let value_table = match value {
+                toml::Value::Table(value) => value,
+                toml::Value::String(_) |
+                toml::Value::Integer(_) |
+                toml::Value::Float(_) |
+                toml::Value::Boolean(_) |
+                toml::Value::Datetime(_) |
+                toml::Value::Array(_) => panic!("error cb693a3f-ff75-47ba-b747-94361925e2e6"),
+            };
+            let value_table_len = value_table.len();
+            let check_version = |value_table: &toml::value::Table| {
+                match value_table.get("version").expect("error d5b2b269-d832-4c94-887b-ec44a7e2045f") {
+                    toml::Value::String(version_string) => {
+                        fn check_version_string(value: &str) -> Option<()> {
+                            let rest = value.strip_prefix('=')?;
+                            let mut iter = rest.split('.');
+                            let _ = iter.next()?.parse::<u64>().ok()?;
+                            let _ = iter.next()?.parse::<u64>().ok()?;
+                            let _ = iter.next()?.parse::<u64>().ok()?;
+                            if iter.next().is_some() {
+                                return None;
+                            }
+                            Some(())
+                        }
+                        check_version_string(version_string).expect(&format!("error 6640b9bf-8fd4-4a00-8c88-72087ba83f60"))
+                    },
+                    toml::Value::Table(_) |
+                    toml::Value::Integer(_) |
+                    toml::Value::Float(_) |
+                    toml::Value::Boolean(_) |
+                    toml::Value::Datetime(_) |
+                    toml::Value::Array(_) => panic!("error a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
+                }
+            };
+            let check_features = |value_table: &toml::value::Table| {
+                match value_table.get("features").expect("error 473577d5-0482-4460-b211-60131d9b7c2a") {
+                    toml::Value::Array(_) => (),
+                    toml::Value::String(_) |
+                    toml::Value::Table(_) |
+                    toml::Value::Integer(_) |
+                    toml::Value::Float(_) |
+                    toml::Value::Boolean(_) |
+                    toml::Value::Datetime(_) => panic!("error 38ba32e9-fe34-4628-8505-414b937c645f"),
+                }
+            };
+            if value_table_len == 1 {
+                check_version(value_table);
+            }
+            else if value_table_len == 2 {
+                check_version(value_table);
+                check_features(value_table);
+            }
+            else if value_table_len == 3 {
+                check_version(value_table);
+                check_features(value_table);
+                match value_table.get("default-features").expect("error 847a138f-421b-47e5-a658-3789a8281b5c") {
+                    toml::Value::Boolean(_) => (),
+                    toml::Value::String(_) |
+                    toml::Value::Table(_) |
+                    toml::Value::Integer(_) |
+                    toml::Value::Float(_) |
+                    toml::Value::Datetime(_) |
+                    toml::Value::Array(_) => panic!("error b320164b-7082-45f0-9f89-1f5f28f6b779"),
+                }
+            }
+            else {
+                panic!("error f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
+            }
+        }
+        // let cargo_toml_string_vec = get_cargo_toml_contents_recursive(std::path::Path::new(&"../Cargo.toml"));
+        // // let mut acc: Vec<(String, toml::Value)> = vec![];
+        // // for cargo_toml_string in &cargo_toml_string_vec {
+
+        // // }
+        // let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
+        // println!("{:#?}", cargo_toml);
+        // //todo after fix issue with pg_jsonschema remove this check
+        // if let Some(package) = &cargo_toml.package
+        //     && package.name != "pg_jsonschema"
+        // {
+        //     assert!(cargo_toml.lints == Some(Lints { workspace: true }), "error 69f77fff-0b46-4c15-9c1b-7cb5fcb628bc");
+        //     let mut handle_dependencies = |deps: Option<std::collections::HashMap<String, toml::Value>>| {
+        //         if let Some(deps_value) = deps {
+        //             let mut keys = deps_value.keys().clone().collect::<Vec<_>>();
+        //             keys.sort();
+        //             for key in keys {
+        //                 if let toml::Value::Table(value) = &deps_value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91") {
+        //                     let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
+        //                         if let toml::Value::String(version_value_string) = version_value {
+        //                             fn is_valid_version(value: &str) -> bool {
+        //                                 let Some(version) = value.strip_prefix('=') else { return false };
+        //                                 let parts: Vec<&str> = version.split('.').collect();
+        //                                 if parts.len() != 3 {
+        //                                     return false;
+        //                                 }
+        //                                 // parse each part as u64 (ensures it's a valid unsigned number)
+        //                                 for part in parts {
+        //                                     if part.is_empty() {
+        //                                         return false; // prevents "=1..2"
+        //                                     }
+        //                                     if part.starts_with('0') && part != "0" {
+        //                                         return false; // optional: forbid leading zeros
+        //                                     }
+        //                                     if part.parse::<u64>().is_err() {
+        //                                         return false;
+        //                                     }
+        //                                 }
+        //                                 true
+        //                             }
+        //                             assert!(is_valid_version(version_value_string), "error 862fd6d2-cecb-4631-bcef-1043fb904153");
+        //                         } else {
+        //                             panic!("error dfc54bf8-f8ff-4e78-b40c-4045762cb50c");
+        //                         }
+        //                         {
+        //                             let mut is_found = false;
+        //                             for (acc_key, acc_version_value) in &acc {
+        //                                 if key == acc_key {
+        //                                     if version_value == acc_version_value {
+        //                                         is_found = true;
+        //                                     } else {
+        //                                         panic!("error 1defaf02-9db9-4432-9bc1-654dde6209c0");
+        //                                     }
+        //                                 }
+        //                             }
+        //                             if !is_found {
+        //                                 acc.push((key.clone(), version_value.clone()));
+        //                             }
+        //                         }
+        //                     };
+        //                     if value.len() == 1 {
+        //                         if let Some(version_value) = value.get("version") {
+        //                             handle_toml_value_string_valid_version(version_value);
+        //                         } else if value.get("path").is_some() {
+        //                         } else {
+        //                             panic!("error a2ac9215-0d83-428b-b572-355bd19f6211 {value:#?}");
+        //                         }
+        //                     } else if value.len() == 2 {
+        //                         if let Some(version_value) = value.get("version")
+        //                             && value.get("features").is_some()
+        //                         {
+        //                             handle_toml_value_string_valid_version(version_value);
+        //                         } else if value.get("path").is_some() && value.get("features").is_some() {
+        //                         } else {
+        //                             panic!("error 029bed67-2e36-4403-aead-9f415bdb20d9");
+        //                         }
+        //                     } else if value.len() == 3 {
+        //                         if let Some(version_value) = value.get("version")
+        //                             && value.get("features").is_some()
+        //                             && value.get("default-features").is_some()
+        //                         {
+        //                             handle_toml_value_string_valid_version(version_value);
+        //                         } else {
+        //                             panic!("error 2233a0a2-c162-42ae-afb5-3b714d63612b");
+        //                         }
+        //                     } else {
+        //                         panic!("error fc975adf-98f9-4f91-9e97-bff3245e06bb");
+        //                     }
+        //                 } else {
+        //                     panic!("error c61368cc-42b8-4de4-9df2-3bb30cc2ad79");
+        //                 }
+        //             }
+        //         }
+        //     };
+        //     handle_dependencies(cargo_toml.dependencies);
+        //     handle_dependencies(cargo_toml.dev_dependencies);
+        //     handle_dependencies(cargo_toml.build_dependencies);
+        // }
+    }
 }
