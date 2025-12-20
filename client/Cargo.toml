@@ -20,9 +20,9 @@ wasm-bindgen.workspace = true
 wasm-bindgen-futures.workspace = true
 web-sys.workspace = true
 yew.workspace = true
-yew-router = {version = "=0.16.0"}
+yew-router.workspace = true
 # yew-stdweb = "0.18.0" // web_sys alternative
-yewdux = {version = "=0.7.0"}
+yewdux.workspace = true
 yewdux-functional = {version = "=0.1.0"}
 common = {path = "../common"}# local dev test without commits version
 svg_component = {path = "../svg_component"}
