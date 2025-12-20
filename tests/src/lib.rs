@@ -164,7 +164,7 @@ mod tests {
         };
         for (_, value) in table_value {
             let value_table = match value {
-                toml::Value::Table(value) => value,
+                toml::Value::Table(table) => table,
                 toml::Value::String(_) |
                 toml::Value::Integer(_) |
                 toml::Value::Float(_) |
@@ -173,21 +173,21 @@ mod tests {
                 toml::Value::Array(_) => panic!("error cb693a3f-ff75-47ba-b747-94361925e2e6"),
             };
             let value_table_len = value_table.len();
-            let check_version = |value_table: &toml::value::Table| {
-                match value_table.get("version").expect("error d5b2b269-d832-4c94-887b-ec44a7e2045f") {
+            let check_version = |current_value_table: &toml::value::Table| {
+                match current_value_table.get("version").expect("error d5b2b269-d832-4c94-887b-ec44a7e2045f") {
                     toml::Value::String(version_string) => {
                         fn check_version_string(value: &str) -> Option<()> {
                             let rest = value.strip_prefix('=')?;
                             let mut iter = rest.split('.');
-                            let _ = iter.next()?.parse::<u64>().ok()?;
-                            let _ = iter.next()?.parse::<u64>().ok()?;
-                            let _ = iter.next()?.parse::<u64>().ok()?;
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
+                            let _: u64 = iter.next()?.parse::<u64>().ok()?;
                             if iter.next().is_some() {
                                 return None;
                             }
                             Some(())
                         }
-                        check_version_string(version_string).expect(&format!("error 6640b9bf-8fd4-4a00-8c88-72087ba83f60"))
+                        check_version_string(version_string).expect("error 6640b9bf-8fd4-4a00-8c88-72087ba83f60");
                     },
                     toml::Value::Table(_) |
                     toml::Value::Integer(_) |
@@ -197,8 +197,8 @@ mod tests {
                     toml::Value::Array(_) => panic!("error a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
                 }
             };
-            let check_features = |value_table: &toml::value::Table| {
-                match value_table.get("features").expect("error 473577d5-0482-4460-b211-60131d9b7c2a") {
+            let check_features = |current_value_table: &toml::value::Table| {
+                match current_value_table.get("features").expect("error 473577d5-0482-4460-b211-60131d9b7c2a") {
                     toml::Value::Array(_) => (),
                     toml::Value::String(_) |
                     toml::Value::Table(_) |
