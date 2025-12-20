@@ -10,16 +10,16 @@ log.workspace = true
 reqwasm.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-colorsys = {version = "=0.6.5"}
+colorsys.workspace = true
 # derive_more = "0.99.17"//for children components 
-convert_case = {version = "=0.6.0"}
-gloo = {version = "=0.7.0"} # wasm-logger = "0.2.0" (al;ternative to gloo)
-js-sys = {version = "=0.3.58"} 
-stylist = {version = "=0.10.0", features = ["yew"]} 
-wasm-bindgen = {version = "=0.2.86"}
-wasm-bindgen-futures = {version = "=0.4.0"}
-web-sys = {version = "=0.3.58", features = ["HtmlInputElement", "Window", "Document", "Element", "StyleSheetList", "HtmlSelectElement"]}
-yew = {version = "=0.19.0"}
+convert_case.workspace = true
+gloo.workspace = true # wasm-logger = "0.2.0" (al;ternative to gloo)
+js-sys.workspace = true
+stylist.workspace = true
+wasm-bindgen.workspace = true
+wasm-bindgen-futures.workspace = true
+web-sys.workspace = true
+yew.workspace = true
 yew-router = {version = "=0.16.0"}
 # yew-stdweb = "0.18.0" // web_sys alternative
 yewdux = {version = "=0.7.0"}
