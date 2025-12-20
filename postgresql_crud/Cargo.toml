@@ -8,7 +8,7 @@ edition = "2024"
 [dependencies]
 strum_macros = {version = "=0.24.3"}
 futures = {version = "=0.3.28"}
-uuid = {version = "=1.10.0", features = ["serde", "v4"]}
+uuid.workspace = true
 postgresql_crud_common = {path = "./postgresql_crud_common", features = ["test-utils"]}
 postgresql_table = {path = "./postgresql_table"}
 postgresql_json_object_type = {path = "./postgresql_json_object_type"}
