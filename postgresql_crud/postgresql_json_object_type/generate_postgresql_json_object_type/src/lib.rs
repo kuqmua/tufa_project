@@ -194,10 +194,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             }
-            enum ReadOrReadInner {
-                ReadWithSerdeOptionIsNoneAnnotation,
-                ReadWithoutSerdeOptionIsNoneAnnotation,
-                ReadInner,
+            enum ReadWithOrWithoutAnnotationOrInner {
+                WithSerdeOptionIsNoneAnnotation,
+                WithoutSerdeOptionIsNoneAnnotation,
+                Inner,
             }
             enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
                 True,
@@ -1920,19 +1920,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let generate_type_as_postgresql_json_type_read_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_read);
             let generate_type_as_postgresql_json_type_read_inner_token_stream = |type_token_stream: &dyn quote::ToTokens| generate_type_as_postgresql_json_type_subtype_token_stream(&type_token_stream, &postgresql_json_type_subtype_read_inner);
-            let generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream = |is_standart_with_id: &IsStandartWithId, read_or_read_inner: &ReadOrReadInner| {
+            let generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream = |
+                is_standart_with_id: &IsStandartWithId,
+                read_with_or_without_annotation_or_inner: &ReadWithOrWithoutAnnotationOrInner
+            | {
                 let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|current_element| {
-                    let maybe_serde_skip_serializing_if_option_is_none_token_stream = match &read_or_read_inner {
-                        ReadOrReadInner::ReadWithSerdeOptionIsNoneAnnotation => quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]},
-                        ReadOrReadInner::ReadWithoutSerdeOptionIsNoneAnnotation |
-                        ReadOrReadInner::ReadInner => proc_macro2::TokenStream::new(),
+                    let maybe_serde_skip_serializing_if_option_is_none_token_stream = match &read_with_or_without_annotation_or_inner {
+                        ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation => quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]},
+                        ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation |
+                        ReadWithOrWithoutAnnotationOrInner::Inner => proc_macro2::TokenStream::new(),
                     };
                     let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let field_type_as_json_type_read_token_stream = match &read_or_read_inner {
-                        ReadOrReadInner::ReadWithSerdeOptionIsNoneAnnotation | ReadOrReadInner::ReadWithoutSerdeOptionIsNoneAnnotation => generate_type_as_postgresql_json_type_read_token_stream(&current_element.ty),
-                        ReadOrReadInner::ReadInner => generate_type_as_postgresql_json_type_read_inner_token_stream(&current_element.ty),
+                    let field_type_as_json_type_read_token_stream = match &read_with_or_without_annotation_or_inner {
+                        ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation |
+                        ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation => generate_type_as_postgresql_json_type_read_token_stream(&current_element.ty),
+                        ReadWithOrWithoutAnnotationOrInner::Inner => generate_type_as_postgresql_json_type_read_inner_token_stream(&current_element.ty),
                     };
                     let std_option_option_value_field_type_as_json_type_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                         &wrap_into_value_declaration_token_stream(&field_type_as_json_type_read_token_stream)
@@ -1965,7 +1969,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                                 {
-                                    let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(&is_standart_with_id_false, &ReadOrReadInner::ReadWithSerdeOptionIsNoneAnnotation);
+                                    let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(
+                                        &is_standart_with_id_false,
+                                        &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation
+                                    );
                                     quote::quote! {{#content_token_stream}}
                                 },
                                 ShouldDeriveSerdeDeserialize::False,
@@ -2007,7 +2014,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         IsStandartWithId::True => &ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case,
                     };
                     macros_helpers::generate_pub_try_new_token_stream(
-                        &generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(is_standart_with_id, &ReadOrReadInner::ReadWithoutSerdeOptionIsNoneAnnotation),
+                        &generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(
+                            is_standart_with_id,
+                            &ReadWithOrWithoutAnnotationOrInner::WithoutSerdeOptionIsNoneAnnotation
+                        ),
                         &ident_read_try_from_error_named_or_ident_with_id_standart_not_null_read_try_from_error_named_upper_camel_case,
                         &{
                             let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
@@ -2235,7 +2245,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let ident_with_id_standart_not_null_read_token_stream = generate_ident_read_token_stream(
                         &ident_with_id_standart_not_null_read_upper_camel_case,
                         &{
-                            let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(&is_standart_with_id_true, &ReadOrReadInner::ReadWithSerdeOptionIsNoneAnnotation);
+                            let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(
+                                &is_standart_with_id_true,
+                                &ReadWithOrWithoutAnnotationOrInner::WithSerdeOptionIsNoneAnnotation
+                            );
                             quote::quote! {{#content_token_stream}}
                         },
                         &ShouldDeriveSerdeDeserialize::False,
@@ -2438,7 +2451,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         IsStandartWithId::False => &ident_read_inner_upper_camel_case,
                         IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
                     };
-                    let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(is_standart_with_id, &ReadOrReadInner::ReadInner);
+                    let content_token_stream = generate_ident_or_ident_with_id_read_or_read_inner_fields_declaration_token_stream(
+                        is_standart_with_id,
+                        &ReadWithOrWithoutAnnotationOrInner::Inner
+                    );
                     quote::quote! {
                         #[derive(Debug, Clone, PartialEq)]
                         pub struct #current_ident_token_stream {
