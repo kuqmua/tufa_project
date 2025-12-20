@@ -4103,16 +4103,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                     "error 3d9f2ec0-e374-48d2-a36b-486f5598b0b4"
                 );
-                let read_only_ids_from_try_delete_one = #ident::try_delete_one(
-                    &url,
-                    #ident_delete_one_parameters_upper_camel_case {
-                        payload: #ident_delete_one_payload_upper_camel_case {
-                            #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
-                        }
-                    }
-                ).await.expect("error 006b18e9-c965-45ee-afc0-a4f6b850ed06");
                 assert_eq!(
-                    read_only_ids_from_try_delete_one,
+                    #ident::try_delete_one(
+                        &url,
+                        #ident_delete_one_parameters_upper_camel_case {
+                            payload: #ident_delete_one_payload_upper_camel_case {
+                                #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
+                            }
+                        }
+                    ).await.expect("error 006b18e9-c965-45ee-afc0-a4f6b850ed06"),
                     #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
                     "error 26e2058b-4bc1-42da-8f35-0ab993904de5"
                 );
@@ -4473,17 +4472,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .expect("error 35141faa-387c-4302-aa7a-c529966f974b"),
                                 "error 5f2adbed-f716-440e-a990-4f1c258808b1"
                             );
-                            let read_only_ids_from_try_delete_one = #ident::try_delete_one_handle(
-                                &url_cloned,
-                                #ident_delete_one_parameters_upper_camel_case {
-                                    #payload_snake_case: #ident_delete_one_payload_upper_camel_case {
-                                        #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
-                                    }
-                                },
-                                &current_table
-                            ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                             assert_eq!(
-                                read_only_ids_from_try_delete_one,
+                                #ident::try_delete_one_handle(
+                                    &url_cloned,
+                                    #ident_delete_one_parameters_upper_camel_case {
+                                        #payload_snake_case: #ident_delete_one_payload_upper_camel_case {
+                                            #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream
+                                        }
+                                    },
+                                    &current_table
+                                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30"),
                                 #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
                                 "error 4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                             );
@@ -6264,17 +6262,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ).await.expect("error c8c44c89-aeb0-43d3-ae72-02b7a5979f5a"),
                         "error 86ef08ae-4356-4417-9490-1d13eb2af71f"
                     );
-                    let read_only_ids_from_try_delete_one = #ident::try_delete_one_handle(
-                        &url_cloned,
-                        #ident_delete_one_parameters_upper_camel_case {
-                            payload: #ident_delete_one_payload_upper_camel_case {
-                                #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
-                            }
-                        },
-                        &current_table
-                    ).await.expect("error acab86b7-b199-4732-b8ea-76c00a12abb2");
                     assert_eq!(
-                        read_only_ids_from_try_delete_one,
+                        #ident::try_delete_one_handle(
+                            &url_cloned,
+                            #ident_delete_one_parameters_upper_camel_case {
+                                payload: #ident_delete_one_payload_upper_camel_case {
+                                    #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
+                                }
+                            },
+                            &current_table
+                        ).await.expect("error acab86b7-b199-4732-b8ea-76c00a12abb2"),
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
                         "error 99f81971-dc80-46db-b466-4f309b215a8c"
                     );
