@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 serde.workspace = true
 serde_json = {version = "=1.0.145"}
-tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+tokio.workspace = true
 thiserror = {version = "=1.0.48"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 

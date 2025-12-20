@@ -33,7 +33,7 @@ num_cpus = {version = "=1.15.0"}
 # quickcheck = {version = "=1.0.3"}
 # quickcheck_macros = {version = "=1.0.0"}
 # rand = {version = "=0.8", features = ["std_rng"]}
-# regex = {version = "=1.9.3"}
+# regex.workspace = true
 # reqwest.workspace = true
 # serde.workspace = true
 # serde-aux = {version = "=4.0.0"}
@@ -47,9 +47,9 @@ sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_
 # strum_macros = {version = "=0.24.3"}
 # thiserror = {version = "=1.0.48"}
 # time = {version = "=0.3.36", features = ["serde"]}
-tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+tokio.workspace = true
 secrecy = {version = "=0.8.0", features = ["serde"]}
-# toml = {version = "=0.9.6"}
+# toml.workspace = true
 # tracing = {version = "=0.1.43", features = ["log", "valuable"]}
 # tracing-actix-web = {version = "=0.7.2"}
 # tracing-bunyan-formatter = {version = "=0.3.10"}
@@ -81,7 +81,7 @@ server_table_example = {path = "../server_table_example"}
 # quick-xml = "0.18.1"
 # log.workspace = true
 # simplelog = "0.9"
-# tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+# tokio.workspace = true
 # tokio-compat = "0.1.6"
 # crossbeam = "0.8.0"
 # async-std = "1.9.0"#remove later its only for example

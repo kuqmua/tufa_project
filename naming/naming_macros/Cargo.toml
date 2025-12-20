@@ -7,7 +7,7 @@ edition = "2024"
 proc-macro = true
 
 [dependencies]
-regex = {version = "=1.9.3"}
+regex.workspace = true
 serde_json = {version = "=1.0.145"}
 proc-macro2.workspace = true
 quote = {version = "=1.0.36"}

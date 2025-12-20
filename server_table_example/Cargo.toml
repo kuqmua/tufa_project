@@ -25,7 +25,7 @@ config_lib = {path = "../config_lib"}
 secrecy = {version = "=0.8.0", features = ["serde"]}
 server_app_state = {path = "../server_app_state"}
 server_config = {path = "../server_config"}
-tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+tokio.workspace = true
 tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]}
 uuid.workspace = true
 

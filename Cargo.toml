@@ -1091,3 +1091,9 @@ uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 proc-macro2 = {version = "=1.0.95"}
 log = {version = "=0.4.28"}
+teloxide = {version = "=0.13.0", features = ["macros"]}
+tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
+toml = {version = "=0.9.6"}
+scraper = {version = "=0.24.0"}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+regex = {version = "=1.9.3"}

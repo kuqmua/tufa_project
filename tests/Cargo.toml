@@ -10,7 +10,7 @@ workspace = true
 
 [dev-dependencies]
 reqwest.workspace = true
-toml = {version = "=0.9.6"}
-scraper = {version = "=0.24.0"}
-regex = {version = "=1.9.3"}
+toml.workspace = true
+scraper.workspace = true
+regex.workspace = true
 serde.workspace = true
