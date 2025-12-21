@@ -31,7 +31,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
-    let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum);
+    let supported_enum_variant = macros_helpers::error_occurence::SuportedEnumVariant::new_or_panic(&data_enum);
     let acc_snake_case = naming::AccSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let element_snake_case = naming::ElementSnakeCase;
@@ -72,7 +72,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         }
     };
     let tokens = match supported_enum_variant {
-        macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+        macros_helpers::error_occurence::SuportedEnumVariant::Named => {
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_std_fmt_display_handle_content_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
@@ -350,7 +350,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 #impl_error_occurence_lib_to_std_string_string_to_std_string_string_for_ident_with_serialize_deserialize_token_stream
             }
         }
-        macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Unnamed => {
+        macros_helpers::error_occurence::SuportedEnumVariant::Unnamed => {
             let generate_display_formatter_unnamed_token_stream = || {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
