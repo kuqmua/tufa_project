@@ -13,6 +13,11 @@
     )
 )]
 pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+    enum SuportedEnumVariant {
+        Named,
+        Unnamed,
+    }
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("{}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -31,11 +36,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
-    #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-    enum SuportedEnumVariant {
-        Named,
-        Unnamed,
-    }
     let supported_enum_variant = {
         let mut all_equal: Option<SuportedEnumVariant> = None;
         assert!(!data_enum.variants.is_empty(), "enum variants are empty");

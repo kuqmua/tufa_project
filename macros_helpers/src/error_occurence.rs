@@ -90,16 +90,10 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
     };
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
-        let current_element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-        let element_type_token_stream = {
-            let element_type = &element.ty;
-            quote::quote! {#element_type}
-        };
-        let std_snake_case = naming::StdSnakeCase;
         fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
             value: &'value_lifetime syn::Field,
             std_snake_case: &naming::StdSnakeCase,
-            std_string_string: &token_patterns::StdStringString
+            std_string_string: token_patterns::StdStringString
         ) -> &'value_lifetime syn::GenericArgument {
             let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
                 &syn_type_path.path.segments
@@ -142,6 +136,12 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "{} != {first_argument_stringified}", quote::quote! {#std_string_string});
             args.iter().nth(1).expect("args.iter().nth(1) is None")
         }
+        let current_element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+        let element_type_token_stream = {
+            let element_type = &element.ty;
+            quote::quote! {#element_type}
+        };
+        let std_snake_case = naming::StdSnakeCase;
         let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element).expect("error 2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
@@ -188,17 +188,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
                 element_type_token_stream
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, &std_string_string);
+                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = format!(
                     "{}{}",
                     quote::quote! {#second_argument},
