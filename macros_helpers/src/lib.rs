@@ -1,6 +1,5 @@
 pub mod attribute_ident_stringified;
 pub mod code_occurence_syn_field;
-pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 mod generate_if_write_is_err_token_stream;
