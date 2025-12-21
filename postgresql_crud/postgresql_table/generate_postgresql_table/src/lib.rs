@@ -4228,13 +4228,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let generate_ident_read_many_parameters_token_stream = |
             where_many_token_stream: &dyn quote::ToTokens,
             select_token_stream: &dyn quote::ToTokens,
-            order_by_token_stream: &dyn quote::ToTokens,
         |quote::quote!{
             #ident_read_many_parameters_upper_camel_case {
                 payload: #ident_read_many_payload_upper_camel_case {
                     where_many: #where_many_token_stream,
                     select: #select_token_stream,
-                    order_by: #order_by_token_stream,
+                    order_by: postgresql_crud::OrderBy {
+                        column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                            #primary_key_field_type_as_postgresql_type_select_token_stream::default()
+                        ),
+                        order: Some(postgresql_crud::Order::Asc)
+                    },
                     pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
                 }
             }
@@ -4270,12 +4274,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ))
                     },
                     &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                            order: Some(postgresql_crud::Order::Asc),
-                        }
-                    },
                 );
                 let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
                     &quote::quote!{
@@ -4300,12 +4298,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ))
                     },
                     &quote::quote!{select_default_all_with_max_page_size_cloned},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                            order: Some(postgresql_crud::Order::Asc),
-                        }
-                    },
                 );
                 quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
@@ -4605,14 +4597,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
-                                ),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     quote::quote! {
                         match #ident::try_read_many_handle(
@@ -4690,14 +4674,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
-                                ),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
                         &quote::quote!{
@@ -4724,12 +4700,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     quote::quote! {
                         let ident_vec_create = {
@@ -4885,12 +4855,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ))
                     },
                     &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                            order: Some(postgresql_crud::Order::Asc)
-                        }
-                    },
                 );
                 quote::quote! {
                     assert_eq!(
@@ -4972,12 +4936,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     quote::quote! {{
                         let current_table = #table_test_name_field_ident_cloned2_token_stream.clone();
@@ -5368,12 +5326,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#primary_key_field_type_as_postgresql_type_token_stream Select::default()),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     quote::quote! {
                         let previous_read = {
@@ -5521,12 +5473,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ))
                     },
                     &quote::quote!{select_default_all_with_max_page_size.clone()},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                            order: Some(postgresql_crud::Order::Asc),
-                        }
-                    },
                 );
                 let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
                     &quote::quote!{
@@ -5546,14 +5492,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }))
                     },
                     &quote::quote!{select_default_all_with_max_page_size_cloned},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                #primary_key_field_type_as_postgresql_type_token_stream Select::default()
-                            ),
-                            order: Some(postgresql_crud::Order::Asc)
-                        }
-                    },
                 );
                 quote::quote! {{
                     let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
@@ -5850,12 +5788,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ))
                     },
                     &quote::quote!{select_default_all_with_max_page_size.clone()},
-                    &quote::quote!{
-                        postgresql_crud::OrderBy {
-                            column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(<#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()),
-                            order: Some(postgresql_crud::Order::Asc),
-                        }
-                    },
                 );
                 quote::quote! {{
                     let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
@@ -6112,14 +6044,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ))
                         },
                         &quote::quote!{select_default_all_with_max_page_size.clone()},
-                        &quote::quote!{
-                            postgresql_crud::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
-                                ),
-                                order: Some(postgresql_crud::Order::Asc)
-                            }
-                        },
                     );
                     quote::quote! {
                         let read_only_ids_from_try_create_many = #ident::try_create_many_handle(
