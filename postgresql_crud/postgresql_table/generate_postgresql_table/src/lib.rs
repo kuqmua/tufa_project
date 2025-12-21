@@ -4225,6 +4225,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &table_create_into_postgresql_json_type_option_vec_where_length_equal_name,
             // &table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name,
         ]);
+        let select_default_all_with_max_page_size_cloned_clone_token_stream = quote::quote!{select_default_all_with_max_page_size_cloned.clone()};
         let generate_ident_read_many_parameters_token_stream = |
             where_many_content_token_stream: &dyn quote::ToTokens,
             select_content_token_stream: &dyn quote::ToTokens,
@@ -4273,7 +4274,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .expect("error 5dfe67ec-9d91-4bf6-a4fb-f71e7826c15c"),
                         ))
                     },
-                    &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
+                    &select_default_all_with_max_page_size_cloned_clone_token_stream,
                 );
                 let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
                     &quote::quote!{
@@ -4447,7 +4448,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #ident_read_one_parameters_upper_camel_case {
                                         #payload_snake_case: #ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
-                                            #select_snake_case: select_default_all_with_max_page_size_cloned.clone()
+                                            #select_snake_case: #select_default_all_with_max_page_size_cloned_clone_token_stream
                                         }
                                     },
                                     &current_table
@@ -4854,7 +4855,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .expect("error 80a91f82-aeda-4bea-9577-5297b8b3bfb9"),
                         ))
                     },
-                    &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
+                    &select_default_all_with_max_page_size_cloned_clone_token_stream,
                 );
                 quote::quote! {
                     assert_eq!(
@@ -4935,7 +4936,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .expect("error 6770e94a-3716-47b1-ac71-e4d0053e4e4e"),
                             ))
                         },
-                        &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
+                        &select_default_all_with_max_page_size_cloned_clone_token_stream,
                     );
                     quote::quote! {{
                         let current_table = #table_test_name_field_ident_cloned2_token_stream.clone();
@@ -5267,7 +5268,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #ident_read_one_parameters_upper_camel_case {
                         payload: #ident_read_one_payload_upper_camel_case {
                             #primary_key_field_ident: #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
-                            select: select_default_all_with_max_page_size_cloned.clone()
+                            select: #select_default_all_with_max_page_size_cloned_clone_token_stream
                         }
                     },
                     &current_table
@@ -5325,7 +5326,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .expect("error e594dd1f-4b25-4ac0-9674-82076f8feafb"),
                             ))
                         },
-                        &quote::quote!{select_default_all_with_max_page_size_cloned.clone()},
+                        &select_default_all_with_max_page_size_cloned_clone_token_stream
                     );
                     quote::quote! {
                         let previous_read = {
@@ -5673,7 +5674,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #ident_read_one_parameters_upper_camel_case {
                                 payload: #ident_read_one_payload_upper_camel_case {
                                     #primary_key_field_ident: #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream,
-                                    select: select_default_all_with_max_page_size_cloned.clone()
+                                    select: #select_default_all_with_max_page_size_cloned_clone_token_stream
                                 }
                             },
                             &current_table
@@ -6197,7 +6198,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #ident_read_one_parameters_upper_camel_case {
                                 payload: #ident_read_one_payload_upper_camel_case {
                                     #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
-                                    select: select_default_all_with_max_page_size_cloned.clone()
+                                    select: #select_default_all_with_max_page_size_cloned_clone_token_stream
                                 }
                             },
                             &current_table
@@ -6222,7 +6223,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #ident_read_one_parameters_upper_camel_case {
                             payload: #ident_read_one_payload_upper_camel_case {
                                 #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
-                                select: select_default_all_with_max_page_size_cloned.clone()
+                                select: #select_default_all_with_max_page_size_cloned_clone_token_stream
                             }
                         },
                         &current_table
