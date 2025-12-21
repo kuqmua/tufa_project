@@ -4140,7 +4140,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_initialization_vec_token_stream = vec![];
         let mut table_field_idents_clones_vec_token_stream = vec![];
         let mut table_field_idents_clones2_vec_token_stream = vec![];
-        let mut table_field_idents_drop_table_if_exists_vec_token_stream = vec![];
+        let mut table_field_idents_to_drop_table_if_exists_vec_token_stream = vec![];
         let mut table_field_idents_prepare_postgresql_table_vec_token_stream = vec![];
         let mut table_field_idents_routes_handle_vec_token_stream = vec![];
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
@@ -4175,12 +4175,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let #table_test_name_field_ident_cloned2_token_stream = #initialization_variable_name_token_stream.clone();
                     }
                 }));
-                table_field_idents_drop_table_if_exists_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                table_field_idents_to_drop_table_if_exists_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
-                    quote::quote! {
-                        drop_table_if_exists(&postgres_pool, &#initialization_variable_name_token_stream).await;
-                    }
+                    quote::quote! {&#initialization_variable_name_token_stream,}
                 }));
                 table_field_idents_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
@@ -5222,14 +5220,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #test_read_many_by_equal_to_created_primary_keys_token_stream
                 #read_only_ids_merged_with_create_into_where_equal_token_stream
                 #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream
-                // #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream
-                // #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
-                // #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
-                // #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
-                // #create_into_postgresql_json_type_option_vec_where_length_equal_token_stream
+                #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream
+                #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
+                #read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
+                #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
+                #create_into_postgresql_json_type_option_vec_where_length_equal_token_stream
                 // #create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream
             };}
         };
@@ -6281,21 +6279,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_one_cloned2 = table_delete_one.clone();
 
                             let drop_all_test_tables = async ||{
-                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &str) {
-                                    let #query_snake_case = format!("drop table if exists {table}");
-                                    let #underscore_unused_token_stream = sqlx::query(&#query_snake_case).execute(#postgres_pool_snake_case).await.expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
+                                let tables_to_drop = vec![
+                                    table,
+                                    &table_create_many,
+                                    &table_create_one,
+                                    &table_test_read_many_by_non_existent_primary_keys_cloned2,
+                                    &table_test_read_many_by_equal_to_created_primary_keys_cloned2,
+                                    #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
+                                    &table_read_one,
+                                    &table_update_many,
+                                    &table_update_one,
+                                    &table_delete_many,
+                                    &table_delete_one,
+                                ];
+                                for table_name in tables_to_drop {
+                                    let #underscore_unused_token_stream = sqlx::query(&format!("drop table if exists {table_name}"))
+                                        .execute(&postgres_pool)
+                                        .await
+                                        .expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
                                 }
-                                drop_table_if_exists(&#postgres_pool_snake_case, table).await;
-                                drop_table_if_exists(&postgres_pool, &table_create_many).await;
-                                drop_table_if_exists(&postgres_pool, &table_create_one).await;
-                                drop_table_if_exists(&postgres_pool, &table_test_read_many_by_non_existent_primary_keys_cloned2).await;
-                                drop_table_if_exists(&postgres_pool, &table_test_read_many_by_equal_to_created_primary_keys_cloned2).await;
-                                #(#table_field_idents_drop_table_if_exists_vec_token_stream)*
-                                drop_table_if_exists(&postgres_pool, &table_read_one).await;
-                                drop_table_if_exists(&postgres_pool, &table_update_many).await;
-                                drop_table_if_exists(&postgres_pool, &table_update_one).await;
-                                drop_table_if_exists(&postgres_pool, &table_delete_many).await;
-                                drop_table_if_exists(&postgres_pool, &table_delete_one).await;
                             };
                             drop_all_test_tables().await;
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
@@ -6385,14 +6387,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
                                     let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
-                                    // #create_many_tests_token_stream
-                                    // #create_one_tests_token_stream
+                                    #create_many_tests_token_stream
+                                    #create_one_tests_token_stream
                                     #read_many_tests_token_stream
-                                    // #read_one_tests_token_stream
-                                    // #update_many_tests_token_stream
-                                    // #update_one_tests_token_stream
-                                    // #delete_many_tests_token_stream
-                                    // #delete_one_tests_token_stream
+                                    #read_one_tests_token_stream
+                                    #update_many_tests_token_stream
+                                    #update_one_tests_token_stream
+                                    #delete_many_tests_token_stream
+                                    #delete_one_tests_token_stream
                                     #acc_snake_case
                                 }),
                                 100,
@@ -6450,7 +6452,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #update_one_token_stream
         #delete_many_token_stream
         #delete_one_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
