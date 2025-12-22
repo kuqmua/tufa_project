@@ -4677,15 +4677,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                         #acc_snake_case
                     }});
-                    let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
-                        &{
-                            quote::quote!{
-                                #some_postgresql_type_where_try_new_or_6ff6850d_c751_4ddd_afc7_c66ab8dde102_token_stream,
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            }
-                        },
-                        &select_default_all_with_max_page_size_clone_token_stream
-                    );
                     quote::quote! {
                         let ident_vec_create = {
                             let mut #acc_snake_case = vec![];
@@ -4787,13 +4778,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                             "error ebbbea6e-c402-4637-9bab-02678c11926c"
                         );
-                        match #ident::try_read_many_handle(
+                        match generate_try_read_many_order_by_primary_key_with_big_pagination(
                             url,
-                            #ident_read_many_parameters_after_delete_many_token_stream,
+                            #ident_where_many_upper_camel_case::try_new(
+                                #some_postgresql_type_where_try_new_or_6ff6850d_c751_4ddd_afc7_c66ab8dde102_token_stream,
+                                #fields_named_without_primary_key_with_comma_none_token_stream
+                            )
+                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                            #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
-                        )
-                        .await
-                        {
+                        ).await {
                             Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "error d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
                             Err(#error_snake_case) => {
                                 panic!("error 1f079962-06af-4d21-a837-c88b0e7db265 {error:#?}");
