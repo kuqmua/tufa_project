@@ -4230,7 +4230,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream = quote::quote!{
             fn generate_some_postgresql_type_where_try_new_or_primary_keys(
-                vec_read_only_ids: &Vec<#ident_read_only_ids_upper_camel_case>
+                vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]
             ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
                 Some(
                     #import_path::PostgresqlTypeWhere::try_new(
