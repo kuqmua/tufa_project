@@ -4827,10 +4827,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };}
             };
             let generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream = |ident_where_many_try_new_parameters_content_token_stream: &dyn quote::ToTokens| {
-                let ident_read_many_parameters_token_stream = generate_ident_read_many_parameters_token_stream(
-                    &ident_where_many_try_new_parameters_content_token_stream,
-                    &select_default_all_with_max_page_size_cloned_clone_token_stream,
-                );
                 quote::quote! {
                     assert_eq!(
                         vec![
@@ -4845,13 +4841,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_returned_from_create_one_clone_ident_create_clone_token_stream
                             }
                         ],
-                        #ident::try_read_many_handle(
+                        generate_try_read_many_order_by_primary_key_with_big_pagination(
                             &url_cloned,
-                            #ident_read_many_parameters_token_stream,
+                            #ident_where_many_upper_camel_case::try_new(#ident_where_many_try_new_parameters_content_token_stream).expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                            #select_default_all_with_max_page_size_cloned_clone_token_stream,
                             &current_table
-                        )
-                        .await
-                        .expect("error 91dd4f87-4f0f-4f5a-a844-4161d78dbf4a"),
+                        ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff"),
                         "error ee8d232d-98f2-4449-ad30-0e36ca2e7094"
                     );
                 }
