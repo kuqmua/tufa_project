@@ -4141,7 +4141,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_clones_vec_token_stream = vec![];
         let mut table_field_idents_clones2_vec_token_stream = vec![];
         let mut table_field_idents_to_drop_table_if_exists_vec_token_stream = vec![];
-        let mut table_field_idents_prepare_postgresql_table_vec_token_stream = vec![];
+        let mut table_field_idents_for_prepare_postgresql_table_vec_token_stream = vec![];
         let mut table_field_idents_routes_handle_vec_token_stream = vec![];
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
             for test_name in test_names {
@@ -4180,12 +4180,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
                     quote::quote! {&#initialization_variable_name_token_stream,}
                 }));
-                table_field_idents_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                table_field_idents_for_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(field_ident);
-                    quote::quote! {
-                        #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &#variable_name_cloned_token_stream).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
-                    }
+                    quote::quote! {&#variable_name_cloned_token_stream,}
                 }));
                 table_field_idents_routes_handle_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
@@ -6304,17 +6302,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
                                 #ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, table).await.expect("error 0c29cf7d-1af7-459c-b0c6-69855ca98bef");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_many_cloned).await.expect("error 141d990c-91e5-4518-8978-7660fcf88784");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_create_one_cloned).await.expect("error cdd3b111-5e8b-4201-896e-bd38dc8b4d7c");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_non_existent_primary_keys_cloned).await.expect("error 56a27d70-0393-4759-9d02-f9eb1e623f5f");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_test_read_many_by_equal_to_created_primary_keys_cloned).await.expect("error 4bd22656-8d17-427f-820f-2dd0ea2eac86");
-                                #(#table_field_idents_prepare_postgresql_table_vec_token_stream)*
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_read_one_cloned).await.expect("error 425e8574-6cdd-43b5-9b7b-75efce9b750d");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_many_cloned).await.expect("error ab50eb74-29ab-49b3-bdd4-ff6c6c6b700a");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_update_one_cloned).await.expect("error de8885ae-34f5-430b-a3b4-bf91c999b2c8");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_many_cloned).await.expect("error 2bb3d5ec-1069-470c-a758-60afe3bd5224");
-                                #ident::prepare_postgresql_table(&#postgres_pool_for_tokio_spawn_sync_move_snake_case, &table_delete_one_cloned).await.expect("error e5cc2f6f-65a2-472d-8a1e-56e23fbc165a");
+                                futures::future::try_join_all(
+                                    [
+                                        table,
+                                        &table_create_many_cloned,
+                                        &table_create_one_cloned,
+                                        &table_test_read_many_by_non_existent_primary_keys_cloned,
+                                        &table_test_read_many_by_equal_to_created_primary_keys_cloned,
+                                        #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream)*
+                                        &table_read_one_cloned,
+                                        &table_update_many_cloned,
+                                        &table_update_one_cloned,
+                                        &table_delete_many_cloned,
+                                        &table_delete_one_cloned
+                                    ].iter().map(|table_name| #ident::prepare_postgresql_table(
+                                        &#postgres_pool_for_tokio_spawn_sync_move_snake_case,
+                                        table_name,
+                                    )),
+                                )
+                                .await
+                                .expect("error c7952247-dc94-441b-9aef-368b8fdc593c");
                                 let #app_state_snake_case = std::sync::Arc::new(server_app_state::ServerAppState {
                                     #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
                                     #config_snake_case,
