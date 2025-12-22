@@ -6302,7 +6302,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
                                 #ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
-                                futures::future::try_join_all(
+                                let _unused = futures::future::try_join_all(
                                     [
                                         table,
                                         &table_create_many_cloned,
