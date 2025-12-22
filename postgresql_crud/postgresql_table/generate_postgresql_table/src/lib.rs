@@ -5258,36 +5258,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let warning_message_double_quote_token_stream = generate_quotes::double_quotes_token_stream(&format!("PostgresqlTypeTestCases read_only_ids_to_two_dimensional_vec_read_inner is empty for {field_ident}"));
                 let is_fields_without_primary_key_len_greater_than_one = fields_without_primary_key.len() > 1;
                 let maybe_previous_read_token_stream = if is_fields_without_primary_key_len_greater_than_one {
-                    let ident_read_many_parameters_token_stream = generate_ident_read_many_parameters_token_stream(
-                        &{
-                            let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{
-                                vec![
-                                    #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
-                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                        value: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                            #primary_key_field_type_as_postgresql_type_token_stream into_inner(
-                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
-                                            )
-                                        )
-                                    })
-                                ]
-                            });
-                            quote::quote!{
-                                #some_postgresql_type_where_try_new_or_token_stream,
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            }
-                        },
-                        &select_default_all_with_max_page_size_cloned_clone_token_stream
-                    );
+                    let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{
+                        vec![
+                            #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
+                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                value: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                    #primary_key_field_type_as_postgresql_type_token_stream into_inner(
+                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
+                                    )
+                                )
+                            })
+                        ]
+                    });
                     quote::quote! {
                         let previous_read = {
-                            let mut #acc_snake_case = #ident::try_read_many_handle(
+                            let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
-                                #ident_read_many_parameters_token_stream,
+                                #ident_where_many_upper_camel_case::try_new(
+                                    #some_postgresql_type_where_try_new_or_token_stream,
+                                    #fields_named_without_primary_key_with_comma_none_token_stream
+                                )
+                                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                 &current_table
-                            )
-                            .await
-                            .expect("error 35141faa-387c-4302-aa7a-c529966f974b");
+                            ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
                             #acc_snake_case.sort_by(|first, second| {
                                 if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
                                     value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
