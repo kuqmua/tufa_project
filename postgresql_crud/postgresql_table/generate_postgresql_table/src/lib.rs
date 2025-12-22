@@ -1482,6 +1482,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     // println!("{ident_read_only_ids_token_stream}");
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation| format!("{ident}Try{operation}ErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 6a5468b2-c8d6-4c5e-88a6-adce2bfe7467");
+    let ident_try_read_many_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(&Operation::ReadMany);
     let generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation| format!("{ident}{operation}ErrorNamedWithSerializeDeserialize").parse::<proc_macro2::TokenStream>().expect("error f9e053d1-c5ce-4a8e-ac79-6cc30ba19bb9");
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
@@ -4226,6 +4227,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 ).expect("error 6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
             )
         };
+        //todo maybe remove it?
         let generate_ident_read_many_parameters_token_stream = |
             ident_where_many_content_token_stream: &dyn quote::ToTokens,
             select_content_token_stream: &dyn quote::ToTokens,
@@ -4246,6 +4248,35 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     pagination: postgresql_crud::PaginationStartsWithZero::try_new(10000, 0).expect("error b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
                 }
             }
+        };
+        let generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream = quote::quote!{
+            let generate_try_read_many_order_by_primary_key_with_big_pagination = async |
+                endpoint_location: &str,
+                current_ident_where_many: #ident_where_many_upper_camel_case,
+                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                table: &str
+            | -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
+                #ident::try_read_many_handle(
+                    &endpoint_location,
+                    #ident_read_many_parameters_upper_camel_case {
+                        payload: #ident_read_many_payload_upper_camel_case {
+                            where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
+                                current_ident_where_many
+                            )),
+                            select,
+                            order_by: #import_path::OrderBy {
+                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
+                                ),
+                                order: Some(#import_path::Order::Asc)
+                            },
+                            pagination: #import_path::PaginationStartsWithZero::try_new(10000, 0).expect("error b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
+                        }
+                    },
+                    &table
+                )
+                .await
+            };
         };
         let create_many_tests_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -6368,6 +6399,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
+                            #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
                                     let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
