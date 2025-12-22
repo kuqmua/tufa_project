@@ -4251,12 +4251,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream = quote::quote!{
-            let generate_try_read_many_order_by_primary_key_with_big_pagination = async |
+            async fn generate_try_read_many_order_by_primary_key_with_big_pagination(
                 endpoint_location: &str,
                 current_ident_where_many: #ident_where_many_upper_camel_case,
                 select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                 table: &str
-            | -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
+            ) -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
                 #ident::try_read_many_handle(
                     &endpoint_location,
                     #ident_read_many_parameters_upper_camel_case {
@@ -4277,7 +4277,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &table
                 )
                 .await
-            };
+            }
         };
         let create_many_tests_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -4309,15 +4309,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                     #acc_snake_case
                 }});
-                // let ident_read_many_parameters_after_delete_many_token_stream = generate_ident_read_many_parameters_token_stream(
-                //     &{
-                //         quote::quote!{
-                //             #some_postgresql_type_where_try_new_or_1ce67b84_494d_49ba_a1b8_27bc8f6071d4_token_stream,
-                //             #fields_named_without_primary_key_with_comma_none_token_stream
-                //         }
-                //     },
-                //     &quote::quote!{select_default_all_with_max_page_size_cloned},
-                // );
                 quote::quote! {{
                     for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
                         .chunks(10)
@@ -4591,36 +4582,31 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             //todo additional read_many checks
             let test_read_many_by_non_existent_primary_keys_token_stream = {
                 let content_token_stream = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream(&{
-                    let ident_read_many_parameters_token_stream = generate_ident_read_many_parameters_token_stream(
-                        &{
-                            let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{{
-                                let mut #acc_snake_case = vec![];
-                                for _ in 1..=length {
-                                    #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
-                                        postgresql_crud::PostgresqlTypeWhereEqual {
-                                            logical_operator: postgresql_crud::LogicalOperator::Or,
-                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                uuid::Uuid::new_v4()
-                                            )
-                                        }
-                                    ));
+                    let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{{
+                        let mut #acc_snake_case = vec![];
+                        for _ in 1..=length {
+                            #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
+                                postgresql_crud::PostgresqlTypeWhereEqual {
+                                    logical_operator: postgresql_crud::LogicalOperator::Or,
+                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                        uuid::Uuid::new_v4()
+                                    )
                                 }
-                                #acc_snake_case
-                            }});
-                            quote::quote!{
+                            ));
+                        }
+                        #acc_snake_case
+                    }});
+                    quote::quote! {
+                        match generate_try_read_many_order_by_primary_key_with_big_pagination(
+                            url,
+                            #ident_where_many_upper_camel_case::try_new(
                                 #some_postgresql_type_where_try_new_or_token_stream,
                                 #fields_named_without_primary_key_with_comma_none_token_stream
-                            }
-                        },
-                        &select_default_all_with_max_page_size_clone_token_stream
-                    );
-                    quote::quote! {
-                        match #ident::try_read_many_handle(
-                            url,
-                            #ident_read_many_parameters_token_stream,
+                            )
+                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                            #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
-                        )
-                        .await {
+                        ).await {
                             Ok(#value_snake_case) => assert!(#value_snake_case.is_empty(), "error 06df4025-e2d1-4128-b819-c06613c6ae3f"),
                             Err(#error_snake_case) => {
                                 panic!("error e661c49b-2288-4548-8783-35495e193976: {error:#?}");
