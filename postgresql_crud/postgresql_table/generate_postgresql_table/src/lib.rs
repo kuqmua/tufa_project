@@ -4142,7 +4142,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_clones2_vec_token_stream = vec![];
         let mut table_field_idents_to_drop_table_if_exists_vec_token_stream = vec![];
         let mut table_field_idents_for_prepare_postgresql_table_vec_token_stream = vec![];
-        let mut table_field_idents_routes_handle_vec_token_stream = vec![];
+        let mut table_field_idents_for_routes_handle_vec_token_stream = vec![];
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
             for test_name in test_names {
                 let generate_initialization_variable_name_token_stream = |field_ident: &syn::Ident| format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
@@ -4178,22 +4178,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 table_field_idents_to_drop_table_if_exists_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
-                    quote::quote! {&#initialization_variable_name_token_stream,}
+                    quote::quote! {&#initialization_variable_name_token_stream}
                 }));
                 table_field_idents_for_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(field_ident);
-                    quote::quote! {&#variable_name_cloned_token_stream,}
+                    quote::quote! {&#variable_name_cloned_token_stream}
                 }));
-                table_field_idents_routes_handle_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                table_field_idents_for_routes_handle_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(field_ident);
-                    quote::quote! {
-                        .merge(#ident::#routes_handle_snake_case(
-                            std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                            &#variable_name_cloned_token_stream
-                        ))
-                    }
+                    quote::quote! {&#variable_name_cloned_token_stream}
                 }));
             }
         };
@@ -6284,7 +6279,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &table_create_one,
                                         &table_test_read_many_by_non_existent_primary_keys_cloned2,
                                         &table_test_read_many_by_equal_to_created_primary_keys_cloned2,
-                                        #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
+                                        #(#table_field_idents_to_drop_table_if_exists_vec_token_stream),*,
                                         &table_read_one,
                                         &table_update_many,
                                         &table_update_one,
@@ -6314,7 +6309,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &table_create_one_cloned,
                                         &table_test_read_many_by_non_existent_primary_keys_cloned,
                                         &table_test_read_many_by_equal_to_created_primary_keys_cloned,
-                                        #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream)*
+                                        #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream),*,
                                         &table_read_one_cloned,
                                         &table_update_many_cloned,
                                         &table_update_one_cloned,
@@ -6338,48 +6333,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                                 axum::serve(
                                     tcp_listener,
-                                    axum::Router::new()
-                                    .merge(#ident::#routes_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case)
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_create_many_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_create_one_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_test_read_many_by_non_existent_primary_keys_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_test_read_many_by_equal_to_created_primary_keys_cloned
-                                    ))
-                                    #(#table_field_idents_routes_handle_vec_token_stream)*
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_read_one_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_update_many_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_update_one_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_delete_many_cloned
-                                    ))
-                                    .merge(#ident::#routes_handle_snake_case(
-                                        std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&#app_state_snake_case),
-                                        &table_delete_one_cloned
-                                    ))
-                                    .into_make_service(),
+                                    {
+                                        let mut router = axum::Router::new()
+                                            .merge(#ident::routes(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state)));
+                                        for table_name in [
+                                            &table_create_many_cloned,
+                                            &table_create_one_cloned,
+                                            &table_test_read_many_by_non_existent_primary_keys_cloned,
+                                            &table_test_read_many_by_equal_to_created_primary_keys_cloned,
+                                            #(#table_field_idents_for_routes_handle_vec_token_stream),*,
+                                            &table_read_one_cloned,
+                                            &table_update_many_cloned,
+                                            &table_update_one_cloned,
+                                            &table_delete_many_cloned,
+                                            &table_delete_one_cloned,
+                                        ] {
+                                            router = router.merge(#ident::routes_handle(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state), table_name));
+                                        }
+                                        router.into_make_service()
+                                    },
                                 )
                                 .await
                                 .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
