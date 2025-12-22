@@ -4880,27 +4880,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let table_test_name_field_ident_cloned2_token_stream = generate_table_test_name_field_ident_cloned2_token_stream(test_name, field_ident);
                     let ident_create_content_token_stream = generate_create_content_token_stream(field_ident);
                     let content_token_stream = generate_content_token_stream(element);
-                    let ident_read_many_parameters_token_stream = generate_ident_read_many_parameters_token_stream(
-                        &{
-                            let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{
-                                vec![
-                                    #primary_key_field_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
-                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
-                                            )
-                                        )
-                                    })
-                                ]
-                            });
-                            quote::quote!{
-                                #some_postgresql_type_where_try_new_or_token_stream,
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            }
-                        },
-                        &select_default_all_with_max_page_size_cloned_clone_token_stream,
-                    );
+                    let some_postgresql_type_where_try_new_or_token_stream = generate_some_postgresql_type_where_try_new_or_token_stream(&quote::quote!{
+                        vec![
+                            #primary_key_field_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
+                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
+                                    )
+                                )
+                            })
+                        ]
+                    });
                     quote::quote! {{
                         let current_table = #table_test_name_field_ident_cloned2_token_stream.clone();
                         for #element_snake_case in #method_call_token_stream {
@@ -4956,13 +4947,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     vec![#primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream],
                                     "error 9fc29fa5-caba-403d-99da-ca9107d0c2e9"
                                 );
-                                match #ident::try_read_many_handle(
+                                match generate_try_read_many_order_by_primary_key_with_big_pagination(
                                     &url_cloned,
-                                    #ident_read_many_parameters_token_stream,
+                                    #ident_where_many_upper_camel_case::try_new(
+                                        #some_postgresql_type_where_try_new_or_token_stream,
+                                        #fields_named_without_primary_key_with_comma_none_token_stream
+                                    )
+                                    .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                    #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                     &current_table
-                                )
-                                .await
-                                {
+                                ).await {
                                     Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "error 38187925-c136-41de-940d-eba75efc3a39"),
                                     Err(#error_snake_case) => {
                                         panic!("error 1817b67a-c6c5-4fea-8ca7-23581c1888a3 {error:#?}");
