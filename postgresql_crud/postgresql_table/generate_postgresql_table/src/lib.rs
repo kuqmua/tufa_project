@@ -6277,25 +6277,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_one_cloned2 = table_delete_one.clone();
 
                             let drop_all_test_tables = async ||{
-                                let tables_to_drop = vec![
-                                    table,
-                                    &table_create_many,
-                                    &table_create_one,
-                                    &table_test_read_many_by_non_existent_primary_keys_cloned2,
-                                    &table_test_read_many_by_equal_to_created_primary_keys_cloned2,
-                                    #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
-                                    &table_read_one,
-                                    &table_update_many,
-                                    &table_update_one,
-                                    &table_delete_many,
-                                    &table_delete_one,
-                                ];
-                                for table_name in tables_to_drop {
-                                    let #underscore_unused_token_stream = sqlx::query(&format!("drop table if exists {table_name}"))
-                                        .execute(&postgres_pool)
-                                        .await
-                                        .expect("error 1b11bf1b-9180-419f-bae7-b1ab93cd9c57");
-                                }
+                                let _unused = futures::future::try_join_all(
+                                    [
+                                        table,
+                                        &table_create_many,
+                                        &table_create_one,
+                                        &table_test_read_many_by_non_existent_primary_keys_cloned2,
+                                        &table_test_read_many_by_equal_to_created_primary_keys_cloned2,
+                                        #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
+                                        &table_read_one,
+                                        &table_update_many,
+                                        &table_update_one,
+                                        &table_delete_many,
+                                        &table_delete_one,
+                                    ]
+                                    .iter()
+                                    .map(|table_name|{
+                                        let postgres_pool = &postgres_pool;
+                                        async move {
+                                            sqlx::query(&format!("drop table if exists {table_name}")).execute(postgres_pool).await
+                                        }
+                                    })
+                                )
+                                .await
+                                .expect("error b9c1eb2e-4ead-449b-abb8-0a160cf68efd");
                             };
                             drop_all_test_tables().await;
                             let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
@@ -6318,7 +6323,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     ].iter().map(|table_name| #ident::prepare_postgresql_table(
                                         &#postgres_pool_for_tokio_spawn_sync_move_snake_case,
                                         table_name,
-                                    )),
+                                    ))
                                 )
                                 .await
                                 .expect("error c7952247-dc94-441b-9aef-368b8fdc593c");
