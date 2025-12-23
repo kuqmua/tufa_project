@@ -6214,7 +6214,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let drop_all_test_tables = async ||{
                                 let _unused = futures::future::try_join_all(
                                     [
-                                        table,
                                         &table_create_many,
                                         &table_create_one,
                                         &table_test_read_many_by_non_existent_primary_keys_cloned2,
@@ -6244,7 +6243,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
                                 //do not make it concurrent. would be postgresql error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
                                 for table_name in [
-                                    table,
                                     &table_create_many_cloned,
                                     &table_create_one_cloned,
                                     &table_test_read_many_by_non_existent_primary_keys_cloned,
