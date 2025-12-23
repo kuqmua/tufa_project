@@ -4151,13 +4151,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 table_field_idents_initialization_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
-                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&{
-                        let value = format!("{{table}}_{test_name}_{field_ident}");
-                        assert!(value.len() <= 63, "error 77f9bfb7-f7d8-4ba0-96d0-712d4246ecae");
-                        value
-                    });
+                    let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{test_name}_{field_ident}"));
                     quote::quote! {
-                        let #initialization_variable_name_token_stream = format!(#format_content_token_stream);
+                        let #initialization_variable_name_token_stream = add_table_postfix(&#format_content_token_stream);
                     }
                 }));
                 table_field_idents_clones_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -6178,16 +6174,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             .await.expect("error e3044bb9-7b76-4c0c-bc5f-eb34da05a103");
                             let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
                             let table = #ident_double_quotes_token_stream;
-                            let table_create_many = format!("{table}_create_many");
-                            let table_create_one = format!("{table}_create_one");
-                            let table_test_read_many_by_non_existent_primary_keys = format!("{table}_test_read_many_by_non_existent_primary_keys");
-                            let table_test_read_many_by_equal_to_created_primary_keys = format!("{table}_test_read_many_by_equal_to_created_primary_keys");
+
+                            let add_table_postfix = |postfix: &str|{
+                                let value = format!("{table}_{postfix}");
+                                assert!(value.len() <= 63, "error 77f9bfb7-f7d8-4ba0-96d0-712d4246ecae");
+                                value
+                            };
+                            let table_create_many = add_table_postfix("create_many");
+                            let table_create_one = add_table_postfix("create_one");
+                            let table_test_read_many_by_non_existent_primary_keys = add_table_postfix("test_read_many_by_non_existent_primary_keys");
+                            let table_test_read_many_by_equal_to_created_primary_keys = add_table_postfix("test_read_many_by_equal_to_created_primary_keys");
                             #(#table_field_idents_initialization_vec_token_stream)*
-                            let table_read_one = format!("{table}_read_one");
-                            let table_update_many = format!("{table}_update_many");
-                            let table_update_one = format!("{table}_update_one");
-                            let table_delete_many = format!("{table}_delete_many");
-                            let table_delete_one = format!("{table}_delete_one");
+                            let table_read_one = add_table_postfix("read_one");
+                            let table_update_many = add_table_postfix("update_many");
+                            let table_update_one = add_table_postfix("update_one");
+                            let table_delete_many = add_table_postfix("delete_many");
+                            let table_delete_one = add_table_postfix("delete_one");
 
                             let table_create_many_cloned = table_create_many.clone();
                             let table_create_one_cloned = table_create_one.clone();
