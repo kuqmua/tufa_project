@@ -4220,52 +4220,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ]);
         let select_default_all_with_max_page_size_cloned_clone_token_stream = quote::quote!{select_default_all_with_max_page_size_cloned.clone()};
         //todo maybe remove it?\
-        let (
-            generate_some_postgresql_type_where_try_new_or_token_stream,
-            generate_some_postgresql_type_where_try_new_and_token_stream
-        ) = {
-            enum LogicalOperatorHandle {
-                And,
-                Or,
-            }
-            impl quote::ToTokens for LogicalOperatorHandle {
-                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    match self {
-                        LogicalOperatorHandle::And => quote::quote!{And},
-                        LogicalOperatorHandle::Or => quote::quote!{Or}
-                    }.to_tokens(tokens)
-                }
-            }
-            fn generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
-                import_path: &postgresql_crud_macros_common::ImportPath,
-                logical_operator_handle: LogicalOperatorHandle,
-                content_token_stream: &dyn quote::ToTokens
-            ) -> proc_macro2::TokenStream {
-                quote::quote!{
+        let generate_some_postgresql_type_where_try_new_and_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            quote::quote!{
                 Some(
                     #import_path::PostgresqlTypeWhere::try_new(
-                        #import_path::LogicalOperator::#logical_operator_handle,
+                        #import_path::LogicalOperator::And,
                         #content_token_stream
                     ).expect("error 6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
                 )
-                }
             }
-            (
-                |content_token_stream: &dyn quote::ToTokens|{
-                    generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
-                        &import_path,
-                        LogicalOperatorHandle::Or,
-                        content_token_stream
-                    )
-                },
-                |content_token_stream: &dyn quote::ToTokens|{
-                    generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
-                        &import_path,
-                        LogicalOperatorHandle::And,
-                        content_token_stream
-                    )
-                }
-            )
         };
         let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = quote::quote!{
             fn generate_some_postgresql_type_where_try_new_primary_key(
@@ -4993,14 +4956,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     };}
                 })
             };
-            let some_primary_key_where_initialization_token_stream = generate_some_postgresql_type_where_try_new_and_token_stream(&quote::quote! {
-                vec![
-                    <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
-                        read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
-                        #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                    )
-                ]
-            });
+            let some_primary_key_where_initialization_token_stream = quote::quote!{
+                generate_some_postgresql_type_where_try_new_primary_key(
+                    postgresql_crud::LogicalOperator::And,
+                    vec![
+                        <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_where_equal(
+                            read_only_ids_returned_from_create_one.#primary_key_field_ident.clone(),
+                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        )
+                    ]
+                )
+            };
             let (read_only_ids_merged_with_create_into_where_equal_token_stream, read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |test_name: &str, equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields| {
                     generate_read_test_token_stream(test_name, &generate_option_vec_create_call_unwrap_or_vec_token_stream, &generate_ident_create_content_element_token_stream, &|element: &SynFieldWrapper| {
