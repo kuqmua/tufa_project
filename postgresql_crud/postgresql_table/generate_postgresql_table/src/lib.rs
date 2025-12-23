@@ -6253,26 +6253,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                             let #underscore_unused_token_stream = tokio::spawn(async move {
                                 #ident::prepare_extensions(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
-                                let _unused = futures::future::try_join_all(
-                                    [
-                                        table,
-                                        &table_create_many_cloned,
-                                        &table_create_one_cloned,
-                                        &table_test_read_many_by_non_existent_primary_keys_cloned,
-                                        &table_test_read_many_by_equal_to_created_primary_keys_cloned,
-                                        #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream)*
-                                        &table_read_one_cloned,
-                                        &table_update_many_cloned,
-                                        &table_update_one_cloned,
-                                        &table_delete_many_cloned,
-                                        &table_delete_one_cloned
-                                    ].iter().map(|table_name| #ident::prepare_postgresql_table(
+                                //do not make it concurrent. would be postgresql error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
+                                for table_name in [
+                                    table,
+                                    &table_create_many_cloned,
+                                    &table_create_one_cloned,
+                                    &table_test_read_many_by_non_existent_primary_keys_cloned,
+                                    &table_test_read_many_by_equal_to_created_primary_keys_cloned,
+                                    #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream)*
+                                    &table_read_one_cloned,
+                                    &table_update_many_cloned,
+                                    &table_update_one_cloned,
+                                    &table_delete_many_cloned,
+                                    &table_delete_one_cloned
+                                ] {
+                                    #ident::prepare_postgresql_table(
                                         &#postgres_pool_for_tokio_spawn_sync_move_snake_case,
                                         table_name,
-                                    ))
-                                )
-                                .await
-                                .expect("error c7952247-dc94-441b-9aef-368b8fdc593c");
+                                    ).await.expect("error c7952247-dc94-441b-9aef-368b8fdc593c");
+                                }
                                 let #app_state_snake_case = std::sync::Arc::new(server_app_state::ServerAppState {
                                     #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
                                     #config_snake_case,
