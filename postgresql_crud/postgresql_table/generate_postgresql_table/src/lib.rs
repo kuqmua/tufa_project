@@ -4148,8 +4148,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let mut table_field_idents_initialization_vec_token_stream = vec![];
         let mut table_field_idents_clones_vec_token_stream = vec![];
         let mut table_field_idents_clones2_vec_token_stream = vec![];
-        let mut table_field_idents_to_drop_table_if_exists_vec_token_stream = vec![];
-        let mut table_field_idents_for_prepare_postgresql_table_vec_token_stream = vec![];
+        let mut table_test_name_field_idents_vec_token_stream = vec![];
         let mut table_field_idents_for_routes_handle_vec_token_stream = vec![];
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
             for test_name in test_names {
@@ -4179,16 +4178,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let #table_test_name_field_ident_cloned2_token_stream = #initialization_variable_name_token_stream.clone();
                     }
                 }));
-                table_field_idents_to_drop_table_if_exists_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+                table_test_name_field_idents_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
                     quote::quote! {&#initialization_variable_name_token_stream,}
                 }));
-                table_field_idents_for_prepare_postgresql_table_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
-                    quote::quote! {&#initialization_variable_name_token_stream,}
-                }));
+
                 table_field_idents_for_routes_handle_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let variable_name_cloned_token_stream = generate_variable_name_cloned_token_stream(field_ident);
@@ -6199,6 +6194,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_many = add_table_postfix("delete_many");
                             let table_delete_one = add_table_postfix("delete_one");
 
+                            let table_names = [
+                                &table_initialization,
+                                &table_create_many,
+                                &table_create_one,
+                                &table_test_read_many_by_non_existent_primary_keys,
+                                &table_test_read_many_by_equal_to_created_primary_keys,
+                                #(#table_test_name_field_idents_vec_token_stream)*
+                                &table_read_one,
+                                &table_update_many,
+                                &table_update_one,
+                                &table_delete_many,
+                                &table_delete_one,
+                            ];
+
                             let table_initialization_cloned = table_initialization.clone();
                             let table_create_many_cloned = table_create_many.clone();
                             let table_create_one_cloned = table_create_one.clone();
@@ -6211,33 +6220,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_many_cloned = table_delete_many.clone();
                             let table_delete_one_cloned = table_delete_one.clone();
 
-                            let table_initialization_cloned2 = table_initialization.clone();
-                            let table_create_many_cloned2 = table_create_many.clone();
-                            let table_create_one_cloned2 = table_create_one.clone();
-                            let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
-                            let table_test_read_many_by_equal_to_created_primary_keys_cloned2 = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                            #(#table_field_idents_clones2_vec_token_stream)*
-                            let table_read_one_cloned2 = table_read_one.clone();
-                            let table_update_many_cloned2 = table_update_many.clone();
-                            let table_update_one_cloned2 = table_update_one.clone();
-                            // let table_delete_many_cloned2 = table_delete_many.clone();
-                            let table_delete_one_cloned2 = table_delete_one.clone();
-
                             let drop_all_test_tables = async ||{
                                 let _unused = futures::future::try_join_all(
-                                    [
-                                        &table_initialization,
-                                        &table_create_many,
-                                        &table_create_one,
-                                        &table_test_read_many_by_non_existent_primary_keys,
-                                        &table_test_read_many_by_equal_to_created_primary_keys,
-                                        #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
-                                        &table_read_one,
-                                        &table_update_many,
-                                        &table_update_one,
-                                        &table_delete_many,
-                                        &table_delete_one,
-                                    ]
+                                    table_names
                                     .iter()
                                     .map(|table_name|{
                                         let postgres_pool = &postgres_pool;
@@ -6252,19 +6237,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             drop_all_test_tables().await;
                             #ident::prepare_extensions(&#postgres_pool_snake_case).await.expect("error 0633ff48-ebc4-460f-a282-d750511f5d78");
                             //do not make it concurrent. would be postgresql error: "duplicate key value violates unique constraint \"pg_class_relname_nsp_index\""
-                            for table_name in [
-                                &table_initialization,
-                                &table_create_many,
-                                &table_create_one,
-                                &table_test_read_many_by_non_existent_primary_keys,
-                                &table_test_read_many_by_equal_to_created_primary_keys,
-                                #(#table_field_idents_for_prepare_postgresql_table_vec_token_stream)*
-                                &table_read_one,
-                                &table_update_many,
-                                &table_update_one,
-                                &table_delete_many,
-                                &table_delete_one
-                            ] {
+                            for table_name in table_names {
                                 #ident::prepare_postgresql_table(
                                     &#postgres_pool_snake_case,
                                     table_name,
@@ -6319,6 +6292,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #ident_create_default_fields_initialization_without_primary_key_token_stream
                             };
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
+                            //
+                            let table_initialization_cloned2 = table_initialization.clone();
+                            let table_create_many_cloned2 = table_create_many.clone();
+                            let table_create_one_cloned2 = table_create_one.clone();
+                            let table_test_read_many_by_non_existent_primary_keys_cloned2 = table_test_read_many_by_non_existent_primary_keys.clone();
+                            let table_test_read_many_by_equal_to_created_primary_keys_cloned2 = table_test_read_many_by_equal_to_created_primary_keys.clone();
+                            #(#table_field_idents_clones2_vec_token_stream)*
+                            let table_read_one_cloned2 = table_read_one.clone();
+                            let table_update_many_cloned2 = table_update_many.clone();
+                            let table_update_one_cloned2 = table_update_one.clone();
+                            // let table_delete_many_cloned2 = table_delete_many.clone();
+                            let table_delete_one_cloned2 = table_delete_one.clone();
+
                             #common_read_only_ids_returned_from_create_one_token_stream
                             #generate_ident_where_many_pripery_key_others_none_content_token_stream
                             #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
