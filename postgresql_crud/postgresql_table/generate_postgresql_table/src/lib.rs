@@ -4220,39 +4220,51 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ]);
         let select_default_all_with_max_page_size_cloned_clone_token_stream = quote::quote!{select_default_all_with_max_page_size_cloned.clone()};
         //todo maybe remove it?\
-        enum LogicalOperatorHandle {
-            And,
-            Or,
-        }
-        impl quote::ToTokens for LogicalOperatorHandle {
-            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                match self {
-                    LogicalOperatorHandle::And => quote::quote!{And},
-                    LogicalOperatorHandle::Or => quote::quote!{Or}
-                }.to_tokens(tokens)
+        let (
+            generate_some_postgresql_type_where_try_new_or_token_stream,
+            generate_some_postgresql_type_where_try_new_and_token_stream
+        ) = {
+            enum LogicalOperatorHandle {
+                And,
+                Or,
             }
-        }
-        let generate_some_postgresql_type_where_try_new_logical_operator_token_stream = |
-            logical_operator_handle: LogicalOperatorHandle,
-            content_token_stream: &dyn quote::ToTokens
-        |quote::quote!{
-            Some(
-                #import_path::PostgresqlTypeWhere::try_new(
-                    #import_path::LogicalOperator::#logical_operator_handle,
-                    #content_token_stream
-                ).expect("error 6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
-            )
-        };
-        let generate_some_postgresql_type_where_try_new_or_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-            generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
-                LogicalOperatorHandle::Or,
-                content_token_stream
-            )
-        };
-        let generate_some_postgresql_type_where_try_new_and_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-            generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
-                LogicalOperatorHandle::And,
-                content_token_stream
+            impl quote::ToTokens for LogicalOperatorHandle {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    match self {
+                        LogicalOperatorHandle::And => quote::quote!{And},
+                        LogicalOperatorHandle::Or => quote::quote!{Or}
+                    }.to_tokens(tokens)
+                }
+            }
+            fn generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
+                import_path: &postgresql_crud_macros_common::ImportPath,
+                logical_operator_handle: LogicalOperatorHandle,
+                content_token_stream: &dyn quote::ToTokens
+            ) -> proc_macro2::TokenStream {
+                quote::quote!{
+                Some(
+                    #import_path::PostgresqlTypeWhere::try_new(
+                        #import_path::LogicalOperator::#logical_operator_handle,
+                        #content_token_stream
+                    ).expect("error 6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
+                )
+                }
+            }
+            (
+                |content_token_stream: &dyn quote::ToTokens|{
+                    generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
+                        &import_path,
+                        LogicalOperatorHandle::Or,
+                        content_token_stream
+                    )
+                },
+                |content_token_stream: &dyn quote::ToTokens|{
+                    generate_some_postgresql_type_where_try_new_logical_operator_token_stream(
+                        &import_path,
+                        LogicalOperatorHandle::And,
+                        content_token_stream
+                    )
+                }
             )
         };
         let generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream = quote::quote!{
