@@ -4230,6 +4230,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             }
         };
+        let generate_ident_where_many_pripery_key_others_none_content_token_stream = quote::quote!{
+            fn generate_ident_where_many_pripery_key_others_none(
+                option_postgresql_type_where: Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>>,
+            ) -> #ident_where_many_upper_camel_case {
+                #ident_where_many_upper_camel_case::try_new(
+                    option_postgresql_type_where,
+                    #fields_named_without_primary_key_with_comma_none_token_stream
+                )
+                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5")
+            }
+        };
         let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = quote::quote!{
             fn generate_some_postgresql_type_where_try_new_primary_key(
                 logical_operator: #import_path::LogicalOperator,
@@ -4344,7 +4355,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 },
                                 generate_try_read_many_order_by_primary_key_with_big_pagination(
                                     &url_cloned,
-                                    #ident_where_many_upper_camel_case::try_new(
+                                    generate_ident_where_many_pripery_key_others_none(
                                         generate_some_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
                                             {
@@ -4360,10 +4371,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 }
                                                 #acc_snake_case
                                             }
-                                        ),
-                                        #fields_named_without_primary_key_with_comma_none_token_stream
-                                    )
-                                    .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                        )
+                                    ),
                                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                     &current_table
                                 ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff"),
@@ -4399,7 +4408,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             );
                             match generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
-                                #ident_where_many_upper_camel_case::try_new(
+                                generate_ident_where_many_pripery_key_others_none(
                                     generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
                                         {
@@ -4414,10 +4423,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                             #acc_snake_case
                                         }
-                                    ),
-                                    #fields_named_without_primary_key_with_comma_none_token_stream
-                                )
-                                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                    )
+                                ),
                                 #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                 &current_table
                             ).await {
@@ -4588,7 +4595,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {
                         match generate_try_read_many_order_by_primary_key_with_big_pagination(
                             url,
-                            #ident_where_many_upper_camel_case::try_new(
+                            generate_ident_where_many_pripery_key_others_none(
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
@@ -4605,10 +4612,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         }
                                         #acc_snake_case
                                     }
-                                ),
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            )
-                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                )
+                            ),
                             #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
                         ).await {
@@ -4696,7 +4701,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                             generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 url,
-                                #ident_where_many_upper_camel_case::try_new(
+                                generate_ident_where_many_pripery_key_others_none(
                                     generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
                                         {
@@ -4715,10 +4720,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                             #acc_snake_case
                                         }
-                                    ),
-                                    #fields_named_without_primary_key_with_comma_none_token_stream
-                                )
-                                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                    )
+                                ),
                                 #select_default_all_with_max_page_size_clone_token_stream,
                                 &current_table
                             ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff"),
@@ -4755,7 +4758,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         );
                         match generate_try_read_many_order_by_primary_key_with_big_pagination(
                             url,
-                            #ident_where_many_upper_camel_case::try_new(
+                            generate_ident_where_many_pripery_key_others_none(
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
@@ -4772,10 +4775,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         }
                                         #acc_snake_case
                                     }
-                                ),
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            )
-                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                )
+                            ),
                             #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
                         ).await {
@@ -4926,7 +4927,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 );
                                 match generate_try_read_many_order_by_primary_key_with_big_pagination(
                                     &url_cloned,
-                                    #ident_where_many_upper_camel_case::try_new(
+                                    generate_ident_where_many_pripery_key_others_none(
                                         generate_some_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
                                             vec![
@@ -4939,10 +4940,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     )
                                                 })
                                             ]
-                                        ),
-                                        #fields_named_without_primary_key_with_comma_none_token_stream
-                                    )
-                                    .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                        )
+                                    ),
                                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                     &current_table
                                 ).await {
@@ -5243,7 +5242,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let previous_read = {
                             let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
-                                #ident_where_many_upper_camel_case::try_new(
+                                generate_ident_where_many_pripery_key_others_none(
                                     generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
                                         vec![
@@ -5256,10 +5255,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 )
                                             })
                                         ]
-                                    ),
-                                    #fields_named_without_primary_key_with_comma_none_token_stream
-                                )
-                                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                    )
+                                ),
                                 #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                 &current_table
                             ).await.expect("error 35141faa-387c-4302-aa7a-c529966f974b");
@@ -5435,7 +5432,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             {
                                 let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
                                     &url,
-                                    #ident_where_many_upper_camel_case::try_new(
+                                    generate_ident_where_many_pripery_key_others_none(
                                         generate_some_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
                                             {
@@ -5454,10 +5451,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 }
                                                 #acc_snake_case
                                             }
-                                        ),
-                                        #fields_named_without_primary_key_with_comma_none_token_stream
-                                    )
-                                    .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                        )
+                                    ),
                                     #select_default_all_with_max_page_size_clone_token_stream,
                                     &current_table
                                 ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff");
@@ -5532,7 +5527,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     {
                                         let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
                                             &url_cloned,
-                                            #ident_where_many_upper_camel_case::try_new(
+                                            generate_ident_where_many_pripery_key_others_none(
                                                 generate_some_postgresql_type_where_try_new_primary_key(
                                                     postgresql_crud::LogicalOperator::Or,
                                                     vec![
@@ -5543,10 +5538,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                             )),
                                                         })
                                                     ]
-                                                ),
-                                                #fields_named_without_primary_key_with_comma_none_token_stream
-                                            )
-                                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                                )
+                                            ),
                                             select_default_all_with_max_page_size_cloned,
                                             &current_table
                                         ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff");
@@ -5739,7 +5732,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             {
                                 let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
                                     &url,
-                                    #ident_where_many_upper_camel_case::try_new(
+                                    generate_ident_where_many_pripery_key_others_none(
                                         generate_some_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
                                             {
@@ -5758,10 +5751,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 }
                                                 #acc_snake_case
                                             }
-                                        ),
-                                        #fields_named_without_primary_key_with_comma_none_token_stream
-                                    )
-                                    .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                        )
+                                    ),
                                     #select_default_all_with_max_page_size_clone_token_stream,
                                     &current_table
                                 ).await.expect("error 82cb984b-8312-4952-a649-389f7c5adcff");
@@ -5977,7 +5968,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         );
                         match generate_try_read_many_order_by_primary_key_with_big_pagination(
                             &url,
-                            #ident_where_many_upper_camel_case::try_new(
+                            generate_ident_where_many_pripery_key_others_none(
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
@@ -5992,10 +5983,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         }
                                         #acc_snake_case
                                     }
-                                ),
-                                #fields_named_without_primary_key_with_comma_none_token_stream
-                            )
-                            .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5"),
+                                )
+                            ),
                             #select_default_all_with_max_page_size_clone_token_stream,
                             &current_table
                         ).await {
@@ -6318,6 +6307,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
+                            #generate_ident_where_many_pripery_key_others_none_content_token_stream
                             #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
                             #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
                             #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
