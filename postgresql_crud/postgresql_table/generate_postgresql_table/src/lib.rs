@@ -4267,25 +4267,35 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             )
         };
+        let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = quote::quote!{
+            fn generate_some_postgresql_type_where_try_new_primary_key(
+                logical_operator: #import_path::LogicalOperator,
+                vec: Vec<#primary_key_field_type_where_token_stream>
+            ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
+                Some(
+                    #import_path::PostgresqlTypeWhere::try_new(
+                        logical_operator,
+                        vec
+                    ).expect("error dbfe049c-4142-469f-907c-4ecc5dd132dc")
+                )
+            }
+        };
         let generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream = quote::quote!{
             fn generate_some_postgresql_type_where_try_new_or_primary_keys(
                 vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]
             ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
-                Some(
-                    #import_path::PostgresqlTypeWhere::try_new(
-                        #import_path::LogicalOperator::Or,
-                        vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
-                            logical_operator: #import_path::LogicalOperator::Or,
-                            value: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                #primary_key_field_type_as_postgresql_type_token_stream into_inner(
-                                    <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
-                                        #element_snake_case.#primary_key_field_ident.clone()
-                                    ),
-                                )
-                            ),
-                        })).collect()
-                    )
-                    .expect("error dbfe049c-4142-469f-907c-4ecc5dd132dc"),
+                generate_some_postgresql_type_where_try_new_primary_key(
+                    #import_path::LogicalOperator::Or,
+                    vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
+                        logical_operator: #import_path::LogicalOperator::Or,
+                        value: #primary_key_field_type_table_type_declaration_token_stream::new(
+                            #primary_key_field_type_as_postgresql_type_token_stream into_inner(
+                                <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
+                                    #element_snake_case.#primary_key_field_ident.clone()
+                                ),
+                            )
+                        ),
+                    })).collect()
                 )
             }
         };
@@ -6329,6 +6339,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
+                            #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
                             #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
                             #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
                             futures::StreamExt::for_each_concurrent(
