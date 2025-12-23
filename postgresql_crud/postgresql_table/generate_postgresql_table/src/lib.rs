@@ -4051,6 +4051,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         });
         let select_default_all_with_max_page_size_clone_token_stream = quote::quote!{select_default_all_with_max_page_size.clone()};
+        let generate_ident_try_read_one_handle_primary_key_token_stream = quote::quote!{
+            async fn generate_ident_try_read_one_handle_primary_key(
+                url: &str,
+                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
+                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                table: &str,
+            ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
+                #ident::try_read_one_handle(
+                    url,
+                    #ident_read_one_parameters_upper_camel_case {
+                        payload: #ident_read_one_payload_upper_camel_case {
+                            primary_key_column,
+                            select,
+                        },
+                    },
+                    table,
+                )
+                .await
+            }
+        };
         let common_read_only_ids_returned_from_create_one_token_stream = {
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream);
             quote::quote! {
@@ -4068,14 +4088,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
                             #fields_none_initialization_token_stream
                         },
-                        #ident::try_read_one_handle(
+                        generate_ident_try_read_one_handle_primary_key(
                             &#url_snake_case,
-                            #ident_read_one_parameters_upper_camel_case {
-                                #payload_snake_case: #ident_read_one_payload_upper_camel_case {
-                                    #primary_key_field_ident: #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
-                                    #select_snake_case: #select_primary_key_snake_case.clone(),
-                                },
-                            },
+                            #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
+                            #select_primary_key_snake_case.clone(),
                             &table_initialization_cloned
                         )
                         .await
@@ -4279,26 +4295,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                     &table
-                )
-                .await
-            }
-        };
-        let generate_ident_try_read_one_handle_primary_key_token_stream = quote::quote!{
-            async fn generate_ident_try_read_one_handle_primary_key(
-                url: &str,
-                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
-                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-                table: &str,
-            ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
-                #ident::try_read_one_handle(
-                    url,
-                    #ident_read_one_parameters_upper_camel_case {
-                        payload: #ident_read_one_payload_upper_camel_case {
-                            primary_key_column,
-                            select,
-                        },
-                    },
-                    table,
                 )
                 .await
             }
