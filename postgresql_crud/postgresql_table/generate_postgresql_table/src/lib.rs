@@ -4283,6 +4283,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 .await
             }
         };
+        let generate_ident_try_read_one_handle_primary_key_token_stream = quote::quote!{
+            async fn generate_ident_try_read_one_handle_primary_key(
+                url: &str,
+                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
+                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                table: &str,
+            ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
+                #ident::try_read_one_handle(
+                    url,
+                    #ident_read_one_parameters_upper_camel_case {
+                        payload: #ident_read_one_payload_upper_camel_case {
+                            primary_key_column,
+                            select,
+                        },
+                    },
+                    table,
+                )
+                .await
+            }
+        };
         let create_many_tests_token_stream = {
             let create_many_tests_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
                 let field_ident = &element.field_ident;
@@ -6271,6 +6291,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
                             #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
                             #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
+                            #generate_ident_try_read_one_handle_primary_key_token_stream
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
                                     let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
