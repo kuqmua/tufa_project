@@ -6207,18 +6207,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &table_delete_many,
                                 &table_delete_one,
                             ];
-
-                            let table_initialization_cloned = table_initialization.clone();
-                            let table_create_many_cloned = table_create_many.clone();
-                            let table_create_one_cloned = table_create_one.clone();
-                            let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
-                            let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                            #(#table_field_idents_clones_vec_token_stream)*
-                            let table_read_one_cloned = table_read_one.clone();
-                            let table_update_many_cloned = table_update_many.clone();
-                            let table_update_one_cloned = table_update_one.clone();
-                            let table_delete_many_cloned = table_delete_many.clone();
-                            let table_delete_one_cloned = table_delete_one.clone();
+                            
+                            let table_names_cloned = table_names.iter().map(|element| (*element).to_owned()).collect::<Vec<String>>();
 
                             let drop_all_test_tables = async ||{
                                 let _unused = futures::future::try_join_all(
@@ -6260,20 +6250,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     {
                                         let mut router = axum::Router::new()
                                             .merge(#ident::routes(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state)));
-                                        for table_name in [
-                                            &table_initialization_cloned,
-                                            &table_create_many_cloned,
-                                            &table_create_one_cloned,
-                                            &table_test_read_many_by_non_existent_primary_keys_cloned,
-                                            &table_test_read_many_by_equal_to_created_primary_keys_cloned,
-                                            #(#table_field_idents_for_routes_handle_vec_token_stream)*
-                                            &table_read_one_cloned,
-                                            &table_update_many_cloned,
-                                            &table_update_one_cloned,
-                                            &table_delete_many_cloned,
-                                            &table_delete_one_cloned,
-                                        ] {
-                                            router = router.merge(#ident::routes_handle(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state), table_name));
+                                        for table_name in table_names_cloned {
+                                            router = router.merge(#ident::routes_handle(std::sync::Arc::<server_app_state::ServerAppState<'_>>::clone(&app_state), &table_name));
                                         }
                                         router.into_make_service()
                                     },
@@ -6292,7 +6270,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #ident_create_default_fields_initialization_without_primary_key_token_stream
                             };
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
-                            //
+
                             let table_initialization_cloned2 = table_initialization.clone();
                             let table_create_many_cloned2 = table_create_many.clone();
                             let table_create_one_cloned2 = table_create_one.clone();
