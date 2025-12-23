@@ -6218,8 +6218,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     [
                                         &table_create_many,
                                         &table_create_one,
-                                        &table_test_read_many_by_non_existent_primary_keys_cloned2,
-                                        &table_test_read_many_by_equal_to_created_primary_keys_cloned2,
+                                        &table_test_read_many_by_non_existent_primary_keys,
+                                        &table_test_read_many_by_equal_to_created_primary_keys,
                                         #(#table_field_idents_to_drop_table_if_exists_vec_token_stream)*
                                         &table_read_one,
                                         &table_update_many,
