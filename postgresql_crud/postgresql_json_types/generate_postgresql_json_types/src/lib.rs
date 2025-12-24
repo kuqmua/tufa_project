@@ -539,9 +539,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
             let std_string_string_token_stream = token_patterns::StdStringString;
             let uuid_uuid_token_stream = token_patterns::UuidUuid;
-            let serde_serialize_token_stream = token_patterns::SerdeSerialize;
-            let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
-            let utoipa_to_schema_token_stream = token_patterns::UtoipaToSchema;
             let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
 
             let none_token_stream = quote::quote! {None};
@@ -651,7 +648,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 True,
                 False
             }
-            let generate_struct_derive = |
+            fn generate_struct_derive(
                 is_pub: IsPub,
                 current_ident: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens,
@@ -663,7 +660,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 derive_serde_deserialize: DeriveSerdeDeserialize,
                 derive_utoipa_to_schema: DeriveUtoipaToSchema,
                 derive_schemars_json_schema: DeriveSchemarsJsonSchema,
-            | -> proc_macro2::TokenStream {
+            ) -> proc_macro2::TokenStream {
                 let maybe_pub_token_stream = match is_pub {
                     IsPub::True => quote::quote!{pub},
                     IsPub::False => proc_macro2::TokenStream::new(),
@@ -685,19 +682,31 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     DerivePartialOrd::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_serde_serialize_token_stream = match derive_serde_serialize {
-                    DeriveSerdeSerialize::True => quote::quote!{#serde_serialize_token_stream,},
+                    DeriveSerdeSerialize::True => {
+                        let serde_serialize_token_stream = token_patterns::SerdeSerialize;
+                        quote::quote!{#serde_serialize_token_stream,}
+                    },
                     DeriveSerdeSerialize::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_serde_deserialize_token_stream = match derive_serde_deserialize {
-                    DeriveSerdeDeserialize::True => quote::quote!{#serde_deserialize_token_stream,},
+                    DeriveSerdeDeserialize::True => {
+                        let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
+                        quote::quote!{#serde_deserialize_token_stream,}
+                    },
                     DeriveSerdeDeserialize::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_utoipa_to_schema_token_stream = match derive_utoipa_to_schema {
-                    DeriveUtoipaToSchema::True => quote::quote!{#utoipa_to_schema_token_stream,},
+                    DeriveUtoipaToSchema::True => {
+                        let utoipa_to_schema_token_stream = token_patterns::UtoipaToSchema;
+                        quote::quote!{#utoipa_to_schema_token_stream,}
+                    },
                     DeriveUtoipaToSchema::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_schemars_json_schema_token_stream = match derive_schemars_json_schema {
-                    DeriveSchemarsJsonSchema::True => quote::quote!{#schemars_json_schema_token_stream,},
+                    DeriveSchemarsJsonSchema::True => {
+                        let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
+                        quote::quote!{#schemars_json_schema_token_stream,}
+                    },
                     DeriveSchemarsJsonSchema::False => proc_macro2::TokenStream::new(),
                 };
                 quote::quote! {
@@ -713,7 +722,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     )]
                     #maybe_pub_token_stream struct #current_ident #content_token_stream
                 }
-            };
+            }
             let ident_token_stream = {
                 let ident_token_stream = generate_struct_derive(
                     IsPub::True,
