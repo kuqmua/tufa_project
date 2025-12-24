@@ -69,6 +69,13 @@ impl quote::ToTokens for UtoipaToSchema {
     }
 }
 #[derive(Debug, Clone, Copy)]
+pub struct SchemarsJsonSchema;
+impl quote::ToTokens for SchemarsJsonSchema {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        quote::quote! {schemars::JsonSchema}.to_tokens(tokens);
+    }
+}
+#[derive(Debug, Clone, Copy)]
 pub struct ErrorOccurenceLibErrorOccurence;
 impl quote::ToTokens for ErrorOccurenceLibErrorOccurence {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
