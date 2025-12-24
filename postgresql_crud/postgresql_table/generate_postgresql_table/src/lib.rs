@@ -4037,7 +4037,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
                 select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                 table: &str,
-                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
             ) {
                 if let Err(#error_snake_case) = generate_ident_try_read_one_handle_primary_key(
                     url,
@@ -4050,7 +4049,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ..
                     } = error {
                         if let #ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, .. } = read_one_error_named_with_serialize_deserialize {
-                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
+                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
                         } else {
                             panic!("error 0ad0117b-a2e0-4629-99d0-71935cd93d15");
                         }
@@ -4234,7 +4233,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #primary_key_read_token_stream,
                         #select_default_all_with_max_page_size_clone_token_stream,
                         &table_initialization,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                     ).await;
                     #common_read_only_ids_returned_from_create_one_snake_case
                 };
@@ -4500,7 +4498,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
-                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -4535,7 +4532,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream,
                     #select_default_all_with_max_page_size_clone_token_stream,
                     current_table,
-                    no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                 ).await;
             }
         };
@@ -4583,7 +4579,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                         current_table: &str,
                         ident_create_default: #ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ){
                         #content_token_stream
                     }
@@ -4600,7 +4595,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -4746,7 +4740,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                         current_table: &str,
                         ident_create_default: #ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ) {
                         #content_token_stream
                     }
@@ -4763,7 +4756,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     }
@@ -5156,7 +5148,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
                     &current_table,
-                    no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                 ).await;
             }));
         };};
@@ -5812,7 +5803,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                         current_table: &str,
                         ident_create_default: #ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ){
                         #content_token_stream
                     }
@@ -5829,7 +5819,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     };
@@ -5925,7 +5914,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
                         current_table: &str,
                         ident_create_default: #ident_create_upper_camel_case,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row: &str,
                     ) {
                         #content_token_stream
                     }
@@ -5942,7 +5930,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 select_default_all_with_max_page_size_cloned,
                                 &current_table,
                                 ident_create_default_cloned,
-                                no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                             ).await;
                         }));
                     };
@@ -5978,7 +5965,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 postgresql,
                                 ..
                             } = delete_one_error_named_with_serialize_deserialize {
-                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row, "error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
+                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
                             } else {
                                 panic!("error e63b27a3-f3e3-4f19-998a-88ce798b08cc");
                             }
@@ -6027,7 +6014,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
                         #select_default_all_with_max_page_size_cloned_clone_token_stream,
                         &current_table,
-                        no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row,
                     ).await;
                 }));
             };}
@@ -6053,7 +6039,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #generate_ident_try_read_one_handle_primary_key_token_stream
                             #generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key_content_token_stream
                             tracing_subscriber::fmt::init();
-                            let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
+                            fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
+                                "no rows returned by a query that expected to return at least one row"
+                            }
                             static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
                             //todo maybe refactor
                             let #config_snake_case = #config_upper_case_token_stream.get_or_init(||
