@@ -615,6 +615,108 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
             let ident_not_null_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
+            //
+            enum IsPub {
+                True,
+                False
+            }
+            enum DeriveDebug {
+                True,
+                False
+            }
+            enum DeriveClone {
+                True,
+                False
+            }
+            enum DerivePartialEq {
+                True,
+                False
+            }
+            enum DerivePartialOrd {
+                True,
+                False
+            }
+            enum DeriveSerdeSerialize {
+                True,
+                False
+            }
+            enum DeriveSerdeDeserialize {
+                True,
+                False
+            }
+            enum DeriveUtoipaToSchema {
+                True,
+                False
+            }
+            enum DeriveSchemarsJsonSchema {
+                True,
+                False
+            }
+            let generate_struct_derives = |
+                is_pub: IsPub,
+                current_ident: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens,
+                derive_debug: DeriveDebug,
+                derive_clone: DeriveClone,
+                derive_partial_eq: DerivePartialEq,
+                derive_partial_ord: DerivePartialOrd,
+                derive_serde_serialize: DeriveSerdeSerialize,
+                derive_serde_deserialize: DeriveSerdeDeserialize,
+                derive_utoipa_to_schema: DeriveUtoipaToSchema,
+                derive_schemars_json_schema: DeriveSchemarsJsonSchema,
+            | -> proc_macro2::TokenStream {
+                let maybe_pub_token_stream = match is_pub {
+                    IsPub::True => quote::quote!{pub},
+                    IsPub::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_debug_token_stream = match derive_debug {
+                    ::True => quote::quote!{Debug},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_clone_token_stream = match derive_clone {
+                    ::True => quote::quote!{Clone},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_partial_eq_token_stream = match derive_partial_eq {
+                    ::True => quote::quote!{PartialEq},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_partial_ord_token_stream = match derive_partial_ord {
+                    ::True => quote::quote!{},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_serde_serialize_token_stream = match derive_serde_serialize {
+                    ::True => quote::quote!{},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_serde_deserialize_token_stream = match derive_serde_deserialize {
+                    ::True => quote::quote!{},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_utoipa_to_schema_token_stream = match derive_utoipa_to_schema {
+                    ::True => quote::quote!{},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                let maybe_schemars_json_schema_token_stream = match derive_schemars_json_schema {
+                    ::True => quote::quote!{},
+                    ::False => proc_macro2::TokenStream::new(),
+                };
+                quote! {
+                    #[derive(
+                        #maybe_debug_token_stream
+                        #maybe_clone_token_stream
+                        #maybe_partial_eq_token_stream
+                        #maybe_partial_ord_token_stream
+                        #maybe_serde_serialize_token_stream
+                        #maybe_serde_deserialize_token_stream
+                        #maybe_utoipa_to_schema_token_stream
+                        #maybe_schemars_json_schema_token_stream
+                    )]
+                    #maybe_pub_token_stream struct #current_ident #content_token_stream
+                }
+            };
+
+            //
             let ident_token_stream = {
                 let ident_token_stream = quote::quote! {
                     #[derive(Debug)]
