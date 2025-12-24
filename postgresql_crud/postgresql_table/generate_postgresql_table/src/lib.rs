@@ -6112,6 +6112,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .stack_size(16 * 1024 * 1024)
                     .spawn(|| {
                         tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
+                            #generate_ident_where_many_pripery_key_others_none_content_token_stream
+                            #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
+                            #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
+                            #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
+                            #generate_ident_try_read_one_handle_primary_key_token_stream
                             tracing_subscriber::fmt::init();
                             let no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row = "no rows returned by a query that expected to return at least one row";
                             static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
@@ -6255,11 +6260,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let table_delete_one_cloned = table_delete_one.clone();
 
                             #common_read_only_ids_returned_from_create_one_token_stream
-                            #generate_ident_where_many_pripery_key_others_none_content_token_stream
-                            #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
-                            #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
-                            #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
-                            #generate_ident_try_read_one_handle_primary_key_token_stream
                             futures::StreamExt::for_each_concurrent(
                                 futures::stream::iter({
                                     let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
