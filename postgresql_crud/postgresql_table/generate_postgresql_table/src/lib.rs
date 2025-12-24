@@ -399,7 +399,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let update_for_query_vec_snake_case = naming::UpdateForQueryVecSnakeCase;
-    let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValueReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let common_read_only_ids_returned_from_create_one_snake_case = naming::CommonReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let select_only_updated_ids_query_part_snake_case = naming::SelectOnlyUpdatedIdsQueryPartSnakeCase;
     let update_for_query_snake_case = naming::UpdateForQuerySnakeCase;
@@ -4210,10 +4209,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &table_initialization
                     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                     let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream;
-                    let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(#value_initialization_token_stream);
                     assert_eq!(
                         #ident_read_upper_camel_case {
-                            #primary_key_field_ident: #some_value_read_only_ids_returned_from_create_one_snake_case.clone(),
+                            #primary_key_field_ident: Some(#value_initialization_token_stream),
                             #fields_none_initialization_token_stream
                         },
                         generate_ident_try_read_one_handle_primary_key(
