@@ -3938,140 +3938,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 )
             }
         };
-        let generate_ident_where_many_pripery_key_others_none_content_token_stream = quote::quote!{
-            fn generate_ident_where_many_pripery_key_others_none(
-                option_postgresql_type_where: Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>>,
-            ) -> #ident_where_many_upper_camel_case {
-                #ident_where_many_upper_camel_case::try_new(
-                    option_postgresql_type_where,
-                    #fields_named_without_primary_key_with_comma_none_token_stream
-                )
-                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5")
-            }
-        };
-        let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = quote::quote!{
-            fn generate_some_postgresql_type_where_try_new_primary_key(
-                logical_operator: #import_path::LogicalOperator,
-                vec: Vec<#primary_key_field_type_where_token_stream>
-            ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
-                Some(
-                    #import_path::PostgresqlTypeWhere::try_new(
-                        logical_operator,
-                        vec
-                    ).expect("error dbfe049c-4142-469f-907c-4ecc5dd132dc")
-                )
-            }
-        };
-        let generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream = quote::quote!{
-            fn generate_some_postgresql_type_where_try_new_or_primary_keys(
-                vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]
-            ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
-                generate_some_postgresql_type_where_try_new_primary_key(
-                    #import_path::LogicalOperator::Or,
-                    vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
-                        logical_operator: #import_path::LogicalOperator::Or,
-                        value: #primary_key_field_type_table_type_declaration_token_stream::new(
-                            #primary_key_field_type_as_postgresql_type_token_stream into_inner(
-                                <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
-                                    #element_snake_case.#primary_key_field_ident.clone()
-                                ),
-                            )
-                        ),
-                    })).collect()
-                )
-            }
-        };
-        let generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream = quote::quote!{
-            async fn generate_try_read_many_order_by_primary_key_with_big_pagination(
-                endpoint_location: &str,
-                current_ident_where_many: #ident_where_many_upper_camel_case,
-                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-                table: &str
-            ) -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
-                #ident::try_read_many_handle(
-                    &endpoint_location,
-                    #ident_read_many_parameters_upper_camel_case {
-                        payload: #ident_read_many_payload_upper_camel_case {
-                            where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
-                                current_ident_where_many
-                            )),
-                            select,
-                            order_by: #import_path::OrderBy {
-                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
-                                ),
-                                order: Some(#import_path::Order::Asc)
-                            },
-                            pagination: #import_path::PaginationStartsWithZero::try_new(10000, 0).expect("error b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
-                        }
-                    },
-                    &table
-                )
-                .await
-            }
-        };
-        let generate_ident_try_read_one_handle_primary_key_token_stream = quote::quote!{
-            async fn generate_ident_try_read_one_handle_primary_key(
-                url: &str,
-                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
-                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-                table: &str,
-            ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
-                #ident::try_read_one_handle(
-                    url,
-                    #ident_read_one_parameters_upper_camel_case {
-                        payload: #ident_read_one_payload_upper_camel_case {
-                            primary_key_column,
-                            select,
-                        },
-                    },
-                    table,
-                )
-                .await
-            }
-        };
-        let generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key_content_token_stream = quote::quote!{
-            async fn generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
-                url: &str,
-                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
-                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-                table: &str,
-            ) {
-                if let Err(#error_snake_case) = generate_ident_try_read_one_handle_primary_key(
-                    url,
-                    primary_key_column,
-                    select,
-                    table
-                ).await {
-                    if let #ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
-                        read_one_error_named_with_serialize_deserialize,
-                        ..
-                    } = error {
-                        if let #ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, .. } = read_one_error_named_with_serialize_deserialize {
-                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
-                        } else {
-                            panic!("error 0ad0117b-a2e0-4629-99d0-71935cd93d15");
-                        }
-                    } else {
-                        panic!("error c6695392-4b5f-4482-86aa-b2f19c33a746")
-                    }
-                } else {
-                    panic!("error 67e43b7a-d3ec-4a3b-a3f1-8c11499fd090")
-                }
-            }
-        };
-        //
-        // let generate__content_token_stream = quote::quote!{
-        //     async fn generate_(
-        //         // endpoint_location: &str,
-        //         // current_ident_where_many: #ident_where_many_upper_camel_case,
-        //         // select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-        //         // table: &str
-        //     ) {
-                
-        //     }
-        // };
-        //
 
         let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
@@ -6039,12 +5905,121 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .stack_size(16 * 1024 * 1024)
                     .spawn(|| {
                         tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 38823c21-1879-449c-9b60-ce7293709959").block_on(async {
-                            #generate_ident_where_many_pripery_key_others_none_content_token_stream
-                            #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
-                            #generate_some_postgresql_type_where_try_new_or_primary_keys_content_token_stream
-                            #generate_try_read_many_order_by_primary_key_asc_with_big_pagination_content_token_stream
-                            #generate_ident_try_read_one_handle_primary_key_token_stream
-                            #generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key_content_token_stream
+                            fn generate_ident_where_many_pripery_key_others_none(
+                                option_postgresql_type_where: Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>>,
+                            ) -> #ident_where_many_upper_camel_case {
+                                #ident_where_many_upper_camel_case::try_new(
+                                    option_postgresql_type_where,
+                                    #fields_named_without_primary_key_with_comma_none_token_stream
+                                )
+                                .expect("error 5fb2b219-8bd7-4edd-9722-b475826707f5")
+                            }
+                            fn generate_some_postgresql_type_where_try_new_primary_key(
+                                logical_operator: #import_path::LogicalOperator,
+                                vec: Vec<#primary_key_field_type_where_token_stream>
+                            ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
+                                Some(
+                                    #import_path::PostgresqlTypeWhere::try_new(
+                                        logical_operator,
+                                        vec
+                                    ).expect("error dbfe049c-4142-469f-907c-4ecc5dd132dc")
+                                )
+                            }
+                            fn generate_some_postgresql_type_where_try_new_or_primary_keys(
+                                vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]
+                            ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
+                                generate_some_postgresql_type_where_try_new_primary_key(
+                                    #import_path::LogicalOperator::Or,
+                                    vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
+                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        value: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                            #primary_key_field_type_as_postgresql_type_token_stream into_inner(
+                                                <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
+                                                    #element_snake_case.#primary_key_field_ident.clone()
+                                                ),
+                                            )
+                                        ),
+                                    })).collect()
+                                )
+                            }
+                            async fn generate_try_read_many_order_by_primary_key_with_big_pagination(
+                                endpoint_location: &str,
+                                current_ident_where_many: #ident_where_many_upper_camel_case,
+                                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                                table: &str
+                            ) -> Result<Vec<#ident_read_upper_camel_case>, #ident_try_read_many_error_named_upper_camel_case> {
+                                #ident::try_read_many_handle(
+                                    &endpoint_location,
+                                    #ident_read_many_parameters_upper_camel_case {
+                                        payload: #ident_read_many_payload_upper_camel_case {
+                                            where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
+                                                current_ident_where_many
+                                            )),
+                                            select,
+                                            order_by: #import_path::OrderBy {
+                                                column: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
+                                                ),
+                                                order: Some(#import_path::Order::Asc)
+                                            },
+                                            pagination: #import_path::PaginationStartsWithZero::try_new(10000, 0).expect("error b0cdf0cb-1e31-4a7e-9e53-d2ff71efb983"),
+                                        }
+                                    },
+                                    &table
+                                )
+                                .await
+                            }
+                            async fn generate_ident_try_read_one_handle_primary_key(
+                                url: &str,
+                                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
+                                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                                table: &str,
+                            ) -> Result<#ident_read_upper_camel_case, #ident_try_read_one_error_named_upper_camel_case> {
+                                #ident::try_read_one_handle(
+                                    url,
+                                    #ident_read_one_parameters_upper_camel_case {
+                                        payload: #ident_read_one_payload_upper_camel_case {
+                                            primary_key_column,
+                                            select,
+                                        },
+                                    },
+                                    table,
+                                )
+                                .await
+                            }
+                            async fn generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
+                                url: &str,
+                                primary_key_column: #primary_key_field_type_as_postgresql_type_read_token_stream,
+                                select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                                table: &str,
+                            ) {
+                                if let Err(#error_snake_case) = generate_ident_try_read_one_handle_primary_key(
+                                    url,
+                                    primary_key_column,
+                                    select,
+                                    table
+                                ).await {
+                                    if let #ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
+                                        read_one_error_named_with_serialize_deserialize,
+                                        ..
+                                    } = error {
+                                        if let #ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, .. } = read_one_error_named_with_serialize_deserialize {
+                                            assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "error 58b9a6a4-cf9b-49f3-a20f-7007deea40fd");
+                                        } else {
+                                            panic!("error 0ad0117b-a2e0-4629-99d0-71935cd93d15");
+                                        }
+                                    } else {
+                                        panic!("error c6695392-4b5f-4482-86aa-b2f19c33a746")
+                                    }
+                                } else {
+                                    panic!("error 67e43b7a-d3ec-4a3b-a3f1-8c11499fd090")
+                                }
+                            }
+                            fn ident_create_default() -> #ident_create_upper_camel_case {
+                                #ident_create_upper_camel_case {
+                                    #ident_create_default_fields_initialization_without_primary_key_token_stream
+                                }
+                            }
                             tracing_subscriber::fmt::init();
                             fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
                                 "no rows returned by a query that expected to return at least one row"
@@ -6169,9 +6144,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                             ])
                             .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                            let #ident_create_default_snake_case = #ident_create_upper_camel_case {
-                                #ident_create_default_fields_initialization_without_primary_key_token_stream
-                            };
+                            let #ident_create_default_snake_case = ident_create_default();
                             #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                             #common_read_only_ids_returned_from_create_one_token_stream
                             futures::StreamExt::for_each_concurrent(
