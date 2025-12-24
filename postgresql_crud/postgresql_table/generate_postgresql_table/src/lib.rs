@@ -4065,13 +4065,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_read_clone_token_stream);
             quote::quote! {
                 let #common_read_only_ids_returned_from_create_one_snake_case = {
-                    let read_only_ids_from_try_create_one = #ident::try_create_one_handle(
-                        &#url_snake_case,
-                        #ident_create_one_parameters_upper_camel_case {
-                            #payload_snake_case: #ident_create_default_snake_case.clone()
-                        },
-                        &table_initialization
-                    ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                    let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one_default(&#url_snake_case, &table_initialization).await;
                     let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream;
                     assert_eq!(
                         #ident_read_upper_camel_case {
@@ -4383,13 +4377,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
         let add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream = |content_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
-                let read_only_ids_from_try_create_one = #ident::try_create_one_handle(
-                    url,
-                    #ident_create_one_parameters_upper_camel_case {
-                        payload: ident_create_default.clone()
-                    },
-                    current_table
-                ).await.expect("error 71632985-ec25-4928-aa9e-1e224a7478c1");
+                let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one_default(#url_snake_case, current_table).await;
                 #content_token_stream
                 let _: #primary_key_field_type_as_postgresql_type_read_token_stream = #ident::try_delete_one_handle(
                     url,
@@ -5848,13 +5836,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     } else {
                         panic!("error 9be62f9f-31d9-493c-bb0f-b83b6ecb0026")
                     }
-                    let read_only_ids_returned_from_create_one = #ident::try_create_one_handle(
-                        &url_cloned,
-                        #ident_create_one_parameters_upper_camel_case {
-                            payload: ident_create_default_cloned.clone()
-                        },
-                        &current_table
-                    ).await.expect("error 8be80909-0e8d-42f9-a5c8-fa08244cb592");
+                    let read_only_ids_returned_from_create_one = generate_read_only_ids_from_try_create_one_default(&url_cloned, &current_table).await;
                     assert_eq!(
                         #ident_read_upper_camel_case {
                             #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -6019,6 +6001,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #ident_create_upper_camel_case {
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 }
+                            }
+                            async fn generate_read_only_ids_from_try_create_one_default(
+                                #url_snake_case: &str,
+                                table: &str,
+                            ) -> #ident_read_only_ids_upper_camel_case {
+                                #ident::try_create_one_handle(
+                                    #url_snake_case,
+                                    #ident_create_one_parameters_upper_camel_case {
+                                        #payload_snake_case: ident_create_default()
+                                    },
+                                    table
+                                ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30")
                             }
                             tracing_subscriber::fmt::init();
                             fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
