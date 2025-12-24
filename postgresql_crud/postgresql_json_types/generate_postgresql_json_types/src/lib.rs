@@ -539,6 +539,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
             let std_string_string_token_stream = token_patterns::StdStringString;
             let uuid_uuid_token_stream = token_patterns::UuidUuid;
+            let serde_serialize_token_stream = token_patterns::SerdeSerialize;
+            let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
 
             let none_token_stream = quote::quote! {None};
 
@@ -834,7 +836,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let ident_origin_token_stream = {
                     let maybe_derive_serde_serialize_token_stream = match &serde_serialize {
-                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
+                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {#serde_serialize_token_stream,},
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
                     };
                     let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize {
@@ -1096,8 +1098,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Clone,
                             PartialEq,
                             PartialOrd,//maybe add it to the trait?
-                            serde::Serialize,
-                            serde::Deserialize,
+                            #serde_serialize_token_stream,
+                            #serde_deserialize_token_stream,
                             utoipa::ToSchema,
                             schemars::JsonSchema
                         )]
@@ -1132,8 +1134,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize,
+                            #serde_serialize_token_stream,
+                            #serde_deserialize_token_stream,
                             utoipa::ToSchema,
                             schemars::JsonSchema
                         )]
@@ -1162,7 +1164,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            serde::Serialize
+                            #serde_serialize_token_stream
                         )]
                         pub struct #ident_create_for_query_upper_camel_case(#ident_origin_upper_camel_case);
                     }
@@ -1212,8 +1214,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize,
+                            #serde_serialize_token_stream,
+                            #serde_deserialize_token_stream,
                             utoipa::ToSchema,
                             schemars::JsonSchema,
                         )]
@@ -1654,8 +1656,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Clone,
                         PartialEq,
                         PartialOrd,
-                        serde::Serialize,
-                        serde::Deserialize,
+                        #serde_serialize_token_stream,
+                        #serde_deserialize_token_stream,
                         utoipa::ToSchema,
                         schemars::JsonSchema,
                     )]
@@ -1783,8 +1785,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Debug,
                         Clone,
                         PartialEq,
-                        serde::Serialize,
-                        serde::Deserialize,
+                        #serde_serialize_token_stream,
+                        #serde_deserialize_token_stream,
                     )]
                     pub struct #ident_read_only_ids_upper_camel_case(pub #content_token_stream);
                 }
@@ -1838,8 +1840,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize,
+                            #serde_serialize_token_stream,
+                            #serde_deserialize_token_stream,
                             utoipa::ToSchema,
                             schemars::JsonSchema
                         )]
@@ -1874,7 +1876,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            serde::Serialize,
+                            #serde_serialize_token_stream,
                         )]
                         pub struct #ident_update_for_query_upper_camel_case(#ident_origin_upper_camel_case);
                     }
