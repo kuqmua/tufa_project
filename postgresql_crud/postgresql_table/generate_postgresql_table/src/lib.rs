@@ -4325,13 +4325,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let ident_create = #ident_create_upper_camel_case {
                                 #ident_create_content_token_stream
                             };
-                            let read_only_ids_from_try_create_one = #ident::try_create_one_handle(
+                            let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one(
                                 &url_cloned,
-                                #ident_create_one_parameters_upper_camel_case {
-                                    payload: ident_create.clone()
-                                },
+                                ident_create.clone(),
                                 &current_table
-                            ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
+                            ).await;
                             assert_eq!(
                                 #ident_read_upper_camel_case {
                                     #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -4686,13 +4684,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let ident_create = #ident_create_upper_camel_case {
                                     #ident_create_content_token_stream
                                 };
-                                let read_only_ids_returned_from_create_one = #ident::try_create_one_handle(
+                                let read_only_ids_returned_from_create_one = generate_read_only_ids_from_try_create_one(
                                     &url_cloned,
-                                    #ident_create_one_parameters_upper_camel_case {
-                                        payload: ident_create.clone()
-                                    },
+                                    ident_create.clone(),
                                     &current_table
-                                ).await.expect("error d6f20011-a88d-44f6-af7f-b2b8eca4c649");
+                                ).await;
                                 #content_token_stream
                                 let read_only_ids_from_try_delete_many = {
                                     let mut #acc_snake_case = #ident::try_delete_many_handle(
@@ -6002,17 +5998,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 }
                             }
-                            async fn generate_read_only_ids_from_try_create_one_default(
+                            async fn generate_read_only_ids_from_try_create_one(
                                 #url_snake_case: &str,
+                                #payload_snake_case: #ident_create_upper_camel_case,
                                 table: &str,
                             ) -> #ident_read_only_ids_upper_camel_case {
                                 #ident::try_create_one_handle(
                                     #url_snake_case,
                                     #ident_create_one_parameters_upper_camel_case {
-                                        #payload_snake_case: ident_create_default()
+                                        #payload_snake_case
                                     },
                                     table
                                 ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30")
+                            }
+                            async fn generate_read_only_ids_from_try_create_one_default(
+                                #url_snake_case: &str,
+                                table: &str,
+                            ) -> #ident_read_only_ids_upper_camel_case {
+                                generate_read_only_ids_from_try_create_one(
+                                    #url_snake_case,
+                                    ident_create_default(),
+                                    table
+                                ).await
                             }
                             tracing_subscriber::fmt::init();
                             fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
