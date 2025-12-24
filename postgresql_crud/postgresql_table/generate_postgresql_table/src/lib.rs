@@ -4061,6 +4061,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 }
             }
         };
+        //
+        // let generate__content_token_stream = quote::quote!{
+        //     async fn generate_(
+        //         // endpoint_location: &str,
+        //         // current_ident_where_many: #ident_where_many_upper_camel_case,
+        //         // select: #import_path::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+        //         // table: &str
+        //     ) {
+                
+        //     }
+        // };
+        //
+
         let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&element.syn_field.ty);
@@ -4121,7 +4134,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_default_primary_key_field_ident_clone_token_stream,
             primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
-            primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream,
         ) = {
             let generate_read_only_ids_into_read_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(&read_only_ids_into_read_snake_case, &content_token_stream);
             (
@@ -4131,7 +4143,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 generate_read_only_ids_into_read_token_stream(&quote::quote! {read_only_ids_from_try_create_one_default.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote! {read_only_ids_current_element.#primary_key_field_ident.clone()}),
                 generate_read_only_ids_into_read_token_stream(&quote::quote! {read_only_ids_returned_from_create_one.#primary_key_field_ident.clone()}),
-                generate_read_only_ids_into_read_token_stream(&quote::quote! {#common_read_only_ids_returned_from_create_one_snake_case.#primary_key_field_ident.clone()}),
             )
         };
         let primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream = {
@@ -4191,14 +4202,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_read_clone_token_stream);
             quote::quote! {
                 let #common_read_only_ids_returned_from_create_one_snake_case = {
-                    let #common_read_only_ids_returned_from_create_one_snake_case = #ident::try_create_one_handle(
+                    let read_only_ids_from_try_create_one = #ident::try_create_one_handle(
                         &#url_snake_case,
                         #ident_create_one_parameters_upper_camel_case {
                             #payload_snake_case: #ident_create_default_snake_case.clone()
                         },
                         &table_initialization
                     ).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
-                    let primary_key_read = #primary_key_field_type_read_only_ids_into_read_common_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream;
+                    let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream;
                     let #some_value_read_only_ids_returned_from_create_one_snake_case = Some(#value_initialization_token_stream);
                     assert_eq!(
                         #ident_read_upper_camel_case {
@@ -4234,7 +4245,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #select_default_all_with_max_page_size_clone_token_stream,
                         &table_initialization,
                     ).await;
-                    #common_read_only_ids_returned_from_create_one_snake_case
+                    read_only_ids_from_try_create_one
                 };
             }
         };
