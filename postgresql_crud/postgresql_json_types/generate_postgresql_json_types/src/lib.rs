@@ -615,7 +615,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
             let ident_not_null_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern);
-            //
             enum IsPub {
                 True,
                 False
@@ -652,7 +651,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 True,
                 False
             }
-            let generate_struct_derives = |
+            let generate_struct_derive = |
                 is_pub: IsPub,
                 current_ident: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens,
@@ -670,38 +669,38 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     IsPub::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_debug_token_stream = match derive_debug {
-                    ::True => quote::quote!{Debug},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveDebug::True => quote::quote!{Debug,},
+                    DeriveDebug::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_clone_token_stream = match derive_clone {
-                    ::True => quote::quote!{Clone},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveClone::True => quote::quote!{Clone,},
+                    DeriveClone::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_partial_eq_token_stream = match derive_partial_eq {
-                    ::True => quote::quote!{PartialEq},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DerivePartialEq::True => quote::quote!{PartialEq,},
+                    DerivePartialEq::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_partial_ord_token_stream = match derive_partial_ord {
-                    ::True => quote::quote!{},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DerivePartialOrd::True => quote::quote!{PartialOrd,},
+                    DerivePartialOrd::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_serde_serialize_token_stream = match derive_serde_serialize {
-                    ::True => quote::quote!{},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveSerdeSerialize::True => quote::quote!{#serde_serialize_token_stream,},
+                    DeriveSerdeSerialize::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_serde_deserialize_token_stream = match derive_serde_deserialize {
-                    ::True => quote::quote!{},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveSerdeDeserialize::True => quote::quote!{#serde_deserialize_token_stream,},
+                    DeriveSerdeDeserialize::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_utoipa_to_schema_token_stream = match derive_utoipa_to_schema {
-                    ::True => quote::quote!{},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveUtoipaToSchema::True => quote::quote!{#utoipa_to_schema_token_stream,},
+                    DeriveUtoipaToSchema::False => proc_macro2::TokenStream::new(),
                 };
                 let maybe_schemars_json_schema_token_stream = match derive_schemars_json_schema {
-                    ::True => quote::quote!{},
-                    ::False => proc_macro2::TokenStream::new(),
+                    DeriveSchemarsJsonSchema::True => quote::quote!{#schemars_json_schema_token_stream,},
+                    DeriveSchemarsJsonSchema::False => proc_macro2::TokenStream::new(),
                 };
-                quote! {
+                quote::quote! {
                     #[derive(
                         #maybe_debug_token_stream
                         #maybe_clone_token_stream
@@ -715,13 +714,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #maybe_pub_token_stream struct #current_ident #content_token_stream
                 }
             };
-
-            //
             let ident_token_stream = {
-                let ident_token_stream = quote::quote! {
-                    #[derive(Debug)]
-                    pub struct #ident;
-                };
+                let ident_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident,
+                    &quote::quote!{;},
+                    DeriveDebug::True,
+                    DeriveClone::False,
+                    DerivePartialEq::False,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::False,
+                    DeriveSerdeDeserialize::False,
+                    DeriveUtoipaToSchema::False,
+                    DeriveSchemarsJsonSchema::False,
+                );
                 quote::quote! {
                     #ident_token_stream
                 }
@@ -938,76 +944,73 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 } else {
                     (postgresql_crud_macros_common::DeriveOrImpl::Derive, postgresql_crud_macros_common::DeriveOrImpl::Derive)
                 };
-                let ident_origin_token_stream = {
-                    let maybe_derive_serde_serialize_token_stream = match &serde_serialize {
-                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {#serde_serialize_token_stream,},
-                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
-                    };
-                    let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize {
-                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Deserialize,},
-                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
-                    };
-                    let maybe_derive_schemars_json_schema_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
-                        SchemarsJsonSchema::Derive => &quote::quote! {#schemars_json_schema_token_stream,},
-                        SchemarsJsonSchema::Impl(_) => &proc_macro2::TokenStream::new(),
-                    };
-                    let content_token_stream: &dyn quote::ToTokens = {
-                        let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
-                            let value = generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern);
-                            match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
+                let ident_origin_token_stream = generate_struct_derive(
+                    IsPub::False,
+                    &ident_origin_upper_camel_case,
+                    &{
+                        let content_token_stream: &dyn quote::ToTokens = {
+                            let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
+                                let value = generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern);
+                                match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
+                                }
+                            };
+                            match &postgresql_json_type_pattern {
+                                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_token_stream,
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error e994797d-7334-4e30-b180-af24c16b68b1")),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    };
+                                    generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => &{
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error 76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    };
+                                    generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => &{
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error 1b996c86-0b08-476a-b963-373dd6838496")),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    };
+                                    generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                                },
+                                PostgresqlJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => &{
+                                    let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error d24b7481-27d9-40c0-8476-344a16d08f27")),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
+                                    };
+                                    generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                                },
                             }
                         };
-                        match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_read_inner_standart_not_null_alias_token_stream,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case),
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                                let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error e994797d-7334-4e30-b180-af24c16b68b1")),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
-                                };
-                                generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => &{
-                                let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error 76eb44e3-3099-4c9a-a935-da3e6f6e4210")),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
-                                };
-                                generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, .. } => &{
-                                let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error 1b996c86-0b08-476a-b963-373dd6838496")),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
-                                };
-                                generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension4 { dimension1_not_null_or_nullable, .. } => &{
-                                let (current_not_null_or_nullable, current_postgresql_json_type_pattern): (&postgresql_crud_macros_common::NotNullOrNullable, &PostgresqlJsonTypePattern) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (dimension1_not_null_or_nullable, &postgresql_json_type_pattern.down_by_1().expect("error d24b7481-27d9-40c0-8476-344a16d08f27")),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_json_type_pattern),
-                                };
-                                generate_current_ident_origin(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            },
-                        }
-                    };
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            PartialOrd,
-                            #maybe_derive_serde_serialize_token_stream
-                            #maybe_derive_serde_deserialize_token_stream
-                            #utoipa_to_schema_token_stream,
-                            #maybe_derive_schemars_json_schema_token_stream
-                        )]
-                        struct #ident_origin_upper_camel_case(#content_token_stream);
-                    }
-                };
+                        quote::quote!{(#content_token_stream);}
+                    },
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::True,
+                    match &serde_serialize {
+                        postgresql_crud_macros_common::DeriveOrImpl::Derive => DeriveSerdeSerialize::True,
+                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => DeriveSerdeSerialize::False,
+                    },
+                    match &serde_deserialize {
+                        postgresql_crud_macros_common::DeriveOrImpl::Derive => DeriveSerdeDeserialize::True,
+                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => DeriveSerdeDeserialize::False,
+                    },
+                    DeriveUtoipaToSchema::True,
+                    match &schemars_json_schema {
+                        SchemarsJsonSchema::Derive => DeriveSchemarsJsonSchema::True,
+                        SchemarsJsonSchema::Impl(_) => DeriveSchemarsJsonSchema::False,
+                    },
+                );
                 let ident_origin_impl_new_self_content_token_stream = {
                     let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {match #value_snake_case {
@@ -1195,22 +1198,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&quote::quote! {Self(#ident_origin_upper_camel_case::new(#value_snake_case))});
+            let ident_origin_struct_content_token_stream = quote::quote!{(#ident_origin_upper_camel_case);};
             let ident_table_type_declaration_token_stream = {
-                let ident_table_type_declaration_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            PartialOrd,//maybe add it to the trait?
-                            #serde_serialize_token_stream,
-                            #serde_deserialize_token_stream,
-                            #utoipa_to_schema_token_stream,
-                            #schemars_json_schema_token_stream
-                        )]
-                        pub struct #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
+                let ident_table_type_declaration_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_table_type_declaration_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::True,//maybe add it to the trait?
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::True,
+                    DeriveUtoipaToSchema::True,
+                    DeriveSchemarsJsonSchema::True,
+                );
                 let impl_ident_table_type_declaration_token_stream = {
                     quote::quote! {
                         impl #ident_table_type_declaration_upper_camel_case {
@@ -1233,20 +1235,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_create_token_stream = {
-                let ident_create_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #serde_serialize_token_stream,
-                            #serde_deserialize_token_stream,
-                            #utoipa_to_schema_token_stream,
-                            #schemars_json_schema_token_stream
-                        )]
-                        pub struct #ident_create_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
+                let ident_create_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_create_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::True,
+                    DeriveUtoipaToSchema::True,
+                    DeriveSchemarsJsonSchema::True,
+                );
                 let impl_ident_create_token_stream = {
                     quote::quote! {
                         impl #ident_create_upper_camel_case {
@@ -1263,17 +1264,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_create_for_query_token_stream = {
-                let ident_create_for_query_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #serde_serialize_token_stream
-                        )]
-                        pub struct #ident_create_for_query_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
+                let ident_create_for_query_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_create_for_query_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::False,
+                    DeriveUtoipaToSchema::False,
+                    DeriveSchemarsJsonSchema::False,
+                );
                 let impl_ident_create_for_query_token_stream = {
                     quote::quote! {
                         impl #ident_create_for_query_upper_camel_case {
@@ -1300,8 +1303,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let ident_select_token_stream = {
-                let ident_select_token_stream = {
-                    let content_token_stream = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
+                let ident_select_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_select_upper_camel_case,
+                    &ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                         |()| quote::quote! {;},
                         |array_dimension| {
                             let mut arguments_token_stream = vec![];
@@ -1313,20 +1318,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                             quote::quote! {{#(#arguments_token_stream),*}}
                         }
-                    );
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #serde_serialize_token_stream,
-                            #serde_deserialize_token_stream,
-                            #utoipa_to_schema_token_stream,
-                            #schemars_json_schema_token_stream,
-                        )]
-                        pub struct #ident_select_upper_camel_case #content_token_stream
-                    }
-                };
+                    ),
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::True,
+                    DeriveUtoipaToSchema::True,
+                    DeriveSchemarsJsonSchema::True,
+                );
                 let generate_default_some_one_content_token_stream = |default_some_one_or_default_some_one_with_max_page_size: &postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize| {
                     let content_token_stream = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                         |()| proc_macro2::TokenStream::new(),
@@ -1755,19 +1756,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             //exists because need to implement .into_inner() for fields (only for read subtype)
             let ident_read_token_stream = {
                 //todo maybe add some derive\impl to trait
-                let ident_read_token_stream = quote::quote! {
-                    #[derive(
-                        Debug,
-                        Clone,
-                        PartialEq,
-                        PartialOrd,
-                        #serde_serialize_token_stream,
-                        #serde_deserialize_token_stream,
-                        #utoipa_to_schema_token_stream,
-                        #schemars_json_schema_token_stream,
-                    )]
-                    pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
-                };
+                let ident_read_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_read_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::True,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::True,
+                    DeriveUtoipaToSchema::True,
+                    DeriveSchemarsJsonSchema::True,
+                );
                 let impl_ident_read_token_stream = {
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
@@ -1788,8 +1789,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-            let ident_read_only_ids_token_stream = {
-                let content_token_stream = {
+            let ident_read_only_ids_token_stream = generate_struct_derive(
+                IsPub::True,
+                &ident_read_only_ids_upper_camel_case,
+                &{
                     use postgresql_crud_macros_common::NotNullOrNullable;
                     let std_option_option_unit_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {()});
                     let vec_token_stream = |value: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value);
@@ -1883,19 +1886,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } else {
                         std_option_option_unit_token_stream
                     };
-                    quote::quote! {#import_path::Value<#content_token_stream>}
-                };
-                quote::quote! {
-                    #[derive(
-                        Debug,
-                        Clone,
-                        PartialEq,
-                        #serde_serialize_token_stream,
-                        #serde_deserialize_token_stream,
-                    )]
-                    pub struct #ident_read_only_ids_upper_camel_case(pub #content_token_stream);
-                }
-            };
+                    quote::quote!{(pub #import_path::Value<#content_token_stream>);}
+                },
+                DeriveDebug::True,
+                DeriveClone::True,
+                DerivePartialEq::True,
+                DerivePartialOrd::False,
+                DeriveSerdeSerialize::True,
+                DeriveSerdeDeserialize::True,
+                DeriveUtoipaToSchema::False,
+                DeriveSchemarsJsonSchema::False,
+            );
             let ident_read_inner_token_stream = {
                 let type_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -1939,20 +1940,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_update_token_stream = {
-                let ident_update_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #serde_serialize_token_stream,
-                            #serde_deserialize_token_stream,
-                            #utoipa_to_schema_token_stream,
-                            #schemars_json_schema_token_stream
-                        )]
-                        pub struct #ident_update_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
+                let ident_update_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_update_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::True,
+                    DeriveUtoipaToSchema::True,
+                    DeriveSchemarsJsonSchema::True,
+                );
                 let impl_ident_update_token_stream = {
                     quote::quote! {
                         impl #ident_update_upper_camel_case {
@@ -1975,17 +1975,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_update_for_query_token_stream = {
-                let ident_update_for_query_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #serde_serialize_token_stream,
-                        )]
-                        pub struct #ident_update_for_query_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
+                let ident_update_for_query_token_stream = generate_struct_derive(
+                    IsPub::True,
+                    &ident_update_for_query_upper_camel_case,
+                    &ident_origin_struct_content_token_stream,
+                    DeriveDebug::True,
+                    DeriveClone::True,
+                    DerivePartialEq::True,
+                    DerivePartialOrd::False,
+                    DeriveSerdeSerialize::True,
+                    DeriveSerdeDeserialize::False,
+                    DeriveUtoipaToSchema::False,
+                    DeriveSchemarsJsonSchema::False,
+                );
                 let impl_ident_update_for_query_token_stream = {
                     quote::quote! {
                         impl #ident_update_for_query_upper_camel_case {
