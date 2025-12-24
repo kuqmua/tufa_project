@@ -4262,7 +4262,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
 
         let generate_table_test_name_field_ident_token_stream = |test_name: &str, field_ident: &syn::Ident| format!("table_{test_name}_{field_ident}").parse::<proc_macro2::TokenStream>().expect("error 2003ad9f-013a-48ba-b0ef-d2d48774d60c");
         let mut table_field_idents_initialization_vec_token_stream = vec![];
-        let mut table_field_idents_clones2_vec_token_stream = vec![];
         let mut table_test_name_field_idents_vec_token_stream = vec![];
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
             for test_name in test_names {
@@ -4273,14 +4272,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let format_content_token_stream = generate_quotes::double_quotes_token_stream(&format!("{test_name}_{field_ident}"));
                     quote::quote! {
                         let #initialization_variable_name_token_stream = add_table_postfix(&#format_content_token_stream);
-                    }
-                }));
-                table_field_idents_clones2_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let table_test_name_field_ident_token_stream = generate_table_test_name_field_ident_token_stream(test_name, field_ident);
-                    let initialization_variable_name_token_stream = generate_initialization_variable_name_token_stream(field_ident);
-                    quote::quote! {
-                        let #table_test_name_field_ident_token_stream = #initialization_variable_name_token_stream.clone();
                     }
                 }));
                 table_test_name_field_idents_vec_token_stream.push(generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
