@@ -32,7 +32,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let postgresql_json_object_type_record_vec = {
         let generate_postgresql_json_object_type_config = serde_json::from_str::<GeneratePostgresqlJsonObjectTypeConfig>(
-            &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+            &macros_helpers::get_macro_attribute_meta_list_token_stream(
                 &syn_derive_input.attrs,
                 &format!("{}::postgresql_json_object_type_pattern", import_path.snake_case_std_primitive_str()),
             )
@@ -377,7 +377,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     qself: None,
                     path: syn::Path {
                         leading_colon: None,
-                        segments: macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(
+                        segments: macros_helpers::generate_simple_syn_punctuated_punctuated(
                             &[import_path.to_path(), &uuid_uuid_as_not_null_jsonb_string_upper_camel_case.to_string()]
                         ),
                     },
@@ -924,7 +924,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                         }
                     );
-                    let impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    let impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                         &ident_create_upper_camel_case,
                         &ident_create_for_query_upper_camel_case,
                         &{
@@ -968,7 +968,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_with_id_standart_not_null_create_for_query_upper_camel_case,
                         &generate_struct_standart_not_null_content_token_stream(&is_standart_with_id_true)
                     );
-                    let impl_std_convert_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    let impl_std_convert_from_ident_with_id_standart_not_null_create_for_ident_with_id_standart_not_null_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                         &ident_with_id_standart_not_null_create_upper_camel_case,
                         &ident_with_id_standart_not_null_create_for_query_upper_camel_case,
                         &quote::quote! {Self {
@@ -2463,7 +2463,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let ident_read_inner_token_stream = {
-                    let generate_pub_type_ident_read_inner_alias_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_inner_upper_camel_case, &content_token_stream);
+                    let generate_pub_type_ident_read_inner_alias_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_type_alias_token_stream(&ident_read_inner_upper_camel_case, &content_token_stream);
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream(&IsStandartWithId::False),
@@ -3362,7 +3362,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                 };
-                let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                let impl_std_convert_from_ident_standart_not_null_update_for_ident_standart_not_null_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                     &quote::quote!{#ident_as_import_path_postgresql_json_type_token_stream::Update},
                     &quote::quote!{#ident_as_import_path_postgresql_json_type_token_stream::UpdateForQuery},
                     &match &not_null_or_nullable {
@@ -3410,7 +3410,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     };
-                    let impl_std_convert_from_ident_standart_not_null_update_element_for_ident_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    let impl_std_convert_from_ident_standart_not_null_update_element_for_ident_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                         &ident_standart_not_null_update_element_upper_camel_case,
                         &ident_standart_not_null_update_for_query_element_upper_camel_case,
                         &{
@@ -3460,7 +3460,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #fields_snake_case
                         }},
                     );
-                    let impl_std_convert_from_ident_with_id_standart_not_null_update_element_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
+                    let impl_std_convert_from_ident_with_id_standart_not_null_update_element_for_ident_with_id_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                         &ident_with_id_standart_not_null_update_element_upper_camel_case,
                         &ident_with_id_standart_not_null_update_for_query_element_upper_camel_case,
                         &quote::quote! {Self {
@@ -6613,10 +6613,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             //     &trait_gen,
             // ) {
             //     if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
-            //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //         macros_helpers::write_token_stream_into_file(
             //             "GeneratePostgresqlJsonObjectType",
             //             &generated,
-            //             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+            //             &macros_helpers::FormatWithRustfmt::True
             //         );
             //     }
             // }
@@ -6632,21 +6632,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         })
         .collect::<(Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>)>();
     if false {
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        macros_helpers::write_token_stream_into_file(
             "GeneratePostgresqlJsonObjectTypeExample",
             &quote::quote! {
                 pub struct GeneratePostgresqlJsonObjectTypeExample {
                     #(#fields_token_stream)*
                 }
             },
-            &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True,
+            &macros_helpers::FormatWithRustfmt::True,
         );
     }
     let generated: proc_macro2::TokenStream = quote::quote! {#(#postgresql_json_object_type_array)*};
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlJsonObjectType",
     //     &generated,
-    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithRustfmt::True
     // );
     generated.into()
 }

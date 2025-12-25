@@ -61,7 +61,6 @@ pub enum StatusCode {
     NotExtended510,
     NetworkAuthenticationRequired511,
 }
-
 impl StatusCode {
     pub fn to_axum_http_status_code_token_stream(&self) -> proc_macro2::TokenStream {
         match self {
@@ -480,7 +479,6 @@ impl StatusCode {
         value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
     }
 }
-
 // impl TryFrom<&syn::Variant> for StatusCode {
 //     type Error = String;
 //     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
@@ -512,7 +510,6 @@ impl StatusCode {
 //         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
 //     }
 // }
-
 // impl TryFrom<&&syn::Variant> for StatusCode {
 //     type Error = String;
 //     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
@@ -544,7 +541,6 @@ impl StatusCode {
 //         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
 //     }
 // }
-
 impl TryFrom<&String> for StatusCode {
     type Error = ();
     fn try_from(value: &String) -> Result<Self, Self::Error> {

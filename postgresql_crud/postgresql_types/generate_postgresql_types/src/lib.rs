@@ -3472,7 +3472,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream = match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(&ident_standart_not_null_read_upper_camel_case, &ident_origin_upper_camel_case, &{
+                    IsNotNullStandartCanBePrimaryKey::True => macros_helpers::generate_impl_std_convert_from_token_stream(&ident_standart_not_null_read_upper_camel_case, &ident_origin_upper_camel_case, &{
                         let ident_standart_not_null_as_crate_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
                         quote::quote! {Self::#new_snake_case(#ident_standart_not_null_as_crate_postgresql_type_token_stream::into_inner(#value_snake_case))}
                     }),
@@ -4167,7 +4167,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
                 let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &quote::quote! {#self_snake_case.0});
-                let impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &quote::quote! {Self(#value_snake_case.0)});
+                let impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &quote::quote! {Self(#value_snake_case.0)});
                 quote::quote! {
                     #ident_update_for_query_token_stream
                     #impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream
@@ -5802,24 +5802,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //this need only for better development experience
     if false {
         let content_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error 79ee6381-c845-4762-a6f6-1c6b38806535")).collect::<Vec<proc_macro2::TokenStream>>();
-        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        macros_helpers::write_token_stream_into_file(
             "GeneratePostgresqlTypesExample",
             &quote::quote! {
                 struct GeneratePostgresqlTypesExample {
                     #(#content_token_stream)*
                 }
             },
-            &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True,
+            &macros_helpers::FormatWithRustfmt::True,
         );
     }
     let generated = {
         let content_token_stream = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("error e0c9257d-e554-4147-8174-b431c364c1ac")).collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     };
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTypes",
     //     &generated,
-    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithRustfmt::True
     // );
     generated.into()
 }

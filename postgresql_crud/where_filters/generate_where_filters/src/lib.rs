@@ -823,10 +823,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             };
             // match &filter {
             //     postgresql_crud_macros_common::PostgresqlTypeFilter::In {ident: _} => {
-            //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //         macros_helpers::write_token_stream_into_file(
             //             "GeneratePostgresqlTypeWhereFilter",
             //             &generated,
-            //             &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+            //             &macros_helpers::FormatWithRustfmt::True
             //         );
             //         proc_macro2::TokenStream::new(),
             //     },
@@ -1291,10 +1291,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             };
             // match &filter {
             //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {ident: _} => {
-            //         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //         // macros_helpers::write_token_stream_into_file(
             //         //     "GeneratePostgresqlTypeWhereFilter",
             //         //     &generated,
-            //         //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+            //         //     &macros_helpers::FormatWithRustfmt::True
             //         // );
             //         proc_macro2::TokenStream::new()
             //     },
@@ -1309,10 +1309,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
             // #_token_stream
         };
         // if let postgresql_crud_macros_common::PostgresqlTypeFilter:: = &filter {
-        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     macros_helpers::write_token_stream_into_file(
         //         "GeneratePostgresqlTypeWhereFilter",
         //         &generated,
-        //         &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+        //         &macros_helpers::FormatWithRustfmt::True
         //     );
         // }
         generated
@@ -1321,10 +1321,10 @@ pub fn generate_where_filters(_input_token_stream: proc_macro::TokenStream) -> p
         #postgresql_type_token_stream
         #postgresql_json_type_token_stream
     };
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTypeWhereFilters",
     //     &generated,
-    //     &macros_helpers::write_token_stream_into_file::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithRustfmt::True
     // );
     generated.into()
 }
