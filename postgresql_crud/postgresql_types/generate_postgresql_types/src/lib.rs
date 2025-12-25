@@ -997,12 +997,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_nullable_upper_camel_case);
             let ident_array_not_null_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
             let ident_array_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_nullable_upper_camel_case);
-            let ident_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, Clone, Copy)]
-                    pub struct #ident;
-                }
-            };
+            let ident_token_stream = macros_helpers::generate_struct_derive(
+                macros_helpers::IsPub::True,
+                &ident,
+                &quote::quote!{;},
+                macros_helpers::DeriveDebug::True,
+                macros_helpers::DeriveClone::True,
+                macros_helpers::DeriveCopy::True,
+                macros_helpers::DerivePartialEq::False,
+                macros_helpers::DerivePartialOrd::False,
+                macros_helpers::DeriveSerdeSerialize::False,
+                macros_helpers::DeriveSerdeDeserialize::False,
+                macros_helpers::DeriveUtoipaToSchema::False,
+                macros_helpers::DeriveSchemarsJsonSchema::False,
+            );
             let generate_ident_standart_not_null_origin_token_stream = |current_postgresql_type: &PostgresqlType| naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                 &generate_ident_standart_not_null_token_stream(current_postgresql_type)
             );

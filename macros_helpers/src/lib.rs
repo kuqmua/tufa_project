@@ -41,6 +41,7 @@ pub use generate_struct_derive::{
     IsPub,
     DeriveDebug,
     DeriveClone,
+    DeriveCopy,
     DerivePartialEq,
     DerivePartialOrd,
     DeriveSerdeSerialize,

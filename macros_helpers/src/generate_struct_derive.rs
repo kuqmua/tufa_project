@@ -14,6 +14,11 @@ pub enum DeriveClone {
     False
 }
 #[derive(Debug, Clone, Copy)]
+pub enum DeriveCopy {
+    True,
+    False
+}
+#[derive(Debug, Clone, Copy)]
 pub enum DerivePartialEq {
     True,
     False
@@ -49,6 +54,7 @@ pub fn generate_struct_derive(
     content_token_stream: &dyn quote::ToTokens,
     derive_debug: DeriveDebug,
     derive_clone: DeriveClone,
+    derive_copy: DeriveCopy,
     derive_partial_eq: DerivePartialEq,
     derive_partial_ord: DerivePartialOrd,
     derive_serde_serialize: DeriveSerdeSerialize,
@@ -67,6 +73,10 @@ pub fn generate_struct_derive(
     let maybe_clone_token_stream = match derive_clone {
         DeriveClone::True => quote::quote!{Clone,},
         DeriveClone::False => proc_macro2::TokenStream::new(),
+    };
+    let maybe_copy_token_stream = match derive_copy {
+        DeriveCopy::True => quote::quote!{Copy,},
+        DeriveCopy::False => proc_macro2::TokenStream::new(),
     };
     let maybe_partial_eq_token_stream = match derive_partial_eq {
         DerivePartialEq::True => quote::quote!{PartialEq,},
@@ -108,6 +118,7 @@ pub fn generate_struct_derive(
         #[derive(
             #maybe_debug_token_stream
             #maybe_clone_token_stream
+            #maybe_copy_token_stream
             #maybe_partial_eq_token_stream
             #maybe_partial_ord_token_stream
             #maybe_serde_serialize_token_stream
