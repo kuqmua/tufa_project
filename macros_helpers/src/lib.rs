@@ -40,6 +40,7 @@ mod generate_struct_derive;
 pub use generate_struct_derive::{
     IsPub,
     DeriveDebug,
+    DeriveDefault,
     DeriveClone,
     DeriveCopy,
     DerivePartialEq,

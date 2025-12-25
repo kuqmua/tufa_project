@@ -1002,6 +1002,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &ident,
                 &quote::quote!{;},
                 macros_helpers::DeriveDebug::True,
+                macros_helpers::DeriveDefault::False,
                 macros_helpers::DeriveClone::True,
                 macros_helpers::DeriveCopy::True,
                 macros_helpers::DerivePartialEq::False,
@@ -2355,30 +2356,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
-                let ident_origin_token_stream = 
-                // macros_helpers::generate_struct_derive(
-                //     macros_helpers::IsPub::True,
-                //     &ident_origin_upper_camel_case,
-                //     &quote::quote!{(#field_type_handle);},
-                //     macros_helpers::DeriveDebug::True,
-                //     macros_helpers::DeriveClone::True,
-                //     macros_helpers::DeriveCopy::False,
-                //     macros_helpers::DerivePartialEq::True,
-                //     macros_helpers::DeriveEq::False,
-                //     macros_helpers::DerivePartialOrd::False,
-                //     macros_helpers::DeriveOrd::False,
-                //     macros_helpers::DeriveSerdeSerialize::False,
-                //     macros_helpers::DeriveSerdeDeserialize::False,
-                //     macros_helpers::DeriveUtoipaToSchema::False,
-                //     macros_helpers::DeriveSchemarsJsonSchema::False,
-                // );
-                
-                
-                
-                {
-                    let maybe_derive_partial_ord_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
-                        let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
-                        match &postgresql_type {
+                let ident_origin_token_stream = macros_helpers::generate_struct_derive(
+                    macros_helpers::IsPub::True,
+                    &ident_origin_upper_camel_case,
+                    &quote::quote!{(#field_type_handle);},
+                    macros_helpers::DeriveDebug::True,
+                    macros_helpers::DeriveDefault::False,
+                    macros_helpers::DeriveClone::True,
+                    macros_helpers::DeriveCopy::False,
+                    macros_helpers::DerivePartialEq::True,
+                    match &is_not_null_standart_can_be_primary_key {
+                        IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
+                        IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveEq::False,
+                    },
+                    match &is_standart_not_null {
+                        IsStandartNotNull::True => match &postgresql_type {
                             PostgresqlType::StdPrimitiveI16AsInt2
                             | PostgresqlType::StdPrimitiveI32AsInt4
                             | PostgresqlType::StdPrimitiveI64AsInt8
@@ -2395,7 +2387,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             | PostgresqlType::SqlxTypesChronoNaiveDateAsDate
                             | PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp
                             | PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                            | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => partial_ord_comma_token_stream,
+                            | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => macros_helpers::DerivePartialOrd::True,
                             PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney
                             | PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval
                             | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient
@@ -2405,36 +2397,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                        }
-                    } else {
-                        proc_macro2::TokenStream::new()
-                    };
-                    let maybe_derive_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
-                        IsNotNullStandartCanBePrimaryKey::True => quote::quote! {Ord, Eq,},
-                        IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
-                    };
-                    let maybe_derive_serde_serialize_token_stream = match &serde_serialize_derive_or_impl {
-                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
-                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
-                    };
-                    let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize_derive_or_impl {
-                        postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Deserialize,},
-                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
-                    };
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            #maybe_derive_partial_ord_token_stream
-                            #maybe_derive_ord_eq_token_stream
-                            #maybe_derive_serde_serialize_token_stream
-                            #maybe_derive_serde_deserialize_token_stream
-                        )]
-                        struct #ident_origin_upper_camel_case(#field_type_handle);
-                    }
-                };
+                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
+                        },
+                        IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False
+                    },
+                    match &is_not_null_standart_can_be_primary_key {
+                        IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveOrd::True,
+                        IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveOrd::False,
+                    },
+                    match &serde_serialize_derive_or_impl {
+                        postgresql_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeSerialize::True,
+                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeSerialize::False,
+                    },
+                    match &serde_deserialize_derive_or_impl {
+                        postgresql_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeDeserialize::True,
+                        postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeDeserialize::False,
+                    },
+                    macros_helpers::DeriveUtoipaToSchema::False,
+                    macros_helpers::DeriveSchemarsJsonSchema::False,
+                );
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
                 let earlier_date_not_supported_upper_camel_case = naming::EarlierDateNotSupportedUpperCamelCase;
                 let earliest_supported_date_snake_case = naming::EarliestSupportedDateSnakeCase;
@@ -3546,6 +3527,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     )]
                     pub struct #current_ident_token_stream #content_token_stream
                 }
+
+                // macros_helpers::generate_struct_derive(
+                //     macros_helpers::IsPub::True,
+                //     &current_ident_token_stream,
+                //     &content_token_stream,
+                //     macros_helpers::DeriveDebug::True,
+                //     macros_helpers::DeriveDefault::False,
+                //     macros_helpers::DeriveClone::True,
+                //     macros_helpers::DeriveCopy::False,
+                //     macros_helpers::DerivePartialEq::True,
+                //     macros_helpers::DeriveEq::False,
+                //     macros_helpers::DerivePartialOrd::False,
+                //     macros_helpers::DeriveOrd::False,
+                //     macros_helpers::DeriveSerdeSerialize::False,
+                //     macros_helpers::DeriveSerdeDeserialize::False,
+                //     macros_helpers::DeriveUtoipaToSchema::False,
+                //     macros_helpers::DeriveSchemarsJsonSchema::False,
+                // )
             };
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_table_type_declaration_token_stream = {
