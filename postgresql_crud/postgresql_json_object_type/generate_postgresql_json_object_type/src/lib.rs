@@ -404,23 +404,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_standart_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_token_stream = {
-                let generate_struct_ident_token_stream = |current_ident: &dyn quote::ToTokens| macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &current_ident,
-                    &quote::quote!{;},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::True,
-                    macros_helpers::DerivePartialEq::False,
-                    macros_helpers::DeriveEq::False,
-                    macros_helpers::DerivePartialOrd::False,
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::False,
-                    macros_helpers::DeriveSerdeDeserialize::False,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                let generate_struct_ident_token_stream = |current_ident: &dyn quote::ToTokens| macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_copy()
+                    .build(
+                        &current_ident,
+                        &quote::quote!{;}
+                    );
                 let ident_token_stream = generate_struct_ident_token_stream(&ident);
                 let maybe_ident_with_id_standart_not_null_token_stream = if is_standart_not_null {
                     let ident_with_id_standart_not_null_token_stream = generate_struct_ident_token_stream(&ident_with_id_standart_not_null_upper_camel_case);

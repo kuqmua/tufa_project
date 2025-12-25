@@ -162,3 +162,125 @@ pub fn generate_struct_derive(
         #maybe_pub_token_stream struct #current_ident #content_token_stream
     }
 }
+
+#[derive(Debug, Default, Clone, Copy)]
+pub struct StructDeriveTokenStreamBuilder {
+    make_pub: bool,
+    derive_debug: bool,
+    derive_default: bool,
+    derive_clone: bool,
+    derive_copy: bool,
+    derive_partial_eq: bool,
+    derive_eq: bool,
+    derive_partial_ord: bool,
+    derive_ord: bool,
+    derive_serde_serialize: bool,
+    derive_serde_deserialize: bool,
+    derive_utoipa_to_schema: bool,
+    derive_schemars_json_schema: bool,
+}
+impl StructDeriveTokenStreamBuilder {
+    pub fn new() -> Self {
+        Self::default()
+    }
+    pub fn make_pub(mut self) -> Self {
+        self.make_pub = true;
+        self
+    }
+    pub fn derive_debug(mut self) -> Self {
+        self.derive_debug = true;
+        self
+    }
+    pub fn derive_default(mut self) -> Self {
+        self.derive_default = true;
+        self
+    }
+    pub fn derive_clone(mut self) -> Self {
+        self.derive_clone = true;
+        self
+    }
+    pub fn derive_copy(mut self) -> Self {
+        self.derive_copy = true;
+        self
+    }
+    pub fn derive_partial_eq(mut self) -> Self {
+        self.derive_partial_eq = true;
+        self
+    }
+    pub fn derive_eq(mut self) -> Self {
+        self.derive_eq = true;
+        self
+    }
+    pub fn derive_partial_ord(mut self) -> Self {
+        self.derive_partial_ord = true;
+        self
+    }
+    pub fn derive_ord(mut self) -> Self {
+        self.derive_ord = true;
+        self
+    }
+    pub fn derive_serde_serialize(mut self) -> Self {
+        self.derive_serde_serialize = true;
+        self
+    }
+    pub fn derive_serde_deserialize(mut self) -> Self {
+        self.derive_serde_deserialize = true;
+        self
+    }
+    pub fn derive_utoipa_to_schema(mut self) -> Self {
+        self.derive_utoipa_to_schema = true;
+        self
+    }
+    pub fn derive_schemars_json_schema(mut self) -> Self {
+        self.derive_schemars_json_schema = true;
+        self
+    }
+    pub fn build(
+        self,
+        current_ident: &dyn quote::ToTokens,
+        content_token_stream: &dyn quote::ToTokens,
+    ) -> proc_macro2::TokenStream {
+        let maybe_pub_token_stream = self.make_pub.then(|| quote::quote!(pub));
+        let maybe_derive_debug_token_stream = self.derive_debug.then(|| quote::quote!(Debug,));
+        let maybe_derive_default_token_stream = self.derive_default.then(|| quote::quote!(Default,));
+        let maybe_derive_clone_token_stream = self.derive_clone.then(|| quote::quote!(Clone,));
+        let maybe_derive_copy_token_stream = self.derive_copy.then(|| quote::quote!(Copy,));
+        let maybe_derive_partial_eq_token_stream = self.derive_partial_eq.then(|| quote::quote!(PartialEq,));
+        let maybe_derive_eq_token_stream = self.derive_eq.then(|| quote::quote!(Eq,));
+        let maybe_derive_partial_ord_token_stream = self.derive_partial_ord.then(|| quote::quote!(PartialOrd,));
+        let maybe_derive_ord_token_stream = self.derive_ord.then(|| quote::quote!(Ord,));
+        let maybe_derive_serde_serialize_token_stream = self.derive_serde_serialize.then(|| {
+            let serde_serialize_token_stream = token_patterns::SerdeSerialize;
+            quote::quote!(#serde_serialize_token_stream,)
+        });
+        let maybe_derive_serde_deserialize_token_stream = self.derive_serde_deserialize.then(|| {
+            let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
+            quote::quote!(#serde_deserialize_token_stream,)
+        });
+        let maybe_derive_utoipa_to_schema_token_stream = self.derive_utoipa_to_schema.then(|| {
+            let utoipa_to_schema_token_stream = token_patterns::UtoipaToSchema;
+            quote::quote!(#utoipa_to_schema_token_stream,)
+        });
+        let maybe_derive_schemars_json_schema_token_stream = self.derive_schemars_json_schema.then(|| {
+            let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
+            quote::quote!(#schemars_json_schema_token_stream,)
+        });
+        quote::quote! {
+            #[derive(
+                #maybe_derive_debug_token_stream
+                #maybe_derive_default_token_stream
+                #maybe_derive_clone_token_stream
+                #maybe_derive_copy_token_stream
+                #maybe_derive_partial_eq_token_stream
+                #maybe_derive_eq_token_stream
+                #maybe_derive_partial_ord_token_stream
+                #maybe_derive_ord_token_stream
+                #maybe_derive_serde_serialize_token_stream
+                #maybe_derive_serde_deserialize_token_stream
+                #maybe_derive_utoipa_to_schema_token_stream
+                #maybe_derive_schemars_json_schema_token_stream
+            )]
+            #maybe_pub_token_stream struct #current_ident #content_token_stream
+        }
+    }
+}
