@@ -15,6 +15,19 @@ mod generate_new_or_try_new;
 pub mod generate_pub_type_alias_token_stream;
 pub mod generate_simple_syn_punctuated_punctuated;
 pub mod generate_std_default_default_token_stream;
+mod generate_struct_derive;
+pub use generate_struct_derive::{
+    IsPub,
+    DeriveDebug,
+    DeriveClone,
+    DerivePartialEq,
+    DerivePartialOrd,
+    DeriveSerdeSerialize,
+    DeriveSerdeDeserialize,
+    DeriveUtoipaToSchema,
+    DeriveSchemarsJsonSchema,
+    generate_struct_derive
+};
 pub mod get_macro_attribute;
 pub mod pagination_start_end_initialization_token_stream;
 pub mod status_code;
