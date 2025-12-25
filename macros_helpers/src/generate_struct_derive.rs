@@ -24,7 +24,17 @@ pub enum DerivePartialEq {
     False
 }
 #[derive(Debug, Clone, Copy)]
+pub enum DeriveEq {
+    True,
+    False
+}
+#[derive(Debug, Clone, Copy)]
 pub enum DerivePartialOrd {
+    True,
+    False
+}
+#[derive(Debug, Clone, Copy)]
+pub enum DeriveOrd {
     True,
     False
 }
@@ -56,7 +66,9 @@ pub fn generate_struct_derive(
     derive_clone: DeriveClone,
     derive_copy: DeriveCopy,
     derive_partial_eq: DerivePartialEq,
+    derive_eq: DeriveEq,
     derive_partial_ord: DerivePartialOrd,
+    derive_ord: DeriveOrd,
     derive_serde_serialize: DeriveSerdeSerialize,
     derive_serde_deserialize: DeriveSerdeDeserialize,
     derive_utoipa_to_schema: DeriveUtoipaToSchema,
@@ -82,9 +94,17 @@ pub fn generate_struct_derive(
         DerivePartialEq::True => quote::quote!{PartialEq,},
         DerivePartialEq::False => proc_macro2::TokenStream::new(),
     };
+    let maybe_eq_token_stream = match derive_eq {
+        DeriveEq::True => quote::quote!{Eq,},
+        DeriveEq::False => proc_macro2::TokenStream::new(),
+    };
     let maybe_partial_ord_token_stream = match derive_partial_ord {
         DerivePartialOrd::True => quote::quote!{PartialOrd,},
         DerivePartialOrd::False => proc_macro2::TokenStream::new(),
+    };
+    let maybe_ord_token_stream = match derive_ord {
+        DeriveOrd::True => quote::quote!{Ord,},
+        DeriveOrd::False => proc_macro2::TokenStream::new(),
     };
     let maybe_serde_serialize_token_stream = match derive_serde_serialize {
         DeriveSerdeSerialize::True => {
@@ -120,7 +140,9 @@ pub fn generate_struct_derive(
             #maybe_clone_token_stream
             #maybe_copy_token_stream
             #maybe_partial_eq_token_stream
+            #maybe_eq_token_stream
             #maybe_partial_ord_token_stream
+            #maybe_ord_token_stream
             #maybe_serde_serialize_token_stream
             #maybe_serde_deserialize_token_stream
             #maybe_utoipa_to_schema_token_stream

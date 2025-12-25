@@ -1005,7 +1005,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 macros_helpers::DeriveClone::True,
                 macros_helpers::DeriveCopy::True,
                 macros_helpers::DerivePartialEq::False,
+                macros_helpers::DeriveEq::False,
                 macros_helpers::DerivePartialOrd::False,
+                macros_helpers::DeriveOrd::False,
                 macros_helpers::DeriveSerdeSerialize::False,
                 macros_helpers::DeriveSerdeDeserialize::False,
                 macros_helpers::DeriveUtoipaToSchema::False,
@@ -2353,7 +2355,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
-                let ident_origin_token_stream = {
+                let ident_origin_token_stream = 
+                // macros_helpers::generate_struct_derive(
+                //     macros_helpers::IsPub::True,
+                //     &ident_origin_upper_camel_case,
+                //     &quote::quote!{(#field_type_handle);},
+                //     macros_helpers::DeriveDebug::True,
+                //     macros_helpers::DeriveClone::True,
+                //     macros_helpers::DeriveCopy::False,
+                //     macros_helpers::DerivePartialEq::True,
+                //     macros_helpers::DeriveEq::False,
+                //     macros_helpers::DerivePartialOrd::False,
+                //     macros_helpers::DeriveOrd::False,
+                //     macros_helpers::DeriveSerdeSerialize::False,
+                //     macros_helpers::DeriveSerdeDeserialize::False,
+                //     macros_helpers::DeriveUtoipaToSchema::False,
+                //     macros_helpers::DeriveSchemarsJsonSchema::False,
+                // );
+                
+                
+                
+                {
                     let maybe_derive_partial_ord_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
                         let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
                         match &postgresql_type {
