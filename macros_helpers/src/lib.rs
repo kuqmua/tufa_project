@@ -50,7 +50,7 @@ pub use status_code::{
 };
 mod struct_or_enum_derive_token_stream_builder;
 pub use struct_or_enum_derive_token_stream_builder::{
-    IsPub,
+    MakePub,
     DeriveDebug,
     DeriveDefault,
     DeriveClone,
