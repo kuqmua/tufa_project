@@ -352,7 +352,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let payload_snake_case = naming::PayloadSnakeCase;
     let select_snake_case = naming::SelectSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
-    let debug_upper_camel_case = naming::DebugUpperCamelCase;
     let error_snake_case = naming::ErrorSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
     let query_part_snake_case = naming::QueryPartSnakeCase;
@@ -437,8 +436,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let derive_debug_this_error_error_occurence = token_patterns::DeriveDebugThisErrorErrorOccurence;
     let sqlx_acquire = token_patterns::SqlxAcquire;
-    let serde_serialize = token_patterns::SerdeSerialize;
-    let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug = token_patterns::DeriveDebug;
     let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
@@ -584,20 +581,25 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             error: sqlx::Error,
             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
         };
-        let ident_prepare_postgresql_error_named_token_stream = quote::quote! {
-            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #ident_prepare_postgresql_error_named_upper_camel_case {
-                #create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
-                    #content_token_stream
-                },
-                #create_extension_if_not_exists_uuid_ossp_upper_camel_case {
-                    #content_token_stream
-                },
-                #prepare_postgresql_upper_camel_case {
-                    #content_token_stream
-                },
-            }
-        };
+        let ident_prepare_postgresql_error_named_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_thiserror_error()
+            .derive_error_occurence_lib_error_occurence()
+            .build_enum(
+                &ident_prepare_postgresql_error_named_upper_camel_case,
+                &quote::quote!{{
+                    #create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
+                        #content_token_stream
+                    },
+                    #create_extension_if_not_exists_uuid_ossp_upper_camel_case {
+                        #content_token_stream
+                    },
+                    #prepare_postgresql_upper_camel_case {
+                        #content_token_stream
+                    },
+                }}
+            );
         let pub_fn_table_token_stream = quote::quote! {
             pub const fn #table_name_snake_case() -> &'static str {
                 #ident_snake_case_double_quotes_token_stream
@@ -1037,17 +1039,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &ident_where_many_upper_camel_case,
                 &quote::quote!{{#fields_declaration_token_stream}}
             );
-        let ident_where_many_try_new_error_named_token_stream = {
-            quote::quote! {
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_where_many_try_new_error_named_upper_camel_case {
+        let ident_where_many_try_new_error_named_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_thiserror_error()
+            .derive_error_occurence_lib_error_occurence()
+            .build_enum(
+                &ident_where_many_try_new_error_named_upper_camel_case,
+                &quote::quote!{{
                     #no_fields_provided_upper_camel_case {
                         #[eo_to_std_string_string]
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     }
-                }
-            }
-        };
+                }}
+            );
         let impl_pub_try_new_for_ident_where_many_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(&ident_where_many_upper_camel_case, &fields_declaration_token_stream, &ident_where_many_try_new_error_named_upper_camel_case, &{
             let generate_fields_token_stream = |should_add_borrow: ShouldAddBorrow| {
                 generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
@@ -1252,30 +1257,29 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let select_token_stream = {
-        let ident_select_token_stream = {
-            let variants = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let element_syn_field_ty_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(&element.syn_field.ty);
-                quote::quote! {
-                    #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
-                    #field_ident_upper_camel_case_token_stream(#element_syn_field_ty_as_postgresql_type_select_token_stream)
+        let ident_select_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_clone()
+            // .derive_copy()
+            .derive_partial_eq()
+            .derive_serde_serialize()
+            .derive_serde_deserialize()
+            .build_enum(
+                &ident_select_upper_camel_case,
+                &{
+                    let variants = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                        let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                        let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                        let element_syn_field_ty_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(&element.syn_field.ty);
+                        quote::quote! {
+                            #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
+                            #field_ident_upper_camel_case_token_stream(#element_syn_field_ty_as_postgresql_type_select_token_stream)
+                        }
+                    });
+                    quote::quote!{{#variants}}
                 }
-            });
-            quote::quote! {
-                #[derive(
-                    #debug_upper_camel_case,
-                    #serde_serialize,
-                    #serde_deserialize,
-                    PartialEq,
-                    Clone,
-                    // Copy,
-                )]
-                pub enum #ident_select_upper_camel_case {
-                    #variants
-                }
-            }
-        };
+            );
         let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|element|format!("cannot serialize into json: {element:?}")))});
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
         let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
@@ -1576,17 +1580,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &ident_update_upper_camel_case,
                 &quote::quote!{{#fields_declaration_token_stream}},
             );
-        let ident_update_try_new_error_named_token_stream = {
-            quote::quote! {
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_update_try_new_error_named_upper_camel_case {
+        let ident_update_try_new_error_named_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_thiserror_error()
+            .derive_error_occurence_lib_error_occurence()
+            .build_enum(
+                &ident_update_try_new_error_named_upper_camel_case,
+                &quote::quote!{{
                     #no_fields_provided_upper_camel_case {
                         #[eo_to_std_string_string]
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     }
-                }
-            }
-        };
+                }}
+            );
         let impl_pub_try_new_for_ident_update_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(&ident_update_upper_camel_case, &fields_declaration_token_stream, &ident_update_try_new_error_named_upper_camel_case, &{
             let (left_token_stream, right_token_stream) = {
                 let maybe_wrap_into_braces_handle_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::maybe_wrap_into_braces_token_stream(content_token_stream, fields_len_without_primary_key > 1);
@@ -3106,20 +3113,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let ident_operation_payload_try_new_error_named_upper_camel_case = format!("{ident}{operation}PayloadTryNewErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 3da248bb-84ba-48c9-9b7c-e0853198e0aa");
             let not_unique_primary_key_upper_camel_case = naming::NotUniquePrimaryKeyUpperCamelCase;
             let not_unique_primary_key_snake_case = naming::NotUniquePrimaryKeySnakeCase;
-            let ident_operation_payload_try_new_error_named_token_stream = {
-                quote::quote! {
-                    #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                    pub enum #ident_operation_payload_try_new_error_named_upper_camel_case {
+            let ident_operation_payload_try_new_error_named_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_thiserror_error()
+                .derive_error_occurence_lib_error_occurence()
+                .build_enum(
+                    &ident_operation_payload_try_new_error_named_upper_camel_case,
+                    &quote::quote!{{
                         #not_unique_primary_key_upper_camel_case {
                             #[eo_to_std_string_string]
                             #not_unique_primary_key_snake_case: #primary_key_field_type_update_token_stream,
                             #[eo_to_std_string_string]
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         }
-
-                    }
-                }
-            };
+                    }}
+                );
             let impl_pub_try_new_for_ident_operation_payload_token_stream = macros_helpers::generate_impl_pub_try_new_for_ident_token_stream(
                 &generate_ident_operation_payload_upper_camel_case(&operation),
                 &quote::quote! {#value_snake_case: #std_vec_vec_ident_update_token_stream},
