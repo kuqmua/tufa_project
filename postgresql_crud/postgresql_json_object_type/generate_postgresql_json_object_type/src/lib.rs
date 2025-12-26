@@ -404,12 +404,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_standart_not_null_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_standart_not_null_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_token_stream = {
-                let generate_struct_ident_token_stream = |current_ident: &dyn quote::ToTokens| macros_helpers::StructDeriveTokenStreamBuilder::new()
+                let generate_struct_ident_token_stream = |current_ident: &dyn quote::ToTokens| macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
                     .derive_copy()
-                    .build(
+                    .build_struct(
                         &current_ident,
                         &quote::quote!{;}
                     );
@@ -623,7 +623,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_ident_table_type_declaration_or_create_token_stream = |
                     current_ident_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens
-                | macros_helpers::StructDeriveTokenStreamBuilder::new()
+                | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -632,7 +632,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     .derive_serde_deserialize()
                     .derive_utoipa_to_schema()
                     .derive_schemars_json_schema()
-                    .build(
+                    .build_struct(
                         &current_ident_token_stream,
                         &content_token_stream
                     );
@@ -862,13 +862,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_debug_clone_partialeq_serialize_pub_struct_token_stream = |
                 current_ident_token_stream: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens
-            | macros_helpers::StructDeriveTokenStreamBuilder::new()
+            | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
                 .derive_partial_eq()
                 .derive_serde_serialize()
-                .build(
+                .build_struct(
                     &current_ident_token_stream,
                     &content_token_stream
                 );
@@ -1100,7 +1100,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let generate_pub_struct_ident_select_token_stream = |
                     current_ident_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens
-                | macros_helpers::StructDeriveTokenStreamBuilder::new()
+                | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
@@ -1109,7 +1109,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 .derive_serde_deserialize()
                 .derive_utoipa_to_schema()
                 .derive_schemars_json_schema()
-                .build(
+                .build_struct(
                     &current_ident_token_stream,
                     &content_token_stream
                 );
@@ -1973,7 +1973,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     current_ident_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens,
                     derive_serde_deserialize: macros_helpers::DeriveSerdeDeserialize
-                | macros_helpers::StructDeriveTokenStreamBuilder::new()
+                | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
@@ -1982,7 +1982,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     .derive_serde_deserialize_if(derive_serde_deserialize)
                     .derive_utoipa_to_schema()
                     .derive_schemars_json_schema()
-                    .build(
+                    .build_struct(
                         &current_ident_token_stream,
                         &content_token_stream
                     );
@@ -2379,14 +2379,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let ident_read_only_ids_token_stream = {
                 let maybe_ident_read_only_ids_handle_token_stream = if is_standart_not_null {
-                    macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
                     .derive_partial_eq()
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
-                    .build(
+                    .build_struct(
                         &ident_read_only_ids_handle_upper_camel_case,
                         &generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(&IsStandartWithId::False)
                     )
@@ -2394,14 +2394,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 else {
                     proc_macro2::TokenStream::new()
                 };
-                let ident_read_only_ids_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                let ident_read_only_ids_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
                     .derive_partial_eq()
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
-                    .build(
+                    .build_struct(
                         &ident_read_only_ids_upper_camel_case,
                         &match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -2440,25 +2440,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = generate_impl_sqlx_type_token_stream(&ident_read_only_ids_upper_camel_case);
                 let maybe_ident_with_id_standart_not_null_read_only_ids_token_stream = if is_standart_not_null {
                     let ident_with_id_standart_not_null_read_only_ids_token_stream = {
-                        let ident_with_id_standart_not_null_read_only_ids_handle_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                        let ident_with_id_standart_not_null_read_only_ids_handle_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_clone()
                             .derive_partial_eq()
                             .derive_serde_serialize()
                             .derive_serde_deserialize()
-                            .build(
+                            .build_struct(
                                 &ident_with_id_standart_not_null_read_only_ids_handle_upper_camel_case,
                                 &generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(&IsStandartWithId::True)
                             );
-                        let ident_with_id_standart_not_null_read_only_ids_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                        let ident_with_id_standart_not_null_read_only_ids_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                             .make_pub()
                             .derive_debug()
                             .derive_clone()
                             .derive_partial_eq()
                             .derive_serde_serialize()
                             .derive_serde_deserialize()
-                            .build(
+                            .build_struct(
                                 &ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                                 &{
                                     let value_ident_with_id_standart_not_null_read_only_ids_handle_token_stream = wrap_into_value_declaration_token_stream(
@@ -2491,12 +2491,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_read_inner_token_stream = {
-                let generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId| macros_helpers::StructDeriveTokenStreamBuilder::new()
+                let generate_ident_read_inner_or_ident_with_id_standart_not_null_read_inner_token_stream = |is_standart_with_id: &IsStandartWithId| macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
                     .derive_partial_eq()
-                    .build(
+                    .build_struct(
                         match &is_standart_with_id {
                             IsStandartWithId::False => &ident_read_inner_upper_camel_case,
                             IsStandartWithId::True => &ident_with_id_standart_not_null_read_inner_upper_camel_case,
@@ -2597,7 +2597,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let generate_ident_update_token_stream = |
                         derive_serde_deserialize: macros_helpers::DeriveSerdeDeserialize,
                         content_token_stream: &dyn quote::ToTokens
-                    |macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    |macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -2606,7 +2606,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         .derive_serde_deserialize_if(derive_serde_deserialize)
                         .derive_utoipa_to_schema()
                         .derive_schemars_json_schema()
-                        .build(
+                        .build_struct(
                             &ident_update_upper_camel_case,
                             &content_token_stream
                         );
@@ -3056,7 +3056,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
                         #fields_snake_case: #ident_standart_not_null_as_postgresql_json_type_update_token_stream
                     };
-                    let ident_with_id_standart_not_null_update_element_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    let ident_with_id_standart_not_null_update_element_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                         .make_pub()
                         .derive_debug()
                         .derive_clone()
@@ -3065,7 +3065,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         .derive_serde_deserialize()
                         .derive_utoipa_to_schema()
                         .derive_schemars_json_schema()
-                        .build(
+                        .build_struct(
                             &ident_with_id_standart_not_null_update_element_upper_camel_case,
                             &quote::quote!{{#ident_with_id_standart_not_null_update_element_fields_declaration_token_stream}}
                         );

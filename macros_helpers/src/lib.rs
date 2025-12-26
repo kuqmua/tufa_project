@@ -51,8 +51,7 @@ pub use generate_struct_derive::{
     DeriveSerdeDeserialize,
     DeriveUtoipaToSchema,
     DeriveSchemarsJsonSchema,
-    generate_struct_derive,
-    StructDeriveTokenStreamBuilder
+    StructOrEnumDeriveTokenStreamBuilder
 };
 mod get_macro_attribute;
 pub use get_macro_attribute::{

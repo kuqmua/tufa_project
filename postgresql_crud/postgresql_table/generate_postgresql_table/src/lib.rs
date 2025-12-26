@@ -895,14 +895,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     );
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     let ident_create_token_stream = {
-        let ident_create_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_create_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
             .derive_serde_serialize()
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
-            .build(
+            .build_struct(
                 &ident_create_upper_camel_case,
                 &{
                     let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -1027,13 +1027,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #field_ident: #std_option_option_postgresql_type_where_syn_field_ty_as_postgresql_type_where_token_stream
             }
         });
-        let ident_where_many_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_where_many_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
             .derive_serde_serialize()
             .derive_utoipa_to_schema()
-            .build(
+            .build_struct(
                 &ident_where_many_upper_camel_case,
                 &quote::quote!{{#fields_declaration_token_stream}}
             );
@@ -1092,14 +1092,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
 
     let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
     let std_option_option_ident_where_many_token_stream = {
-        let std_option_option_ident_where_many_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let std_option_option_ident_where_many_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
             .derive_serde_serialize()
             .derive_serde_deserialize()
             .derive_utoipa_to_schema()
-            .build(
+            .build_struct(
                 &std_option_option_ident_where_many_upper_camel_case,
                 &{
                     let std_option_option_ident_read_only_ids_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
@@ -1298,13 +1298,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let ident_read_token_stream = {
-        let ident_read_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_read_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_partial_eq()
             .derive_serde_serialize()
             .derive_serde_deserialize()
-            .build(
+            .build_struct(
                 &ident_read_upper_camel_case,
                 &{
                     let field_option_primary_key_token_stream = {
@@ -1419,14 +1419,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let ident_read_only_ids_token_stream = {
-        let ident_read_only_ids_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_read_only_ids_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_clone()
             .derive_partial_eq()
             .derive_serde_serialize()
             .derive_serde_deserialize()
-            .build(
+            .build_struct(
                 &ident_read_only_ids_upper_camel_case,
                 &{
                     enum WrapIntoOption {
@@ -1567,16 +1567,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #fields_named_without_primary_key_token_stream
             }
         };
-        let ident_update_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_update_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_serde_serialize()
             .derive_utoipa_to_schema()
-            .build(
+            .build_struct(
                 &ident_update_upper_camel_case,
-                &quote::quote!{{
-                    #fields_declaration_token_stream
-                }},
+                &quote::quote!{{#fields_declaration_token_stream}},
             );
         let ident_update_try_new_error_named_token_stream = {
             quote::quote! {
@@ -1648,12 +1646,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let ident_update_for_query_token_stream = {
-        let ident_update_for_query_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+        let ident_update_for_query_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
             .make_pub()
             .derive_debug()
             .derive_serde_serialize()
             .derive_utoipa_to_schema()
-            .build(
+            .build_struct(
                 &ident_update_for_query_upper_camel_case,
                 &{
                     let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
@@ -3096,12 +3094,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, {
             let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
             let std_vec_vec_ident_update_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&ident_update_upper_camel_case);
-            let ident_operation_payload_vec_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            let ident_operation_payload_vec_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_serde_serialize()
                 .derive_utoipa_to_schema()
-                .build(
+                .build_struct(
                     &ident_operation_payload_upper_camel_case,
                     &quote::quote!{(#std_vec_vec_ident_update_token_stream);}
                 );
