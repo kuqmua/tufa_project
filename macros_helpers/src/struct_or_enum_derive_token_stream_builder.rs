@@ -64,6 +64,16 @@ pub enum DeriveSchemarsJsonSchema {
     False
 }
 #[derive(Debug, Clone, Copy)]
+pub enum DeriveThiserrorError {
+    True,
+    False
+}
+#[derive(Debug, Clone, Copy)]
+pub enum DeriveErrorOccurenceLibErrorOccurence {
+    True,
+    False
+}
+#[derive(Debug, Clone, Copy)]
 enum StructOrEnum {
     Struct,
     Enum
@@ -83,6 +93,8 @@ pub struct StructOrEnumDeriveTokenStreamBuilder {
     derive_serde_deserialize: bool,
     derive_utoipa_to_schema: bool,
     derive_schemars_json_schema: bool,
+    derive_thiserror_error: bool,
+    derive_error_occurence_lib_error_occurence: bool,
 }
 impl StructOrEnumDeriveTokenStreamBuilder {
     pub fn new() -> Self {
@@ -218,56 +230,97 @@ impl StructOrEnumDeriveTokenStreamBuilder {
         }
         self
     }
+    pub const fn derive_thiserror_error(mut self) -> Self {
+        self.derive_thiserror_error = true;
+        self
+    }
+    pub const fn derive_thiserror_error_if(mut self, condition: DeriveThiserrorError) -> Self {
+        if let DeriveThiserrorError::True = condition {
+            self.derive_thiserror_error = true;
+        }
+        self
+    }
+    pub const fn derive_error_occurence_lib_error_occurence(mut self) -> Self {
+        self.derive_error_occurence_lib_error_occurence = true;
+        self
+    }
+    pub const fn derive_error_occurence_lib_error_occurence_if(mut self, condition: DeriveErrorOccurenceLibErrorOccurence) -> Self {
+        if let DeriveErrorOccurenceLibErrorOccurence::True = condition {
+            self.derive_error_occurence_lib_error_occurence = true;
+        }
+        self
+    }
     fn build_handle(
         self,
         struct_or_enum: StructOrEnum,
         current_ident: &dyn quote::ToTokens,
         content_token_stream: &dyn quote::ToTokens,
     ) -> proc_macro2::TokenStream {
-        let maybe_pub_token_stream = self.make_pub.then(|| quote::quote!(pub));
-        let maybe_derive_debug_token_stream = self.derive_debug.then(|| quote::quote!(Debug,));
-        let maybe_derive_default_token_stream = self.derive_default.then(|| quote::quote!(Default,));
-        let maybe_derive_clone_token_stream = self.derive_clone.then(|| quote::quote!(Clone,));
-        let maybe_derive_copy_token_stream = self.derive_copy.then(|| quote::quote!(Copy,));
-        let maybe_derive_partial_eq_token_stream = self.derive_partial_eq.then(|| quote::quote!(PartialEq,));
-        let maybe_derive_eq_token_stream = self.derive_eq.then(|| quote::quote!(Eq,));
-        let maybe_derive_partial_ord_token_stream = self.derive_partial_ord.then(|| quote::quote!(PartialOrd,));
-        let maybe_derive_ord_token_stream = self.derive_ord.then(|| quote::quote!(Ord,));
-        let maybe_derive_serde_serialize_token_stream = self.derive_serde_serialize.then(|| {
-            let serde_serialize_token_stream = token_patterns::SerdeSerialize;
-            quote::quote!(#serde_serialize_token_stream,)
-        });
-        let maybe_derive_serde_deserialize_token_stream = self.derive_serde_deserialize.then(|| {
-            let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
-            quote::quote!(#serde_deserialize_token_stream,)
-        });
-        let maybe_derive_utoipa_to_schema_token_stream = self.derive_utoipa_to_schema.then(|| {
-            let utoipa_to_schema_token_stream = token_patterns::UtoipaToSchema;
-            quote::quote!(#utoipa_to_schema_token_stream,)
-        });
-        let maybe_derive_schemars_json_schema_token_stream = self.derive_schemars_json_schema.then(|| {
-            let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
-            quote::quote!(#schemars_json_schema_token_stream,)
-        });
+        let maybe_pub_token_stream = self.make_pub.then(|| quote::quote!{pub});
+        let derive_token_stream = {
+            let mut acc = vec![];
+            if self.derive_debug {
+                acc.push(quote::quote!{Debug});
+            }
+            if self.derive_default {
+                acc.push(quote::quote!{Default});
+            }
+            if self.derive_clone {
+                acc.push(quote::quote!{Clone});
+            }
+            if self.derive_copy {
+                acc.push(quote::quote!{Copy});
+            }
+            if self.derive_partial_eq {
+                acc.push(quote::quote!{PartialEq});
+            }
+            if self.derive_eq {
+                acc.push(quote::quote!{Eq});
+            }
+            if self.derive_partial_ord {
+                acc.push(quote::quote!{PartialOrd});
+            }
+            if self.derive_ord {
+                acc.push(quote::quote!{Ord});
+            }
+            if self.derive_serde_serialize {
+                acc.push({
+                    let serde_serialize_token_stream = token_patterns::SerdeSerialize;
+                    quote::quote!{#serde_serialize_token_stream}
+                });
+            }
+            if self.derive_serde_deserialize {
+                acc.push({
+                    let serde_deserialize_token_stream = token_patterns::SerdeDeserialize;
+                    quote::quote!{#serde_deserialize_token_stream}
+                });
+            }
+            if self.derive_utoipa_to_schema {
+                acc.push({
+                    let utoipa_to_schema_token_stream = token_patterns::UtoipaToSchema;
+                    quote::quote!{#utoipa_to_schema_token_stream}
+                });
+            }
+            if self.derive_schemars_json_schema {
+                acc.push({
+                    let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
+                    quote::quote!{#schemars_json_schema_token_stream}
+                });
+            }
+            if self.derive_thiserror_error {
+                acc.push(quote::quote!{thiserror::Error});
+            }
+            if self.derive_error_occurence_lib_error_occurence {
+                acc.push(quote::quote!{error_occurence_lib::ErrorOccurence});
+            }
+            acc
+        };
         let struct_or_enum_token_stream = match struct_or_enum {
             StructOrEnum::Struct => quote::quote!{struct},
             StructOrEnum::Enum => quote::quote!{enum},
         };
         quote::quote! {
-            #[derive(
-                #maybe_derive_debug_token_stream
-                #maybe_derive_default_token_stream
-                #maybe_derive_clone_token_stream
-                #maybe_derive_copy_token_stream
-                #maybe_derive_partial_eq_token_stream
-                #maybe_derive_eq_token_stream
-                #maybe_derive_partial_ord_token_stream
-                #maybe_derive_ord_token_stream
-                #maybe_derive_serde_serialize_token_stream
-                #maybe_derive_serde_deserialize_token_stream
-                #maybe_derive_utoipa_to_schema_token_stream
-                #maybe_derive_schemars_json_schema_token_stream
-            )]
+            #[derive(#(#derive_token_stream),*)]
             #maybe_pub_token_stream #struct_or_enum_token_stream #current_ident #content_token_stream
         }
     }

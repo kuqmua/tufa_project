@@ -1389,12 +1389,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #variant_ident_upper_camel_case_token_stream(#field_type_as_json_type_select_token_stream)
                             }
                         });
-                        quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub enum #ident_select_element_or_ident_with_id_select_element_upper_camel_case {
-                                #(#content_token_stream),*
-                            }
-                        }
+                        macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                            .make_pub()
+                            .derive_debug()
+                            .derive_clone()
+                            .derive_partial_eq()
+                            .derive_serde_serialize()
+                            .derive_serde_deserialize()
+                            .derive_utoipa_to_schema()
+                            .derive_schemars_json_schema()
+                            .build_enum(
+                                &ident_select_element_or_ident_with_id_select_element_upper_camel_case,
+                                &quote::quote!{{#(#content_token_stream),*}}
+                            )
                     };
                     let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_standart_not_null_select_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(&ident_select_element_or_ident_with_id_select_element_upper_camel_case);
                     let (
@@ -1512,14 +1519,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         });
                         quote::quote! {#(#variants_token_stream),*}
                     };
-                    let generate_ident_where_token_stream = |current_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub enum #current_ident_token_stream {
-                                #content_token_stream
-                            }
-                        }
-                    };
+                    let generate_ident_where_token_stream = |
+                        current_ident_token_stream: &dyn quote::ToTokens,
+                        content_token_stream: &dyn quote::ToTokens
+                    | macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone()
+                        .derive_partial_eq()
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .derive_utoipa_to_schema()
+                        .derive_schemars_json_schema()
+                        .build_enum(
+                            &current_ident_token_stream,
+                            &quote::quote!{{#content_token_stream}}
+                        );
                     let equal_variant_ident_token_stream = quote::quote! {#equal_upper_camel_case(#import_path::PostgresqlJsonTypeWhereEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>)};
                     let equal_variant_query_part_token_stream = quote::quote!{
                         #self_upper_camel_case::#equal_upper_camel_case(#value_snake_case) => #import_path::PostgresqlTypeWhereFilter::query_part(
@@ -2009,7 +2024,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     generate_ident_read_token_stream(&ident_read_upper_camel_case, &content_token_stream, derive_serde_deserialize)
                 };
                 let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
-                let generate_ident_read_try_from_error_named_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
+                let generate_ident_read_try_from_error_named_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|
+                // macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                //     .make_pub()
+                //     .derive_debug()
+                //     .derive_serde_serialize()
+                //     .derive_serde_deserialize()
+                //     .derive_utoipa_to_schema()
+                //     .derive_schemars_json_schema()
+                //     .build_enum(
+                //         &current_ident_token_stream,
+                //         &quote::quote!{{
+                //             #all_fields_are_none_upper_camel_case {
+                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                //             },
+                //         }}
+                //     );
+                {
                     quote::quote! {
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                         pub enum #current_ident_token_stream {
