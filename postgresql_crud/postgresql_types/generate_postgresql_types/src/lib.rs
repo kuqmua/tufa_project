@@ -2479,102 +2479,107 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let IsStandartNotNull::True = &is_standart_not_null
                     && let Ok(postgresql_type_initialization_try_new) = &postgresql_type_initialization_try_new_try_from_postgresql_type
                 {
-                    let content_token_stream: &dyn quote::ToTokens = {
-                        match &postgresql_type_initialization_try_new {
-                            PostgresqlTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_token_stream,
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
-                                #date_upper_camel_case {
-                                    #[eo_error_occurence]
-                                    #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #time_upper_camel_case {
-                                    #[eo_error_occurence]
-                                    #error_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote::quote! {
-                                #date_naive_upper_camel_case {
-                                    #[eo_error_occurence]
-                                    #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #time_upper_camel_camel_case {
-                                    #[eo_error_occurence]
-                                    #error_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &{
-                                let (start_variant_token_stream, end_variant_token_stream) = {
-                                    let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
-                                        let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                    macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .derive_thiserror_error()
+                        .derive_error_occurence_lib_error_occurence()
+                        .build_enum(
+                            &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
+                            &{
+                                let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_initialization_try_new {
+                                    PostgresqlTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
+                                    PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime | PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &nanosecond_precision_is_not_supported_variant_try_new_token_stream,
+                                    PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
+                                    PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
+                                        #date_upper_camel_case {
+                                            #[eo_error_occurence]
+                                            #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                        },
+                                        #time_upper_camel_case {
+                                            #[eo_error_occurence]
+                                            #error_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                        },
+                                    },
+                                    PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote::quote! {
+                                        #date_naive_upper_camel_case {
+                                            #[eo_error_occurence]
+                                            #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                        },
+                                        #time_upper_camel_camel_case {
+                                            #[eo_error_occurence]
+                                            #error_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                        },
+                                    },
+                                    PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
+                                    PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                    PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &{
+                                        let (start_variant_token_stream, end_variant_token_stream) = {
+                                            let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
+                                                let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                                quote::quote! {
+                                                    #start_or_end_upper_camel_case {
+                                                        #[eo_error_occurence]
+                                                        #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
+                                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                    }
+                                                }
+                                            };
+                                            (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
+                                        };
                                         quote::quote! {
-                                            #start_or_end_upper_camel_case {
-                                                #[eo_error_occurence]
-                                                #error_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_try_new_error_named_upper_camel_case,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                            }
+                                            #start_variant_token_stream,
+                                            #end_variant_token_stream,
                                         }
-                                    };
-                                    (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
-                                };
-                                quote::quote! {
-                                    #start_variant_token_stream,
-                                    #end_variant_token_stream,
-                                }
-                            },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &{
-                                let (start_variant_token_stream, end_variant_token_stream) = {
-                                    let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
-                                        let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                    },
+                                    PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &{
+                                        let (start_variant_token_stream, end_variant_token_stream) = {
+                                            let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
+                                                let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                                quote::quote! {
+                                                    #start_or_end_upper_camel_case {
+                                                        #[eo_error_occurence]
+                                                        #error_snake_case: #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_upper_camel_case,
+                                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                    }
+                                                }
+                                            };
+                                            (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
+                                        };
                                         quote::quote! {
-                                            #start_or_end_upper_camel_case {
-                                                #[eo_error_occurence]
-                                                #error_snake_case: #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_upper_camel_case,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                            }
+                                            #start_variant_token_stream,
+                                            #end_variant_token_stream
                                         }
-                                    };
-                                    (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
-                                };
-                                quote::quote! {
-                                    #start_variant_token_stream,
-                                    #end_variant_token_stream
-                                }
-                            },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &{
-                                let (start_variant_token_stream, end_variant_token_stream) = {
-                                    let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
-                                        let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                    },
+                                    PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &{
+                                        let (start_variant_token_stream, end_variant_token_stream) = {
+                                            let generate_variant_token_stream = |start_or_end: &StartOrEnd| {
+                                                let start_or_end_upper_camel_case = generate_start_or_end_upper_camel_case(start_or_end);
+                                                quote::quote! {
+                                                    #start_or_end_upper_camel_case {
+                                                        #[eo_error_occurence]
+                                                        #error_snake_case: #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case,
+                                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                    }
+                                                }
+                                            };
+                                            (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
+                                        };
                                         quote::quote! {
-                                            #start_or_end_upper_camel_case {
-                                                #[eo_error_occurence]
-                                                #error_snake_case: #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                            }
+                                            #start_variant_token_stream,
+                                            #end_variant_token_stream
                                         }
-                                    };
-                                    (generate_variant_token_stream(&StartOrEnd::Start), generate_variant_token_stream(&StartOrEnd::End))
+                                    },
                                 };
-                                quote::quote! {
-                                    #start_variant_token_stream,
-                                    #end_variant_token_stream
-                                }
-                            },
-                        }
-                    };
-                    quote::quote! {
-                        #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                        pub enum #ident_standart_not_null_origin_try_new_error_named_upper_camel_case {
-                            #content_token_stream
-                        }
-                    }
+                                quote::quote!{{#content_token_stream}}
+                            }
+                        )
                 } else {
                     proc_macro2::TokenStream::new()
                 };
@@ -2585,54 +2590,55 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypeDeserialize::Derive => proc_macro2::TokenStream::new(),
                         PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                             PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
-                            PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
-                                let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_impl_try_new_for_deserialize {
-                                    PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &{
-                                        quote::quote! {
-                                            #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #hour_snake_case: #std_primitive_u32_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #min_snake_case: #std_primitive_u32_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #sec_snake_case: #std_primitive_u32_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #micro_snake_case: #std_primitive_u32_token_stream,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                            PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                                .make_pub()
+                                .derive_debug()
+                                .derive_serde_serialize()
+                                .derive_serde_deserialize()
+                                .derive_thiserror_error()
+                                .derive_error_occurence_lib_error_occurence()
+                                .build_enum(
+                                    &ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case,
+                                    &{
+                                        let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_impl_try_new_for_deserialize {
+                                            PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &quote::quote! {
+                                                #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #hour_snake_case: #std_primitive_u32_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #min_snake_case: #std_primitive_u32_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #sec_snake_case: #std_primitive_u32_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #micro_snake_case: #std_primitive_u32_token_stream,
+                                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                },
+                                                #nanosecond_precision_is_not_supported_variant_try_new_token_stream
                                             },
-                                            #nanosecond_precision_is_not_supported_variant_try_new_token_stream
-                                        }
-                                    },
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &{
-                                        quote::quote! {
-                                            #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #hour_snake_case: #std_primitive_u8_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #minute_snake_case: #std_primitive_u8_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #second_snake_case: #std_primitive_u8_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #microsecond_snake_case: #std_primitive_u32_token_stream,
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #error_snake_case: #std_string_string_token_stream,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &quote::quote! {
+                                                #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #hour_snake_case: #std_primitive_u8_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #minute_snake_case: #std_primitive_u8_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #second_snake_case: #std_primitive_u8_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #microsecond_snake_case: #std_primitive_u32_token_stream,
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #error_snake_case: #std_string_string_token_stream,
+                                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                },
+                                                #nanosecond_precision_is_not_supported_variant_try_new_token_stream
                                             },
-                                            #nanosecond_precision_is_not_supported_variant_try_new_token_stream
-                                        }
-                                    },
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
-                                };
-                                quote::quote! {
-                                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                                    pub enum #ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case {
-                                        #content_token_stream
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                        };
+                                        quote::quote!{{#content_token_stream}}
                                     }
-                                }
-                            }
+                                )
                         },
                     }
                 } else {
