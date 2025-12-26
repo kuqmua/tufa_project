@@ -3509,6 +3509,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &content_token_stream
                     )
             };
+            let ident_origin_struct_content_token_stream = quote::quote!{(#ident_origin_upper_camel_case);};
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_table_type_declaration_token_stream = {
                 let ident_table_type_declaration_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
@@ -3552,7 +3553,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     .derive_serde_deserialize()
                     .build(
                         &ident_table_type_declaration_upper_camel_case,
-                        &quote::quote!{(#ident_origin_upper_camel_case);},
+                        &ident_origin_struct_content_token_stream
                     );
                 let impl_ident_table_type_declaration_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_table_type_declaration_upper_camel_case);
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
@@ -3624,7 +3625,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         .derive_serde_deserialize()
                         .build(
                             &ident_create_upper_camel_case,
-                            &quote::quote!{(#ident_origin_upper_camel_case);},
+                            &ident_origin_struct_content_token_stream
                         )
                 };
                 let maybe_impl_ident_create_token_stream = match &can_be_primary_key {
@@ -4067,7 +4068,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         .derive_serde_deserialize()
                         .build(
                             &ident_read_upper_camel_case,
-                            &quote::quote!{(#ident_origin_upper_camel_case);},
+                            &ident_origin_struct_content_token_stream
                         )
                 };
                 let impl_ident_read_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_read_upper_camel_case);
@@ -4146,7 +4147,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     .derive_serde_deserialize()
                     .build(
                         &ident_update_upper_camel_case,
-                        &quote::quote!{(#ident_origin_upper_camel_case);},
+                        &ident_origin_struct_content_token_stream
                     );
                 let impl_ident_update_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_update_upper_camel_case);
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
@@ -4170,7 +4171,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     .derive_serde_deserialize()
                     .build(
                         &ident_update_for_query_upper_camel_case,
-                        &quote::quote!{(#ident_origin_upper_camel_case);}
+                        &ident_origin_struct_content_token_stream
                     );
                 let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
                 let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &quote::quote! {#self_snake_case.0});
