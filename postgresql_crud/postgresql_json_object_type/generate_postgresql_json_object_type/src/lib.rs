@@ -2024,32 +2024,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     generate_ident_read_token_stream(&ident_read_upper_camel_case, &content_token_stream, derive_serde_deserialize)
                 };
                 let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
-                let generate_ident_read_try_from_error_named_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|
-                // macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
-                //     .make_pub()
-                //     .derive_debug()
-                //     .derive_serde_serialize()
-                //     .derive_serde_deserialize()
-                //     .derive_utoipa_to_schema()
-                //     .derive_schemars_json_schema()
-                //     .build_enum(
-                //         &current_ident_token_stream,
-                //         &quote::quote!{{
-                //             #all_fields_are_none_upper_camel_case {
-                //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                //             },
-                //         }}
-                //     );
-                {
-                    quote::quote! {
-                        #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                        pub enum #current_ident_token_stream {
+                let generate_ident_read_try_from_error_named_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .derive_thiserror_error()
+                    .derive_error_occurence_lib_error_occurence()
+                    .build_enum(
+                        &current_ident_token_stream,
+                        &quote::quote!{{
                             #all_fields_are_none_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                             },
-                        }
-                    }
-                };
+                        }}
+                    );
                 let maybe_ident_read_try_from_error_named_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_try_from_error_named_token_stream(&ident_read_try_from_error_named_upper_camel_case),
@@ -2680,29 +2669,36 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let maybe_ident_update_try_new_error_named_token_stream = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                            #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #ident_update_try_new_error_named_upper_camel_case {
-                                #create_update_delete_are_empty_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #ids_are_not_unique_uppper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    duplicate: #std_string_string_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #not_unique_id_in_json_delete_array_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    error: #std_string_string_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                #not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    error: #std_string_string_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            }
-                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                            .make_pub()
+                            .derive_debug()
+                            .derive_serde_serialize()
+                            .derive_serde_deserialize()
+                            .derive_thiserror_error()
+                            .derive_error_occurence_lib_error_occurence()
+                            .build_enum(
+                                &ident_update_try_new_error_named_upper_camel_case,
+                                &quote::quote!{{
+                                    #create_update_delete_are_empty_upper_camel_case {
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                    #ids_are_not_unique_uppper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        duplicate: #std_string_string_token_stream,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                    #not_unique_id_in_json_delete_array_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        error: #std_string_string_token_stream,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                    #not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        error: #std_string_string_token_stream,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                }}
+                            ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
                 };
@@ -3026,26 +3022,33 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     quote::quote! {Self #value}
                 });
                 let maybe_ident_update_element_token_stream = if is_standart_not_null {
-                    let ident_update_element_token_stream = {
-                        let variants_token_stream = vec_syn_field.iter().map(|current_element| {
-                            let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
-                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                            });
-                            let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                            let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(current_element);
-                            let value_field_type_as_json_type_update_token_stream = wrap_into_value_declaration_token_stream(&generate_type_as_postgresql_json_type_update_token_stream(&current_element.ty));
-                            quote::quote! {
-                                #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
-                                #variant_ident_upper_camel_case_token_stream(#value_field_type_as_json_type_update_token_stream)
+                    let ident_update_element_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone()
+                        .derive_partial_eq()
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .derive_utoipa_to_schema()
+                        .derive_schemars_json_schema()
+                        .build_enum(
+                            &ident_standart_not_null_update_element_upper_camel_case,
+                            &{
+                                let variants_token_stream = vec_syn_field.iter().map(|current_element| {
+                                    let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(current_element);
+                                    let value_field_type_as_json_type_update_token_stream = wrap_into_value_declaration_token_stream(&generate_type_as_postgresql_json_type_update_token_stream(&current_element.ty));
+                                    quote::quote! {
+                                        #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
+                                        #variant_ident_upper_camel_case_token_stream(#value_field_type_as_json_type_update_token_stream)
+                                    }
+                                });
+                                quote::quote!{{#(#variants_token_stream),*}}
                             }
-                        });
-                        quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub enum #ident_standart_not_null_update_element_upper_camel_case {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    };
+                        );
                     let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_standart_not_null_update_element_upper_camel_case, &{
                         let elements_token_stream = vec_syn_field.iter().map(|current_element| {
                             let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
@@ -3499,26 +3502,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 );
                 let maybe_ident_update_for_query_element_token_stream = if is_standart_not_null {
-                    let ident_standart_not_null_update_for_query_element_token_stream = {
-                        let variants_token_stream = vec_syn_field.iter().map(|current_element| {
-                            let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
-                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                            });
-                            let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                            let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(current_element);
-                            let value_field_type_as_json_type_update_for_query_token_stream = wrap_into_value_declaration_token_stream(&generate_type_as_postgresql_json_type_update_for_query_token_stream(&current_element.ty));
-                            quote::quote! {
-                                #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
-                                #variant_ident_upper_camel_case_token_stream(#value_field_type_as_json_type_update_for_query_token_stream)
+                    let ident_standart_not_null_update_for_query_element_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone()
+                        .derive_partial_eq()
+                        .derive_serde_serialize()
+                        .build_enum(
+                            &ident_standart_not_null_update_for_query_element_upper_camel_case,
+                            &{
+                                let variants_token_stream = vec_syn_field.iter().map(|current_element| {
+                                    let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
+                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                    });
+                                    let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                                    let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(current_element);
+                                    let value_field_type_as_json_type_update_for_query_token_stream = wrap_into_value_declaration_token_stream(&generate_type_as_postgresql_json_type_update_for_query_token_stream(&current_element.ty));
+                                    quote::quote! {
+                                        #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
+                                        #variant_ident_upper_camel_case_token_stream(#value_field_type_as_json_type_update_for_query_token_stream)
+                                    }
+                                });
+                                quote::quote!{{#(#variants_token_stream),*}}
                             }
-                        });
-                        quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize)]
-                            pub enum #ident_standart_not_null_update_for_query_element_upper_camel_case {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    };
+                        );
                     let impl_std_convert_from_ident_standart_not_null_update_element_for_ident_standart_not_null_update_for_query_element_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(
                         &ident_standart_not_null_update_element_upper_camel_case,
                         &ident_standart_not_null_update_for_query_element_upper_camel_case,
