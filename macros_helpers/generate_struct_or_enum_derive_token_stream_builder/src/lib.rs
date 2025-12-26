@@ -166,9 +166,60 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
             //         #struct_or_enum_upper_camel_case::Struct => quote::quote!{struct},
             //         #struct_or_enum_upper_camel_case::Enum => quote::quote!{enum},
             //     };
-            //     quote::quote! {
-            //         #[derive(#(#derive_token_stream),*)]
-            //         #maybe_pub_token_stream #struct_or_enum_token_stream #current_ident #content_token_stream
+            //     // quote::quote! {
+
+            //     // }
+            //     quote::quote!{
+            //         // #[derive(#(#derive_token_stream),*)]
+            //         // #maybe_pub_token_stream #struct_or_enum_token_stream #current_ident #content_token_stream
+            //         // this is cargo expand ouput coz double quote::quote!{quote::quote!{}}
+            //         {
+            //             let mut _s = ::quote::__private::TokenStream::new();
+            //             ::quote::__private::push_pound(&mut _s);
+            //             ::quote::__private::push_group(
+            //                 &mut _s,
+            //                 ::quote::__private::Delimiter::Bracket,
+            //                 {
+            //                     let mut _s = ::quote::__private::TokenStream::new();
+            //                     ::quote::__private::push_ident(&mut _s, "derive");
+            //                     ::quote::__private::push_group(
+            //                         &mut _s,
+            //                         ::quote::__private::Delimiter::Parenthesis,
+            //                         {
+            //                             let mut _s = ::quote::__private::TokenStream::new();
+            //                             {
+            //                                 use ::quote::__private::ext::*;
+            //                                 let mut _i = 0usize;
+            //                                 let has_iter = ::quote::__private::ThereIsNoIteratorInRepetition;
+            //                                 #[allow(unused_mut)]
+            //                                 let (mut derive_token_stream, i) = derive_token_stream
+            //                                     .quote_into_iter();
+            //                                 let has_iter = has_iter | i;
+            //                                 let _: ::quote::__private::HasIterator = has_iter;
+            //                                 loop {
+            //                                     let derive_token_stream = match derive_token_stream.next() {
+            //                                         Some(_x) => ::quote::__private::RepInterp(_x),
+            //                                         None => break,
+            //                                     };
+            //                                     if _i > 0 {
+            //                                         ::quote::__private::push_comma(&mut _s);
+            //                                     }
+            //                                     _i += 1;
+            //                                     ::quote::ToTokens::to_tokens(&derive_token_stream, &mut _s);
+            //                                 }
+            //                             }
+            //                             _s
+            //                         },
+            //                     );
+            //                     _s
+            //                 },
+            //             );
+            //             ::quote::ToTokens::to_tokens(&maybe_pub_token_stream, &mut _s);
+            //             ::quote::ToTokens::to_tokens(&struct_or_enum_token_stream, &mut _s);
+            //             ::quote::ToTokens::to_tokens(&current_ident, &mut _s);
+            //             ::quote::ToTokens::to_tokens(&content_token_stream, &mut _s);
+            //             _s
+            //         }
             //     }
             // }
             pub fn build_struct(
@@ -187,10 +238,5 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
             }
         }
     };
-    // macros_helpers::write_token_stream_into_file(
-    //     "GenerateStructOrEnumDeriveTokenStreamBuilder",
-    //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
-    // );
     generated.into()
 }
