@@ -895,32 +895,26 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     );
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     let ident_create_token_stream = {
-        let ident_create_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_create_upper_camel_case,
-            &{
-                let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
-                    let field_ident = &element.field_ident;
-                    let element_syn_field_ty_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&element.syn_field.ty);
-                    quote::quote! {
-                        pub #field_ident: #element_syn_field_ty_as_postgresql_type_create_token_stream
-                    }
-                });
-                quote::quote!{{#content_token_stream}}
-            },
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::True,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::False,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::True,
-            macros_helpers::DeriveUtoipaToSchema::True,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+        let ident_create_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_clone()
+            .derive_serde_serialize()
+            .derive_serde_deserialize()
+            .derive_utoipa_to_schema()
+            .build(
+                &ident_create_upper_camel_case,
+                &{
+                    let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                        let field_ident = &element.field_ident;
+                        let element_syn_field_ty_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&element.syn_field.ty);
+                        quote::quote! {
+                            pub #field_ident: #element_syn_field_ty_as_postgresql_type_create_token_stream
+                        }
+                    });
+                    quote::quote!{{#content_token_stream}}
+                }
+            );
         let impl_ident_create_token_stream = {
             let primary_key_field_type_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = {
                 let primary_key_field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&primary_key_field_type);
@@ -1033,23 +1027,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #field_ident: #std_option_option_postgresql_type_where_syn_field_ty_as_postgresql_type_where_token_stream
             }
         });
-        let ident_where_many_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_where_many_upper_camel_case,
-            &quote::quote!{{#fields_declaration_token_stream}},
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::True,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::False,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::False,
-            macros_helpers::DeriveUtoipaToSchema::True,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+        let ident_where_many_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_clone()
+            .derive_serde_serialize()
+            .derive_utoipa_to_schema()
+            .build(
+                &ident_where_many_upper_camel_case,
+                &quote::quote!{{#fields_declaration_token_stream}}
+            );
         let ident_where_many_try_new_error_named_token_stream = {
             quote::quote! {
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -1105,28 +1092,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
 
     let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
     let std_option_option_ident_where_many_token_stream = {
-        let std_option_option_ident_where_many_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &std_option_option_ident_where_many_upper_camel_case,
-            &{
-                let std_option_option_ident_read_only_ids_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                    &ident_where_many_upper_camel_case
-                );
-                quote::quote!{(pub #std_option_option_ident_read_only_ids_standart_not_null_token_stream);}
-            },
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::True,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::False,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::True,
-            macros_helpers::DeriveUtoipaToSchema::True,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+        let std_option_option_ident_where_many_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_clone()
+            .derive_serde_serialize()
+            .derive_serde_deserialize()
+            .derive_utoipa_to_schema()
+            .build(
+                &std_option_option_ident_where_many_upper_camel_case,
+                &{
+                    let std_option_option_ident_read_only_ids_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                        &ident_where_many_upper_camel_case
+                    );
+                    quote::quote!{(pub #std_option_option_ident_read_only_ids_standart_not_null_token_stream);}
+                }
+            );
         let impl_postgresql_type_where_filter_for_std_option_option_ident_where_many_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &quote::quote! {<'lifetime>},
             &std_option_option_ident_where_many_upper_camel_case,
@@ -1317,44 +1298,37 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let ident_read_token_stream = {
-        let ident_read_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_read_upper_camel_case,
-            &{
-                let field_option_primary_key_token_stream = {
-                    let std_option_option_value_primary_key_field_type_as_postgresql_type_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&primary_key_field_type)));
-                    quote::quote! {
-                        #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
-                        pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_postgresql_type_read_token_stream
-                    }
-                };
-                let fields_options_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                    let field_vis = &element.syn_field.vis;
-                    let field_ident = &element.field_ident;
-                    let std_option_option_value_field_type_as_postgresql_type_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty)));
-                    quote::quote! {
-                        #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
-                        #field_vis #field_ident: #std_option_option_value_field_type_as_postgresql_type_read_token_stream
-                    }
-                });
-                quote::quote!{{
-                    #field_option_primary_key_token_stream,
-                    #fields_options_without_primary_key_token_stream
-                }}
-            },
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::False,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::True,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::True,
-            macros_helpers::DeriveUtoipaToSchema::False,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+        let ident_read_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_partial_eq()
+            .derive_serde_serialize()
+            .derive_serde_deserialize()
+            .build(
+                &ident_read_upper_camel_case,
+                &{
+                    let field_option_primary_key_token_stream = {
+                        let std_option_option_value_primary_key_field_type_as_postgresql_type_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&primary_key_field_type)));
+                        quote::quote! {
+                            #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
+                            pub #primary_key_field_ident: #std_option_option_value_primary_key_field_type_as_postgresql_type_read_token_stream
+                        }
+                    };
+                    let fields_options_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                        let field_vis = &element.syn_field.vis;
+                        let field_ident = &element.field_ident;
+                        let std_option_option_value_field_type_as_postgresql_type_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_value_declaration_token_stream(&generate_as_postgresql_type_read_token_stream(&element.syn_field.ty)));
+                        quote::quote! {
+                            #field_attribute_serde_skip_serializing_if_option_is_none_token_stream
+                            #field_vis #field_ident: #std_option_option_value_field_type_as_postgresql_type_read_token_stream
+                        }
+                    });
+                    quote::quote!{{
+                        #field_option_primary_key_token_stream,
+                        #fields_options_without_primary_key_token_stream
+                    }}
+                }
+            );
         let impl_ident_read_token_stream = {
             let fn_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = {
                 let declaration_primary_key_token_stream = {
@@ -1445,49 +1419,43 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let ident_read_only_ids_token_stream = {
-        let ident_read_only_ids_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_read_only_ids_upper_camel_case,
-            &{
-                enum WrapIntoOption {
-                    True,
-                    False,
-                }
-                let generate_field_token_stream = |field_ident: &dyn quote::ToTokens, field_type: &dyn quote::ToTokens, wrap_into_option: &WrapIntoOption| {
-                    let field_type_token_stream = match &wrap_into_option {
-                        WrapIntoOption::True => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_as_postgresql_type_read_only_ids_token_stream(&field_type)),
-                        WrapIntoOption::False => generate_as_postgresql_type_read_only_ids_token_stream(&field_type),
-                    };
-                    quote::quote! {
-                        pub #field_ident: #field_type_token_stream
+        let ident_read_only_ids_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_clone()
+            .derive_partial_eq()
+            .derive_serde_serialize()
+            .derive_serde_deserialize()
+            .build(
+                &ident_read_only_ids_upper_camel_case,
+                &{
+                    enum WrapIntoOption {
+                        True,
+                        False,
                     }
-                };
-                let primary_key_token_stream = generate_field_token_stream(&primary_key_field_ident, &primary_key_field_type, &WrapIntoOption::False);
-                let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(
-                    &|element: &SynFieldWrapper| generate_field_token_stream(
-                        &element.field_ident,
-                        &element.syn_field.ty,
-                        &WrapIntoOption::True
-                    )
-                );
-                quote::quote!{{
-                    #primary_key_token_stream,
-                    #content_token_stream
-                }}
-            },
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::True,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::True,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::True,
-            macros_helpers::DeriveUtoipaToSchema::False,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+                    let generate_field_token_stream = |field_ident: &dyn quote::ToTokens, field_type: &dyn quote::ToTokens, wrap_into_option: &WrapIntoOption| {
+                        let field_type_token_stream = match &wrap_into_option {
+                            WrapIntoOption::True => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_as_postgresql_type_read_only_ids_token_stream(&field_type)),
+                            WrapIntoOption::False => generate_as_postgresql_type_read_only_ids_token_stream(&field_type),
+                        };
+                        quote::quote! {
+                            pub #field_ident: #field_type_token_stream
+                        }
+                    };
+                    let primary_key_token_stream = generate_field_token_stream(&primary_key_field_ident, &primary_key_field_type, &WrapIntoOption::False);
+                    let content_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(
+                        &|element: &SynFieldWrapper| generate_field_token_stream(
+                            &element.field_ident,
+                            &element.syn_field.ty,
+                            &WrapIntoOption::True
+                        )
+                    );
+                    quote::quote!{{
+                        #primary_key_token_stream,
+                        #content_token_stream
+                    }}
+                }
+            );
         let impl_sqlx_row_for_ident_read_only_ids_token_stream = {
             let undescore_underscore_row = quote::quote! {__row};
             let where_field_types_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -1599,25 +1567,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #fields_named_without_primary_key_token_stream
             }
         };
-        let ident_update_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_update_upper_camel_case,
-            &quote::quote!{{
-                #fields_declaration_token_stream
-            }},
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::False,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::False,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::False,
-            macros_helpers::DeriveUtoipaToSchema::True,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+        let ident_update_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_serde_serialize()
+            .derive_utoipa_to_schema()
+            .build(
+                &ident_update_upper_camel_case,
+                &quote::quote!{{
+                    #fields_declaration_token_stream
+                }},
+            );
         let ident_update_try_new_error_named_token_stream = {
             quote::quote! {
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -1688,40 +1648,32 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     let ident_update_for_query_token_stream = {
-        let ident_update_for_query_token_stream = macros_helpers::generate_struct_derive(
-            macros_helpers::IsPub::True,
-            &ident_update_for_query_upper_camel_case,
-            &{
-                let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                    let field_ident = &element.field_ident;
-                    let option_value_field_type_as_postgresql_type_update_for_query_token_stream = {
-                        let path_value_token_stream = {
-                            let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
-                            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        let ident_update_for_query_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+            .make_pub()
+            .derive_debug()
+            .derive_serde_serialize()
+            .derive_utoipa_to_schema()
+            .build(
+                &ident_update_for_query_upper_camel_case,
+                &{
+                    let fields_named_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                        let field_ident = &element.field_ident;
+                        let option_value_field_type_as_postgresql_type_update_for_query_token_stream = {
+                            let path_value_token_stream = {
+                                let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
+                                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                            };
+                            let syn_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
+                            postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {#path_value_token_stream<#syn_type_as_postgresql_type_update_for_query_token_stream>})
                         };
-                        let syn_type_as_postgresql_type_update_for_query_token_stream = generate_as_postgresql_type_update_for_query_token_stream(&element.syn_field.ty);
-                        postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote! {#path_value_token_stream<#syn_type_as_postgresql_type_update_for_query_token_stream>})
-                    };
-                    quote::quote! {#field_ident: #option_value_field_type_as_postgresql_type_update_for_query_token_stream}
-                });
-                quote::quote!{{
-                    #primary_key_field_ident: #primary_key_field_type_update_for_query_token_stream,
-                    #fields_named_without_primary_key_token_stream
-                }}
-            },
-            macros_helpers::DeriveDebug::True,
-            macros_helpers::DeriveDefault::False,
-            macros_helpers::DeriveClone::False,
-            macros_helpers::DeriveCopy::False,
-            macros_helpers::DerivePartialEq::False,
-            macros_helpers::DeriveEq::False,
-            macros_helpers::DerivePartialOrd::False,
-            macros_helpers::DeriveOrd::False,
-            macros_helpers::DeriveSerdeSerialize::True,
-            macros_helpers::DeriveSerdeDeserialize::False,
-            macros_helpers::DeriveUtoipaToSchema::True,
-            macros_helpers::DeriveSchemarsJsonSchema::False,
-        );
+                        quote::quote! {#field_ident: #option_value_field_type_as_postgresql_type_update_for_query_token_stream}
+                    });
+                    quote::quote!{{
+                        #primary_key_field_ident: #primary_key_field_type_update_for_query_token_stream,
+                        #fields_named_without_primary_key_token_stream
+                    }}
+                }
+            );
         let impl_ident_update_for_query_token_stream = {
             let update_query_part_primary_key_token_stream = {
                 quote::quote! {
@@ -3144,23 +3096,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, {
             let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
             let std_vec_vec_ident_update_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&ident_update_upper_camel_case);
-            let ident_operation_payload_vec_token_stream = macros_helpers::generate_struct_derive(
-                macros_helpers::IsPub::True,
-                &ident_operation_payload_upper_camel_case,
-                &quote::quote!{(#std_vec_vec_ident_update_token_stream);},
-                macros_helpers::DeriveDebug::True,
-                macros_helpers::DeriveDefault::False,
-                macros_helpers::DeriveClone::False,
-                macros_helpers::DeriveCopy::False,
-                macros_helpers::DerivePartialEq::False,
-                macros_helpers::DeriveEq::False,
-                macros_helpers::DerivePartialOrd::False,
-                macros_helpers::DeriveOrd::False,
-                macros_helpers::DeriveSerdeSerialize::True,
-                macros_helpers::DeriveSerdeDeserialize::False,
-                macros_helpers::DeriveUtoipaToSchema::True,
-                macros_helpers::DeriveSchemarsJsonSchema::False,
-            );
+            let ident_operation_payload_vec_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_serde_serialize()
+                .derive_utoipa_to_schema()
+                .build(
+                    &ident_operation_payload_upper_camel_case,
+                    &quote::quote!{(#std_vec_vec_ident_update_token_stream);}
+                );
             let ident_operation_payload_try_new_error_named_upper_camel_case = format!("{ident}{operation}PayloadTryNewErrorNamed").parse::<proc_macro2::TokenStream>().expect("error 3da248bb-84ba-48c9-9b7c-e0853198e0aa");
             let not_unique_primary_key_upper_camel_case = naming::NotUniquePrimaryKeyUpperCamelCase;
             let not_unique_primary_key_snake_case = naming::NotUniquePrimaryKeySnakeCase;

@@ -993,23 +993,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_standart_nullable_upper_camel_case);
             let ident_array_not_null_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_not_null_upper_camel_case);
             let ident_array_nullable_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&ident_array_nullable_upper_camel_case);
-            let ident_token_stream = macros_helpers::generate_struct_derive(
-                macros_helpers::IsPub::True,
-                &ident,
-                &quote::quote!{;},
-                macros_helpers::DeriveDebug::True,
-                macros_helpers::DeriveDefault::False,
-                macros_helpers::DeriveClone::True,
-                macros_helpers::DeriveCopy::True,
-                macros_helpers::DerivePartialEq::False,
-                macros_helpers::DeriveEq::False,
-                macros_helpers::DerivePartialOrd::False,
-                macros_helpers::DeriveOrd::False,
-                macros_helpers::DeriveSerdeSerialize::False,
-                macros_helpers::DeriveSerdeDeserialize::False,
-                macros_helpers::DeriveUtoipaToSchema::False,
-                macros_helpers::DeriveSchemarsJsonSchema::False,
-            );
+            let ident_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_clone()
+                .derive_copy()
+                .build(
+                    &ident,
+                    &quote::quote!{;},
+                );
             let generate_ident_standart_not_null_origin_token_stream = |current_postgresql_type: &PostgresqlType| naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                 &generate_ident_standart_not_null_token_stream(current_postgresql_type)
             );
@@ -2352,20 +2344,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_origin_token_stream = {
-                let ident_origin_token_stream = macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &ident_origin_upper_camel_case,
-                    &quote::quote!{(#field_type_handle);},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::False,
-                    macros_helpers::DerivePartialEq::True,
-                    match &is_not_null_standart_can_be_primary_key {
+                let ident_origin_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_eq_if(match &is_not_null_standart_can_be_primary_key {
                         IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
                         IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveEq::False,
-                    },
-                    match &is_standart_not_null {
+                    })
+                    .derive_partial_ord_if(match &is_standart_not_null {
                         IsStandartNotNull::True => match &postgresql_type {
                             PostgresqlType::StdPrimitiveI16AsInt2
                             | PostgresqlType::StdPrimitiveI32AsInt4
@@ -2396,22 +2384,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
                         },
                         IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False
-                    },
-                    match &is_not_null_standart_can_be_primary_key {
+                    })
+                    .derive_ord_if(match &is_not_null_standart_can_be_primary_key {
                         IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveOrd::True,
                         IsNotNullStandartCanBePrimaryKey::False => macros_helpers::DeriveOrd::False,
-                    },
-                    match &serde_serialize_derive_or_impl {
+                    })
+                    .derive_serde_serialize_if(match &serde_serialize_derive_or_impl {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeSerialize::True,
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeSerialize::False,
-                    },
-                    match &serde_deserialize_derive_or_impl {
+                    })
+                    .derive_serde_deserialize_if(match &serde_deserialize_derive_or_impl {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => macros_helpers::DeriveSerdeDeserialize::True,
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => macros_helpers::DeriveSerdeDeserialize::False,
-                    },
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                    })
+                    .build(
+                        &ident_origin_upper_camel_case,
+                        &quote::quote!{(#field_type_handle);},
+                    );
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
                 let earlier_date_not_supported_upper_camel_case = naming::EarlierDateNotSupportedUpperCamelCase;
                 let earliest_supported_date_snake_case = naming::EarliestSupportedDateSnakeCase;
@@ -3506,37 +3495,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             let generate_pub_struct_tokens_token_stream = |current_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, derive_default: macros_helpers::DeriveDefault| {
-                macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &current_ident_token_stream,
-                    &content_token_stream,
-                    macros_helpers::DeriveDebug::True,
-                    derive_default,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::True,
-                    macros_helpers::DerivePartialEq::True,
-                    macros_helpers::DeriveEq::False,
-                    macros_helpers::DerivePartialOrd::False,
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::True,
-                    macros_helpers::DeriveSerdeDeserialize::True,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                )
+                macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_default_if(derive_default)
+                    .derive_clone()
+                    .derive_copy()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build(
+                        &current_ident_token_stream,
+                        &content_token_stream
+                    )
             };
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_table_type_declaration_token_stream = {
-                let ident_table_type_declaration_token_stream = macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &ident_table_type_declaration_upper_camel_case,
-                    &quote::quote!{(#ident_origin_upper_camel_case);},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::False,
-                    macros_helpers::DerivePartialEq::True,
-                    macros_helpers::DeriveEq::False,
-                    match &is_standart_not_null {
+                let ident_table_type_declaration_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_partial_ord_if(match &is_standart_not_null {
                         IsStandartNotNull::True => match &postgresql_type {
                             PostgresqlType::StdPrimitiveI16AsInt2
                             | PostgresqlType::StdPrimitiveI32AsInt4
@@ -3567,13 +3547,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DerivePartialOrd::False,
                         },
                         IsStandartNotNull::False => macros_helpers::DerivePartialOrd::False
-                    },
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::True,
-                    macros_helpers::DeriveSerdeDeserialize::True,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                    })
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build(
+                        &ident_table_type_declaration_upper_camel_case,
+                        &quote::quote!{(#ident_origin_upper_camel_case);},
+                    );
                 let impl_ident_table_type_declaration_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_table_type_declaration_upper_camel_case);
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
@@ -3635,23 +3615,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_create_token_stream = {
                 let ident_create_token_stream = match &can_be_primary_key {
                     CanBePrimaryKey::True => generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, macros_helpers::DeriveDefault::False),
-                    CanBePrimaryKey::False => macros_helpers::generate_struct_derive(
-                        macros_helpers::IsPub::True,
-                        &ident_create_upper_camel_case,
-                        &quote::quote!{(#ident_origin_upper_camel_case);},
-                        macros_helpers::DeriveDebug::True,
-                        macros_helpers::DeriveDefault::False,
-                        macros_helpers::DeriveClone::True,
-                        macros_helpers::DeriveCopy::False,
-                        macros_helpers::DerivePartialEq::True,
-                        macros_helpers::DeriveEq::False,
-                        macros_helpers::DerivePartialOrd::False,
-                        macros_helpers::DeriveOrd::False,
-                        macros_helpers::DeriveSerdeSerialize::True,
-                        macros_helpers::DeriveSerdeDeserialize::True,
-                        macros_helpers::DeriveUtoipaToSchema::False,
-                        macros_helpers::DeriveSchemarsJsonSchema::False,
-                    )
+                    CanBePrimaryKey::False => macros_helpers::StructDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone()
+                        .derive_partial_eq()
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .build(
+                            &ident_create_upper_camel_case,
+                            &quote::quote!{(#ident_origin_upper_camel_case);},
+                        )
                 };
                 let maybe_impl_ident_create_token_stream = match &can_be_primary_key {
                     CanBePrimaryKey::True => proc_macro2::TokenStream::new(),
@@ -4081,23 +4055,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             macros_helpers::DeriveOrd::False
                         ),
                     };
-                    macros_helpers::generate_struct_derive(
-                        macros_helpers::IsPub::True,
-                        &ident_read_upper_camel_case,
-                        &quote::quote!{(#ident_origin_upper_camel_case);},
-                        macros_helpers::DeriveDebug::True,
-                        macros_helpers::DeriveDefault::False,
-                        macros_helpers::DeriveClone::True,
-                        macros_helpers::DeriveCopy::False,
-                        macros_helpers::DerivePartialEq::True,
-                        derive_eq,
-                        derive_partial_ord,
-                        derive_ord,
-                        macros_helpers::DeriveSerdeSerialize::True,
-                        macros_helpers::DeriveSerdeDeserialize::True,
-                        macros_helpers::DeriveUtoipaToSchema::False,
-                        macros_helpers::DeriveSchemarsJsonSchema::False,
-                    )
+                    macros_helpers::StructDeriveTokenStreamBuilder::new()
+                        .make_pub()
+                        .derive_debug()
+                        .derive_clone()
+                        .derive_partial_eq()
+                        .derive_eq_if(derive_eq)
+                        .derive_partial_ord_if(derive_partial_ord)
+                        .derive_ord_if(derive_ord)
+                        .derive_serde_serialize()
+                        .derive_serde_deserialize()
+                        .build(
+                            &ident_read_upper_camel_case,
+                            &quote::quote!{(#ident_origin_upper_camel_case);},
+                        )
                 };
                 let impl_ident_read_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_read_upper_camel_case);
                 let impl_error_occurence_lib_to_std_string_string_for_ident_read_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_read_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.0.to_string()});
@@ -4140,23 +4111,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
             let ident_read_only_ids_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                let ident_read_only_ids_token_stream = macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &ident_read_only_ids_upper_camel_case,
-                    &quote::quote!{(#ident_read_upper_camel_case);},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::False,
-                    macros_helpers::DerivePartialEq::True,
-                    macros_helpers::DeriveEq::False,
-                    macros_helpers::DerivePartialOrd::False,
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::True,
-                    macros_helpers::DeriveSerdeDeserialize::True,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                let ident_read_only_ids_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build(
+                        &ident_read_only_ids_upper_camel_case,
+                        &quote::quote!{(#ident_read_upper_camel_case);},
+                    );
                 let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case, &quote::quote! {Ok(Self(#value_snake_case))});
                 let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case);
                 quote::quote! {
@@ -4172,23 +4137,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 pub type #ident_read_inner_upper_camel_case = #ident_inner_type_token_stream;
             };
             let ident_update_token_stream = {
-                let ident_update_token_stream = macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &ident_update_upper_camel_case,
-                    &quote::quote!{(#ident_origin_upper_camel_case);},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::False,
-                    macros_helpers::DerivePartialEq::True,
-                    macros_helpers::DeriveEq::False,
-                    macros_helpers::DerivePartialOrd::False,
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::True,
-                    macros_helpers::DeriveSerdeDeserialize::True,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                let ident_update_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build(
+                        &ident_update_upper_camel_case,
+                        &quote::quote!{(#ident_origin_upper_camel_case);},
+                    );
                 let impl_ident_update_token_stream = generate_pub_const_new_or_pub_try_new_token_stream(&ident_update_upper_camel_case);
                 let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
                     postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
@@ -4202,23 +4161,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
             let ident_update_for_query_token_stream = {
-                let ident_update_for_query_token_stream = macros_helpers::generate_struct_derive(
-                    macros_helpers::IsPub::True,
-                    &ident_update_for_query_upper_camel_case,
-                    &quote::quote!{(#ident_origin_upper_camel_case);},
-                    macros_helpers::DeriveDebug::True,
-                    macros_helpers::DeriveDefault::False,
-                    macros_helpers::DeriveClone::True,
-                    macros_helpers::DeriveCopy::False,
-                    macros_helpers::DerivePartialEq::True,
-                    macros_helpers::DeriveEq::False,
-                    macros_helpers::DerivePartialOrd::False,
-                    macros_helpers::DeriveOrd::False,
-                    macros_helpers::DeriveSerdeSerialize::True,
-                    macros_helpers::DeriveSerdeDeserialize::True,
-                    macros_helpers::DeriveUtoipaToSchema::False,
-                    macros_helpers::DeriveSchemarsJsonSchema::False,
-                );
+                let ident_update_for_query_token_stream = macros_helpers::StructDeriveTokenStreamBuilder::new()
+                    .make_pub()
+                    .derive_debug()
+                    .derive_clone()
+                    .derive_partial_eq()
+                    .derive_serde_serialize()
+                    .derive_serde_deserialize()
+                    .build(
+                        &ident_update_for_query_upper_camel_case,
+                        &quote::quote!{(#ident_origin_upper_camel_case);}
+                    );
                 let impl_sqlx_type_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &ident_origin_upper_camel_case);
                 let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &quote::quote! {#self_snake_case.0});
                 let impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &quote::quote! {Self(#value_snake_case.0)});
