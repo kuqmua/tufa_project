@@ -29,6 +29,7 @@ members = [
   "postgresql_crud/where_filters/generate_where_filters",
   "generate_quotes",
   "macros_helpers",
+  "macros_helpers/generate_struct_or_enum_derive_token_stream_builder",
   "server",
   "server_app_state",
   "server_config",

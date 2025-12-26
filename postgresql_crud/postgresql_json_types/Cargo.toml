@@ -10,12 +10,12 @@ keywords = ["keyword"]
 categories = ["category"]
 
 [dependencies]
-generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 uuid.workspace = true
 utoipa.workspace = true
 sqlx.workspace = true
 serde.workspace = true
 schemars.workspace = true
+generate_postgresql_json_types = {path = "./generate_postgresql_json_types"}
 error_occurence_lib = {path = "../../error_occurence_lib"}
 postgresql_crud_common = {path = "../postgresql_crud_common", features = ["test-utils"]}
 where_filters = {path = "../where_filters"}
