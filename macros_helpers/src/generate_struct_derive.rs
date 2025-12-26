@@ -278,4 +278,11 @@ impl StructOrEnumDeriveTokenStreamBuilder {
     ) -> proc_macro2::TokenStream {
         self.build_handle(StructOrEnum::Struct, current_ident, content_token_stream)
     }
+    pub fn build_enum(
+        self,
+        current_ident: &dyn quote::ToTokens,
+        content_token_stream: &dyn quote::ToTokens,
+    ) -> proc_macro2::TokenStream {
+        self.build_handle(StructOrEnum::Enum, current_ident, content_token_stream)
+    }
 }
