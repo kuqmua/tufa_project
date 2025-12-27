@@ -104,7 +104,7 @@ http = {version = "=0.2.9"}
 time = {version = "=0.3.36", features = ["serde"]}
 futures = {version = "=0.3.28"}
 quote = {version = "=1.0.36"}
-syn = {version = "=2.0.100"}
+syn = {version = "=2.0.100", features = ["full", "visit"] }
 yewdux-functional = {version = "=0.1.0"}
 jsonschema = { version = "=0.37.1", default-features = false, features = [] }
 rayon = {version = "=1.10.0"}

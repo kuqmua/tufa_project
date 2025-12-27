@@ -235,20 +235,51 @@ mod tests {
     }
     #[test]
     fn check_expect_contains_only_uuid_v4() {
-        let expect_regex = regex::Regex::new(r#"(?s)\.expect\s*\(\s*"([^"]*)"\s*\)"#).expect("6e4dd117-2305-436a-9569-3a843401eae8");
+        struct ExpectVisitor(Vec<String>);
+        impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
+            fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
+                if i.method == "expect" {
+                    if i.args.len() == 1 {
+                        if let syn::Expr::Lit(syn::ExprLit {
+                            lit: syn::Lit::Str(lit_str),
+                            ..
+                        }) = &i.args.get(0).expect("0650563c-f149-46d6-ab42-631ed4b1934b") {
+                            let value = lit_str.value();
+                            let valid = uuid::Uuid::parse_str(&value)
+                                .map(|element| element.get_version() == Some(uuid::Version::Random))
+                                .unwrap_or(false);
+                            if !valid {
+                                self.0.push(value);
+                            }
+                        }
+                        else {
+                            self.0.push("expect() arg is not string literal".to_owned());
+                        }
+                    } else {
+                        self.0.push("expect() with != 1 arg".to_owned());
+                    }
+                }
+                syn::visit::visit_expr_method_call(self, i);
+            }
+        }
         for entry in walkdir::WalkDir::new("../")
             .into_iter()
+            .filter_entry(|element| element.file_name() != "target")
             .filter_map(Result::ok)
             .filter(|element| element.path().extension().and_then(|current_element| current_element.to_str()) == Some("rs"))
         {
             let Ok(content) = std::fs::read_to_string(entry.path()) else { continue };
-            for capture in expect_regex.captures_iter(&content) {
-                let value = &capture[1];
-                let valid = uuid::Uuid::parse_str(value)
-                    .map(|element| element.get_version() == Some(uuid::Version::Random))
-                    .unwrap_or(false);
-                assert!(valid, "66fde8e0-0a6e-47a3-993e-74a300fc8a63, {value}");
-            }
+            let Ok(ast) = syn::parse_file(&content) else {
+                panic!("failed to parse {:?}", entry.path());
+            };
+            let mut visitor = ExpectVisitor(vec![]);
+            syn::visit::Visit::visit_file(&mut visitor, &ast);
+            assert!(
+                visitor.0.is_empty(), 
+                "invalid expect() in {:?}: {:?}",
+                entry.path(),
+                visitor.0
+            );
         }
     }
 }
