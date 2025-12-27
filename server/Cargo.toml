@@ -24,7 +24,6 @@ sqlx.workspace = true
 tokio.workspace = true
 secrecy.workspace = true
 tracing-subscriber.workspace = true
-http.workspace = true
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 common_routes = {path = "../common_routes"}
