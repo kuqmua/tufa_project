@@ -114,12 +114,11 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
                 let mut value = element.iter().fold(String::new(), |mut acc, current_element| {
+                    use std::fmt::Write as _;
                     let symbol = '_';
                     if current_element == "self" {
-                        use std::fmt::Write as _;
                         assert!(write!(acc, "{{value}}{symbol}").is_ok(), "error f58bba77-30d8-4019-a084-577a3fda0d4a");
                     } else {
-                        use std::fmt::Write as _;
                         assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "error 7b9f8bb3-cefa-4863-a612-8e3b889d1e6e");
                     }
                     acc
