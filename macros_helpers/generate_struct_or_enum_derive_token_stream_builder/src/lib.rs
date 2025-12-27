@@ -18,18 +18,18 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
                 let mut result = String::with_capacity(element.len());
                 let mut prev_is_underscore = false;
                 let mut prev_is_lowercase = false;
-                for element in element.chars() {
-                    if element.is_alphabetic() {
-                        if element.is_uppercase() {
+                for char_element in element.chars() {
+                    if char_element.is_alphabetic() {
+                        if char_element.is_uppercase() {
                             if prev_is_lowercase && !prev_is_underscore {
                                 result.push('_');
                             }
-                            for lower in element.to_lowercase() {
+                            for lower in char_element.to_lowercase() {
                                 result.push(lower);
                             }
                             prev_is_lowercase = false;
                         } else {
-                            result.push(element);
+                            result.push(char_element);
                             prev_is_lowercase = true;
                         }
                         prev_is_underscore = false;
@@ -41,7 +41,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
                         prev_is_lowercase = false;
                     }
                 }
-                result.trim_matches('_').to_string()
+                result.trim_matches('_').to_owned()
             };
             Element {
                 derive_trait_name_upper_camel_case: {
