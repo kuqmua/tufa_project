@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub struct ServerAppState<'lifetime> {
     pub postgres_pool: sqlx::PgPool,
-    pub config: &'lifetime server_config::Config,
+    pub config: server_config::Config,
     pub project_git_info: &'lifetime git_info::ProjectGitInfo<'lifetime>,
 }
 impl common_routes::CommonRoutesParameters for ServerAppState<'_> {}

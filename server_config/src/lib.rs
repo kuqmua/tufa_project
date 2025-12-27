@@ -1,4 +1,4 @@
-#[derive(Debug, config_lib::TryFromEnv, config_lib::GenerateGetterTraitsForStructFields)]
+#[derive(Debug, Clone, config_lib::TryFromEnv, config_lib::GenerateGetterTraitsForStructFields)]
 pub struct Config {
     //todo maybe auto generate .env and docker-compose environment variables. and maybe write in directly into files
     pub service_socket_address: std::net::SocketAddr,

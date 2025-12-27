@@ -17,7 +17,6 @@ pub fn compile_time_project_git_info(_input_token_stream: proc_macro::TokenStrea
     //todo check if its a valid commit id.
     let commit_id_token_stream = format!("\"{hash}\"").parse::<proc_macro2::TokenStream>().expect("commit_id parse failed");
     let generated = quote::quote! {
-        //crate::common::git::project_git_info::
         ProjectGitInfo {
             commit: #commit_id_token_stream,
         }
