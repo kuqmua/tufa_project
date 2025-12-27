@@ -242,14 +242,12 @@ mod tests {
             .filter(|element| element.path().extension().and_then(|current_element| current_element.to_str()) == Some("rs"))
         {
             let Ok(content) = std::fs::read_to_string(entry.path()) else { continue };
-            for line in content.lines() {
-                for capture in expect_regex.captures_iter(line) {
-                    let value = &capture[1];
-                    let valid = uuid::Uuid::parse_str(value)
-                        .map(|element| element.get_version() == Some(uuid::Version::Random))
-                        .unwrap_or(false);
-                    assert!(valid, "66fde8e0-0a6e-47a3-993e-74a300fc8a63, {value}");
-                }
+            for capture in expect_regex.captures_iter(&content) {
+                let value = &capture[1];
+                let valid = uuid::Uuid::parse_str(value)
+                    .map(|element| element.get_version() == Some(uuid::Version::Random))
+                    .unwrap_or(false);
+                assert!(valid, "66fde8e0-0a6e-47a3-993e-74a300fc8a63, {value}");
             }
         }
     }
