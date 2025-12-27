@@ -16,6 +16,8 @@ reqwest.workspace = true
 toml.workspace = true
 scraper.workspace = true
 regex.workspace = true
+uuid.workspace = true
+walkdir.workspace = true
 
 [lints]
 workspace = true

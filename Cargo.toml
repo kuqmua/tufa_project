@@ -109,6 +109,7 @@ yewdux-functional = {version = "=0.1.0"}
 jsonschema = { version = "=0.37.1", default-features = false, features = [] }
 rayon = {version = "=1.10.0"}
 bytes = {version = "=1.2.1"}
+walkdir = {version = "=2.5.0"}
 
 #todo check proc macro generated token on lints
 [workspace.lints.rust]
