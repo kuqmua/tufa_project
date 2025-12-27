@@ -3,7 +3,11 @@ pub enum FormatWithRustfmt {
     True,
     False,
 }
-pub fn write_token_stream_into_file(file_name: &str, token_stream: &proc_macro2::TokenStream, format_with_rustfmt: &FormatWithRustfmt) {
+pub fn write_token_stream_into_file(
+    file_name: &str,
+    token_stream: &proc_macro2::TokenStream,
+    format_with_rustfmt: &FormatWithRustfmt,
+) {
     let path_stringified = format!("{file_name}.rs");
     let mut file = std::fs::File::create(std::path::Path::new(&path_stringified)).unwrap_or_else(|error| panic!("error 7a495d4e-4437-45f1-add1-99028841f6e1, std::fs::File::create {path_stringified} failed {error:#?}"));
     std::io::Write::write_all(&mut file, &token_stream.to_string().into_bytes()).unwrap_or_else(|error| panic!("error f452a294-85b6-4488-b1cc-03093ec0cbfe, file.write_all {path_stringified} failed {error:#?}"));
@@ -18,6 +22,9 @@ pub fn write_token_stream_into_file(file_name: &str, token_stream: &proc_macro2:
             .arg(&path_stringified)
             .status()
             .unwrap_or_else(|_| panic!("error 741f1cce-76db-4529-b25e-5d00078f952a, cannot get execution status of {command}"));
-        assert!(status.success(), "error f59653b5-5a66-4626-a75d-ef38d6fd8e29, execution of {command} status is not success: {status:#?}");
+        assert!(
+            status.success(),
+            "error f59653b5-5a66-4626-a75d-ef38d6fd8e29, execution of {command} status is not success: {status:#?}"
+        );
     }
 }

@@ -1,17 +1,31 @@
 //todo generate authorization rights enum for json fields
 //todo bug in update if updating array and creating element in jsonb array without anything - read_only_ids generation logic of vec returns wrong query part
 #[proc_macro_attribute]
-pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn postgresql_json_object_type_pattern(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     item
 }
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
-pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_json_object_type(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
         PostgresqlJsonType,
         PostgresqlTypeAndPostgresqlJsonType,
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlJsonObjectTypePattern {
         Standart,
         Array,
@@ -28,7 +42,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         Concrete(PostgresqlJsonObjectTypeRecord),
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
+        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let postgresql_json_object_type_record_vec = {
         let generate_postgresql_json_object_type_config = serde_json::from_str::<GeneratePostgresqlJsonObjectTypeConfig>(
@@ -6758,7 +6773,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &macros_helpers::FormatWithRustfmt::True,
         );
     }
-    let generated: proc_macro2::TokenStream = quote::quote! {#(#postgresql_json_object_type_array)*};
+    let generated: proc_macro2::TokenStream =
+        quote::quote! {#(#postgresql_json_object_type_array)*};
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlJsonObjectType",
     //     &generated,

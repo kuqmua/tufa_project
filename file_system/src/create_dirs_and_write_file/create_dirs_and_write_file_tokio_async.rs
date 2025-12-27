@@ -7,19 +7,31 @@ pub enum CreateDirsAndWriteFileTokioAsyncErrorNamed {
     },
 }
 
-pub async fn create_dirs_and_write_file_tokio_async(path: &std::path::Path, bytes: &[u8]) -> Result<(), CreateDirsAndWriteFileTokioAsyncErrorNamed> {
+pub async fn create_dirs_and_write_file_tokio_async(
+    path: &std::path::Path,
+    bytes: &[u8],
+) -> Result<(), CreateDirsAndWriteFileTokioAsyncErrorNamed> {
     if let Some(prefix) = path.parent()
         && let Err(error) = std::fs::create_dir_all(prefix)
     {
-        return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError { error, code_occurence: error_occurence_lib::code_occurence!() });
+        return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        });
     }
     match tokio::fs::File::open(path).await {
         Ok(mut file) => {
             if let Err(error) = tokio::io::AsyncWriteExt::write_all(&mut file, bytes).await {
-                return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError { error, code_occurence: error_occurence_lib::code_occurence!() });
+                return Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+                    error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError { error, code_occurence: error_occurence_lib::code_occurence!() }),
+        Err(error) => Err(CreateDirsAndWriteFileTokioAsyncErrorNamed::StdIoError {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }),
     }
 }

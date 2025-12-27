@@ -1,7 +1,13 @@
 pub use generate_postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
 pub use generate_postgresql_json_object_type::postgresql_json_object_type_pattern;
 
-#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(
+    Debug,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurence,
+)]
 pub enum UniqueVecTryNewErrorNamed<T> {
     NotUnique {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -38,7 +44,9 @@ impl<T: PartialEq + Clone> UniqueVec<T> {
 const _: () = {
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T> {
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+        _serde::Deserialize<'de> for UniqueVec<T>
+    {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -52,9 +60,14 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            {
                 type Value = UniqueVec<T>;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
                 }
                 #[inline]
@@ -73,8 +86,12 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct UniqueVec with 1 element",
+                        ));
                     };
                     match UniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -93,7 +110,10 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UniqueVec<T> {
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for UniqueVec<T>
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
     }

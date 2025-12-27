@@ -847,9 +847,7 @@ pub struct Animal {
     pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug, Clone, Copy,
-    postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"
@@ -1013,9 +1011,7 @@ pub struct Doggie {
     pub field_809: OptionVecOfCatWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug, Clone, Copy,
-    postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 // #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
 #[postgresql_crud::postgresql_json_object_type_pattern{
     // "All"

@@ -27,7 +27,9 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
             Ok(Self::EoVecErrorOccurence)
         } else if value == "eo_hashmap_key_std_string_string_value_to_std_string_string" {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringString)
-        } else if value == "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize" {
+        } else if value
+            == "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
+        {
             Ok(Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize)
         } else if value == "eo_hashmap_key_std_string_string_value_error_occurence" {
             Ok(Self::EoHashMapKeyStdStringStringValueErrorOccurence)
@@ -59,29 +61,50 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
         option_attribute.map_or_else(|| Err("option attribute is None".to_owned()), Ok)
     }
 }
-impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
+impl crate::attribute_ident_stringified::AttributeIdentStringified
+    for ErrorOccurenceFieldAttribute
+{
     fn attribute_ident_stringified(&self) -> &str {
         match self {
             Self::EoToStdStringString => "eo_to_std_string_string",
-            Self::EoToStdStringStringSerializeDeserialize => "eo_to_std_string_string_serialize_deserialize",
+            Self::EoToStdStringStringSerializeDeserialize => {
+                "eo_to_std_string_string_serialize_deserialize"
+            }
             Self::EoErrorOccurence => "eo_error_occurence",
             Self::EoVecToStdStringString => "eo_vec_to_std_string_string",
-            Self::EoVecToStdStringStringSerializeDeserialize => "eo_vec_to_std_string_string_serialize_deserialize",
+            Self::EoVecToStdStringStringSerializeDeserialize => {
+                "eo_vec_to_std_string_string_serialize_deserialize"
+            }
             Self::EoVecErrorOccurence => "eo_vec_error_occurence",
-            Self::EoHashMapKeyStdStringStringValueToStdStringString => "eo_hashmap_key_std_string_string_value_to_std_string_string",
-            Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize",
-            Self::EoHashMapKeyStdStringStringValueErrorOccurence => "eo_hashmap_key_std_string_string_value_error_occurence",
+            Self::EoHashMapKeyStdStringStringValueToStdStringString => {
+                "eo_hashmap_key_std_string_string_value_to_std_string_string"
+            }
+            Self::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
+                "eo_hashmap_key_std_string_string_value_to_std_string_string_serialize_deserialize"
+            }
+            Self::EoHashMapKeyStdStringStringValueErrorOccurence => {
+                "eo_hashmap_key_std_string_string_value_error_occurence"
+            }
         }
     }
 }
 impl ErrorOccurenceFieldAttribute {
     pub fn to_attribute_view_token_stream(&self) -> proc_macro2::TokenStream {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
-        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .unwrap_or_else(|_| {
+                panic!(
+                    "{value} {}",
+                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+                )
+            })
     }
 }
 
-pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::Variant) -> proc_macro2::TokenStream {
+pub fn generate_serialize_deserialize_version_of_named_syn_variant(
+    value: &syn::Variant,
+) -> proc_macro2::TokenStream {
     let element_ident = &value.ident;
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named

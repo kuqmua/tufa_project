@@ -16,7 +16,11 @@ pub struct ServerPortErrorNamed {
 }
 impl std::fmt::Display for ServerPortErrorNamed {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
+        write!(
+            f,
+            "server_port_min_value: {}, server_port_max_value: {}, value: {}",
+            self.server_port_min_value, self.server_port_max_value, self.value
+        )
     }
 }
 impl std::error::Error for ServerPortErrorNamed {}
@@ -28,7 +32,9 @@ impl TryFrom<u16> for ServerPort {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
                 server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: String::from(server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE),
+                message: String::from(
+                    server_port_common::SERVER_PORT_IN_SYSTEM_PORT_RANGE_ERROR_MESSAGE,
+                ),
             })
         } else if value <= server_port_common::SERVER_PORT_MAX_VALUE {
             Ok(Self(value))
@@ -37,7 +43,9 @@ impl TryFrom<u16> for ServerPort {
                 server_port_min_value: server_port_common::SERVER_PORT_MIN_VALUE,
                 server_port_max_value: server_port_common::SERVER_PORT_MAX_VALUE,
                 value,
-                message: String::from(server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE),
+                message: String::from(
+                    server_port_common::SERVER_PORT_IN_EPHEMERAL_PORT_RANGE_ERROR_MESSAGE,
+                ),
             })
         }
     }
@@ -47,14 +55,12 @@ impl<'de> serde::Deserialize<'de> for ServerPort {
     where
         D: serde::Deserializer<'de>,
     {
-        match Self::try_from(
-            match u16::deserialize(deserializer) {
-                Ok(value) => value,
-                Err(error) => {
-                    return Err(error);
-                }
+        match Self::try_from(match u16::deserialize(deserializer) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
             }
-        ) {
+        }) {
             Ok(value) => Ok(value),
             Err(error) => Err(serde::de::Error::custom(error)),
         }

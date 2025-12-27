@@ -19,15 +19,22 @@ impl http_logic::GetAxumHttpStatusCode for CheckBodySizeErrorNamed {
     }
 }
 
-pub async fn check_body_size(body: axum::body::Body, limit: usize) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
+pub async fn check_body_size(
+    body: axum::body::Body,
+    limit: usize,
+) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
     let size_hint = axum::body::HttpBody::size_hint(&body);
     //todo maybe move to router with idenpotent key log or something
     match size_hint.exact() {
         Some(value) => {
             println!(
                 "HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte",
-                value.checked_div(1024).expect("111fd01a-cfef-47f0-bc0b-661da0d8371b"),
-                value.checked_div(1_048_576).expect("efbe0db4-2196-4998-b11f-8844ce5fcf18"), //(1024*1024)
+                value
+                    .checked_div(1024)
+                    .expect("111fd01a-cfef-47f0-bc0b-661da0d8371b"),
+                value
+                    .checked_div(1_048_576)
+                    .expect("efbe0db4-2196-4998-b11f-8844ce5fcf18"), //(1024*1024)
             );
         }
         None => {

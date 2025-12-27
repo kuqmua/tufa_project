@@ -12,14 +12,25 @@ pub enum CreateDirsAndWritePrettyJsonSyncErrorNamed {
     },
 }
 
-pub fn create_dirs_and_write_pretty_json_sync(path: &std::path::Path, serde_json_value: serde_json::Value) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
+pub fn create_dirs_and_write_pretty_json_sync(
+    path: &std::path::Path,
+    serde_json_value: serde_json::Value,
+) -> Result<(), CreateDirsAndWritePrettyJsonSyncErrorNamed> {
     match serde_json::to_string_pretty(&serde_json_value) {
         Ok(value) => {
             if let Err(error) = crate::create_dirs_and_write_file_sync(path, value.as_bytes()) {
-                return Err(CreateDirsAndWritePrettyJsonSyncErrorNamed::WriteBytesIntoFile { error, code_occurence: error_occurence_lib::code_occurence!() });
+                return Err(
+                    CreateDirsAndWritePrettyJsonSyncErrorNamed::WriteBytesIntoFile {
+                        error,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    },
+                );
             }
             Ok(())
         }
-        Err(error) => Err(CreateDirsAndWritePrettyJsonSyncErrorNamed::SerdeJson { error, code_occurence: error_occurence_lib::code_occurence!() }),
+        Err(error) => Err(CreateDirsAndWritePrettyJsonSyncErrorNamed::SerdeJson {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        }),
     }
 }

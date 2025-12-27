@@ -1,5 +1,7 @@
 #[proc_macro]
-pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_json_types(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI8,
@@ -68,11 +70,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
                 | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
                 PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Boolean,
-                PostgresqlJsonType::StdStringStringAsJsonbString | PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
+                PostgresqlJsonType::StdStringStringAsJsonbString
+                | PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
             }
         }
     }
-    #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Eq,
+        Hash,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlJsonType {
         StdPrimitiveI8AsJsonbNumber,
         StdPrimitiveI16AsJsonbNumber,
@@ -90,10 +104,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     }
     impl quote::ToTokens for PostgresqlJsonType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().expect("eb6cafe0-ad0d-4108-8b0e-c062b155efbb").to_tokens(tokens);
+            self.to_string()
+                .parse::<proc_macro2::TokenStream>()
+                .expect("eb6cafe0-ad0d-4108-8b0e-c062b155efbb")
+                .to_tokens(tokens);
         }
     }
-    #[derive(Debug, Clone, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        Eq,
+        Hash,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlJsonTypePattern {
         Standart,
         ArrayDimension1 {
@@ -120,8 +148,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             match &self {
                 Self::Standart => None,
                 Self::ArrayDimension1 { .. } => Some(Self::Standart),
-                Self::ArrayDimension2 { dimension2_not_null_or_nullable, .. } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable }),
-                Self::ArrayDimension3 { dimension2_not_null_or_nullable, dimension3_not_null_or_nullable, .. } => Some(Self::ArrayDimension2 {
+                Self::ArrayDimension2 {
+                    dimension2_not_null_or_nullable,
+                    ..
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                }),
+                Self::ArrayDimension3 {
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    ..
+                } => Some(Self::ArrayDimension2 {
                     dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
                     dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
                 }),
@@ -141,8 +178,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             match &self {
                 Self::Standart | Self::ArrayDimension1 { .. } => None,
                 Self::ArrayDimension2 { .. } => Some(Self::Standart),
-                Self::ArrayDimension3 { dimension3_not_null_or_nullable, .. } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable }),
-                Self::ArrayDimension4 { dimension3_not_null_or_nullable, dimension4_not_null_or_nullable, .. } => Some(Self::ArrayDimension2 {
+                Self::ArrayDimension3 {
+                    dimension3_not_null_or_nullable,
+                    ..
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                }),
+                Self::ArrayDimension4 {
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                    ..
+                } => Some(Self::ArrayDimension2 {
                     dimension1_not_null_or_nullable: *dimension3_not_null_or_nullable,
                     dimension2_not_null_or_nullable: *dimension4_not_null_or_nullable,
                 }),
@@ -150,14 +196,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
         const fn down_by_3(&self) -> Option<Self> {
             match &self {
-                Self::Standart | Self::ArrayDimension1 { .. } | Self::ArrayDimension2 { .. } => None,
+                Self::Standart | Self::ArrayDimension1 { .. } | Self::ArrayDimension2 { .. } => {
+                    None
+                }
                 Self::ArrayDimension3 { .. } => Some(Self::Standart),
-                Self::ArrayDimension4 { dimension4_not_null_or_nullable, .. } => Some(Self::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable }),
+                Self::ArrayDimension4 {
+                    dimension4_not_null_or_nullable,
+                    ..
+                } => Some(Self::ArrayDimension1 {
+                    dimension1_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                }),
             }
         }
         const fn down_by_4(&self) -> Option<Self> {
             match &self {
-                Self::Standart | Self::ArrayDimension1 { .. } | Self::ArrayDimension2 { .. } | Self::ArrayDimension3 { .. } => None,
+                Self::Standart
+                | Self::ArrayDimension1 { .. }
+                | Self::ArrayDimension2 { .. }
+                | Self::ArrayDimension3 { .. } => None,
                 Self::ArrayDimension4 { .. } => Some(Self::Standart),
             }
         }
@@ -193,8 +249,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             match &value {
                 PostgresqlJsonTypePattern::Standart => Err(()),
                 PostgresqlJsonTypePattern::ArrayDimension1 { .. } => Ok(Self::ArrayDimension1),
-                PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. } => Ok(Self::ArrayDimension2 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable }),
-                PostgresqlJsonTypePattern::ArrayDimension3 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable, .. } => Ok(Self::ArrayDimension3 {
+                PostgresqlJsonTypePattern::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    ..
+                } => Ok(Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                }),
+                PostgresqlJsonTypePattern::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    ..
+                } => Ok(Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
                 }),
@@ -235,13 +300,25 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
         fn select_array(&self) -> Vec<&postgresql_crud_macros_common::NotNullOrNullable> {
             match &self {
-                Self::ArrayDimension2 { dimension1_not_null_or_nullable } => vec![&dimension1_not_null_or_nullable],
-                Self::ArrayDimension3 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => vec![&dimension2_not_null_or_nullable, &dimension1_not_null_or_nullable],
+                Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                } => vec![&dimension1_not_null_or_nullable],
+                Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => vec![
+                    &dimension2_not_null_or_nullable,
+                    &dimension1_not_null_or_nullable,
+                ],
                 Self::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
-                } => vec![&dimension3_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension1_not_null_or_nullable],
+                } => vec![
+                    &dimension3_not_null_or_nullable,
+                    &dimension2_not_null_or_nullable,
+                    &dimension1_not_null_or_nullable,
+                ],
             }
         }
     }
@@ -250,8 +327,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
             match &value {
                 ArrayDimension::ArrayDimension1 => Err(()),
-                ArrayDimension::ArrayDimension2 { dimension1_not_null_or_nullable } => Ok(Self::ArrayDimension2 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable }),
-                ArrayDimension::ArrayDimension3 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => Ok(Self::ArrayDimension3 {
+                ArrayDimension::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                } => Ok(Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                }),
+                ArrayDimension::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => Ok(Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
                 }),
@@ -282,7 +366,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     use rayon::iter::ParallelIterator as _;
     panic_location::panic_location();
     let postgresql_json_type_record_vec = {
-        let generate_postgresql_json_types_config = serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string()).expect("1123f78f-9c84-4001-b619-b534dd55a835");
+        let generate_postgresql_json_types_config = serde_json::from_str::<
+            GeneratePostgresqlJsonTypesConfig,
+        >(&input_token_stream.to_string())
+        .expect("1123f78f-9c84-4001-b619-b534dd55a835");
         let postgresql_json_type_record_vec = match generate_postgresql_json_types_config {
             GeneratePostgresqlJsonTypesConfig::All => PostgresqlJsonType::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type| {
                 for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
@@ -369,7 +456,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         };
         {
             let mut seen = std::collections::HashSet::new();
-            assert!(postgresql_json_type_record_vec.iter().all(|element| seen.insert(element)), "not unique postgersql type provided: {postgresql_json_type_record_vec:#?}");
+            assert!(
+                postgresql_json_type_record_vec
+                    .iter()
+                    .all(|element| seen.insert(element)),
+                "not unique postgersql type provided: {postgresql_json_type_record_vec:#?}"
+            );
         };
         postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
@@ -2585,8 +2677,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.0.clone().into()},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => 
-                                generate_iter_or_match_token_stream(
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_iter_or_match_token_stream(
                                     not_null_or_nullable,
                                     &generate_update_to_read_only_ids_token_stream(
                                         &ident_not_null_token_stream,
@@ -2936,7 +3027,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     );
     // }
     let generated = {
-        let content_token_stream = postgresql_json_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")).collect::<Vec<proc_macro2::TokenStream>>();
+        let content_token_stream = postgresql_json_type_array
+            .into_iter()
+            .map(|element| {
+                element
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
+            })
+            .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {
             #(#content_token_stream)*
             // #example_token_stream

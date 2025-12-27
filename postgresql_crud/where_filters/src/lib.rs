@@ -1,6 +1,16 @@
 generate_where_filters::generate_where_filters!();
 
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(
+    Debug,
+    Default,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    schemars::JsonSchema,
+)]
 pub enum EncodeFormat {
     #[default]
     Base64,
@@ -16,7 +26,9 @@ impl std::fmt::Display for EncodeFormat {
         }
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for EncodeFormat
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self::default()
     }
@@ -26,18 +38,26 @@ impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOne
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(
+        value: Vec<T>,
+    ) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
-            return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+            return Err(
+                postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            );
         }
         {
             let mut acc = vec![];
             for element in &value {
                 if acc.contains(&element) {
-                    return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                        value: element.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
+                    return Err(
+                        postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                            value: element.clone(),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        },
+                    );
                 }
                 acc.push(element);
             }
@@ -52,14 +72,23 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
-    pub fn query_part_one_by_one(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+    pub fn query_part_one_by_one(
+        &self,
+        increment: &mut u64,
+        _: &dyn std::fmt::Display,
+        _is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = String::default();
         for _ in self.to_vec() {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(acc, "${value},").is_err() {
-                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!() });
+                        return Err(
+                            postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            },
+                        );
                     }
                 }
                 Err(error) => {
@@ -70,7 +99,13 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         let _: Option<char> = acc.pop();
         Ok(acc)
     }
-    pub fn query_bind_one_by_one<'query_lifetime>(self, mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    pub fn query_bind_one_by_one<'query_lifetime>(
+        self,
+        mut query: sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<
+        sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+        String,
+    >
     where
         T: 'query_lifetime,
     {
@@ -86,7 +121,9 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+        _serde::Deserialize<'de> for PostgresqlJsonTypeNotEmptyUniqueVec<T>
+    {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -100,10 +137,18 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            {
                 type Value = PostgresqlJsonTypeNotEmptyUniqueVec<T>;
-                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "tuple struct PostgresqlJsonTypeNotEmptyUniqueVec")
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __f,
+                        "tuple struct PostgresqlJsonTypeNotEmptyUniqueVec",
+                    )
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -118,8 +163,12 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlJsonTypeNotEmptyUniqueVec with 1 element"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct PostgresqlJsonTypeNotEmptyUniqueVec with 1 element",
+                        ));
                     };
                     match PostgresqlJsonTypeNotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -138,7 +187,10 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for PostgresqlJsonTypeNotEmptyUniqueVec<T>
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
     }
@@ -153,17 +205,27 @@ impl<T> From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
         value.0
     }
 }
-impl<'lifetime, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for PostgresqlJsonTypeNotEmptyUniqueVec<T>
+impl<'lifetime, T> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
+    for PostgresqlJsonTypeNotEmptyUniqueVec<T>
 where
     T: serde::Serialize + 'lifetime,
 {
-    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        _: &dyn std::fmt::Display,
+        _is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
             Ok(value) => Ok(format!("${value}")),
             Err(error) => Err(error),
         }
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
         if let Err(error) = query.try_bind(sqlx::types::Json(self.0)) {
             return Err(error.to_string());
         }
@@ -191,7 +253,11 @@ const _: () = {
         where
             __S: _serde::Serializer,
         {
-            _serde::Serializer::serialize_newtype_struct(__serializer, "RegexRegex", &self.0.to_string())
+            _serde::Serializer::serialize_newtype_struct(
+                __serializer,
+                "RegexRegex",
+                &self.0.to_string(),
+            )
         }
     }
 };
@@ -212,7 +278,10 @@ const _: () = {
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = RegexRegex;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "tuple struct RegexRegex")
                 }
                 #[inline]
@@ -233,8 +302,12 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct RegexRegex with 1 element"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<String>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct RegexRegex with 1 element",
+                        ));
                     };
                     Ok(RegexRegex(match regex::Regex::new(&__field0) {
                         Ok(value) => value,
@@ -274,18 +347,24 @@ impl std::fmt::Display for RegexRegex {
         write!(f, "{}", self.0)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for RegexRegex
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(regex::Regex::new("[a-z]+").expect("22a9eda5-7898-41d7-8176-8acb97786e1e"))
     }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema,
+)]
 pub enum RegularExpressionCase {
     Sensitive,
     Insensitive,
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegularExpressionCase {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for RegularExpressionCase
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self::Sensitive
     }
@@ -307,7 +386,14 @@ where
     start: T,
     end: T,
 }
-#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(
+    Debug,
+    Clone,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurence,
+)]
 pub enum BetweenTryNewErrorNamed<T> {
     StartMoreOrEqualToEnd {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -317,9 +403,19 @@ pub enum BetweenTryNewErrorNamed<T> {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + PartialOrd> Between<T> {
+impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + PartialOrd>
+    Between<T>
+{
     fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
-        if start < end { Ok(Self { start, end }) } else { Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd { start, end, code_occurence: error_occurence_lib::code_occurence!() }) }
+        if start < end {
+            Ok(Self { start, end })
+        } else {
+            Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+                start,
+                end,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
     }
 }
 const _: () = {
@@ -327,7 +423,11 @@ const _: () = {
     #[automatically_derived]
     impl<'de, T> _serde::Deserialize<'de> for Between<T>
     where
-        T: std::fmt::Debug + _serde::Deserialize<'de> + PartialOrd + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+        T: std::fmt::Debug
+            + _serde::Deserialize<'de>
+            + PartialOrd
+            + sqlx::Type<sqlx::Postgres>
+            + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
     {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
@@ -344,7 +444,10 @@ const _: () = {
             struct __FieldVisitor;
             impl _serde::de::Visitor<'_> for __FieldVisitor {
                 type Value = __Field;
-                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "field identifier")
                 }
                 fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
@@ -390,17 +493,26 @@ const _: () = {
             #[doc(hidden)]
             struct __Visitor<'de, T>
             where
-                T: _serde::Deserialize<'de> + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+                T: _serde::Deserialize<'de>
+                    + sqlx::Type<sqlx::Postgres>
+                    + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
             {
                 marker: _serde::__private::PhantomData<Between<T>>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
             where
-                T: std::fmt::Debug + _serde::Deserialize<'de> + PartialOrd + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+                T: std::fmt::Debug
+                    + _serde::Deserialize<'de>
+                    + PartialOrd
+                    + sqlx::Type<sqlx::Postgres>
+                    + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
             {
                 type Value = Between<T>;
-                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "struct Between")
                 }
                 #[inline]
@@ -408,11 +520,19 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(1usize, &"struct Between with 2 elements"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            1usize,
+                            &"struct Between with 2 elements",
+                        ));
                     };
-                    let Some(__field1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(2usize, &"struct Between with 2 elements"));
+                    let Some(__field1) = _serde::de::SeqAccess::next_element::<T>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            2usize,
+                            &"struct Between with 2 elements",
+                        ));
                     };
                     match Between::try_new(__field0, __field1) {
                         Ok(value) => Ok(value),
@@ -426,22 +546,32 @@ const _: () = {
                 {
                     let mut __field0: Option<T> = None;
                     let mut __field1: Option<T> = None;
-                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
+                    {
                         match __key {
                             __Field::__field0 => {
                                 if Option::is_some(&__field0) {
-                                    return Err(<__A::Error as _serde::de::Error>::duplicate_field("start"));
+                                    return Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                    );
                                 }
-                                __field0 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                                __field0 =
+                                    Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
                             }
                             __Field::__field1 => {
                                 if Option::is_some(&__field1) {
-                                    return Err(<__A::Error as _serde::de::Error>::duplicate_field("end"));
+                                    return Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                    );
                                 }
-                                __field1 = Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                                __field1 =
+                                    Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
                             }
                             __Field::__ignore => {
-                                let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                                let _: serde::de::IgnoredAny =
+                                    _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(
+                                        &mut __map,
+                                    )?;
                             }
                         }
                     }
@@ -473,7 +603,13 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Between<T> {
+impl<
+    T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+        + sqlx::Type<sqlx::Postgres>
+        + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for Between<T>
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             start: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -481,23 +617,38 @@ impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContains
         }
     }
 }
-impl<'lifetime, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for Between<T> {
-    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        let start_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(error);
-            }
-        };
-        let end_increment = match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(error);
-            }
-        };
+impl<
+    'lifetime,
+    T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
+> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for Between<T>
+{
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        _: &dyn std::fmt::Display,
+        _: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        let start_increment =
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
+        let end_increment =
+            match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
         Ok(format!("between ${start_increment} and ${end_increment}"))
     }
-    fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+    fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
         if let Err(error) = query.try_bind(self.start) {
             return Err(error.to_string());
         }
@@ -511,18 +662,26 @@ impl<'lifetime, T: Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeNotEmptyUniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
-    pub fn try_new(value: Vec<T>) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
+    pub fn try_new(
+        value: Vec<T>,
+    ) -> Result<Self, postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
-            return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+            return Err(
+                postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            );
         }
         {
             let mut acc = vec![];
             for element in &value {
                 if acc.contains(&element) {
-                    return Err(postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                        value: element.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
+                    return Err(
+                        postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
+                            value: element.clone(),
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        },
+                    );
                 }
                 acc.push(element);
             }
@@ -540,7 +699,9 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeNotEmptyUniqueVec<T> {
+    impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+        _serde::Deserialize<'de> for PostgresqlTypeNotEmptyUniqueVec<T>
+    {
         fn deserialize<__D>(__deserializer: __D) -> Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -554,10 +715,18 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
+            impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
+                _serde::de::Visitor<'de> for __Visitor<'de, T>
+            {
                 type Value = PostgresqlTypeNotEmptyUniqueVec<T>;
-                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "tuple struct PostgresqlTypeNotEmptyUniqueVec")
+                fn expecting(
+                    &self,
+                    __f: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __f,
+                        "tuple struct PostgresqlTypeNotEmptyUniqueVec",
+                    )
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -572,8 +741,12 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct PostgresqlTypeNotEmptyUniqueVec with 1 element",
+                        ));
                     };
                     match PostgresqlTypeNotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => Ok(value),
@@ -592,7 +765,10 @@ const _: () = {
         }
     }
 };
-impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeNotEmptyUniqueVec<T> {
+impl<T: postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
+    postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for PostgresqlTypeNotEmptyUniqueVec<T>
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
     }
@@ -608,9 +784,21 @@ impl<T> From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
     }
 }
 
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
+#[derive(
+    Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema,
+)]
 pub struct BoundedStdVecVec<T, const LENGTH: usize>(Vec<T>);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurence,
+    schemars::JsonSchema,
+)]
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -628,14 +816,26 @@ enum Variant {
     Normal,
     MinusOne,
 }
-impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime, const LENGTH: usize> BoundedStdVecVec<T, LENGTH> {
+impl<
+    'lifetime,
+    T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'lifetime,
+    const LENGTH: usize,
+> BoundedStdVecVec<T, LENGTH>
+{
     pub const fn to_inner(&self) -> &Vec<T> {
         &self.0
     }
     pub fn into_inner(self) -> Vec<T> {
         self.0
     }
-    fn query_part(&self, increment: &mut u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: bool, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType, variant: &Variant) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        _: &dyn std::fmt::Display,
+        _is_need_to_add_logical_operator: bool,
+        postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
+        variant: &Variant,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
         let mut acc = String::new();
         let current_len = match &variant {
             Variant::Normal => self.0.len(),
@@ -649,7 +849,8 @@ impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
                         acc,
                         "{}",
                         &match &postgresql_type_or_postgresql_json_type {
-                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[${value}]"),
+                            PostgresqlTypeOrPostgresqlJsonType::PostgresqlType =>
+                                format!("[${value}]"),
                             PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => {
                                 format!("->${value}")
                             }
@@ -657,7 +858,11 @@ impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
                     )
                     .is_err()
                     {
-                        return Err(postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer { code_occurence: error_occurence_lib::code_occurence!() });
+                        return Err(
+                            postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            },
+                        );
                     }
                 }
                 Err(error) => {
@@ -667,19 +872,67 @@ impl<'lifetime, T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx:
         }
         Ok(acc)
     }
-    pub fn postgresql_type_query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::Normal)
+    pub fn postgresql_type_query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
+            &Variant::Normal,
+        )
     }
-    pub fn postgresql_json_type_query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::Normal)
+    pub fn postgresql_json_type_query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+            &Variant::Normal,
+        )
     }
-    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::MinusOne)
+    pub fn postgresql_type_query_part_minus_one(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType,
+            &Variant::MinusOne,
+        )
     }
-    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.query_part(increment, column, is_need_to_add_logical_operator, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
+    pub fn postgresql_json_type_query_part_minus_one(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.query_part(
+            increment,
+            column,
+            is_need_to_add_logical_operator,
+            &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType,
+            &Variant::MinusOne,
+        )
     }
-    pub fn query_bind(self, mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+    pub fn query_bind(
+        self,
+        mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
         for element in self.0 {
             if let Err(error) = query.try_bind(element) {
                 return Err(error.to_string());
@@ -728,8 +981,14 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 type Value = BoundedStdVecVec<T, LENGTH>;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct BoundedStdVecVec")
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct BoundedStdVecVec",
+                    )
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -747,8 +1006,12 @@ const _: () = {
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)? else {
-                        return Err(_serde::de::Error::invalid_length(0usize, &"tuple struct BoundedStdVecVec with 1 element"));
+                    let Some(__field0) = _serde::de::SeqAccess::next_element::<Vec<T>>(&mut __seq)?
+                    else {
+                        return Err(_serde::de::Error::invalid_length(
+                            0usize,
+                            &"tuple struct BoundedStdVecVec with 1 element",
+                        ));
                     };
                     match BoundedStdVecVec::try_from(__field0) {
                         Ok(value) => Ok(value),
@@ -767,7 +1030,12 @@ const _: () = {
         }
     }
 };
-impl<T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement, const LENGTH: usize> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for BoundedStdVecVec<T, LENGTH> {
+impl<
+    T: Clone + postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    const LENGTH: usize,
+> postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for BoundedStdVecVec<T, LENGTH>
+{
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(vec![<T as postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
     }

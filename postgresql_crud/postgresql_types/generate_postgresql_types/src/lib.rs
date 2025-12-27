@@ -1,5 +1,7 @@
 #[proc_macro]
-pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_types(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     #[derive(Debug, strum_macros::Display)]
     enum RustTypeName {
         StdPrimitiveI16,
@@ -116,7 +118,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlType {
         StdPrimitiveI16AsInt2,
         StdPrimitiveI32AsInt4,
@@ -218,7 +229,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream")).to_tokens(tokens);
+            self.to_string()
+                .parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| {
+                    panic!("failed to parse PostgresqlType to proc_macro2::TokenStream")
+                })
+                .to_tokens(tokens);
         }
     }
     impl From<&PostgresqlTypeRange> for PostgresqlType {
@@ -226,9 +242,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match value {
                 PostgresqlTypeRange::StdPrimitiveI32AsInt4 => Self::StdPrimitiveI32AsInt4,
                 PostgresqlTypeRange::StdPrimitiveI64AsInt8 => Self::StdPrimitiveI64AsInt8,
-                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
-                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
-                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
+                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => {
+                    Self::SqlxTypesChronoNaiveDateAsDate
+                }
+                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                    Self::SqlxTypesChronoNaiveDateTimeAsTimestamp
+                }
+                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                    Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
+                }
             }
         }
     }
@@ -275,19 +297,41 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     impl std::fmt::Display for PostgresqlTypeRange {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
+            write!(
+                f,
+                "{}",
+                naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(
+                    self
+                ))
+            )
         }
     }
     impl quote::ToTokens for PostgresqlTypeRange {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens);
+            self.to_string()
+                .parse::<proc_macro2::TokenStream>()
+                .unwrap_or_else(|_| {
+                    panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")
+                })
+                .to_tokens(tokens);
         }
     }
     // todo reuse it(move to postgresql_macros_common) if sqlx devs will add nested array support
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(
+        Debug,
+        Clone,
+        PartialEq,
+        serde::Serialize,
+        serde::Deserialize,
+        strum_macros::Display,
+        strum_macros::EnumIter,
+        enum_extension_lib::EnumExtension,
+    )]
     enum PostgresqlTypePattern {
         Standart,
-        ArrayDimension1 { dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable },
+        ArrayDimension1 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
         // sqlx does not support nested arrays yet. https://github.com/launchbadge/sqlx/issues/2280
         // ArrayDimension2 {
         //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -341,7 +385,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #[automatically_derived]
                 impl _serde::de::Visitor<'_> for __FieldVisitor {
                     type Value = __Field;
-                    fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    fn expecting(
+                        &self,
+                        __f: &mut _serde::__private::Formatter<'_>,
+                    ) -> _serde::__private::fmt::Result {
                         _serde::__private::Formatter::write_str(__f, "field identifier")
                     }
                     fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
@@ -396,7 +443,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #[automatically_derived]
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = PostgresqlTypeRecord;
-                    fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    fn expecting(
+                        &self,
+                        __f: &mut _serde::__private::Formatter<'_>,
+                    ) -> _serde::__private::fmt::Result {
                         _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
                     }
                     #[inline]
@@ -404,14 +454,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     where
                         __A: _serde::de::SeqAccess<'de>,
                     {
-                        let Some(__field0) = _serde::de::SeqAccess::next_element::<PostgresqlType>(&mut __seq)? else {
-                            return Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                        let Some(__field0) =
+                            _serde::de::SeqAccess::next_element::<PostgresqlType>(&mut __seq)?
+                        else {
+                            return Err(_serde::de::Error::invalid_length(
+                                0usize,
+                                &"struct PostgresqlTypeRecord with 3 elements",
+                            ));
                         };
-                        let Some(__field1) = _serde::de::SeqAccess::next_element::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __seq)? else {
-                            return Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                        let Some(__field1) = _serde::de::SeqAccess::next_element::<
+                            postgresql_crud_macros_common::NotNullOrNullable,
+                        >(&mut __seq)?
+                        else {
+                            return Err(_serde::de::Error::invalid_length(
+                                1usize,
+                                &"struct PostgresqlTypeRecord with 3 elements",
+                            ));
                         };
-                        let Some(__field2) = _serde::de::SeqAccess::next_element::<PostgresqlTypePattern>(&mut __seq)? else {
-                            return Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
+                        let Some(__field2) = _serde::de::SeqAccess::next_element::<
+                            PostgresqlTypePattern,
+                        >(&mut __seq)?
+                        else {
+                            return Err(_serde::de::Error::invalid_length(
+                                2usize,
+                                &"struct PostgresqlTypeRecord with 3 elements",
+                            ));
                         };
                         match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
                             Ok(value) => Ok(value),
@@ -424,30 +491,57 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         __A: _serde::de::MapAccess<'de>,
                     {
                         let mut __field0: Option<PostgresqlType> = None;
-                        let mut __field1: Option<postgresql_crud_macros_common::NotNullOrNullable> = None;
+                        let mut __field1: Option<postgresql_crud_macros_common::NotNullOrNullable> =
+                            None;
                         let mut __field2: Option<PostgresqlTypePattern> = None;
-                        while let Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        while let Some(__key) =
+                            _serde::de::MapAccess::next_key::<__Field>(&mut __map)?
+                        {
                             match __key {
                                 __Field::__field0 => {
                                     if Option::is_some(&__field0) {
-                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type"));
+                                        return Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "postgresql_type",
+                                            ),
+                                        );
                                     }
-                                    __field0 = Some(_serde::de::MapAccess::next_value::<PostgresqlType>(&mut __map)?);
+                                    __field0 =
+                                        Some(_serde::de::MapAccess::next_value::<PostgresqlType>(
+                                            &mut __map,
+                                        )?);
                                 }
                                 __Field::__field1 => {
                                     if Option::is_some(&__field1) {
-                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("not_null_or_nullable"));
+                                        return Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "not_null_or_nullable",
+                                            ),
+                                        );
                                     }
-                                    __field1 = Some(_serde::de::MapAccess::next_value::<postgresql_crud_macros_common::NotNullOrNullable>(&mut __map)?);
+                                    __field1 =
+                                        Some(_serde::de::MapAccess::next_value::<
+                                            postgresql_crud_macros_common::NotNullOrNullable,
+                                        >(&mut __map)?);
                                 }
                                 __Field::__field2 => {
                                     if Option::is_some(&__field2) {
-                                        return Err(<__A::Error as _serde::de::Error>::duplicate_field("postgresql_type_pattern"));
+                                        return Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "postgresql_type_pattern",
+                                            ),
+                                        );
                                     }
-                                    __field2 = Some(_serde::de::MapAccess::next_value::<PostgresqlTypePattern>(&mut __map)?);
+                                    __field2 =
+                                        Some(_serde::de::MapAccess::next_value::<
+                                            PostgresqlTypePattern,
+                                        >(&mut __map)?);
                                 }
                                 __Field::__ignore => {
-                                    let _: serde::de::IgnoredAny = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                                    let _: serde::de::IgnoredAny =
+                                        _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(
+                                            &mut __map,
+                                        )?;
                                 }
                             }
                         }
@@ -461,16 +555,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         let __field2_value = match __field2 {
                             Some(value) => value,
-                            None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
+                            None => {
+                                _serde::__private::de::missing_field("postgresql_type_pattern")?
+                            }
                         };
-                        match PostgresqlTypeRecord::try_from((__field0_value, __field1_value, __field2_value)) {
+                        match PostgresqlTypeRecord::try_from((
+                            __field0_value,
+                            __field1_value,
+                            __field2_value,
+                        )) {
                             Ok(value) => Ok(value),
                             Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                         }
                     }
                 }
                 #[doc(hidden)]
-                const FIELDS: &[&str] = &["postgresql_type", "not_null_or_nullable", "postgresql_type_pattern"];
+                const FIELDS: &[&str] = &[
+                    "postgresql_type",
+                    "not_null_or_nullable",
+                    "postgresql_type_pattern",
+                ];
                 _serde::Deserializer::deserialize_struct(
                     __deserializer,
                     "PostgresqlTypeRecord",
@@ -483,9 +587,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     };
-    impl TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
+    impl
+        TryFrom<(
+            PostgresqlType,
+            postgresql_crud_macros_common::NotNullOrNullable,
+            PostgresqlTypePattern,
+        )> for PostgresqlTypeRecord
+    {
         type Error = String;
-        fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Result<Self, Self::Error> {
+        fn try_from(
+            value: (
+                PostgresqlType,
+                postgresql_crud_macros_common::NotNullOrNullable,
+                PostgresqlTypePattern,
+            ),
+        ) -> Result<Self, Self::Error> {
             let cant_support_nullable_variants_message = "cant support nullable variants: ";
             let cant_support_array_version_message = "cant support array_version: ";
             match &value.0.can_be_nullable() {
@@ -495,18 +611,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         not_null_or_nullable: value.1,
                         postgresql_type_pattern: value.2,
                     }),
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => match &value.0.can_be_an_array_element() {
-                        CanBeAnArrayElement::True => Ok(Self {
-                            postgresql_type: value.0,
-                            not_null_or_nullable: value.1,
-                            postgresql_type_pattern: value.2,
-                        }),
-                        CanBeAnArrayElement::False => Err(format!("{cant_support_array_version_message}{value:#?}")),
-                    },
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                        match &value.0.can_be_an_array_element() {
+                            CanBeAnArrayElement::True => Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern: value.2,
+                            }),
+                            CanBeAnArrayElement::False => {
+                                Err(format!("{cant_support_array_version_message}{value:#?}"))
+                            }
+                        }
+                    }
                 },
                 CanBeNullable::False => {
                     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
-                        return Err(format!("{cant_support_nullable_variants_message}{value:#?}"));
+                        return Err(format!(
+                            "{cant_support_nullable_variants_message}{value:#?}"
+                        ));
                     }
                     match &value.2 {
                         PostgresqlTypePattern::Standart => Ok(Self {
@@ -514,16 +636,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             not_null_or_nullable: value.1,
                             postgresql_type_pattern: value.2,
                         }),
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &value.0.can_be_an_array_element() {
+                        PostgresqlTypePattern::ArrayDimension1 {
+                            dimension1_not_null_or_nullable,
+                        } => match &value.0.can_be_an_array_element() {
                             CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => Ok(Self {
-                                    postgresql_type: value.0,
-                                    not_null_or_nullable: value.1,
-                                    postgresql_type_pattern: value.2,
-                                }),
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => Err(format!("{cant_support_nullable_variants_message}{value:#?}")),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                    Ok(Self {
+                                        postgresql_type: value.0,
+                                        not_null_or_nullable: value.1,
+                                        postgresql_type_pattern: value.2,
+                                    })
+                                }
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => Err(
+                                    format!("{cant_support_nullable_variants_message}{value:#?}"),
+                                ),
                             },
-                            CanBeAnArrayElement::False => Err(format!("{cant_support_array_version_message}{value:#?}")),
+                            CanBeAnArrayElement::False => {
+                                Err(format!("{cant_support_array_version_message}{value:#?}"))
+                            }
                         },
                     }
                 }
@@ -602,7 +732,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserialize {
-        SsqlxPostgresTypesPgIntervalAsInterval,//Ssqlx instead of Sqlx - just to fix clippy lint
+        SsqlxPostgresTypesPgIntervalAsInterval, //Ssqlx instead of Sqlx - just to fix clippy lint
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
@@ -626,7 +756,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug)]
     enum PostgresqlTypeDeserialize {
         Derive,
-        ImplNewForDeserializeOrTryNewForDeserialize(PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize),
+        ImplNewForDeserializeOrTryNewForDeserialize(
+            PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize,
+        ),
     }
     impl From<&PostgresqlType> for PostgresqlTypeDeserialize {
         fn from(value: &PostgresqlType) -> Self {
@@ -665,7 +797,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     use rayon::iter::ParallelIterator as _;
     panic_location::panic_location();
     let postgresql_type_record_vec = {
-        let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("80485f71-4e21-4166-94df-722326c36a29");
+        let generate_postgresql_types_config =
+            serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string())
+                .expect("80485f71-4e21-4166-94df-722326c36a29");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
             GeneratePostgresqlTypesConfig::All => PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
                 let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(vec![], |mut current_acc, postgresql_type_pattern| {
@@ -739,56 +873,84 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
 
-        postgresql_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_type_record_element| {
-            use postgresql_crud_macros_common::NotNullOrNullable;
-            #[derive(Clone)]
-            struct PostgresqlTypeRecordHandle {
-                not_null_or_nullable: NotNullOrNullable,
-                postgresql_type_pattern: PostgresqlTypePattern,
-            }
-            fn generate_postgresql_type_record_handle_vec(postgresql_type_record_handle: PostgresqlTypeRecordHandle) -> Vec<PostgresqlTypeRecordHandle> {
-                let generate_vec = |current_postgresql_type_record_handle: PostgresqlTypeRecordHandle| {
-                    let mut acc = vec![];
-                    for element in generate_postgresql_type_record_handle_vec(current_postgresql_type_record_handle) {
-                        acc.push(element);
-                    }
-                    acc.push(postgresql_type_record_handle.clone());
-                    acc
-                };
-                //same pattern was in generate_postgresql_types 21.05.2025
-                match (&postgresql_type_record_handle.not_null_or_nullable, &postgresql_type_record_handle.postgresql_type_pattern) {
-                    (NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) => {
-                        vec![postgresql_type_record_handle]
-                    }
-                    (NotNullOrNullable::Nullable, PostgresqlTypePattern::Standart) => generate_vec(PostgresqlTypeRecordHandle {
-                        not_null_or_nullable: NotNullOrNullable::NotNull,
-                        postgresql_type_pattern: PostgresqlTypePattern::Standart,
-                    }),
-                    (NotNullOrNullable::NotNull, PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => generate_vec(PostgresqlTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_type_pattern: PostgresqlTypePattern::Standart,
-                    }),
-                    (NotNullOrNullable::Nullable, PostgresqlTypePattern::ArrayDimension1 { .. }) => generate_vec(PostgresqlTypeRecordHandle {
-                        not_null_or_nullable: NotNullOrNullable::NotNull,
-                        postgresql_type_pattern: postgresql_type_record_handle.postgresql_type_pattern.clone(),
-                    }),
+        postgresql_type_record_vec.into_iter().fold(
+            vec![],
+            |mut acc, postgresql_type_record_element| {
+                use postgresql_crud_macros_common::NotNullOrNullable;
+                #[derive(Clone)]
+                struct PostgresqlTypeRecordHandle {
+                    not_null_or_nullable: NotNullOrNullable,
+                    postgresql_type_pattern: PostgresqlTypePattern,
                 }
-            }
-            for postgresql_type_record_handle_element in generate_postgresql_type_record_handle_vec(PostgresqlTypeRecordHandle {
-                not_null_or_nullable: postgresql_type_record_element.not_null_or_nullable,
-                postgresql_type_pattern: postgresql_type_record_element.postgresql_type_pattern,
-            }) {
-                let postgresql_type_record = PostgresqlTypeRecord {
-                    postgresql_type: postgresql_type_record_element.postgresql_type.clone(),
-                    not_null_or_nullable: postgresql_type_record_handle_element.not_null_or_nullable,
-                    postgresql_type_pattern: postgresql_type_record_handle_element.postgresql_type_pattern,
-                };
-                if !acc.contains(&postgresql_type_record) {
-                    acc.push(postgresql_type_record);
+                fn generate_postgresql_type_record_handle_vec(
+                    postgresql_type_record_handle: PostgresqlTypeRecordHandle,
+                ) -> Vec<PostgresqlTypeRecordHandle> {
+                    let generate_vec =
+                        |current_postgresql_type_record_handle: PostgresqlTypeRecordHandle| {
+                            let mut acc = vec![];
+                            for element in generate_postgresql_type_record_handle_vec(
+                                current_postgresql_type_record_handle,
+                            ) {
+                                acc.push(element);
+                            }
+                            acc.push(postgresql_type_record_handle.clone());
+                            acc
+                        };
+                    //same pattern was in generate_postgresql_types 21.05.2025
+                    match (
+                        &postgresql_type_record_handle.not_null_or_nullable,
+                        &postgresql_type_record_handle.postgresql_type_pattern,
+                    ) {
+                        (NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) => {
+                            vec![postgresql_type_record_handle]
+                        }
+                        (NotNullOrNullable::Nullable, PostgresqlTypePattern::Standart) => {
+                            generate_vec(PostgresqlTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_type_pattern: PostgresqlTypePattern::Standart,
+                            })
+                        }
+                        (
+                            NotNullOrNullable::NotNull,
+                            PostgresqlTypePattern::ArrayDimension1 {
+                                dimension1_not_null_or_nullable,
+                            },
+                        ) => generate_vec(PostgresqlTypeRecordHandle {
+                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                            postgresql_type_pattern: PostgresqlTypePattern::Standart,
+                        }),
+                        (
+                            NotNullOrNullable::Nullable,
+                            PostgresqlTypePattern::ArrayDimension1 { .. },
+                        ) => generate_vec(PostgresqlTypeRecordHandle {
+                            not_null_or_nullable: NotNullOrNullable::NotNull,
+                            postgresql_type_pattern: postgresql_type_record_handle
+                                .postgresql_type_pattern
+                                .clone(),
+                        }),
+                    }
                 }
-            }
-            acc
-        })
+                for postgresql_type_record_handle_element in
+                    generate_postgresql_type_record_handle_vec(PostgresqlTypeRecordHandle {
+                        not_null_or_nullable: postgresql_type_record_element.not_null_or_nullable,
+                        postgresql_type_pattern: postgresql_type_record_element
+                            .postgresql_type_pattern,
+                    })
+                {
+                    let postgresql_type_record = PostgresqlTypeRecord {
+                        postgresql_type: postgresql_type_record_element.postgresql_type.clone(),
+                        not_null_or_nullable: postgresql_type_record_handle_element
+                            .not_null_or_nullable,
+                        postgresql_type_pattern: postgresql_type_record_handle_element
+                            .postgresql_type_pattern,
+                    };
+                    if !acc.contains(&postgresql_type_record) {
+                        acc.push(postgresql_type_record);
+                    }
+                }
+                acc
+            },
+        )
     };
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlTypesJsonVariants",
@@ -5819,7 +5981,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         .collect::<(Vec<String>, Vec<String>)>();
     //this need only for better development experience
     if false {
-        let content_token_stream = columns_token_stream.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("79ee6381-c845-4762-a6f6-1c6b38806535")).collect::<Vec<proc_macro2::TokenStream>>();
+        let content_token_stream = columns_token_stream
+            .into_iter()
+            .map(|element| {
+                element
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("79ee6381-c845-4762-a6f6-1c6b38806535")
+            })
+            .collect::<Vec<proc_macro2::TokenStream>>();
         macros_helpers::write_token_stream_into_file(
             "GeneratePostgresqlTypesExample",
             &quote::quote! {
@@ -5831,7 +6000,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         );
     }
     let generated = {
-        let content_token_stream = postgresql_type_array.into_iter().map(|element| element.parse::<proc_macro2::TokenStream>().expect("e0c9257d-e554-4147-8174-b431c364c1ac")).collect::<Vec<proc_macro2::TokenStream>>();
+        let content_token_stream = postgresql_type_array
+            .into_iter()
+            .map(|element| {
+                element
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("e0c9257d-e554-4147-8174-b431c364c1ac")
+            })
+            .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     };
     // macros_helpers::write_token_stream_into_file(

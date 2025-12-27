@@ -1,5 +1,7 @@
 #[proc_macro]
-pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_struct_or_enum_derive_token_stream_builder(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     #[derive(Clone)]
     struct Element {
         derive_trait_name_upper_camel_case: proc_macro2::TokenStream,
@@ -7,9 +9,9 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
         derive_trait_name_if_snake_case: proc_macro2::TokenStream,
         trait_type: proc_macro2::TokenStream,
     }
-    let make_pub_snake_case_token_stream = quote::quote!{make_pub};
-    let make_pub_if_snake_case_token_stream = quote::quote!{make_pub_if};
-    let make_pub_upper_camel_case_token_stream = quote::quote!{MakePub};
+    let make_pub_snake_case_token_stream = quote::quote! {make_pub};
+    let make_pub_if_snake_case_token_stream = quote::quote! {make_pub_if};
+    let make_pub_upper_camel_case_token_stream = quote::quote! {MakePub};
     let element_vec = serde_json::from_str::<Vec<String>>(&input_token_stream.to_string())
         .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
         .into_iter()
@@ -45,26 +47,27 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
             };
             Element {
                 derive_trait_name_upper_camel_case: {
-                    let value = naming::parameter::DeriveSelfUpperCamelCase::from_display(&snake_case);
-                    quote::quote!{#value}
+                    let value =
+                        naming::parameter::DeriveSelfUpperCamelCase::from_display(&snake_case);
+                    quote::quote! {#value}
                 },
                 derive_trait_name_snake_case: {
                     let value = naming::parameter::DeriveSelfSnakeCase::from_display(&snake_case);
-                    quote::quote!{#value}
+                    quote::quote! {#value}
                 },
                 derive_trait_name_if_snake_case: {
                     let value = naming::parameter::DeriveSelfIfSnakeCase::from_display(&snake_case);
-                    quote::quote!{#value}
+                    quote::quote! {#value}
                 },
-                trait_type: element.parse::<proc_macro2::TokenStream>().expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
+                trait_type: element
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
             }
-        }).collect::<Vec<Element>>();
-    let (
-        make_pub_pub_enum_token_stream,
-        pub_enum_derive_vec_token_stream
-    ) = {
+        })
+        .collect::<Vec<Element>>();
+    let (make_pub_pub_enum_token_stream, pub_enum_derive_vec_token_stream) = {
         fn generate_pun_enum_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-            quote::quote!{
+            quote::quote! {
                 #[derive(Debug, Clone, Copy)]
                 pub enum #ident {
                     True,
@@ -74,35 +77,31 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
         }
         (
             generate_pun_enum_token_stream(&make_pub_upper_camel_case_token_stream),
-            element_vec.iter().map(|element|generate_pun_enum_token_stream(
-                &element.derive_trait_name_upper_camel_case
-            ))
+            element_vec.iter().map(|element| {
+                generate_pun_enum_token_stream(&element.derive_trait_name_upper_camel_case)
+            }),
         )
     };
-    let (
-        make_pub_derive_trait_name_bool_token_stream,
-        field_vec_token_stream
-    ) = {
-        fn generate_derive_trait_name_bool_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-            quote::quote!{#ident: bool,}
+    let (make_pub_derive_trait_name_bool_token_stream, field_vec_token_stream) = {
+        fn generate_derive_trait_name_bool_token_stream(
+            ident: &dyn quote::ToTokens,
+        ) -> proc_macro2::TokenStream {
+            quote::quote! {#ident: bool,}
         }
         (
             generate_derive_trait_name_bool_token_stream(&make_pub_snake_case_token_stream),
-            element_vec.iter().map(|element|generate_derive_trait_name_bool_token_stream(
-                &element.derive_trait_name_snake_case
-            ))
+            element_vec.iter().map(|element| {
+                generate_derive_trait_name_bool_token_stream(&element.derive_trait_name_snake_case)
+            }),
         )
     };
-    let (
-        make_pub_derive_and_derive_if_token_stream,
-        derive_and_derive_if_vec_token_stream
-    ) = {
+    let (make_pub_derive_and_derive_if_token_stream, derive_and_derive_if_vec_token_stream) = {
         fn generate_derive_and_derive_if_token_stream(
             ident_snake_case: &dyn quote::ToTokens,
             ident_if_snake_case: &dyn quote::ToTokens,
             ident_upper_camel_case: &dyn quote::ToTokens,
         ) -> proc_macro2::TokenStream {
-            quote::quote!{
+            quote::quote! {
                 pub const fn #ident_snake_case(mut self) -> Self {
                     self.#ident_snake_case = true;
                     self
@@ -140,17 +139,18 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
             })
         )
     };
-    let if_self_derive_acc_push_vec_token_stream = element_vec.iter().map(|element|{
+    let if_self_derive_acc_push_vec_token_stream = element_vec.iter().map(|element| {
         let derive_trait_name_snake_case = &element.derive_trait_name_snake_case;
         let trait_type = &element.trait_type;
-        quote::quote!{
+        quote::quote! {
             if self.#derive_trait_name_snake_case {
                 acc.push(quote::quote!{#trait_type});
             }
         }
     });
-    let struct_or_enum_derive_token_stream_builder_upper_camel_case = quote::quote!{StructOrEnumDeriveTokenStreamBuilder};
-    let struct_or_enum_upper_camel_case = quote::quote!{StructOrEnum};
+    let struct_or_enum_derive_token_stream_builder_upper_camel_case =
+        quote::quote! {StructOrEnumDeriveTokenStreamBuilder};
+    let struct_or_enum_upper_camel_case = quote::quote! {StructOrEnum};
     let generated: proc_macro2::TokenStream = quote::quote! {
         #make_pub_pub_enum_token_stream
         #(#pub_enum_derive_vec_token_stream)*

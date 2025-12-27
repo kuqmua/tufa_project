@@ -11,7 +11,9 @@ pub trait TryFromStdEnvVarOk: Sized {
 pub struct ServiceSocketAddress(pub std::net::SocketAddr);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkServiceSocketAddressErrorNamed {
-    StdNetSocketAddr { std_net_socket_addr: std::net::AddrParseError },
+    StdNetSocketAddr {
+        std_net_socket_addr: std::net::AddrParseError,
+    },
 }
 impl TryFromStdEnvVarOk for ServiceSocketAddress {
     type Error = TryFromStdEnvVarOkServiceSocketAddressErrorNamed;
@@ -28,21 +30,27 @@ impl TryFromStdEnvVarOk for ServiceSocketAddress {
 pub struct Timezone(pub chrono::FixedOffset);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTimezoneErrorNamed {
-    StdPrimitiveI32Parsing { std_primitive_i32_parsing: std::num::ParseIntError },
-    ChronoFixedOffset { chrono_fixed_offset: String },
+    StdPrimitiveI32Parsing {
+        std_primitive_i32_parsing: std::num::ParseIntError,
+    },
+    ChronoFixedOffset {
+        chrono_fixed_offset: String,
+    },
 }
 impl TryFromStdEnvVarOk for Timezone {
     type Error = TryFromStdEnvVarOkTimezoneErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
-        let Some(fixed_offset) = chrono::FixedOffset::east_opt(
-            match value.parse::<i32>() {
-                Ok(value_i32) => value_i32,
-                Err(error) => {
-                    return Err(Self::Error::StdPrimitiveI32Parsing { std_primitive_i32_parsing: error });
-                }
+        let Some(fixed_offset) = chrono::FixedOffset::east_opt(match value.parse::<i32>() {
+            Ok(value_i32) => value_i32,
+            Err(error) => {
+                return Err(Self::Error::StdPrimitiveI32Parsing {
+                    std_primitive_i32_parsing: error,
+                });
             }
-        ) else {
-            return Err(Self::Error::ChronoFixedOffset { chrono_fixed_offset: String::from("not east") });
+        }) else {
+            return Err(Self::Error::ChronoFixedOffset {
+                chrono_fixed_offset: String::from("not east"),
+            });
         };
         Ok(Self(fixed_offset))
     }
@@ -58,7 +66,9 @@ impl TryFromStdEnvVarOk for RedisUrl {
     type Error = TryFromStdEnvVarOkRedisUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
-            return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
+            return Err(Self::Error::IsEmpty {
+                is_empty: String::from("is empty"),
+            });
         } else {
             secrecy::Secret::new(value)
         }))
@@ -75,7 +85,9 @@ impl TryFromStdEnvVarOk for MongoUrl {
     type Error = TryFromStdEnvVarOkMongoUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
-            return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
+            return Err(Self::Error::IsEmpty {
+                is_empty: String::from("is empty"),
+            });
         } else {
             secrecy::Secret::new(value)
         }))
@@ -92,7 +104,9 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
     type Error = TryFromStdEnvVarOkDatabaseUrlErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
-            return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
+            return Err(Self::Error::IsEmpty {
+                is_empty: String::from("is empty"),
+            });
         } else {
             secrecy::Secret::new(value)
         }))
@@ -109,7 +123,9 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
     type Error = TryFromStdEnvVarOkStartingCheckLinkErrorNamed;
     fn try_from_std_env_var_ok(value: String) -> Result<Self, Self::Error> {
         Ok(Self(if value.is_empty() {
-            return Err(Self::Error::IsEmpty { is_empty: String::from("is empty") });
+            return Err(Self::Error::IsEmpty {
+                is_empty: String::from("is empty"),
+            });
         } else {
             value
         }))
@@ -120,7 +136,9 @@ impl TryFromStdEnvVarOk for StartingCheckLink {
 pub struct TracingLevel(pub types::TracingLevel);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkTracingLevelErrorNamed {
-    AppStateTracingLevelParsing { app_state_tracing_type_parsing: String },
+    AppStateTracingLevelParsing {
+        app_state_tracing_type_parsing: String,
+    },
 }
 impl TryFromStdEnvVarOk for TracingLevel {
     type Error = TryFromStdEnvVarOkTracingLevelErrorNamed;
@@ -128,7 +146,9 @@ impl TryFromStdEnvVarOk for TracingLevel {
         Ok(Self(match value.parse::<types::TracingLevel>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::AppStateTracingLevelParsing { app_state_tracing_type_parsing: error });
+                return Err(Self::Error::AppStateTracingLevelParsing {
+                    app_state_tracing_type_parsing: error,
+                });
             }
         }))
     }
@@ -138,7 +158,9 @@ impl TryFromStdEnvVarOk for TracingLevel {
 pub struct SourcePlaceType(pub types::SourcePlaceType);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkSourcePlaceTypeErrorNamed {
-    AppStateSourcePlaceTypeParsing { app_state_source_place_type_parsing: String },
+    AppStateSourcePlaceTypeParsing {
+        app_state_source_place_type_parsing: String,
+    },
 }
 impl TryFromStdEnvVarOk for SourcePlaceType {
     type Error = TryFromStdEnvVarOkSourcePlaceTypeErrorNamed;
@@ -146,7 +168,9 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
         Ok(Self(match value.parse::<types::SourcePlaceType>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::AppStateSourcePlaceTypeParsing { app_state_source_place_type_parsing: error });
+                return Err(Self::Error::AppStateSourcePlaceTypeParsing {
+                    app_state_source_place_type_parsing: error,
+                });
             }
         }))
     }
@@ -156,7 +180,9 @@ impl TryFromStdEnvVarOk for SourcePlaceType {
 pub struct EnableApiGitCommitCheck(pub bool);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed {
-    StdPrimitiveBoolParsing { std_primitive_bool_parsing: std::str::ParseBoolError },
+    StdPrimitiveBoolParsing {
+        std_primitive_bool_parsing: std::str::ParseBoolError,
+    },
 }
 impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
     type Error = TryFromStdEnvVarOkEnableApiGitCommitCheckErrorNamed;
@@ -164,7 +190,9 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
         Ok(Self(match value.parse::<bool>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::StdPrimitiveBoolParsing { std_primitive_bool_parsing: error });
+                return Err(Self::Error::StdPrimitiveBoolParsing {
+                    std_primitive_bool_parsing: error,
+                });
             }
         }))
     }
@@ -174,7 +202,9 @@ impl TryFromStdEnvVarOk for EnableApiGitCommitCheck {
 pub struct MaximumSizeOfHttpBodyInBytes(pub usize);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed {
-    StdPrimitiveUsizeParsing { std_primitive_usize_parsing: std::num::ParseIntError },
+    StdPrimitiveUsizeParsing {
+        std_primitive_usize_parsing: std::num::ParseIntError,
+    },
 }
 impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
     type Error = TryFromStdEnvVarOkMaximumSizeOfHttpBodyInBytesErrorNamed;
@@ -182,7 +212,9 @@ impl TryFromStdEnvVarOk for MaximumSizeOfHttpBodyInBytes {
         Ok(Self(match value.parse::<usize>() {
             Ok(handle) => handle,
             Err(error) => {
-                return Err(Self::Error::StdPrimitiveUsizeParsing { std_primitive_usize_parsing: error });
+                return Err(Self::Error::StdPrimitiveUsizeParsing {
+                    std_primitive_usize_parsing: error,
+                });
             }
         }))
     }

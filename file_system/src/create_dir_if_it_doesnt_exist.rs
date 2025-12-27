@@ -12,7 +12,10 @@ pub fn create_dir_if_it_doesnt_exist(path: &str) -> Result<(), CreateDirIfItDoes
         return Ok(());
     }
     if let Err(error) = std::fs::create_dir_all(path) {
-        return Err(CreateDirIfItDoesntExistErrorNamed::CreateDirAll { error, code_occurence: error_occurence_lib::code_occurence!() });
+        return Err(CreateDirIfItDoesntExistErrorNamed::CreateDirAll {
+            error,
+            code_occurence: error_occurence_lib::code_occurence!(),
+        });
     }
     Ok(())
 }

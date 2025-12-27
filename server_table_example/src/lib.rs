@@ -1,6 +1,4 @@
-#[derive(Debug, Clone, Copy
-    , postgresql_crud::GeneratePostgresqlTable
-)]
+#[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -31,7 +29,8 @@ pub struct TableExample {
     // #[generate_postgresql_crud_primary_key]
     // pub primary_key: postgresql_crud::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
     #[generate_postgresql_table_primary_key]
-    pub primary_key_column: postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
+    pub primary_key_column:
+        postgresql_crud::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
     pub column_0: postgresql_crud::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::OptionStdPrimitiveI16AsNullableInt2,

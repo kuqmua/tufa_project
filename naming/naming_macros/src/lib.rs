@@ -1,7 +1,9 @@
 const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 
 #[proc_macro]
-pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("90e5793b-d813-44aa-a124-c738772030c2").into_iter().map(|element| {
         {
@@ -77,7 +79,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
 }
 
 #[proc_macro]
-pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element| {
         {
@@ -243,11 +247,16 @@ enum Operation {
 }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
+        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
-    let syn::Data::Enum(data_enum) = &syn_derive_input.data else { panic!("error d26bf85e-20cf-4ee1-97bc-d61f59eb11bc") };
+    let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
+        panic!("error d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
+    };
     let std_string_string_token_stream = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
         .variants
@@ -286,9 +295,12 @@ only works if all enum variants without fields like this
  }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input_token_stream).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
         panic!("error ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
@@ -330,9 +342,12 @@ only works if all enum variants without fields like this
  }
 */
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
+        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
         panic!("error b2263e7e-0e5e-48ef-8d91-32864281d4aa");

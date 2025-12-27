@@ -1096,9 +1096,25 @@ fn maybe_primary_key(is_primary_key: bool) -> impl std::fmt::Display {
     if is_primary_key { "primary key" } else { "" }
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    PartialEq,
+    Eq,
+    Default,
+    serde::Serialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+)]
 pub struct PaginationStartsWithOne(postgresql_crud_common::PaginationBase);
-#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(
+    Debug,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurence,
+)]
 pub enum PaginationStartsWithOneTryNewErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
@@ -1119,17 +1135,38 @@ pub enum PaginationStartsWithOneTryNewErrorNamed {
     },
 }
 impl PaginationStartsWithOne {
-    pub fn try_new(limit: i64, offset: i64) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
+    pub fn try_new(
+        limit: i64,
+        offset: i64,
+    ) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
         if limit <= 0 || offset < 1 {
             if limit <= 0 {
-                Err(PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero { limit, code_occurence: error_occurence_lib::code_occurence!() })
+                Err(
+                    PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                        limit,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    },
+                )
             } else {
-                Err(PaginationStartsWithOneTryNewErrorNamed::OffsetIsLessThanOne { offset, code_occurence: error_occurence_lib::code_occurence!() })
+                Err(
+                    PaginationStartsWithOneTryNewErrorNamed::OffsetIsLessThanOne {
+                        offset,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    },
+                )
             }
         } else if offset.checked_add(limit).is_some() {
-            Ok(Self(postgresql_crud_common::PaginationBase::new_unchecked(limit, offset)))
+            Ok(Self(postgresql_crud_common::PaginationBase::new_unchecked(
+                limit, offset,
+            )))
         } else {
-            Err(PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow { limit, offset, code_occurence: error_occurence_lib::code_occurence!() })
+            Err(
+                PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                    limit,
+                    offset,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                },
+            )
         }
     }
     pub const fn start(&self) -> i64 {
@@ -1155,7 +1192,10 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         struct __FieldVisitor;
         impl serde::de::Visitor<'_> for __FieldVisitor {
             type Value = __Field;
-            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+            fn expecting(
+                &self,
+                __f: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
@@ -1205,7 +1245,10 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = PaginationStartsWithOne;
-            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+            fn expecting(
+                &self,
+                __f: &mut serde::__private::Formatter<'_>,
+            ) -> serde::__private::fmt::Result {
                 serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithOne")
             }
             #[inline]
@@ -1214,10 +1257,16 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                 __A: serde::de::SeqAccess<'de>,
             {
                 let Some(__field0) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    return Err(serde::de::Error::invalid_length(
+                        0usize,
+                        &"struct PaginationStartsWithOne with 2 elements",
+                    ));
                 };
                 let Some(__field1) = serde::de::SeqAccess::next_element::<i64>(&mut __seq)? else {
-                    return Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    return Err(serde::de::Error::invalid_length(
+                        1usize,
+                        &"struct PaginationStartsWithOne with 2 elements",
+                    ));
                 };
                 match PaginationStartsWithOne::try_new(__field0, __field1) {
                     Ok(value) => Ok(value),
@@ -1235,18 +1284,25 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                     match __key {
                         __Field::__field0 => {
                             if Option::is_some(&__field0) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
+                                    "limit",
+                                ));
                             }
                             __field0 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__field1 => {
                             if Option::is_some(&__field1) {
-                                return Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
+                                return Err(<__A::Error as serde::de::Error>::duplicate_field(
+                                    "offset",
+                                ));
                             }
                             __field1 = Some(serde::de::MapAccess::next_value::<i64>(&mut __map)?);
                         }
                         __Field::__ignore => {
-                            let _: serde::de::IgnoredAny = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                            let _: serde::de::IgnoredAny =
+                                serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(
+                                    &mut __map,
+                                )?;
                         }
                     }
                 }
@@ -1277,18 +1333,35 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         )
     }
 }
-impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime> for PaginationStartsWithOne {
-    fn query_part(&self, increment: &mut u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: bool) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        self.0.query_part(increment, column, is_need_to_add_logical_operator)
+impl<'lifetime> postgresql_crud_common::PostgresqlTypeWhereFilter<'lifetime>
+    for PaginationStartsWithOne
+{
+    fn query_part(
+        &self,
+        increment: &mut u64,
+        column: &dyn std::fmt::Display,
+        is_need_to_add_logical_operator: bool,
+    ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
+        self.0
+            .query_part(increment, column, is_need_to_add_logical_operator)
     }
-    fn query_bind(self, query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String> {
+    fn query_bind(
+        self,
+        query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
+    ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
+    {
         self.0.query_bind(query)
     }
 }
-impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithOne {
+impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+    for PaginationStartsWithOne
+{
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(postgresql_crud_common::PaginationBase::new_unchecked(postgresql_crud_common::DEFAULT_PAGINATION_LIMIT, 1))
+        Self(postgresql_crud_common::PaginationBase::new_unchecked(
+            postgresql_crud_common::DEFAULT_PAGINATION_LIMIT,
+            1,
+        ))
     }
 }
 impl postgresql_crud_common::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSize for PaginationStartsWithOne {

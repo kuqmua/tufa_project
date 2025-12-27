@@ -22,7 +22,9 @@ pub enum CheckCommitErrorNamed {
 impl http_logic::GetAxumHttpStatusCode for CheckCommitErrorNamed {
     fn get_axum_http_status_code(&self) -> axum::http::StatusCode {
         match self {
-            Self::CommitNotEqual { .. } | Self::CommitToStrConversion { .. } | Self::NoCommitHeader { .. } => axum::http::StatusCode::BAD_REQUEST,
+            Self::CommitNotEqual { .. }
+            | Self::CommitToStrConversion { .. }
+            | Self::NoCommitHeader { .. } => axum::http::StatusCode::BAD_REQUEST,
         }
     }
 }

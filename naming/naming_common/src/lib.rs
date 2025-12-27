@@ -17,7 +17,15 @@ where
     convert_case::Casing::to_case(value, convert_case::Case::ScreamingSnake)
 }
 fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
-    value.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    value
+        .to_string()
+        .parse::<proc_macro2::TokenStream>()
+        .unwrap_or_else(|_| {
+            panic!(
+                "{value} {}",
+                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
+            )
+        })
 }
 
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()
