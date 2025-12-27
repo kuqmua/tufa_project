@@ -121,8 +121,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_excluding_code_occurence_token_stream = {
                         let acc_token_stream = fields.iter()
-                        .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
-                        .map(|current_element| current_element.ident.as_ref().expect("error 971ace15-e8cb-4780-8589-2da5e99e5587"))
+                        .filter(|current_element| *current_element.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_snake_case_stringified)
+                        .map(|current_element| current_element.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
                         .collect::<Vec<&syn::Ident>>();
                         if acc_token_stream.is_empty() {
                             proc_macro2::TokenStream::new()
@@ -133,22 +133,22 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(
                         &fields.iter()
-                        .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
+                        .filter(|current_element| *current_element.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_snake_case_stringified)
                         .fold(
                             String::new(),
                             |mut acc, current_element| {
                                 use std::fmt::Write as _;
-                                let current_element_ident = &current_element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+                                let current_element_ident = &current_element.ident.as_ref().expect("2e7cd5fe-7653-4c10-8977-526b061d6748");
                                 assert!(writeln!(acc, "{current_element_ident}: {{}}").is_ok(), "error ab44c70f-092e-46a0-8daa-56fe44395228");
                                 acc
                             }
                         )
                     );
                     let fields_format_values_excluding_code_occurence_token_stream = fields.iter()
-                    .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
+                    .filter(|current_element| *current_element.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_snake_case_stringified)
                     .map(|current_element| {
-                        let current_element_ident = &current_element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("error 8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
+                        let current_element_ident = &current_element.ident.as_ref().expect("e97b25b9-49d3-4f89-a18a-4e77355c4c9c");
+                        match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
                             macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
                                     error_occurence_lib::ToStdStringString::to_std_string_string(#current_element_ident)
@@ -303,10 +303,10 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_token_stream = fields.iter().map(|current_element| &current_element.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter()
-                    .filter(|current_element| *current_element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *code_occurence_snake_case_stringified)
+                    .filter(|current_element| *current_element.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_snake_case_stringified)
                     .map(|current_element| {
-                        let current_element_ident = &current_element.ident.as_ref().expect(constants::IDENT_IS_NONE);
-                        let conversion_token_stream = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("error 449c3781-1900-4ed4-b784-485db5a08508") {
+                        let current_element_ident = &current_element.ident.as_ref().expect("9a672ac2-5184-4427-9d88-70cb2a0bd199");
+                        let conversion_token_stream = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("449c3781-1900-4ed4-b784-485db5a08508") {
                             macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote! {
                                     #current_element_ident: {
@@ -435,7 +435,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             "{}{}",
                             {
                                 assert!(fields.len() == 1, "fields.len() != 1");
-                                let field_type = &fields.iter().next().expect("no first field type").ty;
+                                let field_type = &fields.iter().next().expect("8a80c36d-0b80-4ade-a4aa-2febb8079bd9").ty;
                                 quote::quote! {#field_type}.to_string()
                             },
                             naming::WithSerializeDeserializeUpperCamelCase

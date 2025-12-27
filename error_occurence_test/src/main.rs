@@ -128,10 +128,10 @@ fn main() {
     let e_serialize_deserialize_version = error.into_serialize_deserialize_version();
     println!("--------------------------------------------------------------------------------------------------");
     println!("{e_serialize_deserialize_version}");
-    let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).expect("error 90127b1c-95fe-424c-951c-64abd475858a");
+    let e_serialize_deserialize_version_json_string = serde_json::to_string(&e_serialize_deserialize_version).expect("90127b1c-95fe-424c-951c-64abd475858a");
     println!("{e_serialize_deserialize_version_json_string}");
     println!("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize = serde_json::from_str(&e_serialize_deserialize_version_json_string).expect("error 05fffda3-53e8-433b-8d9a-9b8f8371c45e");
+    let e_serialize_deserialize_version_deserialized: ErrorNamedOneWithSerializeDeserialize = serde_json::from_str(&e_serialize_deserialize_version_json_string).expect("05fffda3-53e8-433b-8d9a-9b8f8371c45e");
     println!("{e_serialize_deserialize_version_deserialized}");
     println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 }

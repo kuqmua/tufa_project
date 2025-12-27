@@ -37,7 +37,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &format!("{}::postgresql_json_object_type_pattern", import_path.snake_case_std_primitive_str()),
             )
             .to_string()
-        ).expect("failed to get Config for generate_postgresql_json_object_type");
+        ).expect("246de453-00ee-420a-a502-c3db0c1b984d");
         match generate_postgresql_json_object_type_config {
             GeneratePostgresqlJsonObjectTypeConfig::All => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
                 for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
@@ -108,7 +108,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     ;
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
-    //     &serde_json::to_string(&postgresql_json_object_type_record_vec).expect("error efc7a263-f6cd-44ca-aacf-470a37971f7f"),
+    //     &serde_json::to_string(&postgresql_json_object_type_record_vec).expect("efc7a263-f6cd-44ca-aacf-470a37971f7f"),
     // );
 
     // element.iter().enumerate().fold(String::new(), |mut acc, (index, element)| {
@@ -152,7 +152,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             impl quote::ToTokens for PostgresqlJsonTypeSubtype {
                 fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("43ac0b62-551a-421e-aee0-9bf3dfffa3cc").to_tokens(tokens);
                 }
             }
             #[derive(Debug, Clone, strum_macros::Display)]
@@ -168,7 +168,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             impl quote::ToTokens for PostgresqlTypeSubtype {
                 fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                    self.to_string().parse::<proc_macro2::TokenStream>().expect("error 5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
+                    self.to_string().parse::<proc_macro2::TokenStream>().expect("5825d4b7-dd55-41e4-b54e-7b31557181b6").to_tokens(tokens);
                 }
             }
             enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
@@ -319,7 +319,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IdentPattern::ArrayNullableWithIdentifier => (vec_of_syn_derive_input_ident_with_id, array_of_not_null_jsonb_object_with_id, postgresql_crud_macros_common::NotNullOrNullable::Nullable),
                 };
                 let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
-                format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().expect("error 43784dd3-f37a-438d-8bc8-d17f63feac66")
+                format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().expect("43784dd3-f37a-438d-8bc8-d17f63feac66")
             };
 
             let ident = &generate_ident_upper_camel_case(&match (&not_null_or_nullable, &postgresql_json_object_type_pattern) {
@@ -482,7 +482,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #second_argument_token_stream
                                                 ),
                                             )
-                                            .expect("error f8c3796f-7574-468b-ac60-12a620c0917d"),
+                                            .expect("f8c3796f-7574-468b-ac60-12a620c0917d"),
                                         )
                                     }
                                 };
@@ -530,7 +530,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #second_argument_token_stream
                                                 ),
                                             )
-                                            .expect("error 187ece1f-7c99-437b-80a3-ed1a416731a3"),
+                                            .expect("187ece1f-7c99-437b-80a3-ed1a416731a3"),
                                         )
                                     }
                                 };
@@ -2230,7 +2230,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                     postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(
                         &generate_ident_read_or_ident_with_id_standart_not_null_read_upper_camel_case(is_standart_with_id),
-                        &current_vec_syn_field.iter().map(|current_element| (current_element.ident.as_ref().expect("error dd245060-a98c-4fb4-a16d-74262259fcd6"), &current_element.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(),
+                        &current_vec_syn_field.iter().map(|current_element| (current_element.ident.as_ref().expect("dd245060-a98c-4fb4-a16d-74262259fcd6"), &current_element.ty)).collect::<Vec<(&syn::Ident, &syn::Type)>>(),
                         current_vec_syn_field.len(),
                         &|_: &syn::Ident, syn_type: &syn::Type| {
                             let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
@@ -4602,7 +4602,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &{
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_owned());
                         quote::quote! {
-                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).expect("error 59a1654b-cbde-40a6-a958-383d263ee19d"))
+                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_table_type_declaration_upper_camel_case)).expect("59a1654b-cbde-40a6-a958-383d263ee19d"))
                         }
                     },
                     &ident_create_upper_camel_case,
@@ -4744,7 +4744,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     Some(
                                                         #import_path::NotEmptyUniqueEnumVec::try_new(
                                                             vec![#element_snake_case]
-                                                        ).expect("error af515faf-8805-44c3-a5b6-f6e307b8b23a")
+                                                        ).expect("af515faf-8805-44c3-a5b6-f6e307b8b23a")
                                                     )
                                                 )
                                             );
@@ -4753,7 +4753,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(
                                                 #import_path::NotEmptyUniqueEnumVec::try_new(
                                                     #value_snake_case
-                                                ).expect("error 44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
+                                                ).expect("44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
                                             )
                                         );
                                         if !#acc_snake_case.contains(&whole) {
@@ -4789,7 +4789,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #import_path::PostgresqlTypeWhere::try_new(
                                                             #import_path::LogicalOperator::And,
                                                             vec![#element_snake_case]
-                                                        ).expect("error 479db858-6f36-48ba-9ab0-741b7df7956c")
+                                                        ).expect("479db858-6f36-48ba-9ab0-741b7df7956c")
                                                     )
                                                 );
                                             }
@@ -4797,7 +4797,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
                                                     #value_snake_case
-                                                ).expect("error beaeb784-58ea-4836-9c54-73924493bfb4")
+                                                ).expect("beaeb784-58ea-4836-9c54-73924493bfb4")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -4831,7 +4831,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #import_path::PostgresqlTypeWhere::try_new(
                                                         #import_path::LogicalOperator::And,
                                                         vec![#element_snake_case]
-                                                    ).expect("error 1f7ae335-461f-4215-8fb5-ee7cf2f32881")
+                                                    ).expect("1f7ae335-461f-4215-8fb5-ee7cf2f32881")
                                                 );
                                                 if !#acc_snake_case.contains(&handle) {
                                                     #acc_snake_case.push(handle);
@@ -4841,7 +4841,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
                                                     #value_snake_case
-                                                ).expect("error 79634838-847d-4eeb-b199-4927d57b2e2c")
+                                                ).expect("79634838-847d-4eeb-b199-4927d57b2e2c")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -4869,10 +4869,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 dimensions: #import_path::BoundedStdVecVec::try_from(
                                                     vec![
                                                         #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                            i32::try_from(index).expect("error 5341936f-ce9e-4e14-ae30-765f04c12e14")
-                                                        ).expect("error 76906f3c-4472-4ac0-a605-1b02f02fd680")
+                                                            i32::try_from(index).expect("5341936f-ce9e-4e14-ae30-765f04c12e14")
+                                                        ).expect("76906f3c-4472-4ac0-a605-1b02f02fd680")
                                                     ]
-                                                ).expect("error 8a624c70-3701-4907-b361-5637c5361e1f"),
+                                                ).expect("8a624c70-3701-4907-b361-5637c5361e1f"),
                                                 #value_snake_case: #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
                                                     <#uuid_uuid_as_not_null_jsonb_string_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_merged_with_create_into_table_type_declaration_snake_case(
                                                         #read_only_ids_snake_case.0.#value_snake_case.#id_snake_case,
@@ -4925,7 +4925,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     Some(
                                                         #import_path::NotEmptyUniqueEnumVec::try_new(
                                                             vec![#element_snake_case]
-                                                        ).expect("error c05b81be-1b05-47a4-a4fc-f0310fc02b89")
+                                                        ).expect("c05b81be-1b05-47a4-a4fc-f0310fc02b89")
                                                     )
                                                 )
                                             );
@@ -4934,7 +4934,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(
                                                 #import_path::NotEmptyUniqueEnumVec::try_new(
                                                     #value_snake_case
-                                                ).expect("error b4c2c5a6-95df-4e30-853a-0132a8f4da96")
+                                                ).expect("b4c2c5a6-95df-4e30-853a-0132a8f4da96")
                                             )
                                         );
                                         if !#acc_snake_case.contains(&whole) {
@@ -4967,7 +4967,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #import_path::PostgresqlTypeWhere::try_new(
                                                             #import_path::LogicalOperator::And,
                                                             vec![#element_snake_case]
-                                                        ).expect("error 2f437949-0c13-4b15-83dd-8ef0399b7d61")
+                                                        ).expect("2f437949-0c13-4b15-83dd-8ef0399b7d61")
                                                     )
                                                 );
                                             }
@@ -4975,7 +4975,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
                                                     #value_snake_case
-                                                ).expect("error 01b5a0fc-c4e6-42f7-b32d-dc7321539c23")
+                                                ).expect("01b5a0fc-c4e6-42f7-b32d-dc7321539c23")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -5010,7 +5010,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             #import_path::LogicalOperator::And,
                                                             vec![#element_snake_case]
                                                         )
-                                                        .expect("error 38ca88dc-ab40-4a76-8bcd-223df66a1f81"),
+                                                        .expect("38ca88dc-ab40-4a76-8bcd-223df66a1f81"),
                                                     );
                                                     if !#acc_snake_case.contains(&handle) {
                                                         #acc_snake_case.push(handle);
@@ -5021,7 +5021,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #import_path::LogicalOperator::And,
                                                         #value_snake_case
                                                     )
-                                                    .expect("error 2b00c42f-4f61-45d0-a297-9e8b648d334e"),
+                                                    .expect("2b00c42f-4f61-45d0-a297-9e8b648d334e"),
                                                 );
                                                 if !#acc_snake_case.contains(&whole) {
                                                     #acc_snake_case.push(whole);
@@ -5037,8 +5037,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #import_path::PostgresqlJsonTypeWhereLengthEqual {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             #value_snake_case: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                i32::try_from(#create_snake_case.0.len()).expect("error 1811faf7-c0a5-4e05-b866-546affd441df")
-                                            ).expect("error a590f39b-ad2c-4002-afac-f7c18156362e"),
+                                                i32::try_from(#create_snake_case.0.len()).expect("1811faf7-c0a5-4e05-b866-546affd441df")
+                                            ).expect("a590f39b-ad2c-4002-afac-f7c18156362e"),
                                         }
                                     ));
                                     Some(#acc_snake_case)
@@ -5070,7 +5070,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     Some(
                                                         #import_path::NotEmptyUniqueEnumVec::try_new(
                                                             vec![#element_snake_case]
-                                                        ).expect("error af515faf-8805-44c3-a5b6-f6e307b8b23a")
+                                                        ).expect("af515faf-8805-44c3-a5b6-f6e307b8b23a")
                                                     )
                                                 )
                                             );
@@ -5079,7 +5079,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(
                                                 #import_path::NotEmptyUniqueEnumVec::try_new(
                                                     #value_snake_case
-                                                ).expect("error 44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
+                                                ).expect("44d4e9b2-12e2-44c4-8c67-88cb7b8465ce")
                                             )
                                         );
                                         if !#acc_snake_case.contains(&whole) {
@@ -5112,7 +5112,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #import_path::PostgresqlTypeWhere::try_new(
                                                             #import_path::LogicalOperator::And,
                                                             vec![#element_snake_case]
-                                                        ).expect("error 479db858-6f36-48ba-9ab0-741b7df7956c")
+                                                        ).expect("479db858-6f36-48ba-9ab0-741b7df7956c")
                                                     )
                                                 );
                                             }
@@ -5120,7 +5120,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
                                                     #value_snake_case
-                                                ).expect("error beaeb784-58ea-4836-9c54-73924493bfb4")
+                                                ).expect("beaeb784-58ea-4836-9c54-73924493bfb4")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -5155,7 +5155,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             #import_path::LogicalOperator::And,
                                                             vec![#element_snake_case]
                                                         )
-                                                        .expect("error 955c6c27-863d-4b9b-9d88-e71f11161b3e"),
+                                                        .expect("955c6c27-863d-4b9b-9d88-e71f11161b3e"),
                                                     );
                                                     if !#acc_snake_case.contains(&handle) {
                                                         #acc_snake_case.push(handle);
@@ -5166,7 +5166,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                         #import_path::LogicalOperator::And,
                                                         #value_snake_case
                                                     )
-                                                    .expect("error 6ee7a510-c8be-41f5-8fe5-505893eca3cc"),
+                                                    .expect("6ee7a510-c8be-41f5-8fe5-505893eca3cc"),
                                                 );
                                                 if !#acc_snake_case.contains(&whole) {
                                                     #acc_snake_case.push(whole);
@@ -5182,8 +5182,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #import_path::PostgresqlJsonTypeWhereLengthGreaterThan {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             #value_snake_case: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                i32::try_from(#create_snake_case.0.len()).expect("error 1fbbd897-2fae-4271-9fac-4b4007aecf32")
-                                            ).expect("error 0eb5d915-bbbe-44c0-9096-d3d858d3a937"),
+                                                i32::try_from(#create_snake_case.0.len()).expect("1fbbd897-2fae-4271-9fac-4b4007aecf32")
+                                            ).expect("0eb5d915-bbbe-44c0-9096-d3d858d3a937"),
                                         }
                                     ));
                                     Some(#acc_snake_case)
@@ -5539,7 +5539,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         quote::quote! {#value_snake_case.#field_ident.map(|#value_snake_case|#value_content_token_stream)}
                                     });
-                                    quote::quote! {#self_element_as_postgresql_type_read_token_stream::try_new(#(#parameters_token_stream),*).expect("error 3aeeabba-3ffc-4df2-a3bf-e389c40ec566")}
+                                    quote::quote! {#self_element_as_postgresql_type_read_token_stream::try_new(#(#parameters_token_stream),*).expect("3aeeabba-3ffc-4df2-a3bf-e389c40ec566")}
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let self_element_as_postgresql_type_read_token_stream = generate_type_as_postgresql_type_subtype_token_stream(&self_postgresql_json_type_token_stream, &PostgresqlTypeSubtype::Read);
@@ -5635,7 +5635,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut #acc_snake_case = vec![];
                                                 #(#parameters_token_stream)*
                                                 #acc_snake_case
-                                            }).expect("error a06dbdc5-296c-48a8-ba00-913e1fe82ebf")
+                                            }).expect("a06dbdc5-296c-48a8-ba00-913e1fe82ebf")
                                         )
                                     }
                                 },
@@ -5651,7 +5651,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             vec![],
                                             #import_path_unique_vec_ident_with_id_standart_not_null_update_element_token_stream::try_new(
                                                 #value_snake_case.into_iter().map(|#element_snake_case| #ident_with_id_standart_not_null_update_element_upper_camel_case {
-                                                    #id_snake_case: #uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().expect("error f04a2c6d-bc0b-4693-b7e5-ede348cb229e").#value_snake_case),
+                                                    #id_snake_case: #uuid_uuid_as_not_null_jsonb_string_update_upper_camel_case::new(#element_snake_case.#id_snake_case.clone().expect("f04a2c6d-bc0b-4693-b7e5-ede348cb229e").#value_snake_case),
                                                     fields: #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_update_with_new_or_try_new_unwraped_snake_case(
                                                         #ident_standart_not_null_read_inner_upper_camel_case {
                                                             #(#fields_token_stream),*
@@ -5660,10 +5660,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 })
                                                 .collect(),
                                             )
-                                            .expect("error ca51d559-d3d1-4855-8d9a-0f799cccd3e4"),
+                                            .expect("ca51d559-d3d1-4855-8d9a-0f799cccd3e4"),
                                             vec![],
                                         )
-                                        .expect("error 0449fe82-4acc-4c83-9753-18f313b278d1")
+                                        .expect("0449fe82-4acc-4c83-9753-18f313b278d1")
                                     }
                                 }
                             },
@@ -5774,7 +5774,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let field_ident = current_element.ident.as_ref().unwrap_or_else(|| {
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                         });
-                                        quote::quote! {#field_ident: #field_ident.expect("expect 106f16f2-ae03-48b3-9239-f4b1b60746d5")}
+                                        quote::quote! {#field_ident: #field_ident.expect("106f16f2-ae03-48b3-9239-f4b1b60746d5")}
                                     });
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
                                         #ident_read_only_ids_handle_upper_camel_case{
@@ -5847,7 +5847,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         });
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&current_element.ty);
                                         quote::quote! {
-                                            #field_ident: #field_type_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&#field_ident.expect("expect a3ec7cae-94a0-49c1-b5d1-88f7b2a3dd1d"))
+                                            #field_ident: #field_type_as_postgresql_json_type_test_cases_token_stream::#update_to_read_only_ids_snake_case(&#field_ident.expect("a3ec7cae-94a0-49c1-b5d1-88f7b2a3dd1d"))
                                         }
                                     });
                                     let value_content_token_stream = wrap_into_value_initialization_token_stream(&{
@@ -5897,7 +5897,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {
                                             #ident_read_upper_camel_case::try_new(
                                                 #(#parameters_token_stream),*
-                                            ).expect("error 57820868-38ac-4f77-aa0f-dc734399d8b2")
+                                            ).expect("57820868-38ac-4f77-aa0f-dc734399d8b2")
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
@@ -5930,7 +5930,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 let mut #acc_snake_case = #value_snake_case.0.#value_snake_case.clone().into_iter().map(|#element_snake_case|{
                                                     #ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #(#parameters_token_stream),*
-                                                    ).expect("error 8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
+                                                    ).expect("8f6fb6b6-6e84-4819-b9c6-526d39e1ac88")
                                                 }).collect::<Vec<#ident_with_id_standart_not_null_read_upper_camel_case>>();
                                                 #acc_snake_case.sort_by(|first, second| {
                                                     if let (Some(value_first), Some(value_second)) = (&first.id, &second.id) {
@@ -6034,7 +6034,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Standart => {
                                         let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&|content_token_stream: &dyn quote::ToTokens|{
                                             quote::quote!{
-                                                #read_snake_case.#content_token_stream.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
+                                                #read_snake_case.#content_token_stream.expect("2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
                                             }
                                         });
                                         quote::quote!{
@@ -6057,7 +6057,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     PostgresqlJsonObjectTypePattern::Array => {
                                         let struct_initializattion_token_stream = generate_struct_initialization_token_stream(&|content_token_stream: &dyn quote::ToTokens|{
                                             quote::quote!{
-                                                found_read_element.#content_token_stream.expect("error 2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
+                                                found_read_element.#content_token_stream.expect("2e8229f7-38d6-48c1-93c9-e77631a3e155").#value_snake_case
                                             }
                                         });
                                         quote::quote! {
@@ -6070,14 +6070,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             if *#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(&update_element.#id_snake_case.clone().into())
                                                             ==
                                                             #uuid_uuid_as_not_null_jsonb_string_as_import_path_postgresql_json_type_token_stream::into_inner(
-                                                                read_element.#id_snake_case.clone().expect("error df2413fe-e703-451b-ab75-add67da716f7").#value_snake_case
+                                                                read_element.#id_snake_case.clone().expect("df2413fe-e703-451b-ab75-add67da716f7").#value_snake_case
                                                             )
                                                             {
                                                                 option_read_element = Some(read_element.clone());
                                                                 break;
                                                             }
                                                         }
-                                                        let found_read_element = option_read_element.expect("error 139882b9-d38f-4cb5-98ea-af0ab23ec474");
+                                                        let found_read_element = option_read_element.expect("139882b9-d38f-4cb5-98ea-af0ab23ec474");
                                                         #(#fields_initialization_content_token_stream)*
                                                         for #element_snake_case in update_element.fields.0.into_vec() {
                                                             match #element_snake_case {
@@ -6110,7 +6110,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #current_ident_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_option_value_read_snake_case(
                                                         #read_only_ids_snake_case,
                                                         #create_snake_case
-                                                    ).expect("error 56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
+                                                    ).expect("56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
                                                 )
                                             },
                                             (Some(_), None) => panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6"),
@@ -6138,7 +6138,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         quote::quote! {
                                             #ident_read_upper_camel_case::try_new(
                                                 #(#parameters_token_stream),*
-                                            ).expect("error 52ad3994-8392-4fc5-8427-4ca42d87d726")
+                                            ).expect("52ad3994-8392-4fc5-8427-4ca42d87d726")
                                         }
                                     }
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_nullable_token_stream(
@@ -6180,7 +6180,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                     #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
                                                         #id_parameter_token_stream,
                                                         #(#parameters_token_stream),*
-                                                    ).expect("error 1330ac8d-ebf2-4c79-b25e-6394d58de927"));
+                                                    ).expect("1330ac8d-ebf2-4c79-b25e-6394d58de927"));
                                                 }
                                                 #acc_snake_case
                                             })
@@ -6390,7 +6390,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                         match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
+                                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
                                             (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
                                             (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                             (None, None) => None,
@@ -6418,7 +6418,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             #create_snake_case.#field_ident
                                                         )
                                                     )
-                                                    .expect("error edacf099-3f54-41ab-980d-e1d8760e216f")
+                                                    .expect("edacf099-3f54-41ab-980d-e1d8760e216f")
                                                 )
                                             }
                                         });
@@ -6490,7 +6490,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     quote::quote! {
                                         #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                             match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("error 9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
+                                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
                                                 (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
                                                 (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                                 (None, None) => None,
@@ -6521,7 +6521,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                             #import_path::LogicalOperator::Or,
                                                             vec![#element_snake_case],
                                                         )
-                                                        .expect("error 0c6ccad1-6ffc-451f-9b16-0731010fee9f"),
+                                                        .expect("0c6ccad1-6ffc-451f-9b16-0731010fee9f"),
                                                     )
                                                 );
                                             }
@@ -6544,7 +6544,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 #acc_snake_case.push(
                                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
                                                         #import_path::NotEmptyUniqueEnumVec::try_new(vec![#element_snake_case])
-                                                        .expect("error 130eaf97-dd2b-440f-be51-8b0e9ec2d18d")
+                                                        .expect("130eaf97-dd2b-440f-be51-8b0e9ec2d18d")
                                                     ))
                                                 );
                                             }
@@ -6738,7 +6738,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // }
             (
                 {
-                    let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("error 7f9a06a5-db0f-420d-ae83-581ccc02c99f");
+                    let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("7f9a06a5-db0f-420d-ae83-581ccc02c99f");
                     quote::quote! {
                         pub #field_ident: #ident,
                     }

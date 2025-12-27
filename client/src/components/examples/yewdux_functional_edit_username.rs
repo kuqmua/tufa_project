@@ -15,7 +15,7 @@ pub fn yewdux_functional_edit_username() -> Html {
             event.prevent_default();
             // let username = event
             //     .target()
-            //     .expect("error d89e1b8b-be57-432a-8aa2-9bde186046af")
+            //     .expect("d89e1b8b-be57-432a-8aa2-9bde186046af")
             //     .unchecked_into::<HtmlInputElement>()
             //     .value();
             state.username = String::from("kekw");
@@ -26,7 +26,7 @@ pub fn yewdux_functional_edit_username() -> Html {
         .reduce_callback_with(|state, event: Event| {
             let username = event
                 .target()
-                .expect("error aa9d4567-227b-4d95-92ca-adceb69666e8")
+                .expect("aa9d4567-227b-4d95-92ca-adceb69666e8")
                 .unchecked_into::<HtmlInputElement>()
                 .value();
             state.username = username;

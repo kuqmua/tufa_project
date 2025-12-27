@@ -3,9 +3,9 @@ const REGEX_VALUE: &str = "^[a-zA-Z]+$";
 #[proc_macro]
 pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("90e5793b-d813-44aa-a124-c738772030c2").into_iter().map(|element| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).expect("error 20948d87-2c38-4896-96b6-239d9c9a0a38");
+            let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
             for inner_element in &element {
                 assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
             }
@@ -79,9 +79,9 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
 #[proc_macro]
 pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("failed to convert tokens input into valid json string[][] pattern").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element| {
         {
-            let regex = regex::Regex::new(REGEX_VALUE).expect("error cba1b5fb-6833-416b-96d9-b64b7a308008");
+            let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
             for inner_element in &element {
                 assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
             }
@@ -197,7 +197,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                                     }
                                     acc
                                 });
-                                let last = type_path.path.segments.iter().last().expect("error 19f6e1a6-2e06-4043-8732-03f3807d58c4");
+                                let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
                                 Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
                             },
                             _ => panic!("syn::Type is not syn::Type::Path")
@@ -288,7 +288,7 @@ only works if all enum variants without fields like this
 #[proc_macro_derive(AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
 pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).expect("error dea5cbcf-77f9-4861-9993-6ea53e01020b");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
         panic!("error ed6efe2e-ded2-4b61-807d-7b14ba0e2031");

@@ -32,7 +32,7 @@ impl SvgIconWrapper {
               justify-content: center;
             "
         )
-        .expect("error a4922832-c211-4509-82d6-75f26fe9c6b9")
+        .expect("a4922832-c211-4509-82d6-75f26fe9c6b9")
     }
 }
 

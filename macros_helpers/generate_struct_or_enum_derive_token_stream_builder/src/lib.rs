@@ -11,7 +11,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
     let make_pub_if_snake_case_token_stream = quote::quote!{make_pub_if};
     let make_pub_upper_camel_case_token_stream = quote::quote!{MakePub};
     let element_vec = serde_json::from_str::<Vec<String>>(&input_token_stream.to_string())
-        .expect("error c5d09740-51b2-4c11-9b66-931622d1a053")
+        .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
         .into_iter()
         .map(|element| {
             let snake_case = {
@@ -56,7 +56,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(input_token_stream: p
                     let value = naming::parameter::DeriveSelfIfSnakeCase::from_display(&snake_case);
                     quote::quote!{#value}
                 },
-                trait_type: element.parse::<proc_macro2::TokenStream>().expect("error 8672240f-97b3-40f5-bf14-dc4b13af528f"),
+                trait_type: element.parse::<proc_macro2::TokenStream>().expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
             }
         }).collect::<Vec<Element>>();
     let (

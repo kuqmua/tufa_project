@@ -34,8 +34,8 @@ impl UUIDStruct {
 pub fn get_uuid() -> UUIDStruct {
     let ret_id: UUIDStruct;
     if crate::components::rc::rc_animate::util::motion::can_use_dom() {
-        ret_id = UUIDStruct::Number(*UUID.lock().expect("error 63542737-3c0e-4874-8eb1-2aa7412f13df"));
-        *UUID.lock().expect("error 7ea9fb26-1068-471f-a52a-ce89e694bc5c") += 1;
+        ret_id = UUIDStruct::Number(*UUID.lock().expect("63542737-3c0e-4874-8eb1-2aa7412f13df"));
+        *UUID.lock().expect("7ea9fb26-1068-471f-a52a-ce89e694bc5c") += 1;
     } else {
         ret_id = UUIDStruct::String(String::from("TEST_OR_SSR'"));
     }

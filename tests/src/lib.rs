@@ -14,16 +14,16 @@ mod tests {
         }
     }
     fn toml_value_from_from_cargo_toml_workspace() -> toml::Value {
-        let mut file = std::fs::File::open("../Cargo.toml").expect("error 39a0d238-d776-4b4e-ac2a-62f76a60f527");
+        let mut file = std::fs::File::open("../Cargo.toml").expect("39a0d238-d776-4b4e-ac2a-62f76a60f527");
         let mut contents = String::new();
-        let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("error 2f5914f2-bff0-40d3-9948-07f2c562779b");
-        let table = contents.parse::<toml::Table>().expect("error beb11586-c73d-4686-9ae2-a219f3a3ef4a");
-        table.get("workspace").expect("error f728192d-b3e6-470a-b304-8c58adabada5").clone()
+        let _: usize = std::io::Read::read_to_string(&mut file, &mut contents).expect("2f5914f2-bff0-40d3-9948-07f2c562779b");
+        let table = contents.parse::<toml::Table>().expect("beb11586-c73d-4686-9ae2-a219f3a3ef4a");
+        table.get("workspace").expect("f728192d-b3e6-470a-b304-8c58adabada5").clone()
     }
     fn lints_vec_from_cargo_toml_workspace(rust_or_clippy: RustOrClippy) -> Vec<String> {
         let workspace = toml_value_from_from_cargo_toml_workspace();
-        let lints = workspace.get("lints").expect("error 82eaea37-3726-4e28-837f-a3063ff3d3fc");
-        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("error dbd02f72-2647-4e41-a26f-a04cef447957") {
+        let lints = workspace.get("lints").expect("82eaea37-3726-4e28-837f-a3063ff3d3fc");
+        let toml_value_table = match lints.get(rust_or_clippy.name()).expect("dbd02f72-2647-4e41-a26f-a04cef447957") {
             toml::Value::Table(value) => value,
             toml::Value::String(_) |
             toml::Value::Integer(_) |
@@ -60,7 +60,7 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Rust;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let lints_from_command = {
-            let output = std::process::Command::new("rustc").args(["-W", "help"]).stdout(std::process::Stdio::piped()).output().expect("error 7c939ff3-1c10-4188-afe8-36bb5c769ea2");
+            let output = std::process::Command::new("rustc").args(["-W", "help"]).stdout(std::process::Stdio::piped()).output().expect("7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(output.status.success(), "error 0c000f24-afad-4397-88a4-913d0c113a34");
             {
                 let stderr = String::from_utf8_lossy(&output.stderr);
@@ -68,7 +68,7 @@ mod tests {
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
             regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
-                .expect("error 60d99c87-273a-48ac-8daa-4f0a853d16bd")
+                .expect("60d99c87-273a-48ac-8daa-4f0a853d16bd")
                 .captures_iter(&stdout)
                 .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
                 .collect::<Vec<String>>()
@@ -100,14 +100,14 @@ mod tests {
         let rust_or_clippy = RustOrClippy::Clippy;
         let lints_vec_from_cargo_toml = lints_vec_from_cargo_toml_workspace(rust_or_clippy);
         let clippy_lints_from_docs = {
-            let document = scraper::Html::parse_document(&reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("error d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("error 012e3328-53a4-4266-b403-24ac3b8dcbf3"));
-            let html_selector = scraper::Selector::parse("html").expect("error 80427609-cfed-4b38-bdea-0794535ef84a");
-            let body_selector = scraper::Selector::parse("body").expect("error 620c597c-0faa-408f-b9bc-29059d179951");
-            let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("error eb483b13-e70e-40f4-b83a-3eeb00413d57");
-            let article_selector = scraper::Selector::parse("article").expect("error d21dbe55-6f9f-4695-bf08-78da4f2424ea");
-            let label_selector = scraper::Selector::parse("label").expect("error fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7");
-            let h2_lint_title_selector = scraper::Selector::parse(r#"h2[class="lint-title"]"#).expect("error f1473d4e-e26a-491d-9980-e1874301a6b2");
-            let span_label_label_default_lint_group_group_deprecated_selector = scraper::Selector::parse(r#"span[class="label label-default lint-group group-deprecated"]"#).expect("error e86d5496-f62b-428c-ac6c-d533e0f6f775");
+            let document = scraper::Html::parse_document(&reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/index.html").expect("d1a0544a-566e-4bf4-a37e-7dac73be02fd").text().expect("012e3328-53a4-4266-b403-24ac3b8dcbf3"));
+            let html_selector = scraper::Selector::parse("html").expect("80427609-cfed-4b38-bdea-0794535ef84a");
+            let body_selector = scraper::Selector::parse("body").expect("620c597c-0faa-408f-b9bc-29059d179951");
+            let div_container_selector = scraper::Selector::parse(r#"div[class="container"]"#).expect("eb483b13-e70e-40f4-b83a-3eeb00413d57");
+            let article_selector = scraper::Selector::parse("article").expect("d21dbe55-6f9f-4695-bf08-78da4f2424ea");
+            let label_selector = scraper::Selector::parse("label").expect("fe3d9f11-f3b0-4e54-a54a-842fabe3d8a7");
+            let h2_lint_title_selector = scraper::Selector::parse(r#"h2[class="lint-title"]"#).expect("f1473d4e-e26a-491d-9980-e1874301a6b2");
+            let span_label_label_default_lint_group_group_deprecated_selector = scraper::Selector::parse(r#"span[class="label label-default lint-group group-deprecated"]"#).expect("e86d5496-f62b-428c-ac6c-d533e0f6f775");
             let mut ids = Vec::new();
             for html_element in document.select(&html_selector) {
                 for body_element in html_element.select(&body_selector) {
@@ -152,7 +152,7 @@ mod tests {
     #[test]
     fn check_workspace_dependencies_having_exact_version() {
         let workspace = toml_value_from_from_cargo_toml_workspace();
-        let dependencies = workspace.get("dependencies").expect("error 2376f58e-394d-4759-96c1-e5379fdbb0b1");
+        let dependencies = workspace.get("dependencies").expect("2376f58e-394d-4759-96c1-e5379fdbb0b1");
         let table_value = match dependencies {
             toml::Value::Table(value) => value,
             toml::Value::String(_) |
@@ -174,7 +174,7 @@ mod tests {
             };
             let value_table_len = value_table.len();
             let check_version = |current_value_table: &toml::value::Table| {
-                match current_value_table.get("version").expect("error d5b2b269-d832-4c94-887b-ec44a7e2045f") {
+                match current_value_table.get("version").expect("d5b2b269-d832-4c94-887b-ec44a7e2045f") {
                     toml::Value::String(version_string) => {
                         fn check_version_string(value: &str) -> Option<()> {
                             let rest = value.strip_prefix('=')?;
@@ -187,7 +187,7 @@ mod tests {
                             }
                             Some(())
                         }
-                        check_version_string(version_string).expect("error 6640b9bf-8fd4-4a00-8c88-72087ba83f60");
+                        check_version_string(version_string).expect("6640b9bf-8fd4-4a00-8c88-72087ba83f60");
                     },
                     toml::Value::Table(_) |
                     toml::Value::Integer(_) |
@@ -198,7 +198,7 @@ mod tests {
                 }
             };
             let check_features = |current_value_table: &toml::value::Table| {
-                match current_value_table.get("features").expect("error 473577d5-0482-4460-b211-60131d9b7c2a") {
+                match current_value_table.get("features").expect("473577d5-0482-4460-b211-60131d9b7c2a") {
                     toml::Value::Array(_) => (),
                     toml::Value::String(_) |
                     toml::Value::Table(_) |
@@ -218,7 +218,7 @@ mod tests {
             else if value_table_len == 3 {
                 check_version(value_table);
                 check_features(value_table);
-                match value_table.get("default-features").expect("error 847a138f-421b-47e5-a658-3789a8281b5c") {
+                match value_table.get("default-features").expect("847a138f-421b-47e5-a658-3789a8281b5c") {
                     toml::Value::Boolean(_) => (),
                     toml::Value::String(_) |
                     toml::Value::Table(_) |
@@ -237,7 +237,7 @@ mod tests {
         // // for cargo_toml_string in &cargo_toml_string_vec {
 
         // // }
-        // let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("error db6c392c-1702-4aa0-a126-269c520e1dd0");
+        // let cargo_toml: CargoToml = toml::from_str(cargo_toml_string).expect("db6c392c-1702-4aa0-a126-269c520e1dd0");
         // println!("{:#?}", cargo_toml);
         // //todo after fix issue with pg_jsonschema remove this check
         // if let Some(package) = &cargo_toml.package
@@ -249,7 +249,7 @@ mod tests {
         //             let mut keys = deps_value.keys().clone().collect::<Vec<_>>();
         //             keys.sort();
         //             for key in keys {
-        //                 if let toml::Value::Table(value) = &deps_value.get(key).expect("error c0b03ca9-80b3-444f-ab58-3522fb438c91") {
+        //                 if let toml::Value::Table(value) = &deps_value.get(key).expect("c0b03ca9-80b3-444f-ab58-3522fb438c91") {
         //                     let mut handle_toml_value_string_valid_version = |version_value: &toml::Value| {
         //                         if let toml::Value::String(version_value_string) = version_value {
         //                             fn is_valid_version(value: &str) -> bool {

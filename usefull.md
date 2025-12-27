@@ -182,7 +182,7 @@ fn main() {
             one: "notbatman",
             two: 1,
         })
-        .expect("error b4ccb35f-30a2-4c9b-b449-4a6c8c0b8f35");
+        .expect("b4ccb35f-30a2-4c9b-b449-4a6c8c0b8f35");
     println!("123");
 }
 ```

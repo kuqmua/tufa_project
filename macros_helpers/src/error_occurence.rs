@@ -89,7 +89,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let std_string_string = token_patterns::StdStringString;
-    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect(constants::IDENT_IS_NONE) != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
+    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
         fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
             value: &'value_lifetime syn::Field,
             std_snake_case: &naming::StdSnakeCase,
@@ -101,7 +101,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 panic!("Type::Path(syn_type_path) != &element.ty");
             };
             assert!(segments.len() == 3, "segments.len() != 3");
-            let first_segment = segments.iter().next().expect("no .next()) element");
+            let first_segment = segments.iter().next().expect("d5a27ffd-e0c9-4b77-99f1-3be08e20b0cf");
             assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
             match first_segment.arguments {
                 syn::PathArguments::None => (),
@@ -109,7 +109,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     panic!("first_segment.arguments != PathArguments::None")
                 }
             }
-            let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
+            let second_segment = segments.iter().nth(1).expect("44675857-5632-4b93-9bc0-79815fc2fdc6");
             {
                 let collections_snake_case = naming::CollectionsSnakeCase;
                 assert!(second_segment.ident == collections_snake_case.to_string(), "second_segment.ident != {collections_snake_case} {}", second_segment.ident);
@@ -120,7 +120,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     panic!("second_segment.arguments != PathArguments::None")
                 }
             }
-            let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
+            let third_segment = segments.iter().nth(2).expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
             {
                 let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
                 assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
@@ -130,19 +130,19 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             };
             assert!(args.len() == 2, "args.len() != 2");
             let first_argument_stringified = {
-                let first_argument = args.iter().next().expect("args.iter().next() is None");
+                let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
                 quote::quote! {#first_argument}.to_string()
             };
             assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "{} != {first_argument_stringified}", quote::quote! {#std_string_string});
-            args.iter().nth(1).expect("args.iter().nth(1) is None")
+            args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
-        let current_element_ident = element.ident.as_ref().expect(constants::IDENT_IS_NONE);
+        let current_element_ident = element.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
         let element_type_token_stream = {
             let element_type = &element.ty;
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element).expect("error 2db209a8-2f57-4474-a9c6-9743aaaed57d") {
+        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string
@@ -156,7 +156,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     quote::quote! {#element_type}
                 },
                 naming::WithSerializeDeserializeUpperCamelCase
-            ).parse::<proc_macro2::TokenStream>().expect("error 201dc0a4-4563-4e51-a228-ba085b767775"),
+            ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                 quote::quote! {
                     Vec<#std_string_string>
@@ -169,17 +169,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     panic!("Type::Path(value) != &element.ty");
                 };
                 assert!(segments.len() == 1, "segments.len() != 1");
-                let first_segment = segments.iter().next().expect("no .next() element");
+                let first_segment = segments.iter().next().expect("595050cf-f859-49c8-b57c-35c322c25da8");
                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
                     assert!(args.len() == 1, "args.len() != 1");
                     format!(
                         "{}{}",
                         {
-                            let first_arg = args.iter().next().expect("args.iter().next() is None");
+                            let first_arg = args.iter().next().expect("e9b33787-870e-4520-a364-816c0f47f508");
                             quote::quote! {#first_arg}
                         },
                         naming::WithSerializeDeserializeUpperCamelCase,
-                    ).parse::<proc_macro2::TokenStream>().expect("error 22c364b9-c645-46ec-984e-cf0b911feb84")
+                    ).parse::<proc_macro2::TokenStream>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
                     panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
                 };
@@ -203,7 +203,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                     "{}{}",
                     quote::quote! {#second_argument},
                     naming::WithSerializeDeserializeUpperCamelCase
-                ).parse::<proc_macro2::TokenStream>().expect("error 86307dbc-484e-4012-ac70-2d593b1f99e6");
+                ).parse::<proc_macro2::TokenStream>().expect("86307dbc-484e-4012-ac70-2d593b1f99e6");
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #element_hashmap_value_type_with_serialize_deserialize_token_stream>
                 }

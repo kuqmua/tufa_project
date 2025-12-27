@@ -12,7 +12,6 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         syn::Fields::Named(value) => value.named,
         syn::Fields::Unnamed(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Named"),
     };
-    let ident_in_none_stringified = "ident is None";
     let dotenv_upper_camel_case = naming::DotenvUpperCamelCase;
     let dotenv_snake_case = naming::DotenvSnakeCase;
     let std_env_var_error_upper_camel_case = naming::StdEnvVarErrorUpperCamelCase;
@@ -21,7 +20,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let try_from_std_env_var_ok_upper_camel_case = naming::TryFromStdEnvVarOkUpperCamelCase;
     let error_named_token_stream = {
         let variants_token_stream = fields_named.iter().map(|element| {
-            let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+            let element_ident = &element.ident.as_ref().expect("2ecb63c1-675f-489a-af65-a6a17c778bd6");
             let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             let try_from_std_env_var_ok_self_error_named_upper_camel_case = naming::parameter::TryFromStdEnvVarOkSelfErrorNamedUpperCamelCase::from_tokens(&element_ident);
             quote::quote! {
@@ -46,7 +45,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let display_error_named_token_stream = {
         let variants_token_stream = fields_named.iter().map(|element| {
-            let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+            let element_ident = &element.ident.as_ref().expect("8b79a379-2073-4415-82c6-bf7ea4b05165");
             let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
                 Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(f, "{}", #element_ident)
@@ -72,7 +71,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     };
     let try_from_env_token_stream = {
         let fields_initialization_token_stream = fields_named.iter().map(|element| {
-            let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
+            let element_ident = &element.ident.as_ref().expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
             let element_ident_quotes_screaming_snake_case_string = syn::LitStr::new(&naming::ToTokensToScreamingSnakeCaseStringified::case(&element_ident), ident.span());
             let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             let element_ident_wrapper_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);

@@ -1,7 +1,7 @@
 #[proc_macro_derive(SvgComponent)]
 pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("syn::parse(input) failed");
+    let syn_derive_input: syn::DeriveInput = syn::parse(input).expect("13b0816a-f3e8-4999-9210-ef9e13b2986e");
     let ident = &syn_derive_input.ident;
     // let get_html_variants: TokenStream;
     // let get_class_variants: TokenStream;

@@ -15,7 +15,7 @@ pub fn server_port_try_from_u16(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let valid_port_token_stream = valid_port.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse valid u16 user port to proc_macro2::TokenStream"));
     let generated = quote::quote! {
-        ServerPort::try_from(#valid_port_token_stream).expect("error 575a501d-fcca-4091-92c2-8ca5128bf314")
+        ServerPort::try_from(#valid_port_token_stream).expect("575a501d-fcca-4091-92c2-8ca5128bf314")
     };
     // println!("{generated}");
     generated.into()

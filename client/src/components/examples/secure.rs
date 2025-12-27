@@ -46,7 +46,7 @@ pub struct ContextProviderStruct {
 }
 #[styled_component(Secure)]
 pub fn secure(props: &SecureProps) -> Html {
-    let history = use_history().expect("error 16d68f17-0146-4e3c-b747-064b2e95f974");
+    let history = use_history().expect("16d68f17-0146-4e3c-b747-064b2e95f974");
     let onclick = Callback::once(move |_| history.push(Routes::SignUp));
     let class = "my_title";
     let option: Option<&str> = Some("kekw");
@@ -63,8 +63,8 @@ pub fn secure(props: &SecureProps) -> Html {
             background-color: blue;
         "#
     )
-    .expect("error baf9f2a3-1599-4a6a-98ea-dd3ad7cc007c");
-    let file_stylesheet = Style::new(STYLE_FILE).expect("error f8a7ed01-efe0-482e-a534-b97abf459601");
+    .expect("baf9f2a3-1599-4a6a-98ea-dd3ad7cc007c");
+    let file_stylesheet = Style::new(STYLE_FILE).expect("f8a7ed01-efe0-482e-a534-b97abf459601");
     props.on_load.emit("i loaded".to_string());
     let state = use_state(SecureState::default);
     let cloned_state = state.clone();

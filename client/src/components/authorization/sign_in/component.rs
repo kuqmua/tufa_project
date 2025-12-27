@@ -20,7 +20,7 @@ pub fn sign_in() -> Html {
     let username_cloned = username;
     let password_cloned = password;
     let header_name = "Sign in";
-    let history = use_history().expect("error 125b306b-863a-44c0-90c0-8f7c3ef4fa0e");
+    let history = use_history().expect("125b306b-863a-44c0-90c0-8f7c3ef4fa0e");
     let handle_form_submit = store.dispatch().reduce_callback(move |state| {
         state.username = username_cloned.to_string();
         state.password = password_cloned.to_string();
@@ -31,7 +31,7 @@ pub fn sign_in() -> Html {
         .reduce_callback_with(|state, event: Event| {
             let username = event
                 .target()
-                .expect("error 6947a334-9e00-4980-9990-39c78c68b4b5")
+                .expect("6947a334-9e00-4980-9990-39c78c68b4b5")
                 .unchecked_into::<HtmlInputElement>()
                 .value();
             state.username = username;
@@ -42,7 +42,7 @@ pub fn sign_in() -> Html {
         .reduce_callback_with(|state, event: Event| {
             let password = event
                 .target()
-                .expect("error 7d386d61-5adb-4914-8ace-292ef308dbed")
+                .expect("7d386d61-5adb-4914-8ace-292ef308dbed")
                 .unchecked_into::<HtmlInputElement>()
                 .value();
             state.password = password;
