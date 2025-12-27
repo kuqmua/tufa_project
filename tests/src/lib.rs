@@ -235,7 +235,7 @@ mod tests {
     }
     #[test]
     fn check_expect_contains_only_uuid_v4() {
-        let expect_regex = regex::Regex::new(r#"\.expect\s*\(\s*"([^"]*)"\s*\)"#).expect("6e4dd117-2305-436a-9569-3a843401eae8");
+        let expect_regex = regex::Regex::new(r#"(?s)\.expect\s*\(\s*"([^"]*)"\s*\)"#).expect("6e4dd117-2305-436a-9569-3a843401eae8");
         for entry in walkdir::WalkDir::new("../")
             .into_iter()
             .filter_map(Result::ok)
