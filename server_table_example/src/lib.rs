@@ -177,7 +177,7 @@ pub struct TableExample {
     // pub column_140: postgresql_crud::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
     pub column_142: server_types::AnimalAsNotNullJsonbObject,
-    // pub column_143: server_types::OptionAnimalAsNullableJsonbObject,
-    // pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub column_145: server_types::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub column_143: server_types::OptionAnimalAsNullableJsonbObject,
+    pub column_144: server_types::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub column_145: server_types::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
