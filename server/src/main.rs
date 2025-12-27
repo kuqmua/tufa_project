@@ -1,5 +1,3 @@
-//todo - maybe Arc<RwLock<Store>> ?
-pub static CONFIG: std::sync::OnceLock<server_config::Config> = std::sync::OnceLock::new();
 fn main() {
     std::thread::Builder::new()
         .stack_size(16 * 1024 * 1024) // 16 MB
@@ -7,6 +5,8 @@ fn main() {
             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("error 5995c954-bb76-4620-b819-2b26f4b8f728").block_on(async {
                 tracing_subscriber::fmt::init();
                 println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
+                //todo - maybe Arc<RwLock<Store>> ?
+                static CONFIG: std::sync::OnceLock<server_config::Config> = std::sync::OnceLock::new();
                 let config = CONFIG.get_or_init(|| server_config::Config::try_from_env().expect("error d74a6e5f-069a-49ea-9bac-19512e7b2bc5"));
                 println!("trying to create postgres pool...");
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().max_connections(50).connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.expect("error 8b72f688-be7d-4f5c-9185-44a27290a9d0");
@@ -14,7 +14,11 @@ fn main() {
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
                 println!("trying to up server on {service_socket_address}");
-                let app_state = std::sync::Arc::new(server_app_state::ServerAppState { postgres_pool, config, project_git_info: &git_info::PROJECT_GIT_INFO });
+                let app_state = std::sync::Arc::new(server_app_state::ServerAppState {
+                    postgres_pool,
+                    config,
+                    project_git_info: &git_info::PROJECT_GIT_INFO
+                });
                 axum::serve(
                     tokio::net::TcpListener::bind(service_socket_address).await.expect("error 3f294e7c-3386-497f-b76c-c0364d59a60d"),
                     axum::Router::new()
