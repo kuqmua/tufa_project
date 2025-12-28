@@ -293,15 +293,24 @@ mod tests {
             }
         }
     }
-    #[test]
-    fn check_expect_contains_only_unique_uuid_v4() {
+    #[derive(Debug, Clone, Copy)]
+    enum ExpectOrPanic {
+        Expect,
+        Panic,
+    }
+    fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
         struct ExpectVisitor {
+            expect_or_panic: ExpectOrPanic,
             uuids: Vec<String>,
             errors: Vec<String>,
         }
         impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
             fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
-                if i.method == "expect" {
+                let expect_or_panic_str = match self.expect_or_panic {
+                    ExpectOrPanic::Expect => "expect",
+                    ExpectOrPanic::Panic => "panic",
+                };
+                if i.method == expect_or_panic_str {
                     if i.args.len() == 1 {
                         if let syn::Expr::Lit(syn::ExprLit {
                             lit: syn::Lit::Str(lit_str),
@@ -315,16 +324,16 @@ mod tests {
                                 }
                                 _ => {
                                     self.errors.push(format!(
-                                        "expect() arg is not valid UUID v4: {value}"
+                                        "arg is not valid UUID v4: {value}"
                                     ));
                                 }
                             }
                         } else {
                             self.errors
-                                .push("expect() arg is not string literal".to_owned());
+                                .push("arg is not string literal".to_owned());
                         }
                     } else {
-                        self.errors.push("expect() with != 1 arg".to_owned());
+                        self.errors.push("with != 1 arg".to_owned());
                     }
                 }
                 syn::visit::visit_expr_method_call(self, i);
@@ -349,6 +358,7 @@ mod tests {
             };
             let ast = syn::parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
             let mut visitor = ExpectVisitor {
+                expect_or_panic,
                 uuids: Vec::new(),
                 errors: Vec::new(),
             };
@@ -375,5 +385,13 @@ mod tests {
             all_errors.is_empty(),
             "52eb15f1-7b88-4dfa-869b-a7b6f241df08",
         );
+    }
+    #[test]
+    fn check_expect_contains_only_unique_uuid_v4() {
+        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Expect);
+    }
+    #[test]
+    fn check_panic_contains_only_unique_uuid_v4() {
+        check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Panic);
     }
 }
