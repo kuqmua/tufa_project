@@ -5351,7 +5351,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             |test_name: &str, field_ident: &syn::Ident| {
                 format!("table_{test_name}_{field_ident}")
                     .parse::<proc_macro2::TokenStream>()
-                    .expect("2003ad9f-013a-48ba-b0ef-d2d48774d60c")
+                    .expect("eb30c1e4-d208-4fe5-bb73-0c8cbac8b1fd")
             };
         let mut table_field_idents_initialization_vec_token_stream = vec![];
         let mut table_test_name_field_idents_vec_token_stream = vec![];

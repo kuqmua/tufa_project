@@ -294,8 +294,11 @@ mod tests {
         }
     }
     #[test]
-    fn check_expect_contains_only_uuid_v4() {
-        struct ExpectVisitor(Vec<String>);
+    fn check_expect_contains_only_unique_uuid_v4() {
+        struct ExpectVisitor {
+            uuids: Vec<String>,
+            errors: Vec<String>,
+        }
         impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
             fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
                 if i.method == "expect" {
@@ -303,25 +306,32 @@ mod tests {
                         if let syn::Expr::Lit(syn::ExprLit {
                             lit: syn::Lit::Str(lit_str),
                             ..
-                        }) = &i.args.get(0).expect("0650563c-f149-46d6-ab42-631ed4b1934b")
+                        }) = &i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
                         {
                             let value = lit_str.value();
-                            let valid = uuid::Uuid::parse_str(&value)
-                                .map(|element| element.get_version() == Some(uuid::Version::Random))
-                                .unwrap_or(false);
-                            if !valid {
-                                self.0.push(value);
+                            match uuid::Uuid::parse_str(&value) {
+                                Ok(uuid) if uuid.get_version() == Some(uuid::Version::Random) => {
+                                    self.uuids.push(value);
+                                }
+                                _ => {
+                                    self.errors.push(format!(
+                                        "expect() arg is not valid UUID v4: {value}"
+                                    ));
+                                }
                             }
                         } else {
-                            self.0.push("expect() arg is not string literal".to_owned());
+                            self.errors
+                                .push("expect() arg is not string literal".to_owned());
                         }
                     } else {
-                        self.0.push("expect() with != 1 arg".to_owned());
+                        self.errors.push("expect() with != 1 arg".to_owned());
                     }
                 }
                 syn::visit::visit_expr_method_call(self, i);
             }
         }
+        let mut all_uuids = Vec::new();
+        let mut all_errors = Vec::new();
         for entry in walkdir::WalkDir::new("../")
             .into_iter()
             .filter_entry(|element| element.file_name() != "target")
@@ -340,14 +350,33 @@ mod tests {
             let Ok(ast) = syn::parse_file(&content) else {
                 panic!("failed to parse {:?}", entry.path());
             };
-            let mut visitor = ExpectVisitor(vec![]);
+            let mut visitor = ExpectVisitor {
+                uuids: Vec::new(),
+                errors: Vec::new(),
+            };
             syn::visit::Visit::visit_file(&mut visitor, &ast);
-            assert!(
-                visitor.0.is_empty(),
-                "invalid expect() in {:?}: {:?}",
-                entry.path(),
-                visitor.0
+            all_uuids.extend(visitor.uuids);
+            all_errors.extend(
+                visitor
+                    .errors
+                    .into_iter()
+                    .map(|element| format!("{:?}: {}", entry.path(), element)),
             );
         }
+        let mut seen = std::collections::HashSet::new();
+        let mut duplicates = Vec::new();
+        for uuid in all_uuids {
+            if !seen.insert(uuid.clone()) {
+                duplicates.push(uuid);
+            }
+        }
+        if !duplicates.is_empty() {
+            all_errors.push(format!("duplicate UUIDs found: {duplicates:?}"));
+        }
+        assert!(
+            all_errors.is_empty(),
+            "expect() UUID check failed:\n{}",
+            all_errors.join("\n")
+        );
     }
 }
