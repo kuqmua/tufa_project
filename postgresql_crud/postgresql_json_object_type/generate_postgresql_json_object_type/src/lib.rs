@@ -6187,7 +6187,7 @@ pub fn generate_postgresql_json_object_type(
                                         });
                                         quote::quote! {
                                             #ident_read_upper_camel_case::new({
-                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 90d33ddd-e08d-488c-8577-c75febe97301");
+                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "90d33ddd-e08d-488c-8577-c75febe97301");
                                                 let mut #acc_snake_case = vec![];
                                                 for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     #acc_snake_case.push(#ident_with_id_standart_not_null_read_upper_camel_case::try_new(
@@ -6290,7 +6290,7 @@ pub fn generate_postgresql_json_object_type(
                                         });
                                         quote::quote! {
                                             #ident_table_type_declaration_upper_camel_case::new({
-                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "error 7776a146-06a8-4972-8e16-371d41ee164c");
+                                                assert_eq!(#read_only_ids_snake_case.0.#value_snake_case.len(), #create_snake_case.0.len(), "7776a146-06a8-4972-8e16-371d41ee164c");
                                                 let mut #acc_snake_case = vec![];
                                                 for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
                                                     #acc_snake_case.push(#ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(

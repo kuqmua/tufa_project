@@ -150,7 +150,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             |mut acc, current_element| {
                                 use std::fmt::Write as _;
                                 let current_element_ident = &current_element.ident.as_ref().expect("2e7cd5fe-7653-4c10-8977-526b061d6748");
-                                assert!(writeln!(acc, "{current_element_ident}: {{}}").is_ok(), "error ab44c70f-092e-46a0-8daa-56fe44395228");
+                                assert!(writeln!(acc, "{current_element_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
                                 acc
                             }
                         )
@@ -457,7 +457,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         let value = format!(
                             "{}{}",
                             {
-                                assert!(fields.len() == 1, "fields.len() != 1");
+                                assert!(fields.len() == 1, "d7a6b955-3795-4e0c-a990-b06734e9d923");
                                 let field_type = &fields
                                     .iter()
                                     .next()

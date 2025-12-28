@@ -9,7 +9,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
             for inner_element in &element {
-                assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
+                assert!(regex.is_match(inner_element), "faadba8a-ff38-40f9-af05-e4f95bba896a");
             }
         }
         let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, current_element| {
@@ -23,7 +23,7 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
                 acc.push_str(&element_snake_case_stringified);
             } else {
                 use std::fmt::Write as _;
-                assert!(write!(acc, "_{element_snake_case_stringified}").is_ok(), "error 9cd16003-da96-45c7-b261-049f6e062776");
+                assert!(write!(acc, "_{element_snake_case_stringified}").is_ok(), "ef718915-7a99-45a6-b3c5-496262804976");
             }
             acc
         });
@@ -87,7 +87,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
             for inner_element in &element {
-                assert!(regex.is_match(inner_element), "invalid element {inner_element}, regex: {REGEX_VALUE}");
+                assert!(regex.is_match(inner_element), "4a12d90f-6428-4494-8305-40c149a1509a");
             }
         }
         let self_match_name = "self";
@@ -99,7 +99,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                     break;
                 }
             }
-            assert!(is_self_exists_and_only_one, "cannot find {self_match_name}");
+            assert!(is_self_exists_and_only_one, "5680dd63-c98d-4e98-a67e-e13a3710a7c2");
         };
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
@@ -121,9 +121,9 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                     use std::fmt::Write as _;
                     let symbol = '_';
                     if current_element == "self" {
-                        assert!(write!(acc, "{{value}}{symbol}").is_ok(), "error f58bba77-30d8-4019-a084-577a3fda0d4a");
+                        assert!(write!(acc, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
                     } else {
-                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "error 7b9f8bb3-cefa-4863-a612-8e3b889d1e6e");
+                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
                     }
                     acc
                 });

@@ -118,9 +118,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             } else {
                 panic!("55136128-fe0b-4599-978d-8577ae049c98");
             };
-            assert!(segments.len() == 3, "segments.len() != 3");
+            assert!(segments.len() == 3, "114c28f3-61af-4602-bc2f-c3688050e7cd");
             let first_segment = segments.iter().next().expect("d5a27ffd-e0c9-4b77-99f1-3be08e20b0cf");
-            assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
+            assert!(first_segment.ident == std_snake_case.to_string(), "b7871f5b-f882-4afa-95cc-13d1d64a568c");
             match first_segment.arguments {
                 syn::PathArguments::None => (),
                 syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
@@ -130,7 +130,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let second_segment = segments.iter().nth(1).expect("44675857-5632-4b93-9bc0-79815fc2fdc6");
             {
                 let collections_snake_case = naming::CollectionsSnakeCase;
-                assert!(second_segment.ident == collections_snake_case.to_string(), "second_segment.ident != {collections_snake_case} {}", second_segment.ident);
+                assert!(second_segment.ident == collections_snake_case.to_string(), "25cda941-c3cb-4c47-89f5-794fa867a43d");
             };
             match second_segment.arguments {
                 syn::PathArguments::None => (),
@@ -141,7 +141,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let third_segment = segments.iter().nth(2).expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
             {
                 let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
-                assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
+                assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "5e1bc6b1-d997-489a-b903-cfc7f8618fe9");
             };
             let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments else {
                 panic!("f464b7a1-e00e-4d99-8ca3-3fdc93be3d26");
@@ -151,7 +151,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
                 quote::quote! {#first_argument}.to_string()
             };
-            assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "{} != {first_argument_stringified}", quote::quote! {#std_string_string});
+            assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
         let current_element_ident = element.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
@@ -186,10 +186,10 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 } else {
                     panic!("8d93bf20-5034-4dcb-9dcc-0d7056278dae");
                 };
-                assert!(segments.len() == 1, "segments.len() != 1");
+                assert!(segments.len() == 1, "0c65bbaa-59bd-4abd-9967-bea844983ee0");
                 let first_segment = segments.iter().next().expect("595050cf-f859-49c8-b57c-35c322c25da8");
                 let element_vec_type_with_serialize_deserialize_token_stream = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &first_segment.arguments {
-                    assert!(args.len() == 1, "args.len() != 1");
+                    assert!(args.len() == 1, "572a9da8-209f-42d0-9fac-da7e42e3829d");
                     format!(
                         "{}{}",
                         {

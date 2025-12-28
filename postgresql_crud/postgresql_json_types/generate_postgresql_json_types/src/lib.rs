@@ -460,7 +460,7 @@ pub fn generate_postgresql_json_types(
                 postgresql_json_type_record_vec
                     .iter()
                     .all(|element| seen.insert(element)),
-                "not unique postgersql type provided: {postgresql_json_type_record_vec:#?}"
+                "c2d37017-229c-4259-bcee-c434852dca1b"
             );
         };
         postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {

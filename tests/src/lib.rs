@@ -67,7 +67,7 @@ mod tests {
         }
         assert!(
             lints_not_in_cargo_toml.is_empty(),
-            "this {rust_or_clippy_name} lints are not in the [workspace.lints.{rust_or_clippy_name}]: {lints_not_in_cargo_toml:#?}"
+            "d2b7ba9f-d133-496c-a29d-67503c3d9e8a"
         );
         let mut outdated_lints_in_file = vec![];
         for element in &lints_vec_from_cargo_toml {
@@ -77,7 +77,7 @@ mod tests {
         }
         assert!(
             outdated_lints_in_file.is_empty(),
-            "this {rust_or_clippy_name} lints are outdated but still in [workspace.lints.{rust_or_clippy_name}]: {outdated_lints_in_file:#?}"
+            "93787d2d-47b8-4f26-ba5a-341d3c60ca15"
         );
     }
     #[test]
@@ -92,13 +92,13 @@ mod tests {
                 .expect("7c939ff3-1c10-4188-afe8-36bb5c769ea2");
             assert!(
                 output.status.success(),
-                "error 0c000f24-afad-4397-88a4-913d0c113a34"
+                "0c000f24-afad-4397-88a4-913d0c113a34"
             );
             {
                 let stderr = String::from_utf8_lossy(&output.stderr);
                 assert!(
                     stderr.trim().is_empty(),
-                    "error 0a4b2082-a764-4080-9d72-61e009f03f27 {stderr}"
+                    "0a4b2082-a764-4080-9d72-61e009f03f27"
                 );
             };
             let stdout = String::from_utf8_lossy(&output.stdout);
@@ -373,8 +373,7 @@ mod tests {
         }
         assert!(
             all_errors.is_empty(),
-            "expect() UUID check failed:\n{}",
-            all_errors.join("\n")
+            "52eb15f1-7b88-4dfa-869b-a7b6f241df08",
         );
     }
 }
