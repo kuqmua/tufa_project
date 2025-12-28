@@ -394,4 +394,32 @@ mod tests {
     fn check_panic_contains_only_unique_uuid_v4() {
         check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Panic);
     }
+    #[test]
+    fn check_rs_files_contains_only_unique_uuid_v4() {
+        let regex = regex::Regex::new(
+            r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
+        ).expect("e098a1ff-0e70-44f5-a75e-ffe6042ee9f5");
+        let mut seen = std::collections::HashSet::new();
+        for entry in walkdir::WalkDir::new("../")
+            .into_iter()
+            .filter_entry(|element| element.file_name() != "target")
+            .filter_map(Result::ok)
+            .filter(|element| {
+                element
+                    .path()
+                    .extension()
+                    .and_then(|current_element| current_element.to_str())
+                    == Some("rs")
+            })
+        {
+            let Ok(content) = std::fs::read_to_string(entry.path()) else {
+                continue;
+            };
+            for element in regex.find_iter(&content) {
+                let uuid = uuid::Uuid::parse_str(element.as_str()).expect("c9711efd-eb37-4b10-b689-831fa916cb82");
+                assert!(uuid.get_version_num() == 4, "49b49b21-0cc6-4aee-8c28-3003492f2a80");
+                assert!(seen.insert(uuid), "4cf9d239-d701-49bd-9f6b-8843c5a8814e");
+            }
+        }
+    }
 }

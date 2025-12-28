@@ -1526,7 +1526,7 @@ pub fn generate_postgresql_types(
                                         DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                         DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
                                     };
-                                    quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_or_time_token_stream()).expect("cbe9e399-6145-49eb-978c-ed84d1176e4a")}
+                                    quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_or_time_token_stream()).expect("7efb7544-4454-4121-85fa-4b56d7afd21f")}
                                 })
                             };
                             let date_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateOrTime::Date);
@@ -1553,7 +1553,7 @@ pub fn generate_postgresql_types(
                                         DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                         DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
                                     };
-                                    quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).expect("cbe9e399-6145-49eb-978c-ed84d1176e4a")}
+                                    quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).expect("4fd12604-816e-411a-8f51-6074e8ecd9d9")}
                                 })
                             };
                             let date_naive_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateNaiveOrTime::Date);
