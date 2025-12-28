@@ -53,7 +53,7 @@ mod tests {
         lints_not_in_cargo_toml_vec_exceptions: Vec<String>,
     ) {
         let rust_or_clippy_name = rust_or_clippy.name();
-        let mut lints_not_in_cargo_toml = vec![];
+        let mut lints_not_in_cargo_toml = Vec::new();
         for element in &lints_to_check {
             if !lints_vec_from_cargo_toml.contains(element) {
                 if lints_not_in_cargo_toml_vec_exceptions.contains(element) {
@@ -69,7 +69,7 @@ mod tests {
             lints_not_in_cargo_toml.is_empty(),
             "d2b7ba9f-d133-496c-a29d-67503c3d9e8a"
         );
-        let mut outdated_lints_in_file = vec![];
+        let mut outdated_lints_in_file = Vec::new();
         for element in &lints_vec_from_cargo_toml {
             if !lints_to_check.contains(element) {
                 outdated_lints_in_file.push(element);

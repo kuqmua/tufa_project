@@ -797,8 +797,8 @@ pub fn generate_postgresql_types(
             serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string())
                 .expect("80485f71-4e21-4166-94df-722326c36a29");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
-            GeneratePostgresqlTypesConfig::All => PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
-                let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(vec![], |mut current_acc, postgresql_type_pattern| {
+            GeneratePostgresqlTypesConfig::All => PostgresqlType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_type| {
+                let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(Vec::new(), |mut current_acc, postgresql_type_pattern| {
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             current_acc.push(postgresql_type_pattern);
@@ -859,7 +859,7 @@ pub fn generate_postgresql_types(
             GeneratePostgresqlTypesConfig::Concrete(value) => value,
         };
         {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for element in &postgresql_type_record_vec {
                 if acc.contains(&element) {
                     panic!("536036f9-2511-4247-8463-6defbeb72f5c");
@@ -870,7 +870,7 @@ pub fn generate_postgresql_types(
         }
 
         postgresql_type_record_vec.into_iter().fold(
-            vec![],
+            Vec::new(),
             |mut acc, postgresql_type_record_element| {
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 #[derive(Clone)]
@@ -883,7 +883,7 @@ pub fn generate_postgresql_types(
                 ) -> Vec<PostgresqlTypeRecordHandle> {
                     let generate_vec =
                         |current_postgresql_type_record_handle: PostgresqlTypeRecordHandle| {
-                            let mut acc = vec![];
+                            let mut acc = Vec::new();
                             for element in generate_postgresql_type_record_handle_vec(
                                 current_postgresql_type_record_handle,
                             ) {
@@ -2868,7 +2868,7 @@ pub fn generate_postgresql_types(
                             let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                     Ok(Self({
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for #element_snake_case in #value_snake_case {
                                             match #type_token_stream::#try_new_snake_case(#element_snake_case) {
                                                 Ok(#value_snake_case) => {
@@ -3826,7 +3826,7 @@ pub fn generate_postgresql_types(
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => quote::quote! {;},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                            let mut arguments_token_stream = vec![];
+                            let mut arguments_token_stream = Vec::new();
                             for current_element in 1..=array_dimensions_number {
                                 let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
                                 arguments_token_stream.push(quote::quote! {
@@ -3846,7 +3846,7 @@ pub fn generate_postgresql_types(
                                 postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                 postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                             };
-                            let mut arguments_token_stream = vec![];
+                            let mut arguments_token_stream = Vec::new();
                             for current_element in 1..=array_dimensions_number {
                                 let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98-89d6-4a58-90ea-39b04a708c1c");
                                 arguments_token_stream.push(quote::quote! {
@@ -4515,7 +4515,7 @@ pub fn generate_postgresql_types(
                                     format!("{{column}}{acc}")
                                 });
                                 let arguments_token_stream = {
-                                    let mut acc = vec![];
+                                    let mut acc = Vec::new();
                                     for current_element in 1..=array_dimensions_number {
                                         let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
                                         acc.push(quote::quote! {
@@ -4972,7 +4972,7 @@ pub fn generate_postgresql_types(
                         let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(int_range_type);
                         generate_range_read_only_ids_to_two_dimensional_vec_read_inner_token_stream(&quote::quote! {#range_inner_type_token_stream::MIN}, &quote::quote! {-20}, &quote::quote! {-10}, &quote::quote! {0}, &quote::quote! {10}, &quote::quote! {20}, &quote::quote! {#range_inner_type_token_stream::MAX - 1})
                     };
-                    let empty_vec_token_stream = quote::quote! {vec![]};
+                    let empty_vec_token_stream = quote::quote! {Vec::new()};
                     let (sqlx_types_chrono_naive_time_min_token_stream, sqlx_types_chrono_naive_time_ten_token_stream, sqlx_types_chrono_naive_time_twenty_token_stream, sqlx_types_chrono_naive_time_max_token_stream) = {
                         let generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream = |parameters_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {sqlx::types::chrono::NaiveTime::from_hms_micro_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")}
@@ -5066,7 +5066,7 @@ pub fn generate_postgresql_types(
                         PostgresqlType::StdPrimitiveBoolAsBool => generate_typical_test_cases_vec_token_stream(&quote::quote! {std_primitive_bool_test_cases_vec}),
                         PostgresqlType::StdStringStringAsText => generate_typical_test_cases_vec_token_stream(&quote::quote! {std_string_string_test_cases_vec}),
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote! {vec![
-                            vec![],
+                            Vec::new(),
                             (0u8..=255).collect(),
                             vec![0; 1024],
                             vec![0; 1024 * 1024 * 2],
@@ -5135,7 +5135,7 @@ pub fn generate_postgresql_types(
                             #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_positive_more_typical_token_stream,
                             #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_max_token_stream,
                         ]},
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote! {vec![]},
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote! {Vec::new()},
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote! {vec![
                             sqlx::types::Uuid::new_v4()
                         ]},
@@ -5208,8 +5208,8 @@ pub fn generate_postgresql_types(
                         };
                         let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&current_ident_token_stream);
                         quote::quote! {Some({
-                            let mut #acc_snake_case = vec![];
-                            for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]) {
+                            let mut #acc_snake_case = Vec::new();
+                            for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
                                 #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
                             }
                             #maybe_acc_push_none_token_stream
@@ -5270,7 +5270,7 @@ pub fn generate_postgresql_types(
                                         };
                                         (
                                             generate_new_or_try_new_token_stream(&quote::quote! {
-                                                #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![])
+                                                #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new())
                                                 .into_iter()
                                                 .map(|#element_snake_case|#element_snake_case.0.into())
                                                 .collect()
@@ -5281,7 +5281,7 @@ pub fn generate_postgresql_types(
                                     };
                                     quote::quote! {
                                         #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                        if let Some(#value_snake_case) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(vec![]).get(0) {
+                                        if let Some(#value_snake_case) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).get(0) {
                                             #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
                                             #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
                                         }
@@ -5299,7 +5299,7 @@ pub fn generate_postgresql_types(
                             quote::quote! {vec![{#content_token_stream}]}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                            let mut #acc_snake_case = vec![];
+                            let mut #acc_snake_case = Vec::new();
                             for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case) {
                                 for element1 in element0 {
                                     #acc_snake_case.push(vec![Some(element1)]);
@@ -5313,7 +5313,7 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 quote::quote! {
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                     let option_additional = {
                                         let mut option_additional = None;
@@ -5358,7 +5358,7 @@ pub fn generate_postgresql_types(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote! {
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                     let option_additional = {
                                         let mut option_additional = None;
@@ -5379,7 +5379,7 @@ pub fn generate_postgresql_types(
                                     };
                                     let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
                                     #acc_snake_case.push({
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                             for element1 in element0 {
                                                 #acc_snake_case.push(element1);
@@ -5405,7 +5405,7 @@ pub fn generate_postgresql_types(
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream,
                             };
                             quote::quote! {
-                                let mut #acc_snake_case = vec![];
+                                let mut #acc_snake_case = Vec::new();
                                 let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
                                 let option_additional = {
                                     let mut option_additional = None;
@@ -5445,7 +5445,7 @@ pub fn generate_postgresql_types(
                                     has_len_greater_than_one
                                 };
                                 #acc_snake_case.push(vec![Some({
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     for element0 in read_only_ids_to_two_dimensional_vec_read_inner.clone() {
                                         for element1 in element0 {
                                             for element2 in element1 {
@@ -5559,7 +5559,7 @@ pub fn generate_postgresql_types(
                             };
                             quote::quote! {
                                 Some({
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
                                         let index = i.checked_add(1).expect("a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
                                         #acc_snake_case.push(

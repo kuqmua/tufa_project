@@ -1965,7 +1965,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
         .collect::<Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {
-            let mut vec = vec![];
+            let mut vec = Vec::new();
             for element in 0..len {
                 let value = format!("__{}{element}", naming::FieldSnakeCase);
                 vec.push(
@@ -1980,7 +1980,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     };
     let visit_u64_value_enum_variants_token_stream = {
         let visit_u64_value_enum_variants_token_stream = {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for index in 0..len {
                 let index_u64_token_stream = {
                     let value = format!("{index}u64");
@@ -2046,7 +2046,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     let match_try_new_in_deserialize_token_stream =
         generate_match_try_new_in_deserialize_token_stream(&ident, &{
             let fields_token_stream = {
-                let mut acc = vec![];
+                let mut acc = Vec::new();
                 for element in 0..len {
                     acc.push(generate_underscore_underscore_field_index_token_stream(
                         element,

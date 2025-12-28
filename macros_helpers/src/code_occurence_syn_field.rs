@@ -1,6 +1,6 @@
 pub fn code_occurence_syn_field() -> syn::Field {
     syn::Field {
-        attrs: vec![],
+        attrs: Vec::new(),
         vis: syn::Visibility::Inherited,
         mutability: syn::FieldMutability::None,
         ident: Some(syn::Ident::new("code_occurence", proc_macro2::Span::call_site())),

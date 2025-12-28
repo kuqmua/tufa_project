@@ -195,7 +195,7 @@ fn main() {
  ```
 use std::sync::Mutex;
  
-static ARRAY: Mutex<Vec<u8>> = Mutex::new(vec![]);
+static ARRAY: Mutex<Vec<u8>> = Mutex::new(Vec::new());
  
 fn main() {
   {

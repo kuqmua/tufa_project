@@ -58,8 +58,8 @@ pub fn animate(props: &AnimateProps) -> Html {
     let _on_appear: Callback<MouseEvent> = Callback::from(move |_| {}); //noop,
                                                                         //   componentDidMount() {
                                                                         // let _currently_animating_keys = (); //{};
-    let _keys_to_enter: Vec<String> = vec![];
-    let _keys_to_leave: Vec<String> = vec![];
+    let _keys_to_enter: Vec<String> = Vec::new();
+    let _keys_to_leave: Vec<String> = Vec::new();
     let state = use_state(|| AnimateState {
         children: Vec::new(),
     }); //children: toArrayChildren(getChildrenFromProps(props)),

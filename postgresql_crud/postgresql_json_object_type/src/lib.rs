@@ -19,7 +19,7 @@ pub enum UniqueVecTryNewErrorNamed<T> {
 pub struct UniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> UniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
-        let mut acc = vec![];
+        let mut acc = Vec::new();
         for element in &value {
             if acc.contains(&element) {
                 return Err(UniqueVecTryNewErrorNamed::NotUnique {

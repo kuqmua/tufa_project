@@ -609,8 +609,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
             if let syn::Fields::Named(fields_named) = &data_struct.fields {
                 let mut option_primary_key_field: Option<SynFieldWrapper> = None;
-                let mut fields = vec![];
-                let mut fields_without_primary_key = vec![];
+                let mut fields = Vec::new();
+                let mut fields_without_primary_key = Vec::new();
                 for element in &fields_named.named {
                     let field_ident = element
                         .ident
@@ -823,7 +823,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         generate_fields_named_without_primary_key_with_comma_token_stream(
             &|_: &SynFieldWrapper| -> proc_macro2::TokenStream { none_token_stream.clone() },
         );
-    let mut impl_ident_vec_token_stream = vec![];
+    let mut impl_ident_vec_token_stream = Vec::new();
     let impl_ident_token_stream = {
         let ident_prepare_postgresql_error_named_upper_camel_case =
             naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -2523,7 +2523,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         value
     };
     let common_route_with_row_and_rollback_syn_variants = {
-        let mut value = vec![];
+        let mut value = Vec::new();
         for element in &common_route_syn_variants {
             value.push(*element);
         }
@@ -2901,7 +2901,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let ident_try_operation_error_named_upper_camel_case =
             generate_ident_try_operation_error_named_upper_camel_case(operation);
         let variants = {
-            let mut value = vec![];
+            let mut value = Vec::new();
             for element in syn_variants {
                 value.push(element.clone());
             }
@@ -3366,7 +3366,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -3511,7 +3511,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_with_row_and_rollback_syn_variants {
                         value.push(*element);
                     }
@@ -3628,7 +3628,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -3840,7 +3840,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -3975,7 +3975,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -4430,7 +4430,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -4654,7 +4654,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -4755,7 +4755,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
                 &{
-                    let mut value = vec![];
+                    let mut value = Vec::new();
                     for element in &common_route_syn_variants {
                         value.push(*element);
                     }
@@ -5340,8 +5340,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .parse::<proc_macro2::TokenStream>()
                     .expect("eb30c1e4-d208-4fe5-bb73-0c8cbac8b1fd")
             };
-        let mut table_field_idents_initialization_vec_token_stream = vec![];
-        let mut table_test_name_field_idents_vec_token_stream = vec![];
+        let mut table_field_idents_initialization_vec_token_stream = Vec::new();
+        let mut table_test_name_field_idents_vec_token_stream = Vec::new();
         let mut fill_table_field_idents_vec_token_stream = |test_names: Vec<&str>| {
             for test_name in test_names {
                 let generate_initialization_variable_name_token_stream =
@@ -5416,7 +5416,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let ident_create_content_token_stream =
                             generate_ident_create_content_element_token_stream(field_ident);
                         quote::quote! {{
-                            for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
+                            for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new())
                                 .chunks(10)
                                 .map(Vec::from)
                             {
@@ -5425,7 +5425,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
                                     let ident_vec_create = {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for #element_snake_case in chunk {
                                             #acc_snake_case.push(#ident_create_upper_camel_case {
                                                 #ident_create_content_token_stream
@@ -5442,7 +5442,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     ).await.expect("5eecedc4-bb02-454a-acd9-0af758f30b2e");
                                     assert_eq!(
                                         {
-                                            let mut #acc_snake_case = vec![];
+                                            let mut #acc_snake_case = Vec::new();
                                             assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "39572295-b6a4-49d7-a65a-16f8bcf44ede");
                                             for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()) {
                                                 #acc_snake_case.push(#ident_read_upper_camel_case {
@@ -5467,7 +5467,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 generate_some_postgresql_type_where_try_new_primary_key(
                                                     postgresql_crud::LogicalOperator::Or,
                                                     {
-                                                        let mut #acc_snake_case = vec![];
+                                                        let mut #acc_snake_case = Vec::new();
                                                         for #element_snake_case in &read_only_ids_from_try_create_many {
                                                             #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
@@ -5520,7 +5520,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             generate_some_postgresql_type_where_try_new_primary_key(
                                                 postgresql_crud::LogicalOperator::Or,
                                                 {
-                                                    let mut #acc_snake_case = vec![];
+                                                    let mut #acc_snake_case = Vec::new();
                                                     for #element_snake_case in &read_only_ids_from_try_delete_many {
                                                         #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
@@ -5559,7 +5559,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             generate_ident_create_content_element_token_stream(field_ident);
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream);
                         quote::quote! {{
-                            for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]) {
+                            for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
                                 let current_table = current_table.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
@@ -5641,7 +5641,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for _ in 1..=length {
                                             #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
                                                 postgresql_crud::PostgresqlTypeWhereEqual {
@@ -5699,7 +5699,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let content_token_stream = add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream(&{
                     quote::quote! {
                         let ident_vec_create = {
-                            let mut #acc_snake_case = vec![];
+                            let mut #acc_snake_case = Vec::new();
                             for _ in 1..=length {
                                 #acc_snake_case.push(ident_create_default.clone());
                             }
@@ -5714,7 +5714,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ).await.expect("d775179f-f7b1-41d3-9c83-4ca8bd1abeec");
                         assert_eq!(
                             {
-                                let mut #acc_snake_case = vec![];
+                                let mut #acc_snake_case = Vec::new();
                                 assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "52c9d1ea-1593-4b32-97d1-0ed4a529a74a");
                                 for (read_only_ids, create) in read_only_ids_from_try_create_many.clone()
                                     .into_iter()
@@ -5745,7 +5745,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
                                         {
-                                            let mut #acc_snake_case = vec![];
+                                            let mut #acc_snake_case = Vec::new();
                                             for #element_snake_case in &read_only_ids_from_try_create_many {
                                                 #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(
                                                     postgresql_crud::PostgresqlTypeWhereEqual {
@@ -5802,7 +5802,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for element in &read_only_ids_from_try_delete_many {
                                             #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
@@ -5885,14 +5885,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let generate_option_vec_create_call_unwrap_or_vec_token_stream =
                 |_: &syn::Ident, field_type: &syn::Type| {
                     quote::quote! {
-                        <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![])
+                        <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new())
                     }
                 };
             let generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream =
                 |field_ident: &syn::Ident, field_type: &syn::Type| {
                     quote::quote! {
                         {
-                            let mut #acc_snake_case = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(vec![]);
+                            let mut #acc_snake_case = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new());
                             if #acc_snake_case.is_empty() {
                                 #acc_snake_case.push(ident_create_default.#field_ident.clone());
                             }
@@ -5903,7 +5903,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let generate_postgresql_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_token_stream =
                 |_: &syn::Ident, field_type: &syn::Type| {
                     quote::quote! {
-                        <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#postgresql_type_option_vec_where_greater_than_test_snake_case().unwrap_or(vec![])
+                        <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#postgresql_type_option_vec_where_greater_than_test_snake_case().unwrap_or(Vec::new())
                     }
                 };
             let generate_read_test_token_stream =
@@ -6427,7 +6427,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if is_fields_without_primary_key_len_greater_than_one {
                                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream);
                                 quote::quote! {
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     for #element_snake_case in previous_read {
                                         #acc_snake_case.push(#ident_read_upper_camel_case {
                                             #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -6449,7 +6449,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                         quote::quote! {{
                             let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
-                                let mut #acc_snake_case = vec![];
+                                let mut #acc_snake_case = Vec::new();
                                 #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
                                 #acc_snake_case
                             };
@@ -6486,7 +6486,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 };
                                 assert_eq!(
                                     {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for #element_snake_case in &read_only_ids_current_elements {
                                             #acc_snake_case.push(#ident_read_upper_camel_case {
                                                 #primary_key_field_ident: <
@@ -6516,7 +6516,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 generate_some_postgresql_type_where_try_new_primary_key(
                                                     postgresql_crud::LogicalOperator::Or,
                                                     {
-                                                        let mut #acc_snake_case = vec![];
+                                                        let mut #acc_snake_case = Vec::new();
                                                         for #element_snake_case in &read_only_ids_current_elements {
                                                             #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(
                                                                 postgresql_crud::PostgresqlTypeWhereEqual {
@@ -6772,7 +6772,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream);
                         quote::quote! {{
                             let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
-                                let mut #acc_snake_case = vec![];
+                                let mut #acc_snake_case = Vec::new();
                                 #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
                                 #acc_snake_case
                             };
@@ -6812,7 +6812,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 };
                                 assert_eq!(
                                     {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for #element_snake_case in &read_only_ids_current_elements {
                                             #acc_snake_case.push(#ident_read_upper_camel_case {
                                                 #primary_key_field_ident: <
@@ -6842,7 +6842,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 generate_some_postgresql_type_where_try_new_primary_key(
                                                     postgresql_crud::LogicalOperator::Or,
                                                     {
-                                                        let mut #acc_snake_case = vec![];
+                                                        let mut #acc_snake_case = Vec::new();
                                                         for #element_snake_case in &read_only_ids_current_elements {
                                                             #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(
                                                                 postgresql_crud::PostgresqlTypeWhereEqual {
@@ -6957,7 +6957,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     #primary_key_field_ident: generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
                                         {
-                                            let mut #acc_snake_case = vec![];
+                                            let mut #acc_snake_case = Vec::new();
                                             for _ in 1..=length {
                                                 #acc_snake_case.push(
                                                     #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
@@ -7020,7 +7020,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             url,
                             #ident_create_many_parameters_upper_camel_case {
                                 payload: #ident_create_many_payload_upper_camel_case({
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     for _ in 1..=length {
                                         #acc_snake_case.push(ident_create_default.clone());
                                     }
@@ -7037,7 +7037,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #primary_key_field_ident: generate_some_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
                                             {
-                                                let mut #acc_snake_case = vec![];
+                                                let mut #acc_snake_case = Vec::new();
                                                 for #element_snake_case in &read_only_ids_from_try_create_many {
                                                     #acc_snake_case.push(
                                                         #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
@@ -7074,7 +7074,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
                                     {
-                                        let mut #acc_snake_case = vec![];
+                                        let mut #acc_snake_case = Vec::new();
                                         for element in read_only_ids_from_try_delete_many {
                                             #acc_snake_case.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
                                                 postgresql_crud::PostgresqlTypeWhereEqual {
@@ -7481,7 +7481,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #common_read_only_ids_returned_from_create_one_token_stream
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
-                                let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = vec![];
+                                let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();
                                 #create_many_tests_token_stream
                                 #create_one_tests_token_stream
                                 #read_many_tests_token_stream

@@ -371,7 +371,7 @@ pub fn generate_postgresql_json_types(
         >(&input_token_stream.to_string())
         .expect("1123f78f-9c84-4001-b619-b534dd55a835");
         let postgresql_json_type_record_vec = match generate_postgresql_json_types_config {
-            GeneratePostgresqlJsonTypesConfig::All => PostgresqlJsonType::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type| {
+            GeneratePostgresqlJsonTypesConfig::All => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                 for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                     match &postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => {
@@ -463,7 +463,7 @@ pub fn generate_postgresql_json_types(
                 "c2d37017-229c-4259-bcee-c434852dca1b"
             );
         };
-        postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
+        postgresql_json_type_record_vec.into_iter().fold(Vec::new(), |mut acc, postgresql_json_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
             #[derive(Clone)]
             struct PostgresqlJsonTypeRecordHandle {
@@ -1251,7 +1251,7 @@ pub fn generate_postgresql_json_types(
                         &ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                             |()| quote::quote! {;},
                             |array_dimension| {
-                                let mut arguments_token_stream = vec![];
+                                let mut arguments_token_stream = Vec::new();
                                 for current_element in 1..=array_dimension.to_usize() {
                                     let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>()
                                     .expect("2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
@@ -1271,7 +1271,7 @@ pub fn generate_postgresql_json_types(
                                 postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOne => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                 postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                             };
-                            let mut arguments_token_stream = vec![];
+                            let mut arguments_token_stream = Vec::new();
                             for current_element in 1..=array_dimension.to_usize() {
                                 let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
                                 arguments_token_stream.push(quote::quote! {
@@ -2045,7 +2045,7 @@ pub fn generate_postgresql_json_types(
                             }
                         };
                         let maybe_dimensions_start_end_initialization = {
-                            let mut acc = vec![];
+                            let mut acc = Vec::new();
                             if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
                                 for current_element in 1..=array_dimension.to_usize() {
                                     let dimension_number_start_token_stream = generate_dimension_number_start_stringified(current_element).parse::<proc_macro2::TokenStream>().expect("77ec13b9-710a-460f-9239-ac9c3680244d");
@@ -2226,7 +2226,7 @@ pub fn generate_postgresql_json_types(
                     let generate_acc_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         let token_stream = generate_maybe_if_some_token_stream(not_null_or_nullable, &create_dot_zero_dot_zero_token_stream, &content_token_stream);
                         quote::quote! {
-                            let mut #acc_snake_case = vec![];
+                            let mut #acc_snake_case = Vec::new();
                             #token_stream
                             if #acc_snake_case.is_empty() {
                                 None
@@ -2248,7 +2248,7 @@ pub fn generate_postgresql_json_types(
                         let current_where_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&generate_ident_token_stream(&NotNullOrNullable::NotNull, postgresql_json_type_pattern));
                         let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(current_value_ident_not_null_or_nullable, current_value_ident_postgresql_json_type_pattern));
                         let vec_content_token_stream = {
-                            let mut content_token_stream = vec![];
+                            let mut content_token_stream = Vec::new();
                             for current_element in 0..=index_number_to_std_primitive_u8(&dimension_index_number_max) {
                                 let index_number_token_stream = format!("index_{current_element}").parse::<proc_macro2::TokenStream>().expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                                 content_token_stream.push(quote::quote! {
@@ -2410,7 +2410,7 @@ pub fn generate_postgresql_json_types(
                         let maybe_acc_push_long_vec_token_stream = match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => quote::quote! {
                                 if let Some(#value_snake_case) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
-                                    let mut inner_acc = vec![];
+                                    let mut inner_acc = Vec::new();
                                     for #element_snake_case in #value_snake_case {
                                         inner_acc.push(#element_snake_case.0.into());
                                     }
@@ -2422,7 +2422,7 @@ pub fn generate_postgresql_json_types(
                             NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                         };
                         quote::quote! {Some({
-                            let mut #acc_snake_case = vec![];
+                            let mut #acc_snake_case = Vec::new();
                             if let Some(#value_snake_case) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
                                 for #element_snake_case in #value_snake_case {
                                     #acc_snake_case.push(<#ident as #import_path::PostgresqlJsonType>::Create::new(#new_content_token_stream));
@@ -2545,7 +2545,7 @@ pub fn generate_postgresql_json_types(
                         let acc_push_vec_content_token_stream = {
                             let content_token_stream = {
                                 let inner_content_token_stream = quote::quote! {{
-                                    let mut #acc_snake_case = vec![];
+                                    let mut #acc_snake_case = Vec::new();
                                     for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                         for element1 in element0 {
                                             #acc_snake_case.push(element1);
@@ -2565,7 +2565,7 @@ pub fn generate_postgresql_json_types(
                             NotNullOrNullable::Nullable => quote::quote! {#acc_snake_case.push(vec![None]);},
                         };
                         quote::quote! {
-                            let mut #acc_snake_case = vec![];
+                            let mut #acc_snake_case = Vec::new();
                             let read_only_ids_to_two_dimensional_vec_read_inner = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
                             #option_additional_content_token_stream
                             #has_len_greater_than_one_content_token_stream
@@ -2586,7 +2586,7 @@ pub fn generate_postgresql_json_types(
                         PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => quote::quote! {vec![#import_path::#standart_not_null_test_cases_vec_name_token_stream().into()]},
                             NotNullOrNullable::Nullable => quote::quote! {
-                                let mut #acc_snake_case = vec![];
+                                let mut #acc_snake_case = Vec::new();
                                 for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
                                     for element1 in element0 {
                                         #acc_snake_case.push(vec![Some(element1)]);
@@ -2620,7 +2620,7 @@ pub fn generate_postgresql_json_types(
                         | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
                         | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
                         | PostgresqlJsonType::StdStringStringAsJsonbString => content_token_stream,
-                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![]},
+                        PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {Vec::new()},
                     }
                 };
                 let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);

@@ -178,7 +178,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
             ) -> proc_macro2::TokenStream {
                 let maybe_pub_token_stream = self.#make_pub_snake_case_token_stream.then(|| quote::quote!{pub});
                 let derive_token_stream = {
-                    let mut acc = vec![];
+                    let mut acc = Vec::new();
                     #(#if_self_derive_acc_push_vec_token_stream)*
                     acc
                 };

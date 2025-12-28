@@ -49,7 +49,7 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
             );
         }
         {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for element in &value {
                 if acc.contains(&element) {
                     return Err(
@@ -673,7 +673,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
             );
         }
         {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for element in &value {
                 if acc.contains(&element) {
                     return Err(

@@ -541,7 +541,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
             });
         }
         {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for element in &value {
                 if acc.contains(&element) {
                     return Err(PostgresqlTypeWhereTryNewErrorNamed::NotUnique {
@@ -1247,7 +1247,7 @@ impl<T: PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
             });
         }
         {
-            let mut acc = vec![];
+            let mut acc = Vec::new();
             for element in &value {
                 if acc.contains(&element) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
