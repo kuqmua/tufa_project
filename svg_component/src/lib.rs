@@ -28,7 +28,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 }
             }
         }),
-        _ => panic!("works only on enums"),
+        _ => panic!("63c6533f-88ab-45b1-8eb9-e9625b3afd03"),
     };
     let get_class_variants = match syn_derive_input.data {
         syn::Data::Enum(enum_item) => enum_item.variants.into_iter().map(|v| {
@@ -43,7 +43,7 @@ pub fn svg_component(input: proc_macro::TokenStream) -> proc_macro::TokenStream 
                 SvgType::#variant_ident(_) => AttrValue::Static(#class)
             }
         }),
-        _ => panic!("works only on enums"),
+        _ => panic!("d2b86625-54c1-4d29-807b-c90155ccf239"),
     };
     let generated = quote::quote! {
         impl SvgComponent for #ident {

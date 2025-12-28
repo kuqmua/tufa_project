@@ -1,7 +1,7 @@
 pub fn write_string_into_file(file_name: &str, string_content: &str) {
     let path_stringified = format!("{file_name}.rs");
     let mut file = std::fs::File::create(std::path::Path::new(&path_stringified))
-        .unwrap_or_else(|_| panic!("std::fs::File::create {path_stringified} failed"));
+        .expect("dcb22948-7ee4-4b9c-9b7a-ddf3d83dd217");
     std::io::Write::write_all(&mut file, &string_content.to_owned().into_bytes())
-        .unwrap_or_else(|_| panic!("file.write_all {path_stringified} failed"));
+        .expect("9f430999-4159-48e0-8324-147fbbcbd772");
 }

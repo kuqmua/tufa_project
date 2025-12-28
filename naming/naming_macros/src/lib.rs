@@ -29,15 +29,15 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
         });
         let phrase_part_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_upper_camel_case_stringified);
         let phrase_part_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_snake_case_stringified);
-        let phrase_part_upper_camel_case_token_stream = { phrase_part_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{phrase_part_upper_camel_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)) };
-        let phrase_part_snake_case_token_stream = { phrase_part_snake_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{phrase_part_snake_case_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)) };
+        let phrase_part_upper_camel_case_token_stream = phrase_part_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().expect("7cf3ffc0-e9c9-4d91-b42f-beb77350d743");
+        let phrase_part_snake_case_token_stream = phrase_part_snake_case_stringified.parse::<proc_macro2::TokenStream>().expect("114a573a-3df3-4e4a-96c4-043eed3a358c");
         let phrase_part_upper_camel_case_upper_camel_case_token_stream = {
             let value = format!("{phrase_part_upper_camel_case_stringified}UpperCamelCase");
-            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            value.parse::<proc_macro2::TokenStream>().expect("4ab6a54c-892b-4f8f-a6b6-aead9c3671fe")
         };
         let phrase_part_snake_case_upper_camel_case_token_stream = {
             let value = format!("{phrase_part_upper_camel_case_stringified}SnakeCase");
-            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            value.parse::<proc_macro2::TokenStream>().expect("0cc47b2e-03e2-48b8-8df3-7bbbe09de244")
         };
         let generate_struct_declaration = |struct_name_token_stream: &dyn quote::ToTokens| quote::quote! {pub struct #struct_name_token_stream;};
         let upper_camel_case_struct_declaration_token_stream = generate_struct_declaration(&phrase_part_upper_camel_case_upper_camel_case_token_stream);
@@ -132,21 +132,21 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
             });
             let struct_upper_camel_case_upper_camel_case_token_stream = {
                 let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}");
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                value.parse::<proc_macro2::TokenStream>().expect("82f4ac08-08bd-4152-9633-7fb0ad2f59a9")
             };
             let struct_snake_case_token_upper_camel_case_stream = {
                 let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}");
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                value.parse::<proc_macro2::TokenStream>().expect("21044eba-c2c2-4c48-b84a-f7af8777436f")
             };
             let (trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
                 let trait_upper_camel_case_stringified = "Trait";
                 let trait_upper_camel_case_upper_camel_case_token_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{upper_camel_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    value.parse::<proc_macro2::TokenStream>().expect("1066857a-b509-4b94-937f-8a72af6482fe")
                 };
                 let trait_snake_case_token_upper_camel_case_stream = {
                     let value = format!("{elements_concat_upper_camel_case_stringified}{snake_case_upper_camel_case_stringified}{trait_upper_camel_case_stringified}");
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    value.parse::<proc_macro2::TokenStream>().expect("8db74cfd-cc35-4e38-83fa-3e0497504821")
                 };
                 (trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream)
             };
@@ -197,14 +197,14 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                                 let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc, elem| {
                                     use std::fmt::Write as _;
                                     if write!(acc, "{}::", elem.ident).is_err() {
-                                        panic!("error 67c90ce9-beea-4a81-99a2-874b8f04aa0a");
+                                        panic!("67c90ce9-beea-4a81-99a2-874b8f04aa0a");
                                     }
                                     acc
                                 });
                                 let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
                                 Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
                             },
-                            _ => panic!("syn::Type is not syn::Type::Path")
+                            _ => panic!("518933f8-c5b4-4452-908d-0fff899e7a25")
                         }
                     }
                 }
@@ -251,11 +251,11 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
-        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input_token_stream).expect("a8f22481-4162-4372-97ef-91a012d80a8c");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
-        panic!("error d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
+        panic!("d26bf85e-20cf-4ee1-97bc-d61f59eb11bc")
     };
     let std_string_string_token_stream = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
@@ -268,7 +268,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_upper_camel_case_stringified(
                 let variant_ident_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_upper_camel_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string_token_stream::from(#variant_ident_upper_camel_case_double_quotes_token_stream)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("supported only syn::Fields::Unit"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("4955c50d-3db7-4881-a085-64b08a1ef413"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_token_stream = trait_path_token_stream();
@@ -303,7 +303,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
         syn::parse(input_token_stream).expect("dea5cbcf-77f9-4861-9993-6ea53e01020b");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
-        panic!("error ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
+        panic!("ed6efe2e-ded2-4b61-807d-7b14ba0e2031");
     };
     let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
@@ -316,7 +316,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("supported only syn::Fields::Unit"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b3ef2657-22f2-4df6-a58c-263a50e3c247"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_token_stream = trait_path_token_stream();
@@ -346,11 +346,11 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
-        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input_token_stream).expect("edabbc24-fdff-40d6-a83e-5b6a108689f6");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = &syn_derive_input.data else {
-        panic!("error b2263e7e-0e5e-48ef-8d91-32864281d4aa");
+        panic!("b2263e7e-0e5e-48ef-8d91-32864281d4aa");
     };
     let std_string_string = token_patterns::StdStringString;
     let variants_matching_values_token_stream = data_enum
@@ -363,7 +363,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
-            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("supported only syn::Fields::Unit"),
+            syn::Fields::Named(_) | syn::Fields::Unnamed(_) => panic!("b6fedcff-1a88-455f-bd93-219ec45a1fce"),
         })
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_token_stream = trait_path_token_stream();

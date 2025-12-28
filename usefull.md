@@ -76,13 +76,13 @@ impl S {
     }
     pub const fn one_not_batman(one: &str) -> &str {
         if matches!(one.as_bytes(), b"batman") {
-            panic!("one can't be a batman")
+            panic!("ac209d5a-73f8-4c63-a7d2-cc395a752cf7")
         }
         one
     }
     pub const fn two_not_negative(two: i32) -> i32 {
         if two <= 0 {
-            panic!("two can't be a negative")
+            panic!("acfdf18f-7d4a-47f9-bf23-0e7fd1896145")
         }
         two
     }
@@ -161,8 +161,8 @@ mod something {
                     two: value.two,
                 },
                 Err(error) => match e {
-                    SomethingError::IsBatman => panic!("is batman"),
-                    SomethingError::IsNegative => panic!("is negative"),
+                    SomethingError::IsBatman => panic!("e4778c18-87e3-40f7-977b-a27473ce786b"),
+                    SomethingError::IsNegative => panic!("d434f5b3-0b0e-477b-aff0-d17113d0cf18"),
                 },
             }
         }

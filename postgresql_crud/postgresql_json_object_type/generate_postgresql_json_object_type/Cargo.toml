@@ -22,7 +22,6 @@ strum_macros.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 postgresql_crud_macros_common = {path = "../../postgresql_crud_macros_common"}
-constants = {path = "../../../constants"}
 generate_quotes = {path = "../../../generate_quotes"}
 panic_location = {path = "../../../panic_location"}
 naming = {path = "../../../naming"}

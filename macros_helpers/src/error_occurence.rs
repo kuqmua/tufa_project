@@ -109,7 +109,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
     let fields = if let syn::Fields::Named(fields) = &value.fields {
         &fields.named
     } else {
-        panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
     let std_string_string = token_patterns::StdStringString;
     let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
@@ -121,7 +121,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             let segments = if let syn::Type::Path(syn_type_path) = &value.ty {
                 &syn_type_path.path.segments
             } else {
-                panic!("Type::Path(syn_type_path) != &element.ty");
+                panic!("55136128-fe0b-4599-978d-8577ae049c98");
             };
             assert!(segments.len() == 3, "segments.len() != 3");
             let first_segment = segments.iter().next().expect("d5a27ffd-e0c9-4b77-99f1-3be08e20b0cf");
@@ -129,7 +129,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             match first_segment.arguments {
                 syn::PathArguments::None => (),
                 syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
-                    panic!("first_segment.arguments != PathArguments::None")
+                    panic!("9224465f-7482-4695-95de-c3efe390e30e")
                 }
             }
             let second_segment = segments.iter().nth(1).expect("44675857-5632-4b93-9bc0-79815fc2fdc6");
@@ -140,7 +140,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             match second_segment.arguments {
                 syn::PathArguments::None => (),
                 syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
-                    panic!("second_segment.arguments != PathArguments::None")
+                    panic!("0784a9f2-d75d-4926-9f6d-ca63953104d8")
                 }
             }
             let third_segment = segments.iter().nth(2).expect("a037b0ba-efa7-42ea-b024-fb446c16ebc1");
@@ -149,9 +149,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
             };
             let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments else {
-                panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
+                panic!("f464b7a1-e00e-4d99-8ca3-3fdc93be3d26");
             };
-            assert!(args.len() == 2, "args.len() != 2");
+            assert!(args.len() == 2, "47cde1b8-93d7-4945-935d-6cb710bb2b0b");
             let first_argument_stringified = {
                 let first_argument = args.iter().next().expect("f9d97146-c9ba-48f6-9f80-3540f7f7aa60");
                 quote::quote! {#first_argument}.to_string()
@@ -189,7 +189,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 let segments = if let syn::Type::Path(path_value) = &element.ty {
                     &path_value.path.segments
                 } else {
-                    panic!("Type::Path(value) != &element.ty");
+                    panic!("8d93bf20-5034-4dcb-9dcc-0d7056278dae");
                 };
                 assert!(segments.len() == 1, "segments.len() != 1");
                 let first_segment = segments.iter().next().expect("595050cf-f859-49c8-b57c-35c322c25da8");
@@ -204,7 +204,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                         naming::WithSerializeDeserializeUpperCamelCase,
                     ).parse::<proc_macro2::TokenStream>().expect("22c364b9-c645-46ec-984e-cf0b911feb84")
                 } else {
-                    panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
+                    panic!("07c6ab44-5e5e-4fca-96a8-5786fb2d2f48");
                 };
                 quote::quote! {
                     Vec<#element_vec_type_with_serialize_deserialize_token_stream>

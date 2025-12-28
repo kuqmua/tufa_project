@@ -42,7 +42,7 @@ mod tests {
             | toml::Value::Float(_)
             | toml::Value::Boolean(_)
             | toml::Value::Datetime(_)
-            | toml::Value::Array(_) => panic!("error cae226cd-1876-4aa2-a46e-8de0698d15bb"),
+            | toml::Value::Array(_) => panic!("cae226cd-1876-4aa2-a46e-8de0698d15bb"),
         };
         toml_value_table.keys().cloned().collect::<Vec<String>>()
     }
@@ -214,7 +214,7 @@ mod tests {
             | toml::Value::Float(_)
             | toml::Value::Boolean(_)
             | toml::Value::Datetime(_)
-            | toml::Value::Array(_) => panic!("error e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
+            | toml::Value::Array(_) => panic!("e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
         };
         for (_, value) in table_value {
             let value_table = match value {
@@ -224,7 +224,7 @@ mod tests {
                 | toml::Value::Float(_)
                 | toml::Value::Boolean(_)
                 | toml::Value::Datetime(_)
-                | toml::Value::Array(_) => panic!("error cb693a3f-ff75-47ba-b747-94361925e2e6"),
+                | toml::Value::Array(_) => panic!("cb693a3f-ff75-47ba-b747-94361925e2e6"),
             };
             let value_table_len = value_table.len();
             let check_version = |current_value_table: &toml::value::Table| match current_value_table
@@ -251,7 +251,7 @@ mod tests {
                 | toml::Value::Float(_)
                 | toml::Value::Boolean(_)
                 | toml::Value::Datetime(_)
-                | toml::Value::Array(_) => panic!("error a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
+                | toml::Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
             };
             let check_features =
                 |current_value_table: &toml::value::Table| match current_value_table
@@ -265,7 +265,7 @@ mod tests {
                     | toml::Value::Float(_)
                     | toml::Value::Boolean(_)
                     | toml::Value::Datetime(_) => {
-                        panic!("error 38ba32e9-fe34-4628-8505-414b937c645f")
+                        panic!("38ba32e9-fe34-4628-8505-414b937c645f")
                     }
                 };
             if value_table_len == 1 {
@@ -286,10 +286,10 @@ mod tests {
                     | toml::Value::Integer(_)
                     | toml::Value::Float(_)
                     | toml::Value::Datetime(_)
-                    | toml::Value::Array(_) => panic!("error b320164b-7082-45f0-9f89-1f5f28f6b779"),
+                    | toml::Value::Array(_) => panic!("b320164b-7082-45f0-9f89-1f5f28f6b779"),
                 }
             } else {
-                panic!("error f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
+                panic!("f1139378-0a18-4195-9b90-f3248a63253e {value_table:#?}")
             }
         }
     }
@@ -347,9 +347,7 @@ mod tests {
             let Ok(content) = std::fs::read_to_string(entry.path()) else {
                 continue;
             };
-            let Ok(ast) = syn::parse_file(&content) else {
-                panic!("failed to parse {:?}", entry.path());
-            };
+            let ast = syn::parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
             let mut visitor = ExpectVisitor {
                 uuids: Vec::new(),
                 errors: Vec::new(),

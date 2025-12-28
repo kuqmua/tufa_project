@@ -1,12 +1,11 @@
 #[proc_macro_derive(FromStr)]
 pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| {
-        panic!("let syn_derive_input: syn::DeriveInput = syn::parse(input) failed")
-    });
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input).expect("f83fcd2d-667d-4bdc-872f-e8a0afcb4388");
     let ident = &syn_derive_input.ident;
     let syn::Data::Enum(data_enum) = syn_derive_input.data else {
-        panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
+        panic!("d35db256-2db6-42d9-8ac9-24aebe6b7ec4");
     };
     let variant_idents = data_enum
         .variants
@@ -14,7 +13,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         .map(|variant| match variant.fields {
             syn::Fields::Unit => variant.ident,
             syn::Fields::Named(_) | syn::Fields::Unnamed(_) => {
-                panic!("expected fields would be unit")
+                panic!("23575b02-186f-4f9f-84bb-3973c3952d66")
             }
         })
         .collect::<Vec<syn::Ident>>();
@@ -26,12 +25,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             );
             variant_ident_snake_case_stringified
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| {
-                    panic!(
-                        "{variant_ident_snake_case_stringified} {}",
-                        constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                    )
-                })
+                .expect("791603c1-e547-4486-898e-631abb15afc5")
         };
         quote::quote! {
             #variant_ident_snake_case_token_stream => Ok(Self::#variant_ident),
@@ -48,7 +42,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 );
                 assert!(
                     write!(acc, "\'{variant_ident_snake_case_stringified}\',").is_ok(),
-                    "error 491d4b30-5cf7-45db-88dc-d851e70cd0a9"
+                    "09c49558-9d46-41d1-86a5-f76c1460a21e"
                 );
                 acc
             });
@@ -58,12 +52,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
         );
         error_stringified
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{error_stringified} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+            .expect("1b778757-4118-4419-bb33-a2f677afa169")
     };
     let generated = quote::quote! {
         impl std::str::FromStr for #ident {

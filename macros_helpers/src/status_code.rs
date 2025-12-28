@@ -687,24 +687,23 @@ impl TryFrom<&String> for StatusCode {
     }
 }
 
-pub fn get_only_one(
-    variant: &syn::Variant,
-    proc_macro_name_ident_stringified: &String,
-) -> StatusCode {
+pub fn get_only_one(variant: &syn::Variant) -> StatusCode {
     let mut option_self = None;
     variant.attrs.iter().for_each(|attr| {
         if attr.path().segments.len() == 1 {
-            let value = attr.path().segments.first().unwrap_or_else(|| panic!("{proc_macro_name_ident_stringified} attr.path().segments.get(0) is None"));
+            let value = attr
+                .path()
+                .segments
+                .first()
+                .expect("9deb71d1-ea77-4e80-9f23-b91f9ab70003");
             if let Ok(named_attribute) = StatusCode::try_from(&value.ident.to_string()) {
                 if option_self.is_some() {
-                    panic!("{proc_macro_name_ident_stringified} duplicated status_code attributes are not supported");
+                    panic!("07286cf0-dfaf-43fa-9c1f-d1a1cc28894e");
                 } else {
                     option_self = Some(named_attribute);
                 }
             }
         }
     });
-    option_self.unwrap_or_else(|| {
-        panic!("{proc_macro_name_ident_stringified} not supported status_code attribute")
-    })
+    option_self.expect("19fc6512-3877-4498-827d-0bfbc2fb2199")
 }

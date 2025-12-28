@@ -1,18 +1,20 @@
 #[proc_macro_derive(TryFromEnv)]
 pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input)
-        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input).expect("e45f75c2-92ea-4f80-9962-a2438ac0b3fe");
     let ident = &syn_derive_input.ident;
     let ident_try_from_env_error_named_upper_camel_case =
         naming::parameter::SelfTryFromEnvErrorNamedUpperCamelCase::from_tokens(&ident);
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("54289ad5-e5f5-4062-bead-69242ae601a4"),
     };
     let fields_named = match data_struct.fields {
         syn::Fields::Named(value) => value.named,
-        syn::Fields::Unnamed(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Named"),
+        syn::Fields::Unnamed(_) | syn::Fields::Unit => {
+            panic!("330b2512-2672-4aab-a447-27aa15a56f1c")
+        }
     };
     let dotenv_upper_camel_case = naming::DotenvUpperCamelCase;
     let dotenv_snake_case = naming::DotenvSnakeCase;

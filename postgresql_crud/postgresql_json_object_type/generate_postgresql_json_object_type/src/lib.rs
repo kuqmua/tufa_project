@@ -42,8 +42,8 @@ pub fn generate_postgresql_json_object_type(
         Concrete(PostgresqlJsonObjectTypeRecord),
     }
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream)
-        .unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput =
+        syn::parse(input_token_stream).expect("e5f0e27b-e1fc-4d4d-b1f6-dbd56501ad66");
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
     let postgresql_json_object_type_record_vec = {
         let generate_postgresql_json_object_type_config = serde_json::from_str::<GeneratePostgresqlJsonObjectTypeConfig>(
@@ -310,10 +310,10 @@ pub fn generate_postgresql_json_object_type(
                 if let syn::Fields::Named(fields_named) = &data_struct.fields {
                     fields_named.named.iter().collect::<Vec<&syn::Field>>()
                 } else {
-                    panic!("supports only syn::Fields::Named");
+                    panic!("4c305996-2508-4ea4-ab34-22c8c20c51f9");
                 }
             } else {
-                panic!("does work only on structs!");
+                panic!("a4fc18a1-9fa0-40c6-a27f-91883a3ba6a1");
             };
             let is_standart_with_id_false = IsStandartWithId::False;
             let is_standart_with_id_true = IsStandartWithId::True;
@@ -4779,8 +4779,8 @@ pub fn generate_postgresql_json_object_type(
                                 },
                                 None => None
                             },
-                            (Some(_), None) => panic!("error 6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
-                            (None, Some(_)) => panic!("error a2761cd2-27ff-4db0-ae81-948aa04573a6"),
+                            (Some(_), None) => panic!("6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
+                            (None, Some(_)) => panic!("a2761cd2-27ff-4db0-ae81-948aa04573a6"),
                             (None, None) => None,
                         }
                     };
@@ -5479,9 +5479,7 @@ pub fn generate_postgresql_json_object_type(
                                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                         });
                                         let fields_token_stream = vec_syn_field.iter().map(|element_value| {
-                                            let current_field_ident = element_value.ident.as_ref().unwrap_or_else(|| {
-                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                            });
+                                            let current_field_ident = element_value.ident.as_ref().expect("d27c5a76-53a9-4005-927e-53569839370a");
                                             if field_ident == current_field_ident {
                                                 let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{element2});
                                                 quote::quote! {
@@ -5958,7 +5956,7 @@ pub fn generate_postgresql_json_object_type(
                                                         ))
                                                     }
                                                     else {
-                                                        panic!("error 0bdf0f44-0012-4cda-9a27-3a89804d871b");
+                                                        panic!("0bdf0f44-0012-4cda-9a27-3a89804d871b");
                                                     }
                                                 });
                                                 #acc_snake_case
@@ -6128,8 +6126,8 @@ pub fn generate_postgresql_json_object_type(
                                                     ).expect("56ac4450-0feb-4ea7-aca7-6f51c8f4893c").#value_snake_case #content_token_stream
                                                 )
                                             },
-                                            (Some(_), None) => panic!("error 75be9ae0-ca9f-4251-bfff-2156a90b10c6"),
-                                            (None, Some(_)) => panic!("error 6a95d7ae-54f5-4e04-9217-223ba156b799"),
+                                            (Some(_), None) => panic!("75be9ae0-ca9f-4251-bfff-2156a90b10c6"),
+                                            (None, Some(_)) => panic!("6a95d7ae-54f5-4e04-9217-223ba156b799"),
                                             (None, None) => None,
                                         }
                                     )
@@ -6231,8 +6229,8 @@ pub fn generate_postgresql_json_object_type(
                                                     ) #content_token_stream
                                                 )
                                             },
-                                            (Some(_), None) => panic!("error 9349dcd5-3ed3-4157-b1ef-14c51d55262f"),
-                                            (None, Some(_)) => panic!("error 45f8e70a-ffca-41b6-ac70-96f101ac3c80"),
+                                            (Some(_), None) => panic!("9349dcd5-3ed3-4157-b1ef-14c51d55262f"),
+                                            (None, Some(_)) => panic!("45f8e70a-ffca-41b6-ac70-96f101ac3c80"),
                                             (None, None) => None,
                                         }
                                     )
@@ -6406,8 +6404,8 @@ pub fn generate_postgresql_json_object_type(
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                         match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
                                             (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
-                                            (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
-                                            (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
+                                            (Some(_), None) => panic!("49e4c289-b37d-4365-96e3-5d896d6860f7"),
+                                            (None, Some(_)) => panic!("ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                             (None, None) => None,
                                         }
                                     )
@@ -6506,8 +6504,8 @@ pub fn generate_postgresql_json_object_type(
                                         #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                             match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
                                                 (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
-                                                (Some(_), None) => panic!("error 49e4c289-b37d-4365-96e3-5d896d6860f7"),
-                                                (None, Some(_)) => panic!("error ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
+                                                (Some(_), None) => panic!("49e4c289-b37d-4365-96e3-5d896d6860f7"),
+                                                (None, Some(_)) => panic!("ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                                 (None, None) => None,
                                             }
                                         )
@@ -6564,8 +6562,8 @@ pub fn generate_postgresql_json_object_type(
                                                 );
                                             }
                                         },
-                                        (Some(_), None) => panic!("error b4507b4c-5282-4d91-9a50-190b2d789849"),
-                                        (None, Some(_)) => panic!("error 8f458c1d-a286-404f-b3b7-cd8f7b4c8bed"),
+                                        (Some(_), None) => panic!("b4507b4c-5282-4d91-9a50-190b2d789849"),
+                                        (None, Some(_)) => panic!("8f458c1d-a286-404f-b3b7-cd8f7b4c8bed"),
                                         (None, None) => {
                                             #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None));
                                         },

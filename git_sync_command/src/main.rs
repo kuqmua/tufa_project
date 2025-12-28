@@ -1,20 +1,16 @@
 fn main() {
     let _unused = dotenv::dotenv().expect("0964b79a-fd4d-40ef-83dc-e06e2862122e");
     let gitmodules_path_env_name = "GITMODULES_PATH";
-    let string_path = match std::env::var(gitmodules_path_env_name) {
-        Err(error) => panic!("failed to find std::env::var {gitmodules_path_env_name} {error:#?}"),
-        Ok(string_handle) => string_handle,
-    };
+    let string_path =
+        std::env::var(gitmodules_path_env_name).expect("25f5388e-57cf-46df-ba63-98d259cfe4da");
     let parent_dir_pathbuf = std::path::PathBuf::from(string_path);
     let parent_dir_pathbuf_as_string = parent_dir_pathbuf
         .clone()
         .into_os_string()
         .into_string()
         .expect("c46bf30c-5dbb-4e94-8eb5-6c7926b007c9");
-    let canonicalize_pathbuf = match std::fs::canonicalize(&parent_dir_pathbuf) {
-        Ok(pathbuf) => pathbuf,
-        Err(error) => panic!("error: {error}, path: {parent_dir_pathbuf_as_string}"),
-    };
+    let canonicalize_pathbuf =
+        std::fs::canonicalize(&parent_dir_pathbuf).expect("2bcd326b-6576-4f00-836f-5857cc617770");
     let canonicalize_pathbuf_as_string = canonicalize_pathbuf
         .into_os_string()
         .into_string()
@@ -50,45 +46,35 @@ fn main() {
     for path_element in paths_vec {
         let path = format!("{canonicalize_pathbuf_as_string}/{path_element}");
         println!("start {path}");
-        if let Err(error) = std::process::Command::new("git")
+        let _unused0 = std::process::Command::new("git")
             .args(["checkout", "."])
             .current_dir(&path)
             .output()
-        {
-            panic!("git checkout . error: {error}, path: {path}")
-        }
+            .expect("33aafc5b-ff75-42a8-9c69-ed1ff55c12a5");
         println!("git checkout . {path}");
-        if let Err(error) = std::process::Command::new("git")
+        let _unused1 = std::process::Command::new("git")
             .args(["submodule", "update", "--init", "--recursive"])
             .current_dir(&path)
             .output()
-        {
-            panic!("git submodule update error: {error}, path: {path}");
-        }
+            .expect("763e5b36-cadb-4ab9-85df-96e297a24d7c");
         println!("git submodule update --init --recursive {path}");
-        if let Err(error) = std::process::Command::new("git")
+        let _unused2 = std::process::Command::new("git")
             .args(["pull"])
             .current_dir(&path)
             .output()
-        {
-            panic!("git pull error: {error}, path: {path}");
-        }
+            .expect("c2102866-7e6e-4c99-bacf-879f582be6a6");
         println!("git pull {path}");
-        if let Err(error) = std::process::Command::new("git")
+        let _unused3 = std::process::Command::new("git")
             .args(["checkout", "main"])
             .current_dir(&path)
             .output()
-        {
-            panic!("git checkout main error: {error}, path: {path}");
-        }
+            .expect("2992301a-d98e-41d4-b292-0c57e59f4ebd");
         println!("git checkout main {path}");
-        if let Err(error) = std::process::Command::new("cargo")
+        let _unused4 = std::process::Command::new("cargo")
             .args(["build"])
             .current_dir(&path)
             .output()
-        {
-            panic!("cargo build error: {error}, path: {path}");
-        }
+            .expect("e3eca580-f4dc-4a7b-9d40-3d9a9d070b4b");
         println!("cargo build {path}");
     }
 }

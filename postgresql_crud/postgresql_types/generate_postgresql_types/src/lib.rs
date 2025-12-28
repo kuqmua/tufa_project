@@ -231,9 +231,7 @@ pub fn generate_postgresql_types(
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| {
-                    panic!("failed to parse PostgresqlType to proc_macro2::TokenStream")
-                })
+                .expect("cfefbb95-b0f4-44de-ba94-3e77e88daf0f")
                 .to_tokens(tokens);
         }
     }
@@ -310,9 +308,7 @@ pub fn generate_postgresql_types(
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             self.to_string()
                 .parse::<proc_macro2::TokenStream>()
-                .unwrap_or_else(|_| {
-                    panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")
-                })
+                .expect("798ccb5a-e65b-4ae9-88cd-48c8e22d79d0")
                 .to_tokens(tokens);
         }
     }
@@ -866,7 +862,7 @@ pub fn generate_postgresql_types(
             let mut acc = vec![];
             for element in &postgresql_type_record_vec {
                 if acc.contains(&element) {
-                    panic!("not unique postgersql type provided: {element:#?}");
+                    panic!("536036f9-2511-4247-8463-6defbeb72f5c");
                 } else {
                     acc.push(element);
                 }

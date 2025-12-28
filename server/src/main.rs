@@ -137,6 +137,6 @@ fn main() {
                     .into_make_service(),
             )
             .await
-            .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+            .expect("2dc4449b-ece6-4a09-afd5-5ba9766f7653");
         });
 }

@@ -8,14 +8,14 @@ pub fn generate_getter_traits_for_struct_fields(
     let ident = &syn_derive_input.ident;
     let datastruct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("15cd72a2-2f8c-4d47-91b8-e86530856966"),
     };
     let generated_traits_implementations = datastruct.fields.into_iter().map(|field| {
         let (field_ident, upper_camel_case_field_ident) = {
             let field_ident = field
                 .ident
                 .as_ref()
-                .unwrap_or_else(|| panic!("{ident} {}", naming::FIELD_IDENT_IS_NONE));
+                .expect("e5c23c45-9bcf-485b-a6d7-0fcb99f9346b");
             (
                 field_ident,
                 naming::ToTokensToUpperCamelCaseStringified::case(&field_ident),
@@ -55,17 +55,20 @@ pub fn generate_getter_trait(input: proc_macro::TokenStream) -> proc_macro::Toke
     let ident = &syn_derive_input.ident;
     let data_struct = match syn_derive_input.data {
         syn::Data::Struct(value) => value,
-        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("only works on Struct"),
+        syn::Data::Enum(_) | syn::Data::Union(_) => panic!("cd6bbc4e-0cb8-4eff-bc88-69db5909f534"),
     };
     let fields_unnamed = match data_struct.fields {
         syn::Fields::Unnamed(value) => value.unnamed,
-        syn::Fields::Named(_) | syn::Fields::Unit => panic!("only works with syn::Fields::Unnamed"),
+        syn::Fields::Named(_) | syn::Fields::Unit => panic!("577cb86a-9071-40ca-9afd-4e0bfeb60cc1"),
     };
-    assert!(fields_unnamed.len() == 1, "fields_unnamed !== 1");
+    assert!(
+        fields_unnamed.len() == 1,
+        "1e82dc7e-724c-4599-93aa-442b262cbcf5"
+    );
     let first_field_unnamed = fields_unnamed
         .iter()
         .next()
-        .unwrap_or_else(|| panic!("fields_unnamed.iter().nth(0) is None"));
+        .expect("7c2531fd-3a78-43fa-8990-44d8e8438fa3");
     let first_field_unnamed_type = &first_field_unnamed.ty;
     let get_ident_upper_camel_case = naming::parameter::GetSelfUpperCamelCase::from_tokens(&ident);
     let get_ident_snake_case = naming::parameter::GetSelfSnakeCase::from_tokens(&ident);

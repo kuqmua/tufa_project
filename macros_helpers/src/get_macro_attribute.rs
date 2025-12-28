@@ -1,7 +1,6 @@
 pub fn get_macro_attribute<'attributes_litime>(
     attributes: &'attributes_litime [syn::Attribute],
     attribute_path: &String,
-    proc_macro_name_ident_stringified: &String,
 ) -> &'attributes_litime syn::Attribute {
     let option_attribute = attributes.iter().find(|attr| {
         *attribute_path == {
@@ -10,8 +9,7 @@ pub fn get_macro_attribute<'attributes_litime>(
             stringified_path
         }
     });
-    option_attribute
-        .unwrap_or_else(|| panic!("{proc_macro_name_ident_stringified} no {attribute_path}"))
+    option_attribute.expect("68acaa15-abdc-4ede-b38a-4cf744512136")
 }
 
 pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
@@ -25,10 +23,10 @@ pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
             stringified_path
         }
     });
-    let attribute = option_attribute.unwrap_or_else(|| panic!("no {attribute_path}"));
+    let attribute = option_attribute.expect("9d057161-4c8e-4cf5-bee3-12c0020d5b95");
     if let syn::Meta::List(value) = &attribute.meta {
         &value.tokens
     } else {
-        panic!("&attribute.meta is not syn::Meta::List(value)")
+        panic!("985dc2d5-f743-4f1e-a6f3-25c96c2af323")
     }
 }

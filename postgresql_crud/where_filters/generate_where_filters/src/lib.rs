@@ -531,7 +531,7 @@ pub fn generate_where_filters(
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
-                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${value},"}, &quote::quote! {panic!("error 87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
+                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${value},"}, &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let #value_snake_case = {
