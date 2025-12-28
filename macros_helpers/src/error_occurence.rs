@@ -93,12 +93,7 @@ impl ErrorOccurenceFieldAttribute {
         let value = format!("#[{}]", crate::attribute_ident_stringified::AttributeIdentStringified::attribute_ident_stringified(self));
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+            .expect("147c39e9-4e64-4080-9426-f66520a414d6")
     }
 }
 

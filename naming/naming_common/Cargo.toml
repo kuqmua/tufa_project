@@ -13,7 +13,6 @@ categories = ["category"]
 proc-macro2.workspace = true
 quote.workspace = true
 convert_case.workspace = true
-constants = {path = "../../constants"}
 
 [lints]
 workspace = true

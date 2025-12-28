@@ -1948,12 +1948,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
         let value = format!("__field{index}");
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+            .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
     }
     fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
         field_name_double_quotes_token_stream: &dyn quote::ToTokens,
@@ -1976,12 +1971,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                 vec.push(
                     value
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| {
-                            panic!(
-                                "{value} {}",
-                                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                            )
-                        }),
+                        .expect("c46314b0-baee-41c8-b9c6-54b888310ca8"),
                 );
             }
             vec
@@ -1996,12 +1986,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                     let value = format!("{index}u64");
                     value
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| {
-                            panic!(
-                                "{value} {}",
-                                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                            )
-                        })
+                        .expect("828ff7b4-5b7c-4109-8739-c6aa240f0f66")
                 };
                 let field_index_token_stream =
                     generate_underscore_underscore_field_index_token_stream(index);
@@ -2034,12 +2019,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                     let value = format!("b{element_ident_double_quotes_stringified}");
                     value
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| {
-                            panic!(
-                                "{value} {}",
-                                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                            )
-                        })
+                        .expect("9e33625e-5f3d-4110-9641-204910c7f08e")
                 };
                 generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
                     &b_field_name_double_quotes_token_stream,

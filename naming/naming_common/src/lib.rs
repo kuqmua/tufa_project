@@ -20,12 +20,7 @@ fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::Token
     value
         .to_string()
         .parse::<proc_macro2::TokenStream>()
-        .unwrap_or_else(|_| {
-            panic!(
-                "{value} {}",
-                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-            )
-        })
+        .expect("753ce6dd-aa0f-4836-8e74-20a7c4f88f60")
 }
 
 //todo maybe add another generic - trait casing. and ToUpperCamelCaseString and others would implement it like .to_case::<UpperCamel>()

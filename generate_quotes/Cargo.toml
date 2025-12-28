@@ -13,7 +13,6 @@ categories = ["category"]
 
 [dependencies]
 proc-macro2.workspace = true
-constants = {path = "../constants"}
 
 [lints]
 workspace = true

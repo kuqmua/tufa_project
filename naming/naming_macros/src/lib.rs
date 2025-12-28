@@ -165,7 +165,6 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
             } else {
                 quote::quote! {#struct_snake_case_token_upper_camel_case_stream}
             };
-            let panic_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("failed to parse stringified {struct_ident_token_stream} into proc_macro2::TokenStream: {{value_stringified}}"));
             let casing_token_stream = if is_upper_camel_case {
                 quote::quote! {naming_common::AsRefStrToUpperCamelCaseStringified::case}
             } else {
@@ -217,7 +216,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
                         let value_stringified = self.to_string();
                         let value_token_stream = value_stringified.parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| panic!(#panic_handle_token_stream));
+                            .expect("71c8d26b-18c4-4bbe-a07e-3114a15932d2");
                         value_token_stream.to_tokens(tokens)
                     }
                 }

@@ -488,12 +488,7 @@ impl StatusCode {
         let value = format!("#[{self}]");
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+            .expect("48ab5b45-d715-4872-a5e3-aa17c1012898")
     }
 }
 // impl TryFrom<&syn::Variant> for StatusCode {

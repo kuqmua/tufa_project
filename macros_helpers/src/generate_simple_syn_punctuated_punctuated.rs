@@ -25,9 +25,7 @@ pub fn generate_simple_syn_punctuated_punctuated(
         }
         handle
     } else {
-        panic!(
-            "generate_simple_syn_punctuated_punctuated parts_vec_len.len() > 1 == false for {parts_vec:?}"
-        );
+        panic!("f68497cc-bd58-497e-ae49-9ee22e07b45e");
     }
 }
 

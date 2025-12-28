@@ -467,18 +467,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             },
                             naming::WithSerializeDeserializeUpperCamelCase
                         );
-                        value
-                            .parse::<proc_macro2::TokenStream>()
-                            .unwrap_or_else(|_| {
-                                panic!(
-                                    "{value} {}",
-                                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                                )
-                            })
+                        value.parse::<proc_macro2::TokenStream>().expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")
                     };
-                    quote::quote! {
-                        #element_ident(#inner_type_with_serialize_deserialize_token_stream)
-                    }
+                    quote::quote! {#element_ident(#inner_type_with_serialize_deserialize_token_stream)}
                 });
                 generate_enum_ident_with_serialize_deserialize_token_stream(
                     &quote::quote! {#(#variants_token_stream),*},

@@ -645,9 +645,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 == &generate_postgresql_table_primary_key_snake_case_stringified
                             {
                                 if option_primary_key_field.is_some() {
-                                    panic!(
-                                        "two or more supported {generate_postgresql_table_primary_key_snake_case_stringified} attributes!"
-                                    );
+                                    panic!("1a75cea1-9961-4f01-a54a-5b4acc08547c");
                                 } else {
                                     option_primary_key_field = Some(SynFieldWrapper {
                                         syn_field: element.clone(),
@@ -1062,10 +1060,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 })
             } else {
-                panic!(
-                    "syn::Fields::Named(value) != &self.variant.fields {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                );
+                panic!("10773d36-d47f-4563-98f2-118d9ac519fc");
             };
         quote::quote! {
             #variant_ident {
@@ -2028,12 +2023,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                     value
                         .parse::<proc_macro2::TokenStream>()
-                        .unwrap_or_else(|_| {
-                            panic!(
-                                "{value} {}",
-                                constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                            )
-                        })
+                        .expect("dbdbb7f2-7801-49e7-917e-f7daa9b4dd91")
                 };
                 let syn_type_as_postgresql_type_update_token_stream =
                     generate_as_postgresql_type_update_token_stream(&syn_type);

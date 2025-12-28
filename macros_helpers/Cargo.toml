@@ -17,7 +17,6 @@ syn.workspace = true
 strum_macros.workspace = true
 token_patterns = {path = "../token_patterns"}
 generate_quotes = {path = "../generate_quotes"}
-constants = {path = "../constants"}
 naming = {path = "../naming"}
 generate_struct_or_enum_derive_token_stream_builder = {path = "./generate_struct_or_enum_derive_token_stream_builder"}
 

@@ -18,7 +18,6 @@ proc-macro2.workspace = true
 quote.workspace = true
 syn.workspace = true
 macros_helpers = {path = "../../macros_helpers"}
-constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
 panic_location = {path = "../../panic_location"}
 token_patterns = {path = "../../token_patterns"}

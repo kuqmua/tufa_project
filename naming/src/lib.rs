@@ -1461,11 +1461,6 @@ where
         let value = self.swagger_url_path_self_quotes_stringified(table_name_stringified);
         value
             .parse::<proc_macro2::TokenStream>()
-            .unwrap_or_else(|_| {
-                panic!(
-                    "{value} {}",
-                    constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-                )
-            })
+            .expect("f292686b-7b16-4f33-a085-e67b4091f266")
     }
 }
