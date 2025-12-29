@@ -86,7 +86,7 @@ yew = {version = "=0.19.0"}
 yew-router = {version = "=0.16.0"}
 yewdux = {version = "=0.7.0"}
 axum = {version = "=0.7.4", features = ["macros"]}
-tower-http = {version = "=0.5.0", features = ["trace", "fs", "cors"]}
+tower-http = {version = "=0.6.8", features = ["trace", "fs", "cors"]}
 num_cpus = {version = "=1.15.0"}
 secrecy = {version = "=0.8.0", features = ["serde"]}
 tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]}
