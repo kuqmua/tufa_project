@@ -101,13 +101,13 @@ dotenv = {version = "=0.15.0"}
 tracing = {version = "=0.1.44", features = ["log", "valuable"]}
 http-body = {version = "=1.0.1"}
 http = {version = "=1.4.0"}
-time = {version = "=0.3.36", features = ["serde"]}
-futures = {version = "=0.3.28"}
-quote = {version = "=1.0.36"}
-syn = {version = "=2.0.100", features = ["full", "visit", "extra-traits"] }
+time = {version = "=0.3.44", features = ["serde"]}
+futures = {version = "=0.3.31"}
+quote = {version = "=1.0.42"}
+syn = {version = "=2.0.111", features = ["full", "visit", "extra-traits"] }
 yewdux-functional = {version = "=0.1.0"}
-jsonschema = { version = "=0.37.1", default-features = false, features = [] }
-rayon = {version = "=1.10.0"}
+jsonschema = { version = "=0.38.1", default-features = false, features = [] }
+rayon = {version = "=1.11.0"}
 bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
 

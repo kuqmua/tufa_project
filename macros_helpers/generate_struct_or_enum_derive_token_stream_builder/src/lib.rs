@@ -208,12 +208,14 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
                                     {
                                         use ::quote::__private::ext::*;
                                         let mut _i = 0usize;
-                                        let has_iter = ::quote::__private::ThereIsNoIteratorInRepetition;
+                                        let has_iter = ::quote::__private::HasIterator::<false>;
                                         #[allow(unused_mut)]
                                         let (mut derive_token_stream, i) = derive_token_stream
                                             .quote_into_iter();
                                         let has_iter = has_iter | i;
-                                        let _: ::quote::__private::HasIterator = has_iter;
+                                        <_ as ::quote::__private::CheckHasIterator<
+                                            true,
+                                        >>::check(has_iter);
                                         loop {
                                             let derive_token_stream = match derive_token_stream.next() {
                                                 Some(_x) => ::quote::__private::RepInterp(_x),
