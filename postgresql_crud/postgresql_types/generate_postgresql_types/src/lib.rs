@@ -1071,14 +1071,11 @@ pub fn generate_postgresql_types(
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
             let std_primitive_f32_token_stream = token_patterns::StdPrimitiveF32;
-            // let std_primitive_f64_token_stream = token_patterns::StdPrimitiveF64;
             let std_string_string_token_stream = token_patterns::StdStringString;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
-
-            let none_token_stream = quote::quote! {None};
 
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
@@ -1672,11 +1669,15 @@ pub fn generate_postgresql_types(
                     }};
                     let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[u8; 6]};
+                    let generate_vec_field_index_token_stream = |length: usize|{
+                        let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(current_index, _)| generate_field_index_token_stream(current_index));
+                        quote::quote!{#(#fields_token_stream),*}
+                    };
                     let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_token_stream, match_origin_try_new_for_deserialize_two_token_stream, match_origin_try_new_for_deserialize_four_token_stream) = {
                         let generate_match_origin_try_new_for_deserialize_token_stream = |length: usize| {
-                            let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(current_index, _)| generate_field_index_token_stream(current_index));
+                            let fields_token_stream = generate_vec_field_index_token_stream(length);
                             quote::quote! {
-                                match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#(#fields_token_stream),*) {
+                                match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#fields_token_stream) {
                                     Ok(#value_snake_case) => Ok(#value_snake_case),
                                     Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                 }
@@ -1691,9 +1692,9 @@ pub fn generate_postgresql_types(
                     };
                     let (origin_new_for_deserialize_two_token_stream, origin_new_for_deserialize_three_token_stream) = {
                         let generate_origin_new_for_deserialize_token_stream = |length: usize| {
-                            let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(current_index, _)| generate_field_index_token_stream(current_index));
+                            let fields_token_stream = generate_vec_field_index_token_stream(length);
                             quote::quote! {
-                                Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
+                                Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#fields_token_stream))
                             }
                         };
                         (generate_origin_new_for_deserialize_token_stream(2), generate_origin_new_for_deserialize_token_stream(3))
@@ -1956,12 +1957,6 @@ pub fn generate_postgresql_types(
                             generate_fn_visit_bytes_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
-                    let serde_deserializer_deserialize_identifier_token_stream = quote::quote! {
-                        _serde::Deserializer::deserialize_identifier(
-                            __deserializer,
-                            __FieldVisitor,
-                        )
-                    };
                     let impl_serde_deserialize_for_field_token_stream = quote::quote! {
                         impl<'de> _serde::Deserialize<'de> for __Field {
                             #[inline]
@@ -1971,7 +1966,10 @@ pub fn generate_postgresql_types(
                             where
                                 __D: _serde::Deserializer<'de>,
                             {
-                                #serde_deserializer_deserialize_identifier_token_stream
+                                _serde::Deserializer::deserialize_identifier(
+                                    __deserializer,
+                                    __FieldVisitor,
+                                )
                             }
                         }
                     };
@@ -2247,10 +2245,6 @@ pub fn generate_postgresql_types(
                         )
                     };
                     let field_visitor_token_stream = quote::quote! {__FieldVisitor};
-                    let struct_field_visitor_token_stream = quote::quote! {
-                        #[doc(hidden)]
-                        struct #field_visitor_token_stream;
-                    };
                     let type_value_equal_underscore_field_semicolon_token_stream = quote::quote! {type Value = __Field;};
                     let (
                         impl_serde_de_visitor_for_field_visitor_token_stream_5a4f24ce_7a8e_4bcc_8f79_2494f79bcc08,
@@ -2263,7 +2257,8 @@ pub fn generate_postgresql_types(
                         let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
                             quote::quote! {
-                                #struct_field_visitor_token_stream
+                                #[doc(hidden)]
+                                struct #field_visitor_token_stream;
                                 #impl_serde_de_visitor_for_tokens_token_stream
                             }
                         };
@@ -5659,6 +5654,7 @@ pub fn generate_postgresql_types(
                             #equal_not_greater_than_more_token_stream
                         }
                     };
+                    let none_token_stream = quote::quote! {None};
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
