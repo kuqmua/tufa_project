@@ -62,9 +62,9 @@ exclude = [
 
 [workspace.dependencies]
 serde = {version = "=1.0.224", features = ["derive"]}
-uuid = {version = "=1.10.0", features = ["serde", "v4"]}
+uuid = {version = "=1.19.0", features = ["serde", "v4"]}
 reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
-proc-macro2 = {version = "=1.0.95"}
+proc-macro2 = {version = "=1.0.104"}
 log = {version = "=0.4.28"}
 teloxide = {version = "=0.13.0", features = ["macros"]}
 tokio = {version = "=1.48.0", features = ["macros", "rt-multi-thread"]}
