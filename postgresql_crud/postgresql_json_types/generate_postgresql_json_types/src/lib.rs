@@ -390,67 +390,71 @@ pub fn generate_postgresql_json_types(
             current_acc
         }.into_iter().fold(Vec::new(), |mut acc, postgresql_json_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
-            #[derive(Clone)]
-            struct PostgresqlJsonTypeRecordHandle {
-                not_null_or_nullable: NotNullOrNullable,
-                postgresql_json_type_pattern: PostgresqlJsonTypePattern,
-            }
-            fn generate_postgresql_json_type_record_handle_vec(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> Vec<PostgresqlJsonTypeRecordHandle> {
-                let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle| generate_postgresql_json_type_record_handle_vec(current_postgresql_json_type_record_handle).into_iter().chain(std::iter::once(postgresql_json_type_record_handle.clone())).collect();
-                match (&postgresql_json_type_record_handle.not_null_or_nullable, &postgresql_json_type_record_handle.postgresql_json_type_pattern) {
-                    (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => vec![postgresql_json_type_record_handle],
-                    (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: NotNullOrNullable::NotNull,
-                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-                    }),
-                    (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("0e970a4f-eeec-421e-aa30-f90fc536d388"),
-                    }),
-                    (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("85f8ed83-aa1f-4f52-8f8f-80aeb86f8083"),
-                    }),
-                    (
-                        NotNullOrNullable::NotNull,
-                        PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                        },
-                    ) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                        },
-                    }),
-                    (
-                        NotNullOrNullable::NotNull,
-                        PostgresqlJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
-                        },
-                    ) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: *dimension1_not_null_or_nullable,
-                        postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                            dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                        },
-                    }),
-                    (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                        not_null_or_nullable: NotNullOrNullable::NotNull,
-                        postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.clone(),
-                    }),
+            for postgresql_json_type_record_handle_element in {
+                #[derive(Clone)]
+                struct PostgresqlJsonTypeRecordHandle {
+                    not_null_or_nullable: NotNullOrNullable,
+                    postgresql_json_type_pattern: PostgresqlJsonTypePattern,
                 }
-            }
-            for postgresql_json_type_record_handle_element in generate_postgresql_json_type_record_handle_vec(PostgresqlJsonTypeRecordHandle {
-                not_null_or_nullable: postgresql_json_type_record_element.not_null_or_nullable,
-                postgresql_json_type_pattern: postgresql_json_type_record_element.postgresql_json_type_pattern,
-            }) {
+                fn generate_postgresql_json_type_record_handle_vec(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> Vec<PostgresqlJsonTypeRecordHandle> {
+                    let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle| generate_postgresql_json_type_record_handle_vec(
+                        current_postgresql_json_type_record_handle
+                    ).into_iter().chain(std::iter::once(postgresql_json_type_record_handle.clone())).collect();
+                    match (&postgresql_json_type_record_handle.not_null_or_nullable, &postgresql_json_type_record_handle.postgresql_json_type_pattern) {
+                        (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => vec![postgresql_json_type_record_handle],
+                        (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: NotNullOrNullable::NotNull,
+                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                        }),
+                        (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                            postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("0e970a4f-eeec-421e-aa30-f90fc536d388"),
+                        }),
+                        (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                            postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.down_by_1().expect("85f8ed83-aa1f-4f52-8f8f-80aeb86f8083"),
+                        }),
+                        (
+                            NotNullOrNullable::NotNull,
+                            PostgresqlJsonTypePattern::ArrayDimension3 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                            },
+                        ) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+                                dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                            },
+                        }),
+                        (
+                            NotNullOrNullable::NotNull,
+                            PostgresqlJsonTypePattern::ArrayDimension4 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable,
+                            },
+                        ) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: *dimension1_not_null_or_nullable,
+                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+                                dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                                dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                            },
+                        }),
+                        (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. }) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: NotNullOrNullable::NotNull,
+                            postgresql_json_type_pattern: postgresql_json_type_record_handle.postgresql_json_type_pattern.clone(),
+                        }),
+                    }
+                }
+                generate_postgresql_json_type_record_handle_vec(PostgresqlJsonTypeRecordHandle {
+                    not_null_or_nullable: postgresql_json_type_record_element.not_null_or_nullable,
+                    postgresql_json_type_pattern: postgresql_json_type_record_element.postgresql_json_type_pattern,
+                })
+            } {
                 let postgresql_json_type_record = PostgresqlJsonTypeRecord {
                     postgresql_json_type: postgresql_json_type_record_element.postgresql_json_type.clone(),
                     not_null_or_nullable: postgresql_json_type_record_handle_element.not_null_or_nullable,
@@ -658,7 +662,6 @@ pub fn generate_postgresql_json_types(
             };
             quote::quote! {#content_token_stream}
         };
-        let generate_current_ident_origin_non_wrapping = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
         let generate_into_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| {
             let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, current_content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {match #match_token_stream {
@@ -727,6 +730,10 @@ pub fn generate_postgresql_json_types(
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
         let ident_origin_token_stream = {
+            let generate_current_ident_origin_non_wrapping = |
+                current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern
+            | naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
             let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
             //todo json schema logic
             let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
@@ -1053,7 +1060,14 @@ pub fn generate_postgresql_json_types(
                 #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
             }
         };
-        let pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&quote::quote! {Self(#ident_origin_upper_camel_case::new(#value_snake_case))});
+        let generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = |current_ident: &dyn quote::ToTokens|{
+            let pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&quote::quote! {Self(#ident_origin_upper_camel_case::new(#value_snake_case))});
+            quote::quote! {
+                impl #current_ident {
+                    #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
+                }
+            }
+        };
         let ident_origin_struct_content_token_stream = quote::quote!{(#ident_origin_upper_camel_case);};
         let ident_table_type_declaration_token_stream = {
             let ident_table_type_declaration_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -1070,13 +1084,9 @@ pub fn generate_postgresql_json_types(
                     &ident_table_type_declaration_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_table_type_declaration_token_stream = {
-                quote::quote! {
-                    impl #ident_table_type_declaration_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_table_type_declaration_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_table_type_declaration_upper_camel_case
+            );
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             //todo maybe add to trait?
@@ -1105,13 +1115,9 @@ pub fn generate_postgresql_json_types(
                     &ident_create_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_create_token_stream = {
-                quote::quote! {
-                    impl #ident_create_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_create_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_create_upper_camel_case
+            );
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             quote::quote! {
@@ -1131,13 +1137,9 @@ pub fn generate_postgresql_json_types(
                     &ident_create_for_query_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_create_for_query_token_stream = {
-                quote::quote! {
-                    impl #ident_create_for_query_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_create_for_query_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_create_for_query_upper_camel_case
+            );
             let impl_sqlx_encode_sqlx_postgres_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_create_for_query_upper_camel_case, &quote::quote! {sqlx::types::Json(&#self_snake_case.0)});
             let impl_sqlx_type_sqlx_postgres_for_ident_create_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_create_for_query_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_std_convert_from_ident_create_for_ident_create_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_create_upper_camel_case, &ident_create_for_query_upper_camel_case, &quote::quote! {Self(#value_snake_case.0)});
@@ -1625,13 +1627,9 @@ pub fn generate_postgresql_json_types(
                     &ident_read_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_read_token_stream = {
-                quote::quote! {
-                    impl #ident_read_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_read_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_read_upper_camel_case
+            );
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_read_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             let impl_sqlx_encode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &quote::quote! {&#self_snake_case.0});
@@ -1807,13 +1805,9 @@ pub fn generate_postgresql_json_types(
                     &ident_update_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_update_token_stream = {
-                quote::quote! {
-                    impl #ident_update_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_update_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_update_upper_camel_case
+            );
             let impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                 macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:?}")})
             } else {
@@ -1839,13 +1833,9 @@ pub fn generate_postgresql_json_types(
                     &ident_update_for_query_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_update_for_query_token_stream = {
-                quote::quote! {
-                    impl #ident_update_for_query_upper_camel_case {
-                        #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                    }
-                }
-            };
+            let impl_ident_update_for_query_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
+                &ident_update_for_query_upper_camel_case
+            );
             let impl_std_convert_from_ident_update_for_ident_update_for_query_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_update_for_query_upper_camel_case, &quote::quote! {Self(#value_snake_case.0)});
             //its only for primitive json types
             let impl_sqlx_encode_sqlx_postgres_for_ident_update_for_query_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_update_for_query_upper_camel_case, &quote::quote! {sqlx::types::Json(&#self_snake_case.0)});
@@ -1966,8 +1956,10 @@ pub fn generate_postgresql_json_types(
                                         let generate_d_number_elem = |content: usize| format!("d{content}_elem");
                                         let generate_d_number_ord = |content: usize| format!("d{content}_elem");
                                         let generate_dot_value = |content: &str| format!("{content}.value");
-                                        let generate_as_value_where =
-                                            |first_content: &str, second_content: &str| format!("as {first_content}(value, {second_content}) where {second_content}");
+                                        let generate_as_value_where = |
+                                            first_content: &str,
+                                            second_content: &str
+                                        | format!("as {first_content}(value, {second_content}) where {second_content}");
                                         let one = 1;
                                         generate_jsonb_agg(
                                             &{
