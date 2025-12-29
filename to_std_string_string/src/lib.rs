@@ -126,7 +126,7 @@ impl ToStdStringString for http_body::SizeHint {
         format!("{self:#?}")
     }
 }
-impl ToStdStringString for axum::http::header::ToStrError {
+impl ToStdStringString for http::header::ToStrError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }
@@ -167,11 +167,6 @@ impl ToStdStringString for serde_json::Error {
     }
 }
 impl ToStdStringString for reqwest::Error {
-    fn to_std_string_string(&self) -> String {
-        format!("{self}")
-    }
-}
-impl ToStdStringString for http::StatusCode {
     fn to_std_string_string(&self) -> String {
         format!("{self}")
     }

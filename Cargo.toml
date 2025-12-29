@@ -98,9 +98,9 @@ schemars = {version = "=0.8.22"}
 strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 dotenv = {version = "=0.15.0"}
-tracing = {version = "=0.1.43", features = ["log", "valuable"]}
-http-body = {version = "=1.0.0"}
-http = {version = "=0.2.9"}
+tracing = {version = "=0.1.44", features = ["log", "valuable"]}
+http-body = {version = "=1.0.1"}
+http = {version = "=1.4.0"}
 time = {version = "=0.3.36", features = ["serde"]}
 futures = {version = "=0.3.28"}
 quote = {version = "=1.0.36"}
