@@ -71,7 +71,7 @@ tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 toml = {version = "=0.9.6"}
 scraper = {version = "=0.24.0"}
 regex = {version = "=1.9.3"}
-sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
+sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
 reqwasm = {version = "=0.2.0"}
 serde_json = {version = "=1.0.145"}
 colorsys = {version = "=0.6.5"}
