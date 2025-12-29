@@ -38,6 +38,8 @@ jobs:
 
     - name: install rust nightly
       uses: dtolnay/rust-toolchain@nightly
+      with:
+        components: rustfmt, clippy
 
     - name: rustc --version
       run: rustc --version
@@ -52,9 +54,6 @@ jobs:
           echo "Waiting for PostgreSQL..."
           sleep 2
         done
-
-    - name: rustup component add clippy
-      run: rustup component add clippy
 
     - name: cargo clippy --all-targets --all-features
       run: cargo clippy --all-targets --all-features # -- -D warnings
