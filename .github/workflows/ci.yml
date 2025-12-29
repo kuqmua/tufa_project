@@ -27,14 +27,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Login to GHCR
+    - name: login to GHCR
       uses: docker/login-action@v3
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Cache Rust
+    - name: cache rust
       uses: actions/cache@v4
       with:
         path: |
@@ -43,13 +43,13 @@ jobs:
           target
         key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-    - name: Install Rust Nightly
+    - name: install rust nightly
       uses: dtolnay/rust-toolchain@nightly
 
     - name: rustc --version
       run: rustc --version
 
-    - name: Wait for PostgreSQL
+    - name: wait for postgreSQL
       run: |
         for i in {1..30}; do
           if pg_isready -h localhost -p 5432; then
@@ -60,13 +60,16 @@ jobs:
           sleep 2
         done
 
-    - name: Install Clippy
+    - name: rustup component add clippy
       run: rustup component add clippy
 
-    - name: Run Clippy
+    - name: cargo clippy --all-targets --all-features
       run: cargo clippy --all-targets --all-features # -- -D warnings
 
-    - name: Run tests
+    - name: cargo fmt --all -- --check
+      run: cargo fmt --all -- --check
+
+    - name: cargo test --features test-utils
       env:
         SERVICE_SOCKET_ADDRESS: "127.0.0.1:8080"
         DATABASE_URL: "postgres://postgres:postgres@127.0.0.1:5432/postgres"
