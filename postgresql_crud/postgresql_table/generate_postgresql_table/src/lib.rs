@@ -2394,7 +2394,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         &naming::FailedToGetResponseTextUpperCamelCase,
         Some(macros_helpers::StatusCode::BadRequest400),
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &status_code_snake_case, macros_helpers::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &status_code_snake_case, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
                 macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
                 &naming::HeadersSnakeCase,
@@ -2407,7 +2407,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         &naming::DeserializeResponseUpperCamelCase,
         None,
         vec![
-            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &status_code_snake_case, macros_helpers::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"])),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string, &status_code_snake_case, macros_helpers::generate_simple_syn_punctuated_punctuated(&["reqwest", "StatusCode"])),
             (
                 macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
                 &naming::HeadersSnakeCase,

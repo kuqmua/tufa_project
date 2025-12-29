@@ -176,6 +176,11 @@ impl ToStdStringString for http::StatusCode {
         format!("{self}")
     }
 }
+impl ToStdStringString for reqwest::StatusCode {
+    fn to_std_string_string(&self) -> String {
+        format!("{self}")
+    }
+}
 impl ToStdStringString for axum::extract::rejection::JsonDataError {
     fn to_std_string_string(&self) -> String {
         format!("{self}")

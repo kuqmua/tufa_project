@@ -63,7 +63,7 @@ exclude = [
 [workspace.dependencies]
 serde = {version = "=1.0.224", features = ["derive"]}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
-reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
+reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
 proc-macro2 = {version = "=1.0.95"}
 log = {version = "=0.4.28"}
 teloxide = {version = "=0.13.0", features = ["macros"]}
@@ -108,7 +108,7 @@ syn = {version = "=2.0.100", features = ["full", "visit", "extra-traits"] }
 yewdux-functional = {version = "=0.1.0"}
 jsonschema = { version = "=0.37.1", default-features = false, features = [] }
 rayon = {version = "=1.10.0"}
-bytes = {version = "=1.2.1"}
+bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
 
 #todo check proc macro generated token on lints
