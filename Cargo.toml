@@ -72,9 +72,9 @@ toml = {version = "=0.9.6"}
 scraper = {version = "=0.25.0"}
 regex = {version = "=1.12.2"}
 sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
-reqwasm = {version = "=0.2.0"}
-serde_json = {version = "=1.0.145"}
-colorsys = {version = "=0.6.5"}
+reqwasm = {version = "=0.5.0"}
+serde_json = {version = "=1.0.148"}
+colorsys = {version = "=0.7.3"}
 convert_case = {version = "=0.6.0"}
 gloo = {version = "=0.7.0"}
 js-sys = {version = "=0.3.58"}
