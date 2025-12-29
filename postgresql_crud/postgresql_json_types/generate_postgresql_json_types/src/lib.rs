@@ -2994,30 +2994,26 @@ pub fn generate_postgresql_json_types(
         (
             {
                 let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("f992f797-a4df-40d0-9984-3a3a3ad439d7");
-                quote::quote! {
-                    pub #field_ident: #ident,
-                }
-                .to_string()
+                quote::quote! {pub #field_ident: #ident,}.to_string()
             },
             generated.to_string(),
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    // let example_token_stream = {
-    //     let fields_token_stream = fields_token_stream
-    //         .into_iter()
-    //         .map(|element| element.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
-    //         .collect::<Vec<proc_macro2::TokenStream>>();
-    //     quote::quote! {
-    //         pub struct GeneratePostgresqlJsonTypesExample {
-    //             #(#fields_token_stream)*
-    //         }
-    //     }
-    // };
     // if false {
     //     macros_helpers::write_token_stream_into_file(
     //         "GeneratePostgresqlJsonTypesExample",
-    //         &example_token_stream,
+    //         &{
+    //             let fields_token_stream = fields_token_stream
+    //                 .into_iter()
+    //                 .map(|element| element.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
+    //                 .collect::<Vec<proc_macro2::TokenStream>>();
+    //             quote::quote! {
+    //                 pub struct GeneratePostgresqlJsonTypesExample {
+    //                     #(#fields_token_stream)*
+    //                 }
+    //             }
+    //         },
     //         &macros_helpers::FormatWithRustfmt::True
     //     );
     // }
@@ -3030,10 +3026,7 @@ pub fn generate_postgresql_json_types(
                     .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
             })
             .collect::<Vec<proc_macro2::TokenStream>>();
-        quote::quote! {
-            #(#content_token_stream)*
-            // #example_token_stream
-        }
+        quote::quote! {#(#content_token_stream)*}
     };
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlJsonTypes",
