@@ -65,12 +65,12 @@ serde = {version = "=1.0.224", features = ["derive"]}
 uuid = {version = "=1.19.0", features = ["serde", "v4"]}
 reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
 proc-macro2 = {version = "=1.0.104"}
-log = {version = "=0.4.28"}
-teloxide = {version = "=0.13.0", features = ["macros"]}
+log = {version = "=0.4.29"}
+teloxide = {version = "=0.17.0", features = ["macros"]}
 tokio = {version = "=1.48.0", features = ["macros", "rt-multi-thread"]}
 toml = {version = "=0.9.6"}
-scraper = {version = "=0.24.0"}
-regex = {version = "=1.9.3"}
+scraper = {version = "=0.25.0"}
+regex = {version = "=1.12.2"}
 sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
 reqwasm = {version = "=0.2.0"}
 serde_json = {version = "=1.0.145"}
