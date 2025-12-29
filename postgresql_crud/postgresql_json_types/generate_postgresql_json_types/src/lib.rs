@@ -276,81 +276,6 @@ pub fn generate_postgresql_json_types(
             }
         }
     }
-    enum ArrayDimensionSelectPattern {
-        ArrayDimension2 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        },
-        ArrayDimension3 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        },
-        ArrayDimension4 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        },
-    }
-    impl ArrayDimensionSelectPattern {
-        const fn to_usize(&self) -> usize {
-            match &self {
-                Self::ArrayDimension2 { .. } => 2,
-                Self::ArrayDimension3 { .. } => 3,
-                Self::ArrayDimension4 { .. } => 4,
-            }
-        }
-        fn select_array(&self) -> Vec<&postgresql_crud_macros_common::NotNullOrNullable> {
-            match &self {
-                Self::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                } => vec![&dimension1_not_null_or_nullable],
-                Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => vec![
-                    &dimension2_not_null_or_nullable,
-                    &dimension1_not_null_or_nullable,
-                ],
-                Self::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                } => vec![
-                    &dimension3_not_null_or_nullable,
-                    &dimension2_not_null_or_nullable,
-                    &dimension1_not_null_or_nullable,
-                ],
-            }
-        }
-    }
-    impl TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
-        type Error = ();
-        fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
-            match &value {
-                ArrayDimension::ArrayDimension1 => Err(()),
-                ArrayDimension::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                } => Ok(Self::ArrayDimension2 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                }),
-                ArrayDimension::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => Ok(Self::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                }),
-                ArrayDimension::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                } => Ok(Self::ArrayDimension4 {
-                    dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                }),
-            }
-        }
-    }
     #[derive(Debug, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonTypeRecord {
         postgresql_json_type: PostgresqlJsonType,
@@ -1979,6 +1904,49 @@ pub fn generate_postgresql_json_types(
                         let format_handle = ArrayDimension::try_from(postgresql_json_type_pattern).map_or_else(
                             |()| column_name_and_maybe_field_getter_field_ident.clone(),
                             |array_dimension| {
+                                enum ArrayDimensionSelectPattern {
+                                    ArrayDimension2 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable,
+                                    },
+                                    ArrayDimension3 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable,
+                                        dimension2_not_null_or_nullable: NotNullOrNullable,
+                                    },
+                                    ArrayDimension4 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable,
+                                        dimension2_not_null_or_nullable: NotNullOrNullable,
+                                        dimension3_not_null_or_nullable: NotNullOrNullable,
+                                    },
+                                }
+                                impl TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
+                                    type Error = ();
+                                    fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
+                                        match &value {
+                                            ArrayDimension::ArrayDimension1 => Err(()),
+                                            ArrayDimension::ArrayDimension2 {
+                                                dimension1_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDimension2 {
+                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                                            }),
+                                            ArrayDimension::ArrayDimension3 {
+                                                dimension1_not_null_or_nullable,
+                                                dimension2_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDimension3 {
+                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                                                dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                            }),
+                                            ArrayDimension::ArrayDimension4 {
+                                                dimension1_not_null_or_nullable,
+                                                dimension2_not_null_or_nullable,
+                                                dimension3_not_null_or_nullable,
+                                            } => Ok(Self::ArrayDimension4 {
+                                                dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable,
+                                                dimension2_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                                dimension3_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                                            }),
+                                        }
+                                    }
+                                }
                                 let generate_jsonb_agg = |jsonb_agg_content: &str, jsonb_array_elements_content: &str, ordinality_content: &str, dimensions_number: usize| {
                                     let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
                                     let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
@@ -2003,28 +1971,51 @@ pub fn generate_postgresql_json_types(
                                         let one = 1;
                                         generate_jsonb_agg(
                                             &{
-                                                let mut current_usize_value = array_dimension_select_pattern.to_usize();
-                                                array_dimension_select_pattern
-                                                    .select_array()
-                                                    .into_iter()
-                                                    .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, current_not_null_or_nullable| {
-                                                        let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
-                                                        let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
-                                                        let value = generate_jsonb_agg(
-                                                            &acc,
-                                                            &d_usize_minus_one_elem_value,
-                                                            &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
-                                                            current_usize_value,
-                                                        );
-                                                        acc = match &current_not_null_or_nullable {
-                                                            NotNullOrNullable::NotNull => value,
-                                                            NotNullOrNullable::Nullable => {
-                                                                format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
-                                                            }
-                                                        };
-                                                        current_usize_value = current_usize_value_minus_one;
-                                                        acc
-                                                    })
+                                                let mut current_usize_value = match &array_dimension_select_pattern {
+                                                    ArrayDimensionSelectPattern::ArrayDimension2 { .. } => 2,
+                                                    ArrayDimensionSelectPattern::ArrayDimension3 { .. } => 3,
+                                                    ArrayDimensionSelectPattern::ArrayDimension4 { .. } => 4,
+                                                };
+                                                match &array_dimension_select_pattern {
+                                                    ArrayDimensionSelectPattern::ArrayDimension2 {
+                                                        dimension1_not_null_or_nullable,
+                                                    } => vec![dimension1_not_null_or_nullable],
+                                                    ArrayDimensionSelectPattern::ArrayDimension3 {
+                                                        dimension1_not_null_or_nullable,
+                                                        dimension2_not_null_or_nullable,
+                                                    } => vec![
+                                                        dimension2_not_null_or_nullable,
+                                                        dimension1_not_null_or_nullable,
+                                                    ],
+                                                    ArrayDimensionSelectPattern::ArrayDimension4 {
+                                                        dimension1_not_null_or_nullable,
+                                                        dimension2_not_null_or_nullable,
+                                                        dimension3_not_null_or_nullable,
+                                                    } => vec![
+                                                        dimension3_not_null_or_nullable,
+                                                        dimension2_not_null_or_nullable,
+                                                        dimension1_not_null_or_nullable,
+                                                    ],
+                                                }
+                                                .into_iter()
+                                                .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, current_not_null_or_nullable| {
+                                                    let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
+                                                    let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
+                                                    let value = generate_jsonb_agg(
+                                                        &acc,
+                                                        &d_usize_minus_one_elem_value,
+                                                        &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
+                                                        current_usize_value,
+                                                    );
+                                                    acc = match &current_not_null_or_nullable {
+                                                        NotNullOrNullable::NotNull => value,
+                                                        NotNullOrNullable::Nullable => {
+                                                            format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
+                                                        }
+                                                    };
+                                                    current_usize_value = current_usize_value_minus_one;
+                                                    acc
+                                                })
                                             },
                                             &column_name_and_maybe_field_getter_field_ident,
                                             &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
