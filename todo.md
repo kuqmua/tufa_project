@@ -609,8 +609,6 @@ Rc::new(<RefCell::new(Data { value: 42}))
 
 * google some style guide variable naming for project(parsing espesially) and rename variables
 
-* [dependencies] and [dev-dependencies] read about it
-
 * 
 ```
 thread '<unnamed>' panicked at 'twitter_provider_names is empty!!!', libs/providers_info_lib/src/get_project_information/generate_hashmap_links/generate_twitter_hashmap_links.rs:7:9

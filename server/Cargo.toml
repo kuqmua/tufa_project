@@ -32,7 +32,7 @@ server_config = {path = "../server_config"}
 server_table_example = {path = "../server_table_example"}
 
 [dev-dependencies]
-tokio = {version = "=1.29.1", features = ["rt", "macros", "rt-multi-thread"]}
+tokio.workspace = true
 
 # ###########################
 # # custom linker dependencies
