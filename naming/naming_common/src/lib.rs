@@ -10,11 +10,11 @@ where
 {
     convert_case::Casing::to_case(value, convert_case::Case::Snake)
 }
-fn to_screaming_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
+fn to_upper_snake_case_stringified<T: AsRef<str>>(value: &T) -> String
 where
     String: PartialEq<T>,
 {
-    convert_case::Casing::to_case(value, convert_case::Case::ScreamingSnake)
+    convert_case::Casing::to_case(value, convert_case::Case::UpperSnake)
 }
 fn to_token_stream_or_panic(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
     value
@@ -74,28 +74,28 @@ where
     }
 }
 
-pub trait AsRefStrToScreamingSnakeCaseStringified {
+pub trait AsRefStrToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
-impl<T: Sized> AsRefStrToScreamingSnakeCaseStringified for T
+impl<T: Sized> AsRefStrToUpperSnakeCaseStringified for T
 where
     String: PartialEq<T>,
     Self: AsRef<str>,
 {
     fn case(&self) -> String {
-        to_screaming_snake_case_stringified(self)
+        to_upper_snake_case_stringified(self)
     }
 }
 
-pub trait AsRefStrToScreamingSnakeCaseTokenStream {
+pub trait AsRefStrToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> AsRefStrToScreamingSnakeCaseTokenStream for T
+impl<T> AsRefStrToUpperSnakeCaseTokenStream for T
 where
-    T: Sized + AsRefStrToScreamingSnakeCaseStringified,
+    T: Sized + AsRefStrToUpperSnakeCaseStringified,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_token_stream_or_panic(&AsRefStrToScreamingSnakeCaseStringified::case(self))
+        to_token_stream_or_panic(&AsRefStrToUpperSnakeCaseStringified::case(self))
     }
 }
 
@@ -148,27 +148,27 @@ where
     }
 }
 
-pub trait DisplayToScreamingSnakeCaseStringified {
+pub trait DisplayToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
-impl<T> DisplayToScreamingSnakeCaseStringified for T
+impl<T> DisplayToUpperSnakeCaseStringified for T
 where
     T: std::fmt::Display,
 {
     fn case(&self) -> String {
-        to_screaming_snake_case_stringified(&self.to_string())
+        to_upper_snake_case_stringified(&self.to_string())
     }
 }
 
-pub trait DisplayToScreamingSnakeCaseTokenStream {
+pub trait DisplayToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> DisplayToScreamingSnakeCaseTokenStream for T
+impl<T> DisplayToUpperSnakeCaseTokenStream for T
 where
-    T: DisplayToScreamingSnakeCaseStringified,
+    T: DisplayToUpperSnakeCaseStringified,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_token_stream_or_panic(&DisplayToScreamingSnakeCaseStringified::case(self))
+        to_token_stream_or_panic(&DisplayToUpperSnakeCaseStringified::case(self))
     }
 }
 ////////////
@@ -221,26 +221,26 @@ where
     }
 }
 
-pub trait ToTokensToScreamingSnakeCaseStringified {
+pub trait ToTokensToUpperSnakeCaseStringified {
     fn case(&self) -> String;
 }
-impl<T> ToTokensToScreamingSnakeCaseStringified for T
+impl<T> ToTokensToUpperSnakeCaseStringified for T
 where
     T: quote::ToTokens,
 {
     fn case(&self) -> String {
-        to_screaming_snake_case_stringified(&quote::quote! {#self}.to_string())
+        to_upper_snake_case_stringified(&quote::quote! {#self}.to_string())
     }
 }
 
-pub trait ToTokensToScreamingSnakeCaseTokenStream {
+pub trait ToTokensToUpperSnakeCaseTokenStream {
     fn case_or_panic(&self) -> proc_macro2::TokenStream;
 }
-impl<T> ToTokensToScreamingSnakeCaseTokenStream for T
+impl<T> ToTokensToUpperSnakeCaseTokenStream for T
 where
-    T: ToTokensToScreamingSnakeCaseStringified,
+    T: ToTokensToUpperSnakeCaseStringified,
 {
     fn case_or_panic(&self) -> proc_macro2::TokenStream {
-        to_token_stream_or_panic(&ToTokensToScreamingSnakeCaseStringified::case(self))
+        to_token_stream_or_panic(&ToTokensToUpperSnakeCaseStringified::case(self))
     }
 }

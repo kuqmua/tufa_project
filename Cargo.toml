@@ -75,16 +75,16 @@ sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_
 reqwasm = {version = "=0.5.0"}
 serde_json = {version = "=1.0.148"}
 colorsys = {version = "=0.7.3"}
-convert_case = {version = "=0.6.0"}
-gloo = {version = "=0.7.0"}
-js-sys = {version = "=0.3.58"}
-stylist = {version = "=0.10.0", features = ["yew"]}
-wasm-bindgen = {version = "=0.2.86"}
-wasm-bindgen-futures = {version = "=0.4.0"}
-web-sys = {version = "=0.3.58", features = ["HtmlInputElement", "Window", "Document", "Element", "StyleSheetList", "HtmlSelectElement"]}
-yew = {version = "=0.19.0"}
-yew-router = {version = "=0.16.0"}
-yewdux = {version = "=0.7.0"}
+convert_case = {version = "=0.10.0"}
+gloo = {version = "=0.11.0"}
+js-sys = {version = "=0.3.83"}
+stylist = {version = "=0.13.0", features = ["yew"]}
+wasm-bindgen = {version = "=0.2.106"}
+wasm-bindgen-futures = {version = "=0.4.56"}
+web-sys = {version = "=0.3.83", features = ["HtmlInputElement", "Window", "Document", "Element", "StyleSheetList", "HtmlSelectElement"]}
+yew = {version = "=0.22.0"}
+yew-router = {version = "=0.19.0"}
+yewdux = {version = "=0.11.0"}
 axum = {version = "=0.7.4", features = ["macros"]}
 tower-http = {version = "=0.6.8", features = ["trace", "fs", "cors"]}
 num_cpus = {version = "=1.15.0"}

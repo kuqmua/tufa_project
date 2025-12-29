@@ -333,15 +333,15 @@ pub fn as_ref_str_enum_with_unit_fields_to_snake_case_stringified(
 }
 /*
 only works if all enum variants without fields like this
- #[derive(macros_assistants::AsRefStrToScreamingSnakeCaseStringified)]
+ #[derive(macros_assistants::AsRefStrToUpperSnakeCaseStringified)]
  enum Operation {
      One,
      Two,
      Three,
  }
 */
-#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToScreamingSnakeCaseStringified)]
-pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
+#[proc_macro_derive(AsRefStrEnumWithUnitFieldsToUpperSnakeCaseStringified)]
+pub fn as_ref_str_enum_with_unit_fields_to_upper_snake_case_stringified(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
@@ -358,7 +358,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
         .map(|variant| match &variant.fields {
             syn::Fields::Unit => {
                 let variant_ident = &variant.ident;
-                let variant_ident_snake_case_stringified = naming_common::ToTokensToScreamingSnakeCaseStringified::case(&variant_ident);
+                let variant_ident_snake_case_stringified = naming_common::ToTokensToUpperSnakeCaseStringified::case(&variant_ident);
                 let variant_ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&variant_ident_snake_case_stringified);
                 quote::quote! {Self::#variant_ident => #std_string_string::from(#variant_ident_snake_case_double_quotes_token_stream)}
             }
@@ -367,7 +367,7 @@ pub fn as_ref_str_enum_with_unit_fields_to_screaming_snake_case_stringified(
         .collect::<Vec<proc_macro2::TokenStream>>();
     let trait_path_token_stream = trait_path_token_stream();
     let generated = quote::quote! {
-        impl #trait_path_token_stream::ToScreamingSnakeCaseStringified for #ident {
+        impl #trait_path_token_stream::ToUpperSnakeCaseStringified for #ident {
             fn case(&self) -> #std_string_string {
                 match self {
                     #(#variants_matching_values_token_stream),*

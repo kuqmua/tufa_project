@@ -76,12 +76,12 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let try_from_env_token_stream = {
         let fields_initialization_token_stream = fields_named.iter().map(|element| {
             let element_ident = &element.ident.as_ref().expect("ebf4e1b2-f07a-40ee-b885-fc8be3444d9a");
-            let element_ident_quotes_screaming_snake_case_string = syn::LitStr::new(&naming::ToTokensToScreamingSnakeCaseStringified::case(&element_ident), ident.span());
+            let element_ident_quotes_upper_snake_case_string = syn::LitStr::new(&naming::ToTokensToUpperSnakeCaseStringified::case(&element_ident), ident.span());
             let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             let element_ident_wrapper_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
                 let #element_ident = {
-                    let env_var_name = String::from(#element_ident_quotes_screaming_snake_case_string);
+                    let env_var_name = String::from(#element_ident_quotes_upper_snake_case_string);
                     match std::env::var(&env_var_name) {
                         Err(error) => {
                             return Err(#ident_try_from_env_error_named_upper_camel_case::#std_env_var_error_upper_camel_case {
