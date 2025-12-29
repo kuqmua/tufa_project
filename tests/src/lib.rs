@@ -323,14 +323,12 @@ mod tests {
                                     self.uuids.push(value);
                                 }
                                 _ => {
-                                    self.errors.push(format!(
-                                        "arg is not valid UUID v4: {value}"
-                                    ));
+                                    self.errors
+                                        .push(format!("arg is not valid UUID v4: {value}"));
                                 }
                             }
                         } else {
-                            self.errors
-                                .push("arg is not string literal".to_owned());
+                            self.errors.push("arg is not string literal".to_owned());
                         }
                     } else {
                         self.errors.push("with != 1 arg".to_owned());
@@ -416,8 +414,12 @@ mod tests {
                 continue;
             };
             for element in regex.find_iter(&content) {
-                let uuid = uuid::Uuid::parse_str(element.as_str()).expect("c9711efd-eb37-4b10-b689-831fa916cb82");
-                assert!(uuid.get_version_num() == 4, "49b49b21-0cc6-4aee-8c28-3003492f2a80");
+                let uuid = uuid::Uuid::parse_str(element.as_str())
+                    .expect("c9711efd-eb37-4b10-b689-831fa916cb82");
+                assert!(
+                    uuid.get_version_num() == 4,
+                    "49b49b21-0cc6-4aee-8c28-3003492f2a80"
+                );
                 assert!(seen.insert(uuid), "4cf9d239-d701-49bd-9f6b-8843c5a8814e");
             }
         }

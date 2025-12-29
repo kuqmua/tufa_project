@@ -641,11 +641,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     if option_primary_key_field.is_some() {
                                         panic!("1a75cea1-9961-4f01-a54a-5b4acc08547c");
                                     } else {
-                                        option_primary_key_field = Some(macros_helpers::SynFieldWrapper {
-                                            field_visibility: element.vis.clone(),
-                                            field_ident: field_ident.clone(),
-                                            field_type: element.ty.clone(),
-                                        });
+                                        option_primary_key_field =
+                                            Some(macros_helpers::SynFieldWrapper {
+                                                field_visibility: element.vis.clone(),
+                                                field_ident: field_ident.clone(),
+                                                field_type: element.ty.clone(),
+                                            });
                                         is_primary_key = true;
                                     }
                                 }
@@ -815,11 +816,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     };
     let none_token_stream = quote::quote! {None};
     let fields_named_with_comma_none_token_stream = generate_fields_named_with_comma_token_stream(
-        &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream { none_token_stream.clone() },
+        &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+            none_token_stream.clone()
+        },
     );
     let fields_named_without_primary_key_with_comma_none_token_stream =
         generate_fields_named_without_primary_key_with_comma_token_stream(
-            &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream { none_token_stream.clone() },
+            &|_: &macros_helpers::SynFieldWrapper| -> proc_macro2::TokenStream {
+                none_token_stream.clone()
+            },
         );
     let mut impl_ident_vec_token_stream = Vec::new();
     let impl_ident_token_stream = {
@@ -1817,7 +1822,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .collect::<Vec<proc_macro2::TokenStream>>();
                 let fields_initiation_token_stream = &fields
                     .iter()
-                    .map(|element|&element.field_ident)
+                    .map(|element| &element.field_ident)
                     .collect::<Vec<&syn::Ident>>();
                 quote::quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
@@ -1934,11 +1939,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         }
                     },
                 );
-            let self_fields_token_stream =
-                generate_fields_named_with_comma_token_stream(&|element: &macros_helpers::SynFieldWrapper| {
+            let self_fields_token_stream = generate_fields_named_with_comma_token_stream(
+                &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     quote::quote! {#field_ident}
-                });
+                },
+            );
             quote::quote! {
                 impl<'lifetime, R: ::sqlx::Row<Database = sqlx::Postgres>> ::sqlx::FromRow<'lifetime, R> for #ident_read_only_ids_upper_camel_case
                 where
@@ -6647,7 +6653,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             generate_quotes::double_quotes_token_stream(&format!(
                                 "PostgresqlTypeTestCases read_only_ids_to_two_dimensional_vec_read_inner is empty for {field_ident}"
                             ));
-                        let maybe_previous_read_token_stream = if fields_without_primary_key.len() > 1 {
+                        let maybe_previous_read_token_stream = if fields_without_primary_key.len()
+                            > 1
+                        {
                             quote::quote! {
                                 let previous_read = generate_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
