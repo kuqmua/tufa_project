@@ -69,7 +69,7 @@ scraper = {version = "=0.25.0"}
 regex = {version = "=1.12.2"}
 convert_case = {version = "=0.10.0"}
 uuid = {version = "=1.19.0", features = ["serde", "v4"]}
-reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
+reqwest = {version = "=0.13.1", default-features = false, features = ["json", "blocking", "cookies", "gzip", "brotli", "deflate", "native-tls", "multipart", "stream"]}
 tokio = {version = "=1.48.0", features = ["macros", "rt-multi-thread"]}
 sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
 axum = {version = "=0.8.8", features = ["macros"]}
