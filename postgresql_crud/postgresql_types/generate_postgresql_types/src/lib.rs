@@ -1079,6 +1079,7 @@ pub fn generate_postgresql_types(
 
             let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
             let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
+            let none_token_stream = quote::quote!{None};
 
             let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_token_stream(&import_path, &content_token_stream);
 
@@ -5215,7 +5216,7 @@ pub fn generate_postgresql_types(
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &can_be_primary_key {
-                                CanBePrimaryKey::True => quote::quote! {None},
+                                CanBePrimaryKey::True => none_token_stream.clone(),
                                 CanBePrimaryKey::False => {
                                     let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
                                     let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
@@ -5471,7 +5472,7 @@ pub fn generate_postgresql_types(
                         #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0.clone()))//todo its not correct. must be only for primary key but it for all types what van be primary key
                     }
                 } else {
-                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&quote::quote! {None});
+                    let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&none_token_stream);
                     quote::quote! {
                         #import_path_non_primary_key_postgresql_type_read_only_ids_token_stream(#value_initialization_token_stream)
                     }
@@ -5539,9 +5540,9 @@ pub fn generate_postgresql_types(
                 let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {
                     vec![#read_only_ids_merged_with_create_into_where_equal_token_stream]
                 };
-                let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = quote::quote! {None};
+                let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = none_token_stream.clone();
                 let create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream = match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => quote::quote! {None},
+                    PostgresqlTypePattern::Standart => none_token_stream.clone(),
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                         let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case: &dyn quote::ToTokens = match &dimension1_not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_standart_not_null_table_type_declaration_upper_camel_case,
@@ -5654,7 +5655,6 @@ pub fn generate_postgresql_types(
                             #equal_not_greater_than_more_token_stream
                         }
                     };
-                    let none_token_stream = quote::quote! {None};
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -5768,7 +5768,7 @@ pub fn generate_postgresql_types(
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_token_stream,
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => none_token_stream.clone(),
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
@@ -5786,7 +5786,7 @@ pub fn generate_postgresql_types(
                                 }
                             },
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => none_token_stream,
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => none_token_stream.clone(),
                     }
                 };
                 let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = match &postgresql_type_pattern {
@@ -5869,18 +5869,18 @@ pub fn generate_postgresql_types(
                         match &is_need_to_impl_greater_than_test {
                             IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromReadOnlyIds => generate_some_token_stream(&ReadOnlyIdsCreate::ReadOnlyIds),
                             IsNeedToImplPostgresqlTypeGreaterThanTest::TrueFromCreate => generate_some_token_stream(&ReadOnlyIdsCreate::Create),
-                            IsNeedToImplPostgresqlTypeGreaterThanTest::False => quote::quote! {None},
+                            IsNeedToImplPostgresqlTypeGreaterThanTest::False => none_token_stream.clone(),
                         }
                     }
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => quote::quote! {None},
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => none_token_stream.clone(),
                 };
-                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream = quote::quote! {None};
-                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream = quote::quote! {None};
-                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream = quote::quote! {None};
-                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = quote::quote! {None};
-                let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = quote::quote! {None};
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream = none_token_stream.clone();
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream = none_token_stream.clone();
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream = none_token_stream.clone();
+                let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = none_token_stream.clone();
+                let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = none_token_stream.clone();
                 let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote! {todo!()};
-                let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote! {None};
+                let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = none_token_stream;
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &quote::quote! {#[cfg(feature = "test-utils")]},
                     &import_path,
