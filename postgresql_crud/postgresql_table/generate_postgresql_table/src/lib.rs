@@ -1026,7 +1026,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #return_content_token_stream
             }
         };
-    let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
     let generate_ident_operation_error_named_upper_camel_case = |operation: &Operation| {
         format!("{ident}{operation}ErrorNamed")
             .parse::<proc_macro2::TokenStream>()
@@ -1093,7 +1092,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             quote::quote! {
                 let #error_snake_case = #ident_operation_error_named_upper_camel_case::#syn_variant_initialization_token_stream;
-                #eprintln_error_token_stream
+                // eprintln!("{error}");
                 #wraped_into_axum_response_token_stream
             }
         };
@@ -2968,6 +2967,23 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ) {
                         #header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
+                    //todo
+                    // match axum::body::HttpBody::size_hint(&#body_snake_case).exact() {
+                    //     Some(value) => {
+                    //         println!(
+                    //             "HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte",
+                    //             value
+                    //                 .checked_div(1024)
+                    //                 .expect("111fd01a-cfef-47f0-bc0b-661da0d8371b"),
+                    //             value
+                    //                 .checked_div(1_048_576)
+                    //                 .expect("efbe0db4-2196-4998-b11f-8844ce5fcf18"), //(1024*1024)
+                    //         );
+                    //     }
+                    //     None => {
+                    //         println!("HttpBody::size_hint is None");
+                    //     }
+                    // }
                     let body_bytes = match #postgresql_crud_snake_case::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
                         Ok(#value_snake_case) => #value_snake_case,
                         Err(#error_0_token_stream) => {
@@ -7145,7 +7161,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 postgresql,
                                 ..
                             } = delete_one_error_named_with_serialize_deserialize {
-                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "error c9261bb8-d391-4c4b-9707-3a2c4278ad90");
+                                assert!(postgresql == no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row(), "c9261bb8-d391-4c4b-9707-3a2c4278ad90");
                             } else {
                                 panic!("e63b27a3-f3e3-4f19-998a-88ce798b08cc");
                             }
