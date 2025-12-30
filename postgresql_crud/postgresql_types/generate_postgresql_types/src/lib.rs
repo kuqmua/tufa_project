@@ -383,9 +383,9 @@ pub fn generate_postgresql_types(
                     type Value = __Field;
                     fn expecting(
                         &self,
-                        __f: &mut _serde::__private::Formatter<'_>,
-                    ) -> _serde::__private::fmt::Result {
-                        _serde::__private::Formatter::write_str(__f, "field identifier")
+                        __f: &mut _serde::__private228::Formatter<'_>,
+                    ) -> _serde::__private228::fmt::Result {
+                        _serde::__private228::Formatter::write_str(__f, "field identifier")
                     }
                     fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                     where
@@ -433,17 +433,17 @@ pub fn generate_postgresql_types(
                 }
                 #[doc(hidden)]
                 struct __Visitor<'de> {
-                    marker: _serde::__private::PhantomData<PostgresqlTypeRecord>,
-                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                    marker: _serde::__private228::PhantomData<PostgresqlTypeRecord>,
+                    lifetime: _serde::__private228::PhantomData<&'de ()>,
                 }
                 #[automatically_derived]
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = PostgresqlTypeRecord;
                     fn expecting(
                         &self,
-                        __f: &mut _serde::__private::Formatter<'_>,
-                    ) -> _serde::__private::fmt::Result {
-                        _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
+                        __f: &mut _serde::__private228::Formatter<'_>,
+                    ) -> _serde::__private228::fmt::Result {
+                        _serde::__private228::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
                     }
                     #[inline]
                     fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -543,16 +543,16 @@ pub fn generate_postgresql_types(
                         }
                         let __field0_value = match __field0 {
                             Some(value) => value,
-                            None => _serde::__private::de::missing_field("postgresql_type")?,
+                            None => _serde::__private228::de::missing_field("postgresql_type")?,
                         };
                         let __field1_value = match __field1 {
                             Some(value) => value,
-                            None => _serde::__private::de::missing_field("not_null_or_nullable")?,
+                            None => _serde::__private228::de::missing_field("not_null_or_nullable")?,
                         };
                         let __field2_value = match __field2 {
                             Some(value) => value,
                             None => {
-                                _serde::__private::de::missing_field("postgresql_type_pattern")?
+                                _serde::__private228::de::missing_field("postgresql_type_pattern")?
                             }
                         };
                         match PostgresqlTypeRecord::try_from((
@@ -576,8 +576,8 @@ pub fn generate_postgresql_types(
                     "PostgresqlTypeRecord",
                     FIELDS,
                     __Visitor {
-                        marker: _serde::__private::PhantomData::<Self>,
-                        lifetime: _serde::__private::PhantomData,
+                        marker: _serde::__private228::PhantomData::<Self>,
+                        lifetime: _serde::__private228::PhantomData,
                     },
                 )
             }
@@ -1561,8 +1561,8 @@ pub fn generate_postgresql_types(
                 let struct_visitor_token_stream = quote::quote! {
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: serde::__private::PhantomData<#ident_standart_not_null_origin_upper_camel_case>,
-                        lifetime: serde::__private::PhantomData<&'de ()>,
+                        marker: serde::__private228::PhantomData<#ident_standart_not_null_origin_upper_camel_case>,
+                        lifetime: serde::__private228::PhantomData<&'de ()>,
                     }
                 };
                 let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
@@ -1578,8 +1578,8 @@ pub fn generate_postgresql_types(
                             #ident_standart_not_null_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
-                                marker: _serde::__private::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
-                                lifetime: _serde::__private::PhantomData,
+                                marker: _serde::__private228::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
+                                lifetime: _serde::__private228::PhantomData,
                             }
                         )
                     }
@@ -1589,8 +1589,8 @@ pub fn generate_postgresql_types(
                         __deserializer,
                         #ident_standart_not_null_origin_double_quotes_token_stream,
                         __Visitor {
-                            marker: serde::__private::PhantomData::<Self>,
-                            lifetime: serde::__private::PhantomData,
+                            marker: serde::__private228::PhantomData::<Self>,
+                            lifetime: serde::__private228::PhantomData,
                         },
                     )
                 };
@@ -1634,8 +1634,8 @@ pub fn generate_postgresql_types(
                 let (fn_expecting_struct_ident_double_quotes_token_stream, fn_expecting_tuple_struct_ident_double_quotes_token_stream, fn_expecting_field_identifier_token_stream) = {
                     let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
-                            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                serde::__private::Formatter::write_str(__f, #content_token_stream)
+                            fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
+                                serde::__private228::Formatter::write_str(__f, #content_token_stream)
                             }
                         }
                     };
@@ -2077,7 +2077,7 @@ pub fn generate_postgresql_types(
                                 quote::quote! {
                                     let #field_index_name_token_stream = match #field_index_name_token_stream {
                                         Some(#field_index_name_token_stream) => #field_index_name_token_stream,
-                                        None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
+                                        None => serde::__private228::de::missing_field(#field_name_double_quotes_token_stream)?,
                                     };
                                 }
                             });

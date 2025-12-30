@@ -2099,7 +2099,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                 let #field_index_token_stream = match #field_index_token_stream {
                     Some(#value_snake_case) => #value_snake_case,
                     None => {
-                        serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
+                        serde::__private228::de::missing_field(#field_ident_double_quotes_token_stream)?
                     }
                 };
             }
@@ -2138,9 +2138,9 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                         type Value = __Field;
                         fn expecting(
                             &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
+                            __formatter: &mut _serde::__private228::Formatter<'_>,
+                        ) -> _serde::__private228::fmt::Result {
+                            _serde::__private228::Formatter::write_str(
                                 __formatter,
                                 "field identifier",
                             )
@@ -2199,17 +2199,17 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                     }
                     #[doc(hidden)]
                     struct __Visitor<'de> {
-                        marker: _serde::__private::PhantomData<#ident>,
-                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                        marker: _serde::__private228::PhantomData<#ident>,
+                        lifetime: _serde::__private228::PhantomData<&'de ()>,
                     }
                     #[automatically_derived]
                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                         type Value = #ident;
                         fn expecting(
                             &self,
-                            __formatter: &mut _serde::__private::Formatter<'_>,
-                        ) -> _serde::__private::fmt::Result {
-                            _serde::__private::Formatter::write_str(
+                            __formatter: &mut _serde::__private228::Formatter<'_>,
+                        ) -> _serde::__private228::fmt::Result {
+                            _serde::__private228::Formatter::write_str(
                                 __formatter,
                                 #struct_ident_double_quotes_token_stream,
                             )
@@ -2257,8 +2257,8 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
                         #ident_double_quotes_token_stream,
                         FIELDS,
                         __Visitor {
-                            marker: _serde::__private::PhantomData::<Self>,
-                            lifetime: _serde::__private::PhantomData,
+                            marker: _serde::__private228::PhantomData::<Self>,
+                            lifetime: _serde::__private228::PhantomData,
                         },
                     )
                 }

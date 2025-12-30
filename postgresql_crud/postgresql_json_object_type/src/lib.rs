@@ -56,8 +56,8 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<UniqueVec<T>>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<UniqueVec<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -66,9 +66,9 @@ const _: () = {
                 type Value = UniqueVec<T>;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
+                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__formatter, "tuple struct UniqueVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -103,8 +103,8 @@ const _: () = {
                 __deserializer,
                 "UniqueVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }

@@ -1194,9 +1194,9 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             type Value = __Field;
             fn expecting(
                 &self,
-                __f: &mut serde::__private::Formatter<'_>,
-            ) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__f, "field identifier")
+                __f: &mut serde::__private228::Formatter<'_>,
+            ) -> serde::__private228::fmt::Result {
+                serde::__private228::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
             where
@@ -1240,16 +1240,16 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
         }
         #[doc(hidden)]
         struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<PaginationStartsWithOne>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
+            marker: serde::__private228::PhantomData<PaginationStartsWithOne>,
+            lifetime: serde::__private228::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = PaginationStartsWithOne;
             fn expecting(
                 &self,
-                __f: &mut serde::__private::Formatter<'_>,
-            ) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithOne")
+                __f: &mut serde::__private228::Formatter<'_>,
+            ) -> serde::__private228::fmt::Result {
+                serde::__private228::Formatter::write_str(__f, "struct PaginationStartsWithOne")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -1308,11 +1308,11 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
                 }
                 let __field0_value = match __field0 {
                     Some(value) => value,
-                    None => serde::__private::de::missing_field("limit")?,
+                    None => serde::__private228::de::missing_field("limit")?,
                 };
                 let __field1_value = match __field1 {
                     Some(value) => value,
-                    None => serde::__private::de::missing_field("offset")?,
+                    None => serde::__private228::de::missing_field("offset")?,
                 };
                 match PaginationStartsWithOne::try_new(__field0_value, __field1_value) {
                     Ok(value) => Ok(value),
@@ -1327,8 +1327,8 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
             "PaginationStartsWithOne",
             FIELDS,
             __Visitor {
-                marker: serde::__private::PhantomData::<Self>,
-                lifetime: serde::__private::PhantomData,
+                marker: serde::__private228::PhantomData::<Self>,
+                lifetime: serde::__private228::PhantomData,
             },
         )
     }

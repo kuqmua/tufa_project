@@ -133,8 +133,8 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<PostgresqlJsonTypeNotEmptyUniqueVec<T>>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<PostgresqlJsonTypeNotEmptyUniqueVec<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -143,9 +143,9 @@ const _: () = {
                 type Value = PostgresqlJsonTypeNotEmptyUniqueVec<T>;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
                         __f,
                         "tuple struct PostgresqlJsonTypeNotEmptyUniqueVec",
                     )
@@ -180,8 +180,8 @@ const _: () = {
                 __deserializer,
                 "PostgresqlJsonTypeNotEmptyUniqueVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -272,17 +272,17 @@ const _: () = {
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<RegexRegex>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<RegexRegex>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                 type Value = RegexRegex;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct RegexRegex")
+                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__formatter, "tuple struct RegexRegex")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
@@ -321,8 +321,8 @@ const _: () = {
                 __deserializer,
                 "RegexRegex",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -446,9 +446,9 @@ const _: () = {
                 type Value = __Field;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "field identifier")
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__f, "field identifier")
                 }
                 fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                 where
@@ -497,8 +497,8 @@ const _: () = {
                     + sqlx::Type<sqlx::Postgres>
                     + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
             {
-                marker: _serde::__private::PhantomData<Between<T>>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<Between<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
             where
@@ -511,9 +511,9 @@ const _: () = {
                 type Value = Between<T>;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "struct Between")
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(__f, "struct Between")
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -577,11 +577,11 @@ const _: () = {
                     }
                     let __field0_value = match __field0 {
                         Some(value) => value,
-                        None => _serde::__private::de::missing_field("start")?,
+                        None => _serde::__private228::de::missing_field("start")?,
                     };
                     let __field1_value = match __field1 {
                         Some(value) => value,
-                        None => _serde::__private::de::missing_field("end")?,
+                        None => _serde::__private228::de::missing_field("end")?,
                     };
                     match Between::try_new(__field0_value, __field1_value) {
                         Ok(value) => Ok(value),
@@ -596,8 +596,8 @@ const _: () = {
                 "Between",
                 FIELDS,
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -711,8 +711,8 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<PostgresqlTypeNotEmptyUniqueVec<T>>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<PostgresqlTypeNotEmptyUniqueVec<T>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + PartialEq + Clone + _serde::Deserialize<'de>>
@@ -721,9 +721,9 @@ const _: () = {
                 type Value = PostgresqlTypeNotEmptyUniqueVec<T>;
                 fn expecting(
                     &self,
-                    __f: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
+                    __f: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
                         __f,
                         "tuple struct PostgresqlTypeNotEmptyUniqueVec",
                     )
@@ -758,8 +758,8 @@ const _: () = {
                 __deserializer,
                 "PostgresqlTypeNotEmptyUniqueVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }
@@ -972,8 +972,8 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<BoundedStdVecVec<T, LENGTH>>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
+                marker: _serde::__private228::PhantomData<BoundedStdVecVec<T, LENGTH>>,
+                lifetime: _serde::__private228::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T, const LENGTH: usize> _serde::de::Visitor<'de> for __Visitor<'de, T, LENGTH>
@@ -983,9 +983,9 @@ const _: () = {
                 type Value = BoundedStdVecVec<T, LENGTH>;
                 fn expecting(
                     &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
+                    __formatter: &mut _serde::__private228::Formatter<'_>,
+                ) -> _serde::__private228::fmt::Result {
+                    _serde::__private228::Formatter::write_str(
                         __formatter,
                         "tuple struct BoundedStdVecVec",
                     )
@@ -1023,8 +1023,8 @@ const _: () = {
                 __deserializer,
                 "BoundedStdVecVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<Self>,
-                    lifetime: _serde::__private::PhantomData,
+                    marker: _serde::__private228::PhantomData::<Self>,
+                    lifetime: _serde::__private228::PhantomData,
                 },
             )
         }

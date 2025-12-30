@@ -2848,8 +2848,8 @@ pub fn generate_postgresql_json_object_type(
                                         struct __FieldVisitor;
                                         impl serde::de::Visitor<'_> for __FieldVisitor {
                                             type Value = __Field;
-                                            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                serde::__private::Formatter::write_str(__f, "field identifier")
+                                            fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
+                                                serde::__private228::Formatter::write_str(__f, "field identifier")
                                             }
                                             fn visit_u64<__E>(self, __value: u64) -> Result<Self::Value, __E>
                                             where
@@ -2896,13 +2896,13 @@ pub fn generate_postgresql_json_object_type(
                                         }
                                         #[doc(hidden)]
                                         struct __Visitor<'de> {
-                                            marker: serde::__private::PhantomData<#ident_update_upper_camel_case>,
-                                            lifetime: serde::__private::PhantomData<&'de ()>,
+                                            marker: serde::__private228::PhantomData<#ident_update_upper_camel_case>,
+                                            lifetime: serde::__private228::PhantomData<&'de ()>,
                                         }
                                         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                                             type Value = #ident_update_upper_camel_case;
-                                            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                serde::__private::Formatter::write_str(__f, #tuple_struct_ident_update_double_quotes_token_stream)
+                                            fn expecting(&self, __f: &mut serde::__private228::Formatter<'_>) -> serde::__private228::fmt::Result {
+                                                serde::__private228::Formatter::write_str(__f, #tuple_struct_ident_update_double_quotes_token_stream)
                                             }
                                             #[inline]
                                             fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -2960,8 +2960,8 @@ pub fn generate_postgresql_json_object_type(
                                             #ident_update_double_quotes_token_stream,
                                             FIELDS,
                                             __Visitor {
-                                                marker: serde::__private::PhantomData::<#self_upper_camel_case>,
-                                                lifetime: serde::__private::PhantomData,
+                                                marker: serde::__private228::PhantomData::<#self_upper_camel_case>,
+                                                lifetime: serde::__private228::PhantomData,
                                             },
                                         )
                                     }

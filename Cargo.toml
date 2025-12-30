@@ -61,21 +61,44 @@ exclude = [
 ]
 
 [workspace.dependencies]
-serde = {version = "=1.0.224", features = ["derive"]}
-uuid = {version = "=1.19.0", features = ["serde", "v4"]}
-reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
-proc-macro2 = {version = "=1.0.104"}
-log = {version = "=0.4.29"}
-teloxide = {version = "=0.17.0", features = ["macros"]}
-tokio = {version = "=1.48.0", features = ["macros", "rt-multi-thread"]}
+serde = {version = "=1.0.228", features = ["derive"]}
+serde_derive = {version = "=1.0.228"}
+serde_json = {version = "=1.0.148"}
 toml = {version = "=0.9.6"}
 scraper = {version = "=0.25.0"}
 regex = {version = "=1.12.2"}
-sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
-reqwasm = {version = "=0.5.0"}
-serde_json = {version = "=1.0.148"}
-colorsys = {version = "=0.7.3"}
 convert_case = {version = "=0.10.0"}
+uuid = {version = "=1.19.0", features = ["serde", "v4"]}
+reqwest = {version = "=0.12.28", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream"]}
+tokio = {version = "=1.48.0", features = ["macros", "rt-multi-thread"]}
+sqlx = {version = "=0.8.6", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "json"]}
+axum = {version = "=0.8.8", features = ["macros"]}
+tower-http = {version = "=0.6.8", features = ["trace", "fs", "cors"]}
+http-body = {version = "=1.0.1"}
+http = {version = "=1.4.0"}
+futures = {version = "=0.3.31"}
+tracing = {version = "=0.1.44", features = ["log", "valuable"]}
+tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]}
+log = {version = "=0.4.29"}
+teloxide = {version = "=0.17.0", features = ["macros"]}
+num_cpus = {version = "=1.17.0"}
+secrecy = {version = "=0.8.0", features = ["serde"]}
+chrono = {version = "=0.4.42", features = ["serde"]}
+thiserror = {version = "=2.0.17"}
+strum = {version = "=0.27.2"}
+strum_macros = {version = "=0.27.2"}
+dotenv = {version = "=0.15.0"}
+time = {version = "=0.3.44", features = ["serde"]}
+quote = {version = "=1.0.42"}
+syn = {version = "=2.0.111", features = ["full", "visit", "extra-traits"] }
+proc-macro2 = {version = "=1.0.104"}
+jsonschema = { version = "=0.38.1", default-features = false, features = [] }
+utoipa = {version = "=4.1.0", features = ["axum_extras"]}
+schemars = {version = "=0.8.22"}
+rayon = {version = "=1.11.0"}
+bytes = {version = "=1.11.0"}
+walkdir = {version = "=2.5.0"}
+yewdux-functional = {version = "=0.1.0"}
 gloo = {version = "=0.11.0"}
 js-sys = {version = "=0.3.83"}
 stylist = {version = "=0.13.0", features = ["yew"]}
@@ -85,31 +108,8 @@ web-sys = {version = "=0.3.83", features = ["HtmlInputElement", "Window", "Docum
 yew = {version = "=0.22.0"}
 yew-router = {version = "=0.19.0"}
 yewdux = {version = "=0.11.0"}
-axum = {version = "=0.8.8", features = ["macros"]}
-tower-http = {version = "=0.6.8", features = ["trace", "fs", "cors"]}
-num_cpus = {version = "=1.17.0"}
-secrecy = {version = "=0.8.0", features = ["serde"]}
-tracing-subscriber = {version = "=0.3.22", features = ["registry", "env-filter"]}
-serde_derive = {version = "=1.0.224"}
-chrono = {version = "=0.4.42", features = ["serde"]}
-thiserror = {version = "=2.0.17"}
-utoipa = {version = "=4.1.0", features = ["axum_extras"]}
-schemars = {version = "=0.8.22"}
-strum = {version = "=0.27.2"}
-strum_macros = {version = "=0.27.2"}
-dotenv = {version = "=0.15.0"}
-tracing = {version = "=0.1.44", features = ["log", "valuable"]}
-http-body = {version = "=1.0.1"}
-http = {version = "=1.4.0"}
-time = {version = "=0.3.44", features = ["serde"]}
-futures = {version = "=0.3.31"}
-quote = {version = "=1.0.42"}
-syn = {version = "=2.0.111", features = ["full", "visit", "extra-traits"] }
-yewdux-functional = {version = "=0.1.0"}
-jsonschema = { version = "=0.38.1", default-features = false, features = [] }
-rayon = {version = "=1.11.0"}
-bytes = {version = "=1.11.0"}
-walkdir = {version = "=2.5.0"}
+reqwasm = {version = "=0.5.0"}
+colorsys = {version = "=0.7.3"}
 
 #todo check proc macro generated token on lints
 [workspace.lints.rust]

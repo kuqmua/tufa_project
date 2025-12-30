@@ -4086,17 +4086,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             {
                                 #[doc(hidden)]
                                 struct __Visitor<'de> {
-                                    marker: _serde::__private::PhantomData<#ident_operation_payload_upper_camel_case>,
-                                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    marker: _serde::__private228::PhantomData<#ident_operation_payload_upper_camel_case>,
+                                    lifetime: _serde::__private228::PhantomData<&'de ()>,
                                 }
                                 #[automatically_derived]
                                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                     type Value = #ident_operation_payload_upper_camel_case;
                                     fn expecting(
                                         &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
+                                        __formatter: &mut _serde::__private228::Formatter<'_>,
+                                    ) -> _serde::__private228::fmt::Result {
+                                        _serde::__private228::Formatter::write_str(
                                             __formatter,
                                             #tuple_struct_ident_operation_payload_double_quotes_token_stream,
                                         )
@@ -4138,8 +4138,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     __deserializer,
                                     #ident_operation_payload_double_quotes_token_stream,
                                     __Visitor {
-                                        marker: _serde::__private::PhantomData::<Self>,
-                                        lifetime: _serde::__private::PhantomData,
+                                        marker: _serde::__private228::PhantomData::<Self>,
+                                        lifetime: _serde::__private228::PhantomData,
                                     },
                                 )
                             }
