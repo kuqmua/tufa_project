@@ -64,7 +64,7 @@ exclude = [
 serde = {version = "=1.0.228", features = ["derive"]}
 serde_derive = {version = "=1.0.228"}
 serde_json = {version = "=1.0.148"}
-toml = {version = "=0.9.6"}
+toml = {version = "=0.9.8"}
 scraper = {version = "=0.25.0"}
 regex = {version = "=1.12.2"}
 convert_case = {version = "=0.10.0"}
