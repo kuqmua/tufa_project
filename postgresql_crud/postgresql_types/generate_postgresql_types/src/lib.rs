@@ -443,7 +443,10 @@ pub fn generate_postgresql_types(
                         &self,
                         __f: &mut _serde::__private228::Formatter<'_>,
                     ) -> _serde::__private228::fmt::Result {
-                        _serde::__private228::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
+                        _serde::__private228::Formatter::write_str(
+                            __f,
+                            "struct PostgresqlTypeRecord",
+                        )
                     }
                     #[inline]
                     fn visit_seq<__A>(self, mut __seq: __A) -> Result<Self::Value, __A::Error>
@@ -547,7 +550,9 @@ pub fn generate_postgresql_types(
                         };
                         let __field1_value = match __field1 {
                             Some(value) => value,
-                            None => _serde::__private228::de::missing_field("not_null_or_nullable")?,
+                            None => {
+                                _serde::__private228::de::missing_field("not_null_or_nullable")?
+                            }
                         };
                         let __field2_value = match __field2 {
                             Some(value) => value,

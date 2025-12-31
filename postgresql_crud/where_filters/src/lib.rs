@@ -282,7 +282,10 @@ const _: () = {
                     &self,
                     __formatter: &mut _serde::__private228::Formatter<'_>,
                 ) -> _serde::__private228::fmt::Result {
-                    _serde::__private228::Formatter::write_str(__formatter, "tuple struct RegexRegex")
+                    _serde::__private228::Formatter::write_str(
+                        __formatter,
+                        "tuple struct RegexRegex",
+                    )
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> Result<Self::Value, __E::Error>
