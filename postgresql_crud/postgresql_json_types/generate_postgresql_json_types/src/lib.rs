@@ -767,33 +767,7 @@ pub fn generate_postgresql_json_types(
                     generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
                 )
             };
-            let number_validation_token_stream = quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
-                multiple_of: None,
-                maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
-                exclusive_maximum: None,
-                minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
-                exclusive_minimum: None,
-            }))};
-            let string_validation_token_stream = quote::quote! {Some(Box::new(schemars::schema::StringValidation {
-                max_length: Some(36),
-                min_length: Some(36),
-                pattern: None,
-            }))};
             let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
-                let schema_object_token_stream_integer = SchemaObjectTokenStream {
-                    metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
-                    instance_type: &instance_type_number_token_stream,
-                    format: &none_upper_camel_case,
-                    enum_values: &none_upper_camel_case,
-                    const_value: &none_upper_camel_case,
-                    subschemas: &none_upper_camel_case,
-                    number: &number_validation_token_stream,
-                    string: &none_upper_camel_case,
-                    array: &none_upper_camel_case,
-                    object: &none_upper_camel_case,
-                    reference: &none_upper_camel_case,
-                    extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
-                };
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
@@ -802,7 +776,26 @@ pub fn generate_postgresql_json_types(
                     | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => SchemarsJsonSchema::Impl(schema_object_token_stream_integer),
+                    | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
+                        metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
+                        instance_type: &instance_type_number_token_stream,
+                        format: &none_upper_camel_case,
+                        enum_values: &none_upper_camel_case,
+                        const_value: &none_upper_camel_case,
+                        subschemas: &none_upper_camel_case,
+                        number: &quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
+                            multiple_of: None,
+                            maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
+                            exclusive_maximum: None,
+                            minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
+                            exclusive_minimum: None,
+                        }))},
+                        string: &none_upper_camel_case,
+                        array: &none_upper_camel_case,
+                        object: &none_upper_camel_case,
+                        reference: &none_upper_camel_case,
+                        extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
+                    }),
                     PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean | PostgresqlJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
                     PostgresqlJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
                         metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
@@ -812,7 +805,11 @@ pub fn generate_postgresql_json_types(
                         const_value: &none_upper_camel_case,
                         subschemas: &none_upper_camel_case,
                         number: &none_upper_camel_case,
-                        string: &string_validation_token_stream,
+                        string: &quote::quote! {Some(Box::new(schemars::schema::StringValidation {
+                            max_length: Some(36),
+                            min_length: Some(36),
+                            pattern: None,
+                        }))},
                         array: &none_upper_camel_case,
                         object: &none_upper_camel_case,
                         reference: &none_upper_camel_case,
