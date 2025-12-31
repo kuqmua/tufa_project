@@ -517,7 +517,6 @@ pub fn generate_postgresql_json_types(
         let value_snake_case = naming::ValueSnakeCase;
         let element_snake_case = naming::ElementSnakeCase;
         let as_upper_camel_case = naming::AsUpperCamelCase;
-        let none_upper_camel_case = naming::NoneUpperCamelCase;
         let new_snake_case = naming::NewSnakeCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;
         let increment_snake_case = naming::IncrementSnakeCase;
@@ -736,89 +735,89 @@ pub fn generate_postgresql_json_types(
             | naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
             let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
             //todo json schema logic
-            let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
-                Some(Box::new(schemars::schema::Metadata {
-                    id: None,
-                    title: Some(#schema_name_format_handle_token_stream.to_owned()),
-                    description: None,
-                    default: None,
-                    deprecated: false,
-                    read_only: false,
-                    write_only: false,
-                    examples: Vec::default(),
-                }))
-            };
-            let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream = quote::quote! {schemars::Map::default()};
-            let (instance_type_number_token_stream, instance_type_string_token_stream) = {
-                let generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
-                    let instance_type_token_stream: &dyn quote::ToTokens = match &instance_type {
-                        schemars::schema::InstanceType::Null => &naming::NullUpperCamelCase,
-                        schemars::schema::InstanceType::Boolean => &naming::BooleanUpperCamelCase,
-                        schemars::schema::InstanceType::Object => &naming::ObjectUpperCamelCase,
-                        schemars::schema::InstanceType::Array => &naming::ArrayUpperCamelCase,
-                        schemars::schema::InstanceType::Number => &naming::NumberUpperCamelCase,
-                        schemars::schema::InstanceType::String => &naming::StringUpperCamelCase,
-                        schemars::schema::InstanceType::Integer => &naming::IntegerUpperCamelCase,
-                    };
-                    quote::quote! {Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::#instance_type_token_stream)))}
-                };
-                (
-                    generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::Number),
-                    generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
-                )
-            };
-            let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
-                match &postgresql_json_type {
-                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
-                        metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
-                        instance_type: &instance_type_number_token_stream,
-                        format: &none_upper_camel_case,
-                        enum_values: &none_upper_camel_case,
-                        const_value: &none_upper_camel_case,
-                        subschemas: &none_upper_camel_case,
-                        number: &quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
-                            multiple_of: None,
-                            maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
-                            exclusive_maximum: None,
-                            minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
-                            exclusive_minimum: None,
-                        }))},
-                        string: &none_upper_camel_case,
-                        array: &none_upper_camel_case,
-                        object: &none_upper_camel_case,
-                        reference: &none_upper_camel_case,
-                        extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
-                    }),
-                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean | PostgresqlJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
-                    PostgresqlJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
-                        metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
-                        instance_type: &instance_type_string_token_stream,
-                        format: &none_upper_camel_case,
-                        enum_values: &none_upper_camel_case,
-                        const_value: &none_upper_camel_case,
-                        subschemas: &none_upper_camel_case,
-                        number: &none_upper_camel_case,
-                        string: &quote::quote! {Some(Box::new(schemars::schema::StringValidation {
-                            max_length: Some(36),
-                            min_length: Some(36),
-                            pattern: None,
-                        }))},
-                        array: &none_upper_camel_case,
-                        object: &none_upper_camel_case,
-                        reference: &none_upper_camel_case,
-                        extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
-                    }),
-                }
-            } else {
-                SchemarsJsonSchema::Derive
-            };
+            // let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
+            //     Some(Box::new(schemars::schema::Metadata {
+            //         id: None,
+            //         title: Some(#schema_name_format_handle_token_stream.to_owned()),
+            //         description: None,
+            //         default: None,
+            //         deprecated: false,
+            //         read_only: false,
+            //         write_only: false,
+            //         examples: Vec::default(),
+            //     }))
+            // };
+            // let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream = quote::quote! {schemars::Map::default()};
+            // let (instance_type_number_token_stream, instance_type_string_token_stream) = {
+            //     let generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type = |instance_type: &schemars::schema::InstanceType| {
+            //         let instance_type_token_stream: &dyn quote::ToTokens = match &instance_type {
+            //             schemars::schema::InstanceType::Null => &naming::NullUpperCamelCase,
+            //             schemars::schema::InstanceType::Boolean => &naming::BooleanUpperCamelCase,
+            //             schemars::schema::InstanceType::Object => &naming::ObjectUpperCamelCase,
+            //             schemars::schema::InstanceType::Array => &naming::ArrayUpperCamelCase,
+            //             schemars::schema::InstanceType::Number => &naming::NumberUpperCamelCase,
+            //             schemars::schema::InstanceType::String => &naming::StringUpperCamelCase,
+            //             schemars::schema::InstanceType::Integer => &naming::IntegerUpperCamelCase,
+            //         };
+            //         quote::quote! {Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::#instance_type_token_stream)))}
+            //     };
+            //     (
+            //         generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::Number),
+            //         generate_instance_type_some_schemars_schema_single_or_vec_single_box_new_schemars_schema_instance_type(&schemars::schema::InstanceType::String),
+            //     )
+            // };
+            // let schemars_json_schema = if let IsStandartNotNull::True = &is_standart_not_null {
+            //     match &postgresql_json_type {
+            //         PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
+            //         | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
+            //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
+            //             instance_type: &instance_type_number_token_stream,
+            //             format: &none_upper_camel_case,
+            //             enum_values: &none_upper_camel_case,
+            //             const_value: &none_upper_camel_case,
+            //             subschemas: &none_upper_camel_case,
+            //             number: &quote::quote! {Some(Box::new(schemars::schema::NumberValidation {
+            //                 multiple_of: None,
+            //                 maximum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MAX as #std_primitive_f64_token_stream),
+            //                 exclusive_maximum: None,
+            //                 minimum: Some(#ident_read_inner_standart_not_null_alias_token_stream ::MIN as #std_primitive_f64_token_stream),
+            //                 exclusive_minimum: None,
+            //             }))},
+            //             string: &none_upper_camel_case,
+            //             array: &none_upper_camel_case,
+            //             object: &none_upper_camel_case,
+            //             reference: &none_upper_camel_case,
+            //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
+            //         }),
+            //         PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean | PostgresqlJsonType::StdStringStringAsJsonbString => SchemarsJsonSchema::Derive,
+            //         PostgresqlJsonType::UuidUuidAsJsonbString => SchemarsJsonSchema::Impl(SchemaObjectTokenStream {
+            //             metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
+            //             instance_type: &instance_type_string_token_stream,
+            //             format: &none_upper_camel_case,
+            //             enum_values: &none_upper_camel_case,
+            //             const_value: &none_upper_camel_case,
+            //             subschemas: &none_upper_camel_case,
+            //             number: &none_upper_camel_case,
+            //             string: &quote::quote! {Some(Box::new(schemars::schema::StringValidation {
+            //                 max_length: Some(36),
+            //                 min_length: Some(36),
+            //                 pattern: None,
+            //             }))},
+            //             array: &none_upper_camel_case,
+            //             object: &none_upper_camel_case,
+            //             reference: &none_upper_camel_case,
+            //             extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
+            //         }),
+            //     }
+            // } else {
+            //     SchemarsJsonSchema::Derive
+            // };
             let ident_origin_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
@@ -828,10 +827,32 @@ pub fn generate_postgresql_json_types(
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
                 .derive_utoipa_to_schema()
-                .derive_schemars_json_schema_if(match &schemars_json_schema {
-                    SchemarsJsonSchema::Derive => macros_helpers::DeriveSchemarsJsonSchema::True,
-                    SchemarsJsonSchema::Impl(_) => macros_helpers::DeriveSchemarsJsonSchema::False,
-                })
+                .derive_schemars_json_schema_if(
+                    //todo
+                    // match &schemars_json_schema {
+                    //     SchemarsJsonSchema::Derive => macros_helpers::DeriveSchemarsJsonSchema::True,
+                    //     SchemarsJsonSchema::Impl(_) => macros_helpers::DeriveSchemarsJsonSchema::False,
+                    // }
+                    if let IsStandartNotNull::True = &is_standart_not_null {
+                        match &postgresql_json_type {
+                            PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::False,
+                            PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
+                            | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
+                            | PostgresqlJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveSchemarsJsonSchema::True,
+                        }
+                    } else {
+                        macros_helpers::DeriveSchemarsJsonSchema::True
+                    }
+                )
                 .build_struct(
                     &ident_origin_upper_camel_case,
                     &{
@@ -947,51 +968,98 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let impl_std_convert_from_ident_update_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
-            let maybe_impl_schemars_json_schema_for_ident_origin_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
-                SchemarsJsonSchema::Derive => &proc_macro2::TokenStream::new(),
-                SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
-                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgresql_crud::postgersql_json_type::{ident_origin_upper_camel_case}"));
-                    let metadata_token_stream = &schema_object_token_stream.metadata;
-                    let instance_type_token_stream = &schema_object_token_stream.instance_type;
-                    let format_token_stream = &schema_object_token_stream.format;
-                    let enum_values_token_stream = &schema_object_token_stream.enum_values;
-                    let const_value_token_stream = &schema_object_token_stream.const_value;
-                    let subschemas_token_stream = &schema_object_token_stream.subschemas;
-                    let number_token_stream = &schema_object_token_stream.number;
-                    let string_token_stream = &schema_object_token_stream.string;
-                    let array_token_stream = &schema_object_token_stream.array;
-                    let object_token_stream = &schema_object_token_stream.object;
-                    let reference_token_stream = &schema_object_token_stream.reference;
-                    let extensions_token_stream = &schema_object_token_stream.extensions;
-                    //todo maybe reuse
-                    quote::quote! {
-                        impl #schemars_json_schema_token_stream for #ident_origin_upper_camel_case {
-                            fn schema_name() -> String {
-                                #schema_name_format_handle_token_stream.to_owned()
-                            }
-                            fn schema_id() -> std::borrow::Cow<'static, str> {
-                                std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
-                            }
-                            fn json_schema(_: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
-                                schemars::schema::Schema::Object(schemars::schema::SchemaObject {
-                                    metadata: #metadata_token_stream,
-                                    instance_type: #instance_type_token_stream,
-                                    format: #format_token_stream,
-                                    enum_values: #enum_values_token_stream,
-                                    const_value: #const_value_token_stream,
-                                    subschemas: #subschemas_token_stream,
-                                    number: #number_token_stream,
-                                    string: #string_token_stream,
-                                    array: #array_token_stream,
-                                    object: #object_token_stream,
-                                    reference: #reference_token_stream,
-                                    extensions: #extensions_token_stream,
-                                })
-                            }
+            //todo
+            let maybe_impl_schemars_json_schema_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
+                match &postgresql_json_type {
+                    PostgresqlJsonType::UuidUuidAsJsonbString => {
+                        let ident_standart_not_null_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                            &ident_standart_not_null_origin_upper_camel_case
+                        );
+                        let text_ident_standart_not_null_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                            &format!("tests::{ident_standart_not_null_origin_upper_camel_case}")
+                        );
+                        quote::quote!{
+                            const _: () = {
+                                #[automatically_derived]
+                                #[allow(unused_braces)]
+                                impl schemars::JsonSchema for #ident_standart_not_null_origin_upper_camel_case {
+                                    fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#ident_standart_not_null_origin_double_quotes_token_stream)
+                                    }
+                                    fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+                                        schemars::_private::alloc::borrow::Cow::Borrowed(#text_ident_standart_not_null_origin_double_quotes_token_stream)
+                                    }
+                                    fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+                                        { generator.subschema_for::<String>() }
+                                    }
+                                    fn inline_schema() -> bool {
+                                        false
+                                    }
+                                }
+                            };
                         }
-                    }
-                },
+                    },
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
+                    | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
+                    | PostgresqlJsonType::StdStringStringAsJsonbString => proc_macro2::TokenStream::new(),
+                }
+            } else {
+                proc_macro2::TokenStream::new()
             };
+            // match &schemars_json_schema {
+            //     SchemarsJsonSchema::Derive => &proc_macro2::TokenStream::new(),
+            //     SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
+            //         let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgresql_crud::postgersql_json_type::{ident_origin_upper_camel_case}"));
+            //         let metadata_token_stream = &schema_object_token_stream.metadata;
+            //         let instance_type_token_stream = &schema_object_token_stream.instance_type;
+            //         let format_token_stream = &schema_object_token_stream.format;
+            //         let enum_values_token_stream = &schema_object_token_stream.enum_values;
+            //         let const_value_token_stream = &schema_object_token_stream.const_value;
+            //         let subschemas_token_stream = &schema_object_token_stream.subschemas;
+            //         let number_token_stream = &schema_object_token_stream.number;
+            //         let string_token_stream = &schema_object_token_stream.string;
+            //         let array_token_stream = &schema_object_token_stream.array;
+            //         let object_token_stream = &schema_object_token_stream.object;
+            //         let reference_token_stream = &schema_object_token_stream.reference;
+            //         let extensions_token_stream = &schema_object_token_stream.extensions;
+            //         //todo maybe reuse
+            //         quote::quote! {
+            //             impl #schemars_json_schema_token_stream for #ident_origin_upper_camel_case {
+            //                 fn schema_name() -> String {
+            //                     #schema_name_format_handle_token_stream.to_owned()
+            //                 }
+            //                 fn schema_id() -> std::borrow::Cow<'static, str> {
+            //                     std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
+            //                 }
+            //                 fn json_schema(_: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
+            //                     schemars::schema::Schema::Object(schemars::schema::SchemaObject {
+            //                         metadata: #metadata_token_stream,
+            //                         instance_type: #instance_type_token_stream,
+            //                         format: #format_token_stream,
+            //                         enum_values: #enum_values_token_stream,
+            //                         const_value: #const_value_token_stream,
+            //                         subschemas: #subschemas_token_stream,
+            //                         number: #number_token_stream,
+            //                         string: #string_token_stream,
+            //                         array: #array_token_stream,
+            //                         object: #object_token_stream,
+            //                         reference: #reference_token_stream,
+            //                         extensions: #extensions_token_stream,
+            //                     })
+            //                 }
+            //             }
+            //         }
+            //     },
+            // };
             let maybe_impl_is_string_empty_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
@@ -1047,7 +1115,6 @@ pub fn generate_postgresql_json_types(
                 #impl_std_convert_from_ident_create_for_ident_origin_token_stream
                 #impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream
                 #impl_std_convert_from_ident_update_for_ident_origin_token_stream
-
                 #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
                 #maybe_impl_is_string_empty_for_ident_origin_token_stream
                 #impl_std_fmt_display_for_ident_origin_token_stream

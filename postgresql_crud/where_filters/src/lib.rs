@@ -331,17 +331,22 @@ const _: () = {
         }
     }
 };
+//todo add some logic? for regex validation?
 const _: () = {
     #[automatically_derived]
+    #[allow(unused_braces)]
     impl schemars::JsonSchema for RegexRegex {
-        fn schema_name() -> String {
-            "RegexRegex".to_owned()
+        fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+            schemars::_private::alloc::borrow::Cow::Borrowed("RegexRegex")
         }
-        fn schema_id() -> std::borrow::Cow<'static, str> {
-            std::borrow::Cow::Borrowed("testing::RegexRegex")
+        fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
+            schemars::_private::alloc::borrow::Cow::Borrowed("tests::RegexRegex")
         }
-        fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
-            generator.subschema_for::<String>()
+        fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+            { generator.subschema_for::<String>() }
+        }
+        fn inline_schema() -> bool {
+            false
         }
     }
 };

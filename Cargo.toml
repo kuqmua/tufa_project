@@ -93,7 +93,7 @@ quote = {version = "=1.0.42"}
 syn = {version = "=2.0.112", features = ["full", "visit", "extra-traits"] }
 proc-macro2 = {version = "=1.0.104"}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
-schemars = {version = "=0.8.22"}
+schemars = {version = "=1.2.0"}
 rayon = {version = "=1.11.0"}
 bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
