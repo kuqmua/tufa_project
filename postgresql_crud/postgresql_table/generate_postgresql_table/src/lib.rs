@@ -7459,12 +7459,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let table_names_cloned = table_names.iter().map(|element| (*element).to_owned()).collect::<Vec<String>>();
                         let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                         let #underscore_unused_token_stream = tokio::spawn(async move {
+                            let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
                             let #app_state_snake_case = std::sync::Arc::new(server_app_state::ServerAppState {
                                 #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
-                                #config_snake_case: #config_snake_case.clone() ,
+                                #config_snake_case,
                                 project_git_info: &git_info::PROJECT_GIT_INFO,
                             });
-                            let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");
                             started_tx.send(()).expect("431a6f8d-3fbb-4eb2-86f6-1b9cfd57e32e");
                             axum::serve(
                                 tcp_listener,

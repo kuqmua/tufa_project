@@ -18,17 +18,18 @@ fn main() {
             server_table_example::TableExample::prepare_postgresql(&postgres_pool)
                 .await
                 .expect("647fa499-c465-432d-ba4a-498f3e943ada");
+            let tcp_listener = tokio::net::TcpListener::bind(
+                app_state::GetServiceSocketAddress::get_service_socket_address(&config),
+            )
+            .await
+            .expect("3f294e7c-3386-497f-b76c-c0364d59a60d");
             let app_state = std::sync::Arc::new(server_app_state::ServerAppState {
                 postgres_pool,
-                config: config.clone(),
+                config,
                 project_git_info: &git_info::PROJECT_GIT_INFO,
             });
             axum::serve(
-                tokio::net::TcpListener::bind(
-                    app_state::GetServiceSocketAddress::get_service_socket_address(&config),
-                )
-                .await
-                .expect("3f294e7c-3386-497f-b76c-c0364d59a60d"),
+                tcp_listener,
                 axum::Router::new()
                     .merge(common_routes::common_routes(std::sync::Arc::<
                         server_app_state::ServerAppState<'_>,

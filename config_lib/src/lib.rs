@@ -57,7 +57,7 @@ impl TryFromStdEnvVarOk for Timezone {
 }
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct RedisUrl(pub secrecy::Secret<String>);
+pub struct RedisUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkRedisUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -70,13 +70,13 @@ impl TryFromStdEnvVarOk for RedisUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::Secret::new(value)
+            secrecy::SecretBox::new(Box::new(value))
         }))
     }
 }
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct MongoUrl(pub secrecy::Secret<String>);
+pub struct MongoUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkMongoUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -89,13 +89,13 @@ impl TryFromStdEnvVarOk for MongoUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::Secret::new(value)
+            secrecy::SecretBox::new(Box::new(value))
         }))
     }
 }
 
 #[derive(Debug, generate_getter_traits_for_struct_fields::GenerateGetterTrait)]
-pub struct DatabaseUrl(pub secrecy::Secret<String>);
+pub struct DatabaseUrl(pub secrecy::SecretBox<String>);
 #[derive(Debug, thiserror::Error, impl_display_as_debug::ImplDisplayAsDebug)]
 pub enum TryFromStdEnvVarOkDatabaseUrlErrorNamed {
     IsEmpty { is_empty: String },
@@ -108,7 +108,7 @@ impl TryFromStdEnvVarOk for DatabaseUrl {
                 is_empty: String::from("is empty"),
             });
         } else {
-            secrecy::Secret::new(value)
+            secrecy::SecretBox::new(Box::new(value))
         }))
     }
 }
