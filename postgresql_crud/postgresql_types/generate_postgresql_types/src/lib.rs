@@ -5835,16 +5835,12 @@ pub fn generate_postgresql_types(
                                 ReadOnlyIdsCreate::ReadOnlyIds => quote::quote! {#ident_standart_not_null_table_type_declaration_upper_camel_case(#read_only_ids_snake_case.0.0)},
                                 ReadOnlyIdsCreate::Create => quote::quote! {table_type_declaration},
                             };
-                            quote::quote! {
-                                Some(
-                                    #ident_where_upper_camel_case::GreaterThan(
-                                        where_filters::PostgresqlTypeWhereGreaterThan {
-                                            logical_operator: greater_than_variant.logical_operator(),
-                                            #value_snake_case: #content_token_stream,
-                                        }
-                                    )
-                                )
-                            }
+                            quote::quote! {Some(#ident_where_upper_camel_case::GreaterThan(
+                                where_filters::PostgresqlTypeWhereGreaterThan {
+                                    logical_operator: greater_than_variant.logical_operator(),
+                                    #value_snake_case: #content_token_stream,
+                                }
+                            ))}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             let content_token_stream = match &read_only_ids_create {
@@ -5852,17 +5848,10 @@ pub fn generate_postgresql_types(
                                 ReadOnlyIdsCreate::Create => quote::quote! {#table_type_declaration_snake_case.0.0},
                             };
                             quote::quote! {
-                                match #content_token_stream {
-                                    Some(some_value) => Some(
-                                        #ident_where_upper_camel_case::GreaterThan(
-                                            where_filters::PostgresqlTypeWhereGreaterThan {
-                                                logical_operator: greater_than_variant.logical_operator(),
-                                                #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(some_value),
-                                            }
-                                        )
-                                    ),
-                                    None => None
-                                }
+                                #content_token_stream.map_or(None, |#element_snake_case| Some(#ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
+                                    logical_operator: greater_than_variant.logical_operator(),
+                                    #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case),
+                                })))
                             }
                         }
                     };
