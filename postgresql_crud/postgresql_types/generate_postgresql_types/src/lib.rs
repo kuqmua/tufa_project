@@ -1252,12 +1252,11 @@ pub fn generate_postgresql_types(
                 Ok(#query_snake_case)
             },
             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                let value = match #content_token_stream.0.0 {
-                    Some(#value_snake_case) => Some(#value_snake_case),
+                if let Err(#error_snake_case) = #query_snake_case.try_bind(match #content_token_stream.0.0 {
+                    Some(some_value) => Some(some_value),
                     None => None
-                };
-                if let Err(error) = #query_snake_case.try_bind(value) {
-                    return Err(error.to_string());
+                }) {
+                    return Err(#error_snake_case.to_string());
                 }
                 Ok(#query_snake_case)
             },
@@ -1652,7 +1651,7 @@ pub fn generate_postgresql_types(
                 };
                 let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
                 let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_token_stream) {
-                    Ok(value) => value,
+                    Ok(ok_value) => ok_value,
                     Err(error) => {
                         return Err(serde::de::Error::custom(error));
                     }
@@ -1668,7 +1667,7 @@ pub fn generate_postgresql_types(
                         let fields_token_stream = generate_vec_field_index_token_stream(length);
                         quote::quote! {
                             match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#fields_token_stream) {
-                                Ok(#value_snake_case) => Ok(#value_snake_case),
+                                Ok(ok_value) => Ok(ok_value),
                                 Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                             }
                         }
@@ -2462,7 +2461,7 @@ pub fn generate_postgresql_types(
                     &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
                     &quote::quote! {
                         match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
-                            Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                            Ok(ok_value) => Ok(Self(ok_value)),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -2798,7 +2797,7 @@ pub fn generate_postgresql_types(
                         let content_token_stream = {
                             let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                                 quote::quote! {match value {
-                                    Some(value) => Some(#type_token_stream::#new_snake_case(value)),
+                                    Some(some_value) => Some(#type_token_stream::#new_snake_case(some_value)),
                                     None => None
                                 }}
                             };
@@ -3238,7 +3237,7 @@ pub fn generate_postgresql_types(
                                         let generate_self_match_try_new_token_stream = |current_parameters_token_stream: &dyn quote::ToTokens, match_error_variants_token_stream: &dyn quote::ToTokens| {
                                             quote::quote! {
                                                 match Self::#try_new_snake_case(#current_parameters_token_stream) {
-                                                    Ok(#value_snake_case) => Ok(#value_snake_case),
+                                                    Ok(ok_value) => Ok(ok_value),
                                                     Err(#error_snake_case) => match #error_snake_case {
                                                         #match_error_variants_token_stream
                                                     }
@@ -3571,8 +3570,8 @@ pub fn generate_postgresql_types(
             let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle);
             let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &quote::quote! {#self_snake_case.0});
             let impl_sqlx_decode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle, &{
-                let scopes_value_token_stream = quote::quote! {(#value_snake_case)};
-                let ok_self_scopes_value_token_stream = quote::quote! {Ok(Self #scopes_value_token_stream)};
+                let scopes_ok_value_token_stream = quote::quote! {(ok_value)};
+                let ok_self_scopes_ok_value_token_stream = quote::quote! {Ok(Self #scopes_ok_value_token_stream)};
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
@@ -3599,17 +3598,17 @@ pub fn generate_postgresql_types(
                             | PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_token_stream,
+                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_ok_value_token_stream,
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
-                                match Self::#try_new_snake_case #scopes_value_token_stream {
-                                    Ok(#value_snake_case) => Ok(#value_snake_case),
-                                    Err(#error_snake_case) => Err(Box::#new_snake_case(error)),
+                                match Self::#try_new_snake_case #scopes_ok_value_token_stream {
+                                    Ok(ok_value0) => Ok(ok_value0),
+                                    Err(#error_snake_case) => Err(Box::#new_snake_case(#error_snake_case)),
                                 }
                             },
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_scopes_value_token_stream,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_scopes_ok_value_token_stream,
                     },
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => ok_self_scopes_value_token_stream,
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => ok_self_scopes_ok_value_token_stream,
                 }
             });
             let impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream = {
@@ -3715,7 +3714,7 @@ pub fn generate_postgresql_types(
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {#self_snake_case.0});
-            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(#value_snake_case))});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(ok_value))});
         //todo rewrite as dependency of PostgresqlType trait?
             let impl_postgresql_type_equal_operator_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
                 &import_path,
@@ -4233,7 +4232,11 @@ pub fn generate_postgresql_types(
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_read_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &quote::quote! {#self_snake_case.0});
-            let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(#value_snake_case))});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                &ident_read_upper_camel_case,
+                &ident_origin_upper_camel_case,
+                &quote::quote! {Ok(Self(ok_value))}
+            );
             let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
             let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                 postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
@@ -4281,7 +4284,11 @@ pub fn generate_postgresql_types(
                     &ident_read_only_ids_upper_camel_case,
                     &quote::quote!{(#ident_read_upper_camel_case);},
                 );
-            let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case, &quote::quote! {Ok(Self(#value_snake_case))});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                &ident_read_only_ids_upper_camel_case,
+                &ident_read_upper_camel_case,
+                &quote::quote! {Ok(Self(ok_value))}
+            );
             let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case);
             quote::quote! {
                 #ident_read_only_ids_token_stream
@@ -5489,10 +5496,9 @@ pub fn generate_postgresql_types(
                 });
                 quote::quote! {Some(#value_initialization_token_stream)}
             };
-            let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {#self_postgresql_type_as_postgresql_type_token_stream::normalize(match #option_update_snake_case {
-                Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.0),
-                None => #read_snake_case
-            })};
+            let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {
+                #option_update_snake_case.map_or(#read_snake_case, |#value_snake_case| #ident_read_upper_camel_case(#value_snake_case.0))
+            };
             let read_only_ids_merged_with_create_into_read_token_stream = {
                 let content_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                     quote::quote! {#read_only_ids_snake_case.0}
@@ -5520,7 +5526,7 @@ pub fn generate_postgresql_types(
                 };
                 quote::quote! {#ident_table_type_declaration_upper_camel_case(#content_token_stream)}
             };
-        //todo maybe it into function (not in proc macro)
+            //todo maybe it into function (not in proc macro)
             let read_only_ids_merged_with_create_into_where_equal_token_stream = {
                 let content_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern
                     && let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
@@ -5723,7 +5729,7 @@ pub fn generate_postgresql_types(
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("4f4d7790-f760-4ea4-861e-e2b383585b1e")},
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).expect("6be0d837-eb33-45c7-b062-8dfac94f7edf")},
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262142, 12, 30).expect("3d6d30fc-20eb-42ba-8f1a-b67257f4eaeb")},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262_142, 12, 30).expect("3d6d30fc-20eb-42ba-8f1a-b67257f4eaeb")},
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(

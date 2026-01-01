@@ -1023,7 +1023,7 @@ pub fn generate_postgresql_json_object_type(
             let generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &current_ident_token_stream,
                 &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&self_upper_camel_case),
-                &quote::quote! {Ok(value.0)}
+                &quote::quote! {Ok(ok_value.0)}
             );
             let generate_value_type_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {#value_snake_case: #type_token_stream}
@@ -2325,7 +2325,7 @@ pub fn generate_postgresql_json_object_type(
                 postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                     &current_ident_token_stream,
                     &quote::quote!{sqlx::types::Json<Self>},
-                    &quote::quote!{Ok(#value_snake_case.0)}
+                    &quote::quote!{Ok(ok_value.0)}
                 )
             };
             let generate_impl_sqlx_type_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|{
