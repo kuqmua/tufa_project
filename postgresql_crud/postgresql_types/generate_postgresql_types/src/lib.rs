@@ -2844,8 +2844,8 @@ pub fn generate_postgresql_types(
                     let content_token_stream = {
                         let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {Ok(Self(match #value_snake_case {
-                                Some(#value_snake_case) => Some(match #type_token_stream::#try_new_snake_case(#value_snake_case) {
-                                    Ok(#value_snake_case) => #value_snake_case,
+                                Some(some_value) => Some(match #type_token_stream::#try_new_snake_case(some_value) {
+                                    Ok(ok_value) => ok_value,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
                                     },
@@ -3315,14 +3315,14 @@ pub fn generate_postgresql_types(
                                                         #sec_snake_case,
                                                         #micro_snake_case,
                                                     ) {
-                                                        Some(#value_snake_case) => {
-                                                            if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
+                                                        Some(some_value) => {
+                                                            if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&some_value).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
-                                                                    #value_snake_case: #value_snake_case.to_string(),
+                                                                    #value_snake_case: some_value.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            Ok(Self(#value_snake_case))
+                                                            Ok(Self(some_value))
                                                         },
                                                         None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                             #hour_snake_case,
@@ -3405,7 +3405,7 @@ pub fn generate_postgresql_types(
                     let generate_match_token_stream = |match_content_token_stream: &dyn quote::ToTokens, some_content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
                             match #match_content_token_stream {
-                                Some(#value_snake_case) => Some(#value_snake_case.0#some_content_token_stream),
+                                Some(some_value) => Some(some_value.0#some_content_token_stream),
                                 None => None
                             }
                         }
