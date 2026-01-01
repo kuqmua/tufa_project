@@ -4805,13 +4805,13 @@ pub fn generate_postgresql_types(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value})
                                 } else {
-                                    value_dot_zero_token_stream
+                                    quote::quote!{some_value.0}
                                 };
                                 quote::quote! {
                                     match #value_dot_zero_dot_zero_token_stream {
-                                        Some(#value_snake_case) => Some(#content_token_stream),
+                                        Some(some_value) => Some(#content_token_stream),
                                         None => None
                                     }
                                 }
@@ -4830,13 +4830,13 @@ pub fn generate_postgresql_types(
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value})
                                 } else {
-                                    value_dot_zero_token_stream
+                                    quote::quote!{some_value.0}
                                 };
                                 quote::quote! {
                                     #value_dot_zero_dot_zero_token_stream.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
-                                        Some(#value_snake_case) => Some(#content_token_stream),
+                                        Some(some_value) => Some(#content_token_stream),
                                         None => None
                                     }).collect()
                                 }
@@ -4849,21 +4849,21 @@ pub fn generate_postgresql_types(
                                 };
                                 quote::quote! {
                                     match #value_dot_zero_dot_zero_token_stream {
-                                        Some(#value_snake_case) => Some(#value_dot_zero_token_stream.into_iter().map(|element|#content_token_stream).collect()),
+                                        Some(some_value) => Some(some_value.0.into_iter().map(|element|#content_token_stream).collect()),
                                         None => None
                                     }
                                 }
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value1})
                                 } else {
-                                    value_dot_zero_token_stream.clone()
+                                    quote::quote!{some_value1.0}
                                 };
                                 quote::quote! {
                                     match #value_dot_zero_dot_zero_token_stream {
-                                        Some(#value_snake_case) => Some(#value_dot_zero_token_stream.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
-                                            Some(#value_snake_case) => Some(#content_token_stream),
+                                        Some(some_value0) => Some(some_value0.0.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
+                                            Some(some_value1) => Some(#content_token_stream),
                                             None => None
                                         }).collect()),
                                         None => None
