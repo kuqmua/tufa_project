@@ -2793,15 +2793,12 @@ pub fn generate_postgresql_types(
                 proc_macro2::TokenStream::new()
             };
             let impl_ident_origin_token_stream = {
-                let pub_fn_new_or_try_new_token_stream = postgresql_type_initialization_try_new_try_from_postgresql_type.as_ref().map_or_else(
+                let fn_new_or_try_new_token_stream = postgresql_type_initialization_try_new_try_from_postgresql_type.as_ref().map_or_else(
                 |()| {
                     let content_token_stream = {
                         let content_token_stream = {
                             let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                                quote::quote! {match value {
-                                    Some(some_value) => Some(#type_token_stream::#new_snake_case(some_value)),
-                                    None => None
-                                }}
+                                quote::quote! {value.map(#type_token_stream::#new_snake_case)}
                             };
                             let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(#type_token_stream::#new_snake_case).collect()},
@@ -3392,7 +3389,7 @@ pub fn generate_postgresql_types(
                 };
                 quote::quote! {
                     impl #ident_origin_upper_camel_case {
-                        #pub_fn_new_or_try_new_token_stream
+                        #fn_new_or_try_new_token_stream
                         #maybe_fn_new_or_try_new_for_deserialize_token
                     }
                 }
