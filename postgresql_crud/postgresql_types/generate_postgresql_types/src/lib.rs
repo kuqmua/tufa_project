@@ -5870,10 +5870,10 @@ pub fn generate_postgresql_types(
                                 ReadOnlyIdsCreate::Create => quote::quote! {#table_type_declaration_snake_case.0.0},
                             };
                             quote::quote! {
-                                #content_token_stream.map_or(None, |#element_snake_case| Some(#ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
+                                #content_token_stream.map(|#element_snake_case| #ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
                                     logical_operator: greater_than_variant.logical_operator(),
-                                    #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case),
-                                })))
+                                    value: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case),
+                                }))
                             }
                         }
                     };
