@@ -3044,7 +3044,7 @@ pub fn generate_postgresql_types(
                                             let #date_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(
                                                 #value_snake_case.#date_snake_case()
                                             ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Ok(ok_value) => ok_value,
                                                 Err(#error_snake_case) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_upper_camel_case {
                                                         #error_snake_case,
@@ -3055,7 +3055,7 @@ pub fn generate_postgresql_types(
                                             let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(
                                                 #value_snake_case.#time_snake_case()
                                             ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Ok(ok_value) => ok_value,
                                                 Err(#error_snake_case) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_case {
                                                         #error_snake_case,
@@ -3072,7 +3072,7 @@ pub fn generate_postgresql_types(
                                             }));
                                             quote::quote! {
                                                 let #date_naive_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.date_naive()) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Ok(ok_value) => ok_value,
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_naive_upper_camel_case {
                                                             #error_snake_case,
@@ -3081,7 +3081,7 @@ pub fn generate_postgresql_types(
                                                     }
                                                 };
                                                 let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.time()) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Ok(ok_value) => ok_value,
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_camel_case {
                                                             #error_snake_case,
@@ -3339,14 +3339,14 @@ pub fn generate_postgresql_types(
                                                         #second_snake_case,
                                                         #microsecond_snake_case,
                                                     ) {
-                                                        Ok(#value_snake_case) => {
-                                                            if #value_snake_case.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
+                                                        Ok(ok_value) => {
+                                                            if ok_value.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
-                                                                    #value_snake_case: #value_snake_case.to_string(),
+                                                                    #value_snake_case: ok_value.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            Ok(Self(#value_snake_case))
+                                                            Ok(Self(ok_value))
                                                         },
                                                         Err(#error_snake_case) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                             #hour_snake_case,
@@ -4245,7 +4245,7 @@ pub fn generate_postgresql_types(
                     &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                            Ok(#value_snake_case) => Ok(format!("({column} = ${value})")),
+                            Ok(ok_value) => Ok(format!("({column} = ${ok_value})")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4354,11 +4354,14 @@ pub fn generate_postgresql_types(
             let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"default"});
             let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
             let typical_query_part_token_stream = {
-                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${value}"}, &postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path));
+                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                    &quote::quote! {#acc_snake_case, "${ok_value}"},
+                    &postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path)
+                );
                 quote::quote! {
                     let mut #acc_snake_case = String::default();
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                        Ok(#value_snake_case) => {
+                        Ok(ok_value) => {
                             #if_write_is_err_token_stream
                         },
                         Err(#error_snake_case) => {
