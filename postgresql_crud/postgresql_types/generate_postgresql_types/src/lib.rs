@@ -5458,7 +5458,7 @@ pub fn generate_postgresql_types(
                             };
                             #acc_snake_case.push(vec![Some({
                                 let mut #acc_snake_case = Vec::new();
-                                for element0 in read_only_ids_to_two_dimensional_vec_read_inner.clone() {
+                                for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                     for element1 in element0 {
                                         for element2 in element1 {
                                             #acc_snake_case.push(element2);
