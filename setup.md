@@ -435,3 +435,7 @@ cargo install cargo-run-script
 ```
 cargo run-script *script name*
 ```
+#### compilation cache
+```
+cargo install sccache --locked
+```
