@@ -1135,7 +1135,6 @@ pub fn generate_postgresql_types(
         };
         let generate_as_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_token_stream(&content_token_stream, &PostgresqlTypeOrPostgresqlTypeTestCases::PostgresqlType);
         let generate_as_postgresql_type_test_cases_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_token_stream(&content_token_stream, &PostgresqlTypeOrPostgresqlTypeTestCases::PostgresqlTypeTestCases);
-        let ident_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident);
         let self_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&self_upper_camel_case);
         let ident_standart_not_null_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
         let ident_standart_nullable_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&ident_standart_nullable_upper_camel_case);
@@ -5293,10 +5292,10 @@ pub fn generate_postgresql_types(
                                     )
                                 };
                                 quote::quote! {
-                                    #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
+                                    #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#first_token_stream);
                                     if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).get(0) {
-                                        #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
-                                        #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
+                                        #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#second_token_stream);
+                                        #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#third_token_stream);
                                     }
                                 }
                             }
