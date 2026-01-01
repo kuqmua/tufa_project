@@ -5457,15 +5457,15 @@ pub fn generate_postgresql_types(
                                 has_len_greater_than_one
                             };
                             #acc_snake_case.push(vec![Some({
-                                let mut #acc_snake_case = Vec::new();
+                                let mut current_acc = Vec::new();
                                 for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                     for element1 in element0 {
                                         for element2 in element1 {
-                                            #acc_snake_case.push(element2);
+                                            current_acc.push(element2);
                                         }
                                     }
                                 }
-                                #acc_snake_case
+                                current_acc
                             })]);
                             #acc_snake_case.push(vec![None]);
                             if let Some(some_value) = option_additional {
@@ -5889,7 +5889,7 @@ pub fn generate_postgresql_types(
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream = none_token_stream.clone();
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = none_token_stream.clone();
             let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = none_token_stream.clone();
-            let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote! {todo!()};
+            let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote! {panic!("d1d84d4f-60af-45c1-9473-63da5b18d54e")};
             let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = none_token_stream;
             postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
