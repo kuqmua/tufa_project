@@ -2859,8 +2859,8 @@ pub fn generate_postgresql_types(
                                     let mut #acc_snake_case = Vec::new();
                                     for #element_snake_case in #value_snake_case {
                                         match #type_token_stream::#try_new_snake_case(#element_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #acc_snake_case.push(#value_snake_case);
+                                            Ok(ok_value) => {
+                                                #acc_snake_case.push(ok_value);
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -2952,54 +2952,51 @@ pub fn generate_postgresql_types(
                                             Ok(Self(sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }))
                                         }
                                     };
-                                    let generate_ok_self_sqlx_postgres_types_pg_range_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| {
-                                        quote::quote! {
-                                            let #value_snake_case = sqlx::postgres::types::PgRange {
-                                                #start_snake_case: match #value_snake_case.#start_snake_case {
-                                                    std::ops::Bound::Included(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
-                                                        Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                        Err(#error_snake_case) => {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
-                                                                #error_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            });
-                                                        }
-                                                    },
-                                                    std::ops::Bound::Excluded(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
-                                                        Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                        Err(#error_snake_case) => {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
-                                                                #error_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            });
-                                                        }
-                                                    },
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                    let generate_ok_self_sqlx_postgres_types_pg_range_token_stream = |current_ident_token_stream: &dyn quote::ToTokens| quote::quote! {
+                                        Ok(Self(sqlx::postgres::types::PgRange {
+                                            #start_snake_case: match #value_snake_case.#start_snake_case {
+                                                std::ops::Bound::Included(included_value) => match #current_ident_token_stream::#try_new_snake_case(included_value) {
+                                                    Ok(ok_value) => std::ops::Bound::Included(ok_value.0),
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
+                                                            #error_snake_case,
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        });
+                                                    }
                                                 },
-                                                #end_snake_case: match #value_snake_case.#end_snake_case {
-                                                    std::ops::Bound::Included(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
-                                                        Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                        Err(#error_snake_case) => {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
-                                                                #error_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            });
-                                                        }
-                                                    },
-                                                    std::ops::Bound::Excluded(#value_snake_case) => match #current_ident_token_stream::#try_new_snake_case(#value_snake_case) {
-                                                        Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                        Err(#error_snake_case) => {
-                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
-                                                                #error_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            });
-                                                        }
-                                                    },
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_token_stream::#try_new_snake_case(excluded_value) {
+                                                    Ok(ok_value) => std::ops::Bound::Excluded(ok_value.0),
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
+                                                            #error_snake_case,
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        });
+                                                    }
                                                 },
-                                            };
-                                            Ok(Self(#value_snake_case))
-                                        }
+                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                            },
+                                            #end_snake_case: match #value_snake_case.#end_snake_case {
+                                                std::ops::Bound::Included(included_value) => match #current_ident_token_stream::#try_new_snake_case(included_value) {
+                                                    Ok(ok_value) => std::ops::Bound::Included(ok_value.0),
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
+                                                            #error_snake_case,
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        });
+                                                    }
+                                                },
+                                                std::ops::Bound::Excluded(excluded_value) => match #current_ident_token_stream::#try_new_snake_case(excluded_value) {
+                                                    Ok(ok_value) => std::ops::Bound::Excluded(ok_value.0),
+                                                    Err(#error_snake_case) => {
+                                                        return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
+                                                            #error_snake_case,
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        });
+                                                    }
+                                                },
+                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                            },
+                                        }))
                                     };
                                     match &postgresql_type_initialization_try_new {
                                         PostgresqlTypeInitializationTryNew::StdStringStringAsText => quote::quote! {
