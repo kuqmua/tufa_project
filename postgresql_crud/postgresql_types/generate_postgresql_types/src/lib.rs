@@ -2491,6 +2491,38 @@ pub fn generate_postgresql_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => match &postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsInt2 |
+                        PostgresqlType::StdPrimitiveI32AsInt4 |
+                        PostgresqlType::StdPrimitiveI64AsInt8 |
+                        PostgresqlType::StdPrimitiveF32AsFloat4 |
+                        PostgresqlType::StdPrimitiveF64AsFloat8 |
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                        PostgresqlType::StdPrimitiveBoolAsBool |
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
+                        PostgresqlType::SqlxTypesTimeTimeAsTime |
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DeriveCopy::True,
+                        PostgresqlType::StdStringStringAsText |
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => macros_helpers::DeriveCopy::False,
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
+                })
                 .derive_partial_eq()
                 .derive_eq_if(match &is_not_null_standart_can_be_primary_key {
                     IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
@@ -3787,7 +3819,7 @@ pub fn generate_postgresql_types(
                         for current_element in 1..=array_dimensions_number {
                             let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
                             arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: crate::PaginationStartsWithOne
+                                #dimension_number_pagination_token_stream: PaginationStartsWithOne
                             });
                         }
                         quote::quote! {{#(#arguments_token_stream),*}}
