@@ -1252,12 +1252,7 @@ pub fn generate_postgresql_types(
                 Ok(#query_snake_case)
             },
             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                if let Err(#error_snake_case) = #query_snake_case.try_bind(
-                    match #content_token_stream.0.0 {
-                        Some(some_value) => Some(some_value),
-                        None => None
-                    }
-                ) {
+                if let Err(#error_snake_case) = #query_snake_case.try_bind(#content_token_stream.0.0.map(|#element_snake_case| #element_snake_case)) {
                     return Err(#error_snake_case.to_string());
                 }
                 Ok(#query_snake_case)
