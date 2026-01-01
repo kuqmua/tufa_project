@@ -4698,13 +4698,13 @@ pub fn generate_postgresql_types(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_ident_origin_token_stream(&quote::quote! {
                                 match #value_snake_case.0.0 {
-                                    Some(#value_snake_case) => Some(
+                                    Some(some_value) => Some(
                                         <
                                             #ident_standart_not_null_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_standart_not_null_read_upper_camel_case(#value_snake_case)
+                                            #ident_standart_not_null_read_upper_camel_case(some_value)
                                         ).0
                                     ),
                                     None => None
@@ -4741,12 +4741,12 @@ pub fn generate_postgresql_types(
                                 let ident_array_dimension1_not_null_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_not_null_upper_camel_case);
                                 quote::quote! {
                                     match #value_snake_case.0.0 {
-                                        Some(#value_snake_case) => Some(<
+                                        Some(some_value) => Some(<
                                             #ident_array_dimension1_not_null_not_null_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_not_null_read_upper_camel_case(#value_snake_case),
+                                            #ident_array_dimension1_not_null_not_null_read_upper_camel_case(some_value),
                                         ).0),
                                         None => None,
                                     }
@@ -4763,12 +4763,12 @@ pub fn generate_postgresql_types(
                                 let ident_array_dimension1_not_null_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_nullable_upper_camel_case);
                                 quote::quote! {
                                     match #value_snake_case.0.0 {
-                                        Some(#value_snake_case) => Some(<
+                                        Some(some_value) => Some(<
                                             #ident_array_dimension1_not_null_nullable_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_nullable_read_upper_camel_case(#value_snake_case),
+                                            #ident_array_dimension1_not_null_nullable_read_upper_camel_case(some_value),
                                         ).0),
                                         None => None,
                                     }
@@ -5269,7 +5269,7 @@ pub fn generate_postgresql_types(
                                     };
                                     let generate_vec_value_clone_zero_into_number_token_stream = |value: usize| {
                                         let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202-4038-4b27-85bd-c0593552bb89");
-                                        quote::quote! {vec![#value_snake_case.clone().0.into(); #number_token_stream]}
+                                        quote::quote! {vec![some_value.clone().0.into(); #number_token_stream]}
                                     };
                                     (
                                         generate_new_or_try_new_token_stream(&quote::quote! {
@@ -5284,7 +5284,7 @@ pub fn generate_postgresql_types(
                                 };
                                 quote::quote! {
                                     #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                    if let Some(#value_snake_case) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).get(0) {
+                                    if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).get(0) {
                                         #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#second_token_stream);
                                         #acc_snake_case.push(#ident_as_postgresql_type_token_stream::Create::#third_token_stream);
                                     }
@@ -5348,12 +5348,12 @@ pub fn generate_postgresql_types(
                                 for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
                                     #acc_snake_case.push(vec![#element_snake_case]);
                                 }
-                                if let Some(#value_snake_case) = option_additional {
+                                if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {
-                                        #acc_snake_case.push(#value_snake_case.0);
+                                        #acc_snake_case.push(some_value.0);
                                     }
                                     if !has_len_greater_than_one {
-                                        #acc_snake_case.push(#value_snake_case.1);
+                                        #acc_snake_case.push(some_value.1);
                                     }
                                 }
                                 #acc_snake_case
@@ -5390,12 +5390,12 @@ pub fn generate_postgresql_types(
                                     }
                                     vec![#acc_snake_case]
                                 });
-                                if let Some(#value_snake_case) = option_additional {
+                                if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {
-                                        #acc_snake_case.push(#value_snake_case.0);
+                                        #acc_snake_case.push(some_value.0);
                                     }
                                     if !has_len_greater_than_one {
-                                        #acc_snake_case.push(#value_snake_case.1);
+                                        #acc_snake_case.push(some_value.1);
                                     }
                                 }
                                 #acc_snake_case
@@ -5459,12 +5459,12 @@ pub fn generate_postgresql_types(
                                 #acc_snake_case
                             })]);
                             #acc_snake_case.push(vec![None]);
-                            if let Some(#value_snake_case) = option_additional {
+                            if let Some(some_value) = option_additional {
                                 if has_len_greater_than_one {
-                                    #acc_snake_case.push(#value_snake_case.0);
+                                    #acc_snake_case.push(some_value.0);
                                 }
                                 if !has_len_greater_than_one {
-                                    #acc_snake_case.push(#value_snake_case.1);
+                                    #acc_snake_case.push(some_value.1);
                                 }
                             }
                             #acc_snake_case
@@ -5557,7 +5557,7 @@ pub fn generate_postgresql_types(
                     let some_token_stream = {
                         let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote! {#create_snake_case.0.0},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {#value_snake_case.0},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {some_value.0},
                         };
                         quote::quote! {
                             Some({
@@ -5588,7 +5588,7 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => some_token_stream,
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                             match #create_snake_case.0.0 {
-                                Some(#value_snake_case) => #some_token_stream,
+                                Some(some_value) => #some_token_stream,
                                 None => None
                             }
                         },
@@ -5779,8 +5779,8 @@ pub fn generate_postgresql_types(
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                             match <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test() {
-                                Some(#value_snake_case) => Some(
-                                    #value_snake_case
+                                Some(some_value) => Some(
+                                    some_value
                                     .into_iter()
                                     .map(|#element_snake_case|#import_path::PostgresqlTypeGreaterThanTest {
                                         variant: #element_snake_case.variant,
@@ -5859,11 +5859,11 @@ pub fn generate_postgresql_types(
                             };
                             quote::quote! {
                                 match #content_token_stream {
-                                    Some(#value_snake_case) => Some(
+                                    Some(some_value) => Some(
                                         #ident_where_upper_camel_case::GreaterThan(
                                             where_filters::PostgresqlTypeWhereGreaterThan {
                                                 logical_operator: greater_than_variant.logical_operator(),
-                                                #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(#value_snake_case),
+                                                #value_snake_case: #ident_standart_not_null_table_type_declaration_upper_camel_case(some_value),
                                             }
                                         )
                                     ),
