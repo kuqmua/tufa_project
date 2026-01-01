@@ -2802,7 +2802,7 @@ pub fn generate_postgresql_types(
                                 }}
                             };
                             let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::#new_snake_case(element)).collect()},
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(#type_token_stream::#new_snake_case).collect()},
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
                             };
                             match &postgresql_type_pattern {
