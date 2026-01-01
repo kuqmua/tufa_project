@@ -481,24 +481,24 @@ pub fn generate_postgresql_json_types(
             True,
             False,
         }
-        struct SchemaObjectTokenStream<'lifetime> {
-            metadata: &'lifetime dyn quote::ToTokens,
-            instance_type: &'lifetime dyn quote::ToTokens,
-            format: &'lifetime dyn quote::ToTokens,
-            enum_values: &'lifetime dyn quote::ToTokens,
-            const_value: &'lifetime dyn quote::ToTokens,
-            subschemas: &'lifetime dyn quote::ToTokens,
-            number: &'lifetime dyn quote::ToTokens,
-            string: &'lifetime dyn quote::ToTokens,
-            array: &'lifetime dyn quote::ToTokens,
-            object: &'lifetime dyn quote::ToTokens,
-            reference: &'lifetime dyn quote::ToTokens,
-            extensions: &'lifetime dyn quote::ToTokens,
-        }
-        enum SchemarsJsonSchema<'schema_object_token_stream_tifetime> {
-            Derive,
-            Impl(SchemaObjectTokenStream<'schema_object_token_stream_tifetime>),
-        }
+        // struct SchemaObjectTokenStream<'lifetime> {
+        //     metadata: &'lifetime dyn quote::ToTokens,
+        //     instance_type: &'lifetime dyn quote::ToTokens,
+        //     format: &'lifetime dyn quote::ToTokens,
+        //     enum_values: &'lifetime dyn quote::ToTokens,
+        //     const_value: &'lifetime dyn quote::ToTokens,
+        //     subschemas: &'lifetime dyn quote::ToTokens,
+        //     number: &'lifetime dyn quote::ToTokens,
+        //     string: &'lifetime dyn quote::ToTokens,
+        //     array: &'lifetime dyn quote::ToTokens,
+        //     object: &'lifetime dyn quote::ToTokens,
+        //     reference: &'lifetime dyn quote::ToTokens,
+        //     extensions: &'lifetime dyn quote::ToTokens,
+        // }
+        // enum SchemarsJsonSchema<'schema_object_token_stream_tifetime> {
+        //     Derive,
+        //     Impl(SchemaObjectTokenStream<'schema_object_token_stream_tifetime>),
+        // }
         let postgresql_json_type = &element.postgresql_json_type;
         let not_null_or_nullable = &element.not_null_or_nullable;
         let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
@@ -554,7 +554,7 @@ pub fn generate_postgresql_json_types(
         let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
         let std_string_string_token_stream = token_patterns::StdStringString;
         let uuid_uuid_token_stream = token_patterns::UuidUuid;
-        let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
+        // let schemars_json_schema_token_stream = token_patterns::SchemarsJsonSchema;
 
         let none_token_stream = quote::quote! {None};
 
@@ -733,7 +733,7 @@ pub fn generate_postgresql_json_types(
                 current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
                 current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern
             | naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern));
-            let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
+            // let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
             //todo json schema logic
             // let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
             //     Some(Box::new(schemars::schema::Metadata {

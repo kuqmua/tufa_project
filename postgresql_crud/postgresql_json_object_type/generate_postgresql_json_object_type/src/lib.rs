@@ -274,6 +274,7 @@ pub fn generate_postgresql_json_object_type(
             let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
             let cfg_feature_test_utils = quote::quote! {#[cfg(feature = "test-utils")]};
             let return_err_query_part_error_named_write_into_buffer_token_stream = postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path);
+            let none_token_stream = quote::quote!{None};
 
             let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 postgresql_crud_macros_common::generate_value_initialization_token_stream(
@@ -6473,9 +6474,9 @@ pub fn generate_postgresql_json_object_type(
                             #read_only_ids_snake_case,
                             #create_snake_case
                         ))};
-                        let create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream = quote::quote!{None};
-                        let postgresql_type_option_vec_where_greater_than_test_token_stream = quote::quote!{None};
-                        let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = quote::quote!{None};
+                        let create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream = &none_token_stream;
+                        let postgresql_type_option_vec_where_greater_than_test_token_stream = &none_token_stream;
+                        let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = &none_token_stream;
 
                         let (
                             read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream,
