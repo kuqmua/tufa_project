@@ -4925,16 +4925,16 @@ pub fn generate_postgresql_types(
                             let max = #max_token_stream;
                             vec![
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Included(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical.clone()), end: std::ops::Bound::Included(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical.clone()), end: std::ops::Bound::Included(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(near_zero.clone()), end: std::ops::Bound::Included(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Included(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Included(max)},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Excluded(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical.clone()), end: std::ops::Bound::Excluded(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(negative_less_typical.clone()), end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(near_zero.clone()), end: std::ops::Bound::Excluded(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Excluded(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(min), end: std::ops::Bound::Excluded(max)},
 
@@ -4945,16 +4945,16 @@ pub fn generate_postgresql_types(
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(max), end: std::ops::Bound::Unbounded},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Included(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical.clone()), end: std::ops::Bound::Included(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical.clone()), end: std::ops::Bound::Included(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(near_zero.clone()), end: std::ops::Bound::Included(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Included(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Included(max)},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Excluded(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical.clone()), end: std::ops::Bound::Excluded(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(negative_less_typical.clone()), end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(near_zero.clone()), end: std::ops::Bound::Excluded(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(positive_less_typical), end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Excluded(max)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(min), end: std::ops::Bound::Excluded(max)},
 
@@ -4965,15 +4965,15 @@ pub fn generate_postgresql_types(
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(max), end: std::ops::Bound::Unbounded},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(max)},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(min)},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(negative_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(negative_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(near_zero.clone())},
-                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(positive_more_typical.clone())},
+                                sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(positive_more_typical)},
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(max)},
 
                                 sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded},
