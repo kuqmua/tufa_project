@@ -5391,13 +5391,13 @@ pub fn generate_postgresql_types(
                                 };
                                 let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
                                 #acc_snake_case.push({
-                                    let mut #acc_snake_case = Vec::new();
+                                    let mut current_acc = Vec::new();
                                     for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                         for element1 in element0 {
-                                            #acc_snake_case.push(element1);
+                                            current_acc.push(element1);
                                         }
                                     }
-                                    vec![#acc_snake_case]
+                                    vec![current_acc]
                                 });
                                 if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {
