@@ -5303,7 +5303,7 @@ pub fn generate_postgresql_types(
                     }
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                         let mut #acc_snake_case = Vec::new();
-                        for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case) {
+                        for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case) {
                             for element1 in element0 {
                                 #acc_snake_case.push(vec![Some(element1)]);
                             }
@@ -5317,7 +5317,7 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                             quote::quote! {
                                 let mut #acc_snake_case = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                 let option_additional = {
                                     let mut option_additional = None;
                                     for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -5362,7 +5362,7 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             quote::quote! {
                                 let mut #acc_snake_case = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                 let option_additional = {
                                     let mut option_additional = None;
                                     for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -5409,7 +5409,7 @@ pub fn generate_postgresql_types(
                         };
                         quote::quote! {
                             let mut #acc_snake_case = Vec::new();
-                            let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#read_only_ids_snake_case);
+                            let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                             let option_additional = {
                                 let mut option_additional = None;
                                 for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
