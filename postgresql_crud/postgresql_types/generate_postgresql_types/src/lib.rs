@@ -3393,10 +3393,14 @@ pub fn generate_postgresql_types(
                 let content_token_stream = {
                     let value_dot_zero = quote::quote! {#value_snake_case.0};
                     let element_dot_zero_token_stream = quote::quote! {#element_snake_case.0};
-                    let generate_match_token_stream = |match_content_token_stream: &dyn quote::ToTokens, some_content_token_stream: &dyn quote::ToTokens| {
+                    let generate_match_token_stream = |
+                        match_content_token_stream: &dyn quote::ToTokens,
+                        some_content_token_stream: &dyn quote::ToTokens,
+                        some_value_token_stream: &dyn quote::ToTokens,
+                    | {
                         quote::quote! {
                             match #match_content_token_stream {
-                                Some(some_value) => Some(some_value.0#some_content_token_stream),
+                                Some(#some_value_token_stream) => Some(#some_value_token_stream.0#some_content_token_stream),
                                 None => None
                             }
                         }
@@ -3404,19 +3408,31 @@ pub fn generate_postgresql_types(
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => value_dot_zero,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(&value_dot_zero, &proc_macro2::TokenStream::new()),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                &value_dot_zero,
+                                &proc_macro2::TokenStream::new(),
+                                &quote::quote!{some_value0}
+                            ),
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                             let dimension1_token_stream = match &dimension1_not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(&element_dot_zero_token_stream, &proc_macro2::TokenStream::new()),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                    &element_dot_zero_token_stream,
+                                    &proc_macro2::TokenStream::new(),
+                                    &quote::quote!{some_value0}
+                                ),
                             };
                             let into_iter_dimension1_token_stream = quote::quote! {.into_iter().map(|#element_snake_case|#dimension1_token_stream).collect()};
                             match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                     #value_dot_zero #into_iter_dimension1_token_stream
                                 },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(&value_dot_zero, &into_iter_dimension1_token_stream),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
+                                    &value_dot_zero,
+                                    &into_iter_dimension1_token_stream,
+                                    &quote::quote!{some_value1}
+                                ),
                             }
                         }
                     }
