@@ -4871,10 +4871,9 @@ pub fn generate_postgresql_types(
                                 };
                                 quote::quote! {
                                     match #value_dot_zero_dot_zero_token_stream {
-                                        Some(some_value0) => Some(some_value0.0.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
-                                            Some(some_value1) => Some(#content_token_stream),
-                                            None => None
-                                        }).collect()),
+                                        Some(some_value0) => Some(some_value0.0.into_iter().map(|#element_snake_case|
+                                            #element_snake_case.0.map_or(None, |some_value1| Some(#content_token_stream))
+                                        ).collect()),
                                         None => None
                                     }
                                 }
