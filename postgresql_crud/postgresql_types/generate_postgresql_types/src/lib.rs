@@ -2165,7 +2165,7 @@ pub fn generate_postgresql_types(
                         let field_names_token_stream = vec_token_stream.iter().map(|current_element| generate_quotes::double_quotes_token_stream(&current_element));
                         quote::quote! {
                             #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &[#(#field_names_token_stream),*];
+                            const FIELDS: &[&str] = &[#(#field_names_token_stream),*];
                         }
                     };
                     (
@@ -2485,44 +2485,45 @@ pub fn generate_postgresql_types(
                 }
             }
         };
+        let derive_copy = match &postgresql_type_pattern {
+            PostgresqlTypePattern::Standart => match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsInt2 |
+                PostgresqlType::StdPrimitiveI32AsInt4 |
+                PostgresqlType::StdPrimitiveI64AsInt8 |
+                PostgresqlType::StdPrimitiveF32AsFloat4 |
+                PostgresqlType::StdPrimitiveF64AsFloat8 |
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                PostgresqlType::StdPrimitiveBoolAsBool |
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
+                PostgresqlType::SqlxTypesTimeTimeAsTime |
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DeriveCopy::True,
+                PostgresqlType::StdStringStringAsText |
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => macros_helpers::DeriveCopy::False,
+            },
+            PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
+        };
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_origin_token_stream = {
             let ident_origin_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 |
-                        PostgresqlType::StdPrimitiveI32AsInt4 |
-                        PostgresqlType::StdPrimitiveI64AsInt8 |
-                        PostgresqlType::StdPrimitiveF32AsFloat4 |
-                        PostgresqlType::StdPrimitiveF64AsFloat8 |
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
-                        PostgresqlType::StdPrimitiveBoolAsBool |
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
-                        PostgresqlType::SqlxTypesTimeTimeAsTime |
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => macros_helpers::DeriveCopy::True,
-                        PostgresqlType::StdStringStringAsText |
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => macros_helpers::DeriveCopy::False,
-                    },
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
-                })
+                .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_eq_if(match &is_not_null_standart_can_be_primary_key {
                     IsNotNullStandartCanBePrimaryKey::True => macros_helpers::DeriveEq::True,
@@ -3669,6 +3670,7 @@ pub fn generate_postgresql_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord_if(match &is_standart_not_null {
                     IsStandartNotNull::True => match &postgresql_type {
@@ -3773,6 +3775,7 @@ pub fn generate_postgresql_types(
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
+                    .derive_copy_if(derive_copy)
                     .derive_partial_eq()
                     .derive_serde_serialize()
                     .derive_serde_deserialize()
@@ -4213,6 +4216,7 @@ pub fn generate_postgresql_types(
                     .make_pub()
                     .derive_debug()
                     .derive_clone()
+                    .derive_copy_if(derive_copy)
                     .derive_partial_eq()
                     .derive_eq_if(derive_eq)
                     .derive_partial_ord_if(derive_partial_ord)
@@ -4269,6 +4273,7 @@ pub fn generate_postgresql_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -4295,6 +4300,7 @@ pub fn generate_postgresql_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -4319,6 +4325,7 @@ pub fn generate_postgresql_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
