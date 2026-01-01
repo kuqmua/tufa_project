@@ -5787,23 +5787,16 @@ pub fn generate_postgresql_types(
                             }
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                            <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test()
-                            .map_or(
-                                None,
-                                |#element_snake_case| Some(
-                                    #element_snake_case
-                                    .into_iter()
-                                    .map(|current_element| #import_path::PostgresqlTypeGreaterThanTest {
-                                        variant: current_element.variant,
-                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(
-                                            Some(current_element.create.0)
-                                        )),
-                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(
-                                            Some(current_element.greater_than.0)
-                                        )),
-                                    })
-                                    .collect()
-                                )
+                            <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test().map(
+                                |#element_snake_case|
+                                #element_snake_case
+                                .into_iter()
+                                .map(|current_element| #import_path::PostgresqlTypeGreaterThanTest {
+                                    variant: current_element.variant,
+                                    create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.create.0))),
+                                    greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.greater_than.0))),
+                                })
+                                .collect()
                             )
                         },
                     },
