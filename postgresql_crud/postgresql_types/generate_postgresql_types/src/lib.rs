@@ -5820,37 +5820,37 @@ pub fn generate_postgresql_types(
                                     &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).expect("1e71f8c6-49a0-47cd-80e4-a4f92666af78")},
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30).expect("42b5d349-449f-499f-b456-f5670993a767")},//todo not sure about this values. maybe reuse
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).expect("8ccd5702-e11b-4b2f-bf6b-9245396412e3")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("4f4d7790-f760-4ea4-861e-e2b383585b1e")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2).expect("6be0d837-eb33-45c7-b062-8dfac94f7edf")},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30)?},//todo not sure about this values. maybe reuse
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2)?},
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::MAX},
-                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262_142, 12, 30).expect("3d6d30fc-20eb-42ba-8f1a-b67257f4eaeb")},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262_142, 12, 30)?},
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).expect("22bd692f-3ba1-42a9-a053-4cfb3892db7d"),
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("ae30636e-1432-430e-9ffc-a7c7767f5a99")
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31)?,
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0)?
                                     )},
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).expect("44c79b13-f4f2-4246-b6eb-7841024e8e3d"),
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("053b3611-6094-42c0-ad56-eb4c5218b925")
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31)?,
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1)?
                                     )},
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("f75ab479-3d69-41c4-8e0f-c3a02852466b"),
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("34db2475-c4ce-44d2-848b-84efadd2769f")
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1)?,
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0)?
                                     )},
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("9081aea2-a9d3-4aa5-bb88-c188269f86f2"),
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("00db92a8-f1bb-427c-abcb-62c259589840")
-                                    )},
-                                    &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                        sqlx::types::chrono::NaiveDate::MAX,
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("f8dc04ce-285a-4b40-86c9-12d20fe90073")
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1)?,
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1)?
                                     )},
                                     &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
                                         sqlx::types::chrono::NaiveDate::MAX,
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("ab27057c-f47b-4999-bbf7-d0543eabb82e")
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999)?
+                                    )},
+                                    &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
+                                        sqlx::types::chrono::NaiveDate::MAX,
+                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998)?
                                     )},
                                 )),
                                 PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |//todo diffrent test logic for autogenerated?
