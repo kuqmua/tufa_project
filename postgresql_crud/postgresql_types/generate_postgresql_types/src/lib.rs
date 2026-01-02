@@ -5659,7 +5659,12 @@ pub fn generate_postgresql_types(
                             Some({
                                 let mut #acc_snake_case = Vec::new();
                                 for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
-                                    let index = i.checked_add(1).expect("a6eeace9-fc74-48ad-af8c-673a01c3d0b4");
+                                    let index = match i.checked_add(1) {
+                                        Some(some_value) => some_value,
+                                        None => {
+                                            return None
+                                        },
+                                    };
                                     #acc_snake_case.push(
                                         #ident_where_upper_camel_case::DimensionOneEqual(
                                             where_filters::PostgresqlTypeWhereDimensionOneEqual {
