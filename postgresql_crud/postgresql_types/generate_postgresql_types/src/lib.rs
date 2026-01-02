@@ -5084,8 +5084,8 @@ pub fn generate_postgresql_types(
                     PostgresqlType::StdPrimitiveF64AsFloat8 => generate_typical_test_cases_vec_token_stream(&quote::quote! {std_primitive_f64_test_cases_vec}),
                     PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => empty_vec_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote! {
-                        #import_path::std_primitive_i64_test_cases_vec().into_iter().map(|#element_snake_case|
-                            #inner_type_standart_not_null_token_stream(#element_snake_case)
+                        #import_path::std_primitive_i64_test_cases_vec().into_iter().map(
+                            #inner_type_standart_not_null_token_stream
                         ).collect::<Vec<#inner_type_standart_not_null_token_stream>>()
                     },
                     PostgresqlType::StdPrimitiveBoolAsBool => generate_typical_test_cases_vec_token_stream(&quote::quote! {std_primitive_bool_test_cases_vec}),
