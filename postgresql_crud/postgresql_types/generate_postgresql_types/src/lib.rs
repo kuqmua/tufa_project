@@ -4706,18 +4706,16 @@ pub fn generate_postgresql_types(
                                 )
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_ident_origin_token_stream(&quote::quote! {
-                                match #value_snake_case.0.0 {
-                                    Some(some_value) => Some(
-                                        <
-                                            #ident_standart_not_null_upper_camel_case
-                                            as
-                                            #import_path::PostgresqlType
-                                        >::normalize(
-                                            #ident_standart_not_null_read_upper_camel_case(some_value)
-                                        ).0
-                                    ),
-                                    None => None
-                                }
+                                #value_snake_case.0.0.map(
+                                    |some_value|
+                                    <
+                                        #ident_standart_not_null_upper_camel_case
+                                        as
+                                        #import_path::PostgresqlType
+                                    >::normalize(
+                                        #ident_standart_not_null_read_upper_camel_case(some_value)
+                                    ).0
+                                )
                             }),
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
@@ -4749,16 +4747,15 @@ pub fn generate_postgresql_types(
                                 );
                                 let ident_array_dimension1_not_null_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_not_null_upper_camel_case);
                                 quote::quote! {
-                                    match #value_snake_case.0.0 {
-                                        Some(some_value) => Some(<
+                                    #value_snake_case.0.0.map(|some_value|
+                                        <
                                             #ident_array_dimension1_not_null_not_null_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
                                             #ident_array_dimension1_not_null_not_null_read_upper_camel_case(some_value),
-                                        ).0),
-                                        None => None,
-                                    }
+                                        ).0
+                                    )
                                 }
                             }),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => generate_ident_read_ident_origin_token_stream(&{
@@ -4771,16 +4768,16 @@ pub fn generate_postgresql_types(
                                 );
                                 let ident_array_dimension1_not_null_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_nullable_upper_camel_case);
                                 quote::quote! {
-                                    match #value_snake_case.0.0 {
-                                        Some(some_value) => Some(<
+                                    #value_snake_case.0.0.map(
+                                        |some_value|
+                                        <
                                             #ident_array_dimension1_not_null_nullable_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
                                             #ident_array_dimension1_not_null_nullable_read_upper_camel_case(some_value),
-                                        ).0),
-                                        None => None,
-                                    }
+                                        ).0
+                                    )
                                 }
                             }),
                         },
