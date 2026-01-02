@@ -4818,12 +4818,7 @@ pub fn generate_postgresql_types(
                                 } else {
                                     quote::quote!{some_value.0}
                                 };
-                                quote::quote! {
-                                    match #value_dot_zero_dot_zero_token_stream {
-                                        Some(some_value) => Some(#content_token_stream),
-                                        None => None
-                                    }
-                                }
+                                quote::quote! {#value_dot_zero_dot_zero_token_stream.map(|some_value| #content_token_stream)}
                             }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
@@ -4844,10 +4839,9 @@ pub fn generate_postgresql_types(
                                     quote::quote!{some_value.0}
                                 };
                                 quote::quote! {
-                                    #value_dot_zero_dot_zero_token_stream.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
-                                        Some(some_value) => Some(#content_token_stream),
-                                        None => None
-                                    }).collect()
+                                    #value_dot_zero_dot_zero_token_stream.into_iter().map(|#element_snake_case|
+                                        #element_snake_case.0.map(|some_value| #content_token_stream)
+                                    ).collect()
                                 }
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
@@ -4857,10 +4851,9 @@ pub fn generate_postgresql_types(
                                     quote::quote! {#element_snake_case.0}
                                 };
                                 quote::quote! {
-                                    match #value_dot_zero_dot_zero_token_stream {
-                                        Some(some_value) => Some(some_value.0.into_iter().map(|element|#content_token_stream).collect()),
-                                        None => None
-                                    }
+                                    #value_dot_zero_dot_zero_token_stream.map(|some_value|
+                                        some_value.0.into_iter().map(|element|#content_token_stream).collect()
+                                    )
                                 }
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
@@ -4870,12 +4863,9 @@ pub fn generate_postgresql_types(
                                     quote::quote!{some_value1.0}
                                 };
                                 quote::quote! {
-                                    match #value_dot_zero_dot_zero_token_stream {
-                                        Some(some_value0) => Some(some_value0.0.into_iter().map(|#element_snake_case|
-                                            #element_snake_case.0.map_or(None, |some_value1| Some(#content_token_stream))
-                                        ).collect()),
-                                        None => None
-                                    }
+                                    #value_dot_zero_dot_zero_token_stream.map(|some_value0| some_value0.0.into_iter().map(|#element_snake_case|
+                                        #element_snake_case.0.map(|some_value1| #content_token_stream)
+                                    ).collect())
                                 }
                             }
                         },
