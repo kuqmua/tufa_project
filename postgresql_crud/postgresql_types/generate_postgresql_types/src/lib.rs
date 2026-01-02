@@ -5216,14 +5216,21 @@ pub fn generate_postgresql_types(
                             CanBePrimaryKey::True => none_token_stream.clone(),
                             CanBePrimaryKey::False => {
                                 let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::False);
-                                let new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                                    quote::quote! {try_new(#element_snake_case).expect("941bd15c-a751-45e7-8266-f17df4ee00aa")}
-                                } else {
-                                    quote::quote! {new(#element_snake_case)}
+                                let new_or_try_new_token_stream = {
+                                    let self_as_postgresql_type_create_token_stream = quote::quote!{#self_as_postgresql_type_token_stream::Create};
+                                    if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                                        quote::quote! {
+                                            |#element_snake_case|#self_as_postgresql_type_create_token_stream::try_new(
+                                                #element_snake_case
+                                            ).expect("941bd15c-a751-45e7-8266-f17df4ee00aa")
+                                        }
+                                    } else {
+                                        quote::quote! {#self_as_postgresql_type_create_token_stream::#new_snake_case}
+                                    }
                                 };
                                 quote::quote! {Some(
-                                    #content_token_stream.into_iter().map(|#element_snake_case|
-                                        #self_as_postgresql_type_token_stream::Create::#new_or_try_new_token_stream
+                                    #content_token_stream.into_iter().map(
+                                        #new_or_try_new_token_stream
                                     ).collect()
                                 )}
                             }
