@@ -984,13 +984,13 @@ pub fn generate_postgresql_types(
             quote::quote! {
                 sqlx::postgres::types::PgRange {
                     start: match #match_content_token_stream.start {
-                        std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
-                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                        std::ops::Bound::Included(current_value) => std::ops::Bound::Included(#input_token_stream),
+                        std::ops::Bound::Excluded(current_value) => std::ops::Bound::Excluded(#input_token_stream),
                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                     },
                     end: match #match_content_token_stream.end {
-                        std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
-                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                        std::ops::Bound::Included(current_value) => std::ops::Bound::Included(#input_token_stream),
+                        std::ops::Bound::Excluded(current_value) => std::ops::Bound::Excluded(#input_token_stream),
                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                     },
                 }
@@ -2839,7 +2839,7 @@ pub fn generate_postgresql_types(
                                                 &value_snake_case,
                                                 &{
                                                     let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
-                                                    quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value)}
+                                                    quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(current_value)}
                                                 }
                                             )
                                         )
@@ -4831,7 +4831,7 @@ pub fn generate_postgresql_types(
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_pg_range_conversion_token_stream(&value_dot_zero_dot_zero_token_stream, &value_snake_case)
+                                    generate_pg_range_conversion_token_stream(&value_dot_zero_dot_zero_token_stream, &quote::quote!{current_value})
                                 } else {
                                     value_dot_zero_dot_zero_token_stream
                                 }
