@@ -5352,29 +5352,159 @@ pub fn generate_postgresql_types(
                     ),
                 }
             };
-            let read_only_ids_to_two_dimensional_vec_read_inner_token_stream = match &postgresql_type_pattern {
-                PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::True);
-                        quote::quote! {vec![{#content_token_stream}]}
-                    }
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                        let mut #acc_snake_case = Vec::new();
-                        for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case) {
-                            for element1 in element0 {
-                                #acc_snake_case.push(vec![Some(element1)]);
-                            }
-                        }
-                        #acc_snake_case.push(vec![None]);
-                        #acc_snake_case
-                    },
-                },
-                PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+            let read_only_ids_to_two_dimensional_vec_read_inner_token_stream = {
+                let generate_star_or_dot_clone_token_stream = |content_token_stream|match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsInt2 |
+                    PostgresqlType::StdPrimitiveI32AsInt4 |
+                    PostgresqlType::StdPrimitiveI64AsInt8 |
+                    PostgresqlType::StdPrimitiveF32AsFloat4 |
+                    PostgresqlType::StdPrimitiveF64AsFloat8 |
+                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                    PostgresqlType::StdPrimitiveBoolAsBool |
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
+                    PostgresqlType::SqlxTypesTimeTimeAsTime |
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{*#content_token_stream},
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                    PostgresqlType::StdStringStringAsText => quote::quote!{#content_token_stream.clone()}
+                };
+                match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = generate_standart_not_null_test_case_handle_token_stream(&IsNeedToUseInto::True);
+                            quote::quote! {vec![{#content_token_stream}]}
+                        }
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            let mut #acc_snake_case = Vec::new();
+                            for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case) {
+                                for element1 in element0 {
+                                    #acc_snake_case.push(vec![Some(element1)]);
+                                }
+                            }
+                            #acc_snake_case.push(vec![None]);
+                            #acc_snake_case
+                        },
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                let element1_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element1});
+                                quote::quote! {
+                                    let mut #acc_snake_case = Vec::new();
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((vec![
+                                                        vec![#element1_token_stream]],
+                                                        vec![vec![#element1_token_stream, #element1_token_stream]
+                                                    ]));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                    let has_len_greater_than_one = {
+                                        let mut has_len_greater_than_one = false;
+                                        for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if #element_snake_case.len() > 1 {
+                                                has_len_greater_than_one = true;
+                                                break;
+                                            }
+                                        }
+                                        has_len_greater_than_one
+                                    };
+                                    for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
+                                        #acc_snake_case.push(vec![#element_snake_case]);
+                                    }
+                                    if let Some(some_value) = option_additional {
+                                        if has_len_greater_than_one {
+                                            #acc_snake_case.push(some_value.0);
+                                        }
+                                        if !has_len_greater_than_one {
+                                            #acc_snake_case.push(some_value.1);
+                                        }
+                                    }
+                                    #acc_snake_case
+                                }
+                            }
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let element1_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element1});
+                                quote::quote! {
+                                    let mut #acc_snake_case = Vec::new();
+                                    let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
+                                    let option_additional = {
+                                        let mut option_additional = None;
+                                        for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if option_additional.is_some() {
+                                                break;
+                                            }
+                                            for element1 in element0 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((
+                                                        vec![vec![#element1_token_stream]],
+                                                        vec![vec![#element1_token_stream, #element1_token_stream]]
+                                                    ));
+                                                }
+                                                else {
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        option_additional
+                                    };
+                                    let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
+                                    #acc_snake_case.push({
+                                        let mut current_acc = Vec::new();
+                                        for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
+                                            for element1 in element0 {
+                                                current_acc.push(element1);
+                                            }
+                                        }
+                                        vec![current_acc]
+                                    });
+                                    if let Some(some_value) = option_additional {
+                                        if has_len_greater_than_one {
+                                            #acc_snake_case.push(some_value.0);
+                                        }
+                                        if !has_len_greater_than_one {
+                                            #acc_snake_case.push(some_value.1);
+                                        }
+                                    }
+                                    #acc_snake_case
+                                }
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let content_token_stream = match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_array_not_null_as_postgresql_type_test_cases_token_stream,
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream,
+                            };
+                            let element2_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element2});
                             quote::quote! {
                                 let mut #acc_snake_case = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
+                                let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                 let option_additional = {
                                     let mut option_additional = None;
                                     for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
@@ -5382,14 +5512,19 @@ pub fn generate_postgresql_types(
                                             break;
                                         }
                                         for element1 in element0 {
-                                            if option_additional.is_none() {
-                                                option_additional = Some((vec![
-                                                    vec![element1 #maybe_dot_clone_token_stream]],
-                                                    vec![vec![element1 #maybe_dot_clone_token_stream, element1 #maybe_dot_clone_token_stream]
-                                                ]));
-                                            }
-                                            else {
+                                            if option_additional.is_some() {
                                                 break;
+                                            }
+                                            for element2 in element1 {
+                                                if option_additional.is_none() {
+                                                    option_additional = Some((
+                                                        vec![Some(vec![#element2_token_stream])],
+                                                        vec![Some(vec![#element2_token_stream, #element2_token_stream])]
+                                                    ));
+                                                }
+                                                else {
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -5397,59 +5532,28 @@ pub fn generate_postgresql_types(
                                 };
                                 let has_len_greater_than_one = {
                                     let mut has_len_greater_than_one = false;
-                                    for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                        if #element_snake_case.len() > 1 {
-                                            has_len_greater_than_one = true;
-                                            break;
-                                        }
-                                    }
-                                    has_len_greater_than_one
-                                };
-                                for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
-                                    #acc_snake_case.push(vec![#element_snake_case]);
-                                }
-                                if let Some(some_value) = option_additional {
-                                    if has_len_greater_than_one {
-                                        #acc_snake_case.push(some_value.0);
-                                    }
-                                    if !has_len_greater_than_one {
-                                        #acc_snake_case.push(some_value.1);
-                                    }
-                                }
-                                #acc_snake_case
-                            }
-                        }
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote! {
-                                let mut #acc_snake_case = Vec::new();
-                                let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
-                                let option_additional = {
-                                    let mut option_additional = None;
                                     for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                        if option_additional.is_some() {
-                                            break;
-                                        }
                                         for element1 in element0 {
-                                            if option_additional.is_none() {
-                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
-                                            }
-                                            else {
+                                            if element1.len() > 1 {
+                                                has_len_greater_than_one = true;
                                                 break;
                                             }
                                         }
                                     }
-                                    option_additional
+                                    has_len_greater_than_one
                                 };
-                                let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
-                                #acc_snake_case.push({
+                                #acc_snake_case.push(vec![Some({
                                     let mut current_acc = Vec::new();
                                     for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                         for element1 in element0 {
-                                            current_acc.push(element1);
+                                            for element2 in element1 {
+                                                current_acc.push(element2);
+                                            }
                                         }
                                     }
-                                    vec![current_acc]
-                                });
+                                    current_acc
+                                })]);
+                                #acc_snake_case.push(vec![None]);
                                 if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {
                                         #acc_snake_case.push(some_value.0);
@@ -5462,75 +5566,7 @@ pub fn generate_postgresql_types(
                             }
                         }
                     },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                        let content_token_stream = match &dimension1_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_array_not_null_as_postgresql_type_test_cases_token_stream,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_array_nullable_as_postgresql_type_test_cases_token_stream,
-                        };
-                        quote::quote! {
-                            let mut #acc_snake_case = Vec::new();
-                            let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
-                            let option_additional = {
-                                let mut option_additional = None;
-                                for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                    if option_additional.is_some() {
-                                        break;
-                                    }
-                                    for element1 in element0 {
-                                        if option_additional.is_some() {
-                                            break;
-                                        }
-                                        for element2 in element1 {
-                                            if option_additional.is_none() {
-                                                option_additional = Some((
-                                                    vec![Some(vec![element2.clone()])],
-                                                    vec![Some(vec![element2.clone(), element2.clone()])]
-                                                ));
-                                            }
-                                            else {
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                option_additional
-                            };
-                            let has_len_greater_than_one = {
-                                let mut has_len_greater_than_one = false;
-                                for element0 in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                    for element1 in element0 {
-                                        if element1.len() > 1 {
-                                            has_len_greater_than_one = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                                has_len_greater_than_one
-                            };
-                            #acc_snake_case.push(vec![Some({
-                                let mut current_acc = Vec::new();
-                                for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
-                                    for element1 in element0 {
-                                        for element2 in element1 {
-                                            current_acc.push(element2);
-                                        }
-                                    }
-                                }
-                                current_acc
-                            })]);
-                            #acc_snake_case.push(vec![None]);
-                            if let Some(some_value) = option_additional {
-                                if has_len_greater_than_one {
-                                    #acc_snake_case.push(some_value.0);
-                                }
-                                if !has_len_greater_than_one {
-                                    #acc_snake_case.push(some_value.1);
-                                }
-                            }
-                            #acc_snake_case
-                        }
-                    }
-                },
+                }
             };
             let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
