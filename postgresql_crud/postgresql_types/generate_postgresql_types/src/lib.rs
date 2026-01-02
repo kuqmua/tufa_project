@@ -1591,6 +1591,10 @@ pub fn generate_postgresql_types(
                 }
             };
             let serde_deserialize_derive_or_impl = {
+                enum ShouldAddDeLifetime {
+                    True,
+                    False
+                }
                 let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                 let tuple_struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                 let struct_visitor_token_stream = quote::quote! {
@@ -2108,7 +2112,7 @@ pub fn generate_postgresql_types(
                                 let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                                 quote::quote! {
                                     let #field_index_name_token_stream = match #field_index_name_token_stream {
-                                        Some(#field_index_name_token_stream) => #field_index_name_token_stream,
+                                        Some(some_value) => some_value,
                                         None => serde::__private228::de::missing_field(#field_name_double_quotes_token_stream)?,
                                     };
                                 }
@@ -2204,10 +2208,6 @@ pub fn generate_postgresql_types(
                         generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                     )
                 };
-                enum ShouldAddDeLifetime {
-                    True,
-                    False
-                }
                 let generate_impl_serde_de_visitor_for_tokens_token_stream = |
                     should_add_de_lifetime: ShouldAddDeLifetime,
                     current_ident_token_stream: &dyn quote::ToTokens,
