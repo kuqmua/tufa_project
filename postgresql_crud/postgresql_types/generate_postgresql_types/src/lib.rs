@@ -1413,7 +1413,7 @@ pub fn generate_postgresql_types(
                         quote::quote! {#(#value)*}
                     };
                     quote::quote! {
-                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, false as usize #parameter_number_token_stream)?;
+                        let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, usize::from(false) #parameter_number_token_stream)?;
                     }
                 };
                 let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(&parameter_number_two);
@@ -5713,7 +5713,11 @@ pub fn generate_postgresql_types(
                         &quote::quote! {try_new(#greater_than_token_stream).expect("c369e6ea-4420-4087-b09a-88f0bbfcb2fe")},
                     )
                 };
-                let generate_greater_than_test_new_new_vec_token_stream = |less_token_stream: &dyn quote::ToTokens, less_with_more_token_stream: &dyn quote::ToTokens, zero_token_stream: &dyn quote::ToTokens, one_token_stream: &dyn quote::ToTokens, more_token_stream: &dyn quote::ToTokens, more_with_less_token_stream: &dyn quote::ToTokens| {
+                let generate_greater_than_test_new_new_vec_token_stream = |
+                    less_token_stream: &dyn quote::ToTokens,
+                    less_with_more_token_stream: &dyn quote::ToTokens,
+                    zero_token_stream: &dyn quote::ToTokens,
+                    one_token_stream: &dyn quote::ToTokens, more_token_stream: &dyn quote::ToTokens, more_with_less_token_stream: &dyn quote::ToTokens| {
                     let greater_than_less_token_stream = generate_greater_than_test_new_new_token_stream(&greater_than, &less_with_more_token_stream, &less_token_stream);
                     let greater_than_zero_token_stream = generate_greater_than_test_new_new_token_stream(&greater_than, &one_token_stream, &zero_token_stream);
                     let greater_than_more_token_stream = generate_greater_than_test_new_new_token_stream(&greater_than, &more_token_stream, &more_with_less_token_stream);
@@ -5735,7 +5739,14 @@ pub fn generate_postgresql_types(
                         #equal_not_greater_than_more_token_stream
                     }
                 };
-                let generate_greater_than_test_try_new_try_new_vec_token_stream = |less_token_stream: &dyn quote::ToTokens, less_with_more_token_stream: &dyn quote::ToTokens, zero_token_stream: &dyn quote::ToTokens, one_token_stream: &dyn quote::ToTokens, more_token_stream: &dyn quote::ToTokens, more_with_less_token_stream: &dyn quote::ToTokens| {
+                let generate_greater_than_test_try_new_try_new_vec_token_stream = |
+                    less_token_stream: &dyn quote::ToTokens,
+                    less_with_more_token_stream: &dyn quote::ToTokens,
+                    zero_token_stream: &dyn quote::ToTokens,
+                    one_token_stream: &dyn quote::ToTokens,
+                    more_token_stream: &dyn quote::ToTokens,
+                    more_with_less_token_stream: &dyn quote::ToTokens
+                | {
                     let greater_than_less_token_stream = generate_greater_than_test_try_new_try_new_token_stream(&greater_than, &less_with_more_token_stream, &less_token_stream);
                     let greater_than_zero_token_stream = generate_greater_than_test_try_new_try_new_token_stream(&greater_than, &one_token_stream, &zero_token_stream);
                     let greater_than_more_token_stream = generate_greater_than_test_try_new_try_new_token_stream(&greater_than, &more_token_stream, &more_with_less_token_stream);
