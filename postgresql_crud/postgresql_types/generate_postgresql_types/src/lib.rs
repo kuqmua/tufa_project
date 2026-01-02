@@ -2204,9 +2204,30 @@ pub fn generate_postgresql_types(
                         generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                     )
                 };
-                let generate_impl_serde_de_visitor_for_tokens_token_stream = |current_ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
+                enum ShouldAddDeLifetime {
+                    True,
+                    False
+                }
+                let generate_impl_serde_de_visitor_for_tokens_token_stream = |
+                    should_add_de_lifetime: ShouldAddDeLifetime,
+                    current_ident_token_stream: &dyn quote::ToTokens,
+                    content_token_stream: &dyn quote::ToTokens
+                | {
+                    let (
+                        maybe_impl_lifetime_token_stream,
+                        maybe_visitor_lifetime_token_stream
+                    ) = match should_add_de_lifetime{
+                        ShouldAddDeLifetime::True => (
+                            quote::quote!{<'de>},
+                            quote::quote!{<'de>},
+                        ),
+                        ShouldAddDeLifetime::False => (
+                            proc_macro2::TokenStream::new(),
+                            quote::quote!{<'_>},
+                        )
+                    };
                     quote::quote! {
-                        impl<'de> _serde::de::Visitor<'de> for #current_ident_token_stream {
+                        impl #maybe_impl_lifetime_token_stream _serde::de::Visitor #maybe_visitor_lifetime_token_stream for #current_ident_token_stream {
                             #content_token_stream
                         }
                     }
@@ -2230,6 +2251,7 @@ pub fn generate_postgresql_types(
                 ) = {
                     let generate_impl_serde_de_visitor_for_visitor_token_stream = |zero_token_stream: &dyn quote::ToTokens, first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
                         generate_impl_serde_de_visitor_for_tokens_token_stream(
+                            ShouldAddDeLifetime::True,
                             &quote::quote! {__Visitor<'de>},
                             &quote::quote! {
                                 type Value = #ident_standart_not_null_origin_upper_camel_case;
@@ -2272,7 +2294,11 @@ pub fn generate_postgresql_types(
                     impl_serde_de_visitor_for_field_visitor_token_stream_f702a411_b02b_4c90_aa7f_962a698612e7,
                 ) = {
                     let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
+                        let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
+                            ShouldAddDeLifetime::False,
+                            &field_visitor_token_stream,
+                            &content_token_stream
+                        );
                         quote::quote! {
                             #[doc(hidden)]
                             struct #field_visitor_token_stream;
