@@ -5659,12 +5659,7 @@ pub fn generate_postgresql_types(
                             Some({
                                 let mut #acc_snake_case = Vec::new();
                                 for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
-                                    let index = match i.checked_add(1) {
-                                        Some(some_value) => some_value,
-                                        None => {
-                                            return None
-                                        },
-                                    };
+                                    let index = i.checked_add(1)?;
                                     #acc_snake_case.push(
                                         #ident_where_upper_camel_case::DimensionOneEqual(
                                             where_filters::PostgresqlTypeWhereDimensionOneEqual {
@@ -5809,12 +5804,12 @@ pub fn generate_postgresql_types(
                                     &quote::quote!{2.0 - 1.0}
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("dbdd9f7a-85d8-424b-9124-1e93a559436b")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("d81d1eae-747f-416f-aa9d-288212b4ae73")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("be06a120-2bbf-445c-a242-1aaffa121af3")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("30d2c08a-82e2-4a5b-8d6b-b01bd58a00bd")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("bf537b26-f99c-4f1e-a7f5-df224bdfb4fc")},
-                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("e7a13c77-47ba-4fe2-a08d-d257d1dbd2b8")},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999)?},
+                                    &quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998)?},
                                 )),
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_some_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
                                     &quote::quote!{sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("d267f56d-c59b-4476-b7e4-1747aa9b4952")},

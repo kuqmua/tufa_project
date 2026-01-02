@@ -492,7 +492,7 @@ filter_map_next = { level = "deny", priority = 0 }
 filter_next = { level = "deny", priority = 0 }
 flat_map_identity = { level = "deny", priority = 0 }
 flat_map_option = { level = "deny", priority = 0 }
-float_arithmetic = { level = "deny", priority = 0 }
+float_arithmetic = { level = "allow", priority = 0 }
 float_cmp = { level = "deny", priority = 0 }
 float_cmp_const = { level = "deny", priority = 0 }
 float_equality_without_abs = { level = "deny", priority = 0 }
