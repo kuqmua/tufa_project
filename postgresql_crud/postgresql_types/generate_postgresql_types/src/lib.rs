@@ -1076,6 +1076,7 @@ pub fn generate_postgresql_types(
         let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
         let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
         let none_token_stream = quote::quote!{None};
+        let dot_clone_token_stream = quote::quote!{.clone()};
 
         let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_token_stream(&import_path, &content_token_stream);
 
@@ -1711,11 +1712,8 @@ pub fn generate_postgresql_types(
                         let field_index_token_stream = generate_field_index_token_stream(current_index);
                         let index_usize_token_stream = format!("{current_index}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
                         quote::quote! {
-                            let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#current_element>(&mut __seq)? {
-                                Some(__value) => __value,
-                                None => {
-                                    return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
-                                }
+                            let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#current_element>(&mut __seq)? else {
+                                return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
                             };
                         }
                     });
@@ -4515,7 +4513,7 @@ pub fn generate_postgresql_types(
                 },
                 &{
                     let content_token_stream = match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_string()},
+                        PostgresqlTypePattern::Standart => quote::quote! {#column_snake_case.to_owned()},
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
                                 let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
@@ -5469,11 +5467,45 @@ pub fn generate_postgresql_types(
                     }
                 },
             };
+            let maybe_dot_clone_token_stream: &dyn quote::ToTokens = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
+                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            {
+                match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsInt2 |
+                    PostgresqlType::StdPrimitiveI32AsInt4 |
+                    PostgresqlType::StdPrimitiveI64AsInt8 |
+                    PostgresqlType::StdPrimitiveF32AsFloat4 |
+                    PostgresqlType::StdPrimitiveF64AsFloat8 |
+                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                    PostgresqlType::StdPrimitiveBoolAsBool |
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime | PostgresqlType::SqlxTypesTimeTimeAsTime |
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2::TokenStream::new(),
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                    PostgresqlType::StdStringStringAsText => &dot_clone_token_stream,
+                }
+            }
+            else {
+                &dot_clone_token_stream
+            };
             let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
             let update_to_read_only_ids_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
                 quote::quote! {
-                    #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0.clone()))//todo its not correct. must be only for primary key but it for all types what van be primary key
+                    #ident_read_only_ids_upper_camel_case(#ident_read_upper_camel_case(#value_snake_case.0 #maybe_dot_clone_token_stream))//todo its not correct. must be only for primary key but it for all types what van be primary key
                 }
             } else {
                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&none_token_stream);
@@ -5482,10 +5514,10 @@ pub fn generate_postgresql_types(
                 }
             };
             let read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = {
-            //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
+                //todo that is not correct for array of generated by postgresql primary keys but maybe just need to remove this variants and thats it?
                 let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&{
                     let content_token_stream: &dyn quote::ToTokens = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
-                        &quote::quote! {#value_snake_case.0.clone()}
+                        &quote::quote! {#value_snake_case.0 #maybe_dot_clone_token_stream}
                     } else {
                         &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                     };
