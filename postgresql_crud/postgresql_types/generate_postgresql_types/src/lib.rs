@@ -1077,6 +1077,40 @@ pub fn generate_postgresql_types(
         let import_path_non_primary_key_postgresql_type_read_only_ids_token_stream = quote::quote! {#import_path::NonPrimaryKeyPostgresqlTypeReadOnlyIds};
         let none_token_stream = quote::quote!{None};
         let dot_clone_token_stream = quote::quote!{.clone()};
+        let maybe_dot_clone_token_stream: &dyn quote::ToTokens = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
+            let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+        {
+            match &postgresql_type {
+                PostgresqlType::StdPrimitiveI16AsInt2 |
+                PostgresqlType::StdPrimitiveI32AsInt4 |
+                PostgresqlType::StdPrimitiveI64AsInt8 |
+                PostgresqlType::StdPrimitiveF32AsFloat4 |
+                PostgresqlType::StdPrimitiveF64AsFloat8 |
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                PostgresqlType::StdPrimitiveBoolAsBool |
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime | PostgresqlType::SqlxTypesTimeTimeAsTime |
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2::TokenStream::new(),
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                PostgresqlType::StdStringStringAsText => &dot_clone_token_stream,
+            }
+        }
+        else {
+            &dot_clone_token_stream
+        };
 
         let generate_import_path_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| postgresql_crud_macros_common::generate_value_initialization_token_stream(&import_path, &content_token_stream);
 
@@ -5264,7 +5298,7 @@ pub fn generate_postgresql_types(
                                     };
                                     let generate_vec_value_clone_zero_into_number_token_stream = |value: usize| {
                                         let number_token_stream = value.to_string().parse::<proc_macro2::TokenStream>().expect("50c87202-4038-4b27-85bd-c0593552bb89");
-                                        quote::quote! {vec![some_value.clone().0.into(); #number_token_stream]}
+                                        quote::quote! {vec![some_value #maybe_dot_clone_token_stream.0.into(); #number_token_stream]}
                                     };
                                     (
                                         generate_new_or_try_new_token_stream(&quote::quote! {
@@ -5321,7 +5355,10 @@ pub fn generate_postgresql_types(
                                         }
                                         for element1 in element0 {
                                             if option_additional.is_none() {
-                                                option_additional = Some((vec![vec![element1.clone()]], vec![vec![element1.clone(), element1.clone()]]));
+                                                option_additional = Some((vec![
+                                                    vec![element1 #maybe_dot_clone_token_stream]],
+                                                    vec![vec![element1 #maybe_dot_clone_token_stream, element1 #maybe_dot_clone_token_stream]
+                                                ]));
                                             }
                                             else {
                                                 break;
@@ -5466,40 +5503,6 @@ pub fn generate_postgresql_types(
                         }
                     }
                 },
-            };
-            let maybe_dot_clone_token_stream: &dyn quote::ToTokens = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
-                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
-            {
-                match &postgresql_type {
-                    PostgresqlType::StdPrimitiveI16AsInt2 |
-                    PostgresqlType::StdPrimitiveI32AsInt4 |
-                    PostgresqlType::StdPrimitiveI64AsInt8 |
-                    PostgresqlType::StdPrimitiveF32AsFloat4 |
-                    PostgresqlType::StdPrimitiveF64AsFloat8 |
-                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
-                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
-                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
-                    PostgresqlType::StdPrimitiveBoolAsBool |
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime | PostgresqlType::SqlxTypesTimeTimeAsTime |
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
-                    PostgresqlType::StdStringStringAsText => &dot_clone_token_stream,
-                }
-            }
-            else {
-                &dot_clone_token_stream
             };
             let read_inner_into_read_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read);
             let read_inner_into_update_with_new_or_try_new_unwraped_token_stream = generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update);
