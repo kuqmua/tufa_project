@@ -3396,13 +3396,8 @@ pub fn generate_postgresql_types(
                         match_content_token_stream: &dyn quote::ToTokens,
                         some_content_token_stream: &dyn quote::ToTokens,
                         some_value_token_stream: &dyn quote::ToTokens,
-                    | {
-                        quote::quote! {
-                            match #match_content_token_stream {
-                                Some(#some_value_token_stream) => Some(#some_value_token_stream.0#some_content_token_stream),
-                                None => None
-                            }
-                        }
+                    | quote::quote! {
+                        #match_content_token_stream.map(|#some_value_token_stream|#some_value_token_stream.0#some_content_token_stream)
                     };
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
@@ -5279,7 +5274,7 @@ pub fn generate_postgresql_types(
                                 };
                                 quote::quote! {
                                     #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                    if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).get(0) {
+                                    if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).first() {
                                         #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#second_token_stream);
                                         #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#third_token_stream);
                                     }
