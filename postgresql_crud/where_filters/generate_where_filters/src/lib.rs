@@ -114,7 +114,7 @@ pub fn generate_where_filters(
         |format_handle_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                    Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case)),
+                    Ok(ok_value) => Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), #column_snake_case, #increment_snake_case)),
                     Err(#error_snake_case) => Err(#error_snake_case),
                 }
             }
@@ -234,7 +234,7 @@ pub fn generate_where_filters(
         |ident_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
                 let #ident_token_stream = match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_snake_case) => {
                         return Err(#error_snake_case);
                     },
@@ -262,8 +262,8 @@ pub fn generate_where_filters(
     let pub_value_between_t_token_stream = quote::quote! {pub #value_between_t_token_stream};
     let query_self_value_query_bind_token_stream = quote::quote! {
         match #self_snake_case.#value_snake_case.query_bind(#query_snake_case) {
-            Ok(#value_snake_case) => {
-                #query_snake_case = #value_snake_case;
+            Ok(ok_value) => {
+                #query_snake_case = ok_value;
             },
             Err(#error_snake_case) => {
                 return Err(#error_snake_case);
@@ -293,7 +293,7 @@ pub fn generate_where_filters(
          function_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
                 let #ident_token_stream = match self.#field_token_stream.#function_token_stream(#increment_snake_case, #column_snake_case, is_need_to_add_logical_operator) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_snake_case) => {
                         return Err(#error_snake_case);
                     }
@@ -308,8 +308,8 @@ pub fn generate_where_filters(
         quote::quote! {#dimensions_default_initialization_token_stream,};
     let query_self_dimensions_query_bind_query_token_stream = quote::quote! {
         match #self_snake_case.#dimensions_snake_case.query_bind(#query_snake_case) {
-            Ok(#value_snake_case) => {
-                #query_snake_case = #value_snake_case;
+            Ok(ok_value) => {
+                #query_snake_case = ok_value;
             }
             Err(#error_snake_case) => {
                 return Err(#error_snake_case);
@@ -531,14 +531,14 @@ pub fn generate_where_filters(
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
-                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${value},"}, &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
+                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${ok_value},"}, &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let #value_snake_case = {
                                     let mut #acc_snake_case = String::default();
                                     for _ in #self_snake_case.#value_snake_case.to_vec() {
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                            Ok(#value_snake_case) => {
+                                            Ok(ok_value) => {
                                                 #if_write_is_err_token_stream
                                             },
                                             Err(#error_snake_case) => {
@@ -927,8 +927,8 @@ pub fn generate_where_filters(
                             },
                             quote::quote! {
                                 match #self_snake_case.#dimensions_snake_case.clone().query_bind(#query_snake_case) {
-                                    Ok(#value_snake_case) => {
-                                        #query_snake_case = #value_snake_case;
+                                    Ok(ok_value) => {
+                                        #query_snake_case = ok_value;
                                     },
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -1385,8 +1385,8 @@ pub fn generate_where_filters(
                     quote::quote! {
                         #maybe_dimensions_query_bind_content_token_stream
                         match #self_snake_case.#value_snake_case.query_bind_one_by_one(#query_snake_case) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
+                            Ok(ok_value) => {
+                                #query_snake_case = ok_value;
                             }
                             Err(#error_snake_case) => {
                                 return Err(#error_snake_case);

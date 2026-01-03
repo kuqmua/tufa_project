@@ -1084,7 +1084,7 @@ pub fn generate_postgresql_json_object_type(
                             #column_name_and_maybe_field_getter_for_error_message_field_ident_token_stream,
                             false,
                         ) {
-                            Ok(#value_snake_case) => #value_snake_case,
+                            Ok(ok_value) => ok_value,
                             Err(#error_snake_case) => {
                                 return Err(#error_snake_case);
                             }
@@ -1250,7 +1250,7 @@ pub fn generate_postgresql_json_object_type(
                                             None => &#default_but_option_is_always_some_call_token_stream,
                                         };
                                         match #value_snake_case.#select_query_part_postgresql_type_snake_case(#column_snake_case) {
-                                            Ok(#value_snake_case) => Ok(format!("case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({value}) end")),
+                                            Ok(ok_value) => Ok(format!("case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({ok_value}) end")),
                                             Err(#error_snake_case) => Err(#error_snake_case)
                                         }
                                     }
@@ -1281,15 +1281,15 @@ pub fn generate_postgresql_json_object_type(
                                     }
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({value}) end");
+                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({ok_value}) end");
                                     let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(&ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream);
                                     quote::quote! {
                                         let #value_snake_case = match &self.0 {
-                                            Some(#value_snake_case) => #value_snake_case,
+                                            Some(some_value) => some_value,
                                             None => &#default_but_option_is_always_some_call_token_stream,
                                         };
                                         match #value_snake_case.#select_query_part_postgresql_type_snake_case(column) {
-                                            Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                                            Ok(ok_value) => Ok(format!(#format_handle_token_stream)),
                                             Err(#error_snake_case) => Err(#error_snake_case)
                                         }
                                     }
@@ -1714,7 +1714,7 @@ pub fn generate_postgresql_json_object_type(
                                                 &format!("{elem}->'{field}'"),
                                                 false
                                             ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Ok(ok_value) => ok_value,
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
                                                 }
@@ -3324,11 +3324,11 @@ pub fn generate_postgresql_json_object_type(
                                         &return_err_query_part_error_named_write_into_buffer_token_stream
                                     );
                                     let if_write_is_err_0_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                                        &quote::quote!{#acc_snake_case, "${value},"},
+                                        &quote::quote!{#acc_snake_case, "${ok_value},"},
                                         &return_err_query_part_error_named_write_into_buffer_token_stream
                                     );
                                     let if_write_is_err_1_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                                        &quote::quote!{#acc_snake_case, "${value},"},
+                                        &quote::quote!{#acc_snake_case, "${ok_value},"},
                                         &return_err_query_part_error_named_write_into_buffer_token_stream
                                     );
                                     quote::quote!{
@@ -3374,7 +3374,7 @@ pub fn generate_postgresql_json_object_type(
                                                 let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                 for _ in self.#update_snake_case.to_vec() {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                                        Ok(#value_snake_case) => {
+                                                        Ok(ok_value) => {
                                                             #if_write_is_err_0_token_stream
                                                         },
                                                         Err(#error_snake_case) => {
@@ -3384,7 +3384,7 @@ pub fn generate_postgresql_json_object_type(
                                                 }
                                                 for #element_snake_case in &self.#create_snake_case {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                                        Ok(#value_snake_case) => {
+                                                        Ok(ok_value) => {
                                                             #if_write_is_err_1_token_stream
                                                         },
                                                         Err(#error_snake_case) => {
@@ -3407,7 +3407,7 @@ pub fn generate_postgresql_json_object_type(
                                                 column_name_and_maybe_field_getter,
                                                 #increment_snake_case
                                             ) {
-                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Ok(ok_value) => ok_value,
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
                                                 }
@@ -3568,8 +3568,8 @@ pub fn generate_postgresql_json_object_type(
                 let postgresql_type_or_postgresql_json_type_postgresql_json_type = postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType;
                 let generate_update_query_part_standart_nullable_token_stream = |postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType|{
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_type_or_postgresql_json_type {
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{value_snake_case}}})"),
-                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => format!("${{{value_snake_case}}}"),
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{ok_value}})"),
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => "${ok_value}".to_owned(),
                     });
                     quote::quote! {
                         match &#value_snake_case.0 {
@@ -3581,7 +3581,7 @@ pub fn generate_postgresql_json_object_type(
                                 increment,
                             ),
                             None => match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                                Ok(ok_value) => Ok(format!(#format_handle_token_stream)),
                                 Err(#error_snake_case) => Err(#error_snake_case),
                             }
                         }
@@ -3589,7 +3589,7 @@ pub fn generate_postgresql_json_object_type(
                 };
                 let generate_update_delete_create_array_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
                     let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                        &quote::quote!{#acc_snake_case, "{value}"},
+                        &quote::quote!{#acc_snake_case, "{ok_value}"},
                         &return_err_query_part_error_named_write_into_buffer_token_stream
                     );
                     let if_write_is_err_curly_braces_0_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
@@ -3609,7 +3609,7 @@ pub fn generate_postgresql_json_object_type(
                                 for #element_snake_case in #value_snake_case.#update_snake_case.to_vec() {
                                     let ident_with_id_handle = {
                                         let id_increment = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
-                                            Ok(#value_snake_case) => #value_snake_case,
+                                            Ok(ok_value) => ok_value,
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
                                             }
@@ -3621,12 +3621,12 @@ pub fn generate_postgresql_json_object_type(
                                             "",
                                             #increment_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => Ok(format!("when elem->>'id' = ${id_increment} then {value} ")),
+                                            Ok(ok_value) => Ok(format!("when elem->>'id' = ${id_increment} then {ok_value} ")),
                                             Err(#error_snake_case) => Err(#error_snake_case)
                                         }
                                     };
                                     match ident_with_id_handle {
-                                        Ok(#value_snake_case) => {
+                                        Ok(ok_value) => {
                                             #if_write_is_err_token_stream
                                         }
                                         Err(#error_snake_case) => {
@@ -3642,7 +3642,7 @@ pub fn generate_postgresql_json_object_type(
                             let mut #acc_snake_case = #std_string_string_token_stream::default();
                             for _ in &#value_snake_case.#delete_snake_case {
                                 let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
-                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Ok(ok_value) => ok_value,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
                                     }
@@ -3656,7 +3656,7 @@ pub fn generate_postgresql_json_object_type(
                             let mut #acc_snake_case = #std_string_string_token_stream::default();
                             for _ in &#value_snake_case.#create_snake_case {
                                 let #increment_snake_case = match #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::increment_checked_add_one(#increment_snake_case) {
-                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Ok(ok_value) => ok_value,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
                                     }
@@ -3706,11 +3706,11 @@ pub fn generate_postgresql_json_object_type(
                                     },
                                     &format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}"),
                                 ) {
-                                    Ok(#value_snake_case) => Ok(
+                                    Ok(ok_value) => Ok(
                                         if is_postgresql_type {
-                                            #value_snake_case
+                                            ok_value
                                         } else {
-                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{value}))")
+                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{ok_value}))")
                                         }
                                     ),
                                     Err(#error_snake_case) => Err(#error_snake_case)
@@ -3733,8 +3733,8 @@ pub fn generate_postgresql_json_object_type(
                                         column_name_and_maybe_field_getter_for_error_message,
                                         true
                                     ) {
-                                        Ok(#value_snake_case) => Ok(
-                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({value}) end))")
+                                        Ok(ok_value) => Ok(
+                                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({ok_value}) end))")
                                         ),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
@@ -3770,7 +3770,7 @@ pub fn generate_postgresql_json_object_type(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                    &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({value}) end"
+                                    &"case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({ok_value}) end"
                                 );
                                 let default_but_option_is_always_some_call_token_stream = generate_default_but_option_is_always_some_call_token_stream(
                                     &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
@@ -3787,7 +3787,7 @@ pub fn generate_postgresql_json_object_type(
                                         column_name_and_maybe_field_getter_for_error_message,
                                         true
                                     ) {
-                                        Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                                        Ok(ok_value) => Ok(format!(#format_handle_token_stream)),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 }
@@ -3820,7 +3820,7 @@ pub fn generate_postgresql_json_object_type(
                                                 #acc_snake_case,
                                                 #format_handle_token_stream,
                                                 match #field_type_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(#content_token_stream) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
+                                                    Ok(ok_value) => ok_value,
                                                     Err(#error_snake_case) => {
                                                         return Err(#error_snake_case);
                                                     }
@@ -3855,11 +3855,11 @@ pub fn generate_postgresql_json_object_type(
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_token_stream,
                             };
                             let case_null_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
-                                &format!("jsonb_build_object('value',case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{value}} end)")
+                                &format!("jsonb_build_object('value',case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}})='null' then 'null'::jsonb else {{ok_value}} end)")
                             );
                             quote::quote! {
                                 match #content_token_stream::#select_only_ids_query_part_snake_case(#column_name_and_maybe_field_getter_snake_case) {
-                                    Ok(#value_snake_case) => Ok(format!(#case_null_format_handle_token_stream)),
+                                    Ok(ok_value) => Ok(format!(#case_null_format_handle_token_stream)),
                                     Err(#error_snake_case) => Err(#error_snake_case)
                                 }
                             }
@@ -3887,8 +3887,8 @@ pub fn generate_postgresql_json_object_type(
                                                 #field_ident_double_quotes_token_stream,
                                                 #increment_snake_case,
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #object_acc_snake_case = #value_snake_case;
+                                                Ok(ok_value) => {
+                                                    #object_acc_snake_case = ok_value;
                                                 }
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3932,7 +3932,7 @@ pub fn generate_postgresql_json_object_type(
                                         #increment_snake_case,
                                     ),
                                     None => match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                        Ok(#value_snake_case) => Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${value})")),
+                                        Ok(ok_value) => Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${ok_value})")),
                                         Err(#error_snake_case) => Err(#error_snake_case)
                                     }
                                 }
@@ -3956,8 +3956,8 @@ pub fn generate_postgresql_json_object_type(
                                                 #value_snake_case.#value_snake_case,
                                                 #query_snake_case
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #query_snake_case = #value_snake_case;
+                                                Ok(ok_value) => {
+                                                    #query_snake_case = ok_value;
                                                 },
                                                 Err(#error_snake_case) => {
                                                     return Err(#error_snake_case);
@@ -3997,8 +3997,8 @@ pub fn generate_postgresql_json_object_type(
                                         #element_snake_case.#id_snake_case,
                                         #query_snake_case
                                     ) {
-                                        Ok(#value_snake_case) => {
-                                            #query_snake_case = #value_snake_case;
+                                        Ok(ok_value) => {
+                                            #query_snake_case = ok_value;
                                         },
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -4008,8 +4008,8 @@ pub fn generate_postgresql_json_object_type(
                                         #element_snake_case.#fields_snake_case,
                                         #query_snake_case
                                     ) {
-                                        Ok(#value_snake_case) => {
-                                            #query_snake_case = #value_snake_case;
+                                        Ok(ok_value) => {
+                                            #query_snake_case = ok_value;
                                         },
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -4021,8 +4021,8 @@ pub fn generate_postgresql_json_object_type(
                                         #element_snake_case,
                                         #query_snake_case
                                     ) {
-                                        Ok(#value_snake_case) => {
-                                            #query_snake_case = #value_snake_case;
+                                        Ok(ok_value) => {
+                                            #query_snake_case = ok_value;
                                         },
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -4057,7 +4057,7 @@ pub fn generate_postgresql_json_object_type(
                             &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                             #increment_snake_case
                         ) {
-                            Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',{value}),")),
+                            Ok(ok_value) => Ok(format!("'{field_ident}',jsonb_build_object('value',{ok_value}),")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4075,11 +4075,11 @@ pub fn generate_postgresql_json_object_type(
                                                 &#value_snake_case.#value_snake_case,
                                                 #query_snake_case
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #query_snake_case = #value_snake_case;
+                                                Ok(ok_value) => {
+                                                    #query_snake_case = ok_value;
                                                 },
                                                 Err(#error_snake_case) => {
-                                                    return Err(error);
+                                                    return Err(#error_snake_case);
                                                 }
                                             }
                                         }
@@ -4097,8 +4097,8 @@ pub fn generate_postgresql_json_object_type(
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                 if let Some(#value_snake_case) = &#value_snake_case.0 {
                                     match #ident_standart_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(#value_snake_case, #query_snake_case) {
-                                        Ok(#value_snake_case) => {
-                                            #query_snake_case = #value_snake_case;
+                                        Ok(ok_value) => {
+                                            #query_snake_case = ok_value;
                                         },
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -4118,8 +4118,8 @@ pub fn generate_postgresql_json_object_type(
                                             &#element_snake_case.#field_ident,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4133,8 +4133,8 @@ pub fn generate_postgresql_json_object_type(
                                             &#element_snake_case.#id_snake_case,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4144,8 +4144,8 @@ pub fn generate_postgresql_json_object_type(
                                             &#element_snake_case.fields,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4160,8 +4160,8 @@ pub fn generate_postgresql_json_object_type(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4173,8 +4173,8 @@ pub fn generate_postgresql_json_object_type(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4187,8 +4187,8 @@ pub fn generate_postgresql_json_object_type(
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                 if let Some(#value_snake_case) = &#value_snake_case.0 {
                                     match #ident_array_not_null_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_bind_snake_case(#value_snake_case, #query_snake_case) {
-                                        Ok(#value_snake_case) => {
-                                            #query_snake_case = #value_snake_case;
+                                        Ok(ok_value) => {
+                                            #query_snake_case = ok_value;
                                         },
                                         Err(#error_snake_case) => {
                                             return Err(#error_snake_case);
@@ -4320,7 +4320,7 @@ pub fn generate_postgresql_json_object_type(
                                     }
                                 });
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                                    &quote::quote!{#acc_snake_case, "${value},"},
+                                    &quote::quote!{#acc_snake_case, "${ok_value},"},
                                     &return_err_query_part_error_named_write_into_buffer_token_stream
                                 );
                                 quote::quote!{
@@ -4340,7 +4340,7 @@ pub fn generate_postgresql_json_object_type(
                                             let mut #acc_snake_case = #std_string_string_token_stream::new();
                                             for _ in &#value_snake_case.0 {
                                                 match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                                    Ok(#value_snake_case) => {
+                                                    Ok(ok_value) => {
                                                         #if_write_is_err_token_stream
                                                     },
                                                     Err(#error_snake_case) => {
@@ -4381,7 +4381,7 @@ pub fn generate_postgresql_json_object_type(
                                     }
                                 });
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                                    &quote::quote!{#acc_snake_case, "${value},"},
+                                    &quote::quote!{#acc_snake_case, "${ok_value},"},
                                     &return_err_query_part_error_named_write_into_buffer_token_stream
                                 );
                                 quote::quote!{
@@ -4404,7 +4404,7 @@ pub fn generate_postgresql_json_object_type(
                                                     let mut #acc_snake_case = #std_string_string_token_stream::new();
                                                     for _ in &#value_snake_case.0 {
                                                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                                            Ok(#value_snake_case) => {
+                                                            Ok(ok_value) => {
                                                                 #if_write_is_err_token_stream
                                                             },
                                                             Err(#error_snake_case) => {
@@ -4435,8 +4435,8 @@ pub fn generate_postgresql_json_object_type(
                                             &#value_snake_case.#field_ident,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4456,8 +4456,8 @@ pub fn generate_postgresql_json_object_type(
                                             #value_snake_case,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4475,8 +4475,8 @@ pub fn generate_postgresql_json_object_type(
                                     let field_type_as_postgresql_json_type_token_stream = generate_type_as_postgresql_json_type_token_stream(&current_element.field_type);
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_bind_snake_case(&#element_snake_case.#field_ident, #query_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4493,8 +4493,8 @@ pub fn generate_postgresql_json_object_type(
                                             #element_snake_case.#id_snake_case.clone(),
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4508,8 +4508,8 @@ pub fn generate_postgresql_json_object_type(
                                 quote::quote!{
                                     if let Some(#value_snake_case) = &#value_snake_case.0 {
                                         match #ident_array_not_null_as_import_path_postgresql_json_type_token_stream::#select_only_created_ids_query_bind_snake_case(#value_snake_case, #query_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -4538,7 +4538,7 @@ pub fn generate_postgresql_json_object_type(
                     &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     &quote::quote!{
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                            Ok(#value_snake_case) => Ok(format!("${value}")),
+                            Ok(ok_value) => Ok(format!("${ok_value}")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4556,7 +4556,7 @@ pub fn generate_postgresql_json_object_type(
                     &postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                     &quote::quote! {
                         match #value_snake_case.#select_query_part_postgresql_type_snake_case(#column_snake_case) {
-                            Ok(#value_snake_case) => Ok(format!("{value} as {column}")),
+                            Ok(ok_value) => Ok(format!("{ok_value} as {column}")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4566,7 +4566,7 @@ pub fn generate_postgresql_json_object_type(
                     &ident_read_only_ids_upper_camel_case,
                     &quote::quote! {
                         match #self_as_postgresql_json_type_token_stream::#select_only_ids_query_part_snake_case(#column_snake_case) {
-                            Ok(#value_snake_case) => Ok(format!("{value} as {column},")),
+                            Ok(ok_value) => Ok(format!("{ok_value} as {column},")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4605,7 +4605,7 @@ pub fn generate_postgresql_json_object_type(
                                             #content_token_stream
                                         },
                                         None => match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                                            Ok(#value_snake_case) => Ok(format!("${value}")),
+                                            Ok(ok_value) => Ok(format!("${ok_value}")),
                                             Err(#error_snake_case) => Err(#error_snake_case)
                                         }
                                     }
@@ -4623,7 +4623,7 @@ pub fn generate_postgresql_json_object_type(
                             #column_snake_case,
                             #increment_snake_case
                         ) {
-                            Ok(#value_snake_case) => Ok(format!("jsonb_build_object('value',{value}) as {column},")),
+                            Ok(ok_value) => Ok(format!("jsonb_build_object('value',{ok_value}) as {column},")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },

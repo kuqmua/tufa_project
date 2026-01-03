@@ -972,7 +972,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #column_snake_case,
                                 #field_ident_string_double_quotes_token_stream
                             ) {
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(ok_value) => ok_value,
                                 Err(#error_snake_case) => {
                                     return Err(#error_snake_case);
                                 }
@@ -1198,7 +1198,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
             quote::quote! {
                 match Self::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_0_token_stream) => {
                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -1265,7 +1265,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             generate_as_postgresql_type_token_stream(&field_type);
                         let if_write_is_err_token_stream =
                             macros_helpers::generate_if_write_is_err_token_stream(
-                                &quote::quote! {#acc_snake_case, "{value},"},
+                                &quote::quote! {#acc_snake_case, "{ok_value},"},
                                 &return_err_query_part_error_named_write_into_buffer_token_stream,
                             );
                         quote::quote! {
@@ -1273,7 +1273,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &#content_token_stream,
                                 #increment_snake_case
                             ) {
-                                Ok(#value_snake_case) => {
+                                Ok(ok_value) => {
                                     #if_write_is_err_token_stream
                                 }
                                 Err(#error_0_token_stream) => {
@@ -1312,8 +1312,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #content_token_stream,
                                 #query_snake_case
                             ) {
-                                Ok(#value_snake_case) => {
-                                    #query_snake_case = #value_snake_case;
+                                Ok(ok_value) => {
+                                    #query_snake_case = ok_value;
                                 },
                                 Err(#error_0_token_stream) => {
                                     return Err(#error_0_token_stream);
@@ -1511,8 +1511,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &#field_ident_double_quotes_token_stream,
                                 is_first_push_to_additional_parameters_already_happend,
                             ) {
-                                Ok(#value_snake_case) => {
-                                    #additional_parameters_snake_case.push_str(&#value_snake_case);
+                                Ok(ok_value) => {
+                                    #additional_parameters_snake_case.push_str(&ok_value);
                                     #maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream
                                 }
                                 Err(#error_0_token_stream) => {
@@ -1543,8 +1543,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 quote::quote! {
                                     if let Some(#value_snake_case) = #value_snake_case.#field_ident {
                                         match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#value_snake_case, #query_snake_case) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             },
                                             Err(#error_0_token_stream) => {
                                                 return Err(#error_0_token_stream);
@@ -1592,7 +1592,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &"",//useless
                     false//useless
                 ) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_0_token_stream) => {
                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -1620,8 +1620,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
             quote::quote! {
                 match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#parameters_snake_case.#payload_snake_case.#where_many_snake_case, #query_snake_case) {
-                    Ok(#value_snake_case) => {
-                        #query_snake_case = #value_snake_case;
+                    Ok(ok_value) => {
+                        #query_snake_case = ok_value;
                     },
                     Err(#error_0_token_stream) => {
                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -1655,10 +1655,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
             quote::quote! {
                 match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
-                    #value_snake_case,
+                    ok_value1,
                     &#parameters_snake_case.#payload_snake_case.#select_snake_case
                 ) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value1) => ok_value1,
                     Err(#error_0_token_stream) => {
                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -1773,7 +1773,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         },
                     );
                 let value_initialization_token_stream =
-                    quote::quote! {#import_path::#value_upper_camel_case {#value_snake_case}};
+                    quote::quote! {#import_path::#value_upper_camel_case { value: ok_value1}};
                 let assignment_variant_primary_key_token_stream = {
                     let primary_key_field_ident_string_double_quotes_token_stream =
                         generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
@@ -1782,10 +1782,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                             #ref_std_primitive_str
                         >(
-                            &#value_snake_case,
+                            &value,
                             #primary_key_field_ident_string_double_quotes_token_stream
                         ) {
-                            Ok(#value_snake_case) => {
+                            Ok(ok_value1) => {
                                 #primary_key_field_ident = Some(#value_initialization_token_stream);
                             },
                             Err(#error_0_token_stream) => {
@@ -1806,10 +1806,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #element_syn_field_ty_as_postgresql_type_read_token_stream,
                                 #ref_std_primitive_str
                             >(
-                                &#value_snake_case,
+                                &value,
                                 #field_ident_string_double_quotes_token_stream
                             ) {
-                                Ok(#value_snake_case) => {
+                                Ok(ok_value1) => {
                                     #field_ident = Some(#value_initialization_token_stream);
                                 },
                                 Err(#error_0_token_stream) => {
@@ -1912,7 +1912,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &#undescore_underscore_row,
                         #field_ident_double_quotes_token_stream
                     ) {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             return Err(#error_0_token_stream);
                         }
@@ -2226,7 +2226,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     "",
                                     #increment_snake_case
                                 ) {
-                                    Ok(#value_snake_case) => Ok(#value_snake_case),
+                                    Ok(ok_value) => Ok(ok_value),
                                     Err(#error_0_token_stream) => Err(#error_0_token_stream),
                                 }
                             }
@@ -2339,7 +2339,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
             quote::quote! {
                 match #content_token_stream.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_0_token_stream) => {
                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -2614,8 +2614,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
                 let mut #acc_snake_case = Vec::new();
                 while let Some(#value_snake_case) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
-                    Ok(#value_snake_case) => match #value_snake_case {
-                        Some(#value_snake_case) => #value_handle_token_stream,
+                    Ok(ok_value) => match ok_value {
+                        Some(ok_value1) => #value_handle_token_stream,
                         None => None,
                     },
                     Err(#error_0_token_stream) => {
@@ -2637,7 +2637,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
          fetch_one_error_initialization_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
                 match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                    Ok(#value_snake_case) => {
+                    Ok(ok_value1) => {
                         #value_handle_token_stream
                     },
                     Err(#error_0_token_stream) => {
@@ -2654,8 +2654,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 match #sqlx_row::try_get::<
                     #sqlx_row_try_get_type_token_stream,
                     #ref_std_primitive_str
-                >(&#value_snake_case, Self::#primary_key_snake_case()) {
-                    Ok(#value_snake_case) => #ok_token_stream,
+                >(&ok_value1, Self::#primary_key_snake_case()) {
+                    Ok(ok_value) => #ok_token_stream,
                     Err(#error_0_token_stream) => {
                         #err_token_stream
                     }
@@ -2675,7 +2675,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                 quote::quote! {
                     let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_snake_case).await {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                         }
@@ -2962,8 +2962,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let (parts, #body_snake_case) = #request_snake_case.into_parts();
                     let headers = parts.headers;
                     if !matches!(
-                        headers.get(axum::http::header::CONTENT_TYPE),
-                        Some(value) if value == axum::http::header::HeaderValue::from_static("application/json")
+                        headers.get(http::header::CONTENT_TYPE),
+                        Some(value) if value == http::header::HeaderValue::from_static("application/json")
                     ) {
                         #header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -2985,7 +2985,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     //     }
                     // }
                     let body_bytes = match #postgresql_crud_snake_case::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                         }
@@ -3016,13 +3016,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                 quote::quote! {
                     let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                         }
                     };
                     let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                         }
@@ -3091,9 +3091,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #payload_snake_case: match serde_json::from_slice::<#ident_operation_payload_upper_camel_case>(
                         &#body_bytes_snake_case,
                     ) {
-                        Ok(#value_snake_case) => {
+                        Ok(ok_value) => {
                             #operation_payload_with_serialize_deserialize_check_token_stream
-                            #value_snake_case
+                            ok_value
                         },
                         Err(#error_0_token_stream) => {
                             #serde_json_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
@@ -3112,7 +3112,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 let #payload_snake_case = {
                     match serde_json::to_string(&#parameters_snake_case.#payload_snake_case) {
-                        Ok(#value_snake_case) => #value_snake_case,
+                        Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             return Err(#ident_try_operation_error_named_upper_camel_case::#serde_json_to_string_syn_variant_initialization_token_stream);
                         }
@@ -3149,7 +3149,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let reqwest_syn_variant_initialization_token_stream = generate_initialization_token_stream(&reqwest_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 let #response_snake_case = match #future_snake_case.await {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_0_token_stream) => {
                         return Err(#ident_try_operation_error_named_upper_camel_case::#reqwest_syn_variant_initialization_token_stream);
                     }
@@ -3166,7 +3166,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let failed_to_get_response_text_syn_variant_initialization_token_stream = generate_initialization_token_stream(&failed_to_get_response_text_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 let #error_2_token_stream = match #response_snake_case.text().await {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_2_token_stream) => {
                         return Err(#ident_try_operation_error_named_upper_camel_case::#failed_to_get_response_text_syn_variant_initialization_token_stream);
                     }
@@ -3178,7 +3178,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let deserialize_response_syn_variant_initialization_token_stream = generate_initialization_token_stream(&deserialize_response_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 let #expected_response_snake_case = match serde_json::from_str::<#ident_operation_response_variants_upper_camel_case>(&#error_2_token_stream) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                    Ok(ok_value) => ok_value,
                     Err(#error_3_token_stream) => {
                         return Err(#ident_try_operation_error_named_upper_camel_case::#deserialize_response_syn_variant_initialization_token_stream);
                     }
@@ -3255,7 +3255,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
-                &quote::quote! {Some(#value_snake_case)},
+                &quote::quote! {Some(ok_value)},
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -3268,7 +3268,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             wrap_into_value_token_stream(&generate_fetch_one_token_stream(
                 &generate_sqlx_row_try_get_primary_key_token_stream(
                     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
-                    &value_snake_case,
+                    &quote::quote! {ok_value},
                     &generate_match_postgres_transaction_rollback_await_token_stream(
                         &current_operation,
                         file!(),
@@ -3298,7 +3298,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     generate_ident_operation_payload_upper_camel_case(operation);
                 quote::quote! {<#ident_operation_payload_upper_camel_case as postgresql_crud::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()}
             },
-            &quote::quote! {axum::http::StatusCode::OK},
+            &quote::quote! {http::StatusCode::OK},
             &ShouldAddReturn::False,
         );
         quote::quote! {
@@ -3332,8 +3332,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_ids_query_part_snake_case(#field_ident_double_quotes_token_stream) {
-                    Ok(#value_snake_case) => {
-                        #acc_snake_case.push_str(&#value_snake_case);
+                    Ok(ok_value) => {
+                        #acc_snake_case.push_str(&ok_value);
                     },
                     Err(#error_0_token_stream) => {
                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3369,8 +3369,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let generate_match_ident_read_only_ids_as_from_row_from_row_token_stream =
         |content_token_stream: &dyn quote::ToTokens| {
             quote::quote! {
-                match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&#value_snake_case) {
-                    Ok(#value_snake_case) => #value_snake_case,
+                match <#ident_read_only_ids_upper_camel_case as sqlx::FromRow<'_, sqlx::postgres::PgRow>>::from_row(&ok_value1) {
+                    Ok(ok_value2) => ok_value2,
                     Err(#error_0_token_stream) => #content_token_stream
                 }
             }
@@ -3411,7 +3411,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &proc_macro2::TokenStream::new(),
                 );
                 let query_string_token_stream = {
-                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "({value}),"}, &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation));
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "({ok_value}),"}, &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation));
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let select_only_ids_query_part_token_stream =
                         generate_select_only_ids_query_part_token_stream(&operation);
@@ -3423,7 +3423,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let mut #acc_snake_case = #string_token_stream::default();
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
-                                    Ok(#value_snake_case) => {
+                                    Ok(ok_value) => {
                                         #if_write_is_err_token_stream
                                     },
                                     Err(#error_0_token_stream) => {
@@ -3443,8 +3443,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
                         for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
                             match #element_snake_case.#create_query_bind_snake_case(#query_snake_case) {
-                                Ok(#value_snake_case) => {
-                                    #query_snake_case = #value_snake_case;
+                                Ok(ok_value) => {
+                                    #query_snake_case = ok_value;
                                 },
                                 Err(#error_0_token_stream) => {
                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3554,7 +3554,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #table_snake_case,
                             #column_names_double_quotes_token_stream,
                             &match #parameters_snake_case.#payload_snake_case.#create_query_part_snake_case(&mut 0) {
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(ok_value) => ok_value,
                                 Err(#error_0_token_stream) => {
                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
@@ -3568,8 +3568,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         match #parameters_snake_case.#payload_snake_case.#create_query_bind_snake_case(#query_snake_case) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
+                            Ok(ok_value) => {
+                                #query_snake_case = ok_value;
                             },
                             Err(#error_0_token_stream) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3750,7 +3750,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     &"",
                                     bool::default()
                                 ) {
-                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Ok(ok_value) => ok_value,
                                     Err(#error_0_token_stream) => {
                                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     },
@@ -3771,8 +3771,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #parameters_snake_case.#payload_snake_case.pagination,
                             #query_snake_case,
                         ) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
+                            Ok(ok_value) => {
+                                #query_snake_case = ok_value;
                             },
                             Err(#error_0_token_stream) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3904,7 +3904,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &Self::#primary_key_snake_case(),
                             false
                         ) {
-                            Ok(#value_snake_case) => #value_snake_case,
+                            Ok(ok_value) => ok_value,
                             Err(#error_0_token_stream) => {
                                 #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                             }
@@ -3916,8 +3916,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &try_bind_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             match #postgresql_crud_postgresql_type_where_filter_query_bind_token_stream(#parameters_snake_case.#payload_snake_case.#primary_key_field_ident, #query_snake_case) {
-                                Ok(#value_snake_case) => {
-                                    #query_snake_case = #value_snake_case;
+                                Ok(ok_value) => {
+                                    #query_snake_case = ok_value;
                                 },
                                 Err(#error_0_token_stream) => {
                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4219,13 +4219,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
                                                                     Self::#primary_key_snake_case(),
                                                                     &match #element_snake_case.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
-                                                                        Ok(#value_snake_case) => #value_snake_case,
+                                                                        Ok(ok_value) => ok_value,
                                                                         Err(#error_0_token_stream) => {
                                                                             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                                         }
                                                                     },
                                                                     &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(#value_snake_case, &mut #increment_snake_case) {
-                                                                        Ok(#value_snake_case) => #value_snake_case,
+                                                                        Ok(ok_value) => ok_value,
                                                                         Err(#error_0_token_stream) => {
                                                                             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                                         }
@@ -4265,8 +4265,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let mut #acc_snake_case = String::new();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     match #element_snake_case.select_only_updated_ids_query_part(&mut #increment_snake_case) {
-                                        Ok(#value_snake_case) => {
-                                            #acc_snake_case.push_str(&#value_snake_case);
+                                        Ok(ok_value) => {
+                                            #acc_snake_case.push_str(&ok_value);
                                         },
                                         Err(#error_0_token_stream) => {
                                             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4304,8 +4304,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 #value_snake_case.#value_snake_case.clone(),
                                                 #query_snake_case,
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #query_snake_case = #value_snake_case;
+                                                Ok(ok_value) => {
+                                                    #query_snake_case = ok_value;
                                                 },
                                                 Err(#error_0_token_stream) => {
                                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4322,8 +4322,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #element_snake_case.#primary_key_field_ident.clone(),
                                 #query_snake_case,
                             ) {
-                                Ok(#value_snake_case) => {
-                                    #query_snake_case = #value_snake_case;
+                                Ok(ok_value) => {
+                                    #query_snake_case = ok_value;
                                 },
                                 Err(#error_0_token_stream) => {
                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4344,8 +4344,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 &#value_snake_case.#value_snake_case,
                                                 #query_snake_case
                                             ) {
-                                                Ok(#value_snake_case) => {
-                                                    #query_snake_case = #value_snake_case;
+                                                Ok(ok_value) => {
+                                                    #query_snake_case = ok_value;
                                                 },
                                                 Err(#error_0_token_stream) => {
                                                     #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4489,7 +4489,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
                                             #field_ident_double_quotes_token_stream,
                                             &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(#value_snake_case, &mut #increment_snake_case) {
-                                                Ok(#value_snake_case) => #value_snake_case,
+                                                Ok(ok_value) => ok_value,
                                                 Err(#error_0_token_stream) => {
                                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                 }
@@ -4519,7 +4519,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
                             //todo refactor\reuse
                             let return_columns = match #update_for_query_snake_case.select_only_updated_ids_query_part(&mut #increment_snake_case) {
-                                Ok(#value_snake_case) => #value_snake_case,
+                                Ok(ok_value) => ok_value,
                                 Err(#error_0_token_stream) => {
                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
@@ -4549,8 +4549,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #value_snake_case.#value_snake_case.clone(),//todo is there a way to remove .clone here?
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             }
                                             Err(#error_0_token_stream) => {
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4565,8 +4565,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #update_for_query_snake_case.#primary_key_field_ident,
                             #query_snake_case,
                         ) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
+                            Ok(ok_value) => {
+                                #query_snake_case = ok_value;
                             },
                             Err(#error_0_token_stream) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4585,8 +4585,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             &#value_snake_case.#value_snake_case,
                                             #query_snake_case
                                         ) {
-                                            Ok(#value_snake_case) => {
-                                                #query_snake_case = #value_snake_case;
+                                            Ok(ok_value) => {
+                                                #query_snake_case = ok_value;
                                             },
                                             Err(#error_0_token_stream) => {
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -4817,8 +4817,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
                             #query_snake_case
                         ) {
-                            Ok(#value_snake_case) => {
-                                #query_snake_case = #value_snake_case;
+                            Ok(ok_value) => {
+                                #query_snake_case = ok_value;
                             },
                             Err(#error_0_token_stream) => {
                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -5550,7 +5550,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                         &current_table
                                     ).await {
-                                        Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "4e88679a-0d23-418f-8767-4e9b7531429c"),
+                                        Ok(ok_value) => assert!(ok_value == Vec::new(), "4e88679a-0d23-418f-8767-4e9b7531429c"),
                                         Err(#error_snake_case) => panic!("24ab86d6-15c9-47f1-a43f-c5fac4b38188")
                                     }
                                 }));
@@ -5673,7 +5673,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
                         ).await {
-                            Ok(#value_snake_case) => assert!(#value_snake_case.is_empty(), "06df4025-e2d1-4128-b819-c06613c6ae3f"),
+                            Ok(ok_value) => assert!(ok_value.is_empty(), "06df4025-e2d1-4128-b819-c06613c6ae3f"),
                             Err(#error_snake_case) => {
                                 panic!("e661c49b-2288-4548-8783-35495e193976");
                             },
@@ -5834,7 +5834,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_default_all_with_max_page_size_clone_token_stream,
                             current_table
                         ).await {
-                            Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
+                            Ok(ok_value) => assert!(ok_value == Vec::new(), "d79c0af3-5e2e-4891-a7ff-d1007b573e77"),
                             Err(#error_snake_case) => {
                                 panic!("1f079962-06af-4d21-a837-c88b0e7db265");
                             }
@@ -6020,7 +6020,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                             &current_table
                                         ).await {
-                                            Ok(#value_snake_case) => assert!(#value_snake_case == Vec::new(), "38187925-c136-41de-940d-eba75efc3a39"),
+                                            Ok(ok_value) => assert!(ok_value == Vec::new(), "38187925-c136-41de-940d-eba75efc3a39"),
                                             Err(#error_snake_case) => {
                                                 panic!("1817b67a-c6c5-4fea-8ca7-23581c1888a3");
                                             }
@@ -7101,7 +7101,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #select_default_all_with_max_page_size_clone_token_stream,
                             &current_table
                         ).await {
-                            Ok(#value_snake_case) => assert!(#value_snake_case.is_empty(), "77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
+                            Ok(ok_value) => assert!(ok_value.is_empty(), "77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
                             Err(#error_snake_case) => panic!("bcb79917-ee81-416e-82a3-f43a823266a3")
                         }
                     }

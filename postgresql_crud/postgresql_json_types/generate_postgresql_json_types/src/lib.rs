@@ -1920,7 +1920,7 @@ pub fn generate_postgresql_json_types(
             let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                 quote::quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                        Ok(#value_snake_case) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value}),")),
+                        Ok(ok_value) => Ok(format!("'{field_ident}',jsonb_build_object('value',${ok_value}),")),
                         Err(#error_snake_case) => Err(#error_snake_case),
                     }
                 }
@@ -2127,7 +2127,7 @@ pub fn generate_postgresql_json_types(
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
                     quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                            Ok(#value_snake_case) => Ok(format!(#format_handle_token_stream)),
+                            Ok(ok_value) => Ok(format!(#format_handle_token_stream)),
                             Err(#error_snake_case) => Err(#error_snake_case),
                         }
                     }
@@ -2327,9 +2327,9 @@ pub fn generate_postgresql_json_types(
                     match not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {#acc_snake_case.push(#content_token_stream);},
                         NotNullOrNullable::Nullable => quote::quote! {
-                            if let Ok(#value_snake_case) = #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                            if let Ok(ok_value) = #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
                                 #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
-                                    #value_snake_case
+                                    ok_value
                                 )));
                             }
                         },
