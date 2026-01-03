@@ -424,4 +424,49 @@ mod tests {
             }
         }
     }
+    #[test]
+    fn all_files_are_english_only() {
+        let mut errors = Vec::new();
+        for entry in walkdir::WalkDir::new("../")
+            .into_iter()
+            .filter_entry(|element| {
+                let name = element.file_name().to_string_lossy();
+                name != "target" && name != ".git"
+            })
+            .filter_map(Result::ok)
+        {
+            let path = entry.path();
+            if !path.is_file() || !match path.extension().and_then(|value| value.to_str()) {
+                Some(some_value) => matches!(
+                    some_value,
+                    "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
+                ),
+                None => false,
+            } {
+                continue;
+            }
+            let Ok(content) = std::fs::read_to_string(path) else {
+                continue;//skip binary non-utf8 files
+            };
+            for (line_index, line) in content.lines().enumerate() {
+                for char_value in line.chars() {
+                    if !(matches!(char_value, '\n' | '\r' | '\t') || char_value.is_ascii()) {
+                        errors.push(format!(
+                            "{}:{} non-english symbol `{}` (U+{:04X})",
+                            path.display(),
+                            line_index + 1,
+                            char_value,
+                            char_value as u32
+                        ));
+                    }
+                }
+            }
+        }
+        if !errors.is_empty() {
+            panic!(
+                "non-english symbols:\n{}",
+                errors.join("\n")
+            );
+        }
+    }
 }

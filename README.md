@@ -73,13 +73,6 @@ sudo apt install cmake
 ```
 cargo build
 ```
-### example git submodule
-```
-git submodule add https://github.com/kuqmua/client.git
-```
-```
-git submodule add https://github.com/kuqmua/server.git
-```
 ### up databases
 ```
 cd server && sudo docker-compose up -d && cd ..

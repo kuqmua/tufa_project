@@ -3,8 +3,6 @@
 2. [compile_time_git_info](#heading2)
 3. [enum_extension](#heading3)
 18. [macros_helpers](#heading18)
-22. [svg_component](#heading22)
-23. [client](#heading23)
 24. [common](#heading24) 
 25. [tufa_grpc_client](#heading25)
 26. [tufa_grpc_server](#heading26)
@@ -26,10 +24,6 @@
 ## enum_extension <a name="heading3"/>
 
 ## macros_helpers <a name="heading18"/>
-
-## svg_component <a name="heading22"/>
-
-## client <a name="heading23"/>
 
 ## generate_quotes <a name="heading35"/>
 

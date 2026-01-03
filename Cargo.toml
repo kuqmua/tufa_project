@@ -55,10 +55,7 @@ members = [
   "panic_location",
   "providers",
 ]
-exclude = [
-  "client",
-  "svg_component",
-]
+exclude = []
 
 [workspace.dependencies]
 serde = {version = "=1.0.228", features = ["derive"]}
@@ -97,19 +94,6 @@ schemars = {version = "=1.2.0"}
 rayon = {version = "=1.11.0"}
 bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
-# not using client now
-# yew = {version = "=0.22.0"}
-# yew-router = {version = "=0.19.0"}
-# yewdux = {version = "=0.11.0"}
-# yewdux-functional = {version = "=0.1.0"}
-# gloo = {version = "=0.11.0"}
-# js-sys = {version = "=0.3.83"}
-# stylist = {version = "=0.13.0", features = ["yew"]}
-# wasm-bindgen = {version = "=0.2.106"}
-# wasm-bindgen-futures = {version = "=0.4.56"}
-# web-sys = {version = "=0.3.83", features = ["HtmlInputElement", "Window", "Document", "Element", "StyleSheetList", "HtmlSelectElement"]}
-# reqwasm = {version = "=0.5.0"}
-# colorsys = {version = "=0.7.3"}
 
 #todo check proc macro generated token on lints
 [workspace.lints.rust]

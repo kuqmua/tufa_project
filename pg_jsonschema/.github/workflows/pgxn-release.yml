@@ -1,4 +1,4 @@
-name: 🚀 Release on PGXN
+name: Release on PGXN
 on:
   push:
     # Release on semantic version tag.
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   release:
-    name: 🚀 Release on PGXN
+    name: Release on PGXN
     runs-on: ubuntu-latest
     container: pgxn/pgxn-tools
     steps:
