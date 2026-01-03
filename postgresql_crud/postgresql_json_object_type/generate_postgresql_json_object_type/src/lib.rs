@@ -3227,9 +3227,9 @@ pub fn generate_postgresql_json_object_type(
                                         );
                                         quote::quote! {
                                             #ident_standart_not_null_update_for_query_element_upper_camel_case::#field_ident_upper_camel_case_token_stream(
-                                                #value_snake_case
+                                                some_value
                                             ) => match #field_type_as_postgresql_json_type_token_stream::#select_only_updated_ids_query_part_snake_case(
-                                                &#value_snake_case.#value_snake_case,
+                                                &some_value.#value_snake_case,
                                                 #field_ident_double_quotes_token_stream,
                                                 column_name_and_maybe_field_getter,
                                                 #increment_snake_case
@@ -3246,9 +3246,9 @@ pub fn generate_postgresql_json_object_type(
                                     });
                                     quote::quote!{
                                         Ok(match &self.0 {
-                                            Some(#value_snake_case) => {
+                                            Some(some_value) => {
                                                 let mut #acc_snake_case = #std_string_string_token_stream::default();
-                                                for #element_snake_case in #value_snake_case.0.to_vec() {
+                                                for #element_snake_case in some_value.0.to_vec() {
                                                     match &#element_snake_case {
                                                         #(#match_content_token_stream),*
                                                     }
@@ -4257,7 +4257,7 @@ pub fn generate_postgresql_json_object_type(
                                     );
                                     quote::quote! {
                                         match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
-                                            &#value_snake_case.#field_ident,
+                                            &some_value.#field_ident,
                                             #field_ident_double_quotes_token_stream,
                                             &format!(#column_name_and_maybe_field_getter_field_ident_double_quotes_token_stream),
                                             #increment_snake_case
@@ -4276,7 +4276,7 @@ pub fn generate_postgresql_json_object_type(
                                     Ok(format!(
                                         "'{field_ident}',jsonb_build_object('value',{}),",
                                         match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => format!(
+                                            Some(some_value) => format!(
                                                 "jsonb_build_object('value',{})",
                                                 {
                                                     let mut #acc_snake_case = #std_string_string_token_stream::new();
@@ -4388,11 +4388,11 @@ pub fn generate_postgresql_json_object_type(
                                     Ok(format!(
                                         "'{field_ident}',jsonb_build_object('value',{}),",
                                         match &#value_snake_case.0 {
-                                            Some(#value_snake_case) => format!(
+                                            Some(some_value) => format!(
                                                 "jsonb_build_object('value',(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({})))",
                                                 {
                                                     let mut #acc_snake_case = #std_string_string_token_stream::new();
-                                                    for #element_snake_case in &#value_snake_case.0 {
+                                                    for #element_snake_case in &some_value.0 {
                                                         #(#content_token_stream)*
                                                     }
                                                     let _: Option<char> = #acc_snake_case.pop();
@@ -4402,7 +4402,7 @@ pub fn generate_postgresql_json_object_type(
                                                 &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
                                                 {
                                                     let mut #acc_snake_case = #std_string_string_token_stream::new();
-                                                    for _ in &#value_snake_case.0 {
+                                                    for _ in &some_value.0 {
                                                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                             Ok(ok_value) => {
                                                                 #if_write_is_err_token_stream

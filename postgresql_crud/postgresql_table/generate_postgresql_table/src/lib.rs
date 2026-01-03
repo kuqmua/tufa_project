@@ -1541,8 +1541,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &|element: &macros_helpers::SynFieldWrapper| {
                                 let field_ident = &element.field_ident;
                                 quote::quote! {
-                                    if let Some(some_value) = #value_snake_case.#field_ident {
-                                        match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(some_value, #query_snake_case) {
+                                    if let Some(some_value1) = some_value0.#field_ident {
+                                        match postgresql_crud::PostgresqlTypeWhereFilter::query_bind(some_value1, #query_snake_case) {
                                             Ok(ok_value) => {
                                                 #query_snake_case = ok_value;
                                             },
@@ -1555,7 +1555,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         );
                     quote::quote! {
-                        if let Some(#value_snake_case) = self.0 {
+                        if let Some(some_value0) = self.0 {
                             #binded_query_modifications_token_stream
                         }
                         Ok(#query_snake_case)
