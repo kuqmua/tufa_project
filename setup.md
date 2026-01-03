@@ -242,8 +242,8 @@ cd libs/tests_lib && cargo test local -- --show-output
 cargo tree
 ```
 #### how to tune rustfmt <a name="heading2725"></a>
-You can tune rustfmt for a project with a configuration file, rustfmt.toml. </br> 
-Details can be found in [rustfmt’s](https://github.com/rust-lang/rustfmt#configuring-rustfmt)
+You can tune rustfmt for a project with a configuration file, rustfmt.toml. </br>
+Details can be found in [rustfmt](https://github.com/rust-lang/rustfmt#configuring-rustfmt)
 
 #### check vulnerabilities in project <a name="heading2726"></a>
 cargo-audit, a convenient cargo sub-command to check if vulnerabilities have <br/>

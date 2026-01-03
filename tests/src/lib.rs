@@ -427,6 +427,9 @@ mod tests {
     #[test]
     fn all_files_are_english_only() {
         let mut errors = Vec::new();
+        let exceptions = [
+            "../postgresql_crud/postgresql_crud_common/src/lib.rs", //contain utf-8 String test
+        ];
         for entry in walkdir::WalkDir::new("../")
             .into_iter()
             .filter_entry(|element| {
@@ -436,17 +439,24 @@ mod tests {
             .filter_map(Result::ok)
         {
             let path = entry.path();
-            if !path.is_file() || !match path.extension().and_then(|value| value.to_str()) {
-                Some(some_value) => matches!(
-                    some_value,
-                    "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
-                ),
-                None => false,
-            } {
+            if !path.is_file()
+                || !path
+                    .extension()
+                    .and_then(|value| value.to_str())
+                    .is_some_and(|some_value| {
+                        matches!(
+                            some_value,
+                            "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
+                        )
+                    })
+            {
+                continue;
+            }
+            if exceptions.contains(&path.display().to_string().as_str()) {
                 continue;
             }
             let Ok(content) = std::fs::read_to_string(path) else {
-                continue;//skip binary non-utf8 files
+                continue; //skip binary non-utf8 files
             };
             for (line_index, line) in content.lines().enumerate() {
                 for char_value in line.chars() {
@@ -456,17 +466,12 @@ mod tests {
                             path.display(),
                             line_index + 1,
                             char_value,
-                            char_value as u32
+                            u32::from(char_value)
                         ));
                     }
                 }
             }
         }
-        if !errors.is_empty() {
-            panic!(
-                "non-english symbols:\n{}",
-                errors.join("\n")
-            );
-        }
+        assert!(errors.is_empty(), "non-english symbols:\n{}", errors.join("\n"));
     }
 }

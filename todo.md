@@ -891,8 +891,8 @@ https://marketplace.visualstudio.com/items?itemName=Odiriuss.rust-macro-expand
 warning: the following packages contain code that will be rejected by a future version of Rust: old_dep v0.1.0
 note: to see what the problems were, use the option `--future-incompat-report`, or run `cargo report future-incompatibilities --id 1`
 You can run the cargo report command mentioned in the warning to see a full report of the code that will be rejected. This gives you time to upgrade your dependency before it breaks your build.
-    
-* On Linux, you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you’re going to try this you probably want to use a VM):
+
+* On Linux you can induce a system reboot by writing a b to /proc/sysrq-trigger (if you re going to try this you probably want to use a VM):
 echo b > /proc/sysrq-trigger
 We can sort of simulate an operating system level crash (or having the plug pulled on our server rack) by using this:
 ```
@@ -904,7 +904,7 @@ pub fn reboot_kernel() {
 }
 ```
 
-* Rust exposes this system call via the File::sync_all method. If we call sync_all, when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I’ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, let’s keep things simple and assume syncing is a reliable process.
+* Rust exposes this system call via the File::sync_all method. If we call sync_all when it returns successfully, the operating system promises that the data has been written to disk and will exist on disk even in the event of a hard crash like a power failure or OS crash. As I ve tried to emphasize repeatedly, this is an oversimplification, and many things can go wrong depending on your filesystem configuration, but for today, lets keep things simple and assume syncing is a reliable process.
 
 * show llvm ir command
 rustc simple1.rs --emit=llvm-ir
@@ -940,12 +940,12 @@ fn main() {
     println!("{}", capitalize("John"));  // No allocation
 }
 ```
-If you’re using VSCode + Rust Analyzer, I highly suggest going into the settings > Rust Analyzer > Check On Save: Command and setting "clippy" as the new default instead of "check". Same UX, better warnings.
+If you re using VSCode + Rust Analyzer, I highly suggest going into the settings > Rust Analyzer > Check On Save: Command and setting clippy as the new default instead of "check". Same UX, better warnings.
 
 * rust reverse ranges problem https://kaylynn.gay/blog/post/rust_ranges_and_suffering
     
 * inside cargo.toml
-use the “*” to pull the latest version of the dependency.
+use the * to pull the latest version of the dependency.
     
 * more readable tracing like a tree https://lib.rs/crates/tracing-tree
 examples https://fasterthanli.me/articles/request-coalescing-in-async-rust
@@ -969,7 +969,7 @@ let x = vec![(1, 2), (3, 4), (5, 6)].into_iter();
 let _: HashMap<u64, u64> = HashMap::from_iter(x);
 ```
     
-* writing cross-platform “bash” scripts in Rust
+* writing cross-platform bash scripts in Rust
 https://docs.rs/xshell/latest/xshell/
 maybe rewrite shell scripts for service init in xshell?
 
