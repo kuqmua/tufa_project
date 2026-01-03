@@ -664,7 +664,7 @@ pub fn generate_postgresql_json_types(
         let generate_into_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| {
             let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, current_content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {match #match_token_stream {
-                    Some(#value_snake_case) => Some(#value_snake_case.0 #current_content_token_stream),
+                    Some(some_value) => Some(some_value.0 #current_content_token_stream),
                     None => None
                 }}
             };
