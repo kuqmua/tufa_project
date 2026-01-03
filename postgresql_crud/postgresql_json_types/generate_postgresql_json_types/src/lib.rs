@@ -905,7 +905,7 @@ pub fn generate_postgresql_json_types(
             let ident_origin_impl_new_self_content_token_stream = {
                 let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {match #value_snake_case {
-                        Some(#value_snake_case) => Some(#type_token_stream::#new_snake_case(#value_snake_case)),
+                        Some(some_value) => Some(#type_token_stream::#new_snake_case(some_value)),
                         None => None
                     }}
                 };
@@ -2451,9 +2451,9 @@ pub fn generate_postgresql_json_types(
                     //todo check - maybe need to add something here
                     let maybe_acc_push_long_vec_token_stream = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {
-                            if let Some(#value_snake_case) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
+                            if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
                                 let mut inner_acc = Vec::new();
-                                for #element_snake_case in #value_snake_case {
+                                for #element_snake_case in some_value {
                                     inner_acc.push(#element_snake_case.0.into());
                                 }
                                 if !inner_acc.is_empty() {
@@ -2465,8 +2465,8 @@ pub fn generate_postgresql_json_types(
                     };
                     quote::quote! {Some({
                         let mut #acc_snake_case = Vec::new();
-                        if let Some(#value_snake_case) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
-                            for #element_snake_case in #value_snake_case {
+                        if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
+                            for #element_snake_case in some_value {
                                 #acc_snake_case.push(<#ident as #import_path::PostgresqlJsonType>::Create::new(#new_content_token_stream));
                             }
                         }
@@ -2613,12 +2613,12 @@ pub fn generate_postgresql_json_types(
                         #has_len_greater_than_one_content_token_stream
                         #acc_push_vec_content_token_stream
                         #maybe_acc_push_vec_none_token_stream
-                        if let Some(#value_snake_case) = option_additional {
+                        if let Some(some_value) = option_additional {
                             if has_len_greater_than_one {
-                                #acc_snake_case.push(#value_snake_case.0);
+                                #acc_snake_case.push(some_value.0);
                             }
                             if !has_len_greater_than_one {
-                                #acc_snake_case.push(#value_snake_case.1);
+                                #acc_snake_case.push(some_value.1);
                             }
                         }
                         #acc_snake_case
@@ -2806,7 +2806,7 @@ pub fn generate_postgresql_json_types(
                 quote::quote! {Some(#value_initialization_token_stream)}
             };
             let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {match #option_update_snake_case {
-                Some(#value_snake_case) => #ident_read_upper_camel_case(#value_snake_case.into()),
+                Some(some_value) => #ident_read_upper_camel_case(some_value.into()),
                 None => #read_snake_case
             }};
             let read_only_ids_merged_with_create_into_read_token_stream = {
@@ -2851,10 +2851,10 @@ pub fn generate_postgresql_json_types(
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                         let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_not_null_token_stream);
-                        let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(#value_snake_case.into())});
+                        let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(some_value.into())});
                         quote::quote! {
                             #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_snake_case.0.0 {
-                                Some(#value_snake_case) => Some(
+                                Some(some_value) => Some(
                                     #import_path::NotEmptyUniqueEnumVec::try_new(
                                         vec![#current_ident_where_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)]
                                     ).expect("88bfa095-a3ab-4d0c-be71-af63c3acd50f")
