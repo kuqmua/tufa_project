@@ -80,6 +80,100 @@ mod tests {
             "93787d2d-47b8-4f26-ba5a-341d3c60ca15"
         );
     }
+    #[derive(Debug, Clone, Copy)]
+    enum ExpectOrPanic {
+        Expect,
+        Panic,
+    }
+    fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
+        struct ExpectVisitor {
+            expect_or_panic: ExpectOrPanic,
+            uuids: Vec<String>,
+            errors: Vec<String>,
+        }
+        impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
+            fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
+                let expect_or_panic_str = match self.expect_or_panic {
+                    ExpectOrPanic::Expect => "expect",
+                    ExpectOrPanic::Panic => "panic",
+                };
+                if i.method == expect_or_panic_str {
+                    if i.args.len() == 1 {
+                        if let syn::Expr::Lit(syn::ExprLit {
+                            lit: syn::Lit::Str(lit_str),
+                            ..
+                        }) = &i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
+                        {
+                            let value = lit_str.value();
+                            match uuid::Uuid::parse_str(&value) {
+                                Ok(uuid) if uuid.get_version() == Some(uuid::Version::Random) => {
+                                    self.uuids.push(value);
+                                }
+                                _ => {
+                                    self.errors
+                                        .push(format!("arg is not valid UUID v4: {value}"));
+                                }
+                            }
+                        } else {
+                            self.errors.push("arg is not string literal".to_owned());
+                        }
+                    } else {
+                        self.errors.push("with != 1 arg".to_owned());
+                    }
+                }
+                syn::visit::visit_expr_method_call(self, i);
+            }
+        }
+        let mut all_uuids = Vec::new();
+        let mut all_errors = Vec::new();
+        for entry in project_directory()
+            .into_iter()
+            .filter_entry(|element| element.file_name() != "target")
+            .filter_map(Result::ok)
+            .filter(|element| {
+                element
+                    .path()
+                    .extension()
+                    .and_then(|current_element| current_element.to_str())
+                    == Some("rs")
+            })
+        {
+            let Ok(content) = std::fs::read_to_string(entry.path()) else {
+                continue;
+            };
+            let ast = syn::parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
+            let mut visitor = ExpectVisitor {
+                expect_or_panic,
+                uuids: Vec::new(),
+                errors: Vec::new(),
+            };
+            syn::visit::Visit::visit_file(&mut visitor, &ast);
+            all_uuids.extend(visitor.uuids);
+            all_errors.extend(
+                visitor
+                    .errors
+                    .into_iter()
+                    .map(|element| format!("{:?}: {}", entry.path(), element)),
+            );
+        }
+        let mut seen = std::collections::HashSet::new();
+        let mut duplicates = Vec::new();
+        for uuid in all_uuids {
+            if !seen.insert(uuid.clone()) {
+                duplicates.push(uuid);
+            }
+        }
+        if !duplicates.is_empty() {
+            all_errors.push(format!("duplicate UUIDs found: {duplicates:?}"));
+        }
+        assert!(
+            all_errors.is_empty(),
+            "52eb15f1-7b88-4dfa-869b-a7b6f241df08",
+        );
+    }
+    fn project_directory() -> walkdir::WalkDir {
+        walkdir::WalkDir::new("../")
+    }
     #[test]
     fn check_if_workspace_cargo_toml_workspace_lints_rust_contains_all_rust_lints() {
         let rust_or_clippy = RustOrClippy::Rust;
@@ -293,97 +387,6 @@ mod tests {
             }
         }
     }
-    #[derive(Debug, Clone, Copy)]
-    enum ExpectOrPanic {
-        Expect,
-        Panic,
-    }
-    fn check_expect_or_panic_contains_only_unique_uuid_v4(expect_or_panic: ExpectOrPanic) {
-        struct ExpectVisitor {
-            expect_or_panic: ExpectOrPanic,
-            uuids: Vec<String>,
-            errors: Vec<String>,
-        }
-        impl<'ast> syn::visit::Visit<'ast> for ExpectVisitor {
-            fn visit_expr_method_call(&mut self, i: &'ast syn::ExprMethodCall) {
-                let expect_or_panic_str = match self.expect_or_panic {
-                    ExpectOrPanic::Expect => "expect",
-                    ExpectOrPanic::Panic => "panic",
-                };
-                if i.method == expect_or_panic_str {
-                    if i.args.len() == 1 {
-                        if let syn::Expr::Lit(syn::ExprLit {
-                            lit: syn::Lit::Str(lit_str),
-                            ..
-                        }) = &i.args.get(0).expect("d5ad7bff-2125-4fe2-a132-d7f6446a1710")
-                        {
-                            let value = lit_str.value();
-                            match uuid::Uuid::parse_str(&value) {
-                                Ok(uuid) if uuid.get_version() == Some(uuid::Version::Random) => {
-                                    self.uuids.push(value);
-                                }
-                                _ => {
-                                    self.errors
-                                        .push(format!("arg is not valid UUID v4: {value}"));
-                                }
-                            }
-                        } else {
-                            self.errors.push("arg is not string literal".to_owned());
-                        }
-                    } else {
-                        self.errors.push("with != 1 arg".to_owned());
-                    }
-                }
-                syn::visit::visit_expr_method_call(self, i);
-            }
-        }
-        let mut all_uuids = Vec::new();
-        let mut all_errors = Vec::new();
-        for entry in walkdir::WalkDir::new("../")
-            .into_iter()
-            .filter_entry(|element| element.file_name() != "target")
-            .filter_map(Result::ok)
-            .filter(|element| {
-                element
-                    .path()
-                    .extension()
-                    .and_then(|current_element| current_element.to_str())
-                    == Some("rs")
-            })
-        {
-            let Ok(content) = std::fs::read_to_string(entry.path()) else {
-                continue;
-            };
-            let ast = syn::parse_file(&content).expect("5e7a83eb-2556-47b7-8677-66f8612242ad");
-            let mut visitor = ExpectVisitor {
-                expect_or_panic,
-                uuids: Vec::new(),
-                errors: Vec::new(),
-            };
-            syn::visit::Visit::visit_file(&mut visitor, &ast);
-            all_uuids.extend(visitor.uuids);
-            all_errors.extend(
-                visitor
-                    .errors
-                    .into_iter()
-                    .map(|element| format!("{:?}: {}", entry.path(), element)),
-            );
-        }
-        let mut seen = std::collections::HashSet::new();
-        let mut duplicates = Vec::new();
-        for uuid in all_uuids {
-            if !seen.insert(uuid.clone()) {
-                duplicates.push(uuid);
-            }
-        }
-        if !duplicates.is_empty() {
-            all_errors.push(format!("duplicate UUIDs found: {duplicates:?}"));
-        }
-        assert!(
-            all_errors.is_empty(),
-            "52eb15f1-7b88-4dfa-869b-a7b6f241df08",
-        );
-    }
     #[test]
     fn check_expect_contains_only_unique_uuid_v4() {
         check_expect_or_panic_contains_only_unique_uuid_v4(ExpectOrPanic::Expect);
@@ -398,7 +401,7 @@ mod tests {
             r"\b[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}\b"
         ).expect("e098a1ff-0e70-44f5-a75e-ffe6042ee9f5");
         let mut seen = std::collections::HashSet::new();
-        for entry in walkdir::WalkDir::new("../")
+        for entry in project_directory()
             .into_iter()
             .filter_entry(|element| element.file_name() != "target")
             .filter_map(Result::ok)
@@ -430,7 +433,7 @@ mod tests {
         let exceptions = [
             "../postgresql_crud/postgresql_crud_common/src/lib.rs", //contain utf-8 String test
         ];
-        for entry in walkdir::WalkDir::new("../")
+        for entry in project_directory()
             .into_iter()
             .filter_entry(|element| {
                 let name = element.file_name().to_string_lossy();
