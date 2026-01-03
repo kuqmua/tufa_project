@@ -475,6 +475,65 @@ mod tests {
                 }
             }
         }
-        assert!(errors.is_empty(), "non-english symbols:\n{}", errors.join("\n"));
+        assert!(
+            errors.is_empty(),
+            "non-english symbols:\n{}",
+            errors.join("\n")
+        );
+    }
+    #[test]
+    fn workspace_crates_must_use_workspace_dependencies() {
+        let exceptions = [
+            "../Cargo.toml",               //workspace
+            "../pg_jsonschema/Cargo.toml", //need just for postgresql extension
+        ];
+        for entry in project_directory()
+            .into_iter()
+            .filter_map(Result::ok)
+            .filter(|element| element.file_name() == "Cargo.toml")
+        {
+            let path = entry.path();
+            if exceptions.contains(&path.display().to_string().as_str()) {
+                continue;
+            }
+            let mut file = std::fs::File::open(path).expect("bbb0d1fe-e503-4c46-8f2b-954d42090f41");
+            let mut content = String::new();
+            let _: usize = std::io::Read::read_to_string(&mut file, &mut content)
+                .expect("8952ff62-d903-4b93-b46a-85ae5177f98d");
+            let parsed: toml::Table = content
+                .parse()
+                .expect("49012f1f-e721-40b5-8167-5258d206196b");
+            for section in ["dependencies", "dev-dependencies", "build-dependencies"] {
+                if let Some(deps) = parsed.get(section).and_then(|value| value.as_table()) {
+                    for (name, value) in deps {
+                        let panic_with_message = || {
+                            panic!(
+                                "{}: dependency `{}` in [{}] must use `.workspace = true` \
+                                 (only `path = ...` is allowed as exception)",
+                                path.display(),
+                                name,
+                                section
+                            )
+                        };
+                        match value {
+                            toml::Value::Table(table) => {
+                                if !(table.contains_key("path")
+                                    || (table.get("workspace")
+                                        == Some(&toml::Value::Boolean(true))))
+                                {
+                                    panic_with_message();
+                                }
+                            }
+                            toml::Value::String(_)
+                            | toml::Value::Integer(_)
+                            | toml::Value::Float(_)
+                            | toml::Value::Boolean(_)
+                            | toml::Value::Datetime(_)
+                            | toml::Value::Array(_) => panic_with_message(),
+                        }
+                    }
+                }
+            }
+        }
     }
 }
