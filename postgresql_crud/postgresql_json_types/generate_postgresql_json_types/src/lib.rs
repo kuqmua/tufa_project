@@ -2990,19 +2990,55 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                 }
             };
-            //todo 
-
-            // AllElementsEqual - nope
-            // GreaterThan - yep
-            // ContainsElementGreaterThan - yep
-            // AllElementsGreaterThan - nope
-            // Between - yep
-            // In - yep
-            // RegularExpression - yep
-            // ContainsElementRegularExpression - yep
-            // AllElementsRegularExpression - nope
-            // ContainsAllElementsOfArray - nope
-            // OverlapsWithArray - nope
+            let create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            {
+                let (
+                    int_greater_than_one_less_token_stream,
+                    float_greater_than_one_less_token_stream,
+                ) = {
+                    let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
+                        match #content_token_stream {
+                            Some(#value_snake_case) => Some(vec![
+                                #ident_where_upper_camel_case::GreaterThan(
+                                    where_filters::PostgresqlJsonTypeWhereGreaterThan {
+                                        logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                        #value_snake_case: #ident_table_type_declaration_upper_camel_case(
+                                            #ident_origin_upper_camel_case(#value_snake_case)
+                                        ),
+                                    }
+                                )
+                            ]),
+                            None => None,
+                        }
+                    };
+                    (
+                        generate_greater_than_one_less_token_stream(&quote::quote!{create.0.0.checked_sub(1)}),
+                        generate_greater_than_one_less_token_stream(&quote::quote!{{
+                            let value = create.0.0 - 1.0;
+                            value.is_finite().then_some(value)
+                        }}),
+                    )
+                };
+                match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_token_stream,
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_greater_than_one_less_token_stream,
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PostgresqlJsonType::StdStringStringAsJsonbString |
+                    PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
+                }
+            }
+            else {
+                none_token_stream.clone()
+            };
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -3029,6 +3065,7 @@ pub fn generate_postgresql_json_types(
                 &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
                 &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                 &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
+                &create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
             )
         };
         let generated = quote::quote! {

@@ -279,6 +279,9 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_greater_than(
+        create: <Self::PostgresqlType as PostgresqlType>::Create,
+    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 }
 
 #[derive(Debug)]
@@ -371,16 +374,6 @@ pub trait PostgresqlJsonTypeTestCases {
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-
-    //todo
-    // LengthGreaterThan
-    // GreaterThan
-    // ContainsElementGreaterThan
-    // Between
-    // In
-    // RegularExpression
-    // ContainsElementRegularExpression
-
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
@@ -389,6 +382,16 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    fn create_into_postgresql_json_type_option_vec_where_greater_than(
+        create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
+    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    //todo
+    // GreaterThan
+    // ContainsElementGreaterThan
+    // Between
+    // In
+    // RegularExpression
+    // ContainsElementRegularExpression
 }
 
 pub trait PostgresqlTypeWhereFilter<'query_lifetime> {
