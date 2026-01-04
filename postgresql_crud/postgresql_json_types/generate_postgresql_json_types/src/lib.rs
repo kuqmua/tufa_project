@@ -2990,6 +2990,19 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                 }
             };
+            //todo 
+
+            // AllElementsEqual - nope
+            // GreaterThan - yep
+            // ContainsElementGreaterThan - yep
+            // AllElementsGreaterThan - nope
+            // Between - yep
+            // In - yep
+            // RegularExpression - yep
+            // ContainsElementRegularExpression - yep
+            // AllElementsRegularExpression - nope
+            // ContainsAllElementsOfArray - nope
+            // OverlapsWithArray - nope
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
