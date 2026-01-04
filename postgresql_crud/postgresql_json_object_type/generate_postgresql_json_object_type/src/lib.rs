@@ -5096,7 +5096,10 @@ pub fn generate_postgresql_json_object_type(
                                         #import_path::PostgresqlJsonTypeWhereLengthGreaterThan {
                                             logical_operator: #import_path::LogicalOperator::And,
                                             #value_snake_case: #import_path::UnsignedPartOfStdPrimitiveI32::try_from(
-                                                i32::try_from(#create_snake_case.0.len()).expect("1fbbd897-2fae-4271-9fac-4b4007aecf32")
+                                                i32::try_from(
+                                                    //todo temp code. make it better checking all cases
+                                                    #create_snake_case.0.len().checked_sub(1).expect("f8565936-4d27-4bd9-bc30-463b61830326")
+                                                ).expect("1fbbd897-2fae-4271-9fac-4b4007aecf32")
                                             ).expect("0eb5d915-bbbe-44c0-9096-d3d858d3a937"),
                                         }
                                     ));

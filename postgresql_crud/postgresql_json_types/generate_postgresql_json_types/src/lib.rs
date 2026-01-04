@@ -2957,7 +2957,10 @@ pub fn generate_postgresql_json_types(
                                     where_filters::PostgresqlJsonTypeWhereLengthGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
                                         #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                            i32::try_from(#content_token_stream.len()).expect("56aee101-8823-4a80-bb06-c77ce1955151")
+                                            i32::try_from(
+                                                //todo temp code. make it better checking all cases
+                                                #content_token_stream.len().checked_sub(1).expect("70751afa-3f12-4163-81f8-a28eb9836c78")
+                                            ).expect("56aee101-8823-4a80-bb06-c77ce1955151")
                                         ).expect("aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
                                     }
                                 )
