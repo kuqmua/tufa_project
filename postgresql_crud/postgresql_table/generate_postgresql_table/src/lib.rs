@@ -6242,8 +6242,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
                     let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|element: &macros_helpers::SynFieldWrapper|{
-                            let current_field_ident = &element.field_ident;
+                        &generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper|{
+                            let current_field_ident = &current_element.field_ident;
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             }
