@@ -543,7 +543,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         naming::ReadOnlyIdsMergedWithCreateIntoOptionVecWhereEqualToJsonFieldSnakeCase;
     let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case =
         naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
-    let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
+    let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case =
+        naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
     let create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case =
         naming::CreateIntoPostgresqlTypeOptionVecWhereDimensionOneEqualSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
@@ -5404,7 +5405,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             "35b26a97_abdd_4cf9_b4e5_aa9b47aa1a0d";
         let table_create_into_postgresql_json_type_option_vec_where_length_equal_name =
             "1ce53b67_1e94_413e_83cf_c6d7094289a8";
-        let table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name = "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
+        let table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name =
+            "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
 
         fill_table_field_idents_vec_token_stream(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
