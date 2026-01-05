@@ -267,7 +267,7 @@ pub fn generate_postgresql_json_object_type(
             let read_only_ids_merged_with_create_into_table_type_declaration_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoTableTypeDeclarationSnakeCase;
             let create_into_postgresql_json_type_option_vec_where_length_equal_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthEqualSnakeCase;
             let create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereLengthGreaterThanSnakeCase;
-            let create_into_postgresql_json_type_option_vec_where_greater_than_snake_case = naming::CreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
             let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -6417,7 +6417,7 @@ pub fn generate_postgresql_json_object_type(
                                 },
                             }
                         };
-                        let create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = {
+                        let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = {
                             quote::quote!{todo!()}
                         };
                         postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
@@ -6446,7 +6446,7 @@ pub fn generate_postgresql_json_object_type(
                             &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
                             &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
-                            &create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
+                            &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                         )
                     },
                     {
@@ -6512,7 +6512,8 @@ pub fn generate_postgresql_json_object_type(
                         let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
                             #create_snake_case
                         )};
-                        let create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_greater_than_snake_case(
+                        let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case(
+                            #read_only_ids_snake_case,
                             #create_snake_case
                         )};
                         postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
@@ -6543,7 +6544,7 @@ pub fn generate_postgresql_json_object_type(
                             &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
                             &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
-                            &create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
+                            &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                         )
                     },
                 )

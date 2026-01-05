@@ -2990,7 +2990,7 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                 }
             };
-            let create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
             {
                 let (
@@ -3065,7 +3065,7 @@ pub fn generate_postgresql_json_types(
                 &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
                 &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                 &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
-                &create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
+                &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
             )
         };
         let generated = quote::quote! {

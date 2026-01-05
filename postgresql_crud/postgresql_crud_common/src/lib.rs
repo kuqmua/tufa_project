@@ -279,7 +279,8 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
-    fn create_into_postgresql_json_type_option_vec_where_greater_than(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
+        read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 }
@@ -382,7 +383,8 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn create_into_postgresql_json_type_option_vec_where_greater_than(
+    fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
+        read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     //todo
