@@ -282,7 +282,7 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
 }
 
 #[derive(Debug)]
@@ -386,7 +386,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
+    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
     //todo
     // GreaterThan
     // ContainsElementGreaterThan
@@ -515,7 +515,7 @@ pub enum QueryPartErrorNamed {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<T> {
     logical_operator: LogicalOperator,
-    value: Vec<T>,
+    value: Vec<T>,//todo reuse NotEmptyUniqueEnumVec or analog
 }
 #[derive(
     Debug,

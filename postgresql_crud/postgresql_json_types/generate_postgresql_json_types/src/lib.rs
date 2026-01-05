@@ -2999,7 +2999,7 @@ pub fn generate_postgresql_json_types(
                 ) = {
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                         match #content_token_stream {
-                            Some(#value_snake_case) => Some(vec![
+                            Some(#value_snake_case) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(vec![
                                 #ident_where_upper_camel_case::GreaterThan(
                                     where_filters::PostgresqlJsonTypeWhereGreaterThan {
                                         logical_operator: postgresql_crud_common::LogicalOperator::Or,
@@ -3008,7 +3008,7 @@ pub fn generate_postgresql_json_types(
                                         ),
                                     }
                                 )
-                            ]),
+                            ]).expect("98092545-df95-4b68-97a1-bf63fa898d84")),
                             None => None,
                         }
                     };
