@@ -6194,7 +6194,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 read_only_ids_returned_from_create_one.#field_ident.clone().expect("2ed000a5-cf70-4df1-903a-c1f6d224e926"),
                                 ident_create.#field_ident.clone()
                             ) {
-                                for #element_snake_case in some_value {
+                                for #element_snake_case in some_value.into_vec() {
                                     #assert_eq_token_stream
                                 }
                             }

@@ -2268,14 +2268,11 @@ pub fn generate_postgresql_json_types(
                 let generate_acc_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     let token_stream = generate_maybe_if_some_token_stream(not_null_or_nullable, &create_dot_zero_dot_zero_token_stream, &content_token_stream);
                     quote::quote! {
-                        let mut #acc_snake_case = Vec::new();
-                        #token_stream
-                        if #acc_snake_case.is_empty() {
-                            None
-                        }
-                        else {
-                            Some(#acc_snake_case)
-                        }
+                        #import_path::NotEmptyUniqueEnumVec::try_new({
+                            let mut #acc_snake_case = Vec::new();
+                            #token_stream
+                            #acc_snake_case
+                        }).expect("4c08b551-1df7-4e5b-ae92-a700e0aded65")
                     }
                 };
                 let generate_dimension_equal_initialization_token_stream = |current_value_ident_not_null_or_nullable: &NotNullOrNullable, current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {

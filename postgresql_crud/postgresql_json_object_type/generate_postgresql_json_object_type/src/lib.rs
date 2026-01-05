@@ -4666,31 +4666,25 @@ pub fn generate_postgresql_json_object_type(
                                     None
                                 }
                                 else {
-                                    Some({
+                                    Some(#import_path::NotEmptyUniqueEnumVec::try_new({
                                         let mut #acc_snake_case = Vec::new();
-                                        for #element_snake_case in some_value.clone() {
+                                        for #element_snake_case in some_value.clone().into_vec() {
                                             #acc_snake_case.push(
                                                 #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                                     Some(
                                                         #import_path::NotEmptyUniqueEnumVec::try_new(
                                                             vec![#element_snake_case]
-                                                        ).expect("77d3b728-581f-4a7e-9c89-bf045ea5f80e")
+                                                        ).expect("604b888c-923d-4c11-98a6-a5b523f2e91b")
                                                     )
                                                 )
                                             );
                                         }
-                                        let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                            Some(
-                                                #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                    some_value
-                                                ).expect("8380eb52-5b89-465c-923a-0e1b5ebe5ce9")
-                                            )
-                                        );
+                                        let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
                                         if !#acc_snake_case.contains(&whole) {
                                             #acc_snake_case.push(whole);
                                         }
                                         #acc_snake_case
-                                    })
+                                    }).expect("12b7822a-45ed-4368-86a7-fc0035880377"))
                                 },
                                 None => None
                             },
@@ -4711,7 +4705,7 @@ pub fn generate_postgresql_json_object_type(
                                             #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                             #create_snake_case.#field_ident
                                         ) {
-                                            for #element_snake_case in some_value.clone() {
+                                            for #element_snake_case in some_value.clone().into_vec() {
                                                 #acc_snake_case.push(
                                                     #ident_where_upper_camel_case::#field_ident_upper_camel_case(
                                                         #import_path::PostgresqlTypeWhere::try_new(
@@ -4724,7 +4718,7 @@ pub fn generate_postgresql_json_object_type(
                                             let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
-                                                    some_value
+                                                    some_value.into_vec()
                                                 ).expect("029c6ab6-27c0-41c6-8405-155ab793275f")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
@@ -4734,9 +4728,17 @@ pub fn generate_postgresql_json_object_type(
                                     }
                                 });
                                 quote::quote! {
-                                    let mut #acc_snake_case = Vec::new();
-                                    #(#content_token_stream)*
-                                    #acc_is_empty_none_or_some_acc_token_stream
+                                    match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                        let mut #acc_snake_case = Vec::new();
+                                        #(#content_token_stream)*
+                                        #acc_snake_case
+                                    }) {
+                                        Ok(ok_value) => Some(ok_value),
+                                        Err(error) => match error {
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("88912e24-3bee-4dc4-a373-6d96d260170f")
+                                        }
+                                    }
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_nullable_token_stream(&ident_standart_not_null_upper_camel_case)
@@ -4752,7 +4754,7 @@ pub fn generate_postgresql_json_object_type(
                                             #read_only_ids_snake_case.0.#value_snake_case.#field_ident.clone(),
                                             #create_snake_case.#field_ident.clone()
                                         ) {
-                                            for #element_snake_case in some_value.clone() {
+                                            for #element_snake_case in some_value.clone().into_vec() {
                                                 let handle = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
                                                     #import_path::PostgresqlTypeWhere::try_new(
                                                         #import_path::LogicalOperator::And,
@@ -4766,7 +4768,7 @@ pub fn generate_postgresql_json_object_type(
                                             let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
                                                 #import_path::PostgresqlTypeWhere::try_new(
                                                     #import_path::LogicalOperator::And,
-                                                    some_value
+                                                    some_value.into_vec()
                                                 ).expect("79634838-847d-4eeb-b199-4927d57b2e2c")
                                             );
                                             if !#acc_snake_case.contains(&whole) {
@@ -4812,15 +4814,19 @@ pub fn generate_postgresql_json_object_type(
                                     postgresql_crud_macros_common::Dimension::Four => proc_macro2::TokenStream::new(),
                                 };
                                 quote::quote! {
-                                    let mut #acc_snake_case = Vec::new();
-                                    for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
-                                        .zip(#create_snake_case.0.into_iter())
-                                        .enumerate()
-                                    {
-                                        #(#content_token_stream)*
-                                        #maybe_dimension_one_token_stream
-                                    }
-                                    #acc_is_empty_none_or_some_acc_token_stream
+                                    Some(
+                                        #import_path::NotEmptyUniqueEnumVec::try_new({
+                                            let mut #acc_snake_case = Vec::new();
+                                            for (index, (#read_only_ids_snake_case, #create_snake_case)) in #read_only_ids_snake_case.0.#value_snake_case.into_iter()
+                                                .zip(#create_snake_case.0.into_iter())
+                                                .enumerate()
+                                            {
+                                                #(#content_token_stream)*
+                                                #maybe_dimension_one_token_stream
+                                            }
+                                            #acc_snake_case
+                                        }).expect("dffabcfc-41a4-4798-8bf0-8c4f46f58f72")
+                                    )
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_nullable_token_stream(&ident_array_not_null_upper_camel_case)
