@@ -238,7 +238,7 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Vec<<Self::PostgresqlType as PostgresqlType>::Where>;
+    ) -> NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>;
     fn read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
@@ -354,7 +354,7 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_vec_where_equal_using_fields(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
+    ) -> NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>;
     fn read_only_ids_merged_with_create_into_vec_where_equal_to_json_field(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,

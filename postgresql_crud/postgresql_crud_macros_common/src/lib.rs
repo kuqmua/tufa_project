@@ -1354,6 +1354,7 @@ pub fn generate_read_only_ids_merged_with_create_into_where_equal_token_stream(
     }
 }
 pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(
+    import_path: &ImportPath,
     read_only_ids_token_stream: &dyn quote::ToTokens,
     create_token_stream: &dyn quote::ToTokens,
     where_token_stream: &dyn quote::ToTokens,
@@ -1367,7 +1368,7 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fiel
         fn #read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
             #read_only_ids_snake_case: #read_only_ids_token_stream,
             #create_snake_case: #create_token_stream
-        ) -> Vec<#where_token_stream> {
+        ) -> #import_path::NotEmptyUniqueEnumVec<#where_token_stream> {
             #content_token_stream
         }
     }
@@ -1676,6 +1677,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         );
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_content_token_stream =
         generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(
+            import_path,
             &self_postgresql_type_as_postgresql_type_read_only_ids_token_stream,
             &self_postgresql_type_as_postgresql_type_create_token_stream,
             &self_postgresql_type_as_postgresql_type_where_token_stream,
@@ -1885,6 +1887,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         );
     let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_content_token_stream =
         generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(
+            import_path,
             &self_postgresql_json_type_as_postgresql_json_type_read_only_ids_token_stream,
             &self_postgresql_json_type_as_postgresql_json_type_create_token_stream,
             &self_postgresql_json_type_as_postgresql_json_type_where_token_stream,

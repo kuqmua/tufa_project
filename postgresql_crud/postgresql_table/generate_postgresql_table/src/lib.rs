@@ -6059,11 +6059,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             } else if current_field_ident == field_ident {
                                 generate_some_postgresql_type_where_try_new_and_token_stream(&{
                                     let generate_token_stream = |method_token_stream: &dyn quote::ToTokens| {
+                                        let maybe_into_token_stream = match equal_or_equal_using_fields {
+                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => proc_macro2::TokenStream::new(),
+                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{.into()},
+                                        };
                                         quote::quote! {
                                             <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
                                                 read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
                                                 ident_create.#current_field_ident.clone()
-                                            )
+                                            ) #maybe_into_token_stream
                                         }
                                     };
                                     match &equal_or_equal_using_fields {

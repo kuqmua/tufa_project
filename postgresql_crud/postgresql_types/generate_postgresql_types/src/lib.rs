@@ -5942,7 +5942,9 @@ pub fn generate_postgresql_types(
                 }
             };
             let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = quote::quote! {
-                vec![#read_only_ids_merged_with_create_into_where_equal_token_stream]
+                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                    #read_only_ids_merged_with_create_into_where_equal_token_stream
+                ]).expect("4c08b551-1df7-4e5b-ae92-a700e0aded65")
             };
             let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = none_token_stream.clone();
             let create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream = match &postgresql_type_pattern {

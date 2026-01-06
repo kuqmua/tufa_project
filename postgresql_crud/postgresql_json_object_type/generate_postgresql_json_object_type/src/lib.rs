@@ -492,6 +492,7 @@ pub fn generate_postgresql_json_object_type(
                             },
                         );
                         let read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream = postgresql_crud_macros_common::generate_read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream(
+                            &import_path,
                             &ident_with_id_standart_not_null_read_only_ids_upper_camel_case,
                             &ident_with_id_standart_not_null_create_upper_camel_case,
                             &ident_with_id_standart_not_null_where_upper_camel_case,
@@ -510,7 +511,7 @@ pub fn generate_postgresql_json_object_type(
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                                                     #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #second_argument_token_stream
-                                                ),
+                                                ).into_vec(),
                                             )
                                             .expect("f8c3796f-7574-468b-ac60-12a620c0917d"),
                                         )
@@ -530,10 +531,10 @@ pub fn generate_postgresql_json_object_type(
                                     )
                                 });
                                 quote::quote!{
-                                    vec![
+                                    #import_path::NotEmptyUniqueEnumVec::try_new(vec![
                                         #id_token_stream,
                                         #(#content_token_stream),*
-                                    ]
+                                    ]).expect("5473d8c4-2b10-4ba8-8a4a-704fde84f6ff")
                                 }
                             },
                         );
@@ -4662,30 +4663,25 @@ pub fn generate_postgresql_json_object_type(
                                 #read_only_ids_snake_case,
                                 #create_snake_case
                             ) {
-                                Some(some_value) => if some_value.is_empty() {
-                                    None
-                                }
-                                else {
-                                    Some(#import_path::NotEmptyUniqueEnumVec::try_new({
-                                        let mut #acc_snake_case = Vec::new();
-                                        for #element_snake_case in some_value.clone().into_vec() {
-                                            #acc_snake_case.push(
-                                                #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                    Some(
-                                                        #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                            vec![#element_snake_case]
-                                                        ).expect("604b888c-923d-4c11-98a6-a5b523f2e91b")
-                                                    )
+                                Some(some_value) => Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                                    let mut #acc_snake_case = Vec::new();
+                                    for #element_snake_case in some_value.clone().into_vec() {
+                                        #acc_snake_case.push(
+                                            #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                Some(
+                                                    #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                        vec![#element_snake_case]
+                                                    ).expect("604b888c-923d-4c11-98a6-a5b523f2e91b")
                                                 )
-                                            );
-                                        }
-                                        let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
-                                        if !#acc_snake_case.contains(&whole) {
-                                            #acc_snake_case.push(whole);
-                                        }
-                                        #acc_snake_case
-                                    }).expect("12b7822a-45ed-4368-86a7-fc0035880377"))
-                                },
+                                            )
+                                        );
+                                    }
+                                    let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
+                                    if !#acc_snake_case.contains(&whole) {
+                                        #acc_snake_case.push(whole);
+                                    }
+                                    #acc_snake_case
+                                }).expect("12b7822a-45ed-4368-86a7-fc0035880377")),
                                 None => None
                             },
                             (Some(_), None) => panic!("6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
@@ -5988,7 +5984,7 @@ pub fn generate_postgresql_json_object_type(
                                                         #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                                                             #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                             #create_snake_case.#field_ident
-                                                        )
+                                                        ).into_vec()
                                                     )
                                                     .expect("edacf099-3f54-41ab-980d-e1d8760e216f")
                                                 )
@@ -6060,7 +6056,7 @@ pub fn generate_postgresql_json_object_type(
                                     quote::quote! {
                                         #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                             match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("9f550fbd-2d60-4a8a-a67b-ab49f728c9d0")),
+                                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#content_token_stream),
                                                 (Some(_), None) => panic!("49e4c289-b37d-4365-96e3-5d896d6860f7"),
                                                 (None, Some(_)) => panic!("ad71caa2-2503-4f9a-952c-e796abf5bbbe"),
                                                 (None, None) => None,
@@ -6069,7 +6065,11 @@ pub fn generate_postgresql_json_object_type(
                                     }
                                 },
                             };
-                            quote::quote!{vec![#content_token_stream]}
+                            quote::quote!{
+                                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                                    #content_token_stream
+                                ]).expect("ba9c52c1-6fb6-4fb7-bb5a-b4998b7a2ed2")
+                            }
                         };
                         let read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_token_stream = match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -6130,7 +6130,7 @@ pub fn generate_postgresql_json_object_type(
                                 #self_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                                     #read_only_ids_snake_case,
                                     #create_snake_case
-                                )
+                                ).into()
                             }
                         };
                         let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream = generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::One);
@@ -6642,17 +6642,9 @@ pub fn generate_postgresql_json_object_type(
                                             #create_snake_case
                                         ) {
                                             Some(some_value) => Some(
-                                                #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                    vec![
-                                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                            Some(
-                                                                #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                                    some_value
-                                                                ).expect("af515faf-8805-44c3-a5b6-f6e307b8b23a")
-                                                            )
-                                                        )
-                                                    ]
-                                                ).expect("4155b8a5-7d8e-47d8-b19f-221bf30fca6c")
+                                                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value))
+                                                ]).expect("4155b8a5-7d8e-47d8-b19f-221bf30fca6c")
                                             ),
                                             None => None,
                                         },
