@@ -5919,7 +5919,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let generate_postgresql_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_token_stream =
                 |_: &syn::Ident, field_type: &syn::Type| {
                     quote::quote! {
-                        <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#postgresql_type_option_vec_where_greater_than_test_snake_case().unwrap_or(Vec::new())
+                        match <
+                            #field_type
+                            as
+                            postgresql_crud::PostgresqlTypeTestCases
+                        >::#postgresql_type_option_vec_where_greater_than_test_snake_case() {
+                            Some(some_value) => some_value.into(),
+                            None => Vec::new(),
+                        }
                     }
                 };
             let generate_read_test_token_stream =

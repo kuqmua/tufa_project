@@ -2568,6 +2568,7 @@ pub fn generate_postgresql_types(
                 .derive_debug()
                 .derive_clone()
                 .derive_copy()
+                .derive_partial_eq()
                 .build_struct(
                     &ident,
                     &quote::quote!{;},
@@ -6075,7 +6076,9 @@ pub fn generate_postgresql_types(
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            let wrap_into_some_vec_token_stream = |content_token_stream: &dyn quote::ToTokens| quote::quote! {Some(vec![#content_token_stream])};
+                            let wrap_into_some_vec_token_stream = |content_token_stream: &dyn quote::ToTokens| quote::quote! {Some(
+                                #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]).expect("3ad4b6bf-ba8c-4b14-8745-b0d658e2bdd6")
+                            )};
                             let sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream = &generate_ident_token_stream(
                                 &PostgresqlType::SqlxTypesChronoNaiveTimeAsTime,
                                 &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -6091,7 +6094,6 @@ pub fn generate_postgresql_types(
                                 &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                 &PostgresqlTypePattern::Standart
                             );
-                            //here
                             match &postgresql_type {
                                 PostgresqlType::StdPrimitiveI16AsInt2 => wrap_into_some_vec_token_stream(&generate_greater_than_test_new_new_vec_token_stream(
                                     &quote::quote!{#std_primitive_i16_token_stream::MIN},
@@ -6207,14 +6209,17 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                             <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test().map(
                                 |#element_snake_case|
-                                #element_snake_case
-                                .into_iter()
-                                .map(|current_element| #import_path::PostgresqlTypeGreaterThanTest {
-                                    variant: current_element.variant,
-                                    create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.create.0))),
-                                    greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.greater_than.0))),
-                                })
-                                .collect()
+                                #import_path::NotEmptyUniqueEnumVec::try_new(
+                                    #element_snake_case
+                                    .into_vec()
+                                    .into_iter()
+                                    .map(|current_element| #import_path::PostgresqlTypeGreaterThanTest {
+                                        variant: current_element.variant,
+                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.create.0))),
+                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.greater_than.0))),
+                                    })
+                                    .collect()
+                                ).expect("63ce5df3-2b2b-4b2d-be70-0041e6a1cad2")
                             )
                         },
                     },

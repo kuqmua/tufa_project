@@ -67,7 +67,7 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum PostgresqlTypeGreaterThanVariant {
     GreaterThan,
     NotGreaterThan,
