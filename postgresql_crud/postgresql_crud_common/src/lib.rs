@@ -245,7 +245,7 @@ pub trait PostgresqlTypeTestCases {
     ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn create_into_postgresql_type_option_vec_where_dimension_one_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
     fn postgresql_type_option_vec_where_greater_than_test()
     -> Option<Vec<PostgresqlTypeGreaterThanTest<Self::PostgresqlType>>>;
     fn read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than(

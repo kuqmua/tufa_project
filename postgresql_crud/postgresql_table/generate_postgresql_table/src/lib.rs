@@ -6135,7 +6135,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if let Some(some_value) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case(
                                 ident_create.#field_ident.clone()
                             ) {
-                                for #element_snake_case in some_value {
+                                for #element_snake_case in some_value.into_vec() {
                                     #assert_eq_token_stream
                                 }
                             }

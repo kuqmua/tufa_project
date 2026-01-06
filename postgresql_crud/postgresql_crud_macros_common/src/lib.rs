@@ -1767,7 +1767,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
             #read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_content_token_stream
             fn #create_into_postgresql_type_option_vec_where_dimension_one_equal_snake_case(
                 #create_snake_case: #self_postgresql_type_as_postgresql_type_token_stream::#create_upper_camel_case
-            ) -> Option<Vec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
+            ) -> Option<#import_path::NotEmptyUniqueEnumVec<#self_postgresql_type_as_postgresql_type_token_stream::#where_upper_camel_case>> {
                 #create_into_postgresql_type_option_vec_where_dimension_one_equal_token_stream
             }
             fn #postgresql_type_option_vec_where_greater_than_test_snake_case() -> Option<Vec<#import_path::PostgresqlTypeGreaterThanTest<#self_upper_camel_case::#postgresql_type_upper_camel_case>>> {
