@@ -6432,7 +6432,7 @@ pub fn generate_postgresql_json_object_type(
                                         let field_type = &current_element.field_type;
                                         let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
-                                        let field_type_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_type_last_segment(&field_type);
+                                        let field_type_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_type_last_segment(field_type);
                                         quote::quote! {
                                             if let Some(some_value) = #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case(
                                                 #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
@@ -6625,7 +6625,6 @@ pub fn generate_postgresql_json_object_type(
                                         // else {
                                         //     Some(acc)
                                         // }
-                                        
                                         todo!()
                                     }
                                 }

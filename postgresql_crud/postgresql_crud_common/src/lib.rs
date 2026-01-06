@@ -515,7 +515,7 @@ pub enum QueryPartErrorNamed {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<T> {
     logical_operator: LogicalOperator,
-    value: Vec<T>,//todo reuse NotEmptyUniqueEnumVec or analog
+    value: Vec<T>, //todo reuse NotEmptyUniqueEnumVec or analog
 }
 #[derive(
     Debug,

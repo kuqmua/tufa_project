@@ -1422,7 +1422,7 @@ pub fn generate_read_only_ids_merged_with_create_into_vec_where_equal_to_json_fi
     generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_to_json_field_postgresql_type_or_postgresql_json_type_token_stream(&read_only_ids_token_stream, &create_token_stream, &where_token_stream, &content_token_stream, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     name_token_stream: &dyn quote::ToTokens,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
@@ -1442,7 +1442,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     }
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1454,7 +1454,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     )
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1466,7 +1466,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     )
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1478,7 +1478,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
     )
 }
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1527,7 +1527,7 @@ fn generate_create_into_postgresql_json_type_option_vec_where_length_greater_tha
 }
 
 fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream(
-    import_path: &ImportPath,
+    import_path: ImportPath,
     path_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -1696,22 +1696,22 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         naming::PostgresqlTypeOptionVecWhereGreaterThanTestSnakeCase;
     let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithTableTypeDeclarationIntoPostgresqlTypeOptionWhereGreaterThanSnakeCase;
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
     );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
     );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
     );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_type_as_postgresql_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
     );
@@ -1733,7 +1733,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
         );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_content_token_stream =
         generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream(
-            import_path,
+            *import_path,
             &self_postgresql_type_as_postgresql_type_token_stream,
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
         );
@@ -1901,23 +1901,23 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
             &read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_token_stream,
         );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_one_equal_token_stream
     );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_two_equal_token_stream
     );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_content_token_stream =
         generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream(
-            import_path,
+            *import_path,
             &self_postgresql_json_type_as_postgresql_json_type_token_stream,
             &create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream
         );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_content_token_stream = generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream(
-        import_path,
+        *import_path,
         &self_postgresql_json_type_as_postgresql_json_type_token_stream,
         &create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream
     );
@@ -1939,7 +1939,7 @@ pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
         );
     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_content_token_stream =
         generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream(
-            import_path,
+            *import_path,
             &self_postgresql_json_type_as_postgresql_json_type_token_stream,
             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
         );
