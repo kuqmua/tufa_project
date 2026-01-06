@@ -1385,7 +1385,8 @@ fn generate_read_only_ids_merged_with_create_into_vec_or_option_vec_where_equal_
     let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
     let create_snake_case = naming::CreateSnakeCase;
     let return_type_token_stream = {
-        let return_type_handle_token_stream = quote::quote! {#import_path::NotEmptyUniqueEnumVec<#where_token_stream>};
+        let return_type_handle_token_stream =
+            quote::quote! {#import_path::NotEmptyUniqueEnumVec<#where_token_stream>};
         match &postgresql_type_or_postgresql_json_type {
             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => {
                 generate_std_option_option_tokens_declaration_token_stream(
