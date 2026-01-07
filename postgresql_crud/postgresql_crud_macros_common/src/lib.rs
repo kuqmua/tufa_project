@@ -1577,7 +1577,7 @@ fn generate_postgresql_json_type_option_vec_where_length_greater_than_test_token
         ),
     };
     quote::quote! {
-        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<Vec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
+        fn #postgresql_json_type_option_vec_where_length_greater_than_test_snake_case() -> Option<#import_path::NotEmptyUniqueEnumVec<#import_path::#first_token_stream<Self::#second_token_stream>>> {
             #content_token_stream
         }
     }

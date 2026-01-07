@@ -273,8 +273,9 @@ pub trait PostgresqlTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlType as PostgresqlType>::Where>>;
+    //todo maybe need maybe not. for later
     fn postgresql_json_type_option_vec_where_length_greater_than_test()
-    -> Option<Vec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
+    -> Option<NotEmptyUniqueEnumVec<PostgresqlTypeLengthGreaterThanTest<Self::PostgresqlType>>>;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlType as PostgresqlType>::Create,
     ) -> Option<Vec<<Self::PostgresqlType as PostgresqlType>::Where>>;
@@ -377,8 +378,10 @@ pub trait PostgresqlJsonTypeTestCases {
     fn create_into_postgresql_json_type_option_vec_where_length_equal(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<NotEmptyUniqueEnumVec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
-    fn postgresql_json_type_option_vec_where_length_greater_than_test()
-    -> Option<Vec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>>;
+    //todo maybe need maybe not. for later
+    fn postgresql_json_type_option_vec_where_length_greater_than_test() -> Option<
+        NotEmptyUniqueEnumVec<PostgresqlJsonTypeLengthGreaterThanTest<Self::PostgresqlJsonType>>,
+    >;
     fn create_into_postgresql_json_type_option_vec_where_length_greater_than(
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
     ) -> Option<Vec<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>;
