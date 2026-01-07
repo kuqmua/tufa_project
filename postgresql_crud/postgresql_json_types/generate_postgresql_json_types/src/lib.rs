@@ -2984,7 +2984,15 @@ pub fn generate_postgresql_json_types(
                             }
                         }
                     };
-                    quote::quote! {Some(vec![#content_token_stream])}
+                    quote::quote! {
+                        match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                            Ok(ok_value) => Some(ok_value),
+                            Err(error) => match error {
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("497359a5-49fb-4152-a9f4-5d1bbda2f926")
+                            },
+                        }
+                    }
                 };
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
