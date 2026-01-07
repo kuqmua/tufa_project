@@ -2910,7 +2910,9 @@ pub fn generate_postgresql_json_types(
                             }
                         }
                     };
-                    quote::quote! {Some(vec![#content_token_stream])}
+                    quote::quote! {Some(
+                        #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]).expect("865b531f-3e7d-4b7c-be80-085b8394572f")
+                    )}
                 };
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
