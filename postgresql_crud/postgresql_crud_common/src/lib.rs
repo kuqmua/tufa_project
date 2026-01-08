@@ -528,13 +528,10 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
                 logical_operator,
                 value: ok_value,
             }),
-            Err(error) => Err(error)
+            Err(error) => Err(error),
         }
     }
-    pub fn new(
-        logical_operator: LogicalOperator,
-        value: NotEmptyUniqueEnumVec<T>,
-    ) -> Self {
+    pub const fn new(logical_operator: LogicalOperator, value: NotEmptyUniqueEnumVec<T>) -> Self {
         Self {
             logical_operator,
             value,
@@ -779,8 +776,12 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         Ok(query)
     }
 }
-impl<T: std::fmt::Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
-    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T>
+impl<
+    T: std::fmt::Debug
+        + PartialEq
+        + Clone
+        + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+> DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {

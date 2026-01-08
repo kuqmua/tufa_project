@@ -5100,27 +5100,30 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let config_path_token_stream = quote::quote! {server_config::Config};
         let underscore_unused_token_stream = quote::quote! {_unused};
         //todo maybe remove it?\
-        let generate_some_postgresql_type_where_try_new_token_stream = |
-            logical_operator_token_stream: &dyn quote::ToTokens,
-            content_token_stream: &dyn quote::ToTokens
-        | quote::quote! {
-            Some(
-                #import_path::PostgresqlTypeWhere::try_new(
-                    #logical_operator_token_stream,
-                    #content_token_stream
-                ).expect("6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
-            )
-        };
-        let generate_some_postgresql_type_where_try_new_and_token_stream = |
-            content_token_stream: &dyn quote::ToTokens
-        | generate_some_postgresql_type_where_try_new_token_stream(
-            &quote::quote!{#import_path::LogicalOperator::And},
-            content_token_stream
-        );
-        let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = generate_some_postgresql_type_where_try_new_token_stream(
-            &quote::quote!{logical_operator},
-            &quote::quote!{vec}
-        );
+        let generate_some_postgresql_type_where_try_new_token_stream =
+            |logical_operator_token_stream: &dyn quote::ToTokens,
+             content_token_stream: &dyn quote::ToTokens| {
+                quote::quote! {
+                    Some(
+                        #import_path::PostgresqlTypeWhere::try_new(
+                            #logical_operator_token_stream,
+                            #content_token_stream
+                        ).expect("6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
+                    )
+                }
+            };
+        let generate_some_postgresql_type_where_try_new_and_token_stream =
+            |content_token_stream: &dyn quote::ToTokens| {
+                generate_some_postgresql_type_where_try_new_token_stream(
+                    &quote::quote! {#import_path::LogicalOperator::And},
+                    content_token_stream,
+                )
+            };
+        let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream =
+            generate_some_postgresql_type_where_try_new_token_stream(
+                &quote::quote! {logical_operator},
+                &quote::quote! {vec},
+            );
         let ident_create_default_fields_initialization_without_primary_key_token_stream =
             generate_fields_named_without_primary_key_with_comma_token_stream(
                 &|element: &macros_helpers::SynFieldWrapper| {

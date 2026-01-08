@@ -69,10 +69,10 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOpera
 impl quote::ToTokens for LogicalOperator {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::And => quote::quote!{And},
-            Self::Or => quote::quote!{Or},
-            Self::AndNot => quote::quote!{AndNot},
-            Self::OrNot => quote::quote!{OrNot},
+            Self::And => quote::quote! {And},
+            Self::Or => quote::quote! {Or},
+            Self::AndNot => quote::quote! {AndNot},
+            Self::OrNot => quote::quote! {OrNot},
         }
         .to_tokens(tokens);
     }
