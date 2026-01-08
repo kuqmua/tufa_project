@@ -1554,7 +1554,7 @@ fn generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_ve
         fn #read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case(
             #read_only_ids_snake_case: #path_token_stream::#read_only_ids_upper_camel_case,
             #create_snake_case: #path_token_stream::#create_upper_camel_case
-        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#path_token_stream::#where_upper_camel_case>> {
+        ) -> Option<#import_path::NotEmptyUniqueEnumVec<#import_path::SingleOrMultiple<#path_token_stream::#where_upper_camel_case>>> {
             #content_token_stream
         }
     }

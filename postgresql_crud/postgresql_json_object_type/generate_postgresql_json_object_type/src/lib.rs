@@ -6440,27 +6440,60 @@ pub fn generate_postgresql_json_object_type(
                                         let field_type = &current_element.field_type;
                                         let field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
-                                        let field_type_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_type_last_segment(field_type);
                                         quote::quote! {
                                             if let Some(some_value) = #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case(
                                                 #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                 #create_snake_case.#field_ident
                                             ) {
-                                                for #element_snake_case in <#import_path::NotEmptyUniqueEnumVec<#field_type_where_upper_camel_case> as Into<Vec<#field_type_where_upper_camel_case>>>::into(some_value.clone()) {
-                                                    #acc_snake_case.push(
-                                                        #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                            #import_path::PostgresqlTypeWhere::try_new(
-                                                                #import_path::LogicalOperator::And,
-                                                                vec![#element_snake_case]
-                                                            ).expect("2635ede5-e733-4793-a2b5-110dda258c90")
-                                                        )
-                                                    );
+                                                let and = #import_path::LogicalOperator::And;
+                                                for element in some_value.clone().into_vec() {
+                                                    match element {
+                                                        #import_path::SingleOrMultiple::Single(single) => {
+                                                            #acc_snake_case.push(
+                                                                #import_path::SingleOrMultiple::Single(
+                                                                    AnimalAsNotNullJsonbObjectWhere::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::try_new(
+                                                                        and,
+                                                                        vec![single]
+                                                                    ).expect("2635ede5-e733-4793-a2b5-110dda258c90"))
+                                                                )
+                                                            );
+                                                        },
+                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                            #acc_snake_case.push(
+                                                                #import_path::SingleOrMultiple::Single(
+                                                                    AnimalAsNotNullJsonbObjectWhere::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::new(
+                                                                        and,
+                                                                        multiple
+                                                                    ))
+                                                                )
+                                                            );
+                                                        }
+                                                    }
                                                 }
-                                                let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                    #import_path::PostgresqlTypeWhere::new(
+                                                let whole = #import_path::SingleOrMultiple::Single(
+                                                    AnimalAsNotNullJsonbObjectWhere::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::try_new(
                                                         #import_path::LogicalOperator::And,
-                                                        some_value
-                                                    )
+                                                        {
+                                                            let mut current_acc = vec![];
+                                                            for element in some_value.into_vec() {
+                                                                match element {
+                                                                    #import_path::SingleOrMultiple::Single(single) => {
+                                                                        if !current_acc.contains(&single) {
+                                                                            current_acc.push(single);
+                                                                        }
+                                                                    },
+                                                                    #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                                        for current_element in multiple.into_vec() {
+                                                                            if !current_acc.contains(&current_element) {
+                                                                                current_acc.push(current_element);
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            current_acc
+                                                        }
+                                                    ).expect("e3e5b4ab-fca8-4443-bbad-26d92d0a4667"))
                                                 );
                                                 if !#acc_snake_case.contains(&whole) {
                                                     #acc_snake_case.push(whole);
@@ -6580,11 +6613,36 @@ pub fn generate_postgresql_json_object_type(
                                             #read_only_ids_snake_case,
                                             #create_snake_case
                                         ) {
-                                            Some(some_value) => Some(
-                                                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
-                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value))
-                                                ]).expect("4155b8a5-7d8e-47d8-b19f-221bf30fca6c")
-                                            ),
+                                            Some(some_value) => Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                                                let mut #acc_snake_case = vec![];
+                                                for element in some_value.into_vec() {
+                                                    match element {
+                                                        #import_path::SingleOrMultiple::Single(single) => {
+                                                            #acc_snake_case.push(
+                                                                #import_path::SingleOrMultiple::Single(
+                                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                                        Some(
+                                                                            #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                                                vec![single]
+                                                                            ).expect("996db3ef-cf2b-4b41-a47b-6d3c5f8a87a4")
+                                                                        )
+                                                                    )
+                                                                )
+                                                            );
+                                                        },
+                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                            #acc_snake_case.push(
+                                                                #import_path::SingleOrMultiple::Single(
+                                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
+                                                                        Some(multiple)
+                                                                    )
+                                                                )
+                                                            );
+                                                        },
+                                                    }
+                                                }
+                                                #acc_snake_case
+                                            }).expect("4e02482d-9086-4bea-8087-fdbccd29b605")),
                                             None => None,
                                         },
                                         (Some(_), None) => panic!("994082bf-aa95-45ea-9f80-ce91ae8661fc"),

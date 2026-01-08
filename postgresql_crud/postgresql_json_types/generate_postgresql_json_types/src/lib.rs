@@ -2974,6 +2974,7 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                 }
             };
+            //todo additonal logic for Option<value> and element of array? optional element of array?
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
             {
@@ -2984,13 +2985,15 @@ pub fn generate_postgresql_json_types(
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                         match #content_token_stream {
                             Some(#value_snake_case) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(vec![
-                                #ident_where_upper_camel_case::GreaterThan(
-                                    where_filters::PostgresqlJsonTypeWhereGreaterThan {
-                                        logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                        #value_snake_case: #ident_table_type_declaration_upper_camel_case(
-                                            #ident_origin_upper_camel_case(#value_snake_case)
-                                        ),
-                                    }
+                                #import_path::SingleOrMultiple::Single(
+                                    #ident_where_upper_camel_case::GreaterThan(
+                                        where_filters::PostgresqlJsonTypeWhereGreaterThan {
+                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                            #value_snake_case: #ident_table_type_declaration_upper_camel_case(
+                                                #ident_origin_upper_camel_case(#value_snake_case)
+                                            ),
+                                        }
+                                    )
                                 )
                             ]).expect("98092545-df95-4b68-97a1-bf63fa898d84")),
                             None => None,
