@@ -3048,7 +3048,79 @@ pub fn generate_postgresql_json_types(
             else {
                 none_token_stream.clone()
             };
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream = quote::quote!{todo!()};
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            {
+                let (
+                    between_one_less_and_one_more_int_token_stream,
+                    between_one_less_and_one_more_float_token_stream
+                ) = {
+                    let generate_between_one_less_and_one_more_token_stream = |
+                        less_token_stream: &dyn quote::ToTokens,
+                        more_token_stream: &dyn quote::ToTokens
+                    |quote::quote!{
+                        if let (Some(start), Some(end)) = (#less_token_stream, #more_token_stream) {
+                            match where_filters::Between::try_new(
+                                #ident_table_type_declaration_upper_camel_case::new(start),
+                                #ident_table_type_declaration_upper_camel_case::new(end)
+                            ) {
+                                Ok(ok_value0) => match postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(vec![
+                                    #ident_where_upper_camel_case::Between(
+                                        where_filters::PostgresqlJsonTypeWhereBetween {
+                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                            value: ok_value0,
+                                        }
+                                    )
+                                ]) {
+                                    Ok(ok_value1) => Some(ok_value1),
+                                    Err(error) => None
+                                },
+                                Err(error) => None
+                            }
+                        }
+                        else {
+                            None
+                        }
+                    };
+                    (
+                        {
+                            let generate_content_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{create.0.0.#content_token_stream(1)};
+                            generate_between_one_less_and_one_more_token_stream(
+                                &generate_content_token_stream(&quote::quote!{checked_sub}),
+                                &generate_content_token_stream(&quote::quote!{checked_add})
+                            )
+                        },
+                        {
+                            let generate_content_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{{
+                                let value = create.0.0 #content_token_stream 1.0;
+                                value.is_finite().then_some(value)
+                            }};
+                            generate_between_one_less_and_one_more_token_stream(
+                                &generate_content_token_stream(&quote::quote!{-}),
+                                &generate_content_token_stream(&quote::quote!{+})
+                            )
+                        }
+                    )
+                };
+                match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => between_one_less_and_one_more_int_token_stream,
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => between_one_less_and_one_more_float_token_stream,
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PostgresqlJsonType::StdStringStringAsJsonbString |
+                    PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone()
+                }
+            }
+            else {
+                none_token_stream.clone()
+            };
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,

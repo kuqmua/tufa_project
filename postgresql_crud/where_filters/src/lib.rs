@@ -414,7 +414,7 @@ pub enum BetweenTryNewErrorNamed<T> {
 impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + PartialOrd>
     Between<T>
 {
-    fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
+    pub fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
         if start < end {
             Ok(Self { start, end })
         } else {
