@@ -5100,18 +5100,27 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let config_path_token_stream = quote::quote! {server_config::Config};
         let underscore_unused_token_stream = quote::quote! {_unused};
         //todo maybe remove it?\
-        let generate_some_postgresql_type_where_try_new_and_token_stream =
-            |content_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {
-                    Some(
-                        #import_path::PostgresqlTypeWhere::try_new(
-                            #import_path::LogicalOperator::And,
-                            #content_token_stream
-                        ).expect("6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
-                    )
-                }
-            };
-
+        let generate_some_postgresql_type_where_try_new_token_stream = |
+            logical_operator_token_stream: &dyn quote::ToTokens,
+            content_token_stream: &dyn quote::ToTokens
+        | quote::quote! {
+            Some(
+                #import_path::PostgresqlTypeWhere::try_new(
+                    #logical_operator_token_stream,
+                    #content_token_stream
+                ).expect("6b0491b2-1555-4f1c-81f7-5b22d7d353fb"),
+            )
+        };
+        let generate_some_postgresql_type_where_try_new_and_token_stream = |
+            content_token_stream: &dyn quote::ToTokens
+        | generate_some_postgresql_type_where_try_new_token_stream(
+            &quote::quote!{#import_path::LogicalOperator::And},
+            content_token_stream
+        );
+        let generate_some_postgresql_type_where_try_new_primary_key_content_token_stream = generate_some_postgresql_type_where_try_new_token_stream(
+            &quote::quote!{logical_operator},
+            &quote::quote!{vec}
+        );
         let ident_create_default_fields_initialization_without_primary_key_token_stream =
             generate_fields_named_without_primary_key_with_comma_token_stream(
                 &|element: &macros_helpers::SynFieldWrapper| {
@@ -6064,27 +6073,29 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             } else if current_field_ident == field_ident {
-                                generate_some_postgresql_type_where_try_new_and_token_stream(&{
-                                    let generate_token_stream = |method_token_stream: &dyn quote::ToTokens| {
-                                        let maybe_into_token_stream = match equal_or_equal_using_fields {
-                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => proc_macro2::TokenStream::new(),
-                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{.into()},
-                                        };
-                                        quote::quote! {
-                                            <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
-                                                read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
-                                                ident_create.#current_field_ident.clone()
-                                            ) #maybe_into_token_stream
-                                        }
+                                let method_content_token_stream = {
+                                    let method_token_stream: &dyn quote::ToTokens = match &equal_or_equal_using_fields {
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => &read_only_ids_merged_with_create_into_where_equal_snake_case,
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case
                                     };
-                                    match &equal_or_equal_using_fields {
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => {
-                                            let content_token_stream = generate_token_stream(&read_only_ids_merged_with_create_into_where_equal_snake_case);
-                                            quote::quote! {vec![#content_token_stream]}
-                                        }
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => generate_token_stream(&read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case),
+                                    quote::quote!{
+                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
+                                            read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
+                                            ident_create.#current_field_ident.clone()
+                                        )
                                     }
-                                })
+                                };
+                                match &equal_or_equal_using_fields {
+                                    postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => generate_some_postgresql_type_where_try_new_and_token_stream(&quote::quote!{
+                                        vec![#method_content_token_stream]
+                                    }),
+                                    postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{
+                                        Some(#import_path::PostgresqlTypeWhere::new(
+                                            #import_path::LogicalOperator::And,
+                                            #method_content_token_stream
+                                        ))
+                                    }
+                                }
                             } else {
                                 none_token_stream.clone()
                             }
@@ -7240,12 +7251,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         logical_operator: #import_path::LogicalOperator,
                         vec: Vec<#primary_key_field_type_where_token_stream>
                     ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
-                        Some(
-                            #import_path::PostgresqlTypeWhere::try_new(
-                                logical_operator,
-                                vec
-                            ).expect("dbfe049c-4142-469f-907c-4ecc5dd132dc")
-                        )
+                        #generate_some_postgresql_type_where_try_new_primary_key_content_token_stream
                     }
                     fn generate_some_postgresql_type_where_try_new_or_primary_keys(
                         vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]

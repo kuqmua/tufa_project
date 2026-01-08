@@ -516,52 +516,29 @@ pub enum QueryPartErrorNamed {
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlTypeWhere<T> {
     logical_operator: LogicalOperator,
-    value: Vec<T>, //todo reuse NotEmptyUniqueEnumVec or analog
-}
-#[derive(
-    Debug,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
-)]
-pub enum PostgresqlTypeWhereTryNewErrorNamed<T> {
-    IsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUnique {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: T,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
+    value: NotEmptyUniqueEnumVec<T>,
 }
 impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
     pub fn try_new(
         logical_operator: LogicalOperator,
         value: Vec<T>,
-    ) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<T>> {
-        if value.is_empty() {
-            return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty {
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
+    ) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
+        match NotEmptyUniqueEnumVec::try_new(value) {
+            Ok(ok_value) => Ok(Self {
+                logical_operator,
+                value: ok_value,
+            }),
+            Err(error) => Err(error)
         }
-        {
-            let mut acc = Vec::new();
-            for element in &value {
-                if acc.contains(&element) {
-                    return Err(PostgresqlTypeWhereTryNewErrorNamed::NotUnique {
-                        value: element.clone(),
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                acc.push(element);
-            }
-        }
-        Ok(Self {
+    }
+    pub fn new(
+        logical_operator: LogicalOperator,
+        value: NotEmptyUniqueEnumVec<T>,
+    ) -> Self {
+        Self {
             logical_operator,
             value,
-        })
+        }
     }
     pub const fn get_logical_operator(&self) -> &LogicalOperator {
         &self.logical_operator
@@ -753,7 +730,7 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
-        for element in &self.value {
+        for element in &self.value.0 {
             match PostgresqlTypeWhereFilter::query_part(
                 element,
                 increment,
@@ -789,7 +766,7 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     > {
-        for element in self.value {
+        for element in self.value.0 {
             match PostgresqlTypeWhereFilter::query_bind(element, query) {
                 Ok(value) => {
                     query = value;
@@ -802,13 +779,15 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         Ok(query)
     }
 }
-impl<T: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
+impl<T: std::fmt::Debug + PartialEq + Clone + AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>
     DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<T>
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+            value: NotEmptyUniqueEnumVec::try_new(
+                AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+            ).expect("a918b427-2d74-4096-915c-2f97314cc05f"),
         }
     }
 }

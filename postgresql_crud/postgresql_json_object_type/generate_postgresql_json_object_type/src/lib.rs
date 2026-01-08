@@ -506,14 +506,13 @@ pub fn generate_postgresql_json_object_type(
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
-                                            postgresql_crud::PostgresqlTypeWhere::try_new(
+                                            postgresql_crud::PostgresqlTypeWhere::new(
                                                 postgresql_crud::LogicalOperator::And,
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                                                     #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #second_argument_token_stream
-                                                ).into_vec(),
-                                            )
-                                            .expect("f8c3796f-7574-468b-ac60-12a620c0917d"),
+                                                ),
+                                            ),
                                         )
                                     }
                                 };
@@ -553,14 +552,13 @@ pub fn generate_postgresql_json_object_type(
                                     let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&field_type);
                                     quote::quote!{
                                         #ident_with_id_standart_not_null_where_upper_camel_case::#field_ident_upper_camel_case(
-                                            #import_path::PostgresqlTypeWhere::try_new(
+                                            #import_path::PostgresqlTypeWhere::new(
                                                 #import_path::LogicalOperator::Or,
                                                 #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_to_json_field_snake_case(
                                                     #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                     #second_argument_token_stream
-                                                ).into_vec(),
-                                            )
-                                            .expect("187ece1f-7c99-437b-80a3-ed1a416731a3"),
+                                                ),
+                                            ),
                                         )
                                     }
                                 };
@@ -4706,10 +4704,10 @@ pub fn generate_postgresql_json_object_type(
                                                 );
                                             }
                                             let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                #import_path::PostgresqlTypeWhere::try_new(
+                                                #import_path::PostgresqlTypeWhere::new(
                                                     #import_path::LogicalOperator::And,
-                                                    some_value.into_vec()
-                                                ).expect("029c6ab6-27c0-41c6-8405-155ab793275f")
+                                                    some_value
+                                                )
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -4756,10 +4754,10 @@ pub fn generate_postgresql_json_object_type(
                                                 }
                                             }
                                             let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                #import_path::PostgresqlTypeWhere::try_new(
+                                                #import_path::PostgresqlTypeWhere::new(
                                                     #import_path::LogicalOperator::And,
-                                                    some_value.into_vec()
-                                                ).expect("79634838-847d-4eeb-b199-4927d57b2e2c")
+                                                    some_value
+                                                )
                                             );
                                             if !#acc_snake_case.contains(&whole) {
                                                 #acc_snake_case.push(whole);
@@ -5977,14 +5975,13 @@ pub fn generate_postgresql_json_object_type(
                                             let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&current_element.field_type);
                                             quote::quote! {
                                                 #ident_where_upper_camel_case::#field_ident_upper_camel_case_token_stream(
-                                                    #import_path::PostgresqlTypeWhere::try_new(
+                                                    #import_path::PostgresqlTypeWhere::new(
                                                         #import_path::LogicalOperator::And,
                                                         #field_type_as_postgresql_json_type_test_cases_token_stream::#read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case(
                                                             #read_only_ids_snake_case.0.#value_snake_case.#field_ident,
                                                             #create_snake_case.#field_ident
-                                                        ).into_vec()
+                                                        )
                                                     )
-                                                    .expect("edacf099-3f54-41ab-980d-e1d8760e216f")
                                                 )
                                             }
                                         });
@@ -6195,10 +6192,10 @@ pub fn generate_postgresql_json_object_type(
                                                         );
                                                     }
                                                     let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                        #import_path::PostgresqlTypeWhere::try_new(
+                                                        #import_path::PostgresqlTypeWhere::new(
                                                             #import_path::LogicalOperator::And,
-                                                            some_value.into_vec()
-                                                        ).expect("01b5a0fc-c4e6-42f7-b32d-dc7321539c23")
+                                                            some_value
+                                                        )
                                                     );
                                                     if !#acc_snake_case.contains(&whole) {
                                                         #acc_snake_case.push(whole);
@@ -6246,11 +6243,10 @@ pub fn generate_postgresql_json_object_type(
                                                             }
                                                         }
                                                         let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                            #import_path::PostgresqlTypeWhere::try_new(
+                                                            #import_path::PostgresqlTypeWhere::new(
                                                                 #import_path::LogicalOperator::And,
-                                                                some_value.into_vec()
+                                                                some_value
                                                             )
-                                                            .expect("2b00c42f-4f61-45d0-a297-9e8b648d334e"),
                                                         );
                                                         if !#acc_snake_case.contains(&whole) {
                                                             #acc_snake_case.push(whole);
@@ -6345,10 +6341,10 @@ pub fn generate_postgresql_json_object_type(
                                                         );
                                                     }
                                                     let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                        #import_path::PostgresqlTypeWhere::try_new(
+                                                        #import_path::PostgresqlTypeWhere::new(
                                                             #import_path::LogicalOperator::And,
-                                                            some_value.into_vec()
-                                                        ).expect("beaeb784-58ea-4836-9c54-73924493bfb4")
+                                                            some_value
+                                                        )
                                                     );
                                                     if !#acc_snake_case.contains(&whole) {
                                                         #acc_snake_case.push(whole);
@@ -6396,11 +6392,10 @@ pub fn generate_postgresql_json_object_type(
                                                             }
                                                         }
                                                         let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                            #import_path::PostgresqlTypeWhere::try_new(
+                                                            #import_path::PostgresqlTypeWhere::new(
                                                                 #import_path::LogicalOperator::And,
-                                                                some_value.into_vec()
+                                                                some_value
                                                             )
-                                                            .expect("6ee7a510-c8be-41f5-8fe5-505893eca3cc"),
                                                         );
                                                         if !#acc_snake_case.contains(&whole) {
                                                             #acc_snake_case.push(whole);
@@ -6463,10 +6458,10 @@ pub fn generate_postgresql_json_object_type(
                                                     );
                                                 }
                                                 let whole = #ident_where_upper_camel_case::#field_ident_upper_camel_case(
-                                                    #import_path::PostgresqlTypeWhere::try_new(
+                                                    #import_path::PostgresqlTypeWhere::new(
                                                         #import_path::LogicalOperator::And,
-                                                        <#import_path::NotEmptyUniqueEnumVec<#field_type_where_upper_camel_case> as Into<Vec<#field_type_where_upper_camel_case>>>::into(some_value)
-                                                    ).expect("6428a68e-b6ce-4153-b122-c888c73c4a92")
+                                                        some_value
+                                                    )
                                                 );
                                                 if !#acc_snake_case.contains(&whole) {
                                                     #acc_snake_case.push(whole);
@@ -6588,10 +6583,10 @@ pub fn generate_postgresql_json_object_type(
                                         //             let whole = vec![
                                         //                 id.clone(),
                                         //                 VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField0(
-                                        //                     postgresql_crud::PostgresqlTypeWhere::try_new(
+                                        //                     postgresql_crud::PostgresqlTypeWhere::new(
                                         //                         postgresql_crud::LogicalOperator::And,
                                         //                         some_value,
-                                        //                     ).expect("821dba02-db29-466d-938d-96be14bf9388")
+                                        //                     )
                                         //                 )
                                         //             ];
                                         //             if !current_acc.contains(&whole) {
@@ -6617,10 +6612,10 @@ pub fn generate_postgresql_json_object_type(
                                         //             let whole = vec![
                                         //                 id.clone(),
                                         //                 VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField1(
-                                        //                     postgresql_crud::PostgresqlTypeWhere::try_new(
+                                        //                     postgresql_crud::PostgresqlTypeWhere::new(
                                         //                         postgresql_crud::LogicalOperator::And,
                                         //                         some_value,
-                                        //                     ).expect("d797f66b-b0a8-4b93-998b-e36655ba4b7b")
+                                        //                     )
                                         //                 )
                                         //             ];
                                         //             if !current_acc.contains(&whole) {
