@@ -6282,8 +6282,6 @@ pub fn generate_postgresql_json_object_type(
                                 },
                             }
                         };
-                        //todo maybe its for the future, maybe not even need...
-                        let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote!{todo!()};
                         let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = {
                             let generate_nullable_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
                                 match #create_snake_case.0 {
@@ -6507,134 +6505,66 @@ pub fn generate_postgresql_json_object_type(
                                     //     )
                                     // });
                                     quote::quote! {
-                                        // #ident_where_upper_camel_case::#equal_upper_camel_case(
-                                        //     #import_path::PostgresqlJsonTypeWhereEqual {
-                                        //         logical_operator: #import_path::LogicalOperator::And,
-                                        //         #value_snake_case: #ident_table_type_declaration_upper_camel_case::new({
-                                        //             let mut #acc_snake_case = Vec::new();
-                                        //             for (#read_only_ids_snake_case, #create_snake_case) in #read_only_ids_snake_case.0.#value_snake_case.into_iter().zip(#create_snake_case.0.into_iter()) {
-                                        //                 #acc_snake_case.push(
-                                        //                     #ident_with_id_standart_not_null_table_type_declaration_upper_camel_case::new(
-                                        //                         #current_ident_token_stream,
-                                        //                         #(#parameters_token_stream),*
-                                        //                     )
-                                        //                 );
-                                        //             }
-                                        //             #acc_snake_case
-                                        //         })
-                                        //     }
-                                        // )
-
-                                        //todo need exactly vec vec
-                                        // let mut acc: Vec<Vec<<Self::PostgresqlJsonType as postgresql_crud::PostgresqlJsonType>::Where>> = Vec::new();
-                                        // for (read_only_ids, create) in read_only_ids.0.value.into_iter().zip(create.0.into_iter()) {
-                                        //     let option_field_0 = match <
-                                        //         postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber
-                                        //         as
-                                        //         postgresql_crud::PostgresqlJsonTypeTestCases
-                                        //     >::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
-                                        //         read_only_ids.0.value.field_0,
-                                        //         create.field_0
-                                        //     ) {
-                                        //         Some(some_value) => if some_value.is_empty() {
-                                        //             None
-                                        //         }
-                                        //         else {
-                                        //             Some(some_value)
-                                        //         },
-                                        //         None => None,
-                                        //     };
-                                        //     let option_field_1 = match <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
-                                        //         read_only_ids.0.value.field_1,
-                                        //         create.field_1
-                                        //     ) {
-                                        //         Some(some_value) => if some_value.is_empty() {
-                                        //             None
-                                        //         }
-                                        //         else {
-                                        //             Some(some_value)
-                                        //         },
-                                        //         None => None,
-                                        //     };
-                                        //     if option_field_0.is_some() || option_field_1.is_some() {
-                                        //         let id = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementId(
-                                        //             postgresql_crud::PostgresqlTypeWhere::try_new(
-                                        //                 postgresql_crud::LogicalOperator::And,
-                                        //                 vec![
-                                        //                     postgresql_crud::UuidUuidAsNotNullJsonbStringWhere::Equal(postgresql_crud::PostgresqlJsonTypeWhereEqual {
+                                        // #import_path::NotEmptyUniqueEnumVec::try_new({
+                                        //     let mut acc: Vec<Vec<<Self::PostgresqlJsonType as postgresql_crud::PostgresqlJsonType>::Where>> = Vec::new();
+                                        //     for (read_only_ids, create) in read_only_ids.0.value.into_iter().zip(create.0.into_iter()) {
+                                        //         let option_field_0 = <postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
+                                        //             read_only_ids.0.value.field_0,
+                                        //             create.field_0
+                                        //         );
+                                        //         let option_field_1 = <postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonTypeTestCases>::read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
+                                        //             read_only_ids.0.value.field_1,
+                                        //             create.field_1
+                                        //         );
+                                        //         if option_field_0.is_some() || option_field_1.is_some() {
+                                        //             let id = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementId(
+                                        //                 postgresql_crud::PostgresqlTypeWhere::try_new(
+                                        //                     postgresql_crud::LogicalOperator::And,
+                                        //                     vec![postgresql_crud::UuidUuidAsNotNullJsonbStringWhere::Equal(postgresql_crud::PostgresqlJsonTypeWhereEqual {
                                         //                         logical_operator: postgresql_crud::LogicalOperator::Or,
                                         //                         value: postgresql_crud::UuidUuidAsNotNullJsonbStringTableTypeDeclaration::new(read_only_ids.0.value.id.0.value),
-                                        //                     })
-                                        //                 ]
-                                        //             ).expect("31db8e1e-28cd-44f7-9f32-a41cc6675660")
-                                        //         );
-                                        //         if let Some(some_value) = option_field_0 {
-                                        //             let mut current_acc = vec![];
-                                        //             for element in some_value.clone() {
-                                        //                 current_acc.push(vec![
-                                        //                     id.clone(),
-                                        //                     VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField0(
-                                        //                         postgresql_crud::PostgresqlTypeWhere::try_new(
-                                        //                             postgresql_crud::LogicalOperator::And,
-                                        //                             vec![element],
-                                        //                         ).expect("2ed4dc5e-b893-4bd9-b05c-ffd3bab797cd")
-                                        //                     )
-                                        //                 ]);
-                                        //             }
-                                        //             let whole = vec![
-                                        //                 id.clone(),
-                                        //                 VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField0(
-                                        //                     postgresql_crud::PostgresqlTypeWhere::new(
-                                        //                         postgresql_crud::LogicalOperator::And,
-                                        //                         some_value,
-                                        //                     )
+                                        //                     })],
                                         //                 )
-                                        //             ];
-                                        //             if !current_acc.contains(&whole) {
-                                        //                 current_acc.push(whole);
+                                        //                 .expect("31db8e1e-28cd-44f7-9f32-a41cc6675660"),
+                                        //             );
+                                        //             if let Some(some_value) = option_field_0 {
+                                        //                 let mut current_acc = vec![];
+                                        //                 for element in some_value.clone().into_vec() {
+                                        //                     current_acc.push(vec![
+                                        //                         id.clone(),
+                                        //                         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField0(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::And, vec![element]).expect("2ed4dc5e-b893-4bd9-b05c-ffd3bab797cd")),
+                                        //                     ]);
+                                        //                 }
+                                        //                 let whole = vec![id.clone(), VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField0(postgresql_crud::PostgresqlTypeWhere::new(postgresql_crud::LogicalOperator::And, some_value))];
+                                        //                 if !current_acc.contains(&whole) {
+                                        //                     current_acc.push(whole);
+                                        //                 }
+                                        //                 for element in current_acc {
+                                        //                     acc.push(element);
+                                        //                 }
                                         //             }
-                                        //             for element in current_acc {
-                                        //                 acc.push(element);
-                                        //             }
-                                        //         }
-                                        //         if let Some(some_value) = option_field_1 {
-                                        //             let mut current_acc = vec![];
-                                        //             for element in some_value.clone() {
-                                        //                 current_acc.push(vec![
-                                        //                     id.clone(),
-                                        //                     VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField1(
-                                        //                         postgresql_crud::PostgresqlTypeWhere::try_new(
-                                        //                             postgresql_crud::LogicalOperator::And,
-                                        //                             vec![element],
-                                        //                         ).expect("82c0abf5-2727-4773-b5bf-09a4a437b428")
-                                        //                     )
-                                        //                 ]);
-                                        //             }
-                                        //             let whole = vec![
-                                        //                 id.clone(),
-                                        //                 VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField1(
-                                        //                     postgresql_crud::PostgresqlTypeWhere::new(
-                                        //                         postgresql_crud::LogicalOperator::And,
-                                        //                         some_value,
-                                        //                     )
-                                        //                 )
-                                        //             ];
-                                        //             if !current_acc.contains(&whole) {
-                                        //                 current_acc.push(whole);
-                                        //             }
-                                        //             for element in current_acc {
-                                        //                 acc.push(element);
+                                        //             if let Some(some_value) = option_field_1 {
+                                        //                 let mut current_acc = vec![];
+                                        //                 for element in some_value.clone().into_vec() {
+                                        //                     current_acc.push(vec![
+                                        //                         id.clone(),
+                                        //                         VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField1(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::And, vec![element]).expect("82c0abf5-2727-4773-b5bf-09a4a437b428")),
+                                        //                     ]);
+                                        //                 }
+                                        //                 let whole = vec![id.clone(), VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhere::ElementField1(postgresql_crud::PostgresqlTypeWhere::new(postgresql_crud::LogicalOperator::And, some_value))];
+                                        //                 if !current_acc.contains(&whole) {
+                                        //                     current_acc.push(whole);
+                                        //                 }
+                                        //                 for element in current_acc {
+                                        //                     acc.push(element);
+                                        //                 }
                                         //             }
                                         //         }
                                         //     }
-                                        // }
+                                        //     acc
+                                        // }).expect("1460138a-8364-4e3e-9986-75fa2829f6c5")
                                         // let acc = vec![];
-                                        // if acc.is_empty() {
-                                        //     None
-                                        // }
-                                        // else {
-                                        //     Some(acc)
-                                        // }
+                                        // if acc.is_empty() { None } else { Some(acc) }
                                         todo!()
                                     }
                                 }
@@ -6689,7 +6619,6 @@ pub fn generate_postgresql_json_object_type(
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
-                            &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
@@ -6754,7 +6683,6 @@ pub fn generate_postgresql_json_object_type(
                         let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(
                             #create_snake_case
                         )};
-                        let postgresql_json_type_option_vec_where_length_greater_than_test_token_stream = quote::quote!{todo!()};
                         let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = quote::quote!{#self_as_postgresql_json_type_test_cases_token_stream::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
                             #create_snake_case
                         )};
@@ -6792,7 +6720,6 @@ pub fn generate_postgresql_json_object_type(
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_three_equal_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_equal_token_stream,
-                            &postgresql_json_type_option_vec_where_length_greater_than_test_token_stream,
                             &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                             &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
