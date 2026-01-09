@@ -285,7 +285,9 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
+    ) -> Option<
+        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
+    >;
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -395,7 +397,11 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>>;
+    ) -> Option<
+        NotEmptyUniqueEnumVec<
+            SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
+        >,
+    >;
     //todo
     // ContainsElementGreaterThan
     // Between

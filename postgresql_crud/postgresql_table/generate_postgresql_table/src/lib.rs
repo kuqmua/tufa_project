@@ -554,8 +554,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let read_only_ids_into_table_type_declaration_snake_case =
         naming::ReadOnlyIdsIntoTableTypeDeclarationSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
-    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case = naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case =
+        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereGreaterThanSnakeCase;
+    let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case =
+        naming::ReadOnlyIdsMergedWithCreateIntoPostgresqlJsonTypeOptionVecWhereBetweenSnakeCase;
     let read_only_ids_into_read_snake_case = naming::ReadOnlyIdsIntoReadSnakeCase;
     let read_only_ids_into_update_snake_case = naming::ReadOnlyIdsIntoUpdateSnakeCase;
     let read_into_table_type_declaration_snake_case = naming::ReadIntoTableTypeDeclarationSnakeCase;
@@ -5421,8 +5423,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             "1ce53b67_1e94_413e_83cf_c6d7094289a8";
         let table_create_into_postgresql_json_type_option_vec_where_length_greater_than_name =
             "6b6bdfe0_c7b8_43fd_ac2e_854a47c0b64c";
-        let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_name = "35a01678_f7e2_482d_9803_c3b5a23d36ad";
-        let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_name = "33a3706a_ef28_4c80_88e0_b8e7fb720de2";
+        let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_name =
+            "35a01678_f7e2_482d_9803_c3b5a23d36ad";
+        let table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_name =
+            "33a3706a_ef28_4c80_88e0_b8e7fb720de2";
 
         fill_table_field_idents_vec_token_stream(vec![
             &table_read_only_ids_merged_with_create_into_where_equal_name,
@@ -6300,12 +6304,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
             let (
                 read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
-                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream
+                read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
             ) = {
-                let generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_filter_token_stream = |
-                    table_name: &str,
-                    method_token_stream: &dyn quote::ToTokens
-                |generate_read_test_token_stream(
+                let generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_filter_token_stream =
+                    |table_name: &str, method_token_stream: &dyn quote::ToTokens| {
+                        generate_read_test_token_stream(
                     table_name,
                     &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream,
                     &generate_ident_create_content_element_token_stream,
@@ -6349,14 +6352,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     }
-                );
+                )
+                    };
                 (
                     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_filter_token_stream(
-                        &table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_name,
+                        table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_name,
                         &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_snake_case
                     ),
                     generate_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_filter_token_stream(
-                        &table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_name,
+                        table_read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_name,
                         &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_snake_case
                     )
                 )
