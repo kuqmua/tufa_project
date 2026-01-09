@@ -1,4 +1,9 @@
 generate_postgresql_json_types::generate_postgresql_json_types!("All");
+// generate_postgresql_json_types::generate_postgresql_json_types!("WithoutDimensions");
+// generate_postgresql_json_types::generate_postgresql_json_types!("WithDimensionOne");
+// generate_postgresql_json_types::generate_postgresql_json_types!("WithDimensionTwo");
+// generate_postgresql_json_types::generate_postgresql_json_types!("WithDimensionThree");
+// generate_postgresql_json_types::generate_postgresql_json_types!("WithDimensionFour");
 // generate_postgresql_json_types::generate_postgresql_json_types!({
 //     "Concrete": [
 //         {
