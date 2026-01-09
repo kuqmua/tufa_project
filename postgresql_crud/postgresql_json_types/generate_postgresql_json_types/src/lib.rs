@@ -3043,11 +3043,13 @@ pub fn generate_postgresql_json_types(
                                 #ident_table_type_declaration_upper_camel_case::new(end)
                             ) {
                                 Ok(ok_value0) => match postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(vec![
-                                    #ident_where_upper_camel_case::Between(
-                                        where_filters::PostgresqlJsonTypeWhereBetween {
-                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                            value: ok_value0,
-                                        }
+                                    #import_path::SingleOrMultiple::Single(
+                                        #ident_where_upper_camel_case::Between(
+                                            where_filters::PostgresqlJsonTypeWhereBetween {
+                                                logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                                value: ok_value0,
+                                            }
+                                        )
                                     )
                                 ]) {
                                     Ok(ok_value1) => Some(ok_value1),
