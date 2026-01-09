@@ -6510,11 +6510,17 @@ pub fn generate_postgresql_json_object_type(
                                         }
                                     });
                                     quote::quote! {
-                                        Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                                        match #import_path::NotEmptyUniqueEnumVec::try_new({
                                             let mut #acc_snake_case = Vec::new();
                                             #(#content_token_stream)*
                                             #acc_snake_case
-                                        }).expect("5f42f69a-09e4-4435-8bbf-f722978273de"))
+                                        }) {
+                                            Ok(ok_value) => Some(ok_value),
+                                            Err(error) => match error {
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("b877e9c0-7d1e-47e6-9d23-c9bd080753fc")
+                                            }
+                                        }
                                     }
                                 },
                                 PostgresqlJsonObjectTypePattern::Array => {
