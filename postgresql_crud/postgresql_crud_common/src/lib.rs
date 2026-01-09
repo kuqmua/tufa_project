@@ -279,7 +279,9 @@ pub trait PostgresqlTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>>;
+    ) -> Option<
+        NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlType as PostgresqlType>::Where>>,
+    >;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between(
         read_only_ids: <Self::PostgresqlType as PostgresqlType>::ReadOnlyIds,
         create: <Self::PostgresqlType as PostgresqlType>::Create,
@@ -385,7 +387,11 @@ pub trait PostgresqlJsonTypeTestCases {
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
-    ) -> Option<NotEmptyUniqueEnumVec<SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>>>;
+    ) -> Option<
+        NotEmptyUniqueEnumVec<
+            SingleOrMultiple<<Self::PostgresqlJsonType as PostgresqlJsonType>::Where>,
+        >,
+    >;
     fn read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between(
         read_only_ids: <Self::PostgresqlJsonType as PostgresqlJsonType>::ReadOnlyIds,
         create: <Self::PostgresqlJsonType as PostgresqlJsonType>::Create,
@@ -1836,8 +1842,17 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Eq,
+    serde::Serialize,
+    serde::Deserialize,
+    utoipa::ToSchema,
+    schemars::JsonSchema,
+)]
 pub enum SingleOrMultiple<T: std::fmt::Debug + PartialEq + Clone> {
     Single(T),
-    Multiple(NotEmptyUniqueEnumVec<T>)
+    Multiple(NotEmptyUniqueEnumVec<T>),
 }
