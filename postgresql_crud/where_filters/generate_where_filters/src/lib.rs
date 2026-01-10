@@ -1327,10 +1327,28 @@ pub fn generate_where_filters(
                     },
                     generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                     {
+                        let content_token_stream: &dyn quote::ToTokens = match postgresql_type_pattern_handle {
+                            PostgresqlTypePatternHandle::Standart => &quote::quote!{
+                                let value = match self.value.query_part(
+                                    increment,
+                                    column,
+                                    is_need_to_add_logical_operator
+                                ) {
+                                    Ok(ok_value) => ok_value,
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
+                                };
+                            },
+                            PostgresqlTypePatternHandle::ArrayDimension1 |
+                            PostgresqlTypePatternHandle::ArrayDimension2 |
+                            PostgresqlTypePatternHandle::ArrayDimension3 |
+                            PostgresqlTypePatternHandle::ArrayDimension4 => &value_match_increment_checked_add_one_initialization_token_stream
+                        };
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}})", postgresql_type_kind.format_argument()));
                         quote::quote! {
                             #maybe_dimensions_indexes_initialization_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
+                            #content_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &#self_snake_case.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1341,9 +1359,28 @@ pub fn generate_where_filters(
                         }
                     },
                     is_query_bind_mutable_true,
-                    quote::quote! {
-                        #maybe_dimensions_query_bind_content_token_stream
-                        #query_bind_sqlx_types_json_self_value_token_stream
+                    {
+                        let content_token_stream: &dyn quote::ToTokens = match postgresql_type_pattern_handle {
+                            PostgresqlTypePatternHandle::Standart => &quote::quote!{
+                                match self.value.query_bind(query) {
+                                    Ok(value) => {
+                                        query = value;
+                                    },
+                                    Err(error) => {
+                                        return Err(error.to_string());
+                                    }
+                                }
+                                Ok(query)
+                            },
+                            PostgresqlTypePatternHandle::ArrayDimension1 |
+                            PostgresqlTypePatternHandle::ArrayDimension2 |
+                            PostgresqlTypePatternHandle::ArrayDimension3 |
+                            PostgresqlTypePatternHandle::ArrayDimension4 => &query_bind_sqlx_types_json_self_value_token_stream
+                        };
+                        quote::quote! {
+                            #maybe_dimensions_query_bind_content_token_stream
+                            #content_token_stream
+                        }
                     },
                 )
                     };
@@ -1646,7 +1683,14 @@ pub fn generate_where_filters(
                     },
                 )
                     };
-                let (should_add_declaration_of_struct_ident_generic, struct_additional_fields_token_stream, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream, query_part_content_token_stream, is_query_bind_mutable, query_bind_content_token_stream) = match &filter {
+                let (
+                    should_add_declaration_of_struct_ident_generic,
+                    struct_additional_fields_token_stream,
+                    impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
+                    query_part_content_token_stream,
+                    is_query_bind_mutable,
+                    query_bind_content_token_stream
+                ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { .. } => generate_equal_token_stream(&postgresql_type_pattern_handle_standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual { .. } => generate_equal_token_stream(&postgresql_type_pattern_handle_array_dimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoEqual { .. } => generate_equal_token_stream(&postgresql_type_pattern_handle_array_dimension2),
