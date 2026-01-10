@@ -294,8 +294,8 @@ mod tests {
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
             vec![
                 String::from("same_length_and_capacity"),
-                String::from("duration_suboptimal_units")
-            ]
+                String::from("duration_suboptimal_units"),
+            ],
         );
     }
     #[test]
