@@ -3211,6 +3211,42 @@ pub fn generate_postgresql_json_types(
             else {
                 none_token_stream.clone()
             };
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            {
+                match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
+                    PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
+                        Some(
+                            #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                                #import_path::SingleOrMultiple::Single(
+                                    #ident_where_upper_camel_case::RegularExpression(
+                                        where_filters::PostgresqlJsonTypeWhereRegularExpression {
+                                            logical_operator: #import_path::LogicalOperator::Or,
+                                            regular_expression_case: where_filters::RegularExpressionCase::Sensitive,
+                                            value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&#create_snake_case.0.0))).expect("3814ff38-0e4d-4173-bf0e-971372b888f6")),
+                                        }
+                                    ),
+                                )
+                            ]).expect("af72fa0f-ffe8-4261-b552-ac9965b5b538")
+                        )
+                    },
+                }
+            }
+            else {
+                none_token_stream.clone()
+            };
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -3239,6 +3275,7 @@ pub fn generate_postgresql_json_types(
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream,
+                &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_token_stream,
             )
         };
         let generated = quote::quote! {

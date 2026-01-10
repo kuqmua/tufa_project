@@ -234,7 +234,7 @@ where
 }
 
 #[derive(Debug, Clone)]
-pub struct RegexRegex(regex::Regex); //regex::Regex
+pub struct RegexRegex(pub regex::Regex);
 // #[automatically_derived]
 // impl ::core::marker::StructuralPartialEq for RegexRegex {}
 // #[automatically_derived]

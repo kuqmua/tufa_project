@@ -1430,6 +1430,23 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
         "vec",
         "where",
         "in"
+    ],
+    [
+        "read",
+        "only",
+        "ids",
+        "merged",
+        "with",
+        "create",
+        "into",
+        "postgresql",
+        "json",
+        "type",
+        "option",
+        "vec",
+        "where",
+        "regular",
+        "expression"
     ]
 ]);
 
