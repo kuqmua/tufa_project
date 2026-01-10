@@ -6307,7 +6307,8 @@ pub fn generate_postgresql_types(
             let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = none_token_stream.clone();
             let create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream = none_token_stream.clone();
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = none_token_stream.clone();
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream = none_token_stream;
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream = none_token_stream.clone();
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream = none_token_stream;
             postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &import_path,
@@ -6337,6 +6338,7 @@ pub fn generate_postgresql_types(
                 &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
+                &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream,
             )
         };
         let maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {

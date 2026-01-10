@@ -3171,6 +3171,50 @@ pub fn generate_postgresql_json_types(
             else {
                 none_token_stream.clone()
             };
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
+                let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
+            {
+                //todo additional variants to test
+                match &postgresql_json_type {
+                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => {
+                        quote::quote!{
+                            Some(
+                                #import_path::NotEmptyUniqueEnumVec::try_new({
+                                    let mut acc = vec![
+                                        #import_path::SingleOrMultiple::Single(
+                                            #ident_where_upper_camel_case::In(
+                                                where_filters::PostgresqlJsonTypeWhereIn {
+                                                    logical_operator: #import_path::LogicalOperator::Or,
+                                                    value: where_filters::PostgresqlJsonTypeNotEmptyUniqueVec::try_new(
+                                                        vec![#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.0)]
+                                                    ).expect("2737c0ed-cf4a-4aba-b749-dc7c4e37ff2e")
+                                                }
+                                            ),
+                                        )
+                                    ];
+
+                                    acc
+                                }).expect("af72fa0f-ffe8-4261-b552-ac9965b5b538")
+                            )
+                        }
+                    },
+                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                    PostgresqlJsonType::StdStringStringAsJsonbString |
+                    PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone()
+                }
+            }
+            else {
+                none_token_stream.clone()
+            };
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -3198,6 +3242,7 @@ pub fn generate_postgresql_json_types(
                 &create_into_postgresql_json_type_option_vec_where_length_greater_than_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
+                &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream,
             )
         };
         let generated = quote::quote! {
