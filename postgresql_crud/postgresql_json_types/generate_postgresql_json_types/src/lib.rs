@@ -3247,6 +3247,7 @@ pub fn generate_postgresql_json_types(
             else {
                 none_token_stream.clone()
             };
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream = quote::quote!{todo!()};
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
@@ -3276,6 +3277,7 @@ pub fn generate_postgresql_json_types(
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_between_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream,
                 &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_regular_expression_token_stream,
+                &read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream,
             )
         };
         let generated = quote::quote! {
