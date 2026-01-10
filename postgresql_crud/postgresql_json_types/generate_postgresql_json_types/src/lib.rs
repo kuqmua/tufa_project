@@ -3174,7 +3174,6 @@ pub fn generate_postgresql_json_types(
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_in_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
             {
-                //todo additional variants to test
                 match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
                     PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
@@ -3186,24 +3185,21 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
                     PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
                     PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => {
+                        //todo additional variants to test
                         quote::quote!{
                             Some(
-                                #import_path::NotEmptyUniqueEnumVec::try_new({
-                                    let mut acc = vec![
-                                        #import_path::SingleOrMultiple::Single(
-                                            #ident_where_upper_camel_case::In(
-                                                where_filters::PostgresqlJsonTypeWhereIn {
-                                                    logical_operator: #import_path::LogicalOperator::Or,
-                                                    value: where_filters::PostgresqlJsonTypeNotEmptyUniqueVec::try_new(
-                                                        vec![#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.0)]
-                                                    ).expect("2737c0ed-cf4a-4aba-b749-dc7c4e37ff2e")
-                                                }
-                                            ),
-                                        )
-                                    ];
-
-                                    acc
-                                }).expect("af72fa0f-ffe8-4261-b552-ac9965b5b538")
+                                #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                                    #import_path::SingleOrMultiple::Single(
+                                        #ident_where_upper_camel_case::In(
+                                            where_filters::PostgresqlJsonTypeWhereIn {
+                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                value: where_filters::PostgresqlJsonTypeNotEmptyUniqueVec::try_new(
+                                                    vec![#ident_table_type_declaration_upper_camel_case::new(#create_snake_case.0.0)]
+                                                ).expect("2737c0ed-cf4a-4aba-b749-dc7c4e37ff2e")
+                                            }
+                                        ),
+                                    )
+                                ]).expect("af72fa0f-ffe8-4261-b552-ac9965b5b538")
                             )
                         }
                     },
