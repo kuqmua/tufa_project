@@ -67,7 +67,7 @@ mod tests {
         }
         assert!(
             lints_not_in_cargo_toml.is_empty(),
-            "d2b7ba9f-d133-496c-a29d-67503c3d9e8a"
+            "d2b7ba9f-d133-496c-a29d-67503c3d9e8a {lints_not_in_cargo_toml:#?}"
         );
         let mut outdated_lints_in_file = Vec::new();
         for element in &lints_vec_from_cargo_toml {
@@ -221,7 +221,6 @@ mod tests {
                 String::from("resolving_to_items_shadowing_supertrait_items"),
                 String::from("shadowing_supertrait_items"),
                 String::from("unqualified_local_imports"), //need to use some kind of defferent test flag or something for this
-                String::from("duration_suboptimal_units"),
             ],
         );
     }
@@ -293,7 +292,10 @@ mod tests {
             lints_vec_from_cargo_toml,
             clippy_lints_from_docs,
             //todo on commit momment seems like this lints still not added to clippy, but in the list in clippy site
-            vec![String::from("same_length_and_capacity")],
+            vec![
+                String::from("same_length_and_capacity"),
+                String::from("duration_suboptimal_units")
+            ]
         );
     }
     #[test]

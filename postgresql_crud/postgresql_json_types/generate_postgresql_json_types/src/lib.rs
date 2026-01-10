@@ -3199,7 +3199,7 @@ pub fn generate_postgresql_json_types(
                                             }
                                         ),
                                     )
-                                ]).expect("af72fa0f-ffe8-4261-b552-ac9965b5b538")
+                                ]).expect("7f6618cd-5fb6-4ebd-bff9-2e0cb2780fb6")
                             )
                         }
                     },
