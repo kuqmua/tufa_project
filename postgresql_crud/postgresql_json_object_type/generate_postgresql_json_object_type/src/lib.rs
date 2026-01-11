@@ -6130,12 +6130,15 @@ pub fn generate_postgresql_json_object_type(
                                                     #read_only_ids_snake_case,
                                                     #create_snake_case
                                                 ).into_vec() {
-                                                    #acc_snake_case.push(
-                                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(
-                                                            #import_path::NotEmptyUniqueEnumVec::try_new(vec![#element_snake_case])
-                                                            .expect("130eaf97-dd2b-440f-be51-8b0e9ec2d18d")
-                                                        ))
-                                                    );
+                                                    match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#element_snake_case]) {
+                                                        Ok(ok_value) => {
+                                                            #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value)));
+                                                        },
+                                                        Err(error) => match error {
+                                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2a88b17f-cf3d-4793-a221-d6fc5922b218")
+                                                        }
+                                                    }
                                                 }
                                             },
                                             (Some(_), None) => panic!("b4507b4c-5282-4d91-9a50-190b2d789849"),
