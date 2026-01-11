@@ -6176,14 +6176,14 @@ pub fn generate_postgresql_json_object_type(
                         let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_four_equal_token_stream = generate_dimension_equal_token_stream(&postgresql_crud_macros_common::Dimension::Four);
                         let create_into_postgresql_json_type_option_vec_where_length_equal_token_stream = {
                             let generate_nullable_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
-                                match #create_snake_case.0 {
-                                    Some(#create_snake_case) => match <
-                                        #content_token_stream
-                                        as
-                                        #import_path::PostgresqlJsonTypeTestCases
-                                    >::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(#create_snake_case) {
-                                        Some(some_value) => Some(
-                                            #import_path::NotEmptyUniqueEnumVec::try_new({
+                                match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                    match #create_snake_case.0 {
+                                        Some(#create_snake_case) => match <
+                                            #content_token_stream
+                                            as
+                                            #import_path::PostgresqlJsonTypeTestCases
+                                        >::#create_into_postgresql_json_type_option_vec_where_length_equal_snake_case(#create_snake_case) {
+                                            Some(some_value) => {
                                                 let mut #acc_snake_case = Vec::new();
                                                 for #element_snake_case in some_value.clone().into_vec() {
                                                     match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#element_snake_case]) {
@@ -6205,11 +6205,19 @@ pub fn generate_postgresql_json_object_type(
                                                     #acc_snake_case.push(whole);
                                                 }
                                                 #acc_snake_case
-                                            }).expect("b34f6416-697d-48ae-9aa8-f20a291a158f")
-                                        ),
-                                        None => None
-                                    },
-                                    None => None,
+                                            },
+                                            None => {
+                                                return None;
+                                            }
+                                        },
+                                        None => vec![#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None)],
+                                    }
+                                ) {
+                                    Ok(ok_value) => Some(ok_value),
+                                    Err(error) => match error {
+                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("d41bcbca-5d4c-436c-a465-4920c9da6a43")
+                                    }
                                 }
                             };
                             match &postgresql_json_object_type_pattern {
