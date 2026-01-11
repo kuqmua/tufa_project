@@ -31,8 +31,8 @@
     }
 }]
 pub struct Animal {
-    pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
-    pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    // pub field_0: postgresql_crud::StdPrimitiveI8AsNotNullJsonbNumber,
+    // pub field_1: postgresql_crud::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
     // pub field_4: postgresql_crud::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
@@ -533,7 +533,7 @@ pub struct Animal {
     // pub field_495: postgresql_crud::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveU64AsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
     // pub field_496: postgresql_crud::StdPrimitiveF32AsNotNullJsonbNumber,
     // pub field_497: postgresql_crud::OptionStdPrimitiveF32AsNullableJsonbNumber,
-    // pub field_498: postgresql_crud::VecOfStdPrimitiveF32AsNotNullArrayOfNotNullJsonbNumber,
+    pub field_498: postgresql_crud::VecOfStdPrimitiveF32AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_499: postgresql_crud::VecOfOptionStdPrimitiveF32AsNotNullArrayOfNullableJsonbNumber,
     // pub field_500: postgresql_crud::OptionVecOfStdPrimitiveF32AsNullableArrayOfNotNullJsonbNumber,
     // pub field_501: postgresql_crud::OptionVecOfOptionStdPrimitiveF32AsNullableArrayOfNullableJsonbNumber,
