@@ -4737,7 +4737,7 @@ pub fn generate_postgresql_json_object_type(
                                         Ok(ok_value) => Some(ok_value),
                                         Err(error) => match error {
                                             #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("88912e24-3bee-4dc4-a373-6d96d260170f")
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("89e719cf-3a6d-4250-95fc-237aaf46659b")
                                         }
                                     }
                                 }
@@ -5969,7 +5969,13 @@ pub fn generate_postgresql_json_object_type(
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                         match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => Some(#import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream).expect("c159ae2f-4727-44ae-9426-8f9e9eede757")),
+                                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match #import_path::NotEmptyUniqueEnumVec::try_new(#content_token_stream) {
+                                                Ok(ok_value) => Some(ok_value),
+                                                Err(error) => match error {
+                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("463769fc-19da-49dc-9b79-8f6ed360fd2b")
+                                                }
+                                            },
                                             (Some(_), None) => panic!("1a2b314c-289e-4dc7-bec8-654c60966abf"),
                                             (None, Some(_)) => panic!("9faea0f9-78ef-4241-98fc-2acde83d07ce"),
                                             (None, None) => None,
@@ -6304,27 +6310,35 @@ pub fn generate_postgresql_json_object_type(
                                     >::#create_into_postgresql_json_type_option_vec_where_length_greater_than_snake_case(
                                         #create_snake_case
                                     ) {
-                                        Some(some_value) => Some(
-                                            #import_path::NotEmptyUniqueEnumVec::try_new({
-                                                let mut #acc_snake_case = Vec::new();
-                                                for #element_snake_case in some_value.clone().into_vec() {
-                                                    #acc_snake_case.push(
-                                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                            Some(
-                                                                #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                                    vec![#element_snake_case]
-                                                                ).expect("68bb0e2d-abf8-4cd5-a691-4d721ce31493")
-                                                            )
-                                                        )
-                                                    );
+                                        Some(some_value) => match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                            let mut #acc_snake_case = Vec::new();
+                                            for #element_snake_case in some_value.clone().into_vec() {
+                                                match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                    vec![#element_snake_case]
+                                                ) {
+                                                    Ok(ok_value) => {
+                                                        #acc_snake_case.push(
+                                                            #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value))
+                                                        );
+                                                    },
+                                                    Err(error) => match error {
+                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("bdb0a112-6f75-481c-ad28-f540252d8525")
+                                                    }
                                                 }
-                                                let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
-                                                if !#acc_snake_case.contains(&whole) {
-                                                    #acc_snake_case.push(whole);
-                                                }
-                                                #acc_snake_case
-                                            }).expect("99ca36a5-b763-43e6-a868-05f9dbb460b5")
-                                        ),
+                                            }
+                                            let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
+                                            if !#acc_snake_case.contains(&whole) {
+                                                #acc_snake_case.push(whole);
+                                            }
+                                            #acc_snake_case
+                                        }) {
+                                            Ok(ok_value) => Some(ok_value),
+                                            Err(error) => match error {
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("c7ecc36f-d510-40ff-a740-e796e112eee5")
+                                            }
+                                        },
                                         None => None
                                     },
                                     None => None,
@@ -6576,43 +6590,57 @@ pub fn generate_postgresql_json_object_type(
                                                             }
                                                         );
                                                         all_fields_acc.push(current_where.clone());
-                                                        let multiple_current_where_with_id = #import_path::SingleOrMultiple::Multiple(
-                                                            #import_path::NotEmptyUniqueEnumVec::try_new(vec![
-                                                                #id_snake_case.clone(),
-                                                                current_where
-                                                            ]).expect("cc6dc5dd-454a-416c-9276-0beed987fcbd")
-                                                        );
-                                                        if !#acc_snake_case.contains(&multiple_current_where_with_id) {
-                                                            #acc_snake_case.push(multiple_current_where_with_id);
+                                                        match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                                                            #id_snake_case.clone(),
+                                                            current_where
+                                                        ]) {
+                                                            Ok(ok_value) => {
+                                                                let multiple_current_where_with_id = #import_path::SingleOrMultiple::Multiple(ok_value);
+                                                                if !#acc_snake_case.contains(&multiple_current_where_with_id) {
+                                                                    #acc_snake_case.push(multiple_current_where_with_id);
+                                                                }
+                                                            },
+                                                            Err(error) => match error {
+                                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("f0e3d01b-ac0c-43d4-b31b-45f02e274696")
+                                                            }
                                                         }
                                                     }
-                                                    let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
-                                                        #import_path::PostgresqlTypeWhere::new(
-                                                            and,
-                                                            #import_path::NotEmptyUniqueEnumVec::try_new({
-                                                                let mut current_field_whole_acc = vec![];
-                                                                for element in some_value.into_vec() {
-                                                                    match element {
-                                                                        #import_path::SingleOrMultiple::Single(single) => {
-                                                                            if !current_field_whole_acc.contains(&single) {
-                                                                                current_field_whole_acc.push(single);
-                                                                            }
-                                                                        },
-                                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                                            for current_element in multiple.into_vec() {
-                                                                                if !current_field_whole_acc.contains(&current_element) {
-                                                                                    current_field_whole_acc.push(current_element);
-                                                                                }
-                                                                            }
+                                                    match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                                        let mut current_field_whole_acc = vec![];
+                                                        for element in some_value.into_vec() {
+                                                            match element {
+                                                                #import_path::SingleOrMultiple::Single(single) => {
+                                                                    if !current_field_whole_acc.contains(&single) {
+                                                                        current_field_whole_acc.push(single);
+                                                                    }
+                                                                },
+                                                                #import_path::SingleOrMultiple::Multiple(multiple) => {
+                                                                    for current_element in multiple.into_vec() {
+                                                                        if !current_field_whole_acc.contains(&current_element) {
+                                                                            current_field_whole_acc.push(current_element);
                                                                         }
                                                                     }
                                                                 }
-                                                                current_field_whole_acc
-                                                            }).expect("2b6d935c-2b68-4c57-8b70-5c14d764c3e7")
-                                                        )
-                                                    );
-                                                    if !all_fields_acc.contains(&whole) {
-                                                        all_fields_acc.push(whole);
+                                                            }
+                                                        }
+                                                        current_field_whole_acc
+                                                    }) {
+                                                        Ok(ok_value) => {
+                                                            let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
+                                                                #import_path::PostgresqlTypeWhere::new(
+                                                                    and,
+                                                                    ok_value
+                                                                )
+                                                            );
+                                                            if !all_fields_acc.contains(&whole) {
+                                                                all_fields_acc.push(whole);
+                                                            }
+                                                        },
+                                                        Err(error) => match error {
+                                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("f8fcc434-f952-4f73-9e94-1e5d73516fd7")
+                                                        }
                                                     }
                                                 }
                                             }
@@ -6640,15 +6668,18 @@ pub fn generate_postgresql_json_object_type(
                                                     if #if_some_content_token_stream {
                                                         let mut all_fields_acc = vec![];
                                                         #(#content_token_stream)*
-                                                        #acc_snake_case.push(
-                                                            #import_path::SingleOrMultiple::Multiple(
-                                                                #import_path::NotEmptyUniqueEnumVec::try_new({
-                                                                    all_fields_acc.push(#id_snake_case);
-                                                                    all_fields_acc
-                                                                })
-                                                                .expect("23139185-d147-4b25-a681-1c1b50a2dc25")
-                                                            )
-                                                        );
+                                                        match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                                            all_fields_acc.push(#id_snake_case);
+                                                            all_fields_acc
+                                                        }) {
+                                                            Ok(ok_value) => {
+                                                                #acc_snake_case.push(#import_path::SingleOrMultiple::Multiple(ok_value));
+                                                            },
+                                                            Err(error) => match error {
+                                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("32a3da97-c772-44d7-91f9-2916759034e0")
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 #acc_snake_case
@@ -6673,22 +6704,24 @@ pub fn generate_postgresql_json_object_type(
                                                 #read_only_ids_snake_case,
                                                 #create_snake_case
                                             ) {
-                                                Some(some_value) => Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                                                Some(some_value) => match #import_path::NotEmptyUniqueEnumVec::try_new({
                                                     let mut #acc_snake_case = vec![];
                                                     for element in some_value.into_vec() {
                                                         match element {
                                                             #import_path::SingleOrMultiple::Single(single) => {
-                                                                #acc_snake_case.push(
-                                                                    #import_path::SingleOrMultiple::Single(
-                                                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                                            Some(
-                                                                                #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                                                    vec![single]
-                                                                                ).expect("996db3ef-cf2b-4b41-a47b-6d3c5f8a87a4")
+                                                                match #import_path::NotEmptyUniqueEnumVec::try_new(vec![single]) {
+                                                                    Ok(ok_value) => {
+                                                                        #acc_snake_case.push(
+                                                                            #import_path::SingleOrMultiple::Single(
+                                                                                #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value))
                                                                             )
-                                                                        )
-                                                                    )
-                                                                );
+                                                                        );
+                                                                    },
+                                                                    Err(error) => match error {
+                                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("626ffa77-f81a-46ce-b5a0-44663fe1f182")
+                                                                    }
+                                                                }
                                                             },
                                                             #import_path::SingleOrMultiple::Multiple(multiple) => {
                                                                 #acc_snake_case.push(
@@ -6702,7 +6735,15 @@ pub fn generate_postgresql_json_object_type(
                                                         }
                                                     }
                                                     #acc_snake_case
-                                                }).expect("4e02482d-9086-4bea-8087-fdbccd29b605")),
+                                                }) {
+                                                    Ok(ok_value) => Some(ok_value),
+                                                    Err(error) => match error {
+                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
+                                                            return None;
+                                                        },
+                                                        #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("23a17416-0bac-4a1b-90df-cfd9d61ae86c")
+                                                    }
+                                                },
                                                 None => None,
                                             },
                                             (Some(_), None) => panic!("994082bf-aa95-45ea-9f80-ce91ae8661fc"),

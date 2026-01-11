@@ -5961,7 +5961,7 @@ pub fn generate_postgresql_types(
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {some_value.0},
                         };
                         quote::quote! {
-                            Some(#import_path::NotEmptyUniqueEnumVec::try_new({
+                            match #import_path::NotEmptyUniqueEnumVec::try_new({
                                 let mut #acc_snake_case = Vec::new();
                                 for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
                                     let index = i.checked_add(1)?;
@@ -5982,7 +5982,13 @@ pub fn generate_postgresql_types(
                                     );
                                 }
                                 #acc_snake_case
-                            }).expect("c26dc26e-02c8-4e92-9dfc-f331baa6586d"))
+                            }) {
+                                Ok(ok_value) => Some(ok_value),
+                                Err(error) => match error {
+                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("45c8de3c-965b-44a9-b1fd-b7148531da9e")
+                                }
+                            }
                         }
                     };
                     match &not_null_or_nullable {
