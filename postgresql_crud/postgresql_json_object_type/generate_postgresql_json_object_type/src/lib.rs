@@ -5219,14 +5219,18 @@ pub fn generate_postgresql_json_object_type(
                                     let content_token_stream = vec_syn_field_with_id.iter().map(|current_element| {
                                         let field_ident = &current_element.field_ident;
                                         let field_type_as_postgresql_json_type_test_cases_token_stream = generate_type_as_postgresql_json_type_test_cases_token_stream(&current_element.field_type);
-                                        let maybe_dot_clone_token_stream = if vec_syn_field.len() == 1 {
-                                            proc_macro2::TokenStream::new()
-                                        }
-                                        else {
-                                            quote::quote!{.clone()}
-                                        };
+                                        // let maybe_dot_clone_token_stream = if vec_syn_field.len() == 1 {
+                                        //     proc_macro2::TokenStream::new()
+                                        // }
+                                        // else {
+                                        //     quote::quote!{.clone()}
+                                        // };
                                         let value_content_token_stream = wrap_into_value_initialization_token_stream(&quote::quote!{
-                                            #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(#value_snake_case.#value_snake_case #maybe_dot_clone_token_stream)
+                                            #field_type_as_postgresql_json_type_test_cases_token_stream::#read_inner_into_read_with_new_or_try_new_unwraped_snake_case(
+                                                #value_snake_case.#value_snake_case 
+                                                // #maybe_dot_clone_token_stream
+                                                .clone()
+                                            )
                                         });
                                         quote::quote! {
                                             #field_ident: #element_snake_case.#field_ident.as_ref().map(|#value_snake_case| #value_content_token_stream)
