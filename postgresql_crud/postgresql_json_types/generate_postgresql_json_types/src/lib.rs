@@ -692,6 +692,7 @@ pub fn generate_postgresql_json_types(
         };
         let ident = &generate_ident_token_stream(not_null_or_nullable, postgresql_json_type_pattern);
         let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
+        let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident);
@@ -3044,6 +3045,11 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonTypePattern::ArrayDimension1 { .. } | PostgresqlJsonTypePattern::ArrayDimension2 { .. } | PostgresqlJsonTypePattern::ArrayDimension3 { .. } | PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_token_stream(),
                 }
             };
+            let generate_dot_checked_sub_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{#content_token_stream.checked_sub(1)};
+            let generate_minus_one_is_finite_then_some_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{{
+                let value = #content_token_stream - 1.0;
+                value.is_finite().then_some(value)
+            }};
             //todo additonal logic for Option<value> and element of array? optional element of array?
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
@@ -3069,12 +3075,14 @@ pub fn generate_postgresql_json_types(
                             None => None,
                         }
                     };
+                    let create_dot_zero_dot_zero_token_stream = quote::quote!{create.0.0};
                     (
-                        generate_greater_than_one_less_token_stream(&quote::quote!{create.0.0.checked_sub(1)}),
-                        generate_greater_than_one_less_token_stream(&quote::quote!{{
-                            let value = create.0.0 - 1.0;
-                            value.is_finite().then_some(value)
-                        }}),
+                        generate_greater_than_one_less_token_stream(&generate_dot_checked_sub_one_token_stream(
+                            &create_dot_zero_dot_zero_token_stream
+                        )),
+                        generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                            &create_dot_zero_dot_zero_token_stream
+                        )),
                     )
                 };
                 match &postgresql_json_type {
@@ -3247,8 +3255,101 @@ pub fn generate_postgresql_json_types(
             else {
                 none_token_stream.clone()
             };
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream = quote::quote!{todo!()};
-            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream = quote::quote!{todo!()};
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_greater_than_token_stream = {
+                use postgresql_crud_macros_common::NotNullOrNullable;
+                match &postgresql_json_type_pattern {
+                    PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
+                    PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
+                        if let (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) = (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                            //todo reuse logic for greater than and contains element greater than
+                            let (
+                                int_greater_than_one_less_token_stream,
+                                float_greater_than_one_less_token_stream,
+                            ) = {
+                                let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
+                                    match #import_path::NotEmptyUniqueEnumVec::try_new({
+                                        let mut #acc_snake_case = vec![];
+                                        for element in create.0.0 {
+                                            match #content_token_stream {
+                                                Some(value) => {
+                                                    #acc_snake_case.push(
+                                                        #import_path::SingleOrMultiple::Single(
+                                                            #ident_where_upper_camel_case::ContainsElementGreaterThan(
+                                                                where_filters::PostgresqlJsonTypeWhereContainsElementGreaterThan {
+                                                                    logical_operator: #import_path::LogicalOperator::Or,
+                                                                    value: #ident_standart_not_null_table_type_declaration_upper_camel_case(
+                                                                        #ident_standart_not_null_origin_upper_camel_case(value)
+                                                                    )
+                                                                }
+                                                            )
+                                                        )
+                                                    );
+                                                },
+                                                None => {
+                                                    return None;
+                                                },
+                                            }
+                                        }
+                                        #acc_snake_case
+                                    }) {
+                                        Ok(ok_value) => Some(ok_value),
+                                        Err(error) => match error {
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("47e44ecd-d1c9-4d2b-9d9e-4191cad34be9")
+                                        }
+                                    }
+                                };
+                                let element_dot_zero_token_stream = quote::quote!{element.0};
+                                (
+                                    generate_greater_than_one_less_token_stream(&generate_dot_checked_sub_one_token_stream(
+                                        &element_dot_zero_token_stream
+                                    )),
+                                    generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                                        &element_dot_zero_token_stream
+                                    )),
+                                )
+                            };
+                            match &postgresql_json_type {
+                                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_token_stream,
+                                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                                PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_greater_than_one_less_token_stream,
+                                PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                                PostgresqlJsonType::StdStringStringAsJsonbString |
+                                PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
+                            }
+                        }
+                        else {
+                            none_token_stream.clone()
+                        }
+                    },
+                    PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => {
+                        none_token_stream.clone()
+                    }
+                    PostgresqlJsonTypePattern::ArrayDimension3 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                    } => {
+                        none_token_stream.clone()
+                    }
+                    PostgresqlJsonTypePattern::ArrayDimension4 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                        dimension4_not_null_or_nullable,
+                    } => {
+                        none_token_stream.clone()
+                    }
+                }
+            };
+            let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_contains_element_regular_expression_token_stream = none_token_stream.clone();
             postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
                 &quote::quote! {#[cfg(feature = "test-utils")]},
                 &postgresql_crud_macros_common_import_path_postgresql_crud_common,
