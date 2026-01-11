@@ -4659,43 +4659,55 @@ pub fn generate_postgresql_json_object_type(
                 let generate_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension|{
                     let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case = dimension.read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case();
                     let generate_nullable_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote! {
-                        match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
-                            (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
-                                #content_token_stream
-                                as
-                                #import_path::PostgresqlJsonTypeTestCases
-                            >::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
-                                #read_only_ids_snake_case,
-                                #create_snake_case
-                            ) {
-                                Some(some_value) => Some(#import_path::NotEmptyUniqueEnumVec::try_new({
-                                    let mut #acc_snake_case = Vec::new();
-                                    for #element_snake_case in some_value.clone().into_vec() {
-                                        match #import_path::NotEmptyUniqueEnumVec::try_new(
-                                            vec![#element_snake_case]
-                                        ) {
-                                            Ok(ok_value) => {
-                                                #acc_snake_case.push(
-                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value))
-                                                );
-                                            },
-                                            Err(error) => match error {
-                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
-                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("23dca12f-65c0-4c0e-addd-cc392c663733")
+                        match #import_path::NotEmptyUniqueEnumVec::try_new(
+                            match (#read_only_ids_snake_case.0.#value_snake_case, #create_snake_case.0) {
+                                (Some(#read_only_ids_snake_case), Some(#create_snake_case)) => match <
+                                    #content_token_stream
+                                    as
+                                    #import_path::PostgresqlJsonTypeTestCases
+                                >::#read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_dimension_number_equal_snake_case(
+                                    #read_only_ids_snake_case,
+                                    #create_snake_case
+                                ) {
+                                    Some(some_value) => {
+                                        let mut #acc_snake_case = Vec::new();
+                                        for #element_snake_case in some_value.clone().into_vec() {
+                                            match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                vec![#element_snake_case]
+                                            ) {
+                                                Ok(ok_value) => {
+                                                    #acc_snake_case.push(
+                                                        #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value))
+                                                    );
+                                                },
+                                                Err(error) => match error {
+                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("23dca12f-65c0-4c0e-addd-cc392c663733")
+                                                }
                                             }
                                         }
+                                        let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
+                                        if !#acc_snake_case.contains(&whole) {
+                                            #acc_snake_case.push(whole);
+                                        }
+                                        #acc_snake_case
+                                    },
+                                    None => {
+                                        return None;
                                     }
-                                    let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
-                                    if !#acc_snake_case.contains(&whole) {
-                                        #acc_snake_case.push(whole);
-                                    }
-                                    #acc_snake_case
-                                }).expect("12b7822a-45ed-4368-86a7-fc0035880377")),
-                                None => None
-                            },
-                            (Some(_), None) => panic!("6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
-                            (None, Some(_)) => panic!("a2761cd2-27ff-4db0-ae81-948aa04573a6"),
-                            (None, None) => None,
+                                },
+                                (Some(_), None) => panic!("6abeac7b-2ba2-4eb1-a21e-2f9d30b21e98"),
+                                (None, Some(_)) => panic!("a2761cd2-27ff-4db0-ae81-948aa04573a6"),
+                                (None, None) => vec![#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(None)]
+                            }
+                        ) {
+                            Ok(ok_value) => Some(ok_value),
+                            Err(error) => match error {
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
+                                    return None;
+                                },
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("88912e24-3bee-4dc4-a373-6d96d260170f")
+                            }
                         }
                     };
                     match &postgresql_json_object_type_pattern {
