@@ -4671,15 +4671,19 @@ pub fn generate_postgresql_json_object_type(
                                 Some(some_value) => Some(#import_path::NotEmptyUniqueEnumVec::try_new({
                                     let mut #acc_snake_case = Vec::new();
                                     for #element_snake_case in some_value.clone().into_vec() {
-                                        #acc_snake_case.push(
-                                            #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                                Some(
-                                                    #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                        vec![#element_snake_case]
-                                                    ).expect("604b888c-923d-4c11-98a6-a5b523f2e91b")
-                                                )
-                                            )
-                                        );
+                                        match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                            vec![#element_snake_case]
+                                        ) {
+                                            Ok(ok_value) => {
+                                                #acc_snake_case.push(
+                                                    #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value))
+                                                );
+                                            },
+                                            Err(error) => match error {
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("23dca12f-65c0-4c0e-addd-cc392c663733")
+                                            }
+                                        }
                                     }
                                     let whole = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(some_value));
                                     if !#acc_snake_case.contains(&whole) {
