@@ -662,9 +662,14 @@ pub fn generate_postgresql_types(
         }
     }
     #[derive(Debug, serde::Deserialize)]
-    enum GeneratePostgresqlTypesConfig {
+    enum GeneratePostgresqlTypesConfigVariant {
         All,
         Concrete(Vec<PostgresqlTypeRecord>),
+    }
+    #[derive(Debug, serde::Deserialize)]
+    struct GeneratePostgresqlJsonTypesConfig {
+        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        variant: GeneratePostgresqlTypesConfigVariant,
     }
     #[derive(Debug)]
     enum PostgresqlTypeInitializationTryNew {
@@ -797,11 +802,12 @@ pub fn generate_postgresql_types(
     use rayon::iter::IntoParallelRefIterator as _;
     use rayon::iter::ParallelIterator as _;
     panic_location::panic_location();
+    let generate_postgresql_json_types_config =
+        serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string())
+            .expect("80485f71-4e21-4166-94df-722326c36a29");
     let (columns_token_stream, postgresql_type_array) = {
-        let current_acc = match serde_json::from_str::<GeneratePostgresqlTypesConfig>(
-            &input_token_stream.to_string()
-        ).expect("80485f71-4e21-4166-94df-722326c36a29") {
-            GeneratePostgresqlTypesConfig::All => PostgresqlType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_type| {
+        let current_acc = match generate_postgresql_json_types_config.variant {
+            GeneratePostgresqlTypesConfigVariant::All => PostgresqlType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_type| {
                 let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(Vec::new(), |mut current_acc, postgresql_type_pattern| {
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
@@ -860,7 +866,7 @@ pub fn generate_postgresql_types(
                 }
                 acc
             }),
-            GeneratePostgresqlTypesConfig::Concrete(value) => value,
+            GeneratePostgresqlTypesConfigVariant::Concrete(value) => value,
         };
         {
             let mut check_acc = Vec::new();
@@ -6444,10 +6450,11 @@ pub fn generate_postgresql_types(
             .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     };
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlTypes",
-    //     &generated,
-    //     &macros_helpers::FormatWithCargofmt::True
-    // );
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_json_types_config.should_write_token_stream_into_file,
+        "GeneratePostgresqlTypes",
+        &generated,
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     generated.into()
 }
