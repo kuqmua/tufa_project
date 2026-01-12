@@ -3081,7 +3081,12 @@ pub fn generate_postgresql_json_types(
             let generate_dot_checked_sub_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{#content_token_stream.checked_sub(1)};
             let generate_minus_one_is_finite_then_some_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{{
                 let value = #content_token_stream - 1.0;
-                value.is_finite().then_some(value)
+                if value == #content_token_stream {
+                    None
+                }
+                else {
+                    value.is_finite().then_some(value)
+                }
             }};
             //todo additonal logic for Option<value> and element of array? optional element of array?
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&

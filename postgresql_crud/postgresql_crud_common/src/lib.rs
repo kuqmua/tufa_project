@@ -1506,7 +1506,7 @@ pub const fn std_primitive_u32_test_cases_vec() -> [u32; 3] {
 pub const fn std_primitive_u64_test_cases_vec() -> [u64; 3] {
     [u64::MIN, 0, u64::MAX]
 }
-pub const fn std_primitive_f32_test_cases_vec() -> [f32; 12] {
+pub const fn std_primitive_f32_test_cases_vec() -> [f32; 18] {
     [
         f32::EPSILON,
         f32::MAX,
@@ -1514,15 +1514,21 @@ pub const fn std_primitive_f32_test_cases_vec() -> [f32; 12] {
         f32::MIN_POSITIVE,
         -1e30,
         -1e-30,
+        -16777214.0,
+        -100.0,
+        -10.0,
         -1.0,
         -0.0,
         0.0,
         1.0,
+        10.0,
+        100.0,
+        16777214.0,
         1e-30,
         1e30,
     ]
 }
-pub const fn std_primitive_f64_test_cases_vec() -> [f64; 12] {
+pub const fn std_primitive_f64_test_cases_vec() -> [f64; 18] {
     [
         f64::EPSILON,
         f64::MAX,
@@ -1530,10 +1536,16 @@ pub const fn std_primitive_f64_test_cases_vec() -> [f64; 12] {
         f64::MIN_POSITIVE,
         -1e300,
         -1e-300,
+        -9007199254740990.0,
+        -100.0,
+        -10.0,
         -1.0,
         -0.0,
         0.0,
         1.0,
+        10.0,
+        100.0,
+        9007199254740990.0,
         1e-300,
         1e300,
     ]

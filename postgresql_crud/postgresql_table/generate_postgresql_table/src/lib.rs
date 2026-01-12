@@ -5361,7 +5361,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             quote::quote! {
                                 #current_field_ident: <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_merged_with_create_into_option_value_read(
-                                    #read_only_ids_content_token_stream.#current_field_ident #maybe_dot_clone_token_stream.expect("88038e29-adc7-4e1c-ae5b-609c18831a1b"),
+                                    #read_only_ids_content_token_stream.#current_field_ident #maybe_dot_clone_token_stream.expect("f967434c-f45a-47f9-a289-36ef99d80e33"),
                                     #create_content_token_stream.#current_field_ident #maybe_dot_clone_token_stream
                                 )
                             }
@@ -6457,7 +6457,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         );
                         quote::quote!{
                             if let Some(some_value) = <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
-                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("c2b51523-e8fe-4e67-bbc8-3363e5db64fb"),
+                                read_only_ids_returned_from_create_one.#field_ident.clone().expect("df01c8ac-63e3-42f7-aae4-018c7958c00d"),
                                 ident_create.#field_ident.clone()
                             ) {
                                 for #element_snake_case in some_value.into_vec() {
