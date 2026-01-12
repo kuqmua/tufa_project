@@ -300,6 +300,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
             naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
         }
+        fn derive_clone_and_copy(&self) -> (macros_helpers::DeriveClone, macros_helpers::DeriveCopy) {
+            match self{
+                Operation::CreateMany |
+                Operation::CreateOne |
+                Operation::ReadMany |
+                Operation::ReadOne |
+                Operation::UpdateMany |
+                Operation::UpdateOne |
+                Operation::DeleteMany => (macros_helpers::DeriveClone::False, macros_helpers::DeriveCopy::False),
+                Operation::DeleteOne => (macros_helpers::DeriveClone::True, macros_helpers::DeriveCopy::True),
+            }
+        }
     }
     impl std::fmt::Display for Operation {
         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2854,16 +2866,24 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
          payload_token_stream: proc_macro2::TokenStream|
          -> proc_macro2::TokenStream {
             let parameters_token_stream = {
-                let ident_operation_parameters_upper_camel_case =
-                    generate_ident_operation_parameters_upper_camel_case(operation);
-                let ident_operation_payload_upper_camel_case =
-                    generate_ident_operation_payload_upper_camel_case(operation);
-                quote::quote! {
-                    #derive_debug
-                    pub struct #ident_operation_parameters_upper_camel_case {
-                        pub #payload_snake_case: #ident_operation_payload_upper_camel_case,
+                let (
+                    derive_clone,
+                    derive_copy
+                ) = operation.derive_clone_and_copy();
+                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_clone_if(derive_clone)
+                .derive_copy_if(derive_copy)
+                .build_struct(
+                    &generate_ident_operation_parameters_upper_camel_case(operation),
+                    &{
+                        let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(operation);
+                        quote::quote!{{
+                            pub #payload_snake_case: #ident_operation_payload_upper_camel_case,
+                        }}
                     }
-                }
+                )
             };
             quote::quote! {
                 #payload_token_stream
@@ -2877,10 +2897,22 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let ident_operation_payload_upper_camel_case =
                 generate_ident_operation_payload_upper_camel_case(operation);
             let ident_operation_payload_token_stream = {
-                quote::quote! {
-                    #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-                    pub struct #ident_operation_payload_upper_camel_case #declaration_token_stream
-                }
+                let (
+                    derive_clone,
+                    derive_copy
+                ) = operation.derive_clone_and_copy();
+                macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
+                .make_pub()
+                .derive_debug()
+                .derive_clone_if(derive_clone)
+                .derive_copy_if(derive_copy)
+                .derive_serde_serialize()
+                .derive_serde_deserialize()
+                .derive_utoipa_to_schema()
+                .build_struct(
+                    &ident_operation_payload_upper_camel_case,
+                    &declaration_token_stream
+                )
             };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(&ident_operation_payload_upper_camel_case, &quote::quote! {Self #default_init_content_token_stream});
             quote::quote! {
@@ -7699,7 +7731,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTable",
     //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithRustfmt::True,
     // );
     // }
     generated.into()
