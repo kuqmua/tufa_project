@@ -1,5 +1,5 @@
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-#[postgresql_crud::postgresql_json_object_type_pattern{
+#[postgresql_crud::postgresql_json_object_type_config{
     {
         "should_write_token_stream_into_file": "False",
         "variant": 
@@ -846,7 +846,7 @@ pub struct Animal {
 }
 
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-#[postgresql_crud::postgresql_json_object_type_pattern{
+#[postgresql_crud::postgresql_json_object_type_config{
     {
         "should_write_token_stream_into_file": "False",
         "variant":
@@ -1008,7 +1008,7 @@ pub struct Doggie {
 }
 
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-#[postgresql_crud::postgresql_json_object_type_pattern{
+#[postgresql_crud::postgresql_json_object_type_config{
     {
         "should_write_token_stream_into_file": "False",
         "variant":

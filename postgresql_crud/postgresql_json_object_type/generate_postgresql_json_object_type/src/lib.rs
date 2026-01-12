@@ -1,7 +1,7 @@
 //todo generate authorization rights enum for json fields
 //todo bug in update if updating array and creating element in jsonb array without anything - read_only_ids generation logic of vec returns wrong query part
 #[proc_macro_attribute]
-pub fn postgresql_json_object_type_pattern(
+pub fn postgresql_json_object_type_config(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
@@ -50,7 +50,7 @@ pub fn generate_postgresql_json_object_type(
             &macros_helpers::get_macro_attribute_meta_list_token_stream(
                 &syn_derive_input.attrs,
                 &format!(
-                    "{}::postgresql_json_object_type_pattern",
+                    "{}::postgresql_json_object_type_config",
                     import_path.snake_case_std_primitive_str()
                 ),
             )

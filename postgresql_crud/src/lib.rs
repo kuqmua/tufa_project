@@ -41,7 +41,7 @@ pub use postgresql_table::update_one_additional_logic;
 pub use postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
 pub use postgresql_json_object_type::UniqueVec;
 pub use postgresql_json_object_type::UniqueVecTryNewErrorNamed;
-pub use postgresql_json_object_type::postgresql_json_object_type_pattern;
+pub use postgresql_json_object_type::postgresql_json_object_type_config;
 
 pub use postgresql_crud_common::PostgresqlTypePrimaryKey;
 pub use postgresql_types::*;
