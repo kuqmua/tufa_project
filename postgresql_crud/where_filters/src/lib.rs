@@ -1,4 +1,8 @@
-generate_where_filters::generate_where_filters!();
+generate_where_filters::generate_where_filters!({
+    "postgresql_types_content_write_into_generate_where_filters_postgresql_types": "False",
+    "postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types": "False",
+    "whole_content_write_into_generate_where_filters": "False"
+});
 
 #[derive(
     Debug,

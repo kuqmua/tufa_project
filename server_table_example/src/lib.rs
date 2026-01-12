@@ -1,5 +1,13 @@
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
 #[postgresql_crud::generate_postgresql_table_config{{
+    "create_many_content_write_into_generate_postgresql_table_create_many": "False",
+    "create_one_content_write_into_generate_postgresql_table_create_one": "False",
+    "read_many_content_write_into_generate_postgresql_table_read_many": "False",
+    "read_one_content_write_into_generate_postgresql_table_read_one": "False",
+    "update_many_content_write_into_generate_postgresql_table_update_many": "False",
+    "update_one_content_write_into_generate_postgresql_table_update_one": "False",
+    "delete_many_content_write_into_generate_postgresql_table_delete_many": "False",
+    "delete_one_content_write_into_generate_postgresql_table_delete_one": "False",
     "tests_content_write_into_generate_postgresql_table_tests": "False",
     "common_content_write_into_generate_postgresql_table_common": "False",
     "whole_content_write_into_generate_postgresql_table": "False"

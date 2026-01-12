@@ -1,7 +1,5 @@
 #[proc_macro]
-pub fn generate_where_filters(
-    _input_token_stream: proc_macro::TokenStream,
-) -> proc_macro::TokenStream {
+pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
@@ -82,7 +80,16 @@ pub fn generate_where_filters(
             }
         }
     }
+    #[derive(Debug, serde::Deserialize)]
+    struct GenerateWhereFiltersConfig {
+        postgresql_types_content_write_into_generate_where_filters_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_where_filters: macros_helpers::ShouldWriteTokenStreamIntoFile,
+    }
     panic_location::panic_location();
+    let generate_where_filters_config =
+        serde_json::from_str::<GenerateWhereFiltersConfig>(&input_token_stream.to_string())
+            .expect("1217b73b-456c-4a3e-8a5a-5d5b8b8c3452");
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
@@ -1783,10 +1790,11 @@ pub fn generate_where_filters(
         #postgresql_type_token_stream
         #postgresql_json_type_token_stream
     };
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlTypeWhereFilters",
-    //     &generated,
-    //     &macros_helpers::FormatWithCargofmt::True
-    // );
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_where_filters_config.whole_content_write_into_generate_where_filters,
+        "generate_postgresql_type_where_filters",
+        &generated,
+        &macros_helpers::FormatWithCargofmt::True
+    );
     generated.into()
 }

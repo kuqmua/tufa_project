@@ -494,13 +494,12 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             }
         }
     };
-    let generated = quote::quote! {
-        #tokens
-    };
+    let generated = quote::quote! {#tokens};
     // println!("{generated} ");
     // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file(
-    //         "ErrorOccurence",
+    //     macros_helpers::maybe_write_token_stream_into_file(
+    //         macros_helpers::ShouldWriteTokenStreamIntoFile::True,
+    //         "error_occurence",
     //         &generated,
     //         &macros_helpers::FormatWithCargofmt::True
     //     );
