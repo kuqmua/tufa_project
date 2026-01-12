@@ -484,9 +484,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlTableConfig {
-        should_write_tests_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        should_write_common_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        tests_content_write_into_generate_postgresql_table_tests: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        common_content_write_into_generate_postgresql_table_common: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_table: macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
@@ -7710,8 +7710,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.should_write_tests_token_stream_into_file,
-        "GeneratePostgresqlTableTests",
+        generate_postgresql_table_config.tests_content_write_into_generate_postgresql_table_tests,
+        "generate_postgresql_table_tests",
         &ident_tests_token_stream,
         &macros_helpers::FormatWithCargofmt::True,
     );
@@ -7728,8 +7728,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #ident_update_for_query_token_stream
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.should_write_common_token_stream_into_file,
-        "GeneratePostgresqlTableCommon",
+        generate_postgresql_table_config.common_content_write_into_generate_postgresql_table_common,
+        "generate_postgresql_table_common",
         &common_token_stream,
         &macros_helpers::FormatWithCargofmt::True,
     );
@@ -7749,8 +7749,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #ident_tests_token_stream
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.should_write_token_stream_into_file,
-        "GeneratePostgresqlTable",
+        generate_postgresql_table_config.whole_content_write_into_generate_postgresql_table,
+        "generate_postgresql_table",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );

@@ -668,7 +668,8 @@ pub fn generate_postgresql_types(
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
-        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlTypesConfigVariant,
     }
     #[derive(Debug)]
@@ -6419,26 +6420,27 @@ pub fn generate_postgresql_types(
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    //this need only for better development experience
-    if false {
-        let content_token_stream = columns_token_stream
-            .into_iter()
-            .map(|element| {
-                element
-                    .parse::<proc_macro2::TokenStream>()
-                    .expect("79ee6381-c845-4762-a6f6-1c6b38806535")
-            })
-            .collect::<Vec<proc_macro2::TokenStream>>();
-        macros_helpers::write_token_stream_into_file(
-            "GeneratePostgresqlTypesExample",
-            &quote::quote! {
-                struct GeneratePostgresqlTypesExample {
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_json_types_config
+            .postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types,
+        "postgresql_table_columns_using_postgresql_types",
+        &{
+            let content_token_stream = columns_token_stream
+                .into_iter()
+                .map(|element| {
+                    element
+                        .parse::<proc_macro2::TokenStream>()
+                        .expect("79ee6381-c845-4762-a6f6-1c6b38806535")
+                })
+                .collect::<Vec<proc_macro2::TokenStream>>();
+            quote::quote! {
+                struct PostgresqlTableColumnsUsingPostgresqlTypes {
                     #(#content_token_stream)*
                 }
-            },
-            &macros_helpers::FormatWithCargofmt::True,
-        );
-    }
+            }
+        },
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     let generated = {
         let content_token_stream = postgresql_type_array
             .into_iter()
@@ -6451,8 +6453,8 @@ pub fn generate_postgresql_types(
         quote::quote! {#(#content_token_stream)*}
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_json_types_config.should_write_token_stream_into_file,
-        "GeneratePostgresqlTypes",
+        generate_postgresql_json_types_config.whole_content_write_into_generate_postgresql_types,
+        "generate_postgresql_types",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );

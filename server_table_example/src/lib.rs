@@ -1,8 +1,8 @@
 #[derive(Debug, Clone, Copy, postgresql_crud::GeneratePostgresqlTable)]
 #[postgresql_crud::generate_postgresql_table_config{{
-    "should_write_tests_token_stream_into_file": "False",
-    "should_write_common_token_stream_into_file": "False",
-    "should_write_token_stream_into_file": "False"
+    "tests_content_write_into_generate_postgresql_table_tests": "False",
+    "common_content_write_into_generate_postgresql_table_common": "False",
+    "whole_content_write_into_generate_postgresql_table": "False"
 }}]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]

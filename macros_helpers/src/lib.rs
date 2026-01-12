@@ -61,7 +61,6 @@ pub use write_string_into_file::write_string_into_file;
 mod write_token_stream_into_file;
 pub use write_token_stream_into_file::{
     FormatWithCargofmt, ShouldWriteTokenStreamIntoFile, maybe_write_token_stream_into_file,
-    write_token_stream_into_file,
 };
 mod syn_field_wrapper;
 pub use syn_field_wrapper::SynFieldWrapper;

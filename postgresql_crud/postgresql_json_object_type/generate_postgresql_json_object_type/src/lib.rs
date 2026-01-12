@@ -38,7 +38,9 @@ pub fn generate_postgresql_json_object_type(
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
-        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_json_object_type: macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: PostgresqlJsonObjectTypeRecord,
     }
     panic_location::panic_location();
@@ -6978,28 +6980,6 @@ pub fn generate_postgresql_json_object_type(
                 #impl_postgresql_type_test_cases_for_ident_token_stream
                 #impl_postgresql_type_not_primary_key_for_ident_token_stream
             };
-            // if let (
-            //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-
-            //     // PostgresqlJsonObjectTypePattern::Standart,
-            //     PostgresqlJsonObjectTypePattern::Array,
-
-            //     TraitGen::PostgresqlJsonType,
-            //     // TraitGen::PostgresqlTypeAndPostgresqlJsonType,
-            // ) = (
-            //     &not_null_or_nullable,
-            //     &postgresql_json_object_type_pattern,
-            //     &trait_gen,
-            // ) {
-            //     if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
-            //         macros_helpers::write_token_stream_into_file(
-            //             "GeneratePostgresqlJsonObjectType",
-            //             &generated,
-            //             &macros_helpers::FormatWithCargofmt::True
-            //         );
-            //     }
-            // }
             (
                 {
                     let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().expect("7f9a06a5-db0f-420d-ae83-581ccc02c99f");
@@ -7011,22 +6991,22 @@ pub fn generate_postgresql_json_object_type(
             )
         })
         .collect::<(Vec<proc_macro2::TokenStream>, Vec<proc_macro2::TokenStream>)>();
-    if false {
-        macros_helpers::write_token_stream_into_file(
-            "GeneratePostgresqlJsonObjectTypeExample",
-            &quote::quote! {
-                pub struct GeneratePostgresqlJsonObjectTypeExample {
-                    #(#fields_token_stream)*
-                }
-            },
-            &macros_helpers::FormatWithCargofmt::True,
-        );
-    }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_json_object_type_config
+            .postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types,
+        "postgresql_table_columns_using_postgresql_json_object_types",
+        &quote::quote! {
+            pub struct PostgresqlTableColumnsContentWriteIntoPostgresqlTableColumnsUsingPostgresqlJsonObjectTypes {
+                #(#fields_token_stream)*
+            }
+        },
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     let generated: proc_macro2::TokenStream =
         quote::quote! {#(#postgresql_json_object_type_array)*};
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_json_object_type_config.should_write_token_stream_into_file,
-        "GeneratePostgresqlJsonObjectType",
+        generate_postgresql_json_object_type_config.whole_content_write_into_generate_postgresql_json_object_type,
+        "generate_postgresql_json_object_type",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );

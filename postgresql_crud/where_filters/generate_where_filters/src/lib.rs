@@ -1107,27 +1107,12 @@ pub fn generate_where_filters(
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                     #impl_postgresql_type_where_filter_token_stream
                 };
-                // match &filter {
-                //     postgresql_crud_macros_common::PostgresqlTypeFilter::In {ident: _} => {
-                //         macros_helpers::write_token_stream_into_file(
-                //             "GeneratePostgresqlTypeWhereFilter",
-                //             &generated,
-                //             &macros_helpers::FormatWithCargofmt::True
-                //         );
-                //         proc_macro2::TokenStream::new(),
-                //     },
-                //     _ => generated
-                // }
                 generated
             };
         let filter_array_token_stream =
             postgresql_crud_macros_common::PostgresqlTypeFilter::into_array()
                 .map(|element| generate_filters_token_stream(&element));
-        // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::);
-        quote::quote! {
-            #(#filter_array_token_stream)*
-            //#_token_stream
-        }
+        quote::quote! {#(#filter_array_token_stream)*}
     };
     let postgresql_json_type_token_stream = {
         let generate_filters_token_stream =
@@ -1786,34 +1771,12 @@ pub fn generate_where_filters(
                     #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                     #impl_postgresql_type_where_filter_token_stream
                 };
-                // match &filter {
-                //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {ident: _} => {
-                //         // macros_helpers::write_token_stream_into_file(
-                //         //     "GeneratePostgresqlTypeWhereFilter",
-                //         //     &generated,
-                //         //     &macros_helpers::FormatWithCargofmt::True
-                //         // );
-                //         proc_macro2::TokenStream::new()
-                //     },
-                //     _ => generated
-                // }
                 generated
             };
         let filter_array_token_stream =
             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array()
                 .map(|element| generate_filters_token_stream(&element));
-        // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::);
-        let generated = quote::quote! {
-            #(#filter_array_token_stream)*
-            // #_token_stream
-        };
-        // if let postgresql_crud_macros_common::PostgresqlTypeFilter:: = &filter {
-        //     macros_helpers::write_token_stream_into_file(
-        //         "GeneratePostgresqlTypeWhereFilter",
-        //         &generated,
-        //         &macros_helpers::FormatWithCargofmt::True
-        //     );
-        // }
+        let generated = quote::quote! {#(#filter_array_token_stream)*};
         generated
     };
     let generated = quote::quote! {

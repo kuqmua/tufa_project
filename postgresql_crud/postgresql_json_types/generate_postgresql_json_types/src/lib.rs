@@ -294,7 +294,8 @@ pub fn generate_postgresql_json_types(
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
-        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlJsonTypesConfigVariant,
     }
     use rayon::iter::IntoParallelRefIterator as _;
@@ -303,7 +304,7 @@ pub fn generate_postgresql_json_types(
     let generate_postgresql_json_types_config =
         serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string())
             .expect("1123f78f-9c84-4001-b619-b534dd55a835");
-    let (_fields_token_stream, postgresql_json_type_array) = {
+    let (fields_token_stream, postgresql_json_type_array) = {
         {
             let generate_standart = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
@@ -3496,23 +3497,22 @@ pub fn generate_postgresql_json_types(
         )
     })
     .collect::<(Vec<String>, Vec<String>)>();
-    // if false {
-    //     macros_helpers::write_token_stream_into_file(
-    //         "GeneratePostgresqlJsonTypesExample",
-    //         &{
-    //             let fields_token_stream = fields_token_stream
-    //                 .into_iter()
-    //                 .map(|element| element.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
-    //                 .collect::<Vec<proc_macro2::TokenStream>>();
-    //             quote::quote! {
-    //                 pub struct GeneratePostgresqlJsonTypesExample {
-    //                     #(#fields_token_stream)*
-    //                 }
-    //             }
-    //         },
-    //         &macros_helpers::FormatWithCargofmt::True
-    //     );
-    // }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_json_types_config.postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types,
+        "postgresql_table_columns_using_postgresql_json_types",
+        &{
+            let fields_content_token_stream = fields_token_stream
+                .into_iter()
+                .map(|element| element.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
+                .collect::<Vec<proc_macro2::TokenStream>>();
+            quote::quote! {
+                pub struct PostgresqlTableColumnsUsingPostgresqlJsonTypes {
+                    #(#fields_content_token_stream)*
+                }
+            }
+        },
+        &macros_helpers::FormatWithCargofmt::True
+    );
     let generated = {
         let content_token_stream = postgresql_json_type_array
             .into_iter()
@@ -3525,8 +3525,8 @@ pub fn generate_postgresql_json_types(
         quote::quote! {#(#content_token_stream)*}
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_json_types_config.should_write_token_stream_into_file,
-        "GeneratePostgresqlJsonTypes",
+        generate_postgresql_json_types_config.whole_content_write_into_generate_postgresql_json_types,
+        "generate_postgresql_json_types",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
     );
