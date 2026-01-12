@@ -1,7 +1,7 @@
 generate_postgresql_json_types::generate_postgresql_json_types!({
     "postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types": "False",
     "whole_content_write_into_generate_postgresql_json_types": "False",
-    "variant": 
+    "variant":
     // "WithoutDimensions"
     // "WithDimensionOne"
     // "WithDimensionTwo"

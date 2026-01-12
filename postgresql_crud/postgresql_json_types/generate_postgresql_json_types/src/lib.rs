@@ -294,8 +294,10 @@ pub fn generate_postgresql_json_types(
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
-        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_generate_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_json_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlJsonTypesConfigVariant,
     }
     use rayon::iter::IntoParallelRefIterator as _;
@@ -3525,7 +3527,8 @@ pub fn generate_postgresql_json_types(
         quote::quote! {#(#content_token_stream)*}
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_json_types_config.whole_content_write_into_generate_postgresql_json_types,
+        generate_postgresql_json_types_config
+            .whole_content_write_into_generate_postgresql_json_types,
         "generate_postgresql_json_types",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,

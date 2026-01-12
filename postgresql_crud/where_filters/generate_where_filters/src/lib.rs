@@ -1,5 +1,7 @@
 #[proc_macro]
-pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_where_filters(
+    input_token_stream: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
@@ -82,9 +84,12 @@ pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> pr
     }
     #[derive(Debug, serde::Deserialize)]
     struct GenerateWhereFiltersConfig {
-        postgresql_types_content_write_into_generate_where_filters_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_generate_where_filters: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_types_content_write_into_generate_where_filters_postgresql_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_where_filters:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
     let generate_where_filters_config =
@@ -1119,7 +1124,15 @@ pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> pr
         let filter_array_token_stream =
             postgresql_crud_macros_common::PostgresqlTypeFilter::into_array()
                 .map(|element| generate_filters_token_stream(&element));
-        quote::quote! {#(#filter_array_token_stream)*}
+        let generated = quote::quote! {#(#filter_array_token_stream)*};
+        macros_helpers::maybe_write_token_stream_into_file(
+            generate_where_filters_config
+                .postgresql_types_content_write_into_generate_where_filters_postgresql_types,
+            "generate_where_filters_postgresql_types",
+            &generated,
+            &macros_helpers::FormatWithCargofmt::True,
+        );
+        generated
     };
     let postgresql_json_type_token_stream = {
         let generate_filters_token_stream =
@@ -1784,6 +1797,12 @@ pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> pr
             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array()
                 .map(|element| generate_filters_token_stream(&element));
         let generated = quote::quote! {#(#filter_array_token_stream)*};
+        macros_helpers::maybe_write_token_stream_into_file(
+            generate_where_filters_config.postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types,
+            "generate_where_filters_postgresql_json_types",
+            &generated,
+            &macros_helpers::FormatWithCargofmt::True
+        );
         generated
     };
     let generated = quote::quote! {
@@ -1792,9 +1811,9 @@ pub fn generate_where_filters(input_token_stream: proc_macro::TokenStream) -> pr
     };
     macros_helpers::maybe_write_token_stream_into_file(
         generate_where_filters_config.whole_content_write_into_generate_where_filters,
-        "generate_postgresql_type_where_filters",
+        "generate_where_filters",
         &generated,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     generated.into()
 }

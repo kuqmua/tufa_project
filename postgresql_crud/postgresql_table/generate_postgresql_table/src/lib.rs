@@ -484,17 +484,28 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlTableConfig {
-        create_many_content_write_into_generate_postgresql_table_create_many: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        create_one_content_write_into_generate_postgresql_table_create_one: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        read_many_content_write_into_generate_postgresql_table_read_many: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        read_one_content_write_into_generate_postgresql_table_read_one: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        update_many_content_write_into_generate_postgresql_table_update_many: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        update_one_content_write_into_generate_postgresql_table_update_one: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        delete_many_content_write_into_generate_postgresql_table_delete_many: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        delete_one_content_write_into_generate_postgresql_table_delete_one: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        tests_content_write_into_generate_postgresql_table_tests: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        common_content_write_into_generate_postgresql_table_common: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_generate_postgresql_table: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        create_many_content_write_into_generate_postgresql_table_create_many:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        create_one_content_write_into_generate_postgresql_table_create_one:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        read_many_content_write_into_generate_postgresql_table_read_many:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        read_one_content_write_into_generate_postgresql_table_read_one:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        update_many_content_write_into_generate_postgresql_table_update_many:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        update_one_content_write_into_generate_postgresql_table_update_one:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        delete_many_content_write_into_generate_postgresql_table_delete_many:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        delete_one_content_write_into_generate_postgresql_table_delete_one:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        tests_content_write_into_generate_postgresql_table_tests:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        common_content_write_into_generate_postgresql_table_common:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_table:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
     }
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
@@ -3592,10 +3603,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.create_many_content_write_into_generate_postgresql_table_create_many,
-        &"generate_postgresql_table_create_many",
+        generate_postgresql_table_config
+            .create_many_content_write_into_generate_postgresql_table_create_many,
+        "generate_postgresql_table_create_many",
         &create_many_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     let create_one_token_stream = {
         let operation = Operation::CreateOne;
@@ -3710,10 +3722,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.create_one_content_write_into_generate_postgresql_table_create_one,
-        &"generate_postgresql_table_create_one",
+        generate_postgresql_table_config
+            .create_one_content_write_into_generate_postgresql_table_create_one,
+        "generate_postgresql_table_create_one",
         &create_one_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     let read_many_token_stream = {
         let operation = Operation::ReadMany;
@@ -3923,10 +3936,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.read_many_content_write_into_generate_postgresql_table_read_many,
-        &"generate_postgresql_table_read_many",
+        generate_postgresql_table_config
+            .read_many_content_write_into_generate_postgresql_table_read_many,
+        "generate_postgresql_table_read_many",
         &read_many_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     let read_one_token_stream = {
         let operation = Operation::ReadOne;
@@ -4058,10 +4072,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.read_one_content_write_into_generate_postgresql_table_read_one,
-        &"generate_postgresql_table_read_one",
+        generate_postgresql_table_config
+            .read_one_content_write_into_generate_postgresql_table_read_one,
+        "generate_postgresql_table_read_one",
         &read_one_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     //todo update not only with array of objects with ids but with WHERE and one object
     let update_many_token_stream = {
@@ -4515,10 +4530,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.update_many_content_write_into_generate_postgresql_table_update_many,
-        &"generate_postgresql_table_update_many",
+        generate_postgresql_table_config
+            .update_many_content_write_into_generate_postgresql_table_update_many,
+        "generate_postgresql_table_update_many",
         &update_many_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     let update_one_token_stream = {
         let operation = Operation::UpdateOne;
@@ -4739,10 +4755,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.update_one_content_write_into_generate_postgresql_table_update_one,
-        &"generate_postgresql_table_update_one",
+        generate_postgresql_table_config
+            .update_one_content_write_into_generate_postgresql_table_update_one,
+        "generate_postgresql_table_update_one",
         &update_one_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     //todo return deleted rows ids vec
     let delete_many_token_stream = {
@@ -4842,10 +4859,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.delete_many_content_write_into_generate_postgresql_table_delete_many,
-        &"generate_postgresql_table_delete_many",
+        generate_postgresql_table_config
+            .delete_many_content_write_into_generate_postgresql_table_delete_many,
+        "generate_postgresql_table_delete_many",
         &delete_many_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     let delete_one_token_stream = {
         let operation = Operation::DeleteOne;
@@ -4956,10 +4974,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         }
     };
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_table_config.delete_one_content_write_into_generate_postgresql_table_delete_one,
-        &"generate_postgresql_table_delete_one",
+        generate_postgresql_table_config
+            .delete_one_content_write_into_generate_postgresql_table_delete_one,
+        "generate_postgresql_table_delete_one",
         &delete_one_token_stream,
-        &macros_helpers::FormatWithCargofmt::True
+        &macros_helpers::FormatWithCargofmt::True,
     );
     {
         let generate_slash_route_double_quotes_token_stream = |value: &dyn std::fmt::Display| {

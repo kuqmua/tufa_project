@@ -668,8 +668,10 @@ pub fn generate_postgresql_types(
     }
     #[derive(Debug, serde::Deserialize)]
     struct GeneratePostgresqlJsonTypesConfig {
-        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_generate_postgresql_types: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_types:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: GeneratePostgresqlTypesConfigVariant,
     }
     #[derive(Debug)]

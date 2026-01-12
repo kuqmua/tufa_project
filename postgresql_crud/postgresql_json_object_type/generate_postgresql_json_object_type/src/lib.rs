@@ -40,7 +40,8 @@ pub fn generate_postgresql_json_object_type(
     struct GeneratePostgresqlJsonTypesConfig {
         postgresql_table_columns_content_write_into_postgresql_table_columns_using_postgresql_json_object_types:
             macros_helpers::ShouldWriteTokenStreamIntoFile,
-        whole_content_write_into_generate_postgresql_json_object_type: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        whole_content_write_into_generate_postgresql_json_object_type:
+            macros_helpers::ShouldWriteTokenStreamIntoFile,
         variant: PostgresqlJsonObjectTypeRecord,
     }
     panic_location::panic_location();
@@ -7005,7 +7006,8 @@ pub fn generate_postgresql_json_object_type(
     let generated: proc_macro2::TokenStream =
         quote::quote! {#(#postgresql_json_object_type_array)*};
     macros_helpers::maybe_write_token_stream_into_file(
-        generate_postgresql_json_object_type_config.whole_content_write_into_generate_postgresql_json_object_type,
+        generate_postgresql_json_object_type_config
+            .whole_content_write_into_generate_postgresql_json_object_type,
         "generate_postgresql_json_object_type",
         &generated,
         &macros_helpers::FormatWithCargofmt::True,
