@@ -29,7 +29,6 @@ futures.workspace = true
 secrecy.workspace = true
 tokio.workspace = true
 tracing-subscriber.workspace = true
-uuid.workspace = true
 app_state = {path = "../app_state"}
 config_lib = {path = "../config_lib"}
 server_app_state = {path = "../server_app_state"}

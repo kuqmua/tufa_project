@@ -26,3 +26,8 @@ pub fn write_token_stream_into_file(
         assert!(status.success(), "cargo fmt failed for {}", path.display());
     }
 }
+#[derive(Debug, Copy, Clone, serde::Deserialize)]
+pub enum ShouldWriteTokenStreamIntoFile {
+    True,
+    False,
+}

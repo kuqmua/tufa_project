@@ -59,6 +59,10 @@ pub use wrap_derive::wrap_derive;
 mod write_string_into_file;
 pub use write_string_into_file::write_string_into_file;
 mod write_token_stream_into_file;
-pub use write_token_stream_into_file::{FormatWithRustfmt, write_token_stream_into_file};
+pub use write_token_stream_into_file::{
+    FormatWithRustfmt,
+    write_token_stream_into_file,
+    ShouldWriteTokenStreamIntoFile
+};
 mod syn_field_wrapper;
 pub use syn_field_wrapper::SynFieldWrapper;

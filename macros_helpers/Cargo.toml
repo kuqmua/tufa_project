@@ -15,6 +15,7 @@ proc-macro2.workspace = true
 quote.workspace = true
 syn.workspace = true
 strum_macros.workspace = true
+serde.workspace = true
 token_patterns = {path = "../token_patterns"}
 generate_quotes = {path = "../generate_quotes"}
 naming = {path = "../naming"}

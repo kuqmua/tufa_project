@@ -608,12 +608,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let derive_debug_this_error_error_occurence =
         token_patterns::DeriveDebugThisErrorErrorOccurence;
     let sqlx_acquire = token_patterns::SqlxAcquire;
-    let derive_debug = token_patterns::DeriveDebug;
-    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema =
-        token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
     let derive_debug_serde_serialize_serde_deserialize =
         token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    // let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
     let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     let field_attribute_serde_skip_serializing_if_option_is_none_token_stream =
         token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;

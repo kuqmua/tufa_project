@@ -283,7 +283,7 @@ pub fn generate_postgresql_json_types(
         postgresql_json_type_pattern: PostgresqlJsonTypePattern,
     }
     #[derive(Debug, serde::Deserialize)]
-    enum GeneratePostgresqlJsonTypesConfig {
+    enum GeneratePostgresqlJsonTypesConfigVariant {
         All,
         WithoutDimensions,
         WithDimensionOne,
@@ -292,14 +292,18 @@ pub fn generate_postgresql_json_types(
         WithDimensionFour,
         Concrete(Vec<PostgresqlJsonTypeRecord>),
     }
+    #[derive(Debug, serde::Deserialize)]
+    struct GeneratePostgresqlJsonTypesConfig {
+        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        variant: GeneratePostgresqlJsonTypesConfigVariant,
+    }
     use rayon::iter::IntoParallelRefIterator as _;
     use rayon::iter::ParallelIterator as _;
     panic_location::panic_location();
+    let generate_postgresql_json_types_config =
+        serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string())
+            .expect("1123f78f-9c84-4001-b619-b534dd55a835");
     let (_fields_token_stream, postgresql_json_type_array) = {
-        let generate_postgresql_json_types_config = serde_json::from_str::<
-            GeneratePostgresqlJsonTypesConfig,
-        >(&input_token_stream.to_string())
-        .expect("1123f78f-9c84-4001-b619-b534dd55a835");
         {
             let generate_standart = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
@@ -375,8 +379,8 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let current_acc = match generate_postgresql_json_types_config {
-                GeneratePostgresqlJsonTypesConfig::All => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+            let current_acc = match generate_postgresql_json_types_config.variant {
+                GeneratePostgresqlJsonTypesConfigVariant::All => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -388,7 +392,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::WithoutDimensions => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithoutDimensions => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -400,7 +404,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::WithDimensionOne => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionOne => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -412,7 +416,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::WithDimensionTwo => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionTwo => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -424,7 +428,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::WithDimensionThree => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionThree => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -436,7 +440,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::WithDimensionFour => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionFour => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
@@ -448,7 +452,7 @@ pub fn generate_postgresql_json_types(
                     }
                     acc
                 }),
-                GeneratePostgresqlJsonTypesConfig::Concrete(value) => value,
+                GeneratePostgresqlJsonTypesConfigVariant::Concrete(value) => value,
             };
             let mut seen = std::collections::HashSet::new();
             assert!(
@@ -3520,10 +3524,14 @@ pub fn generate_postgresql_json_types(
             .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     };
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlJsonTypes",
-    //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
-    // );
+    if let macros_helpers::ShouldWriteTokenStreamIntoFile::True =
+        &generate_postgresql_json_types_config.should_write_token_stream_into_file
+    {
+        macros_helpers::write_token_stream_into_file(
+            "GeneratePostgresqlJsonTypes",
+            &generated,
+            &macros_helpers::FormatWithRustfmt::True,
+        );
+    }
     generated.into()
 }
