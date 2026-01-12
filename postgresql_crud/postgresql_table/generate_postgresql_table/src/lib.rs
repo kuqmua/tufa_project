@@ -27,6 +27,13 @@
 //* validate insert json field with json schema
 
 #[proc_macro_attribute]
+pub fn generate_postgresql_table_config(
+    _attr: proc_macro::TokenStream,
+    item: proc_macro::TokenStream,
+) -> proc_macro::TokenStream {
+    item
+}
+#[proc_macro_attribute]
 pub fn create_many_additional_error_variants(
     _attr: proc_macro::TokenStream,
     item: proc_macro::TokenStream,
@@ -475,6 +482,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         Update,
         Delete,
     }
+    #[derive(Debug, serde::Deserialize)]
+    struct GeneratePostgresqlTableConfig {
+        should_write_tests_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        should_write_common_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+        should_write_token_stream_into_file: macros_helpers::ShouldWriteTokenStreamIntoFile,
+    }
     panic_location::panic_location();
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
     let create_extension_if_not_exists_pg_jsonschema_upper_camel_case =
@@ -624,6 +637,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let syn_derive_input: syn::DeriveInput =
         syn::parse(input).expect("991c614f-5cf9-4a53-873a-5280b62e2dfa");
+    let generate_postgresql_table_config = serde_json::from_str::<GeneratePostgresqlTableConfig>(
+        &macros_helpers::get_macro_attribute_meta_list_token_stream(
+            &syn_derive_input.attrs,
+            &format!(
+                "{}::generate_postgresql_table_config",
+                import_path.snake_case_std_primitive_str()
+            ),
+        )
+        .to_string(),
+    )
+    .expect("1b6adf7e-7da9-4e2d-82e6-e8bb48ba8ee6");
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
     let ident_snake_case_double_quotes_token_stream =
@@ -7685,13 +7709,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         }
     };
-    // if ident == "" {
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlTable",
-    //     &ident_tests_token_stream,
-    //     &macros_helpers::FormatWithCargofmt::False
-    // );
-    // }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_table_config.should_write_tests_token_stream_into_file,
+        "GeneratePostgresqlTableTests",
+        &ident_tests_token_stream,
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     let common_token_stream = quote::quote! {
         #impl_ident_token_stream
         #ident_create_token_stream
@@ -7704,13 +7727,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #ident_update_token_stream
         #ident_update_for_query_token_stream
     };
-    // if ident == "" {
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlTable",
-    //     &common_token_stream,
-    //     &macros_helpers::FormatWithCargofmt::True
-    // );
-    // }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_table_config.should_write_common_token_stream_into_file,
+        "GeneratePostgresqlTableCommon",
+        &common_token_stream,
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     let generated = quote::quote! {
         impl #ident {
             #(#impl_ident_vec_token_stream)*
@@ -7726,12 +7748,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         #delete_one_token_stream
         #ident_tests_token_stream
     };
-    // if ident == "" {
-    // macros_helpers::write_token_stream_into_file(
-    //     "GeneratePostgresqlTable",
-    //     &generated,
-    //     &macros_helpers::FormatWithCargofmt::True,
-    // );
-    // }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_table_config.should_write_token_stream_into_file,
+        "GeneratePostgresqlTable",
+        &generated,
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     generated.into()
 }

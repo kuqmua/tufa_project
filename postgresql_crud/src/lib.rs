@@ -23,6 +23,7 @@ pub use postgresql_table::generate_create_many_query_string;
 pub use postgresql_table::generate_create_one_query_string;
 pub use postgresql_table::generate_delete_many_query_string;
 pub use postgresql_table::generate_delete_one_query_string;
+pub use postgresql_table::generate_postgresql_table_config;
 pub use postgresql_table::generate_read_many_query_string;
 pub use postgresql_table::generate_read_one_query_string;
 pub use postgresql_table::generate_update_many_query_string;
