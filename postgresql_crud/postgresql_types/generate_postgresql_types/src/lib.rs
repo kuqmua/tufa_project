@@ -6430,7 +6430,7 @@ pub fn generate_postgresql_types(
                     #(#content_token_stream)*
                 }
             },
-            &macros_helpers::FormatWithRustfmt::True,
+            &macros_helpers::FormatWithCargofmt::True,
         );
     }
     let generated = {
@@ -6447,7 +6447,7 @@ pub fn generate_postgresql_types(
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTypes",
     //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     generated.into()
 }

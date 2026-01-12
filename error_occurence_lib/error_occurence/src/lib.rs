@@ -502,7 +502,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     //     macros_helpers::write_token_stream_into_file(
     //         "ErrorOccurence",
     //         &generated,
-    //         &macros_helpers::FormatWithRustfmt::True
+    //         &macros_helpers::FormatWithCargofmt::True
     //     );
     // }
     generated.into()

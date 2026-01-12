@@ -7002,7 +7002,7 @@ pub fn generate_postgresql_json_object_type(
             //         macros_helpers::write_token_stream_into_file(
             //             "GeneratePostgresqlJsonObjectType",
             //             &generated,
-            //             &macros_helpers::FormatWithRustfmt::True
+            //             &macros_helpers::FormatWithCargofmt::True
             //         );
             //     }
             // }
@@ -7025,7 +7025,7 @@ pub fn generate_postgresql_json_object_type(
                     #(#fields_token_stream)*
                 }
             },
-            &macros_helpers::FormatWithRustfmt::True,
+            &macros_helpers::FormatWithCargofmt::True,
         );
     }
     let generated: proc_macro2::TokenStream =
@@ -7033,7 +7033,7 @@ pub fn generate_postgresql_json_object_type(
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlJsonObjectType",
     //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     generated.into()
 }

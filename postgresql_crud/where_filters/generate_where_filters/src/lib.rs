@@ -1112,7 +1112,7 @@ pub fn generate_where_filters(
                 //         macros_helpers::write_token_stream_into_file(
                 //             "GeneratePostgresqlTypeWhereFilter",
                 //             &generated,
-                //             &macros_helpers::FormatWithRustfmt::True
+                //             &macros_helpers::FormatWithCargofmt::True
                 //         );
                 //         proc_macro2::TokenStream::new(),
                 //     },
@@ -1791,7 +1791,7 @@ pub fn generate_where_filters(
                 //         // macros_helpers::write_token_stream_into_file(
                 //         //     "GeneratePostgresqlTypeWhereFilter",
                 //         //     &generated,
-                //         //     &macros_helpers::FormatWithRustfmt::True
+                //         //     &macros_helpers::FormatWithCargofmt::True
                 //         // );
                 //         proc_macro2::TokenStream::new()
                 //     },
@@ -1811,7 +1811,7 @@ pub fn generate_where_filters(
         //     macros_helpers::write_token_stream_into_file(
         //         "GeneratePostgresqlTypeWhereFilter",
         //         &generated,
-        //         &macros_helpers::FormatWithRustfmt::True
+        //         &macros_helpers::FormatWithCargofmt::True
         //     );
         // }
         generated
@@ -1823,7 +1823,7 @@ pub fn generate_where_filters(
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTypeWhereFilters",
     //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     generated.into()
 }

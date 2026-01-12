@@ -1,12 +1,13 @@
 #[derive(Debug, Clone, Copy)]
-pub enum FormatWithRustfmt {
+pub enum FormatWithCargofmt {
     True,
     False,
 }
+//todo move it into maybe_write_token_stream_into_file
 pub fn write_token_stream_into_file(
     file_name: &str,
     token_stream: &proc_macro2::TokenStream,
-    format_with_rustfmt: &FormatWithRustfmt,
+    format_with_cargofmt: &FormatWithCargofmt,
 ) {
     let path_string = format!("{file_name}.rs");
     let path = std::path::Path::new(&path_string);
@@ -16,7 +17,7 @@ pub fn write_token_stream_into_file(
             .expect("write token stream failed");
     };
     //no other way to format only one file. it formats all files in project
-    if let FormatWithRustfmt::True = format_with_rustfmt {
+    if let FormatWithCargofmt::True = format_with_cargofmt {
         let status = std::process::Command::new("cargo")
             .arg("fmt")
             .arg("--")
@@ -30,4 +31,14 @@ pub fn write_token_stream_into_file(
 pub enum ShouldWriteTokenStreamIntoFile {
     True,
     False,
+}
+pub fn maybe_write_token_stream_into_file(
+    should_write_token_stream_into_file: ShouldWriteTokenStreamIntoFile,
+    file_name: &str,
+    token_stream: &proc_macro2::TokenStream,
+    format_with_cargofmt: &FormatWithCargofmt,
+) {
+    if let ShouldWriteTokenStreamIntoFile::True = should_write_token_stream_into_file {
+        write_token_stream_into_file(file_name, token_stream, format_with_cargofmt);
+    }
 }

@@ -3510,7 +3510,7 @@ pub fn generate_postgresql_json_types(
     //                 }
     //             }
     //         },
-    //         &macros_helpers::FormatWithRustfmt::True
+    //         &macros_helpers::FormatWithCargofmt::True
     //     );
     // }
     let generated = {
@@ -3524,14 +3524,11 @@ pub fn generate_postgresql_json_types(
             .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     };
-    if let macros_helpers::ShouldWriteTokenStreamIntoFile::True =
-        &generate_postgresql_json_types_config.should_write_token_stream_into_file
-    {
-        macros_helpers::write_token_stream_into_file(
-            "GeneratePostgresqlJsonTypes",
-            &generated,
-            &macros_helpers::FormatWithRustfmt::True,
-        );
-    }
+    macros_helpers::maybe_write_token_stream_into_file(
+        generate_postgresql_json_types_config.should_write_token_stream_into_file,
+        "GeneratePostgresqlJsonTypes",
+        &generated,
+        &macros_helpers::FormatWithCargofmt::True,
+    );
     generated.into()
 }

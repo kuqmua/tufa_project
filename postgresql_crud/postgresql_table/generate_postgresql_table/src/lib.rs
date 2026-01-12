@@ -3562,7 +3562,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"create_many",
     //     &create_many_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     let create_one_token_stream = {
         let operation = Operation::CreateOne;
@@ -3679,7 +3679,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"create_one",
     //     &create_one_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     let read_many_token_stream = {
         let operation = Operation::ReadMany;
@@ -3891,7 +3891,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"read_many",
     //     &read_many_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     let read_one_token_stream = {
         let operation = Operation::ReadOne;
@@ -4025,7 +4025,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"read_one",
     //     &read_one_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     //todo update not only with array of objects with ids but with WHERE and one object
     let update_many_token_stream = {
@@ -4481,7 +4481,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"update_many",
     //     &update_many_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     let update_one_token_stream = {
         let operation = Operation::UpdateOne;
@@ -4704,7 +4704,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"update_one",
     //     &update_one_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     //todo return deleted rows ids vec
     let delete_many_token_stream = {
@@ -4806,7 +4806,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"delete_many",
     //     &delete_many_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     let delete_one_token_stream = {
         let operation = Operation::DeleteOne;
@@ -4919,7 +4919,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     &"delete_one",
     //     &delete_one_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     {
         let generate_slash_route_double_quotes_token_stream = |value: &dyn std::fmt::Display| {
@@ -7689,7 +7689,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTable",
     //     &ident_tests_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::False
+    //     &macros_helpers::FormatWithCargofmt::False
     // );
     // }
     let common_token_stream = quote::quote! {
@@ -7708,7 +7708,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTable",
     //     &common_token_stream,
-    //     &macros_helpers::FormatWithRustfmt::True
+    //     &macros_helpers::FormatWithCargofmt::True
     // );
     // }
     let generated = quote::quote! {
@@ -7730,7 +7730,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     // macros_helpers::write_token_stream_into_file(
     //     "GeneratePostgresqlTable",
     //     &generated,
-    //     &macros_helpers::FormatWithRustfmt::True,
+    //     &macros_helpers::FormatWithCargofmt::True,
     // );
     // }
     generated.into()
