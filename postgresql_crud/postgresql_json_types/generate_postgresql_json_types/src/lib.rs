@@ -2403,7 +2403,7 @@ pub fn generate_postgresql_json_types(
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a-4dc6-4699-8656-33870b2c629f")
                                 }
-                            } 
+                            }
                         },
                     }
                 };
