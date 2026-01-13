@@ -5892,22 +5892,18 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 generate_ident_where_many_pripery_key_others_none(
                                     generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
-                                        {
-                                            let mut acc_4d6c2f4b = Vec::new();
-                                            for #element_snake_case in &read_only_ids_from_try_create_many {
-                                                acc_4d6c2f4b.push(#primary_key_field_type_where_token_stream::Equal(
-                                                    postgresql_crud::PostgresqlTypeWhereEqual {
-                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
-                                                            )
+                                        read_only_ids_from_try_create_many.iter().map(|#element_snake_case| {
+                                            #primary_key_field_type_where_token_stream::Equal(
+                                                postgresql_crud::PostgresqlTypeWhereEqual {
+                                                    logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                        <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
                                                         )
-                                                    }
-                                                ));
-                                            }
-                                            acc_4d6c2f4b
-                                        }
+                                                    ),
+                                                },
+                                            )
+                                        }).collect()
                                     )
                                 ),
                                 #select_default_all_with_max_page_size_clone_token_stream,
@@ -5936,13 +5932,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                         assert_eq!(
                             read_only_ids_from_try_delete_many,
-                            {
-                                let mut #acc_snake_case = read_only_ids_from_try_create_many.into_iter().map(|#element_snake_case|
+                            itertools::Itertools::sorted(
+                                read_only_ids_from_try_create_many
+                                .into_iter()
+                                .map(|#element_snake_case| {
                                     #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                                ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
-                                #acc_snake_case.sort();
-                                #acc_snake_case
-                            },
+                                }).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>()
+                                .into_iter()
+                            ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>(),
                             "ebbbea6e-c402-4637-9bab-02678c11926c"
                         );
                         match generate_try_read_many_order_by_primary_key_with_big_pagination(
