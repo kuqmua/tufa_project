@@ -3081,7 +3081,8 @@ pub fn generate_postgresql_json_types(
             let generate_dot_checked_sub_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{#content_token_stream.checked_sub(1)};
             let generate_minus_one_is_finite_then_some_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{{
                 let value = #content_token_stream - 1.0;
-                if value == #content_token_stream {
+                //The correct way to compare floating point numbers is to define an allowed error margin
+                if (#content_token_stream - value).abs() < 0.1 {
                     None
                 }
                 else {
