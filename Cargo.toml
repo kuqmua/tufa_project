@@ -94,6 +94,7 @@ schemars = {version = "=1.2.0"}
 rayon = {version = "=1.11.0"}
 bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
+itertools = {version = "=0.14.0"}
 
 #todo check proc macro generated token on lints
 [workspace.lints.rust]
