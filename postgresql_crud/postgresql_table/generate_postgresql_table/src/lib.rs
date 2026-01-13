@@ -4583,7 +4583,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     );
                                 quote::quote! {
                                     if let Some(some_value) = &#update_for_query_snake_case.#field_ident {
-                                        #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
+                                        acc_683e37b8.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
                                             #field_ident_double_quotes_token_stream,
                                             &match #ident_update_for_query_upper_camel_case::#update_query_part_field_ident_snake_case(some_value, &mut #increment_snake_case) {
                                                 Ok(ok_value) => ok_value,
@@ -4608,10 +4608,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         {
                             #increment_initialization_token_stream
                             let #columns_snake_case = {
-                                let mut #acc_snake_case = #string_token_stream::default();
+                                let mut acc_683e37b8 = #string_token_stream::default();
                                 #additional_parameters_modification_token_stream
-                                let _: Option<char> = #acc_snake_case.pop();
-                                #acc_snake_case
+                                let _: Option<char> = acc_683e37b8.pop();
+                                acc_683e37b8
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
                             //todo refactor\reuse
@@ -7034,67 +7034,51 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .collect::<Vec<#ident_read_only_ids_upper_camel_case>>()
                                 };
                                 assert_eq!(
-                                    {
-                                        let mut #acc_snake_case = Vec::new();
-                                        for #element_snake_case in &read_only_ids_current_elements {
-                                            #acc_snake_case.push(#ident_read_upper_camel_case {
+                                    itertools::Itertools::sorted_by(
+                                        read_only_ids_current_elements.iter().map(|#element_snake_case| {
+                                            #ident_read_upper_camel_case {
                                                 #primary_key_field_ident: <
-                                                    #primary_key_field_type
-                                                    as
-                                                    postgresql_crud::PostgresqlTypeTestCases
+                                                    #primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases
                                                 >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
                                                     &#element_snake_case.#primary_key_field_ident
                                                 ),
                                                 #ident_read_fields_initialization_without_primary_key_after_create_many_token_stream
-                                            });
+                                            }
+                                        }),
+                                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                            (Some(a), Some(b)) => a.#value_snake_case.cmp(&b.#value_snake_case),
+                                            _ => panic!("b8fc0f4e-f669-4eed-a79b-9ea51d351d1c"),
                                         }
-                                        #acc_snake_case.sort_by(|first, second| {
-                                            if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
-                                            }
-                                            else {
-                                                panic!("b8fc0f4e-f669-4eed-a79b-9ea51d351d1c");
-                                            }
-                                        });
-                                        #acc_snake_case
-                                    },
-                                    {
-                                        let mut #acc_snake_case = generate_try_read_many_order_by_primary_key_with_big_pagination(
+                                    ).collect::<Vec<#ident_read_upper_camel_case>>(),
+                                    itertools::Itertools::sorted_by(
+                                        generate_try_read_many_order_by_primary_key_with_big_pagination(
                                             &url,
                                             generate_ident_where_many_pripery_key_others_none(
                                                 generate_some_postgresql_type_where_try_new_primary_key(
                                                     postgresql_crud::LogicalOperator::Or,
-                                                    {
-                                                        let mut #acc_snake_case = Vec::new();
-                                                        for #element_snake_case in &read_only_ids_current_elements {
-                                                            #acc_snake_case.push(#primary_key_field_type_where_token_stream::Equal(
-                                                                postgresql_crud::PostgresqlTypeWhereEqual {
-                                                                    logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                                        <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
-                                                                        )
-                                                                    ),
-                                                                }
-                                                            ));
+                                                    read_only_ids_current_elements.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(
+                                                        postgresql_crud::PostgresqlTypeWhereEqual {
+                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                                                )
+                                                            ),
                                                         }
-                                                        #acc_snake_case
-                                                    }
+                                                    )).collect()
                                                 )
                                             ),
                                             #select_default_all_with_max_page_size_clone_token_stream,
                                             &current_table
-                                        ).await.expect("f5eeb8b7-85f1-406b-85e2-b8c409bd77d1");
-                                        #acc_snake_case.sort_by(|first, second| {
-                                            if let (Some(value_first), Some(value_second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                value_first.#value_snake_case.cmp(&value_second.#value_snake_case)
-                                            }
-                                            else {
-                                                panic!("d2f6e94a-7ff3-43ce-8302-fcdbb458d2a9")
-                                            }
-                                        });
-                                        #acc_snake_case
-                                    },
+                                        )
+                                        .await
+                                        .expect("f5eeb8b7-85f1-406b-85e2-b8c409bd77d1")
+                                        .into_iter(),
+                                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                            (Some(a), Some(b)) => a.#value_snake_case.cmp(&b.#value_snake_case),
+                                            _ => panic!("d2f6e94a-7ff3-43ce-8302-fcdbb458d2a9"),
+                                        }
+                                    ).collect::<Vec<#ident_read_upper_camel_case>>(),
                                     "db146190-0496-42a7-93d6-8405eb641954"
                                 );
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
