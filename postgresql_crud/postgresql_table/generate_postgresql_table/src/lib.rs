@@ -5634,32 +5634,38 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         ).await.expect("bdb72341-016f-4d85-8ce8-abe7e97666ca"),
                                         "d19bbbf6-f64c-4151-8b5b-998a93e13af5"
                                     );
-                                    let read_only_ids_from_try_delete_many = {
-                                        let mut acc_5d718449 = #ident::try_delete_many_handle(
+                                    let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
+                                        #ident::try_delete_many_handle(
                                             &url_cloned,
                                             #ident_delete_many_parameters_upper_camel_case {
                                                 //todo rewrite it using new\try_new?
                                                 payload: #ident_delete_many_payload_upper_camel_case {
-                                                    where_many: #std_option_option_ident_where_many_upper_camel_case(Some(#ident_where_many_upper_camel_case {
-                                                        #primary_key_field_ident: generate_some_postgresql_type_where_try_new_or_primary_keys(&read_only_ids_from_try_create_many),
-                                                        #std_option_option_ident_where_many_content_token_stream
-                                                    }))
+                                                    where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
+                                                        #ident_where_many_upper_camel_case {
+                                                            #primary_key_field_ident:
+                                                                generate_some_postgresql_type_where_try_new_or_primary_keys(
+                                                                    &read_only_ids_from_try_create_many
+                                                                ),
+                                                            #std_option_option_ident_where_many_content_token_stream
+                                                        }
+                                                    ))
                                                 }
                                             },
                                             &current_table
-                                        ).await.expect("716e470e-d738-4642-adfc-df1f9b945d27");
-                                        acc_5d718449.sort();
-                                        acc_5d718449
-                                    };
+                                        )
+                                        .await
+                                        .expect("716e470e-d738-4642-adfc-df1f9b945d27")
+                                        .into_iter()
+                                    ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                                     assert_eq!(
                                         read_only_ids_from_try_delete_many,
-                                        {
-                                            let mut acc_70134a07 = read_only_ids_from_try_create_many.into_iter().map(|element|
+                                        itertools::Itertools::sorted(
+                                            read_only_ids_from_try_create_many
+                                            .into_iter()
+                                            .map(|element| {
                                                 #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                                            ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>();
-                                            acc_70134a07.sort();
-                                            acc_70134a07
-                                        },
+                                            })
+                                        ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>(),
                                         "f58f5572-4286-4a74-8006-0507339910d4"
                                     );
                                     match generate_try_read_many_order_by_primary_key_with_big_pagination(
@@ -6104,36 +6110,39 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             &current_table
                                         ).await;
                                         #content_token_stream
-                                        let read_only_ids_from_try_delete_many = {
-                                            let mut #acc_snake_case = #ident::try_delete_many_handle(
+                                        let read_only_ids_from_try_delete_many = itertools::Itertools::sorted(
+                                            #ident::try_delete_many_handle(
                                                 &url_cloned,
                                                 #ident_delete_many_parameters_upper_camel_case {
                                                     payload: #ident_delete_many_payload_upper_camel_case {
-                                                        where_many: #std_option_option_ident_where_many_upper_camel_case(Some(#ident_where_many_upper_camel_case {
-                                                            #primary_key_field_ident: generate_some_postgresql_type_where_try_new_primary_key(
-                                                                postgresql_crud::LogicalOperator::Or,
-                                                                vec![
-                                                                    #primary_key_field_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
-                                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                                #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
-                                                                            )
+                                                        where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
+                                                            #ident_where_many_upper_camel_case {
+                                                                #primary_key_field_ident: generate_some_postgresql_type_where_try_new_primary_key(
+                                                                    postgresql_crud::LogicalOperator::Or,
+                                                                    vec![
+                                                                        #primary_key_field_type_where_token_stream::Equal(
+                                                                            postgresql_crud::PostgresqlTypeWhereEqual {
+                                                                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream
+                                                                                    )
+                                                                                )
+                                                                            }
                                                                         )
-                                                                    })
-                                                                ]
-                                                            ),
-                                                            #std_option_option_ident_where_many_content_token_stream
-                                                        })),
+                                                                    ]
+                                                                ),
+                                                                #std_option_option_ident_where_many_content_token_stream
+                                                            }
+                                                        )),
                                                     },
                                                 },
                                                 &current_table
                                             )
                                             .await
-                                            .expect("338bcf89-0c3d-49d7-ac51-b73af98a32b0");
-                                            #acc_snake_case.sort();
-                                            #acc_snake_case
-                                        };
+                                            .expect("338bcf89-0c3d-49d7-ac51-b73af98a32b0")
+                                            .into_iter()
+                                        ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>();
                                         assert_eq!(
                                             read_only_ids_from_try_delete_many,
                                             vec![#primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_clone_token_stream],
