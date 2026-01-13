@@ -18,6 +18,7 @@ serde_json.workspace = true
 thiserror.workspace = true
 sqlx.workspace = true
 utoipa.workspace = true
+uuid.workspace = true
 git_info = {path = "../git_info"}
 error_occurence_lib = {path = "../error_occurence_lib"}
 postgresql_crud = {path = "../postgresql_crud", features = ["test-utils"]}
