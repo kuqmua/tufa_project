@@ -5555,34 +5555,36 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ]);
         let select_default_all_with_max_page_size_cloned_clone_token_stream =
             quote::quote! {select_default_all_with_max_page_size_cloned.clone()};
-        let generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream = |field_ident: &syn::Ident|{
-            let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(
-                &|current_current_element: &macros_helpers::SynFieldWrapper| {
-                    let current_field_ident = &current_current_element.field_ident;
-                    let current_field_type = &current_current_element.field_type;
-                    if field_ident == current_field_ident {
-                        quote::quote! {
-                            if let Some(some_value) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                                for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(some_value) {
-                                    for _ in #element_snake_case {
-                                        acc_458cda9e.push(ident_create_default.clone());
+        let generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream =
+            |field_ident: &syn::Ident| {
+                let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream =
+                    generate_fields_named_without_primary_key_without_comma_token_stream(
+                        &|current_current_element: &macros_helpers::SynFieldWrapper| {
+                            let current_field_ident = &current_current_element.field_ident;
+                            let current_field_type = &current_current_element.field_type;
+                            if field_ident == current_field_ident {
+                                quote::quote! {
+                                    if let Some(some_value) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
+                                        for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(some_value) {
+                                            for _ in #element_snake_case {
+                                                acc_458cda9e.push(ident_create_default.clone());
+                                            }
+                                        }
                                     }
                                 }
+                            } else {
+                                proc_macro2::TokenStream::new()
                             }
-                        }
-                    } else {
-                        proc_macro2::TokenStream::new()
-                    }
-                },
-            );
-            quote::quote!{
-                let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
-                    let mut acc_458cda9e = Vec::new();
-                    #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
-                    acc_458cda9e
-                };
-            }
-        };
+                        },
+                    );
+                quote::quote! {
+                    let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
+                        let mut acc_458cda9e = Vec::new();
+                        #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
+                        acc_458cda9e
+                    };
+                }
+            };
         let create_many_tests_token_stream = {
             let create_many_tests_token_stream =
                 generate_fields_named_without_primary_key_without_comma_token_stream(
@@ -6614,7 +6616,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 proc_macro2::TokenStream::new()
                             };
                         let read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream(
-                            &field_ident
+                            field_ident
                         );
                         let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream =
                             generate_fields_named_without_primary_key_with_comma_token_stream(
@@ -6919,7 +6921,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             proc_macro2::TokenStream::new()
                         };
                         let read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream(
-                            &field_ident
+                            field_ident
                         );
                         let ident_read_fields_initialization_without_primary_key_after_create_many_token_stream =
                             generate_fields_named_without_primary_key_with_comma_token_stream(
