@@ -1531,7 +1531,9 @@ pub fn generate_where_filters(
                             {
                                 let format_handle_token_stream =
                                     generate_quotes::double_quotes_token_stream(&format!(
-                                        "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                                        //todo test it properly using all strange string variants
+                                        "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') {{}} ${{}}))",
+                                        // "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
                                         postgresql_type_kind.format_argument()
                                     ));
                                 quote::quote! {
@@ -1579,7 +1581,9 @@ pub fn generate_where_filters(
                             {
                                 let format_handle_token_stream =
                                     generate_quotes::double_quotes_token_stream(&format!(
-                                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
+                                        //todo test it properly using all strange string variants
+                                        "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el #>> '{{{{}}}}') !{{}} ${{}}))",
+                                        // "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{{}} ${{}}))",
                                         postgresql_type_kind.format_argument()
                                     ));
                                 quote::quote! {
