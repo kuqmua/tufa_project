@@ -7195,9 +7195,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             url,
                             #ident_create_many_parameters_upper_camel_case {
                                 payload: #ident_create_many_payload_upper_camel_case(
-                                    std::iter::repeat(ident_create_default.clone())
-                                    .take(length)
-                                    .collect()
+                                    std::iter::repeat_n(ident_create_default.clone(), length).collect()
                                 )
                             },
                             current_table
