@@ -5925,7 +5925,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     )
                                 ),
                                 #select_default_all_with_max_page_size_clone_token_stream,
-                                &current_table
+                                current_table
                             ).await.expect("b8efe770-153c-4e4a-ab0e-6484a8dc5343"),
                             "error 3b2cf1f5-2c4e-4908-ba66-f4af84fe0893"
                         );
@@ -7247,7 +7247,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 )
                             ),
                             #select_default_all_with_max_page_size_clone_token_stream,
-                            &current_table
+                            current_table
                         ).await {
                             Ok(ok_value) => assert!(ok_value.is_empty(), "77f038b0-6f39-4b5b-a402-a1b6142acd0d"),
                             Err(#error_snake_case) => panic!("bcb79917-ee81-416e-82a3-f43a823266a3")
