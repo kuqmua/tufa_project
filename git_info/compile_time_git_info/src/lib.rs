@@ -3,27 +3,24 @@ pub fn compile_time_project_git_info(
     _input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let path_to_git_modules = ".git";
-    let path = if std::path::Path::new(&path_to_git_modules).is_dir() {
-        path_to_git_modules
-    } else {
-        panic!("3e5265b6-7447-4785-85ad-2aaa2ebcf46d");
-    };
-    let file_name = "FETCH_HEAD";
-    let full_path = format!("{path}/{file_name}");
-    let file = std::fs::File::open(std::path::Path::new(&full_path))
-        .expect("2075925d-64a5-4499-82c3-02651f8d8171");
-    let mut buf_reader = std::io::BufReader::new(file);
-    let mut git_logs_head_content = String::new();
-    let _: usize = std::io::Read::read_to_string(&mut buf_reader, &mut git_logs_head_content)
-        .expect("a1df8c05-a6e6-4882-b8ab-1aa0a1069019");
-    let hash = git_logs_head_content
-        .get(0..40)
-        .expect("ceb73b63-9cec-4d4b-84ae-123a110485a7");
-    //todo check if its a valid commit id.
+    let output = std::process::Command::new("git")
+        .args(["rev-parse", "HEAD"])
+        .output()
+        .expect("d6b0f81a-1fc1-42fe-a20c-5e3cfd8a6403");
+    if !output.status.success() {
+        panic!("f7185b72-c92e-4558-8615-1ae11bcaa131");
+    }
+    let hash = String::from_utf8(output.stdout)
+        .expect("9a3f659d-aca1-47d7-be32-cc3ba06e1b01")
+        .trim()
+        .to_string();
+    // Validate SHA-1 (40 hex chars)
+    if hash.len() != 40 || !hash.chars().all(|element| element.is_ascii_hexdigit()) {
+        panic!("093516ae-a89f-42df-8b01-9b2897111705");
+    }
     let commit_id_token_stream = format!("\"{hash}\"")
         .parse::<proc_macro2::TokenStream>()
-        .expect("07edecef-6213-4aab-9491-449f5509108a");
+        .expect("842e75e8-1c25-44af-bb71-f15ee1c0c67d");
     let generated = quote::quote! {
         ProjectGitInfo {
             commit: #commit_id_token_stream,

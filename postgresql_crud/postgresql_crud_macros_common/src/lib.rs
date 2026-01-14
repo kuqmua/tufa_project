@@ -2181,21 +2181,25 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     len: usize,
     generate_type_token_stream: &dyn Fn(&syn::Ident, &syn::Type) -> proc_macro2::TokenStream,
 ) -> proc_macro2::TokenStream {
+    fn generate_underscore_underscore_field_index_stringified(index: usize) -> String {
+        format!("__field{index}")
+    }
     fn generate_underscore_underscore_field_index_token_stream(
         index: usize,
     ) -> proc_macro2::TokenStream {
-        let value = format!("__field{index}");
-        value
+        generate_underscore_underscore_field_index_stringified(index)
             .parse::<proc_macro2::TokenStream>()
-            .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
+            .expect("ff7433a3-459b-45f4-a41f-01bf7ce46757")
     }
     fn generate_underscore_underscore_field_index_handle_token_stream(
         index: usize,
     ) -> proc_macro2::TokenStream {
-        let value = format!("__field{index}_handle");
-        value
-            .parse::<proc_macro2::TokenStream>()
-            .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
+        format!(
+            "{}_handle",
+            generate_underscore_underscore_field_index_stringified(index)
+        )
+        .parse::<proc_macro2::TokenStream>()
+        .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
     }
     fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
         field_name_double_quotes_token_stream: &dyn quote::ToTokens,
