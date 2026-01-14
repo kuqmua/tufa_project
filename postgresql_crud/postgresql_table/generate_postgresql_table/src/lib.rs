@@ -5573,40 +5573,43 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     };
                 }
             };
-        // let generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream = generate_fields_named_without_comma_token_stream(
-        //     &|element: &macros_helpers::SynFieldWrapper| {
-        //         let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream =
-        //             generate_fields_named_without_primary_key_without_comma_token_stream(
-        //                 &|current_current_element: &macros_helpers::SynFieldWrapper| {
-        //                     let current_field_ident = &current_current_element.field_ident;
-        //                     let current_field_type = &current_current_element.field_type;
-        //                     if field_ident == current_field_ident {
-        //                         quote::quote! {
-        //                             if let Some(some_value) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-        //                                 for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(some_value) {
-        //                                     for _ in #element_snake_case {
-        //                                         acc_458cda9e.push(ident_create_default.clone());
-        //                                     }
-        //                                 }
-        //                             }
-        //                         }
-        //                     } else {
-        //                         proc_macro2::TokenStream::new()
-        //                     }
-        //                 },
-        //             );
-        //         quote::quote! {
-        //             let generate_field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc = |
-                    
-        //             | -> Vec<#ident_create_upper_camel_case> {
-        //                 let mut acc_458cda9e = Vec::new();
-        //                 #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
-        //                 acc_458cda9e
-        //             }
-        //         }
-        //     }
-        // );
-        let generate_assert_token_stream = {
+        let read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream =
+            generate_fields_named_without_primary_key_without_comma_token_stream(
+                &|element: &macros_helpers::SynFieldWrapper| {
+                    let field_ident = &element.field_ident;
+                    let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                    &field_ident
+                );
+                    let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream =
+                        generate_fields_named_without_primary_key_without_comma_token_stream(
+                            &|current_current_element: &macros_helpers::SynFieldWrapper| {
+                                let current_field_ident = &current_current_element.field_ident;
+                                let current_field_type = &current_current_element.field_type;
+                                if field_ident == current_field_ident {
+                                    quote::quote! {
+                                        if let Some(some_value) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
+                                            for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(some_value) {
+                                                for _ in #element_snake_case {
+                                                    acc_458cda9e.push(ident_create_default.clone());
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    proc_macro2::TokenStream::new()
+                                }
+                            },
+                        );
+                    quote::quote! {
+                        let #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = {
+                            let mut acc_458cda9e = Vec::new();
+                            #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
+                            acc_458cda9e
+                        };
+                    }
+                },
+            );
+        let generate_read_only_ids_current_elements_token_stream = {
             let ident_read_fields_initialization_without_primary_key_token_stream =
                 generate_fields_named_without_primary_key_with_comma_token_stream(
                     &|syn_field_wrapper: &macros_helpers::SynFieldWrapper| {
@@ -6736,8 +6739,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             } else {
                                 proc_macro2::TokenStream::new()
                             };
-                        let read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream(
-                            field_ident
+                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                            &field_ident
                         );
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream =
                             generate_fields_named_without_primary_key_with_comma_token_stream(
@@ -6819,107 +6822,101 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             };
                         quote::quote! {{
-                            #read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream
-                            if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
-                                println!(#warning_message_double_quote_token_stream);
-                            } else {
-                                let read_only_ids_current_elements = generate_read_only_ids_current_elements(
-                                    &url,
-                                    &table_update_many,
-                                    #select_default_all_with_max_page_size_clone_token_stream,
-                                    read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                ).await;
-                                for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                    let table_update_many_cloned = table_update_many.clone();
-                                    let url_cloned = url.clone();
-                                    let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                                        #maybe_previous_read_token_stream
-                                        let update = <
-                                            #field_type
-                                            as
-                                            postgresql_crud::PostgresqlTypeTestCases
-                                        >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                            let mut local_increment: usize = 0;
-                                            let mut option_test_case = None;
-                                            for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
-                                                &read_only_ids_current_element.#field_ident.clone().expect("af7d979d-0d43-47e9-bbf6-07282cae7eff")
-                                            ) {
-                                                let mut should_break = false;
-                                                for element_1 in element_0 {
-                                                    if local_increment == increment {
-                                                        option_test_case = Some(element_1);
-                                                        should_break = true;
-                                                        break;
-                                                    }
-                                                    local_increment = local_increment.checked_add(1).expect("0968dda6-4c3a-42b6-8aa1-83058a928dde");
-                                                }
-                                                if should_break {
+                            for (increment, read_only_ids_current_element) in generate_read_only_ids_current_elements(
+                                &url,
+                                &table_update_many,
+                                #select_default_all_with_max_page_size_clone_token_stream,
+                                #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case.clone()
+                            ).await.into_iter().enumerate() {
+                                let table_update_many_cloned = table_update_many.clone();
+                                let url_cloned = url.clone();
+                                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
+                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                    #maybe_previous_read_token_stream
+                                    let update = <
+                                        #field_type
+                                        as
+                                        postgresql_crud::PostgresqlTypeTestCases
+                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
+                                        let mut local_increment: usize = 0;
+                                        let mut option_test_case = None;
+                                        for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
+                                            &read_only_ids_current_element.#field_ident.clone().expect("af7d979d-0d43-47e9-bbf6-07282cae7eff")
+                                        ) {
+                                            let mut should_break = false;
+                                            for element_1 in element_0 {
+                                                if local_increment == increment {
+                                                    option_test_case = Some(element_1);
+                                                    should_break = true;
                                                     break;
                                                 }
+                                                local_increment = local_increment.checked_add(1).expect("0968dda6-4c3a-42b6-8aa1-83058a928dde");
                                             }
-                                            option_test_case.expect("769983ba-3992-4298-97ab-9a3721c32359")
-                                        });
-                                        assert_eq!(
-                                            vec![
-                                                #ident_read_only_ids_upper_camel_case {
-                                                    #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
-                                                    #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
-                                                }
-                                            ],
-                                            #ident::try_update_many_handle(
-                                                &url_cloned,
-                                                #ident_update_many_parameters_upper_camel_case {
-                                                    payload: #ident_update_many_payload_upper_camel_case::try_new(vec![
-                                                        #ident_update_upper_camel_case::try_new(
-                                                            #primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream,
-                                                            #ident_update_parameters_initialization_without_primary_key_token_stream
-                                                        ).expect("42dc87b3-2ac4-4e66-8287-91aeb13f0ee8")
-                                                    ]).expect("69e1bd8a-fe78-4301-85ca-f4f3958d7493")
-                                                },
-                                                &table_update_many_cloned
-                                            ).await.expect("d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                                            "34bfb3c7-7a53-479e-9d4f-0856003573e1"
-                                        );
-                                        assert_eq!(
-                                            {
-                                                #expected_read_many_token_stream
+                                            if should_break {
+                                                break;
+                                            }
+                                        }
+                                        option_test_case.expect("769983ba-3992-4298-97ab-9a3721c32359")
+                                    });
+                                    assert_eq!(
+                                        vec![
+                                            #ident_read_only_ids_upper_camel_case {
+                                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
+                                                #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
+                                            }
+                                        ],
+                                        #ident::try_update_many_handle(
+                                            &url_cloned,
+                                            #ident_update_many_parameters_upper_camel_case {
+                                                payload: #ident_update_many_payload_upper_camel_case::try_new(vec![
+                                                    #ident_update_upper_camel_case::try_new(
+                                                        #primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream,
+                                                        #ident_update_parameters_initialization_without_primary_key_token_stream
+                                                    ).expect("42dc87b3-2ac4-4e66-8287-91aeb13f0ee8")
+                                                ]).expect("69e1bd8a-fe78-4301-85ca-f4f3958d7493")
                                             },
-                                            itertools::Itertools::sorted_by(
-                                                generate_try_read_many_order_by_primary_key_with_big_pagination(
-                                                    &url_cloned,
-                                                    generate_ident_where_many_pripery_key_others_none(
-                                                        generate_some_postgresql_type_where_try_new_primary_key(
-                                                            postgresql_crud::LogicalOperator::Or,
-                                                            vec![
-                                                                #primary_key_field_type_where_token_stream::Equal(
-                                                                    postgresql_crud::PostgresqlTypeWhereEqual {
-                                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                                        #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream
-                                                                            )
-                                                                        ),
-                                                                    }
-                                                                )
-                                                            ]
-                                                        )
-                                                    ),
-                                                    select_default_all_with_max_page_size_cloned,
-                                                    &table_update_many_cloned
-                                                )
-                                                .await
-                                                .expect("25c561e2-6b39-4982-8fe7-4473d12b3271")
-                                                .into_iter(),
-                                                |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                    (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
-                                                    _ => panic!("3c827ad6-30bb-49db-8f49-8c903a236040"),
-                                                }
-                                            ).collect::<Vec<#ident_read_upper_camel_case>>(),
-                                            "ae2a2da5-3697-4fd7-9ad2-4a535618fbc3"
-                                        );
-                                    }));
-                                }
+                                            &table_update_many_cloned
+                                        ).await.expect("d2de0bd6-1b01-4ef2-b074-a60878241b52"),
+                                        "34bfb3c7-7a53-479e-9d4f-0856003573e1"
+                                    );
+                                    assert_eq!(
+                                        {
+                                            #expected_read_many_token_stream
+                                        },
+                                        itertools::Itertools::sorted_by(
+                                            generate_try_read_many_order_by_primary_key_with_big_pagination(
+                                                &url_cloned,
+                                                generate_ident_where_many_pripery_key_others_none(
+                                                    generate_some_postgresql_type_where_try_new_primary_key(
+                                                        postgresql_crud::LogicalOperator::Or,
+                                                        vec![
+                                                            #primary_key_field_type_where_token_stream::Equal(
+                                                                postgresql_crud::PostgresqlTypeWhereEqual {
+                                                                    logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                                    #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                                        <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream
+                                                                        )
+                                                                    ),
+                                                                }
+                                                            )
+                                                        ]
+                                                    )
+                                                ),
+                                                select_default_all_with_max_page_size_cloned,
+                                                &table_update_many_cloned
+                                            )
+                                            .await
+                                            .expect("25c561e2-6b39-4982-8fe7-4473d12b3271")
+                                            .into_iter(),
+                                            |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                                (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
+                                                _ => panic!("3c827ad6-30bb-49db-8f49-8c903a236040"),
+                                            }
+                                        ).collect::<Vec<#ident_read_upper_camel_case>>(),
+                                        "ae2a2da5-3697-4fd7-9ad2-4a535618fbc3"
+                                    );
+                                }));
                             }
                         };}
                     },
@@ -6951,8 +6948,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         } else {
                             proc_macro2::TokenStream::new()
                         };
-                        let read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream = generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream(
-                            field_ident
+                        let field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case = naming::parameter::SelfReadOnlyIdsToTwoDimensionalVecReadInnerAccSnakeCase::from_tokens(
+                            &field_ident
                         );
                         let ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream =
                             generate_fields_named_without_primary_key_with_comma_token_stream(
@@ -7018,80 +7015,74 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             );
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream);
                         quote::quote! {{
-                            #read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream
-                            if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
-                                println!(#warning_message_double_quote_token_stream);
-                            } else {
-                                let read_only_ids_current_elements = generate_read_only_ids_current_elements(
-                                    &url,
-                                    &table_update_one,
-                                    #select_default_all_with_max_page_size_clone_token_stream,
-                                    read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                ).await;
-                                for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                    let table_update_one_cloned = table_update_one.clone();
-                                    let url_cloned = url.clone();
-                                    let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
-                                        #maybe_previous_read_token_stream
-                                        let update = <
-                                            #field_type
-                                            as
-                                            postgresql_crud::PostgresqlTypeTestCases
-                                        >::read_inner_into_update_with_new_or_try_new_unwraped({
-                                            let mut local_increment: usize = 0;
-                                            let mut option_test_case = None;
-                                            for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
-                                                &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71-f30f-410e-b410-a75f4672f2f7")
-                                            ) {
-                                                let mut should_break = false;
-                                                for element_1 in element_0 {
-                                                    if local_increment == increment {
-                                                        option_test_case = Some(element_1);
-                                                        should_break = true;
-                                                        break;
-                                                    }
-                                                    local_increment = local_increment.checked_add(1).expect("326274d1-199d-4c43-89b3-c61c8ecdfd77");
-                                                }
-                                                if should_break {
+                            for (increment, read_only_ids_current_element) in generate_read_only_ids_current_elements(
+                                &url,
+                                &table_update_one,
+                                #select_default_all_with_max_page_size_clone_token_stream,
+                                #field_ident_read_only_ids_to_two_dimensional_vec_read_inner_acc_snake_case
+                            ).await.into_iter().enumerate() {
+                                let table_update_one_cloned = table_update_one.clone();
+                                let url_cloned = url.clone();
+                                let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
+                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                    #maybe_previous_read_token_stream
+                                    let update = <
+                                        #field_type
+                                        as
+                                        postgresql_crud::PostgresqlTypeTestCases
+                                    >::read_inner_into_update_with_new_or_try_new_unwraped({
+                                        let mut local_increment: usize = 0;
+                                        let mut option_test_case = None;
+                                        for element_0 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(
+                                            &read_only_ids_current_element.#field_ident.clone().expect("c4d98a71-f30f-410e-b410-a75f4672f2f7")
+                                        ) {
+                                            let mut should_break = false;
+                                            for element_1 in element_0 {
+                                                if local_increment == increment {
+                                                    option_test_case = Some(element_1);
+                                                    should_break = true;
                                                     break;
                                                 }
+                                                local_increment = local_increment.checked_add(1).expect("326274d1-199d-4c43-89b3-c61c8ecdfd77");
                                             }
-                                            option_test_case.expect("bd79056e-bd30-4eda-b913-2afffaf1bfc3")
-                                        });
-                                        assert_eq!(
-                                            #ident_read_only_ids_upper_camel_case {
-                                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
-                                                #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
+                                            if should_break {
+                                                break;
+                                            }
+                                        }
+                                        option_test_case.expect("bd79056e-bd30-4eda-b913-2afffaf1bfc3")
+                                    });
+                                    assert_eq!(
+                                        #ident_read_only_ids_upper_camel_case {
+                                            #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
+                                            #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
+                                        },
+                                        #ident::try_update_one_handle(
+                                            &url_cloned,
+                                            #ident_update_one_parameters_upper_camel_case {
+                                                payload: #ident_update_upper_camel_case::try_new(
+                                                    #primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream,
+                                                    #ident_update_parameters_initialization_without_primary_key_token_stream
+                                                ).expect("0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
                                             },
-                                            #ident::try_update_one_handle(
-                                                &url_cloned,
-                                                #ident_update_one_parameters_upper_camel_case {
-                                                    payload: #ident_update_upper_camel_case::try_new(
-                                                        #primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream,
-                                                        #ident_update_parameters_initialization_without_primary_key_token_stream
-                                                    ).expect("0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
-                                                },
-                                                &table_update_one_cloned
-                                            ).await.expect("4d755542-e3e3-4c68-a3a2-beb654cf5b80"),
-                                            "564de31c-3664-4c62-85fc-e03793372f8f"
-                                        );
-                                        assert_eq!(
-                                            #ident_read_upper_camel_case {
-                                                #primary_key_field_ident: Some(#value_initialization_token_stream),
-                                                #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
-                                            },
-                                            generate_ident_try_read_one_handle_primary_key(
-                                                &url_cloned,
-                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
-                                                select_default_all_with_max_page_size_cloned,
-                                                &table_update_one_cloned
-                                            )
-                                            .await.expect("75894c76-88f5-406e-ab46-c27b1c7d4212"),
-                                            "d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
-                                        );
-                                    }));
-                                }
+                                            &table_update_one_cloned
+                                        ).await.expect("4d755542-e3e3-4c68-a3a2-beb654cf5b80"),
+                                        "564de31c-3664-4c62-85fc-e03793372f8f"
+                                    );
+                                    assert_eq!(
+                                        #ident_read_upper_camel_case {
+                                            #primary_key_field_ident: Some(#value_initialization_token_stream),
+                                            #ident_read_fields_initialization_without_primary_key_after_update_one_token_stream
+                                        },
+                                        generate_ident_try_read_one_handle_primary_key(
+                                            &url_cloned,
+                                            #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
+                                            select_default_all_with_max_page_size_cloned,
+                                            &table_update_one_cloned
+                                        )
+                                        .await.expect("75894c76-88f5-406e-ab46-c27b1c7d4212"),
+                                        "d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
+                                    );
+                                }));
                             }
                         };}
                     },
@@ -7483,7 +7474,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
                         "no rows returned by a query that expected to return at least one row"
                     }
-                    #generate_assert_token_stream
+                    #generate_read_only_ids_current_elements_token_stream
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21-1879-449c-9b60-ce7293709959").block_on(async {
                         //todo maybe refactor
@@ -7604,6 +7595,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let #ident_create_default_snake_case = ident_create_default();
                         #select_default_all_with_max_page_size_not_empty_unique_enum_vec_token_stream
                         #common_read_only_ids_returned_from_create_one_token_stream
+                        #read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
                                 let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();

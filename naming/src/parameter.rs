@@ -2003,5 +2003,18 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "handle"],
     ["try", "self", "handle"],
     ["derive", "self"],
-    ["derive", "self", "if"]
+    ["derive", "self", "if"],
+    [
+        "self",
+        "read",
+        "only",
+        "ids",
+        "to",
+        "two",
+        "dimensional",
+        "vec",
+        "read",
+        "inner",
+        "acc"
+    ]
 ]);
