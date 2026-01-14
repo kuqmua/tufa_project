@@ -2189,6 +2189,14 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
             .parse::<proc_macro2::TokenStream>()
             .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
     }
+    fn generate_underscore_underscore_field_index_handle_token_stream(
+        index: usize,
+    ) -> proc_macro2::TokenStream {
+        let value = format!("__field{index}_handle");
+        value
+            .parse::<proc_macro2::TokenStream>()
+            .expect("09a0c518-28da-455b-bce8-fb6defae8a3b")
+    }
     fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
         field_name_double_quotes_token_stream: &dyn quote::ToTokens,
         index: usize,
@@ -2269,24 +2277,24 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     let struct_ident_double_quotes_token_stream =
         generate_struct_ident_double_quotes_token_stream(&ident);
     let visit_seq_fields_initialization_token_stream = {
-        let visit_seq_fields_initialization_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
-            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        let content_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
+            let field_index_handle_token_stream = generate_underscore_underscore_field_index_handle_token_stream(index);
             let type_token_stream = generate_type_token_stream(element_ident, element_type);
             let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"));
             quote::quote! {
-                let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? else {
+                let Some(#field_index_handle_token_stream) = serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? else {
                     return Err(serde::de::Error::invalid_length(0usize, &#struct_ident_options_with_double_quotes_token_stream));
                 };
             }
         });
-        quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
+        quote::quote! {#(#content_token_stream)*}
     };
     let match_try_new_in_deserialize_token_stream =
         generate_match_try_new_in_deserialize_token_stream(&ident, &{
             let fields_token_stream = {
                 let mut acc = Vec::new();
                 for element in 0..len {
-                    acc.push(generate_underscore_underscore_field_index_token_stream(
+                    acc.push(generate_underscore_underscore_field_index_handle_token_stream(
                         element,
                     ));
                 }
@@ -2332,9 +2340,10 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     let visit_map_missing_fields_check_token_stream = {
         let content_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            let field_index_handle_token_stream = generate_underscore_underscore_field_index_handle_token_stream(index);
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
             quote::quote! {
-                let #field_index_token_stream = match #field_index_token_stream {
+                let #field_index_handle_token_stream = match #field_index_token_stream {
                     Some(some_value) => some_value,
                     None => {
                         serde::__private228::de::missing_field(#field_ident_double_quotes_token_stream)?
