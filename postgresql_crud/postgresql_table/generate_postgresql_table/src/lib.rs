@@ -5543,36 +5543,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         ]);
         let select_default_all_with_max_page_size_cloned_clone_token_stream =
             quote::quote! {select_default_all_with_max_page_size_cloned.clone()};
-        let generate_read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream =
-            |field_ident: &syn::Ident| {
-                let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream =
-                    generate_fields_named_without_primary_key_without_comma_token_stream(
-                        &|current_current_element: &macros_helpers::SynFieldWrapper| {
-                            let current_field_ident = &current_current_element.field_ident;
-                            let current_field_type = &current_current_element.field_type;
-                            if field_ident == current_field_ident {
-                                quote::quote! {
-                                    if let Some(some_value) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
-                                        for #element_snake_case in <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_two_dimensional_vec_read_inner(some_value) {
-                                            for _ in #element_snake_case {
-                                                acc_458cda9e.push(ident_create_default.clone());
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                proc_macro2::TokenStream::new()
-                            }
-                        },
-                    );
-                quote::quote! {
-                    let read_only_ids_to_two_dimensional_vec_read_inner_acc = {
-                        let mut acc_458cda9e = Vec::new();
-                        #ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream
-                        acc_458cda9e
-                    };
-                }
-            };
         let read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream =
             generate_fields_named_without_primary_key_without_comma_token_stream(
                 &|element: &macros_helpers::SynFieldWrapper| {
@@ -6683,10 +6653,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &|current_element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &current_element.field_ident;
                         let field_type = &current_element.field_type;
-                        let warning_message_double_quote_token_stream =
-                            generate_quotes::double_quotes_token_stream(&format!(
-                                "PostgresqlTypeTestCases read_only_ids_to_two_dimensional_vec_read_inner is empty for {field_ident}"
-                            ));
                         let is_fields_without_primary_key_len_greater_than_one =
                             fields_without_primary_key.len() > 1;
                         let maybe_previous_read_token_stream =
@@ -6919,10 +6885,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &|current_element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &current_element.field_ident;
                         let field_type = &current_element.field_type;
-                        let warning_message_double_quote_token_stream =
-                            generate_quotes::double_quotes_token_stream(&format!(
-                                "PostgresqlTypeTestCases read_only_ids_to_two_dimensional_vec_read_inner is empty for {field_ident}"
-                            ));
                         let maybe_previous_read_token_stream = if fields_without_primary_key.len()
                             > 1
                         {
