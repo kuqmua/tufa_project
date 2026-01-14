@@ -4144,7 +4144,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         for #element_snake_case in &#value_snake_case {
                             if #acc_snake_case.contains(&&#element_snake_case.#primary_key_field_ident) {
                                 return Err(#ident_operation_payload_try_new_error_named_upper_camel_case::#not_unique_primary_key_upper_camel_case {
-                                    #not_unique_primary_key_snake_case: #element_snake_case.#primary_key_field_ident.clone(),
+                                    #not_unique_primary_key_snake_case: #element_snake_case.#primary_key_field_ident,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -4383,7 +4383,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 quote::quote! {
                                     for #element_snake_case in &#update_for_query_vec_snake_case {
                                         if let Some(some_value) = &#element_snake_case.#field_ident {
-                                            if let Err(#error_0_token_stream) = #query_snake_case.try_bind(#element_snake_case.#primary_key_field_ident.clone()) {
+                                            if let Err(#error_0_token_stream) = #query_snake_case.try_bind(#element_snake_case.#primary_key_field_ident) {
                                                 let #error_0_token_stream = #error_0_token_stream.to_string();
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
@@ -4406,7 +4406,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let primary_key_update_assignment_token_stream = quote::quote! {
                         for #element_snake_case in &#update_for_query_vec_snake_case {
                             match #primary_key_field_type_as_postgresql_type_token_stream #update_query_bind_snake_case(
-                                #element_snake_case.#primary_key_field_ident.clone(),
+                                #element_snake_case.#primary_key_field_ident,
                                 #query_snake_case,
                             ) {
                                 Ok(ok_value) => {
@@ -5288,7 +5288,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let primary_key_field_type_read_only_ids_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream =
             generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(
                 &read_only_ids_into_table_type_declaration_snake_case,
-                &quote::quote! {#element_snake_case.#primary_key_field_ident.clone()},
+                &quote::quote! {#element_snake_case.#primary_key_field_ident},
             );
         let (
             primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream,
@@ -7388,7 +7388,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                     #primary_key_field_type_as_postgresql_type_token_stream into_inner(
                                         <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
-                                            #element_snake_case.#primary_key_field_ident.clone()
+                                            #element_snake_case.#primary_key_field_ident
                                         ),
                                     )
                                 ),
