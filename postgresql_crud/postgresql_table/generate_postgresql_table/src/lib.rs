@@ -4215,16 +4215,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     where
                                         __A: _serde::de::SeqAccess<'de>,
                                     {
-                                        let __field0 = match _serde::de::SeqAccess::next_element::<#std_vec_vec_ident_update_token_stream>(&mut __seq)? {
-                                            Some(__value) => __value,
-                                            None => {
-                                                return Err(
-                                                    _serde::de::Error::invalid_length(
-                                                        0usize,
-                                                        &#tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream,
-                                                    ),
-                                                );
-                                            }
+                                        let Some(__field0) = _serde::de::SeqAccess::next_element::<#std_vec_vec_ident_update_token_stream>(&mut __seq)? else {
+                                            return Err(_serde::de::Error::invalid_length(0usize, &#tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream));
                                         };
                                         #match_ident_update_many_payload_try_new_field0_token_stream
                                     }
