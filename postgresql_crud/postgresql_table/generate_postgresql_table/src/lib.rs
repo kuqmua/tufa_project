@@ -7257,7 +7257,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             "db5e88a6-c75b-421b-acfb-56931b97ba3b"
                         );
                         match generate_try_read_many_order_by_primary_key_with_big_pagination(
-                            &url,
+                            url,
                             generate_ident_where_many_pripery_key_others_none(
                                 generate_some_postgresql_type_where_try_new_primary_key(
                                     postgresql_crud::LogicalOperator::Or,
