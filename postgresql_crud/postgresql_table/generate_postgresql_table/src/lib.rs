@@ -5316,7 +5316,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             )
         };
         let primary_key_field_type_as_postgresql_type_update_as_postgresql_type_primary_key_read_only_ids_into_update_token_stream = {
-            let method_call_token_stream = generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(&read_only_ids_into_update_snake_case, &quote::quote! {read_only_ids_current_element.#primary_key_field_ident.clone()});
+            let method_call_token_stream = generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(&read_only_ids_into_update_snake_case, &quote::quote! {read_only_ids_current_element.#primary_key_field_ident});
             quote::quote! {
                 <
                     #primary_key_field_type
@@ -6810,7 +6810,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         assert_eq!(
                                             vec![
                                                 #ident_read_only_ids_upper_camel_case {
-                                                    #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone(),
+                                                    #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
                                                     #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
                                                 }
                                             ],
@@ -7091,7 +7091,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         });
                                         assert_eq!(
                                             #ident_read_only_ids_upper_camel_case {
-                                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident.clone(),
+                                                #primary_key_field_ident: read_only_ids_current_element.#primary_key_field_ident,
                                                 #ident_read_only_ids_upper_fields_initialization_without_primary_key_token_stream
                                             },
                                             #ident::try_update_one_handle(
