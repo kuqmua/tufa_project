@@ -5573,7 +5573,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     };
                 }
             };
-        let generate_sorted_default_vec_ident_read_from_vec_ident_read_only_ids_token_stream = {
+        let generate_assert_token_stream = {
             let ident_read_fields_initialization_without_primary_key_token_stream =
                 generate_fields_named_without_primary_key_with_comma_token_stream(
                     &|syn_field_wrapper: &macros_helpers::SynFieldWrapper| {
@@ -5595,25 +5595,61 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     },
                 );
             quote::quote! {
-                fn generate_sorted_default_vec_ident_read_from_vec_ident_read_only_ids(
-                    read_only_ids_current_elements: &[#ident_read_only_ids_upper_camel_case]
-                ) -> Vec<#ident_read_upper_camel_case> {
-                    itertools::Itertools::sorted_by(
-                        read_only_ids_current_elements.iter().map(|#element_snake_case| {
-                            #ident_read_upper_camel_case {
-                                #primary_key_field_ident: <
-                                    #primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases
-                                >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                    &#element_snake_case.#primary_key_field_ident
-                                ),
-                                #ident_read_fields_initialization_without_primary_key_token_stream
+                async fn generate_assert(
+                    url: &str,
+                    current_table: &str,
+                    select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
+                    read_only_ids_current_elements: &[#ident_read_only_ids_upper_camel_case],
+                ) {
+                    assert_eq!(
+                        itertools::Itertools::sorted_by(
+                            read_only_ids_current_elements.iter().map(|#element_snake_case| {
+                                #ident_read_upper_camel_case {
+                                    #primary_key_field_ident: <
+                                        #primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases
+                                    >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                        &#element_snake_case.#primary_key_field_ident
+                                    ),
+                                    #ident_read_fields_initialization_without_primary_key_token_stream
+                                }
+                            }),
+                            |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
+                                _ => panic!("0f1d45ed-b6e3-4fbd-bd41-bcbe61739f83"),
                             }
-                        }),
-                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
-                            _ => panic!("0f1d45ed-b6e3-4fbd-bd41-bcbe61739f83"),
-                        }
-                    ).collect()
+                        ).collect::<Vec<#ident_read_upper_camel_case>>(),
+                        itertools::Itertools::sorted_by(
+                            generate_try_read_many_order_by_primary_key_with_big_pagination(
+                                &url,
+                                generate_ident_where_many_pripery_key_others_none(
+                                    generate_some_postgresql_type_where_try_new_primary_key(
+                                        postgresql_crud::LogicalOperator::Or,
+                                        read_only_ids_current_elements.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(
+                                            postgresql_crud::PostgresqlTypeWhereEqual {
+                                                logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                                    )
+                                                )
+                                            }
+                                        )).collect()
+                                    )
+                                ),
+                                #select_default_all_with_max_page_size_clone_token_stream,
+                                &current_table
+                            )
+                            .await
+                            .expect("097d5e7d-41c6-41f4-8847-720647f2d6ea")
+                            .into_iter(),
+                            |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
+                                _ => panic!("51e477ea-0a01-46f0-89fb-967bb8e4e131"),
+                            }
+                        )
+                        .collect::<Vec<#ident_read_upper_camel_case>>(),
+                        "50198a7f-e65c-4e4e-8d7f-9881cfd42453"
+                    );
                 }
             }
         };
@@ -6755,42 +6791,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     .flatten()
                                     .collect::<Vec<#ident_read_only_ids_upper_camel_case>>()
                                 };
-                                assert_eq!(
-                                    generate_sorted_default_vec_ident_read_from_vec_ident_read_only_ids(
-                                        &read_only_ids_current_elements
-                                    ),
-                                    itertools::Itertools::sorted_by(
-                                        generate_try_read_many_order_by_primary_key_with_big_pagination(
-                                            &url,
-                                            generate_ident_where_many_pripery_key_others_none(
-                                                generate_some_postgresql_type_where_try_new_primary_key(
-                                                    postgresql_crud::LogicalOperator::Or,
-                                                    read_only_ids_current_elements.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(
-                                                        postgresql_crud::PostgresqlTypeWhereEqual {
-                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                                                                )
-                                                            )
-                                                        }
-                                                    )).collect()
-                                                )
-                                            ),
-                                            #select_default_all_with_max_page_size_clone_token_stream,
-                                            &table_update_many
-                                        )
-                                        .await
-                                        .expect("097d5e7d-41c6-41f4-8847-720647f2d6ea")
-                                        .into_iter(),
-                                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
-                                            _ => panic!("51e477ea-0a01-46f0-89fb-967bb8e4e131"),
-                                        }
-                                    )
-                                    .collect::<Vec<#ident_read_upper_camel_case>>(),
-                                    "50198a7f-e65c-4e4e-8d7f-9881cfd42453"
-                                );
+                                generate_assert(
+                                    &url,
+                                    &table_update_many,
+                                    #select_default_all_with_max_page_size_clone_token_stream,
+                                    &read_only_ids_current_elements
+                                ).await;
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                                     let table_update_many_cloned = table_update_many.clone();
                                     let url_cloned = url.clone();
@@ -7011,41 +7017,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .into_iter()
                                 .flatten()
                                 .collect::<Vec<#ident_read_only_ids_upper_camel_case>>();
-                                assert_eq!(
-                                    generate_sorted_default_vec_ident_read_from_vec_ident_read_only_ids(
-                                        &read_only_ids_current_elements
-                                    ),
-                                    itertools::Itertools::sorted_by(
-                                        generate_try_read_many_order_by_primary_key_with_big_pagination(
-                                            &url,
-                                            generate_ident_where_many_pripery_key_others_none(
-                                                generate_some_postgresql_type_where_try_new_primary_key(
-                                                    postgresql_crud::LogicalOperator::Or,
-                                                    read_only_ids_current_elements.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(
-                                                        postgresql_crud::PostgresqlTypeWhereEqual {
-                                                            logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                            #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
-                                                                )
-                                                            ),
-                                                        }
-                                                    )).collect()
-                                                )
-                                            ),
-                                            #select_default_all_with_max_page_size_clone_token_stream,
-                                            &table_update_one
-                                        )
-                                        .await
-                                        .expect("f5eeb8b7-85f1-406b-85e2-b8c409bd77d1")
-                                        .into_iter(),
-                                        |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
-                                            _ => panic!("d2f6e94a-7ff3-43ce-8302-fcdbb458d2a9"),
-                                        }
-                                    ).collect::<Vec<#ident_read_upper_camel_case>>(),
-                                    "db146190-0496-42a7-93d6-8405eb641954"
-                                );
+                                generate_assert(
+                                    &url,
+                                    &table_update_one,
+                                    #select_default_all_with_max_page_size_clone_token_stream,
+                                    &read_only_ids_current_elements
+                                ).await;
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                                     let table_update_one_cloned = table_update_one.clone();
                                     let url_cloned = url.clone();
@@ -7501,7 +7478,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
                         "no rows returned by a query that expected to return at least one row"
                     }
-                    #generate_sorted_default_vec_ident_read_from_vec_ident_read_only_ids_token_stream
+                    #generate_assert_token_stream
                     tracing_subscriber::fmt::init();
                     tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().expect("38823c21-1879-449c-9b60-ce7293709959").block_on(async {
                         //todo maybe refactor
