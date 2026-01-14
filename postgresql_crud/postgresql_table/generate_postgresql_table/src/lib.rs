@@ -7138,14 +7138,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 where_many: #std_option_option_ident_where_many_upper_camel_case(Some(#ident_where_many_upper_camel_case {
                                     #primary_key_field_ident: generate_some_postgresql_type_where_try_new_primary_key(
                                         postgresql_crud::LogicalOperator::Or,
-                                        (1..=length).map(|_| #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
+                                        std::iter::repeat_with(|| #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
                                             postgresql_crud::PostgresqlTypeWhereEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                                value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                     uuid::Uuid::new_v4()
-                                                ),
+                                                )
                                             }
                                         ))
+                                        .take(length)
                                         .collect()
                                     ),
                                     #fields_none_initialization_token_stream
