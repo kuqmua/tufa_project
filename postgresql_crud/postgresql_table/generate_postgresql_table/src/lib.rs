@@ -5595,12 +5595,37 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     },
                 );
             quote::quote! {
-                async fn generate_assert(
+                async fn generate_read_only_ids_current_elements(
                     url: &str,
                     current_table: &str,
                     select_default_all_with_max_page_size: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>,
-                    read_only_ids_current_elements: &[#ident_read_only_ids_upper_camel_case],
-                ) {
+                    read_only_ids_to_two_dimensional_vec_read_inner_acc: Vec<#ident_create_upper_camel_case>
+                ) -> Vec<#ident_read_only_ids_upper_camel_case> {
+                    let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
+                        futures::StreamExt::buffer_unordered(
+                            futures::stream::iter(
+                                read_only_ids_to_two_dimensional_vec_read_inner_acc
+                                .chunks(25)
+                                .map(Vec::from)
+                                .map(|#element_snake_case| {
+                                    let current_table_cloned = current_table.clone();
+                                    let url_cloned = url.clone();
+                                    futures::FutureExt::boxed(async move { #ident::try_create_many_handle(
+                                        &url_cloned,
+                                        #ident_create_many_parameters_upper_camel_case {
+                                            payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
+                                        },
+                                        &current_table_cloned
+                                    ).await.expect("38a24e7a-5b0e-4237-b686-3f03ab332efd") })
+                                })
+                            ),
+                            5
+                        )
+                    )
+                    .await
+                    .into_iter()
+                    .flatten()
+                    .collect::<Vec<#ident_read_only_ids_upper_camel_case>>();
                     assert_eq!(
                         itertools::Itertools::sorted_by(
                             read_only_ids_current_elements.iter().map(|#element_snake_case| {
@@ -5650,6 +5675,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         .collect::<Vec<#ident_read_upper_camel_case>>(),
                         "50198a7f-e65c-4e4e-8d7f-9881cfd42453"
                     );
+                    read_only_ids_current_elements
                 }
             }
         };
@@ -6764,38 +6790,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
                                 println!(#warning_message_double_quote_token_stream);
                             } else {
-                                let read_only_ids_current_elements = {
-                                    futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
-                                        futures::StreamExt::buffer_unordered(
-                                            futures::stream::iter(
-                                                read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                                .chunks(25)
-                                                .map(Vec::from)
-                                                .map(|#element_snake_case| {
-                                                    let table_update_many_cloned = table_update_many.clone();
-                                                    let url_cloned = url.clone();
-                                                    futures::FutureExt::boxed(async move { #ident::try_create_many_handle(
-                                                        &url_cloned,
-                                                        #ident_create_many_parameters_upper_camel_case {
-                                                            payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
-                                                        },
-                                                        &table_update_many_cloned
-                                                    ).await.expect("38a24e7a-5b0e-4237-b686-3f03ab332efd") })
-                                                })
-                                            ),
-                                            5
-                                        )
-                                    )
-                                    .await
-                                    .into_iter()
-                                    .flatten()
-                                    .collect::<Vec<#ident_read_only_ids_upper_camel_case>>()
-                                };
-                                generate_assert(
+                                let read_only_ids_current_elements = generate_read_only_ids_current_elements(
                                     &url,
                                     &table_update_many,
                                     #select_default_all_with_max_page_size_clone_token_stream,
-                                    &read_only_ids_current_elements
+                                    read_only_ids_to_two_dimensional_vec_read_inner_acc
                                 ).await;
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                                     let table_update_many_cloned = table_update_many.clone();
@@ -6990,38 +6989,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
                                 println!(#warning_message_double_quote_token_stream);
                             } else {
-                                let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
-                                    futures::StreamExt::buffer_unordered(
-                                        futures::stream::iter(
-                                            read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                            .chunks(25)
-                                            .map(Vec::from)
-                                            .map(|#element_snake_case| {
-                                                let table_update_one_cloned = table_update_one.clone();
-                                                let url_cloned = url.clone();
-                                                futures::FutureExt::boxed(async move {
-                                                    #ident::try_create_many_handle(
-                                                        &url_cloned,
-                                                        #ident_create_many_parameters_upper_camel_case {
-                                                            payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
-                                                        },
-                                                        &table_update_one_cloned
-                                                    ).await.expect("0aedfa07-149b-4028-a131-a64ccdda6b98")
-                                                })
-                                            })
-                                        ),
-                                        5
-                                    )
-                                )
-                                .await
-                                .into_iter()
-                                .flatten()
-                                .collect::<Vec<#ident_read_only_ids_upper_camel_case>>();
-                                generate_assert(
+                                let read_only_ids_current_elements = generate_read_only_ids_current_elements(
                                     &url,
                                     &table_update_one,
                                     #select_default_all_with_max_page_size_clone_token_stream,
-                                    &read_only_ids_current_elements
+                                    read_only_ids_to_two_dimensional_vec_read_inner_acc
                                 ).await;
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
                                     let table_update_one_cloned = table_update_one.clone();
