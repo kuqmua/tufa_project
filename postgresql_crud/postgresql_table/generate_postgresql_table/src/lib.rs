@@ -5619,8 +5619,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 });
                                             }
                                             acc_1debe8fb.sort_by(|first, second| {
-                                                if let (Some(first), Some(second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                    first.#value_snake_case.cmp(&second.#value_snake_case)
+                                                if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                                    first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case)
                                                 } else {
                                                     panic!("4428083a-53be-4184-a5b7-94ae2de21d40");
                                                 }
@@ -5897,8 +5897,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     });
                                 }
                                 acc_8a827f58.sort_by(|first, second| {
-                                    if let (Some(first), Some(second)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                        first.#value_snake_case.cmp(&second.#value_snake_case)
+                                    if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                        first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case)
                                     } else {
                                         panic!("0faa6fb3-a7c0-44ca-9b51-13f6ca2fc543");
                                     }
@@ -6588,7 +6588,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         .into_iter(),
                                         |first, second| {
                                             match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                                (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                                 _ => panic!("99ba9dc3-ca32-4462-b9b4-b1202265beee"),
                                             }
                                         }
@@ -6738,7 +6738,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                         }),
                                         |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                             _ => panic!("972f3b9f-4239-459a-a06b-9e59ef2615a1"),
                                         }
                                     ).collect::<Vec<#ident_read_upper_camel_case>>(),
@@ -6769,7 +6769,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         .expect("097d5e7d-41c6-41f4-8847-720647f2d6ea")
                                         .into_iter(),
                                         |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                             _ => panic!("51e477ea-0a01-46f0-89fb-967bb8e4e131"),
                                         }
                                     )
@@ -6859,7 +6859,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 .expect("25c561e2-6b39-4982-8fe7-4473d12b3271")
                                                 .into_iter(),
                                                 |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                    (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                                    (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                                     _ => panic!("3c827ad6-30bb-49db-8f49-8c903a236040"),
                                                 }
                                             ).collect::<Vec<#ident_read_upper_camel_case>>(),
@@ -7023,7 +7023,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                         }),
                                         |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                             _ => panic!("b8fc0f4e-f669-4eed-a79b-9ea51d351d1c"),
                                         }
                                     ).collect::<Vec<#ident_read_upper_camel_case>>(),
@@ -7052,7 +7052,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         .expect("f5eeb8b7-85f1-406b-85e2-b8c409bd77d1")
                                         .into_iter(),
                                         |first, second| match (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                            (Some(first), Some(second)) => first.#value_snake_case.cmp(&second.#value_snake_case),
+                                            (Some(first_handle), Some(second_handle)) => first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case),
                                             _ => panic!("d2f6e94a-7ff3-43ce-8302-fcdbb458d2a9"),
                                         }
                                     ).collect::<Vec<#ident_read_upper_camel_case>>(),
