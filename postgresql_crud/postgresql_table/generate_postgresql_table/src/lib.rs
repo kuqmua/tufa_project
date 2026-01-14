@@ -5594,7 +5594,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 .chunks(10)
                                 .map(Vec::from)
                             {
-                                let current_table = current_table.clone();
+                                let table_create_many_cloned = table_create_many.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -5612,7 +5612,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         #ident_create_many_parameters_upper_camel_case {
                                             #payload_snake_case: #ident_create_many_payload_upper_camel_case(ident_vec_create.clone())
                                         },
-                                        &current_table.clone()
+                                        &table_create_many_cloned.clone()
                                     ).await.expect("5eecedc4-bb02-454a-acd9-0af758f30b2e");
                                     assert_eq!(
                                         {
@@ -5656,7 +5656,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 )
                                             ),
                                             #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                                            &current_table
+                                            &table_create_many_cloned
                                         ).await.expect("bdb72341-016f-4d85-8ce8-abe7e97666ca"),
                                         "d19bbbf6-f64c-4151-8b5b-998a93e13af5"
                                     );
@@ -5677,7 +5677,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     ))
                                                 }
                                             },
-                                            &current_table
+                                            &table_create_many_cloned
                                         )
                                         .await
                                         .expect("716e470e-d738-4642-adfc-df1f9b945d27")
@@ -5714,7 +5714,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             )
                                         ),
                                         #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                                        &current_table
+                                        &table_create_many_cloned
                                     ).await {
                                         Ok(ok_value) => assert!(ok_value == Vec::new(), "4e88679a-0d23-418f-8767-4e9b7531429c"),
                                         Err(#error_snake_case) => panic!("24ab86d6-15c9-47f1-a43f-c5fac4b38188")
@@ -5724,10 +5724,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };}
                     },
                 );
-            quote::quote! {{
-                let current_table = table_create_many.clone();
-                #create_many_tests_token_stream
-            };}
+            quote::quote! {{#create_many_tests_token_stream};}
         };
         let create_one_tests_token_stream = {
             let create_one_tests_token_stream =
@@ -5740,7 +5737,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream);
                         quote::quote! {{
                             for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
-                                let current_table = current_table.clone();
+                                let current_table = table_create_one.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                                 #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -5787,10 +5784,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };}
                     },
                 );
-            quote::quote! {{
-                let current_table = table_create_one.clone();
-                #create_one_tests_token_stream
-            };}
+            quote::quote! {{#create_one_tests_token_stream};}
         };
         let add_create_one_default_and_delete_after_just_to_add_some_data_to_be_sure_it_will_not_return_from_the_test_query_token_stream =
             |content_token_stream: &dyn quote::ToTokens| {
@@ -6546,7 +6540,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };}
         };
         let read_one_tests_token_stream = quote::quote! {{
-            let current_table = table_read_one.clone();
+            let table_read_one_cloned = table_read_one.clone();
             let url_cloned = url.clone();
             let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
             #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -6554,7 +6548,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &url_cloned,
                     #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                    &current_table,
+                    &table_read_one_cloned,
                 ).await;
             }));
         };};
@@ -6595,7 +6589,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 )
                                             ),
                                             #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                                            &current_table
+                                            &table_update_many_cloned
                                         )
                                         .await
                                         .expect("540ec737-dea7-4d50-a42a-45ea1f81d6c1")
@@ -6712,7 +6706,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
                                 println!(#warning_message_double_quote_token_stream);
                             } else {
-                                let current_table = current_table.clone();
                                 let read_only_ids_current_elements = {
                                     futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
                                         futures::StreamExt::buffer_unordered(
@@ -6721,14 +6714,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 .chunks(25)
                                                 .map(Vec::from)
                                                 .map(|#element_snake_case| {
-                                                    let current_table = current_table.clone();
+                                                    let table_update_many_cloned = table_update_many.clone();
                                                     let url_cloned = url.clone();
                                                     futures::FutureExt::boxed(async move { #ident::try_create_many_handle(
                                                         &url_cloned,
                                                         #ident_create_many_parameters_upper_camel_case {
                                                             payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
                                                         },
-                                                        &current_table
+                                                        &table_update_many_cloned
                                                     ).await.expect("38a24e7a-5b0e-4237-b686-3f03ab332efd") })
                                                 })
                                             ),
@@ -6778,7 +6771,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 )
                                             ),
                                             #select_default_all_with_max_page_size_clone_token_stream,
-                                            &current_table
+                                            &table_update_many
                                         )
                                         .await
                                         .expect("097d5e7d-41c6-41f4-8847-720647f2d6ea")
@@ -6792,7 +6785,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     "50198a7f-e65c-4e4e-8d7f-9881cfd42453"
                                 );
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                    let current_table = table_update_many.clone();
+                                    let table_update_many_cloned = table_update_many.clone();
                                     let url_cloned = url.clone();
                                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -6839,7 +6832,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         ).expect("42dc87b3-2ac4-4e66-8287-91aeb13f0ee8")
                                                     ]).expect("69e1bd8a-fe78-4301-85ca-f4f3958d7493")
                                                 },
-                                                &current_table
+                                                &table_update_many_cloned
                                             ).await.expect("d2de0bd6-1b01-4ef2-b074-a60878241b52"),
                                             "34bfb3c7-7a53-479e-9d4f-0856003573e1"
                                         );
@@ -6868,7 +6861,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         )
                                                     ),
                                                     select_default_all_with_max_page_size_cloned,
-                                                    &current_table
+                                                    &table_update_many_cloned
                                                 )
                                                 .await
                                                 .expect("25c561e2-6b39-4982-8fe7-4473d12b3271")
@@ -6886,10 +6879,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };}
                     },
                 );
-            quote::quote! {{
-                let current_table = table_update_many.clone();
-                #update_many_only_one_column_tests_token_stream
-            };}
+            quote::quote! {{#update_many_only_one_column_tests_token_stream};}
         };
         let update_one_tests_token_stream = {
             let update_one_only_one_column_tests_token_stream =
@@ -6909,7 +6899,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     &url_cloned,
                                     #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
                                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                                    &current_table
+                                    &table_update_one_cloned
                                 )
                                 .await.expect("e6998b47-c593-449e-89fd-3888de9f84a6");
                             }
@@ -7001,36 +6991,33 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
                                 println!(#warning_message_double_quote_token_stream);
                             } else {
-                                let current_table = table_update_one.clone();
-                                let read_only_ids_current_elements = {
-                                    futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
-                                        futures::StreamExt::buffer_unordered(
-                                            futures::stream::iter(
-                                                read_only_ids_to_two_dimensional_vec_read_inner_acc
-                                                .chunks(25)
-                                                .map(Vec::from)
-                                                .map(|#element_snake_case| {
-                                                    let current_table = current_table.clone();
-                                                    let url_cloned = url.clone();
-                                                    futures::FutureExt::boxed(async move {
-                                                        #ident::try_create_many_handle(
-                                                            &url_cloned,
-                                                            #ident_create_many_parameters_upper_camel_case {
-                                                                payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
-                                                            },
-                                                            &current_table
-                                                        ).await.expect("0aedfa07-149b-4028-a131-a64ccdda6b98")
-                                                    })
+                                let read_only_ids_current_elements = futures::StreamExt::collect::<Vec<Vec<#ident_read_only_ids_upper_camel_case>>>(
+                                    futures::StreamExt::buffer_unordered(
+                                        futures::stream::iter(
+                                            read_only_ids_to_two_dimensional_vec_read_inner_acc
+                                            .chunks(25)
+                                            .map(Vec::from)
+                                            .map(|#element_snake_case| {
+                                                let table_update_one_cloned = table_update_one.clone();
+                                                let url_cloned = url.clone();
+                                                futures::FutureExt::boxed(async move {
+                                                    #ident::try_create_many_handle(
+                                                        &url_cloned,
+                                                        #ident_create_many_parameters_upper_camel_case {
+                                                            payload: #ident_create_many_payload_upper_camel_case(#element_snake_case)
+                                                        },
+                                                        &table_update_one_cloned
+                                                    ).await.expect("0aedfa07-149b-4028-a131-a64ccdda6b98")
                                                 })
-                                            ),
-                                            5
-                                        )
+                                            })
+                                        ),
+                                        5
                                     )
-                                    .await
-                                    .into_iter()
-                                    .flatten()
-                                    .collect::<Vec<#ident_read_only_ids_upper_camel_case>>()
-                                };
+                                )
+                                .await
+                                .into_iter()
+                                .flatten()
+                                .collect::<Vec<#ident_read_only_ids_upper_camel_case>>();
                                 assert_eq!(
                                     itertools::Itertools::sorted_by(
                                         read_only_ids_current_elements.iter().map(|#element_snake_case| {
@@ -7067,7 +7054,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 )
                                             ),
                                             #select_default_all_with_max_page_size_clone_token_stream,
-                                            &current_table
+                                            &table_update_one
                                         )
                                         .await
                                         .expect("f5eeb8b7-85f1-406b-85e2-b8c409bd77d1")
@@ -7080,7 +7067,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     "db146190-0496-42a7-93d6-8405eb641954"
                                 );
                                 for (increment, read_only_ids_current_element) in read_only_ids_current_elements.into_iter().enumerate() {
-                                    let current_table = table_update_one.clone();
+                                    let table_update_one_cloned = table_update_one.clone();
                                     let url_cloned = url.clone();
                                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                                     #acc_snake_case.push(futures::FutureExt::boxed(async move {
@@ -7123,7 +7110,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         #ident_update_parameters_initialization_without_primary_key_token_stream
                                                     ).expect("0e5d65a5-12c8-4c48-a24c-0f1fe376ada2")//todo add column ident
                                                 },
-                                                &current_table
+                                                &table_update_one_cloned
                                             ).await.expect("4d755542-e3e3-4c68-a3a2-beb654cf5b80"),
                                             "564de31c-3664-4c62-85fc-e03793372f8f"
                                         );
@@ -7136,7 +7123,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 &url_cloned,
                                                 #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
                                                 select_default_all_with_max_page_size_cloned,
-                                                &current_table
+                                                &table_update_one_cloned
                                             )
                                             .await.expect("75894c76-88f5-406e-ab46-c27b1c7d4212"),
                                             "d5dec823-b1f9-49b2-9c24-bf788f08cd8c"
@@ -7147,9 +7134,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         };}
                     },
                 );
-            quote::quote! {{
-                #update_one_only_one_column_tests_token_stream
-            };}
+            quote::quote! {{#update_one_only_one_column_tests_token_stream};}
         };
         let delete_many_tests_token_stream = {
             let test_delete_many_by_non_existent_primary_keys_token_stream = {
@@ -7183,7 +7168,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 });
                 quote::quote! {{
-                    let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();//todo is table name correct?
+                    //todo why this function exists? refactor into async move block?
                     async fn generate_test_delete_many_by_non_existent_primary_keys(
                         length: usize,
                         url: &str,
@@ -7197,14 +7182,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for element in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                        let current_table = current_table.clone();
+                        let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_non_existent_primary_keys(
                                 element,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
-                                &current_table,
+                                &table_test_read_many_by_equal_to_created_primary_keys_cloned,
                                 ident_create_default_cloned,
                             ).await;
                         }));
@@ -7278,7 +7263,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 });
                 quote::quote! {{
-                    let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();//todo is table name correct?
+                    //todo why this function exists? refactor into async move block?
                     async fn generate_test_delete_many_by_primary_keys(
                         length: usize,
                         url: &str,
@@ -7292,14 +7277,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     for element in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                        let current_table = current_table.clone();
+                        //todo is table name correct?
+                        let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_primary_keys(
                                 element,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
-                                &current_table,
+                                &table_test_read_many_by_equal_to_created_primary_keys_cloned,
                                 ident_create_default_cloned,
                             ).await;
                         }));
@@ -7314,7 +7300,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let delete_one_tests_token_stream = {
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream);
             quote::quote! {{
-                let current_table = table_delete_one.clone();
+                let table_delete_one_cloned = table_delete_one.clone();
                 let ident_create_default_cloned = ident_create_default.clone();
                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                 let url_cloned = url.clone();
@@ -7322,7 +7308,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     if let Err(#error_snake_case) = generate_try_delete_one_handle(
                         &url_cloned,
                         #primary_key_field_type_as_postgresql_type_read_token_stream::new(uuid::Uuid::new_v4()),
-                        &current_table
+                        &table_delete_one_cloned
                     ).await {
                         if let #ident_try_delete_one_error_named_upper_camel_case::#ident_delete_one_error_named_with_serialize_deserialize_upper_camel_case {
                             delete_one_error_named_with_serialize_deserialize,
@@ -7342,7 +7328,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     } else {
                         panic!("9be62f9f-31d9-493c-bb0f-b83b6ecb0026")
                     }
-                    let read_only_ids_returned_from_create_one = generate_read_only_ids_from_try_create_one_default(&url_cloned, &current_table).await;
+                    let read_only_ids_returned_from_create_one = generate_read_only_ids_from_try_create_one_default(&url_cloned, &table_delete_one_cloned).await;
                     assert_eq!(
                         #ident_read_upper_camel_case {
                             #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -7352,7 +7338,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &url_cloned,
                             #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
                             #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                            &current_table
+                            &table_delete_one_cloned
                         )
                         .await.expect("c8c44c89-aeb0-43d3-ae72-02b7a5979f5a"),
                         "86ef08ae-4356-4417-9490-1d13eb2af71f"
@@ -7361,7 +7347,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         generate_try_delete_one_handle(
                             &url_cloned,
                             #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
-                            &current_table
+                            &table_delete_one_cloned
                         ).await.expect("7e1d1a70-8f93-43b9-9cfe-37fc240ca7ba"),
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
                         "99f81971-dc80-46db-b466-4f309b215a8c"
@@ -7370,7 +7356,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         &url_cloned,
                         #primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
                         #select_default_all_with_max_page_size_cloned_clone_token_stream,
-                        &current_table,
+                        &table_delete_one_cloned,
                     ).await;
                 }));
             };}
