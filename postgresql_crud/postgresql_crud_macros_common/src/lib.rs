@@ -2294,9 +2294,9 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
             let fields_token_stream = {
                 let mut acc = Vec::new();
                 for element in 0..len {
-                    acc.push(generate_underscore_underscore_field_index_handle_token_stream(
-                        element,
-                    ));
+                    acc.push(
+                        generate_underscore_underscore_field_index_handle_token_stream(element),
+                    );
                 }
                 acc
             };

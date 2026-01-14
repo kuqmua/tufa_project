@@ -5300,9 +5300,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             );
         let (
             primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream,
-            primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream,
-            primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
-            primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream,
+            primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
         ) = {
             let generate_read_only_ids_into_read_token_stream =
@@ -5314,13 +5313,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &quote::quote! {#element_snake_case.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_token_stream(
-                    &quote::quote! {#element_snake_case.#primary_key_field_ident.clone()},
+                    &quote::quote! {read_only_ids_from_try_create_one.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_token_stream(
-                    &quote::quote! {read_only_ids_from_try_create_one.#primary_key_field_ident.clone()},
-                ),
-                generate_read_only_ids_into_read_token_stream(
-                    &quote::quote! {read_only_ids_current_element.#primary_key_field_ident.clone()},
+                    &quote::quote! {read_only_ids_current_element.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_token_stream(
                     &quote::quote! {read_only_ids_returned_from_create_one.#primary_key_field_ident},
@@ -5397,7 +5393,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 let #common_read_only_ids_returned_from_create_one_snake_case = {
                     let read_only_ids_from_try_create_one = generate_read_only_ids_from_try_create_one_default(&#url_snake_case, &table_initialization).await;
-                    let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream;
+                    let primary_key_read = #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream;
                     assert_eq!(
                         #ident_read_upper_camel_case {
                             #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -5651,7 +5647,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                 //todo must use trait type instead
                                                                 #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                                                                 )),
                                                             }));
                                                         }
@@ -5741,7 +5737,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_type = &element.field_type;
                         let ident_create_content_token_stream =
                             generate_ident_create_content_element_token_stream(field_ident);
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream);
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream);
                         quote::quote! {{
                             for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
                                 let current_table = current_table.clone();
@@ -5763,7 +5759,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         },
                                         generate_ident_try_read_one_handle_primary_key(
                                             &url_cloned,
-                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                                             #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                             &current_table
                                         )
@@ -5774,15 +5770,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     assert_eq!(
                                         generate_try_delete_one_handle(
                                             &url_cloned,
-                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                                            #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                                             &current_table
                                         ).await.expect("20d5a40a-8467-481c-9715-f9b8fef63fbd"),
-                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                                         "4f563faf-1d9b-4ef3-8636-f93fde8ef235"
                                     );
                                     generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                                         &url_cloned,
-                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                                         select_default_all_with_max_page_size_cloned,
                                         &current_table,
                                     ).await;
@@ -5803,12 +5799,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #content_token_stream
                     let _: #primary_key_field_type_as_postgresql_type_read_token_stream = generate_try_delete_one_handle(
                         url,
-                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                         current_table
                     ).await.expect("93b4bf61-3a98-42ea-ab66-015c5d211622");
                     generate_check_no_rows_returned_from_ident_try_read_one_handle_primary_key(
                         url,
-                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_clone_token_stream,
+                        #primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
                         #select_default_all_with_max_page_size_clone_token_stream,
                         current_table,
                     ).await;
@@ -5934,7 +5930,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                     #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                         <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                                                         )
                                                     ),
                                                 },
@@ -6590,7 +6586,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                 value: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                     #primary_key_field_type_as_postgresql_type_token_stream into_inner(
-                                                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
+                                                                        #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream
                                                                     )
                                                                 ),
                                                             }
@@ -6693,7 +6689,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             );
                         let expected_read_many_token_stream =
                             if is_fields_without_primary_key_len_greater_than_one {
-                                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream);
+                                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream);
                                 quote::quote! {
                                     previous_read.into_iter().map(|#element_snake_case| #ident_read_upper_camel_case {
                                         #primary_key_field_ident: Some(#value_initialization_token_stream),
@@ -6701,7 +6697,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }).collect::<Vec<#ident_read_upper_camel_case>>()
                                 }
                             } else {
-                                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream);
+                                let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream);
                                 quote::quote! {
                                     vec![
                                         #ident_read_upper_camel_case {
@@ -6773,7 +6769,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                 #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                                                                     )
                                                                 )
                                                             }
@@ -6863,7 +6859,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                         #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream
+                                                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream
                                                                             )
                                                                         ),
                                                                     }
@@ -6911,7 +6907,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             quote::quote! {
                                 let previous_read = generate_ident_try_read_one_handle_primary_key(
                                     &url_cloned,
-                                    #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream,
+                                    #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
                                     #select_default_all_with_max_page_size_cloned_clone_token_stream,
                                     &current_table
                                 )
@@ -6999,7 +6995,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                 },
                             );
-                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream);
+                        let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream);
                         quote::quote! {{
                             #read_only_ids_to_two_dimensional_vec_read_inner_acc_token_stream
                             if read_only_ids_to_two_dimensional_vec_read_inner_acc.is_empty() {
@@ -7063,7 +7059,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                             logical_operator: postgresql_crud::LogicalOperator::Or,
                                                             #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                                 <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_clone_token_stream
+                                                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
                                                                 )
                                                             ),
                                                         }
@@ -7138,7 +7134,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             },
                                             generate_ident_try_read_one_handle_primary_key(
                                                 &url_cloned,
-                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_clone_token_stream,
+                                                #primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
                                                 select_default_all_with_max_page_size_cloned,
                                                 &current_table
                                             )
