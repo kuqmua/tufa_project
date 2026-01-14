@@ -322,6 +322,7 @@ aarch64_softfloat_neon = { level = "deny", priority = 0 }
 inline_always_mismatching_target_features = { level = "deny", priority = 0 } 
 improper_gpu_kernel_arg = { level = "deny", priority = 0 }
 missing_gpu_kernel_export_name = { level = "deny", priority = 0 }
+ambiguous_panic_imports = { level = "deny", priority = 0 }
 
 [workspace.lints.clippy]
 absolute_paths = { level = "allow", priority = 0 } # im against this lint
