@@ -537,6 +537,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let response_snake_case = naming::ResponseSnakeCase;
     let status_code_snake_case = naming::StatusCodeSnakeCase;
     let body_snake_case = naming::BodySnakeCase;
+    let executor_acquire_snake_case = naming::ExecutorAcquireSnakeCase;
     let executor_snake_case = naming::ExecutorSnakeCase;
     let rows_snake_case = naming::RowsSnakeCase;
     let begin_snake_case = naming::BeginSnakeCase;
@@ -2659,46 +2660,50 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
         }
     };
-    let generate_fetch_token_stream =
-        |value_handle_token_stream: &dyn quote::ToTokens,
-         try_next_error_initialization_token_stream: &dyn quote::ToTokens,
-         should_wrap_into_value: &ShouldWrapIntoValue| {
-            let content_token_stream = quote::quote! {
-                let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_snake_case.as_mut());
-                let mut #acc_snake_case = Vec::new();
-                while let Some(some_value0) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
-                    Ok(ok_value) => match ok_value {
-                        Some(ok_value1) => #value_handle_token_stream,
-                        None => None,
-                    },
-                    Err(#error_0_token_stream) => {
-                        #try_next_error_initialization_token_stream
-                    }
-                }
-                {
-                    #acc_snake_case.push(some_value0);
-                }
-                #acc_snake_case
-            };
-            match should_wrap_into_value {
-                ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
-                ShouldWrapIntoValue::False => content_token_stream,
-            }
-        };
-    let generate_fetch_one_token_stream =
-        |value_handle_token_stream: &dyn quote::ToTokens,
-         fetch_one_error_initialization_token_stream: &dyn quote::ToTokens| {
-            quote::quote! {
-                match #binded_query_snake_case.fetch_one(#executor_snake_case.as_mut()).await {
-                    Ok(ok_value1) => {
-                        #value_handle_token_stream
-                    },
-                    Err(#error_0_token_stream) => {
-                        #fetch_one_error_initialization_token_stream
-                    }
+    let generate_fetch_token_stream = |
+        executor_name_token_stream: &dyn quote::ToTokens,
+        value_handle_token_stream: &dyn quote::ToTokens,
+        try_next_error_initialization_token_stream: &dyn quote::ToTokens,
+        should_wrap_into_value: &ShouldWrapIntoValue
+    | {
+        let content_token_stream = quote::quote! {
+            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_name_token_stream.as_mut());
+            let mut #acc_snake_case = Vec::new();
+            while let Some(some_value0) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
+                Ok(ok_value) => match ok_value {
+                    Some(ok_value1) => #value_handle_token_stream,
+                    None => None,
+                },
+                Err(#error_0_token_stream) => {
+                    #try_next_error_initialization_token_stream
                 }
             }
+            {
+                #acc_snake_case.push(some_value0);
+            }
+            #acc_snake_case
         };
+        match should_wrap_into_value {
+            ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
+            ShouldWrapIntoValue::False => content_token_stream,
+        }
+    };
+    let generate_fetch_one_token_stream = |
+        executor_name_token_stream: &dyn quote::ToTokens,
+        value_handle_token_stream: &dyn quote::ToTokens,
+        fetch_one_error_initialization_token_stream: &dyn quote::ToTokens
+    | {
+        quote::quote! {
+            match #binded_query_snake_case.fetch_one(#executor_name_token_stream.as_mut()).await {
+                Ok(ok_value1) => {
+                    #value_handle_token_stream
+                },
+                Err(#error_0_token_stream) => {
+                    #fetch_one_error_initialization_token_stream
+                }
+            }
+        }
+    };
     let generate_sqlx_row_try_get_primary_key_token_stream =
         |sqlx_row_try_get_type_token_stream: &dyn quote::ToTokens,
          ok_token_stream: &dyn quote::ToTokens,
@@ -2727,7 +2732,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         column!(),
                     );
                 quote::quote! {
-                    let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_snake_case).await {
+                    let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_acquire_snake_case).await {
                         Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3088,7 +3093,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
                         }
                     };
-                    let #executor_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
+                    let #executor_acquire_snake_case = match sqlx::Acquire::acquire(&mut #pool_connection_snake_case).await {
                         Ok(ok_value) => ok_value,
                         Err(#error_0_token_stream) => {
                             #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
@@ -3320,6 +3325,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         |create_or_update_or_delete_many: &CreateOrUpdateOrDeleteMany| {
             let current_operation = Operation::from(create_or_update_or_delete_many);
             generate_fetch_token_stream(
+            &executor_snake_case,
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
                 &quote::quote! {Some(ok_value)},
@@ -3333,6 +3339,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         |create_or_update_or_delete_one: &CreateOrUpdateOrDeleteOne| {
             let current_operation = Operation::from(create_or_update_or_delete_one);
             wrap_into_value_token_stream(&generate_fetch_one_token_stream(
+                &executor_snake_case,
                 &generate_sqlx_row_try_get_primary_key_token_stream(
                     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
                     &quote::quote! {ok_value},
@@ -3535,6 +3542,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let current_operation =
                                 Operation::from(&CreateOrUpdateOrDeleteMany::Create);
                             generate_fetch_token_stream(
+                            &executor_snake_case,
                             &{
                                 let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
                                     let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
@@ -3662,6 +3670,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let current_operation =
                                 Operation::from(&CreateOrUpdateOrDeleteOne::Create);
                             wrap_into_value_token_stream(&generate_fetch_one_token_stream(
+                            &executor_snake_case,
                             &generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
                                 let content_token_stream = generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
                                 quote::quote! {{#content_token_stream}}
@@ -3864,6 +3873,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 let postgresql_logic_token_stream = {
                     let fetch_token_stream = generate_fetch_token_stream(
+                        &executor_acquire_snake_case,
                         &{
                             let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadMany);
                             quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream)}
@@ -4018,6 +4028,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 };
                 let postgresql_logic_token_stream = generate_fetch_one_token_stream(
+                    &executor_acquire_snake_case,
                     &generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadOne),
                     &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
                 );
@@ -4454,6 +4465,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         // &{
                         //     let current_operation = Operation::from(&CreateOrUpdateOrDeleteMany::Update);
                         //     generate_fetch_token_stream(
+                        //         &executor_snake_case,
                         //         &generate_sqlx_row_try_get_primary_key_token_stream(
                         //             &ident_read_only_ids_upper_camel_case,
                         //             &quote::quote! {Some(some_value)},
@@ -4467,6 +4479,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let current_operation =
                                 Operation::from(&CreateOrUpdateOrDeleteMany::Update);
                             generate_fetch_token_stream(
+                            &executor_snake_case,
                             &{
                                 let content_token_stream = generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(&{
                                     let content_token_stream = generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!());
@@ -4700,6 +4713,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let current_operation =
                                 Operation::from(&CreateOrUpdateOrDeleteOne::Update);
                             wrap_into_value_token_stream(&generate_fetch_one_token_stream(
+                            &executor_snake_case,
                             &generate_match_ident_read_only_ids_as_from_row_from_row_token_stream(
                                 &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!())
                             ),
