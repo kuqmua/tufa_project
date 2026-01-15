@@ -1723,7 +1723,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ok_value1,
                     &#parameters_snake_case.#payload_snake_case.#select_snake_case
                 ) {
-                    Ok(ok_value1) => ok_value1,
+                    Ok(ok_value_450feda1) => ok_value_450feda1,
                     Err(#error_0_token_stream) => {
                         #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                     }
@@ -1837,8 +1837,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         },
                     );
-                let value_initialization_token_stream =
-                    quote::quote! {#import_path::#value_upper_camel_case { value: ok_value1}};
                 let assignment_variant_primary_key_token_stream = {
                     let primary_key_field_ident_string_double_quotes_token_stream =
                         generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
@@ -1850,8 +1848,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &value,
                             #primary_key_field_ident_string_double_quotes_token_stream
                         ) {
-                            Ok(ok_value1) => {
-                                #primary_key_field_ident = Some(#value_initialization_token_stream);
+                            Ok(ok_value_a2002b89) => {
+                                #primary_key_field_ident = Some(#import_path::#value_upper_camel_case { value: ok_value_a2002b89});
                             },
                             Err(#error_0_token_stream) => {
                                 return Err(#error_0_token_stream);
@@ -1874,8 +1872,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &value,
                                 #field_ident_string_double_quotes_token_stream
                             ) {
-                                Ok(ok_value1) => {
-                                    #field_ident = Some(#value_initialization_token_stream);
+                                Ok(ok_value_7e737bd2) => {
+                                    #field_ident = Some(#import_path::#value_upper_camel_case { value: ok_value_7e737bd2});
                                 },
                                 Err(#error_0_token_stream) => {
                                     return Err(#error_0_token_stream);
@@ -3226,7 +3224,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
             }
         };
-        let status_code_token_stream = quote::quote! {
+        let error_0_response_status_token_stream = quote::quote! {
             let #error_0_token_stream = #response_snake_case.status();
         };
         let headers_token_stream = quote::quote! {
@@ -3300,7 +3298,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 #url_token_stream
                 #future_token_stream
                 #response_token_stream
-                #status_code_token_stream
+                #error_0_response_status_token_stream
                 #headers_token_stream
                 #response_text_token_stream
                 #expected_response_token_stream
