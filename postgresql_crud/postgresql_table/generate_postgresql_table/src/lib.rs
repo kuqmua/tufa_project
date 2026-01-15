@@ -3389,7 +3389,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &ShouldAddReturn::False,
         );
         quote::quote! {
-            pub async fn #operation_payload_example_snake_case() -> axum::response::Response {
+            pub fn #operation_payload_example_snake_case() -> axum::response::Response {
                 #wraped_into_axum_response_token_stream
             }
         }
@@ -5076,7 +5076,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(Self::#create_many_payload_example_snake_case))
+                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(async move||Self::#create_many_payload_example_snake_case()))
                     .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
@@ -5088,7 +5088,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(Self::#create_one_payload_example_snake_case))
+                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(async move||Self::#create_one_payload_example_snake_case()))
                     .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
@@ -5100,7 +5100,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(Self::#read_many_payload_example_snake_case))
+                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(async move||Self::#read_many_payload_example_snake_case()))
                     .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(
                         {
                             let table = table.to_string();
@@ -5112,7 +5112,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(Self::#read_one_payload_example_snake_case))
+                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(async move||Self::#read_one_payload_example_snake_case()))
                     .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(
                         {
                             let table = table.to_string();
@@ -5124,7 +5124,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(Self::#update_many_payload_example_snake_case))
+                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(async move||Self::#update_many_payload_example_snake_case()))
                     .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(
                         {
                             let table = table.to_string();
@@ -5136,7 +5136,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(Self::#update_one_payload_example_snake_case))
+                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(async move||Self::#update_one_payload_example_snake_case()))
                     .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(
                         {
                             let table = table.to_string();
@@ -5148,7 +5148,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(Self::#delete_many_payload_example_snake_case))
+                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(async move||Self::#delete_many_payload_example_snake_case()))
                     .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(
                         {
                             let table = table.to_string();
@@ -5160,7 +5160,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             }
                         }
                     ))
-                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(Self::#delete_one_payload_example_snake_case))
+                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(async move||Self::#delete_one_payload_example_snake_case()))
                     // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
                     .with_state(#app_state_snake_case)
                 )
