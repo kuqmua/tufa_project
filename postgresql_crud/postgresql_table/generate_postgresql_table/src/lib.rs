@@ -6559,7 +6559,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 _ => panic!("99ba9dc3-ca32-4462-b9b4-b1202265beee"),
                                             }
                                         }
-                                    ).collect::<Vec<#ident_read_upper_camel_case>>();
+                                    );
                                 }
                             } else {
                                 proc_macro2::TokenStream::new()
