@@ -959,19 +959,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let pub_async_fn_prepare_postgresql_table_token_stream = {
-            let prepare_postgresql_double_quotes_token_stream = {
-                let acc = {
-                    let mut acc = String::new();
-                    for _ in &fields {
-                        acc.push_str("{},");
-                    }
-                    let _: Option<char> = acc.pop();
-                    acc
-                };
+            let prepare_postgresql_double_quotes_token_stream =
                 generate_quotes::double_quotes_token_stream(&format!(
-                    "create table if not exists {{table}} ({acc})"
-                ))
-            };
+                    "create table if not exists {{table}} ({})",
+                    fields.iter().map(|_| "{}").collect::<Vec<&str>>().join(",")
+                ));
             let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream =
                     |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: bool| {
@@ -2577,26 +2569,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         GeneratePostgresqlTableAttribute::CommonAdditionalErrorVariants,
     );
     let common_route_syn_variants = {
-        let common_additional_error_variants_vec = common_additional_error_variants
-            .iter()
-            .collect::<Vec<&syn::Variant>>();
         let mut value = vec![
             check_body_size_syn_variant_wrapper.get_syn_variant(),
             postgresql_syn_variant_wrapper.get_syn_variant(),
             serde_json_syn_variant_wrapper.get_syn_variant(),
             header_content_type_application_json_not_found_syn_variant_wrapper.get_syn_variant(),
         ];
-        for element in common_additional_error_variants_vec {
+        for element in &common_additional_error_variants {
             value.push(element);
         }
-        value
-    };
-    let common_route_with_row_and_rollback_syn_variants = {
-        let mut value = Vec::new();
-        for element in &common_route_syn_variants {
-            value.push(*element);
-        }
-        value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
         value
     };
     let common_additional_logic_token_stream =
@@ -2968,11 +2949,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             for element in syn_variants {
                 type_variants_from_request_response_syn_variants.push((*element).clone());
             }
-            let operation_additional_error_variants = generate_additional_error_variants(
+            for element in generate_additional_error_variants(
                 &syn_derive_input,
                 operation.generate_postgresql_table_attribute_additional_error_variants(),
-            );
-            for element in operation_additional_error_variants {
+            ) {
                 type_variants_from_request_response_syn_variants.push(element.clone());
             }
             type_variants_from_request_response_syn_variants
@@ -2984,27 +2964,27 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
      -> proc_macro2::TokenStream {
         let ident_try_operation_error_named_upper_camel_case =
             generate_ident_try_operation_error_named_upper_camel_case(operation);
-        let variants = {
-            let mut value = Vec::new();
-            for element in syn_variants {
-                value.push(element.clone());
-            }
-            value.push({
-                let ident_operation_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
-                new_syn_variant_wrapper(
-                    &ident_operation_error_named_with_serialize_deserialize_upper_camel_case,
-                    None,
-                    vec![(
-                        macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
-                        &operation.operation_error_named_with_serialize_deserialize_snake_case(),
-                        macros_helpers::generate_simple_syn_punctuated_punctuated(&[&ident_operation_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
-                    )],
-                )
-                .get_syn_variant()
-                .clone()
-            });
-            value
-        };
+        let variants = syn_variants
+        .iter()
+        .cloned()
+        .chain(std::iter::once({
+            let ident_operation_error_named_with_serialize_deserialize_upper_camel_case =
+                generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
+            new_syn_variant_wrapper(
+                &ident_operation_error_named_with_serialize_deserialize_upper_camel_case,
+                None,
+                vec![(
+                    macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string,
+                    &operation.operation_error_named_with_serialize_deserialize_snake_case(),
+                    macros_helpers::generate_simple_syn_punctuated_punctuated(&[
+                        &ident_operation_error_named_with_serialize_deserialize_upper_camel_case.to_string(),
+                    ]),
+                )],
+            )
+            .get_syn_variant()
+            .clone()
+        }))
+        .collect::<Vec<syn::Variant>>();
         let variants_token_stream = variants
             .iter()
             .map(generate_error_occurence_variant_token_stream);
@@ -3215,7 +3195,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let operation_http_method_snake_case_token_stream = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&operation.http_method());
             let commit_header_addition_token_stream = quote::quote! {
                 .header(
-                    &"commit".to_string(),//todo remove it
+                    &"commit".to_owned(),
                     git_info::PROJECT_GIT_INFO.commit,
                 )
             };
@@ -3466,16 +3446,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -3613,15 +3596,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::CreateOne;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_with_row_and_rollback_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream =
@@ -3732,16 +3719,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::ReadMany;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(not_unique_field_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        not_unique_field_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -3946,16 +3936,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::ReadOne;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(not_unique_field_syn_variant_wrapper.get_syn_variant());
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        not_unique_field_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -4083,16 +4076,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::UpdateMany;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(&operation, {
@@ -4532,16 +4528,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::UpdateOne;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream =
@@ -4758,16 +4757,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::DeleteMany;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                    value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        query_part_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -4861,15 +4863,16 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants =
             generate_type_variants_from_request_response_syn_variants(
-                &{
-                    let mut value = Vec::new();
-                    for element in &common_route_syn_variants {
-                        value.push(*element);
-                    }
-                    value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                    value.push(try_bind_syn_variant_wrapper.get_syn_variant());
-                    value
-                },
+                &common_route_syn_variants
+                    .iter()
+                    .copied()
+                    .chain(std::iter::once(
+                        row_and_rollback_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .chain(std::iter::once(
+                        try_bind_syn_variant_wrapper.get_syn_variant(),
+                    ))
+                    .collect(),
                 &operation,
             );
         let parameters_token_stream = generate_parameters_pattern_token_stream(
@@ -5820,14 +5823,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #content_token_stream
                     }
                     let lengths = vec![1,2];
-                    for element in lengths {
+                    for length in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let table_test_read_many_by_non_existent_primary_keys_cloned = table_test_read_many_by_non_existent_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_non_existent_primary_keys(
-                                element,
+                                length,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
                                 &table_test_read_many_by_non_existent_primary_keys_cloned,
@@ -5974,14 +5977,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #content_token_stream
                     }
                     let lengths = vec![1,2];
-                    for element in lengths {
+                    for length in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_read_many_by_equal_to_created_primary_keys(
-                                element,
+                                length,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
                                 &table_test_read_many_by_equal_to_created_primary_keys_cloned,
@@ -6956,14 +6959,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #content_token_stream
                     }
                     let lengths = vec![1,2];
-                    for element in lengths {
+                    for length in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let table_test_read_many_by_equal_to_created_primary_keys_cloned = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_non_existent_primary_keys(
-                                element,
+                                length,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
                                 &table_test_read_many_by_equal_to_created_primary_keys_cloned,
@@ -7051,7 +7054,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #content_token_stream
                     }
                     let lengths = vec![1,2];
-                    for element in lengths {
+                    for length in lengths {
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         //todo is table name correct?
@@ -7059,7 +7062,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             generate_test_delete_many_by_primary_keys(
-                                element,
+                                length,
                                 &url_cloned,
                                 select_default_all_with_max_page_size_cloned,
                                 &table_test_read_many_by_equal_to_created_primary_keys_cloned,
