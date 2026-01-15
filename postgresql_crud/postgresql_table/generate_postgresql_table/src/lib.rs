@@ -2042,7 +2042,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         };
     let postgresql_crud_order_by_token_stream =
         quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
-    let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
     //todo
     // let ident_column_read_permission_token_stream = {
     //     let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
@@ -3830,10 +3829,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             {
                                 #prefix_to_additional_parameters_token_stream
                                 let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
-                                let #order_snake_case = match &#value_snake_case.#order_snake_case {
-                                    Some(some_value) => some_value.to_snake_case_stringified(),
-                                    None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
-                                };
+                                let #order_snake_case = #value_snake_case.#order_snake_case.as_ref().map_or_else(
+                                    || postgresql_crud::Order::default().to_snake_case_stringified(),
+                                    |some_value| some_value.to_snake_case_stringified()
+                                );
                                 #if_write_is_err_curly_braces_0_token_stream
                             };
                             {
@@ -4271,7 +4270,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     quote::quote! {
                         #parameters_logic_token_stream
                         let #update_for_query_vec_snake_case = #parameters_snake_case.#payload_snake_case.0.into_iter()
-                        .map(|#element_snake_case|#ident_update_for_query_upper_camel_case::#from_handle_snake_case(#element_snake_case))
+                        .map(#ident_update_for_query_upper_camel_case::#from_handle_snake_case)
                         .collect::<Vec<#ident_update_for_query_upper_camel_case>>();
                     }
                 };
@@ -4403,8 +4402,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 quote::quote! {
                                     for element_4b24f8f0 in &#update_for_query_vec_snake_case {
                                         if let Some(some_value) = &element_4b24f8f0.#field_ident {
-                                            if let Err(#error_0_token_stream) = #query_snake_case.try_bind(element_4b24f8f0.#primary_key_field_ident) {
-                                                let #error_0_token_stream = #error_0_token_stream.to_string();
+                                            if let Err(error_696908ba) = #query_snake_case.try_bind(element_4b24f8f0.#primary_key_field_ident) {
+                                                let #error_0_token_stream = error_696908ba.to_string();
                                                 #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                             }
                                             match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
