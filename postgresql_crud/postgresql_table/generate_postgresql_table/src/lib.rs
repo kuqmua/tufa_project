@@ -1981,7 +1981,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
                 quote::quote! {
                     let #primary_key_field_ident = match sqlx::Row::try_get::<#element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream, &str>(
-                        &#undescore_underscore_row,
+                        #undescore_underscore_row,
                         #field_ident_double_quotes_token_stream
                     ) {
                         Ok(ok_value) => ok_value,
@@ -2006,7 +2006,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             let #field_ident = sqlx::Row::try_get::<
                                 #element_syn_field_ty_as_postgresql_type_read_only_ids_token_stream,
                                 &str
-                            >(&#undescore_underscore_row, #field_ident_double_quotes_token_stream).ok();
+                            >(#undescore_underscore_row, #field_ident_double_quotes_token_stream).ok();
                         }
                     },
                 );
