@@ -1050,15 +1050,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let std_option_option_std_primitive_char_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&token_patterns::StdPrimitiveChar);
             quote::quote! {
                 fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> Result<#string_token_stream, #import_path ::#query_part_error_named_upper_camel_case> {
-                    let mut #acc_snake_case = #string_token_stream::default();
+                    let mut acc_37c883c3 = #string_token_stream::default();
                     for element_78d2ec39 in #select_snake_case.to_vec() {
-                        #acc_snake_case.push_str(&match element_78d2ec39 {
+                        acc_37c883c3.push_str(&match element_78d2ec39 {
                             #variants_token_stream
                         });
-                        #acc_snake_case.push(',');
+                        acc_37c883c3.push(',');
                     }
-                    let _: #std_option_option_std_primitive_char_token_stream = #acc_snake_case.pop();
-                    Ok(#acc_snake_case)
+                    let _: #std_option_option_std_primitive_char_token_stream = acc_37c883c3.pop();
+                    Ok(acc_37c883c3)
                 }
             }
         };
@@ -2660,50 +2660,48 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             };
         }
     };
-    let generate_fetch_token_stream = |
-        executor_name_token_stream: &dyn quote::ToTokens,
-        value_handle_token_stream: &dyn quote::ToTokens,
-        try_next_error_initialization_token_stream: &dyn quote::ToTokens,
-        should_wrap_into_value: &ShouldWrapIntoValue
-    | {
-        let content_token_stream = quote::quote! {
-            let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_name_token_stream.as_mut());
-            let mut #acc_snake_case = Vec::new();
-            while let Some(some_value0) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
-                Ok(ok_value) => match ok_value {
-                    Some(ok_value1) => #value_handle_token_stream,
-                    None => None,
-                },
-                Err(#error_0_token_stream) => {
-                    #try_next_error_initialization_token_stream
+    let generate_fetch_token_stream =
+        |executor_name_token_stream: &dyn quote::ToTokens,
+         value_handle_token_stream: &dyn quote::ToTokens,
+         try_next_error_initialization_token_stream: &dyn quote::ToTokens,
+         should_wrap_into_value: &ShouldWrapIntoValue| {
+            let content_token_stream = quote::quote! {
+                let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_name_token_stream.as_mut());
+                let mut #acc_snake_case = Vec::new();
+                while let Some(some_value0) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
+                    Ok(ok_value) => match ok_value {
+                        Some(ok_value1) => #value_handle_token_stream,
+                        None => None,
+                    },
+                    Err(#error_0_token_stream) => {
+                        #try_next_error_initialization_token_stream
+                    }
                 }
+                {
+                    #acc_snake_case.push(some_value0);
+                }
+                #acc_snake_case
+            };
+            match should_wrap_into_value {
+                ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
+                ShouldWrapIntoValue::False => content_token_stream,
             }
-            {
-                #acc_snake_case.push(some_value0);
-            }
-            #acc_snake_case
         };
-        match should_wrap_into_value {
-            ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
-            ShouldWrapIntoValue::False => content_token_stream,
-        }
-    };
-    let generate_fetch_one_token_stream = |
-        executor_name_token_stream: &dyn quote::ToTokens,
-        value_handle_token_stream: &dyn quote::ToTokens,
-        fetch_one_error_initialization_token_stream: &dyn quote::ToTokens
-    | {
-        quote::quote! {
-            match #binded_query_snake_case.fetch_one(#executor_name_token_stream.as_mut()).await {
-                Ok(ok_value1) => {
-                    #value_handle_token_stream
-                },
-                Err(#error_0_token_stream) => {
-                    #fetch_one_error_initialization_token_stream
+    let generate_fetch_one_token_stream =
+        |executor_name_token_stream: &dyn quote::ToTokens,
+         value_handle_token_stream: &dyn quote::ToTokens,
+         fetch_one_error_initialization_token_stream: &dyn quote::ToTokens| {
+            quote::quote! {
+                match #binded_query_snake_case.fetch_one(#executor_name_token_stream.as_mut()).await {
+                    Ok(ok_value1) => {
+                        #value_handle_token_stream
+                    },
+                    Err(#error_0_token_stream) => {
+                        #fetch_one_error_initialization_token_stream
+                    }
                 }
             }
-        }
-    };
+        };
     let generate_sqlx_row_try_get_primary_key_token_stream =
         |sqlx_row_try_get_type_token_stream: &dyn quote::ToTokens,
          ok_token_stream: &dyn quote::ToTokens,
@@ -3407,7 +3405,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_ids_query_part_snake_case(#field_ident_double_quotes_token_stream) {
                     Ok(ok_value) => {
-                        #acc_snake_case.push_str(&ok_value);
+                        acc_a35168d8.push_str(&ok_value);
                     },
                     Err(#error_0_token_stream) => {
                         #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
@@ -3417,10 +3415,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         });
         quote::quote! {
             {
-                let mut #acc_snake_case = #string_token_stream::new();
+                let mut acc_a35168d8 = #string_token_stream::new();
                 #(#select_only_ids_query_part_initialization_token_stream)*
-                let _: Option<char> = #acc_snake_case.pop();
-                #acc_snake_case
+                let _: Option<char> = acc_a35168d8.pop();
+                acc_a35168d8
             }
         }
     };
@@ -3488,7 +3486,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &proc_macro2::TokenStream::new(),
                 );
                 let query_string_token_stream = {
-                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "({ok_value}),"}, &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation));
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote! {
+                            acc_8a58994e,
+                            "({ok_value}),"
+                        },
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(
+                            &operation
+                        )
+                    );
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let select_only_ids_query_part_token_stream =
                         generate_select_only_ids_query_part_token_stream(&operation);
@@ -3497,7 +3503,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #column_names_double_quotes_token_stream,
                         &{
                             #increment_initialization_token_stream
-                            let mut #acc_snake_case = #string_token_stream::default();
+                            let mut acc_8a58994e = #string_token_stream::default();
                             for element_1651705d in &#parameters_snake_case.#payload_snake_case.0 {
                                 match element_1651705d.#create_query_part_snake_case(&mut #increment_snake_case) {
                                     Ok(ok_value) => {
@@ -3508,8 +3514,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     }
                                 }
                             }
-                            let _: Option<char> = #acc_snake_case.pop();
-                            #acc_snake_case
+                            let _: Option<char> = acc_8a58994e.pop();
+                            acc_8a58994e
                         },
                         &#select_only_ids_query_part_token_stream
                     )}
@@ -4147,15 +4153,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &quote::quote! {#value_snake_case: #std_vec_vec_ident_update_token_stream},
                     &ident_operation_payload_try_new_error_named_upper_camel_case,
                     &quote::quote! {
-                        let mut #acc_snake_case = Vec::new();
+                        let mut acc_6bf275fc = Vec::new();
                         for element_35facc3a in &#value_snake_case {
-                            if #acc_snake_case.contains(&&element_35facc3a.#primary_key_field_ident) {
+                            if acc_6bf275fc.contains(&&element_35facc3a.#primary_key_field_ident) {
                                 return Err(#ident_operation_payload_try_new_error_named_upper_camel_case::#not_unique_primary_key_upper_camel_case {
                                     #not_unique_primary_key_snake_case: element_35facc3a.#primary_key_field_ident,
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
-                            #acc_snake_case.push(&element_35facc3a.#primary_key_field_ident);
+                            acc_6bf275fc.push(&element_35facc3a.#primary_key_field_ident);
                         }
                         Ok(Self(#value_snake_case))
                     },
@@ -4303,14 +4309,14 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                             }
                                         }
                                         if #is_field_ident_update_exists_snake_case {
-                                            #acc_snake_case.push_str(&
+                                            acc_b86a253a.push_str(&
                                                 postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
                                                     #field_ident_double_quotes_token_stream,
                                                     &{
-                                                        let mut #acc_snake_case = #string_token_stream::default();
+                                                        let mut acc_8ad06c8c = #string_token_stream::default();
                                                         for element_defbc401 in &#update_for_query_vec_snake_case {
                                                             if let Some(some_value) = &element_defbc401.#field_ident {
-                                                                #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
+                                                                acc_8ad06c8c.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
                                                                     Self::#primary_key_snake_case(),
                                                                     &match element_defbc401.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
                                                                         Ok(ok_value) => ok_value,
@@ -4327,7 +4333,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                                 ));
                                                             }
                                                         }
-                                                        #acc_snake_case
+                                                        acc_8ad06c8c
                                                     }
                                                 )
                                             );
@@ -4336,38 +4342,47 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 }
                             },
                         );
-                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "{},", #match_update_query_part_primary_key_token_stream}, &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation));
+                    let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
+                        &quote::quote! {
+                            acc_a95eb175,
+                            "{},",
+                            #match_update_query_part_primary_key_token_stream
+                        },
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(
+                            &operation
+                        )
+                    );
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
                             let elements = {
-                                let mut #acc_snake_case = #string_token_stream::default();
+                                let mut acc_b86a253a = #string_token_stream::default();
                                 #fields_named_without_primary_key_update_assignment_token_stream
-                                let _: Option<char> = #acc_snake_case.pop();
-                                #acc_snake_case
+                                let _: Option<char> = acc_b86a253a.pop();
+                                acc_b86a253a
                             };
                             let primary_keys = {
-                                let mut #acc_snake_case = #string_token_stream::default();
+                                let mut acc_a95eb175 = #string_token_stream::default();
                                 for #element_snake_case in &#update_for_query_vec_snake_case {
                                     #if_write_is_err_token_stream
                                 }
-                                let _: Option<char> = #acc_snake_case.pop();
-                                #acc_snake_case
+                                let _: Option<char> = acc_a95eb175.pop();
+                                acc_a95eb175
                             };
                             //todo refactor\reuse
                             let return_columns = {
-                                let mut #acc_snake_case = String::new();
+                                let mut acc_fd44b0aa = String::new();
                                 for element_bcf0dde4 in &#update_for_query_vec_snake_case {
                                     match element_bcf0dde4.select_only_updated_ids_query_part(&mut #increment_snake_case) {
                                         Ok(ok_value) => {
-                                            #acc_snake_case.push_str(&ok_value);
+                                            acc_fd44b0aa.push_str(&ok_value);
                                         },
                                         Err(#error_0_token_stream) => {
                                             #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                         }
                                     }
                                 }
-                                #acc_snake_case
+                                acc_fd44b0aa
                             };
                             postgresql_crud::generate_update_many_query_string(
                                 #table_snake_case,
