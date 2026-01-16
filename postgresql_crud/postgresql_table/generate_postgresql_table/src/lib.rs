@@ -1974,7 +1974,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #undescore_underscore_row,
                         #field_ident_double_quotes_token_stream
                     ) {
-                        Ok(ok_value) => ok_value,
+                        Ok(value_283179dd) => value_283179dd,
                         Err(#error_0_token_stream) => {
                             return Err(#error_0_token_stream);
                         }
@@ -2704,7 +2704,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     #sqlx_row_try_get_type_token_stream,
                     #ref_std_primitive_str
                 >(&ok_value1, Self::#primary_key_snake_case()) {
-                    Ok(ok_value) => #ok_token_stream,
+                    Ok(value_69ecb6a9) => #ok_token_stream,
                     Err(#error_0_token_stream) => {
                         #err_token_stream
                     }
@@ -3319,7 +3319,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             &executor_snake_case,
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &primary_key_field_type_as_postgresql_type_read_upper_camel_case,
-                &quote::quote! {Some(ok_value)},
+                &quote::quote! {Some(value_69ecb6a9)},
                 &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -3333,7 +3333,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &executor_snake_case,
                 &generate_sqlx_row_try_get_primary_key_token_stream(
                     &quote::quote! {#primary_key_field_type_as_postgresql_type_read_upper_camel_case},
-                    &quote::quote! {ok_value},
+                    &quote::quote! {value_69ecb6a9},
                     &generate_match_postgres_transaction_rollback_await_token_stream(
                         &current_operation,
                         file!(),
@@ -3785,7 +3785,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}{order_snake_case} {by_snake_case} {{}} {{}}"
                         ));
-                    let prefix_to_additional_parameters_token_stream = quote::quote! {let #prefix_snake_case = if additional_parameters.is_empty() {""} else {" "};};
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     let order_by_column_match_token_stream =
                         generate_fields_named_with_comma_token_stream(
@@ -3808,44 +3807,43 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #additional_parameters_snake_case,
                             #additional_parameters_order_by_handle_token_stream,
                             #prefix_snake_case,
-                            &match &#value_snake_case.#column_snake_case {
+                            &match &#parameters_snake_case.#payload_snake_case.#order_by_snake_case.#column_snake_case {
                                 #order_by_column_match_token_stream
                             },
-                            #order_snake_case,
+                            #parameters_snake_case.#payload_snake_case.#order_by_snake_case.#order_snake_case.as_ref().map_or_else(
+                                || postgresql_crud::Order::default().to_snake_case_stringified(),
+                                #import_path::Order::to_snake_case_stringified
+                            )
                         },
                         &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation),
                     );
-                    let if_write_is_err_curly_braces_1_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(&quote::quote! {#additional_parameters_snake_case, "{prefix}{value}"}, &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation));
+                    let if_write_is_err_curly_braces_1_token_stream = macros_helpers::generate_if_write_is_err_curly_braces_token_stream(
+                        &quote::quote! {
+                            #additional_parameters_snake_case,
+                            "{prefix}{}",
+                            match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
+                                &#parameters_snake_case.#payload_snake_case.pagination,
+                                &mut #increment_snake_case,
+                                &"",
+                                bool::default()
+                            ) {
+                                Ok(ok_value) => ok_value,
+                                Err(#error_0_token_stream) => {
+                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                },
+                            }
+                        },
+                        &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(&operation)
+                    );
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
                         #table_snake_case,
                         &#select_query_part_parameters_payload_select_token_stream,
                         &{
                             #increment_initialization_token_stream
                             let mut #additional_parameters_snake_case = #additional_paramaters_initialization_token_stream;
-                            {
-                                #prefix_to_additional_parameters_token_stream
-                                let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
-                                let #order_snake_case = #value_snake_case.#order_snake_case.as_ref().map_or_else(
-                                    || postgresql_crud::Order::default().to_snake_case_stringified(),
-                                    #import_path::Order::to_snake_case_stringified
-                                );
-                                #if_write_is_err_curly_braces_0_token_stream
-                            };
-                            {
-                                #prefix_to_additional_parameters_token_stream
-                                let #value_snake_case = match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
-                                    &#parameters_snake_case.#payload_snake_case.pagination,
-                                    &mut #increment_snake_case,
-                                    &"",
-                                    bool::default()
-                                ) {
-                                    Ok(ok_value) => ok_value,
-                                    Err(#error_0_token_stream) => {
-                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    },
-                                };
-                                #if_write_is_err_curly_braces_1_token_stream
-                            };
+                            let #prefix_snake_case = if additional_parameters.is_empty() {""} else {" "};
+                            #if_write_is_err_curly_braces_0_token_stream
+                            #if_write_is_err_curly_braces_1_token_stream
                             #additional_parameters_snake_case
                         }
                     )}
@@ -4476,7 +4474,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         //         &executor_snake_case,
                         //         &generate_sqlx_row_try_get_primary_key_token_stream(
                         //             &ident_read_only_ids_upper_camel_case,
-                        //             &quote::quote! {Some(some_value)},
+                        //             &quote::quote! {Some(value_69ecb6a9)},
                         //             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
                         //         ),
                         //         &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
@@ -5663,10 +5661,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                 payload: #ident_delete_many_payload_upper_camel_case {
                                                     where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
                                                         #ident_where_many_upper_camel_case {
-                                                            #primary_key_field_ident:
-                                                                generate_some_postgresql_type_where_try_new_or_primary_keys(
-                                                                    &read_only_ids_from_try_create_many
-                                                                ),
+                                                            #primary_key_field_ident: Some(generate_postgresql_type_where_try_new_or_primary_keys(
+                                                                &read_only_ids_from_try_create_many
+                                                            )),
                                                             #std_option_option_ident_where_many_content_token_stream
                                                         }
                                                     ))
@@ -5845,7 +5842,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let current_table = table_test_read_many_by_non_existent_primary_keys.clone();
-                        let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
@@ -5926,7 +5922,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     payload: #ident_delete_many_payload_upper_camel_case {
                                         where_many: #std_option_option_ident_where_many_upper_camel_case(Some(
                                             #ident_where_many_upper_camel_case {
-                                                #primary_key_field_ident: generate_some_postgresql_type_where_try_new_or_primary_keys(&read_only_ids_from_try_create_many),
+                                                #primary_key_field_ident: Some(generate_postgresql_type_where_try_new_or_primary_keys(&read_only_ids_from_try_create_many)),
                                                 #std_option_option_ident_where_many_content_token_stream
                                             }
                                         )),
@@ -6950,7 +6946,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                        let ident_create_default_cloned = ident_create_default.clone();
                         #acc_snake_case.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
@@ -7135,23 +7130,21 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     ) -> #import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream> {
                         #generate_postgresql_type_where_try_new_primary_key_content_token_stream
                     }
-                    fn generate_some_postgresql_type_where_try_new_or_primary_keys(
+                    fn generate_postgresql_type_where_try_new_or_primary_keys(
                         vec_read_only_ids: &[#ident_read_only_ids_upper_camel_case]
-                    ) -> Option<#import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream>> {
-                        Some(
-                            generate_postgresql_type_where_try_new_primary_key(
-                                #import_path::LogicalOperator::Or,
-                                vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
-                                    logical_operator: #import_path::LogicalOperator::Or,
-                                    value: #primary_key_field_type_table_type_declaration_token_stream::new(
-                                        #primary_key_field_type_as_postgresql_type_token_stream into_inner(
-                                            <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
-                                                #element_snake_case.#primary_key_field_ident
-                                            ),
-                                        )
-                                    ),
-                                })).collect()
-                            )
+                    ) -> #import_path::PostgresqlTypeWhere<#primary_key_field_type_as_postgresql_type_where_token_stream> {
+                        generate_postgresql_type_where_try_new_primary_key(
+                            #import_path::LogicalOperator::Or,
+                            vec_read_only_ids.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(#import_path::PostgresqlTypeWhereEqual {
+                                logical_operator: #import_path::LogicalOperator::Or,
+                                value: #primary_key_field_type_table_type_declaration_token_stream::new(
+                                    #primary_key_field_type_as_postgresql_type_token_stream into_inner(
+                                        <#primary_key_field_type as #import_path::PostgresqlTypePrimaryKey>::read_only_ids_into_read(
+                                            #element_snake_case.#primary_key_field_ident
+                                        ),
+                                    )
+                                ),
+                            })).collect()
                         )
                     }
                     async fn generate_try_read_many_order_by_primary_key_with_big_pagination(
