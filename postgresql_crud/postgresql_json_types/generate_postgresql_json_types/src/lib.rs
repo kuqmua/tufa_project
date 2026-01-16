@@ -1035,16 +1035,6 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let impl_std_convert_from_ident_create_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_create_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
-            let impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream = {
-                let content_token_stream = generate_into_inner_content_token_stream(&quote::quote! {self.0});
-                quote::quote! {
-                    impl Into<#ident_read_inner_upper_camel_case> for #ident_origin_upper_camel_case {
-                        fn into(self) -> #ident_read_inner_upper_camel_case {
-                            #content_token_stream
-                        }
-                    }
-                }
-            };
             let impl_std_convert_from_ident_update_for_ident_origin_token_stream = macros_helpers::generate_impl_std_convert_from_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {#value_snake_case.0});
             //todo
             let maybe_impl_schemars_json_schema_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
@@ -1191,7 +1181,6 @@ pub fn generate_postgresql_json_types(
                 #ident_origin_token_stream
                 #impl_ident_origin_token_stream
                 #impl_std_convert_from_ident_create_for_ident_origin_token_stream
-                #impl_std_convert_into_ident_read_inner_for_ident_origin_token_stream
                 #impl_std_convert_from_ident_update_for_ident_origin_token_stream
                 #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
                 #maybe_impl_is_string_empty_for_ident_origin_token_stream
@@ -1929,8 +1918,39 @@ pub fn generate_postgresql_json_types(
                     not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
                 },
             };
+            let impl_std_convert_from_ident_origin_for_ident_read_inner_token_stream = {
+                use postgresql_crud_macros_common::NotNullOrNullable;
+                let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
+                let nullable_token_stream = quote::quote!{
+                    match #value_dot_zero_token_stream {
+                        Some(some_value) => Some(some_value.into()),
+                        None => None
+                    }
+                };
+                let into_inner_content_token_stream = match &postgresql_json_type_pattern {
+                    PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                        NotNullOrNullable::NotNull => value_dot_zero_token_stream,
+                        NotNullOrNullable::Nullable => nullable_token_stream,
+                    },
+                    PostgresqlJsonTypePattern::ArrayDimension1 {..} |
+                    PostgresqlJsonTypePattern::ArrayDimension2 {..} |
+                    PostgresqlJsonTypePattern::ArrayDimension3 {..} |
+                    PostgresqlJsonTypePattern::ArrayDimension4 {..} => match &not_null_or_nullable {
+                        NotNullOrNullable::NotNull => quote::quote!{#value_dot_zero_token_stream.into_iter().map(Into::into).collect()},
+                        NotNullOrNullable::Nullable => nullable_token_stream
+                    },
+                };
+                quote::quote! {
+                    impl From<#ident_origin_upper_camel_case> for #ident_read_inner_upper_camel_case {
+                        fn from(#value_snake_case: #ident_origin_upper_camel_case) -> Self {
+                            #into_inner_content_token_stream
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 pub type #ident_read_inner_upper_camel_case = #type_token_stream;
+                #impl_std_convert_from_ident_origin_for_ident_read_inner_token_stream
             }
         };
         let ident_update_token_stream = {
