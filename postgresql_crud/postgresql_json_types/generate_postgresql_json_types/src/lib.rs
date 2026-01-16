@@ -981,20 +981,15 @@ pub fn generate_postgresql_json_types(
                     }
                 );
             let ident_origin_impl_new_self_content_token_stream = {
-                let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                    quote::quote! {match #value_snake_case {
-                        Some(some_value) => Some(#type_token_stream::#new_snake_case(some_value)),
-                        None => None
-                    }}
-                };
+                let generate_value_map_type_new_token_stream = |type_token_stream: &dyn quote::ToTokens| quote::quote! {#value_snake_case.map(#type_token_stream::#new_snake_case)};
                 let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(|#element_snake_case|#type_token_stream::#new_snake_case(#element_snake_case)).collect()},
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_map_type_new_token_stream(&type_token_stream),
                 };
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_map_type_new_token_stream(&ident_standart_not_null_origin_upper_camel_case),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
                         let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
