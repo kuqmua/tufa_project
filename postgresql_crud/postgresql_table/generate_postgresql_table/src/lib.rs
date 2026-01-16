@@ -7045,7 +7045,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             quote::quote! {
                 #acc_snake_case.push({
                     let table_delete_one_cloned = table_delete_one.clone();
-                    let ident_create_default_cloned = ident_create_default.clone();
                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                     futures::FutureExt::boxed(async move {
                         if let Err(#error_snake_case) = generate_try_delete_one_handle(
