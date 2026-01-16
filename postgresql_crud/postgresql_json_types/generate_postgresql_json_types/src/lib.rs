@@ -744,6 +744,27 @@ pub fn generate_postgresql_json_types(
         let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
+        let maybe_derive_copy = match &postgresql_json_type_pattern {
+            PostgresqlJsonTypePattern::Standart => match &postgresql_json_type {
+                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber |
+                PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveCopy::True,
+                PostgresqlJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveCopy::False,
+            },
+            PostgresqlJsonTypePattern::ArrayDimension1 {..} |
+            PostgresqlJsonTypePattern::ArrayDimension2 {..} |
+            PostgresqlJsonTypePattern::ArrayDimension3 {..} |
+            PostgresqlJsonTypePattern::ArrayDimension4 {..} => macros_helpers::DeriveCopy::False,
+        };
         let ident_origin_token_stream = {
             let generate_current_ident_origin_non_wrapping = |
                 current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
@@ -838,29 +859,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
-                .derive_copy_if(
-                    match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => match &postgresql_json_type {
-                            PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
-                            PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveCopy::True,
-                            PostgresqlJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveCopy::False,
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension1 {..} |
-                        PostgresqlJsonTypePattern::ArrayDimension2 {..} |
-                        PostgresqlJsonTypePattern::ArrayDimension3 {..} |
-                        PostgresqlJsonTypePattern::ArrayDimension4 {..} => macros_helpers::DeriveCopy::False,
-                    }
-                )
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord()
                 .derive_serde_serialize()
@@ -1161,6 +1160,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord()//maybe add it to the trait?
                 .derive_serde_serialize()
@@ -1193,6 +1193,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
@@ -1705,6 +1706,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_partial_ord()
                 .derive_serde_serialize()
@@ -1915,6 +1917,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
