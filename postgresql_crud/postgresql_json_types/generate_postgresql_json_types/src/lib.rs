@@ -838,6 +838,29 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(
+                    match &postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => match &postgresql_json_type {
+                            PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber |
+                            PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
+                            PostgresqlJsonType::UuidUuidAsJsonbString => macros_helpers::DeriveCopy::True,
+                            PostgresqlJsonType::StdStringStringAsJsonbString => macros_helpers::DeriveCopy::False,
+                        },
+                        PostgresqlJsonTypePattern::ArrayDimension1 {..} |
+                        PostgresqlJsonTypePattern::ArrayDimension2 {..} |
+                        PostgresqlJsonTypePattern::ArrayDimension3 {..} |
+                        PostgresqlJsonTypePattern::ArrayDimension4 {..} => macros_helpers::DeriveCopy::False,
+                    }
+                )
                 .derive_partial_eq()
                 .derive_partial_ord()
                 .derive_serde_serialize()
@@ -1227,6 +1250,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy()
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .derive_serde_deserialize()
