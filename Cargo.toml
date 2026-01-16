@@ -1125,4 +1125,3 @@ decimal_bitwise_operands = { level = "deny", priority = 0 }
 manual_ilog2 = { level = "deny", priority = 0 }
 ptr_offset_by_literal = { level = "deny", priority = 0 }
 needless_type_cast = { level = "deny", priority = 0 }
-manual_take = { level = "deny", priority = 0 }
