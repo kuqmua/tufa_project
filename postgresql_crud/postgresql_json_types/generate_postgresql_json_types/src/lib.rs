@@ -1219,6 +1219,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .build_struct(
@@ -1949,6 +1950,7 @@ pub fn generate_postgresql_json_types(
                 .make_pub()
                 .derive_debug()
                 .derive_clone()
+                .derive_copy_if(maybe_derive_copy)
                 .derive_partial_eq()
                 .derive_serde_serialize()
                 .build_struct(
@@ -3068,12 +3070,27 @@ pub fn generate_postgresql_json_types(
                                 ::LengthGreaterThan(
                                     where_filters::PostgresqlJsonTypeWhereLengthGreaterThan {
                                         logical_operator: #import_path::LogicalOperator::Or,
-                                        #value_snake_case: postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                            i32::try_from(
+                                        #value_snake_case: if let Ok(value_762dae1f) = postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
+                                            if let Ok(value_9dca0200) = i32::try_from(
                                                 //todo temp code. make it better checking all cases
-                                                #content_token_stream.len().checked_sub(1).expect("70751afa-3f12-4163-81f8-a28eb9836c78")
-                                            ).expect("56aee101-8823-4a80-bb06-c77ce1955151")
-                                        ).expect("aa5ac3cd-ad8a-4e90-af21-ad583792bc36"),
+                                                match #content_token_stream.len().checked_sub(1) {
+                                                    Some(value_92860143) => value_92860143,
+                                                    None => {
+                                                        return None;
+                                                    }
+                                                }
+                                            ) {
+                                                value_9dca0200
+                                            }
+                                            else {
+                                                return None;
+                                            }
+                                        ) {
+                                            value_762dae1f
+                                        }
+                                        else {
+                                            return None;
+                                        }
                                     }
                                 )
                             }
