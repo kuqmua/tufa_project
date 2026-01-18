@@ -53,9 +53,9 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
             );
         }
         {
-            let mut acc = Vec::new();
+            let mut acc_72940a4c = Vec::new();
             for element in &value {
-                if acc.contains(&element) {
+                if acc_72940a4c.contains(&element) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                             value: element.clone(),
@@ -63,7 +63,7 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
                         },
                     );
                 }
-                acc.push(element);
+                acc_72940a4c.push(element);
             }
         }
         Ok(Self(value))
@@ -82,12 +82,12 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
         _: &dyn std::fmt::Display,
         _is_need_to_add_logical_operator: bool,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        let mut acc = String::default();
+        let mut acc_ecd78d3a = String::default();
         for _ in self.to_vec() {
             match postgresql_crud_common::increment_checked_add_one_returning_increment(increment) {
                 Ok(value) => {
                     use std::fmt::Write as _;
-                    if write!(acc, "${value},").is_err() {
+                    if write!(acc_ecd78d3a, "${value},").is_err() {
                         return Err(
                             postgresql_crud_common::QueryPartErrorNamed::WriteIntoBuffer {
                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -100,8 +100,8 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
                 }
             }
         }
-        let _: Option<char> = acc.pop();
-        Ok(acc)
+        let _: Option<char> = acc_ecd78d3a.pop();
+        Ok(acc_ecd78d3a)
     }
     pub fn query_bind_one_by_one<'query_lifetime>(
         self,
@@ -685,9 +685,9 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
             );
         }
         {
-            let mut acc = Vec::new();
+            let mut acc_6be6ccee = Vec::new();
             for element in &value {
-                if acc.contains(&element) {
+                if acc_6be6ccee.contains(&element) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                             value: element.clone(),
@@ -695,7 +695,7 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
                         },
                     );
                 }
-                acc.push(element);
+                acc_6be6ccee.push(element);
             }
         }
         Ok(Self(value))
@@ -848,7 +848,7 @@ impl<
         postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType,
         variant: &Variant,
     ) -> Result<String, postgresql_crud_common::QueryPartErrorNamed> {
-        let mut acc = String::new();
+        let mut acc_24eb25aa = String::new();
         let current_len = match &variant {
             Variant::Normal => self.0.len(),
             Variant::MinusOne => self.0.len().saturating_sub(1),
@@ -858,7 +858,7 @@ impl<
                 Ok(value) => {
                     use std::fmt::Write as _;
                     if write!(
-                        acc,
+                        acc_24eb25aa,
                         "{}",
                         &match &postgresql_type_or_postgresql_json_type {
                             PostgresqlTypeOrPostgresqlJsonType::PostgresqlType =>
@@ -882,7 +882,7 @@ impl<
                 }
             }
         }
-        Ok(acc)
+        Ok(acc_24eb25aa)
     }
     pub fn postgresql_type_query_part(
         &self,

@@ -2085,13 +2085,7 @@ pub fn generate_postgresql_json_object_type(
                                     current_vec_syn_field_len > 1
                                 );
                                 let left_token_stream = maybe_wrap_into_braces_handle_token_stream(&{
-                                    let nones_token_stream = {
-                                        let mut acc = Vec::new();
-                                        for _ in 0..current_vec_syn_field_len {
-                                            acc.push(quote::quote! {None});
-                                        }
-                                        acc
-                                    };
+                                    let nones_token_stream = std::iter::repeat_with(||quote::quote!{None}).take(current_vec_syn_field_len);
                                     quote::quote! {#(#nones_token_stream),*}
                                 });
                                 let right_token_stream = maybe_wrap_into_braces_handle_token_stream(&fields_reference_token_stream);
@@ -4907,24 +4901,18 @@ pub fn generate_postgresql_json_object_type(
                                                     False
                                                 }
                                                 let generate_parameters_token_stream = |should_add_dot_clone: ShouldAddDotClone|{
-                                                    let mut acc = Vec::new();
-                                                    for element_value in &vec_syn_field {
+                                                    vec_syn_field.iter().map(|element_value| {
                                                         let current_field_ident = &element_value.field_ident;
-                                                        acc.push(if field_ident == current_field_ident {
+                                                        if field_ident == current_field_ident {
                                                             let maybe_dot_clone_token_stream = match should_add_dot_clone.clone() {
-                                                                ShouldAddDotClone::True => quote::quote!{.clone()},
-                                                                ShouldAddDotClone::False => proc_macro2::TokenStream::new()
+                                                                ShouldAddDotClone::True => quote::quote! { .clone() },
+                                                                ShouldAddDotClone::False => proc_macro2::TokenStream::new(),
                                                             };
-                                                            quote::quote! {
-                                                                #element_snake_case #maybe_dot_clone_token_stream
-                                                            }
+                                                            quote::quote! {#element_snake_case #maybe_dot_clone_token_stream}
                                                         } else {
-                                                            quote::quote! {
-                                                                #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                            }
-                                                        });
-                                                    }
-                                                    acc
+                                                            quote::quote! {#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
+                                                        }
+                                                    }).collect::<Vec<proc_macro2::TokenStream>>()
                                                 };
                                                 (
                                                     generate_parameters_token_stream(ShouldAddDotClone::True),
@@ -4933,7 +4921,7 @@ pub fn generate_postgresql_json_object_type(
                                             };
                                             quote::quote! {
                                                 if let Some(vec_create) = #field_type_type_as_postgresql_json_type_test_cases_token_stream::#option_vec_create_snake_case() {
-                                                    let mut inner_acc = Vec::new();
+                                                    let mut acc_6a886d56 = Vec::new();
                                                     let option_additional = {
                                                         let mut option_additional = None;
                                                         for #element_snake_case in &vec_create {
@@ -4954,12 +4942,12 @@ pub fn generate_postgresql_json_object_type(
                                                     };
                                                     let has_len_greater_than_one = vec_create.len() > 1;
                                                     for #element_snake_case in vec_create {
-                                                        inner_acc.push(#ident_with_id_standart_not_null_create_upper_camel_case::new(
+                                                        acc_6a886d56.push(#ident_with_id_standart_not_null_create_upper_camel_case::new(
                                                             #(#parameters_token_stream),*
                                                         ));
                                                     }
                                                     {
-                                                        let current_value = #ident_create_upper_camel_case::new(inner_acc);
+                                                        let current_value = #ident_create_upper_camel_case::new(acc_6a886d56);
                                                         if !acc_ccd79a32.contains(&current_value) {
                                                             acc_ccd79a32.push(current_value);
                                                         }

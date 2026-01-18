@@ -980,11 +980,20 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             #field_type_postgresql_type_token_stream #create_table_column_query_part_snake_case(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                         }
                     };
-                let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(primary_key_field_type, &primary_key_field.field_ident, true)];
-                for element in &fields_without_primary_key {
-                    acc.push(generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&element.field_type, &element.field_ident, false));
-                }
-                acc
+                std::iter::once(
+                    generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(
+                        primary_key_field_type,
+                        &primary_key_field.field_ident,
+                        true,
+                    ),
+                )
+                .chain(fields_without_primary_key.iter().map(|element| {
+                    generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(
+                        &element.field_type,
+                        &element.field_ident,
+                        false,
+                    )
+                })).collect::<Vec<proc_macro2::TokenStream>>()
             };
             quote::quote! {
                 pub async fn #prepare_postgresql_table_snake_case(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>, table: &str) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {

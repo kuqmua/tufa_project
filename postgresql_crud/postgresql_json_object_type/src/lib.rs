@@ -19,15 +19,15 @@ pub enum UniqueVecTryNewErrorNamed<T> {
 pub struct UniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> UniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
-        let mut acc = Vec::new();
+        let mut acc_4855bea7 = Vec::new();
         for element in &value {
-            if acc.contains(&element) {
+            if acc_4855bea7.contains(&element) {
                 return Err(UniqueVecTryNewErrorNamed::NotUnique {
                     value: element.clone(),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            acc.push(element);
+            acc_4855bea7.push(element);
         }
         Ok(Self(value))
     }

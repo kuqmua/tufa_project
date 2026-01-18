@@ -2162,21 +2162,29 @@ pub fn generate_postgresql_json_types(
                             NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
                         }
                     };
-                    let maybe_dimensions_start_end_initialization = {
-                        let mut acc = Vec::new();
-                        if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                            for current_element in 1..=array_dimension.to_usize() {
-                                let dimension_number_start_token_stream = generate_dimension_number_start_stringified(current_element).parse::<proc_macro2::TokenStream>().expect("77ec13b9-710a-460f-9239-ac9c3680244d");
-                                let dimension_number_end_token_stream = generate_dimension_number_end_stringified(current_element).parse::<proc_macro2::TokenStream>().expect("24acbb5e-c0fe-4257-b299-8746887ce198");
-                                let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(current_element)).parse::<proc_macro2::TokenStream>().expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");
-                                acc.push(quote::quote! {
-                                    let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
-                                    let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
-                                });
+                    let maybe_dimensions_start_end_initialization = ArrayDimension::try_from(postgresql_json_type_pattern).ok().into_iter().flat_map(|array_dimension| {
+                        (1..=array_dimension.to_usize()).map(|current_element| {
+                            let dimension_number_start_token_stream =
+                                generate_dimension_number_start_stringified(current_element)
+                                    .parse::<proc_macro2::TokenStream>()
+                                    .expect("77ec13b9-710a-460f-9239-ac9c3680244d");
+                            let dimension_number_end_token_stream =
+                                generate_dimension_number_end_stringified(current_element)
+                                    .parse::<proc_macro2::TokenStream>()
+                                    .expect("24acbb5e-c0fe-4257-b299-8746887ce198");
+                            let dimension_number_pagination_token_stream =
+                                format!(
+                                    "{}_pagination",
+                                    generate_dimension_number_stringified(current_element)
+                                )
+                                .parse::<proc_macro2::TokenStream>()
+                                .expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");
+                            quote::quote! {
+                                let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
+                                let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
                             }
-                        }
-                        acc
-                    };
+                        })
+                    });
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
                     quote::quote! {
                         #(#maybe_dimensions_start_end_initialization)*

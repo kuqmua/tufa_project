@@ -2229,23 +2229,17 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
         quote::quote! {#(#field_enum_variants_token_stream),*}
     };
     let visit_u64_value_enum_variants_token_stream = {
-        let visit_u64_value_enum_variants_token_stream = {
-            let mut acc = Vec::new();
-            for index in 0..len {
-                let index_u64_token_stream = {
-                    let value = format!("{index}u64");
-                    value
-                        .parse::<proc_macro2::TokenStream>()
-                        .expect("828ff7b4-5b7c-4109-8739-c6aa240f0f66")
-                };
-                let field_index_token_stream =
-                    generate_underscore_underscore_field_index_token_stream(index);
-                acc.push(quote::quote! {
-                    #index_u64_token_stream => Ok(__Field::#field_index_token_stream)
-                });
-            }
-            acc
-        };
+        let visit_u64_value_enum_variants_token_stream = (0..len).map(|index| {
+            let index_u64_token_stream = {
+                let value = format!("{index}u64");
+                value
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("828ff7b4-5b7c-4109-8739-c6aa240f0f66")
+            };
+            let field_index_token_stream =
+                generate_underscore_underscore_field_index_token_stream(index);
+            quote::quote! {#index_u64_token_stream => Ok(__Field::#field_index_token_stream)}
+        });
         quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
     };
     let visit_str_value_enum_variants_token_stream = {
@@ -2295,15 +2289,8 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     };
     let match_try_new_in_deserialize_token_stream =
         generate_match_try_new_in_deserialize_token_stream(&ident, &{
-            let fields_token_stream = {
-                let mut acc = Vec::new();
-                for element in 0..len {
-                    acc.push(
-                        generate_underscore_underscore_field_index_handle_token_stream(element),
-                    );
-                }
-                acc
-            };
+            let fields_token_stream =
+                (0..len).map(generate_underscore_underscore_field_index_handle_token_stream);
             quote::quote! {#(#fields_token_stream),*}
         });
     let visit_map_fields_initialization_token_stream = {

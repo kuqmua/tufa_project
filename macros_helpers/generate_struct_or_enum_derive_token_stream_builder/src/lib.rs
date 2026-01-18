@@ -144,7 +144,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
         let trait_type = &element.trait_type;
         quote::quote! {
             if self.#derive_trait_name_snake_case {
-                acc.push(quote::quote!{#trait_type});
+                acc_2a71375c.push(quote::quote!{#trait_type});
             }
         }
     });
@@ -178,9 +178,9 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
             ) -> proc_macro2::TokenStream {
                 let maybe_pub_token_stream = self.#make_pub_snake_case_token_stream.then(|| quote::quote!{pub});
                 let derive_token_stream = {
-                    let mut acc = Vec::new();
+                    let mut acc_2a71375c = Vec::new();
                     #(#if_self_derive_acc_push_vec_token_stream)*
-                    acc
+                    acc_2a71375c
                 };
                 let struct_or_enum_token_stream = match struct_or_enum {
                     #struct_or_enum_upper_camel_case::Struct => quote::quote!{struct},

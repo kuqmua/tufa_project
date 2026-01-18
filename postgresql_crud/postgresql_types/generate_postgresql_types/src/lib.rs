@@ -4858,23 +4858,20 @@ pub fn generate_postgresql_types(
                                 let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
                                 format!("{{column}}{acc}")
                             });
-                            let arguments_token_stream = {
-                                let mut acc = Vec::new();
-                                for current_element in 1..=array_dimensions_number {
-                                    let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
-                                    acc.push(quote::quote! {
-                                        #value_snake_case.#dimension_number_pagination_token_stream.start(),
-                                        #value_snake_case.#dimension_number_pagination_token_stream.end(),
-                                    });
+                            let arguments_token_stream = (1..=array_dimensions_number)
+                            .map(|current_element| {
+                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination")
+                                .parse::<proc_macro2::TokenStream>()
+                                .expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
+                                quote::quote! {
+                                    #value_snake_case.#dimension_number_pagination_token_stream.start(),
+                                    #value_snake_case.#dimension_number_pagination_token_stream.end(),
                                 }
-                                acc
-                            };
-                            quote::quote! {
-                                format!(
-                                    #format_handle_token_stream,
-                                    #(#arguments_token_stream)*
-                                )
-                            }
+                            });
+                            quote::quote! {format!(
+                                #format_handle_token_stream,
+                                #(#arguments_token_stream)*
+                            )}
                         }
                     };
                     quote::quote! {Ok(#content_token_stream)}
