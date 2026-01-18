@@ -5783,15 +5783,12 @@ pub fn generate_postgresql_types(
                                         option_additional
                                     };
                                     let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
-                                    acc_68eba82f.push({
-                                        let mut current_acc = Vec::new();
-                                        for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
-                                            for element1 in element0 {
-                                                current_acc.push(element1);
-                                            }
-                                        }
-                                        vec![current_acc]
-                                    });
+                                    acc_68eba82f.push(vec![
+                                        read_only_ids_to_two_dimensional_vec_read_inner
+                                        .into_iter()
+                                        .flat_map(|element_78f3b0ee| element_78f3b0ee.into_iter())
+                                        .collect()
+                                    ]);
                                     if let Some(some_value) = option_additional {
                                         if has_len_greater_than_one {
                                             acc_68eba82f.push(some_value.0);
@@ -5850,17 +5847,13 @@ pub fn generate_postgresql_types(
                                     }
                                     has_len_greater_than_one
                                 };
-                                acc_5f7f59ac.push(vec![Some({
-                                    let mut current_acc = Vec::new();
-                                    for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
-                                        for element1 in element0 {
-                                            for element2 in element1 {
-                                                current_acc.push(element2);
-                                            }
-                                        }
-                                    }
-                                    current_acc
-                                })]);
+                                acc_5f7f59ac.push(vec![Some(
+                                    read_only_ids_to_two_dimensional_vec_read_inner
+                                    .into_iter()
+                                    .flatten()
+                                    .flatten()
+                                    .collect()
+                                )]);
                                 acc_5f7f59ac.push(vec![None]);
                                 if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {

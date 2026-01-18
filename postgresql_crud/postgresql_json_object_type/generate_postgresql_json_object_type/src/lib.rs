@@ -6539,26 +6539,18 @@ pub fn generate_postgresql_json_object_type(
                                                     let whole = #import_path::SingleOrMultiple::Single(
                                                         #ident_where_upper_camel_case::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::try_new(
                                                             and,
-                                                            {
-                                                                let mut current_acc = vec![];
-                                                                for element in some_value.into_vec() {
-                                                                    match element {
-                                                                        #import_path::SingleOrMultiple::Single(single) => {
-                                                                            if !current_acc.contains(&single) {
-                                                                                current_acc.push(single);
-                                                                            }
-                                                                        },
-                                                                        #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                                            for current_element in multiple.into_vec() {
-                                                                                if !current_acc.contains(&current_element) {
-                                                                                    current_acc.push(current_element);
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
+                                                            some_value.into_vec().into_iter().flat_map(|element| match element {
+                                                                #import_path::SingleOrMultiple::Single(single) => {
+                                                                    std::iter::once(single).collect()
                                                                 }
-                                                                current_acc
-                                                            }
+                                                                #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
+                                                            })
+                                                            .fold(Vec::new(), |mut acc_be2a6606, element| {
+                                                                if !acc_be2a6606.contains(&element) {
+                                                                    acc_be2a6606.push(element);
+                                                                }
+                                                                acc_be2a6606
+                                                            })
                                                         ).expect("e3e5b4ab-fca8-4443-bbad-26d92d0a4667"))
                                                     );
                                                     if !acc_a94bd7fb.contains(&whole) {
@@ -6638,26 +6630,20 @@ pub fn generate_postgresql_json_object_type(
                                                             }
                                                         }
                                                     }
-                                                    match #import_path::NotEmptyUniqueEnumVec::try_new({
-                                                        let mut current_field_whole_acc = vec![];
-                                                        for element in some_value.into_vec() {
-                                                            match element {
-                                                                #import_path::SingleOrMultiple::Single(single) => {
-                                                                    if !current_field_whole_acc.contains(&single) {
-                                                                        current_field_whole_acc.push(single);
-                                                                    }
-                                                                },
-                                                                #import_path::SingleOrMultiple::Multiple(multiple) => {
-                                                                    for current_element in multiple.into_vec() {
-                                                                        if !current_field_whole_acc.contains(&current_element) {
-                                                                            current_field_whole_acc.push(current_element);
-                                                                        }
-                                                                    }
-                                                                }
+                                                    match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                                        some_value.into_vec().into_iter().flat_map(|element| match element {
+                                                            #import_path::SingleOrMultiple::Single(single) => {
+                                                                std::iter::once(single).collect()
                                                             }
-                                                        }
-                                                        current_field_whole_acc
-                                                    }) {
+                                                            #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
+                                                        })
+                                                        .fold(Vec::new(), |mut acc_01265629, element| {
+                                                            if !acc_01265629.contains(&element) {
+                                                                acc_01265629.push(element);
+                                                            }
+                                                            acc_01265629
+                                                        })
+                                                    ) {
                                                         Ok(ok_value) => {
                                                             let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
                                                                 #import_path::PostgresqlTypeWhere::new(
