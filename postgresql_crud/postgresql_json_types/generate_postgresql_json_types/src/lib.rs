@@ -2596,9 +2596,9 @@ pub fn generate_postgresql_json_types(
                     //todo check - maybe need to add something here
                     let maybe_acc_push_long_vec_token_stream = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {
-                            if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
+                            if let Some(value_a25f1343) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
                                 let mut acc_27624e5e = Vec::new();
-                                for #element_snake_case in some_value {
+                                for #element_snake_case in value_a25f1343 {
                                     acc_27624e5e.push(#element_snake_case.0.into());
                                 }
                                 if !acc_27624e5e.is_empty() {
@@ -2610,8 +2610,8 @@ pub fn generate_postgresql_json_types(
                     };
                     quote::quote! {Some({
                         let mut acc_50e99088 = Vec::new();
-                        if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
-                            for #element_snake_case in some_value {
+                        if let Some(value_8de026a4) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
+                            for #element_snake_case in value_8de026a4 {
                                 acc_50e99088.push(<Self as #import_path::PostgresqlJsonType>::Create::new(#new_content_token_stream));
                             }
                         }
@@ -2764,12 +2764,12 @@ pub fn generate_postgresql_json_types(
                         #has_len_greater_than_one_content_token_stream
                         #acc_push_vec_content_token_stream
                         #maybe_acc_push_vec_none_token_stream
-                        if let Some(some_value) = option_additional {
+                        if let Some(value_3de7fba4) = option_additional {
                             if has_len_greater_than_one {
-                                acc_0a07db18.push(some_value.0);
+                                acc_0a07db18.push(value_3de7fba4.0);
                             }
                             if !has_len_greater_than_one {
-                                acc_0a07db18.push(some_value.1);
+                                acc_0a07db18.push(value_3de7fba4.1);
                             }
                         }
                         acc_0a07db18
@@ -2847,7 +2847,7 @@ pub fn generate_postgresql_json_types(
                             let content_token_stream = {
                                 let content_token_stream = match &update_current_not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#element_snake_case.clone()},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {some_value.clone().into()},
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone().into()},
                                 };
                                 quote::quote! {&#current_ident_update_token_stream(#content_token_stream)}
                             };
@@ -2865,7 +2865,7 @@ pub fn generate_postgresql_json_types(
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match &#value_zero_zero_token_stream {
-                                    Some(some_value) => Some(#content_token_stream),
+                                    Some(value_92de91cc) => Some(#content_token_stream),
                                     None => None
                                 }
                             },
@@ -3030,7 +3030,7 @@ pub fn generate_postgresql_json_types(
                         let content_token_stream = {
                             let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {some_value.0},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {value_1bbf74bc.0},
                             };
                             quote::quote! {
                                 ::LengthEqual(
@@ -3050,7 +3050,7 @@ pub fn generate_postgresql_json_types(
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
                                         match #create_dot_zero_dot_zero {
-                                            Some(some_value) => match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                            Some(value_1bbf74bc) => match #import_path::NotEmptyUniqueEnumVec::try_new(
                                                 vec![#current_ident_where_upper_camel_case #content_token_stream]
                                             ) {
                                                 Ok(ok_value) => Some(ok_value),
@@ -3092,7 +3092,7 @@ pub fn generate_postgresql_json_types(
                         let content_token_stream = {
                             let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => &create_dot_zero_dot_zero,
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {some_value.0},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {value_68880991.0},
                             };
                             quote::quote! {
                                 ::LengthGreaterThan(
@@ -3129,7 +3129,7 @@ pub fn generate_postgresql_json_types(
                                 let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                                 quote::quote! {
                                     #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(match #create_dot_zero_dot_zero {
-                                        Some(some_value) => match #import_path::NotEmptyUniqueEnumVec::try_new(
+                                        Some(value_68880991) => match #import_path::NotEmptyUniqueEnumVec::try_new(
                                             vec![#current_ident_where_upper_camel_case #content_token_stream]
                                         ) {
                                             Ok(ok_value) => Some(ok_value),

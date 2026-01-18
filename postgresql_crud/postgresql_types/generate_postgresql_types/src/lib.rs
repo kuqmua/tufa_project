@@ -2106,7 +2106,7 @@ pub fn generate_postgresql_types(
                                 let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                                 quote::quote! {
                                     let #field_index_name_token_stream = match #field_index_name_token_stream {
-                                        Some(some_value) => some_value,
+                                        Some(value_eeeb431b) => value_eeeb431b,
                                         None => serde::__private228::de::missing_field(#field_name_double_quotes_token_stream)?,
                                     };
                                 }
@@ -3174,7 +3174,7 @@ pub fn generate_postgresql_types(
                     let content_token_stream = {
                         let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {Ok(Self(match #value_snake_case {
-                                Some(some_value) => Some(match #type_token_stream::#try_new_snake_case(some_value) {
+                                Some(value_989d943e) => Some(match #type_token_stream::#try_new_snake_case(value_989d943e) {
                                     Ok(ok_value) => ok_value,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
@@ -3642,14 +3642,14 @@ pub fn generate_postgresql_types(
                                                         #sec_snake_case,
                                                         #micro_snake_case,
                                                     ) {
-                                                        Some(some_value) => {
-                                                            if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&some_value).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
+                                                        Some(value_b143b9e1) => {
+                                                            if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&value_b143b9e1).checked_rem(1000).expect("c0514180-cfe0-44e2-9dcf-ab41df7e11f3") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
-                                                                    #value_snake_case: some_value.to_string(),
+                                                                    #value_snake_case: value_b143b9e1.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            Ok(Self(some_value))
+                                                            Ok(Self(value_b143b9e1))
                                                         },
                                                         None => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                             #hour_snake_case,
@@ -5628,7 +5628,7 @@ pub fn generate_postgresql_types(
                                             PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
                                             PostgresqlType::StdStringStringAsText => &dot_clone_token_stream,
                                         };
-                                        quote::quote! {vec![some_value #current_maybe_dot_clone_token_stream.0.into(); #number_token_stream]}
+                                        quote::quote! {vec![value_6465e8ae #current_maybe_dot_clone_token_stream.0.into(); #number_token_stream]}
                                     };
                                     (
                                         generate_new_or_try_new_token_stream(&quote::quote! {
@@ -5643,7 +5643,7 @@ pub fn generate_postgresql_types(
                                 };
                                 quote::quote! {
                                     acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#first_token_stream);
-                                    if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).first() {
+                                    if let Some(value_6465e8ae) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).first() {
                                         acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#second_token_stream);
                                         acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#third_token_stream);
                                     }
@@ -5737,12 +5737,12 @@ pub fn generate_postgresql_types(
                                     for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
                                         acc_abf96c9f.push(vec![#element_snake_case]);
                                     }
-                                    if let Some(some_value) = option_additional {
+                                    if let Some(value_e22f9ad2) = option_additional {
                                         if has_len_greater_than_one {
-                                            acc_abf96c9f.push(some_value.0);
+                                            acc_abf96c9f.push(value_e22f9ad2.0);
                                         }
                                         if !has_len_greater_than_one {
-                                            acc_abf96c9f.push(some_value.1);
+                                            acc_abf96c9f.push(value_e22f9ad2.1);
                                         }
                                     }
                                     acc_abf96c9f
@@ -5780,12 +5780,12 @@ pub fn generate_postgresql_types(
                                         .flat_map(|element_78f3b0ee| element_78f3b0ee.into_iter())
                                         .collect()
                                     ]);
-                                    if let Some(some_value) = option_additional {
+                                    if let Some(value_a0f0f172) = option_additional {
                                         if has_len_greater_than_one {
-                                            acc_68eba82f.push(some_value.0);
+                                            acc_68eba82f.push(value_a0f0f172.0);
                                         }
                                         if !has_len_greater_than_one {
-                                            acc_68eba82f.push(some_value.1);
+                                            acc_68eba82f.push(value_a0f0f172.1);
                                         }
                                     }
                                     acc_68eba82f
@@ -5846,12 +5846,12 @@ pub fn generate_postgresql_types(
                                     .collect()
                                 )]);
                                 acc_5f7f59ac.push(vec![None]);
-                                if let Some(some_value) = option_additional {
+                                if let Some(value_3530786a) = option_additional {
                                     if has_len_greater_than_one {
-                                        acc_5f7f59ac.push(some_value.0);
+                                        acc_5f7f59ac.push(value_3530786a.0);
                                     }
                                     if !has_len_greater_than_one {
-                                        acc_5f7f59ac.push(some_value.1);
+                                        acc_5f7f59ac.push(value_3530786a.1);
                                     }
                                 }
                                 acc_5f7f59ac
@@ -5947,7 +5947,7 @@ pub fn generate_postgresql_types(
                     let some_token_stream = {
                         let content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote! {#create_snake_case.0.0},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {some_value.0},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {value_09152b2e.0},
                         };
                         quote::quote! {
                             match #import_path::NotEmptyUniqueEnumVec::try_new({
@@ -5984,7 +5984,7 @@ pub fn generate_postgresql_types(
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => some_token_stream,
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                             match #create_snake_case.0.0 {
-                                Some(some_value) => #some_token_stream,
+                                Some(value_09152b2e) => #some_token_stream,
                                 None => None
                             }
                         },

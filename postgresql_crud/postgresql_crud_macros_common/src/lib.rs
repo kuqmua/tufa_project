@@ -2335,7 +2335,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
             quote::quote! {
                 let #field_index_handle_token_stream = match #field_index_token_stream {
-                    Some(some_value) => some_value,
+                    Some(value_4f8faf03) => value_4f8faf03,
                     None => {
                         serde::__private228::de::missing_field(#field_ident_double_quotes_token_stream)?
                     }
