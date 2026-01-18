@@ -603,7 +603,6 @@ pub fn generate_postgresql_json_types(
         let option_vec_create_snake_case = naming::OptionVecCreateSnakeCase;
         let option_update_snake_case = naming::OptionUpdateSnakeCase;
         let read_only_ids_to_two_dimensional_vec_read_inner_snake_case = naming::ReadOnlyIdsToTwoDimensionalVecReadInnerSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
         let create_snake_case = naming::CreateSnakeCase;
         let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
         let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
@@ -1902,10 +1901,7 @@ pub fn generate_postgresql_json_types(
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
                 let nullable_token_stream = quote::quote!{
-                    match #value_dot_zero_token_stream {
-                        Some(some_value) => Some(some_value.into()),
-                        None => None
-                    }
+                    #value_dot_zero_token_stream.map(|some_value| some_value.into())
                 };
                 let into_inner_content_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -2194,7 +2190,7 @@ pub fn generate_postgresql_json_types(
                     let content_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                         quote::quote! {format!("jsonb_build_object('value',{column_name_and_maybe_field_getter})")}
                     } else {
-                        quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_string()}
+                        quote::quote! {"jsonb_build_object('value','null'::jsonb)".to_owned()}
                     };
                     quote::quote! {Ok(#content_token_stream)}
                 },
@@ -2406,11 +2402,12 @@ pub fn generate_postgresql_json_types(
                 };
                 let generate_acc_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     let token_stream = generate_maybe_if_some_token_stream(not_null_or_nullable, &create_dot_zero_dot_zero_token_stream, &content_token_stream);
+                    //here
                     quote::quote! {
                         Some(#import_path::NotEmptyUniqueEnumVec::try_new({
-                            let mut #acc_snake_case = Vec::new();
+                            let mut acc_049ff0b3 = Vec::new();
                             #token_stream
-                            #acc_snake_case
+                            acc_049ff0b3
                         }).expect("e99ecd08-0aec-4a25-931d-163319bb8179"))
                     }
                 };
@@ -2461,11 +2458,11 @@ pub fn generate_postgresql_json_types(
                 let generate_not_null_or_nullable_token_stream = |current_not_null_or_nullable: &NotNullOrNullable, current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern| {
                     let content_token_stream = generate_dimension_equal_initialization_token_stream(current_not_null_or_nullable, current_postgresql_json_type_pattern);
                     match not_null_or_nullable {
-                        NotNullOrNullable::NotNull => quote::quote! {#acc_snake_case.push(#content_token_stream);},
+                        NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream);},
                         NotNullOrNullable::Nullable => quote::quote! {
                             match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
                                 Ok(value_9328b66f) => {
-                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
+                                    acc_049ff0b3.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
                                 },
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
@@ -2586,33 +2583,33 @@ pub fn generate_postgresql_json_types(
                 let generate_some_acc_content_token_stream = |current_not_null_or_nullable: &NotNullOrNullable, current_ident_token_stream: &dyn quote::ToTokens| {
                     let (new_content_token_stream, maybe_acc_push_none_token_stream) = match &current_not_null_or_nullable {
                         NotNullOrNullable::NotNull => (quote::quote! {vec![#element_snake_case.0.into()]}, proc_macro2::TokenStream::new()),
-                        NotNullOrNullable::Nullable => (quote::quote! {Some(#element_snake_case.0.into())}, quote::quote! {#acc_snake_case.push(<Self as #import_path::PostgresqlJsonType>::Create::new(None));}),
+                        NotNullOrNullable::Nullable => (quote::quote! {Some(#element_snake_case.0.into())}, quote::quote! {acc_50e99088.push(<Self as #import_path::PostgresqlJsonType>::Create::new(None));}),
                     };
                     //todo check - maybe need to add something here
                     let maybe_acc_push_long_vec_token_stream = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {
                             if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
-                                let mut inner_acc = Vec::new();
+                                let mut acc_27624e5e = Vec::new();
                                 for #element_snake_case in some_value {
-                                    inner_acc.push(#element_snake_case.0.into());
+                                    acc_27624e5e.push(#element_snake_case.0.into());
                                 }
-                                if !inner_acc.is_empty() {
-                                    #acc_snake_case.push(<Self as #import_path::PostgresqlJsonType>::Create::new(inner_acc));
+                                if !acc_27624e5e.is_empty() {
+                                    acc_50e99088.push(<Self as #import_path::PostgresqlJsonType>::Create::new(acc_27624e5e));
                                 }
                             }
                         },
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     };
                     quote::quote! {Some({
-                        let mut #acc_snake_case = Vec::new();
+                        let mut acc_50e99088 = Vec::new();
                         if let Some(some_value) = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#option_vec_create_snake_case() {
                             for #element_snake_case in some_value {
-                                #acc_snake_case.push(<Self as #import_path::PostgresqlJsonType>::Create::new(#new_content_token_stream));
+                                acc_50e99088.push(<Self as #import_path::PostgresqlJsonType>::Create::new(#new_content_token_stream));
                             }
                         }
                         #maybe_acc_push_long_vec_token_stream
                         #maybe_acc_push_none_token_stream
-                        #acc_snake_case
+                        acc_50e99088
                     })}
                 };
                 let content_token_stream = match &postgresql_json_type_pattern {
@@ -2727,55 +2724,61 @@ pub fn generate_postgresql_json_types(
                     let acc_push_vec_content_token_stream = {
                         let content_token_stream = {
                             let inner_content_token_stream = quote::quote! {{
-                                let mut #acc_snake_case = Vec::new();
+                                let mut acc_6cd5b60a = Vec::new();
                                 for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                     for element1 in element0 {
-                                        #acc_snake_case.push(element1);
+                                        acc_6cd5b60a.push(element1);
                                     }
                                 }
-                                #acc_snake_case
+                                acc_6cd5b60a
                             }};
                             match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => inner_content_token_stream,
                                 NotNullOrNullable::Nullable => quote::quote! {Some(#inner_content_token_stream)},
                             }
                         };
-                        quote::quote! {#acc_snake_case.push(vec![#content_token_stream]);}
+                        quote::quote! {acc_0a07db18.push(vec![#content_token_stream]);}
                     };
                     let maybe_acc_push_vec_none_token_stream = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                        NotNullOrNullable::Nullable => quote::quote! {#acc_snake_case.push(vec![None]);},
+                        NotNullOrNullable::Nullable => quote::quote! {acc_0a07db18.push(vec![None]);},
                     };
                     quote::quote! {
-                        let mut #acc_snake_case = Vec::new();
-                        let read_only_ids_to_two_dimensional_vec_read_inner = <#current_ident_token_stream as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone()));
+                        let mut acc_0a07db18 = Vec::new();
+                        let read_only_ids_to_two_dimensional_vec_read_inner = <
+                            #current_ident_token_stream
+                            as
+                            #import_path::PostgresqlJsonTypeTestCases
+                        >::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(
+                            &#current_ident_read_only_ids_upper_camel_case(read_only_ids.0.clone())
+                        );
                         #option_additional_content_token_stream
                         #has_len_greater_than_one_content_token_stream
                         #acc_push_vec_content_token_stream
                         #maybe_acc_push_vec_none_token_stream
                         if let Some(some_value) = option_additional {
                             if has_len_greater_than_one {
-                                #acc_snake_case.push(some_value.0);
+                                acc_0a07db18.push(some_value.0);
                             }
                             if !has_len_greater_than_one {
-                                #acc_snake_case.push(some_value.1);
+                                acc_0a07db18.push(some_value.1);
                             }
                         }
-                        #acc_snake_case
+                        acc_0a07db18
                     }
                 };
                 let content_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {vec![#import_path::#standart_not_null_test_cases_vec_name_token_stream().into()]},
                         NotNullOrNullable::Nullable => quote::quote! {
-                            let mut #acc_snake_case = Vec::new();
+                            let mut acc_97242d4d = Vec::new();
                             for element0 in <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonTypeTestCases>::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(&#ident_read_only_ids_standart_not_null_upper_camel_case(read_only_ids.0.clone())) {
                                 for element1 in element0 {
-                                    #acc_snake_case.push(vec![Some(element1)]);
+                                    acc_97242d4d.push(vec![Some(element1)]);
                                 }
                             }
-                            #acc_snake_case.push(vec![None]);
-                            #acc_snake_case
+                            acc_97242d4d.push(vec![None]);
+                            acc_97242d4d
                         },
                     },
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_acc_content_handle_token_stream(
@@ -3393,11 +3396,11 @@ pub fn generate_postgresql_json_types(
                         ) = {
                             let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                                 match #import_path::NotEmptyUniqueEnumVec::try_new({
-                                    let mut #acc_snake_case = vec![];
+                                    let mut acc_f95ec4f2 = vec![];
                                     for element in create.0.0 {
                                         match #content_token_stream {
                                             Some(value) => {
-                                                #acc_snake_case.push(
+                                                acc_f95ec4f2.push(
                                                     #import_path::SingleOrMultiple::Single(
                                                         #ident_where_upper_camel_case::ContainsElementGreaterThan(
                                                             where_filters::PostgresqlJsonTypeWhereContainsElementGreaterThan {
@@ -3415,7 +3418,7 @@ pub fn generate_postgresql_json_types(
                                             },
                                         }
                                     }
-                                    #acc_snake_case
+                                    acc_f95ec4f2
                                 }) {
                                     Ok(ok_value) => Some(ok_value),
                                     Err(error) => match error {
@@ -3480,23 +3483,25 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                             PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
                             PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
-                                match #import_path::NotEmptyUniqueEnumVec::try_new({
-                                    let mut #acc_snake_case = vec![];
-                                    for element in create.0.0 {
-                                        #acc_snake_case.push(
-                                            #import_path::SingleOrMultiple::Single(
-                                                #ident_where_upper_camel_case::ContainsElementRegularExpression(
-                                                    where_filters::PostgresqlJsonTypeWhereContainsElementRegularExpression {
-                                                        logical_operator: #import_path::LogicalOperator::Or,
-                                                        regular_expression_case: where_filters::RegularExpressionCase::Sensitive,
-                                                        value: where_filters::RegexRegex(regex::Regex::new(&format!("^{}$", regex::escape(&element.0))).expect("7d01653a-e82f-4615-bbef-a8c899491f34")),
-                                                    }
-                                                )
-                                            )
-                                        );
-                                    }
-                                    #acc_snake_case
-                                }) {
+                                match #import_path::NotEmptyUniqueEnumVec::try_new(create.0.0.into_iter().map(|element| {
+                                    #import_path::SingleOrMultiple::Single(
+                                        #ident_where_upper_camel_case::ContainsElementRegularExpression(
+                                            where_filters::PostgresqlJsonTypeWhereContainsElementRegularExpression {
+                                                logical_operator: #import_path::LogicalOperator::Or,
+                                                regular_expression_case:
+                                                    where_filters::RegularExpressionCase::Sensitive,
+                                                value: where_filters::RegexRegex(
+                                                    regex::Regex::new(&format!(
+                                                        "^{}$",
+                                                        regex::escape(&element.0)
+                                                    ))
+                                                    .expect("7d01653a-e82f-4615-bbef-a8c899491f34"),
+                                                ),
+                                            },
+                                        ),
+                                    )
+                                })
+                                .collect()) {
                                     Ok(ok_value) => Some(ok_value),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
