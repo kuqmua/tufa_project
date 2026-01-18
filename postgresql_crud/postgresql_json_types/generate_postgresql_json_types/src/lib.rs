@@ -2919,10 +2919,9 @@ pub fn generate_postgresql_json_types(
                 });
                 quote::quote! {Some(#value_initialization_token_stream)}
             };
-            let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {match #option_update_snake_case {
-                Some(some_value) => #ident_read_upper_camel_case(some_value.into()),
-                None => #read_snake_case
-            }};
+            let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {
+                #option_update_snake_case.map_or(#read_snake_case, |some_value| #ident_read_upper_camel_case(some_value.into()))
+            };
             let read_only_ids_merged_with_create_into_read_token_stream = {
                 let content_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                     quote::quote! {#ident_origin_upper_camel_case::new(#read_only_ids_snake_case.0.#value_snake_case)}
