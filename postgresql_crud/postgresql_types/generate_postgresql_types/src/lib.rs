@@ -809,33 +809,32 @@ pub fn generate_postgresql_types(
         serde_json::from_str::<GeneratePostgresqlJsonTypesConfig>(&input_token_stream.to_string())
             .expect("80485f71-4e21-4166-94df-722326c36a29");
     let (columns_token_stream, postgresql_type_array) = {
-        let current_acc = match generate_postgresql_json_types_config.variant {
-            GeneratePostgresqlTypesConfigVariant::All => PostgresqlType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_type| {
-                let postgresql_type_pattern_all = PostgresqlTypePattern::into_array().into_iter().fold(Vec::new(), |mut current_acc, postgresql_type_pattern| {
+        let acc_5464fefe = match generate_postgresql_json_types_config.variant {
+            GeneratePostgresqlTypesConfigVariant::All => PostgresqlType::into_array().into_iter().fold(Vec::new(), |mut acc_4351207e, postgresql_type| {
+                for postgresql_type_pattern in PostgresqlTypePattern::into_array().into_iter().fold(Vec::new(), |mut acc_f806f6d2, postgresql_type_pattern| {
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
-                            current_acc.push(postgresql_type_pattern);
+                            acc_f806f6d2.push(postgresql_type_pattern);
                         }
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
                             for dimension1_not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                current_acc.push(PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable });
+                                acc_f806f6d2.push(PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable });
                             }
                         }
                     }
-                    current_acc
-                });
-                for postgresql_type_pattern in postgresql_type_pattern_all {
+                    acc_f806f6d2
+                }) {
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &postgresql_type.can_be_nullable() {
                             CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                acc.push(PostgresqlTypeRecord {
+                                acc_4351207e.push(PostgresqlTypeRecord {
                                     postgresql_type: postgresql_type.clone(),
                                     not_null_or_nullable,
                                     postgresql_type_pattern: postgresql_type_pattern.clone(),
                                 });
                             }),
                             CanBeNullable::False => {
-                                acc.push(PostgresqlTypeRecord {
+                                acc_4351207e.push(PostgresqlTypeRecord {
                                     postgresql_type: postgresql_type.clone(),
                                     not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                                     postgresql_type_pattern,
@@ -845,7 +844,7 @@ pub fn generate_postgresql_types(
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &postgresql_type.can_be_an_array_element() {
                             CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
                                 CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                    acc.push(PostgresqlTypeRecord {
+                                    acc_4351207e.push(PostgresqlTypeRecord {
                                         postgresql_type: postgresql_type.clone(),
                                         not_null_or_nullable,
                                         postgresql_type_pattern: postgresql_type_pattern.clone(),
@@ -854,7 +853,7 @@ pub fn generate_postgresql_types(
                                 CanBeNullable::False => {
                                     if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
                                         for not_null_or_nullable in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                            acc.push(PostgresqlTypeRecord {
+                                            acc_4351207e.push(PostgresqlTypeRecord {
                                                 postgresql_type: postgresql_type.clone(),
                                                 not_null_or_nullable,
                                                 postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: *dimension1_not_null_or_nullable },
@@ -867,13 +866,13 @@ pub fn generate_postgresql_types(
                         },
                     }
                 }
-                acc
+                acc_4351207e
             }),
             GeneratePostgresqlTypesConfigVariant::Concrete(value) => value,
         };
         {
             let mut check_acc = Vec::new();
-            for element in &current_acc {
+            for element in &acc_5464fefe {
                 if check_acc.contains(&element) {
                     panic!("536036f9-2511-4247-8463-6defbeb72f5c");
                 } else {
@@ -881,11 +880,11 @@ pub fn generate_postgresql_types(
                 }
             }
         }
-        current_acc
+        acc_5464fefe
     }.into_iter()
     .fold(
         Vec::new(),
-        |mut acc, postgresql_type_record_element| {
+        |mut acc_0562629e, postgresql_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
             #[derive(Clone)]
             struct PostgresqlTypeRecordHandle {
@@ -895,17 +894,12 @@ pub fn generate_postgresql_types(
             fn generate_postgresql_type_record_handle_vec(
                 postgresql_type_record_handle: PostgresqlTypeRecordHandle,
             ) -> Vec<PostgresqlTypeRecordHandle> {
-                let generate_vec =
-                    |current_postgresql_type_record_handle: PostgresqlTypeRecordHandle| {
-                        let mut acc = Vec::new();
-                        for element in generate_postgresql_type_record_handle_vec(
-                            current_postgresql_type_record_handle,
-                        ) {
-                            acc.push(element);
-                        }
-                        acc.push(postgresql_type_record_handle.clone());
-                        acc
-                    };
+                let generate_vec = |
+                    current_postgresql_type_record_handle: PostgresqlTypeRecordHandle
+                | generate_postgresql_type_record_handle_vec(current_postgresql_type_record_handle)
+                .into_iter()
+                .chain(std::iter::once(postgresql_type_record_handle.clone()))
+                .collect();
                 //same pattern was in generate_postgresql_types 21.05.2025
                 match (
                     &postgresql_type_record_handle.not_null_or_nullable,
@@ -951,11 +945,11 @@ pub fn generate_postgresql_types(
                     postgresql_type_pattern: postgresql_type_record_handle_element
                         .postgresql_type_pattern,
                 };
-                if !acc.contains(&postgresql_type_record) {
-                    acc.push(postgresql_type_record);
+                if !acc_0562629e.contains(&postgresql_type_record) {
+                    acc_0562629e.push(postgresql_type_record);
                 }
             }
-            acc
+            acc_0562629e
         },
     )
     .into_iter()

@@ -123,14 +123,14 @@ pub fn generate_postgresql_json_object_type(
     //     &serde_json::to_string(&postgresql_json_object_type_record_vec).expect("efc7a263-f6cd-44ca-aacf-470a37971f7f"),
     // );
 
-    // element.iter().enumerate().fold(String::new(), |mut acc, (index, element)| {
+    // element.iter().enumerate().fold(String::new(), |mut acc_1e1c6a6e, (index, element)| {
     //     let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
     //     if index == 0 {
-    //         acc.push_str(&element_snake_case_stringified);
+    //         acc_1e1c6a6e.push_str(&element_snake_case_stringified);
     //     } else {
-    //         acc.push_str(&format!("_{element_snake_case_stringified}"));
+    //         acc_1e1c6a6e.push_str(&format!("_{element_snake_case_stringified}"));
     //     }
-    //     acc
+    //     acc_1e1c6a6e
     // });
     // let postgresql_json_object_type_array
     let (fields_token_stream, postgresql_json_object_type_array) = postgresql_json_object_type_record_vec
@@ -413,9 +413,9 @@ pub fn generate_postgresql_json_object_type(
                     field_type: value.ty,
                 }
             };
-            let vec_syn_field_with_id: Vec<macros_helpers::SynFieldWrapper> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc, current_element| {
-                acc.push(current_element);
-                acc
+            let vec_syn_field_with_id: Vec<macros_helpers::SynFieldWrapper> = vec_syn_field.clone().into_iter().fold(vec![id_syn_field], |mut acc_9db5e042, current_element| {
+                acc_9db5e042.push(current_element);
+                acc_9db5e042
             });
             let get_vec_syn_field = |is_standart_with_id: &IsStandartWithId| -> &Vec<macros_helpers::SynFieldWrapper> {
                 match &is_standart_with_id {

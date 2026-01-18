@@ -1199,8 +1199,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 fields: syn::Fields::Named(syn::FieldsNamed {
                     brace_token: syn::token::Brace::default(),
                     named: {
-                        let mut handle = current_fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc, element| {
-                            acc.push_value(syn::Field {
+                        let mut handle = current_fields.into_iter().fold(syn::punctuated::Punctuated::new(), |mut acc_37be2059, element| {
+                            acc_37be2059.push_value(syn::Field {
                                 attrs: vec![syn::Attribute {
                                     pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
                                     style: syn::AttrStyle::Outer,
@@ -1226,8 +1226,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     path: syn::Path { leading_colon: None, segments: element.2 },
                                 }),
                             });
-                            acc.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
-                            acc
+                            acc_37be2059.push_punct(syn::token::Comma { spans: [proc_macro2::Span::call_site()] });
+                            acc_37be2059
                         });
                         handle.push_value(macros_helpers::code_occurence_syn_field());
                         handle
@@ -3374,15 +3374,17 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let increment_initialization_token_stream =
         quote::quote! {let mut #increment_snake_case: u64 = 0;};
     let column_names = {
-        let mut value = fields.iter().fold(String::default(), |mut acc, element| {
-            use std::fmt::Write as _;
-            assert!(
-                write!(acc, "{}", &element.field_ident).is_ok(),
-                "b9fe50dc-69a2-4af1-801d-69b7839a1471"
-            );
-            acc.push(',');
-            acc
-        });
+        let mut value = fields
+            .iter()
+            .fold(String::default(), |mut acc_b2600a1f, element| {
+                use std::fmt::Write as _;
+                assert!(
+                    write!(acc_b2600a1f, "{}", &element.field_ident).is_ok(),
+                    "b9fe50dc-69a2-4af1-801d-69b7839a1471"
+                );
+                acc_b2600a1f.push(',');
+                acc_b2600a1f
+            });
         let _: Option<char> = value.pop();
         value
     };

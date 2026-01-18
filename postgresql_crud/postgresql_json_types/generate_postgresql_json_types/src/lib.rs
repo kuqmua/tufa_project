@@ -382,90 +382,90 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let current_acc = match generate_postgresql_json_types_config.variant {
-                GeneratePostgresqlJsonTypesConfigVariant::All => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+            let acc_d97120ed = match generate_postgresql_json_types_config.variant {
+                GeneratePostgresqlJsonTypesConfigVariant::All => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_e2f65a79, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_array_dimension4(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_e2f65a79, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc_e2f65a79, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc_e2f65a79, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc_e2f65a79, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_array_dimension4(&mut acc_e2f65a79, postgresql_json_type.clone()),
                         }
                     }
-                    acc
+                    acc_e2f65a79
                 }),
-                GeneratePostgresqlJsonTypesConfigVariant::WithoutDimensions => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithoutDimensions => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_3d95645c, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_3d95645c, postgresql_json_type.clone()),
                             PostgresqlJsonTypePattern::ArrayDimension1 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension2 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension3 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => (),
                         }
                     }
-                    acc
+                    acc_3d95645c
                 }),
-                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionOne => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionOne => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_66a17cae, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_66a17cae, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc_66a17cae, postgresql_json_type.clone()),
                             PostgresqlJsonTypePattern::ArrayDimension2 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension3 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => (),
                         }
                     }
-                    acc
+                    acc_66a17cae
                 }),
-                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionTwo => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionTwo => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_c5ffb796, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_c5ffb796, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc_c5ffb796, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc_c5ffb796, postgresql_json_type.clone()),
                             PostgresqlJsonTypePattern::ArrayDimension3 { .. } |
                             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => (),
                         }
                     }
-                    acc
+                    acc_c5ffb796
                 }),
-                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionThree => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionThree => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_78b27c00, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_78b27c00, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc_78b27c00, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc_78b27c00, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc_78b27c00, postgresql_json_type.clone()),
                             PostgresqlJsonTypePattern::ArrayDimension4 { .. } => (),
                         }
                     }
-                    acc
+                    acc_78b27c00
                 }),
-                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionFour => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc, postgresql_json_type| {
+                GeneratePostgresqlJsonTypesConfigVariant::WithDimensionFour => PostgresqlJsonType::into_array().into_iter().fold(Vec::new(), |mut acc_172c62ad, postgresql_json_type| {
                     for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
                         match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc, postgresql_json_type.clone()),
-                            PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_array_dimension4(&mut acc, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::Standart => generate_standart(&mut acc_172c62ad, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { .. } => generate_array_dimension1(&mut acc_172c62ad, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension2 { .. } => generate_array_dimension2(&mut acc_172c62ad, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension3 { .. } => generate_array_dimension3(&mut acc_172c62ad, postgresql_json_type.clone()),
+                            PostgresqlJsonTypePattern::ArrayDimension4 { .. } => generate_array_dimension4(&mut acc_172c62ad, postgresql_json_type.clone()),
                         }
                     }
-                    acc
+                    acc_172c62ad
                 }),
                 GeneratePostgresqlJsonTypesConfigVariant::Concrete(value) => value,
             };
             let mut seen = std::collections::HashSet::new();
             assert!(
-                current_acc
+                acc_d97120ed
                     .iter()
                     .all(|element| seen.insert(element)),
                 "c2d37017-229c-4259-bcee-c434852dca1b"
             );
-            current_acc
-        }.into_iter().fold(Vec::new(), |mut acc, postgresql_json_type_record_element| {
+            acc_d97120ed
+        }.into_iter().fold(Vec::new(), |mut acc_5e43269c, postgresql_json_type_record_element| {
             use postgresql_crud_macros_common::NotNullOrNullable;
             for postgresql_json_type_record_handle_element in {
                 #[derive(Clone)]
@@ -537,11 +537,11 @@ pub fn generate_postgresql_json_types(
                     not_null_or_nullable: postgresql_json_type_record_handle_element.not_null_or_nullable,
                     postgresql_json_type_pattern: postgresql_json_type_record_handle_element.postgresql_json_type_pattern,
                 };
-                if !acc.contains(&postgresql_json_type_record) {
-                    acc.push(postgresql_json_type_record);
+                if !acc_5e43269c.contains(&postgresql_json_type_record) {
+                    acc_5e43269c.push(postgresql_json_type_record);
                 }
             }
-            acc
+            acc_5e43269c
         })
     }
     .into_iter()
@@ -2130,23 +2130,23 @@ pub fn generate_postgresql_json_types(
                                                     ],
                                                 }
                                                 .into_iter()
-                                                .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, current_not_null_or_nullable| {
+                                                .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc_64e08e3a, current_not_null_or_nullable| {
                                                     let current_usize_value_minus_one = current_usize_value.checked_sub(one).expect("a35e873e-a2a1-4a25-8de1-c35dbb0b65af");
                                                     let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
                                                     let value = generate_jsonb_agg(
-                                                        &acc,
+                                                        &acc_64e08e3a,
                                                         &d_usize_minus_one_elem_value,
                                                         &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
                                                         current_usize_value,
                                                     );
-                                                    acc = match &current_not_null_or_nullable {
+                                                    acc_64e08e3a = match &current_not_null_or_nullable {
                                                         NotNullOrNullable::NotNull => value,
                                                         NotNullOrNullable::Nullable => {
                                                             format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
                                                         }
                                                     };
                                                     current_usize_value = current_usize_value_minus_one;
-                                                    acc
+                                                    acc_64e08e3a
                                                 })
                                             },
                                             &column_name_and_maybe_field_getter_field_ident,

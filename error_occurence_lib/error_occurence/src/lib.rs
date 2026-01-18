@@ -146,11 +146,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                         .filter(|current_element| *current_element.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_snake_case_stringified)
                         .fold(
                             String::new(),
-                            |mut acc, current_element| {
+                            |mut acc_924ab1b3, current_element| {
                                 use std::fmt::Write as _;
                                 let current_element_ident = &current_element.ident.as_ref().expect("2e7cd5fe-7653-4c10-8977-526b061d6748");
-                                assert!(writeln!(acc, "{current_element_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
-                                acc
+                                assert!(writeln!(acc_924ab1b3, "{current_element_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
+                                acc_924ab1b3
                             }
                         )
                     );

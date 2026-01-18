@@ -12,20 +12,19 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
                 assert!(regex.is_match(inner_element), "faadba8a-ff38-40f9-af05-e4f95bba896a");
             }
         }
-        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, current_element| {
-            let element_upper_camel_case_stringified = naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element);
-            acc.push_str(&element_upper_camel_case_stringified);
-            acc
+        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_3d60efa0, current_element| {
+            acc_3d60efa0.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+            acc_3d60efa0
         });
-        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc, (index, current_element)| {
+        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, current_element)| {
             let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(current_element);
             if index == 0 {
-                acc.push_str(&element_snake_case_stringified);
+                acc_7a8bd950.push_str(&element_snake_case_stringified);
             } else {
                 use std::fmt::Write as _;
-                assert!(write!(acc, "_{element_snake_case_stringified}").is_ok(), "ef718915-7a99-45a6-b3c5-496262804976");
+                assert!(write!(acc_7a8bd950, "_{element_snake_case_stringified}").is_ok(), "ef718915-7a99-45a6-b3c5-496262804976");
             }
-            acc
+            acc_7a8bd950
         });
         let phrase_part_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_upper_camel_case_stringified);
         let phrase_part_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&phrase_part_snake_case_stringified);
@@ -104,28 +103,28 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc, current_element| {
-                acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
-                acc
+            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_34997d76, current_element| {
+                acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+                acc_34997d76
             });
-            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc, current_element| {
+            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc_ae77cbd3, current_element| {
                 if current_element == "self" {
-                    acc.push_str("{value}");
+                    acc_ae77cbd3.push_str("{value}");
                 } else {
-                    acc.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
                 }
-                acc
+                acc_ae77cbd3
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
-                let mut value = element.iter().fold(String::new(), |mut acc, current_element| {
+                let mut value = element.iter().fold(String::new(), |mut acc_cbcae5e1, current_element| {
                     use std::fmt::Write as _;
                     let symbol = '_';
                     if current_element == "self" {
-                        assert!(write!(acc, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
+                        assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
                     } else {
-                        assert!(write!(acc, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
+                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
                     }
-                    acc
+                    acc_cbcae5e1
                 });
                 let _: Option<char> = value.pop();
                 value
@@ -193,12 +192,12 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                     pub fn from_type_last_segment(value: &syn::Type) -> Self {
                         match value {
                             syn::Type::Path(type_path) => {
-                                let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc, elem| {
+                                let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc_f0a77378, elem| {
                                     use std::fmt::Write as _;
-                                    if write!(acc, "{}::", elem.ident).is_err() {
+                                    if write!(acc_f0a77378, "{}::", elem.ident).is_err() {
                                         panic!("67c90ce9-beea-4a81-99a2-874b8f04aa0a");
                                     }
-                                    acc
+                                    acc_f0a77378
                                 });
                                 let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
                                 Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))

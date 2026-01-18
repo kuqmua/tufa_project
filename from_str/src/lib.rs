@@ -34,17 +34,17 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     let error_variants_stringified =
         variant_idents
             .iter()
-            .fold(String::default(), |mut acc, variant_ident| {
+            .fold(String::default(), |mut acc_d6966473, variant_ident| {
                 use std::fmt::Write as _;
                 let variant_ident_snake_case_stringified = convert_case::Casing::to_case(
                     &format!("{variant_ident}"),
                     convert_case::Case::Snake,
                 );
                 assert!(
-                    write!(acc, "\'{variant_ident_snake_case_stringified}\',").is_ok(),
+                    write!(acc_d6966473, "\'{variant_ident_snake_case_stringified}\',").is_ok(),
                     "09c49558-9d46-41d1-86a5-f76c1460a21e"
                 );
-                acc
+                acc_d6966473
             });
     let error_token_stream = {
         let error_stringified = format!(
