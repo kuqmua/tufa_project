@@ -450,9 +450,9 @@ mod tests {
                 || !path
                     .extension()
                     .and_then(|value| value.to_str())
-                    .is_some_and(|some_value| {
+                    .is_some_and(|value_c980b45f| {
                         matches!(
-                            some_value,
+                            value_c980b45f,
                             "rs" | "toml" | "md" | "txt" | "yml" | "yaml" | "json"
                         )
                     })

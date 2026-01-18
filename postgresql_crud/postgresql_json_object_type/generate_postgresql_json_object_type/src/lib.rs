@@ -5082,9 +5082,9 @@ pub fn generate_postgresql_json_object_type(
                                 }
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     quote::quote! {
-                                        #read_only_ids_snake_case.0.#value_snake_case.as_ref().into_iter().flat_map(|some_value| {
+                                        #read_only_ids_snake_case.0.#value_snake_case.as_ref().into_iter().flat_map(|value_5fa0668c| {
                                             #ident_standart_not_null_as_postgresql_json_type_test_cases_token_stream::
-                                                #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(some_value)
+                                                #read_only_ids_to_two_dimensional_vec_read_inner_snake_case(value_5fa0668c)
                                                 .into_iter()
                                                 .flat_map(|element0| {
                                                     element0.into_iter().map(|element1| vec![Some(element1)])

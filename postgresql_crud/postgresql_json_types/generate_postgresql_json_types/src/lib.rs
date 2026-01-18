@@ -1901,7 +1901,7 @@ pub fn generate_postgresql_json_types(
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
                 let nullable_token_stream = quote::quote!{
-                    #value_dot_zero_token_stream.map(|some_value| some_value.into())
+                    #value_dot_zero_token_stream.map(|value_08656169| value_08656169.into())
                 };
                 let into_inner_content_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -2206,7 +2206,7 @@ pub fn generate_postgresql_json_types(
                 &{
                     let content_token_stream = quote::quote! {#value_snake_case.0.0};
                     let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, current_content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {#match_token_stream.map(|some_value| some_value.0 #current_content_token_stream)}
+                        quote::quote! {#match_token_stream.map(|value_a4ef0e83| value_a4ef0e83.0 #current_content_token_stream)}
                     };
                     let element_dot_zero_token_stream = quote::quote! {#element_snake_case.0};
                     let generate_into_iter_map_element_collect_token_stream = |current_content_token_stream: &dyn quote::ToTokens| {
@@ -2951,7 +2951,7 @@ pub fn generate_postgresql_json_types(
                 quote::quote! {Some(#value_initialization_token_stream)}
             };
             let previous_read_merged_with_option_update_into_read_token_stream = quote::quote! {
-                #option_update_snake_case.map_or(#read_snake_case, |some_value| #ident_read_upper_camel_case(some_value.into()))
+                #option_update_snake_case.map_or(#read_snake_case, |value_f6e37412| #ident_read_upper_camel_case(value_f6e37412.into()))
             };
             let read_only_ids_merged_with_create_into_read_token_stream = {
                 let content_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
@@ -2995,10 +2995,10 @@ pub fn generate_postgresql_json_types(
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         let current_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&ident_not_null_token_stream);
                         let current_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_not_null_token_stream);
-                        let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(some_value.into())});
+                        let equal_token_stream = generate_equal_token_stream(&quote::quote! {#current_ident_table_type_declaration_upper_camel_case::new(value_18544acf.into())});
                         quote::quote! {
                             #import_path::NullableJsonObjectPostgresqlTypeWhereFilter(
-                                #create_snake_case.0.0.map(|some_value| postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
+                                #create_snake_case.0.0.map(|value_18544acf| postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(
                                     vec![#current_ident_where_upper_camel_case::#equal_upper_camel_case(#equal_token_stream)]
                                 ).expect("88bfa095-a3ab-4d0c-be71-af63c3acd50f"))
                             )

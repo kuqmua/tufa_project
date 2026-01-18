@@ -3742,7 +3742,7 @@ pub fn generate_postgresql_types(
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
                                 &value_dot_zero,
                                 &proc_macro2::TokenStream::new(),
-                                &quote::quote!{some_value0}
+                                &quote::quote!{value_6bfd70fa}
                             ),
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
@@ -3751,7 +3751,7 @@ pub fn generate_postgresql_types(
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
                                     &element_dot_zero_token_stream,
                                     &proc_macro2::TokenStream::new(),
-                                    &quote::quote!{some_value0}
+                                    &quote::quote!{value_1b8cbd77}
                                 ),
                             };
                             let into_iter_dimension1_token_stream = quote::quote! {.into_iter().map(|#element_snake_case|#dimension1_token_stream).collect()};
@@ -3762,7 +3762,7 @@ pub fn generate_postgresql_types(
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_token_stream(
                                     &value_dot_zero,
                                     &into_iter_dimension1_token_stream,
-                                    &quote::quote!{some_value1}
+                                    &quote::quote!{value_38cfcd24}
                                 ),
                             }
                         }
@@ -5036,13 +5036,13 @@ pub fn generate_postgresql_types(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_ident_origin_token_stream(&quote::quote! {
                                 #value_snake_case.0.0.map(
-                                    |some_value|
+                                    |value_4561270e|
                                     <
                                         #ident_standart_not_null_upper_camel_case
                                         as
                                         #import_path::PostgresqlType
                                     >::normalize(
-                                        #ident_standart_not_null_read_upper_camel_case(some_value)
+                                        #ident_standart_not_null_read_upper_camel_case(value_4561270e)
                                     ).0
                                 )
                             }),
@@ -5076,13 +5076,13 @@ pub fn generate_postgresql_types(
                                 );
                                 let ident_array_dimension1_not_null_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_not_null_upper_camel_case);
                                 quote::quote! {
-                                    #value_snake_case.0.0.map(|some_value|
+                                    #value_snake_case.0.0.map(|value_b4d912fb|
                                         <
                                             #ident_array_dimension1_not_null_not_null_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_not_null_read_upper_camel_case(some_value),
+                                            #ident_array_dimension1_not_null_not_null_read_upper_camel_case(value_b4d912fb),
                                         ).0
                                     )
                                 }
@@ -5098,13 +5098,13 @@ pub fn generate_postgresql_types(
                                 let ident_array_dimension1_not_null_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_array_dimension1_not_null_nullable_upper_camel_case);
                                 quote::quote! {
                                     #value_snake_case.0.0.map(
-                                        |some_value|
+                                        |value_dd042db2|
                                         <
                                             #ident_array_dimension1_not_null_nullable_upper_camel_case
                                             as
                                             #import_path::PostgresqlType
                                         >::normalize(
-                                            #ident_array_dimension1_not_null_nullable_read_upper_camel_case(some_value),
+                                            #ident_array_dimension1_not_null_nullable_read_upper_camel_case(value_dd042db2),
                                         ).0
                                     )
                                 }
@@ -5140,11 +5140,11 @@ pub fn generate_postgresql_types(
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value})
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{value_bd169d3b})
                                 } else {
-                                    quote::quote!{some_value.0}
+                                    quote::quote!{value_bd169d3b.0}
                                 };
-                                quote::quote! {#value_dot_zero_dot_zero_token_stream.map(|some_value| #content_token_stream)}
+                                quote::quote! {#value_dot_zero_dot_zero_token_stream.map(|value_bd169d3b| #content_token_stream)}
                             }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
@@ -5160,13 +5160,13 @@ pub fn generate_postgresql_types(
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value})
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{value_e9a6bd41})
                                 } else {
-                                    quote::quote!{some_value.0}
+                                    quote::quote!{value_e9a6bd41.0}
                                 };
                                 quote::quote! {
                                     #value_dot_zero_dot_zero_token_stream.into_iter().map(|#element_snake_case|
-                                        #element_snake_case.0.map(|some_value| #content_token_stream)
+                                        #element_snake_case.0.map(|value_e9a6bd41| #content_token_stream)
                                     ).collect()
                                 }
                             }
@@ -5177,20 +5177,20 @@ pub fn generate_postgresql_types(
                                     quote::quote! {#element_snake_case.0}
                                 };
                                 quote::quote! {
-                                    #value_dot_zero_dot_zero_token_stream.map(|some_value|
-                                        some_value.0.into_iter().map(|element|#content_token_stream).collect()
+                                    #value_dot_zero_dot_zero_token_stream.map(|value_47fb2e43|
+                                        value_47fb2e43.0.into_iter().map(|element|#content_token_stream).collect()
                                     )
                                 }
                             }
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
                                 let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{some_value1})
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{value_e5c5f65c})
                                 } else {
-                                    quote::quote!{some_value1.0}
+                                    quote::quote!{value_e5c5f65c.0}
                                 };
                                 quote::quote! {
-                                    #value_dot_zero_dot_zero_token_stream.map(|some_value0| some_value0.0.into_iter().map(|#element_snake_case|
-                                        #element_snake_case.0.map(|some_value1| #content_token_stream)
+                                    #value_dot_zero_dot_zero_token_stream.map(|value_b1a259c4| value_b1a259c4.0.into_iter().map(|#element_snake_case|
+                                        #element_snake_case.0.map(|value_e5c5f65c| #content_token_stream)
                                     ).collect())
                                 }
                             }
