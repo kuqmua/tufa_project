@@ -740,7 +740,8 @@ pub fn generate_postgresql_json_types(
             quote::quote! {#content_token_stream}
         };
         let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
-        let generate_pub_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_new_token_stream(&quote::quote! {#value_snake_case: #ident_read_inner_upper_camel_case}, &content_token_stream);
+        let value_ident_read_inner_token_stream = quote::quote! {#value_snake_case: #ident_read_inner_upper_camel_case};
+        let generate_pub_fn_new_value_ident_read_inner_content_token_stream = |content_token_stream: &dyn quote::ToTokens| macros_helpers::generate_pub_new_token_stream(&value_ident_read_inner_token_stream, &content_token_stream);
         let ident_create_for_query_upper_camel_case = naming::parameter::SelfCreateForQueryUpperCamelCase::from_tokens(&ident);
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_update_for_query_upper_camel_case = naming::parameter::SelfUpdateForQueryUpperCamelCase::from_tokens(&ident);
@@ -982,7 +983,26 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let impl_ident_origin_token_stream = {
-                let pub_fn_new_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&quote::quote! {Self(#ident_origin_impl_new_self_content_token_stream)});
+                let pub_fn_new_token_stream = {
+                    let self_ident_origin_impl_new_self_content_token_stream = quote::quote!{
+                        Self(#ident_origin_impl_new_self_content_token_stream)
+                    };
+                    let pub_fn_new_value_ident_read_inner_content_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&self_ident_origin_impl_new_self_content_token_stream);
+                    match &postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_pub_const_new_token_stream(
+                                &value_ident_read_inner_token_stream,
+                                &self_ident_origin_impl_new_self_content_token_stream
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => pub_fn_new_value_ident_read_inner_content_token_stream
+                        },
+                        PostgresqlJsonTypePattern::ArrayDimension1 { .. } |
+                        PostgresqlJsonTypePattern::ArrayDimension2 { .. } |
+                        PostgresqlJsonTypePattern::ArrayDimension3 { .. } |
+                        PostgresqlJsonTypePattern::ArrayDimension4 { .. } => pub_fn_new_value_ident_read_inner_content_token_stream
+                    }
+                };
+                //here
                 quote::quote! {
                     impl #ident_origin_upper_camel_case {
                         #pub_fn_new_token_stream
