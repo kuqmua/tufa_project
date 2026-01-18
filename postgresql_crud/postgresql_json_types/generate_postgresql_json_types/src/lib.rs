@@ -2182,9 +2182,7 @@ pub fn generate_postgresql_json_types(
                 &{
                     let content_token_stream = quote::quote! {#value_snake_case.0.0};
                     let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, current_content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {
-                            #match_token_stream.map_or(None, |some_value| Some(some_value.0 #current_content_token_stream))
-                        }
+                        quote::quote! {#match_token_stream.map(|some_value| some_value.0 #current_content_token_stream)}
                     };
                     let element_dot_zero_token_stream = quote::quote! {#element_snake_case.0};
                     let generate_into_iter_map_element_collect_token_stream = |current_content_token_stream: &dyn quote::ToTokens| {
@@ -2446,8 +2444,8 @@ pub fn generate_postgresql_json_types(
                         NotNullOrNullable::NotNull => quote::quote! {#acc_snake_case.push(#content_token_stream);},
                         NotNullOrNullable::Nullable => quote::quote! {
                             match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
-                                Ok(ok_value) => {
-                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(ok_value)));
+                                Ok(value_9328b66f) => {
+                                    #acc_snake_case.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
                                 },
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
@@ -3153,27 +3151,24 @@ pub fn generate_postgresql_json_types(
                     float_greater_than_one_less_token_stream,
                 ) = {
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                        match #content_token_stream {
-                            Some(#value_snake_case) => match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
-                                #import_path::SingleOrMultiple::Single(
-                                    #ident_where_upper_camel_case::GreaterThan(
-                                        where_filters::PostgresqlJsonTypeWhereGreaterThan {
-                                            logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                            #value_snake_case: #ident_table_type_declaration_upper_camel_case(
-                                                #ident_origin_upper_camel_case(#value_snake_case)
-                                            ),
-                                        }
-                                    )
-                                )
-                            ]) {
-                                Ok(ok_value) => Some(ok_value),
-                                Err(error) => match error {
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("11287f54-f840-4076-a16b-1a59a74e6dee")
-                                }
+                       #content_token_stream.map_or(None, |value_7aa498e8| match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
+                            #import_path::SingleOrMultiple::Single(
+                                #ident_where_upper_camel_case::GreaterThan(
+                                    where_filters::PostgresqlJsonTypeWhereGreaterThan {
+                                        logical_operator: postgresql_crud_common::LogicalOperator::Or,
+                                        #value_snake_case: #ident_table_type_declaration_upper_camel_case(
+                                            #ident_origin_upper_camel_case(value_7aa498e8),
+                                        ),
+                                    },
+                                ),
+                            ),
+                        ]) {
+                            Ok(value_6f3e23b5) => Some(value_6f3e23b5),
+                            Err(error) => match error {
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("11287f54-f840-4076-a16b-1a59a74e6dee")
                             },
-                            None => None,
-                        }
+                        })
                     };
                     let create_dot_zero_dot_zero_token_stream = quote::quote!{create.0.0};
                     (
