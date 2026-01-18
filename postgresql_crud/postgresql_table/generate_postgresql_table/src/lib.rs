@@ -530,7 +530,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
     let select_snake_case = naming::SelectSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let error_snake_case = naming::ErrorSnakeCase;
-    let acc_snake_case = naming::AccSnakeCase;
     let query_part_snake_case = naming::QueryPartSnakeCase;
     let query_bind_snake_case = naming::QueryBindSnakeCase;
     let order_by_snake_case = naming::OrderBySnakeCase;
@@ -1330,7 +1329,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             generate_as_postgresql_type_token_stream(&field_type);
                         let if_write_is_err_token_stream =
                             macros_helpers::generate_if_write_is_err_token_stream(
-                                &quote::quote! {#acc_snake_case, "{ok_value},"},
+                                &quote::quote! {acc_a097110b, "{ok_value},"},
                                 &return_err_query_part_error_named_write_into_buffer_token_stream,
                             );
                         quote::quote! {
@@ -1359,11 +1358,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     );
                 quote::quote! {
                     fn #create_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#string_token_stream, postgresql_crud::#query_part_error_named_upper_camel_case> {
-                        let mut #acc_snake_case = String::default();
+                        let mut acc_a097110b = String::default();
                         #primary_key_content_token_stream
                         #column_increments_token_stream
-                        let _: Option<char> = #acc_snake_case.pop();
-                        Ok(#acc_snake_case)
+                        let _: Option<char> = acc_a097110b.pop();
+                        Ok(acc_a097110b)
                     }
                 }
             };
@@ -2299,7 +2298,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let primary_key_field_ident_double_quotes_token_stream =
                         generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
                     quote::quote! {
-                        acc.push_str(&match <#primary_key_field_type as postgresql_crud::PostgresqlType>::#select_only_updated_ids_query_part_snake_case(
+                        acc_88c91f52.push_str(&match <#primary_key_field_type as postgresql_crud::PostgresqlType>::#select_only_updated_ids_query_part_snake_case(
                             &self.#primary_key_field_ident,
                             #primary_key_field_ident_double_quotes_token_stream,
                             increment,
@@ -2317,7 +2316,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.field_type);
                     quote::quote! {
                         if let Some(some_value) = &self.#field_ident {
-                            #acc_snake_case.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_updated_ids_query_part_snake_case(
+                            acc_88c91f52.push_str(&match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #select_only_updated_ids_query_part_snake_case(
                                 &some_value.#value_snake_case,
                                 #field_ident_double_quotes_token_stream,
                                 increment,
@@ -2332,11 +2331,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 });
                 quote::quote! {
                     fn #select_only_updated_ids_query_part_snake_case(&self, #increment_snake_case: &mut u64) -> Result<#string_token_stream, postgresql_crud::QueryPartErrorNamed> {
-                        let mut #acc_snake_case = String::new();
+                        let mut acc_88c91f52 = String::new();
                         #primary_key_content_token_stream
                         #(#content_token_stream)*
-                        let _: Option<char> = #acc_snake_case.pop();
-                        Ok(#acc_snake_case)
+                        let _: Option<char> = acc_88c91f52.pop();
+                        Ok(acc_88c91f52)
                     }
                 }
             };
@@ -2660,7 +2659,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
          should_wrap_into_value: &ShouldWrapIntoValue| {
             let content_token_stream = quote::quote! {
                 let mut #rows_snake_case = #binded_query_snake_case.fetch(#executor_name_token_stream.as_mut());
-                let mut #acc_snake_case = Vec::new();
+                let mut acc_d16ac269 = Vec::new();
                 while let Some(some_value0) = match #postgresql_crud_snake_case::TryStreamExt::try_next(&mut #rows_snake_case).await {
                     Ok(ok_value) => match ok_value {
                         Some(ok_value1) => #value_handle_token_stream,
@@ -2671,9 +2670,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 }
                 {
-                    #acc_snake_case.push(some_value0);
+                    acc_d16ac269.push(some_value0);
                 }
-                #acc_snake_case
+                acc_d16ac269
             };
             match should_wrap_into_value {
                 ShouldWrapIntoValue::True => wrap_into_value_token_stream(&content_token_stream),
@@ -3914,9 +3913,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &quote::quote! {
                     #value_snake_case
                     .into_iter()
-                    .fold(Vec::new(), |mut #acc_snake_case, #element_snake_case| {
-                        #acc_snake_case.push(#element_snake_case);
-                        #acc_snake_case
+                    .fold(Vec::new(), |mut acc_4adf5a80, #element_snake_case| {
+                        acc_4adf5a80.push(#element_snake_case);
+                        acc_4adf5a80
                     })
                 },
             ));
@@ -5588,7 +5587,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let table_create_many_cloned = table_create_many.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                     let ident_vec_create = {
                                         let mut acc_92d248f7 = Vec::new();
                                         for #element_snake_case in chunk {
@@ -5736,7 +5735,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let table_create_one_cloned = table_create_one.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                     let ident_create = #ident_create_upper_camel_case {
                                         #ident_create_content_token_stream
                                     };
@@ -5842,7 +5841,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let current_table = table_test_read_many_by_non_existent_primary_keys.clone();
-                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                        acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
                     }
@@ -5984,7 +5983,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                        acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
                     }
@@ -6071,7 +6070,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     let current_table = #table_test_name_field_ident_token_stream.clone();
                                     let url_cloned = url.clone();
                                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                    #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                    acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                         let ident_create = #ident_create_upper_camel_case {
                                             #ident_create_content_token_stream
                                         };
@@ -6492,7 +6491,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             }
         };
         let read_one_tests_token_stream = quote::quote! {
-            #acc_snake_case.push({
+            acc_9189f86e.push({
                 let table_read_one_cloned = table_read_one.clone();
                 let url_cloned = url.clone();
                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
@@ -6649,7 +6648,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let table_update_many_cloned = table_update_many.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                     #maybe_previous_read_token_stream
                                     let update = <
                                         #field_type
@@ -6840,7 +6839,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 let table_update_one_cloned = table_update_one.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
-                                #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                                acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                     #maybe_previous_read_token_stream
                                     let update = <
                                         #field_type
@@ -6946,7 +6945,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let url_cloned = url.clone();
                         let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                         let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
-                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                        acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
                     };
@@ -7029,7 +7028,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         //todo is table name correct?
                         let current_table = table_test_read_many_by_equal_to_created_primary_keys.clone();
                         let ident_create_default_cloned = ident_create_default.clone();
-                        #acc_snake_case.push(futures::FutureExt::boxed(async move {
+                        acc_9189f86e.push(futures::FutureExt::boxed(async move {
                             #content_token_stream
                         }));
                     };
@@ -7043,7 +7042,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let delete_one_tests_token_stream = {
             let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream);
             quote::quote! {
-                #acc_snake_case.push({
+                acc_9189f86e.push({
                     let table_delete_one_cloned = table_delete_one.clone();
                     let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
                     futures::FutureExt::boxed(async move {
@@ -7389,7 +7388,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         #read_only_ids_to_two_dimensional_vec_read_inner_acc_fields_token_stream
                         futures::StreamExt::for_each_concurrent(
                             futures::stream::iter({
-                                let mut #acc_snake_case: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();
+                                let mut acc_9189f86e: Vec<futures::future::BoxFuture<'static, ()>> = Vec::new();
                                 #create_many_tests_token_stream
                                 #create_one_tests_token_stream
                                 #read_many_tests_token_stream
@@ -7398,7 +7397,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 #update_one_tests_token_stream
                                 #delete_many_tests_token_stream
                                 #delete_one_tests_token_stream
-                                #acc_snake_case
+                                acc_9189f86e
                             }),
                             100,
                             async |fut| { fut.await; },

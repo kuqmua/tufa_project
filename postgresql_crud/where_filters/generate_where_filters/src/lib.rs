@@ -102,7 +102,6 @@ pub fn generate_where_filters(
     let element_snake_case = naming::ElementSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let error_snake_case = naming::ErrorSnakeCase;
-    let acc_snake_case = naming::AccSnakeCase;
     let dimensions_snake_case = naming::DimensionsSnakeCase;
     let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
     let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrudCommon;
@@ -543,11 +542,11 @@ pub fn generate_where_filters(
                         postgresql_crud_macros_common::IncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
-                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {#acc_snake_case, "${ok_value},"}, &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
+                            let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_14596a52, "${ok_value},"}, &quote::quote! {panic!("87f47f75-b2db-4d88-a0f0-e254ac7d14a3");});
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let #value_snake_case = {
-                                    let mut #acc_snake_case = String::default();
+                                    let mut acc_14596a52 = String::default();
                                     for _ in #self_snake_case.#value_snake_case.to_vec() {
                                         match postgresql_crud_common::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                             Ok(ok_value) => {
@@ -558,8 +557,8 @@ pub fn generate_where_filters(
                                             },
                                         }
                                     }
-                                    let _ = #acc_snake_case.pop();
-                                    #acc_snake_case
+                                    let _ = acc_14596a52.pop();
+                                    acc_14596a52
                                 };
                                 Ok(format!(
                                     #format_handle_token_stream,

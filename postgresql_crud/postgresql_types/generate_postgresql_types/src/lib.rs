@@ -1031,7 +1031,6 @@ pub fn generate_postgresql_types(
         let microseconds_snake_case = naming::MicrosecondsSnakeCase;
         let as_upper_camel_case = naming::AsUpperCamelCase;
         let read_only_ids_snake_case = naming::ReadOnlyIdsSnakeCase;
-        let acc_snake_case = naming::AccSnakeCase;
         let option_update_snake_case = naming::OptionUpdateSnakeCase;
         let read_snake_case = naming::ReadSnakeCase;
         let hour_snake_case = naming::HourSnakeCase;
@@ -3193,18 +3192,18 @@ pub fn generate_postgresql_types(
                         let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                 Ok(Self({
-                                    let mut #acc_snake_case = Vec::new();
+                                    let mut acc_4ce2782a = Vec::new();
                                     for #element_snake_case in #value_snake_case {
                                         match #type_token_stream::#try_new_snake_case(#element_snake_case) {
                                             Ok(ok_value) => {
-                                                #acc_snake_case.push(ok_value);
+                                                acc_4ce2782a.push(ok_value);
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
                                             }
                                         }
                                     }
-                                    #acc_snake_case
+                                    acc_4ce2782a
                                 }))
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
@@ -4703,11 +4702,11 @@ pub fn generate_postgresql_types(
             let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
             let typical_query_part_token_stream = {
                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                    &quote::quote! {#acc_snake_case, "${ok_value}"},
+                    &quote::quote! {acc_c7df00f5, "${ok_value}"},
                     &postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path)
                 );
                 quote::quote! {
-                    let mut #acc_snake_case = String::default();
+                    let mut acc_c7df00f5 = String::default();
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                         Ok(ok_value) => {
                             #if_write_is_err_token_stream
@@ -4716,7 +4715,7 @@ pub fn generate_postgresql_types(
                             return Err(#error_snake_case);
                         }
                     }
-                    Ok(#acc_snake_case)
+                    Ok(acc_c7df00f5)
                 }
             };
             let ok_query_token_stream = quote::quote! {Ok(#query_snake_case)};
@@ -5539,19 +5538,19 @@ pub fn generate_postgresql_types(
                         (postgresql_crud_macros_common::NotNullOrNullable::NotNull, false) => (quote::quote! {new(vec![#element_snake_case.0.into()])}, proc_macro2::TokenStream::new()),
                         (postgresql_crud_macros_common::NotNullOrNullable::Nullable, true) => (
                             quote::quote! {try_new(Some(#element_snake_case.0.into())).expect("b244d498-527d-4332-98c9-770d27e7af35")},
-                            quote::quote! {#acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::try_new(None).expect("31878971-17fc-4526-ab01-42c8332e641f"));},
+                            quote::quote! {acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::try_new(None).expect("31878971-17fc-4526-ab01-42c8332e641f"));},
                         ),
-                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (quote::quote! {new(Some(#element_snake_case.0.into()))}, quote::quote! {#acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::new(None));}),
+                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, false) => (quote::quote! {new(Some(#element_snake_case.0.into()))}, quote::quote! {acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::new(None));}),
                     };
                     let ident_as_postgresql_type_test_cases_token_stream = generate_as_postgresql_type_test_cases_token_stream(&current_ident_token_stream);
                     quote::quote! {Some({
-                        let mut #acc_snake_case = Vec::new();
+                        let mut acc_0b59a062 = Vec::new();
                         for #element_snake_case in #ident_as_postgresql_type_test_cases_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
-                            #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
+                            acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#new_or_try_new_content_token_stream);
                         }
                         #maybe_acc_push_none_token_stream
                         #additonal_content_token_stream
-                        #acc_snake_case
+                        acc_0b59a062
                     })}
                 };
                 match &postgresql_type_pattern {
@@ -5652,10 +5651,10 @@ pub fn generate_postgresql_types(
                                     )
                                 };
                                 quote::quote! {
-                                    #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#first_token_stream);
+                                    acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#first_token_stream);
                                     if let Some(some_value) = #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new()).first() {
-                                        #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#second_token_stream);
-                                        #acc_snake_case.push(#self_as_postgresql_type_token_stream::Create::#third_token_stream);
+                                        acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#second_token_stream);
+                                        acc_0b59a062.push(#self_as_postgresql_type_token_stream::Create::#third_token_stream);
                                     }
                                 }
                             }
@@ -5700,14 +5699,11 @@ pub fn generate_postgresql_types(
                             quote::quote! {vec![{#content_token_stream}]}
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                            let mut #acc_snake_case = Vec::new();
-                            for element0 in #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case) {
-                                for element1 in element0 {
-                                    #acc_snake_case.push(vec![Some(element1)]);
-                                }
-                            }
-                            #acc_snake_case.push(vec![None]);
-                            #acc_snake_case
+                            #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case)
+                            .into_iter()
+                            .flat_map(|element0| element0.into_iter().map(|element1| vec![Some(element1)]))
+                            .chain(std::iter::once(vec![None]))
+                            .collect()
                         },
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &not_null_or_nullable {
@@ -5715,7 +5711,7 @@ pub fn generate_postgresql_types(
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let element1_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element1});
                                 quote::quote! {
-                                    let mut #acc_snake_case = Vec::new();
+                                    let mut acc_abf96c9f = Vec::new();
                                     let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_not_null_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                     let option_additional = {
                                         let mut option_additional = None;
@@ -5748,23 +5744,23 @@ pub fn generate_postgresql_types(
                                         has_len_greater_than_one
                                     };
                                     for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
-                                        #acc_snake_case.push(vec![#element_snake_case]);
+                                        acc_abf96c9f.push(vec![#element_snake_case]);
                                     }
                                     if let Some(some_value) = option_additional {
                                         if has_len_greater_than_one {
-                                            #acc_snake_case.push(some_value.0);
+                                            acc_abf96c9f.push(some_value.0);
                                         }
                                         if !has_len_greater_than_one {
-                                            #acc_snake_case.push(some_value.1);
+                                            acc_abf96c9f.push(some_value.1);
                                         }
                                     }
-                                    #acc_snake_case
+                                    acc_abf96c9f
                                 }
                             }
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let element1_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element1});
                                 quote::quote! {
-                                    let mut #acc_snake_case = Vec::new();
+                                    let mut acc_68eba82f = Vec::new();
                                     let read_only_ids_to_two_dimensional_vec_read_inner = #ident_standart_nullable_as_postgresql_type_test_cases_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                     let option_additional = {
                                         let mut option_additional = None;
@@ -5787,7 +5783,7 @@ pub fn generate_postgresql_types(
                                         option_additional
                                     };
                                     let has_len_greater_than_one = read_only_ids_to_two_dimensional_vec_read_inner.len() > 1;
-                                    #acc_snake_case.push({
+                                    acc_68eba82f.push({
                                         let mut current_acc = Vec::new();
                                         for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                             for element1 in element0 {
@@ -5798,13 +5794,13 @@ pub fn generate_postgresql_types(
                                     });
                                     if let Some(some_value) = option_additional {
                                         if has_len_greater_than_one {
-                                            #acc_snake_case.push(some_value.0);
+                                            acc_68eba82f.push(some_value.0);
                                         }
                                         if !has_len_greater_than_one {
-                                            #acc_snake_case.push(some_value.1);
+                                            acc_68eba82f.push(some_value.1);
                                         }
                                     }
-                                    #acc_snake_case
+                                    acc_68eba82f
                                 }
                             }
                         },
@@ -5815,7 +5811,7 @@ pub fn generate_postgresql_types(
                             };
                             let element2_token_stream = generate_star_or_dot_clone_token_stream(&quote::quote!{element2});
                             quote::quote! {
-                                let mut #acc_snake_case = Vec::new();
+                                let mut acc_5f7f59ac = Vec::new();
                                 let read_only_ids_to_two_dimensional_vec_read_inner = #content_token_stream::#read_only_ids_to_two_dimensional_vec_read_inner_snake_case(#read_only_ids_snake_case);
                                 let option_additional = {
                                     let mut option_additional = None;
@@ -5854,7 +5850,7 @@ pub fn generate_postgresql_types(
                                     }
                                     has_len_greater_than_one
                                 };
-                                #acc_snake_case.push(vec![Some({
+                                acc_5f7f59ac.push(vec![Some({
                                     let mut current_acc = Vec::new();
                                     for element0 in read_only_ids_to_two_dimensional_vec_read_inner {
                                         for element1 in element0 {
@@ -5865,16 +5861,16 @@ pub fn generate_postgresql_types(
                                     }
                                     current_acc
                                 })]);
-                                #acc_snake_case.push(vec![None]);
+                                acc_5f7f59ac.push(vec![None]);
                                 if let Some(some_value) = option_additional {
                                     if has_len_greater_than_one {
-                                        #acc_snake_case.push(some_value.0);
+                                        acc_5f7f59ac.push(some_value.0);
                                     }
                                     if !has_len_greater_than_one {
-                                        #acc_snake_case.push(some_value.1);
+                                        acc_5f7f59ac.push(some_value.1);
                                     }
                                 }
-                                #acc_snake_case
+                                acc_5f7f59ac
                             }
                         }
                     },
@@ -5971,10 +5967,10 @@ pub fn generate_postgresql_types(
                         };
                         quote::quote! {
                             match #import_path::NotEmptyUniqueEnumVec::try_new({
-                                let mut #acc_snake_case = Vec::new();
+                                let mut acc_74c71d5d = Vec::new();
                                 for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
                                     let index = i.checked_add(1)?;
-                                    #acc_snake_case.push(
+                                    acc_74c71d5d.push(
                                         #ident_where_upper_camel_case::DimensionOneEqual(
                                             where_filters::PostgresqlTypeWhereDimensionOneEqual {
                                                 logical_operator: #import_path::LogicalOperator::Or,
@@ -5990,7 +5986,7 @@ pub fn generate_postgresql_types(
                                         )
                                     );
                                 }
-                                #acc_snake_case
+                                acc_74c71d5d
                             }) {
                                 Ok(ok_value) => Some(ok_value),
                                 Err(error) => match error {
