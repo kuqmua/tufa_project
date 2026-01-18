@@ -1680,7 +1680,7 @@ pub fn generate_postgresql_types(
                 };
                 let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
                 let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_token_stream) {
-                    Ok(ok_value) => ok_value,
+                    Ok(value_3c0b34fb) => value_3c0b34fb,
                     Err(error) => {
                         return Err(serde::de::Error::custom(error));
                     }
@@ -1696,7 +1696,7 @@ pub fn generate_postgresql_types(
                         let fields_token_stream = generate_vec_field_index_token_stream(length);
                         quote::quote! {
                             match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#fields_token_stream) {
-                                Ok(ok_value) => Ok(ok_value),
+                                Ok(value_e81dd4a5) => Ok(value_e81dd4a5),
                                 Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                             }
                         }
@@ -2509,7 +2509,7 @@ pub fn generate_postgresql_types(
                     &ident_standart_not_null_origin_try_new_error_named_upper_camel_case,
                     &quote::quote! {
                         match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
-                            Ok(ok_value) => Ok(Self(ok_value)),
+                            Ok(value_0f9f1a61) => Ok(Self(value_0f9f1a61)),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -3175,7 +3175,7 @@ pub fn generate_postgresql_types(
                         let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {Ok(Self(match #value_snake_case {
                                 Some(value_989d943e) => Some(match #type_token_stream::#try_new_snake_case(value_989d943e) {
-                                    Ok(ok_value) => ok_value,
+                                    Ok(value_ea2a4a8c) => value_ea2a4a8c,
                                     Err(#error_snake_case) => {
                                         return Err(#error_snake_case);
                                     },
@@ -3189,8 +3189,8 @@ pub fn generate_postgresql_types(
                                     let mut acc_4ce2782a = Vec::new();
                                     for #element_snake_case in #value_snake_case {
                                         match #type_token_stream::#try_new_snake_case(#element_snake_case) {
-                                            Ok(ok_value) => {
-                                                acc_4ce2782a.push(ok_value);
+                                            Ok(value_a763a416) => {
+                                                acc_4ce2782a.push(value_a763a416);
                                             },
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -3286,7 +3286,7 @@ pub fn generate_postgresql_types(
                                         Ok(Self(sqlx::postgres::types::PgRange {
                                             #start_snake_case: match #value_snake_case.#start_snake_case {
                                                 std::ops::Bound::Included(included_value) => match #current_ident_token_stream::#try_new_snake_case(included_value) {
-                                                    Ok(ok_value) => std::ops::Bound::Included(ok_value.0),
+                                                    Ok(value_a9c1f658) => std::ops::Bound::Included(value_a9c1f658.0),
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
                                                             #error_snake_case,
@@ -3295,7 +3295,7 @@ pub fn generate_postgresql_types(
                                                     }
                                                 },
                                                 std::ops::Bound::Excluded(excluded_value) => match #current_ident_token_stream::#try_new_snake_case(excluded_value) {
-                                                    Ok(ok_value) => std::ops::Bound::Excluded(ok_value.0),
+                                                    Ok(value_f0ff8036) => std::ops::Bound::Excluded(value_f0ff8036.0),
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
                                                             #error_snake_case,
@@ -3307,7 +3307,7 @@ pub fn generate_postgresql_types(
                                             },
                                             #end_snake_case: match #value_snake_case.#end_snake_case {
                                                 std::ops::Bound::Included(included_value) => match #current_ident_token_stream::#try_new_snake_case(included_value) {
-                                                    Ok(ok_value) => std::ops::Bound::Included(ok_value.0),
+                                                    Ok(value_80168e2b) => std::ops::Bound::Included(value_80168e2b.0),
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
                                                             #error_snake_case,
@@ -3316,7 +3316,7 @@ pub fn generate_postgresql_types(
                                                     }
                                                 },
                                                 std::ops::Bound::Excluded(excluded_value) => match #current_ident_token_stream::#try_new_snake_case(excluded_value) {
-                                                    Ok(ok_value) => std::ops::Bound::Excluded(ok_value.0),
+                                                    Ok(value_05f87b70) => std::ops::Bound::Excluded(value_05f87b70.0),
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
                                                             #error_snake_case,
@@ -3374,7 +3374,7 @@ pub fn generate_postgresql_types(
                                             let #date_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(
                                                 #value_snake_case.#date_snake_case()
                                             ) {
-                                                Ok(ok_value) => ok_value,
+                                                Ok(value_9be8eddb) => value_9be8eddb,
                                                 Err(#error_snake_case) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_upper_camel_case {
                                                         #error_snake_case,
@@ -3385,7 +3385,7 @@ pub fn generate_postgresql_types(
                                             let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(
                                                 #value_snake_case.#time_snake_case()
                                             ) {
-                                                Ok(ok_value) => ok_value,
+                                                Ok(value_993484ce) => value_993484ce,
                                                 Err(#error_snake_case) => {
                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_case {
                                                         #error_snake_case,
@@ -3402,7 +3402,7 @@ pub fn generate_postgresql_types(
                                             }));
                                             quote::quote! {
                                                 let #date_naive_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.date_naive()) {
-                                                    Ok(ok_value) => ok_value,
+                                                    Ok(value_158945ad) => value_158945ad,
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_naive_upper_camel_case {
                                                             #error_snake_case,
@@ -3411,7 +3411,7 @@ pub fn generate_postgresql_types(
                                                     }
                                                 };
                                                 let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.time()) {
-                                                    Ok(ok_value) => ok_value,
+                                                    Ok(value_c5af739c) => value_c5af739c,
                                                     Err(#error_snake_case) => {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_camel_case {
                                                             #error_snake_case,
@@ -3564,7 +3564,7 @@ pub fn generate_postgresql_types(
                                         let generate_self_match_try_new_token_stream = |current_parameters_token_stream: &dyn quote::ToTokens, match_error_variants_token_stream: &dyn quote::ToTokens| {
                                             quote::quote! {
                                                 match Self::#try_new_snake_case(#current_parameters_token_stream) {
-                                                    Ok(ok_value) => Ok(ok_value),
+                                                    Ok(value_b318fc86) => Ok(value_b318fc86),
                                                     Err(#error_snake_case) => match #error_snake_case {
                                                         #match_error_variants_token_stream
                                                     }
@@ -3669,14 +3669,14 @@ pub fn generate_postgresql_types(
                                                         #second_snake_case,
                                                         #microsecond_snake_case,
                                                     ) {
-                                                        Ok(ok_value) => {
-                                                            if ok_value.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
+                                                        Ok(value_9932d535) => {
+                                                            if value_9932d535.nanosecond().checked_rem(1000).expect("0def33ce-99c1-4969-9f1d-6923319ccc5b") != 0 {
                                                                 return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
-                                                                    #value_snake_case: ok_value.to_string(),
+                                                                    #value_snake_case: value_9932d535.to_string(),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            Ok(Self(ok_value))
+                                                            Ok(Self(value_9932d535))
                                                         },
                                                         Err(#error_snake_case) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                             #hour_snake_case,
@@ -3908,7 +3908,7 @@ pub fn generate_postgresql_types(
             let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle);
             let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &quote::quote! {#self_snake_case.0});
             let impl_sqlx_decode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle, &{
-                let scopes_ok_value_token_stream = quote::quote! {(ok_value)};
+                let scopes_ok_value_token_stream = quote::quote! {(value_147c3532)};
                 let ok_self_scopes_ok_value_token_stream = quote::quote! {Ok(Self #scopes_ok_value_token_stream)};
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
@@ -3939,7 +3939,7 @@ pub fn generate_postgresql_types(
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_ok_value_token_stream,
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
                                 match Self::#try_new_snake_case #scopes_ok_value_token_stream {
-                                    Ok(ok_value0) => Ok(ok_value0),
+                                    Ok(value_93eb5329) => Ok(value_93eb5329),
                                     Err(#error_snake_case) => Err(Box::#new_snake_case(#error_snake_case)),
                                 }
                             },
@@ -4052,7 +4052,7 @@ pub fn generate_postgresql_types(
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             let impl_sqlx_type_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_sqlx_encode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {#self_snake_case.0});
-            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(ok_value))});
+            let impl_sqlx_decode_sqlx_postgres_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case, &quote::quote! {Ok(Self(value_147c3532))});
         //todo rewrite as dependency of PostgresqlType trait?
             let impl_postgresql_type_equal_operator_for_ident_table_type_declaration_token_stream = postgresql_crud_macros_common::impl_postgresql_type_equal_operator_for_ident_token_stream(
                 &import_path,
@@ -4573,7 +4573,7 @@ pub fn generate_postgresql_types(
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &ident_read_upper_camel_case,
                 &ident_origin_upper_camel_case,
-                &quote::quote! {Ok(Self(ok_value))}
+                &quote::quote! {Ok(Self(value_147c3532))}
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
             let maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream = if let IsNotNullStandartCanBePrimaryKey::True = &is_not_null_standart_can_be_primary_key {
@@ -4586,7 +4586,7 @@ pub fn generate_postgresql_types(
                     &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
                     &quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                            Ok(ok_value) => Ok(format!("({column} = ${ok_value})")),
+                            Ok(value_8da76391) => Ok(format!("({column} = ${value_8da76391})")),
                             Err(#error_snake_case) => Err(#error_snake_case)
                         }
                     },
@@ -4625,7 +4625,7 @@ pub fn generate_postgresql_types(
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &ident_read_only_ids_upper_camel_case,
                 &ident_read_upper_camel_case,
-                &quote::quote! {Ok(Self(ok_value))}
+                &quote::quote! {Ok(Self(value_147c3532))}
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_read_only_ids_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_read_only_ids_upper_camel_case, &ident_read_upper_camel_case);
             quote::quote! {
@@ -4696,13 +4696,13 @@ pub fn generate_postgresql_types(
             let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
             let typical_query_part_token_stream = {
                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                    &quote::quote! {acc_c7df00f5, "${ok_value}"},
+                    &quote::quote! {acc_c7df00f5, "${value_ba581e0f}"},
                     &postgresql_crud_macros_common::generate_return_err_query_part_error_named_write_into_buffer_token_stream(import_path)
                 );
                 quote::quote! {
                     let mut acc_c7df00f5 = String::default();
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                        Ok(ok_value) => {
+                        Ok(value_ba581e0f) => {
                             #if_write_is_err_token_stream
                         },
                         Err(#error_snake_case) => {
@@ -5972,7 +5972,7 @@ pub fn generate_postgresql_types(
                                 }
                                 acc_74c71d5d
                             }) {
-                                Ok(ok_value) => Some(ok_value),
+                                Ok(value_2218be19) => Some(value_2218be19),
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("45c8de3c-965b-44a9-b1fd-b7148531da9e")

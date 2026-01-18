@@ -1996,7 +1996,7 @@ pub fn generate_postgresql_json_types(
             let select_only_created_or_updated_ids_query_part_token_stream = if let PostgresqlJsonType::UuidUuidAsJsonbString = &postgresql_json_type {
                 quote::quote! {
                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                        Ok(ok_value) => Ok(format!("'{field_ident}',jsonb_build_object('value',${ok_value}),")),
+                        Ok(value_f06128be) => Ok(format!("'{field_ident}',jsonb_build_object('value',${value_f06128be}),")),
                         Err(#error_snake_case) => Err(#error_snake_case),
                     }
                 }
@@ -2267,10 +2267,10 @@ pub fn generate_postgresql_json_types(
                 &ident_update_for_query_upper_camel_case,
                 &{
                     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{value_26526e0f}})"));
                     quote::quote! {
                         match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
-                            Ok(ok_value) => Ok(format!(#format_handle_token_stream)),
+                            Ok(value_26526e0f) => Ok(format!(#format_handle_token_stream)),
                             Err(#error_snake_case) => Err(#error_snake_case),
                         }
                     }
@@ -3053,7 +3053,7 @@ pub fn generate_postgresql_json_types(
                                             Some(value_1bbf74bc) => match #import_path::NotEmptyUniqueEnumVec::try_new(
                                                 vec![#current_ident_where_upper_camel_case #content_token_stream]
                                             ) {
-                                                Ok(ok_value) => Some(ok_value),
+                                                Ok(value_d82bbdbe) => Some(value_d82bbdbe),
                                                 Err(error) => match error {
                                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
                                                         return None;
@@ -3072,7 +3072,7 @@ pub fn generate_postgresql_json_types(
                         match #import_path::NotEmptyUniqueEnumVec::try_new(vec![
                             #content_token_stream
                         ]) {
-                            Ok(ok_value) => Some(ok_value),
+                            Ok(value_e196e86d) => Some(value_e196e86d),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("e9f9b021-e884-412e-bc02-7c1dafd35fdc")
@@ -3132,7 +3132,7 @@ pub fn generate_postgresql_json_types(
                                         Some(value_68880991) => match #import_path::NotEmptyUniqueEnumVec::try_new(
                                             vec![#current_ident_where_upper_camel_case #content_token_stream]
                                         ) {
-                                            Ok(ok_value) => Some(ok_value),
+                                            Ok(value_cdc120a8) => Some(value_cdc120a8),
                                             Err(error) => match error {
                                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => {
                                                     return None;
@@ -3148,7 +3148,7 @@ pub fn generate_postgresql_json_types(
                     };
                     quote::quote! {
                         match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
-                            Ok(ok_value) => Some(ok_value),
+                            Ok(value_cee8d0ab) => Some(value_cee8d0ab),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("497359a5-49fb-4152-a9f4-5d1bbda2f926")
@@ -3245,17 +3245,17 @@ pub fn generate_postgresql_json_types(
                                 #ident_table_type_declaration_upper_camel_case::new(start),
                                 #ident_table_type_declaration_upper_camel_case::new(end)
                             ) {
-                                Ok(ok_value0) => match postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(vec![
+                                Ok(value_cdde02cc) => match postgresql_crud_common::NotEmptyUniqueEnumVec::try_new(vec![
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_upper_camel_case::Between(
                                             where_filters::PostgresqlJsonTypeWhereBetween {
                                                 logical_operator: postgresql_crud_common::LogicalOperator::Or,
-                                                value: ok_value0,
+                                                value: value_cdde02cc,
                                             }
                                         )
                                     )
                                 ]) {
-                                    Ok(ok_value1) => Some(ok_value1),
+                                    Ok(value_41af48fb) => Some(value_41af48fb),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("5edabfcc-fcbe-419c-a2be-5bd7e961e6e0")
@@ -3335,7 +3335,7 @@ pub fn generate_postgresql_json_types(
                                     ),
                                 )
                             ]) {
-                                Ok(ok_value) => Some(ok_value),
+                                Ok(value_1c4f89a4) => Some(value_1c4f89a4),
                                 Err(error) => match error {
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                     #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("16ae359d-3869-421b-b37d-85b0b24835bd")
@@ -3379,7 +3379,7 @@ pub fn generate_postgresql_json_types(
                                 ),
                             )
                         ]) {
-                            Ok(ok_value) => Some(ok_value),
+                            Ok(value_75ae8964) => Some(value_75ae8964),
                             Err(error) => match error {
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                 #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("b9713787-7160-4a8b-b82c-72617d446184")
@@ -3428,7 +3428,7 @@ pub fn generate_postgresql_json_types(
                                     }
                                     acc_f95ec4f2
                                 }) {
-                                    Ok(ok_value) => Some(ok_value),
+                                    Ok(value_69c93ec5) => Some(value_69c93ec5),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("47e44ecd-d1c9-4d2b-9d9e-4191cad34be9")
@@ -3510,7 +3510,7 @@ pub fn generate_postgresql_json_types(
                                     )
                                 })
                                 .collect()) {
-                                    Ok(ok_value) => Some(ok_value),
+                                    Ok(value_0363f494) => Some(value_0363f494),
                                     Err(error) => match error {
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => None,
                                         #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("415a73d9-3665-4dde-9120-662a51626586")

@@ -587,9 +587,9 @@ impl<T: PartialEq + Clone> PostgresqlTypeWhere<T> {
         value: Vec<T>,
     ) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         match NotEmptyUniqueEnumVec::try_new(value) {
-            Ok(ok_value) => Ok(Self {
+            Ok(value_56f976af) => Ok(Self {
                 logical_operator,
-                value: ok_value,
+                value: value_56f976af,
             }),
             Err(error) => Err(error),
         }

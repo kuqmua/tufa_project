@@ -830,7 +830,7 @@ pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
             fn decode(#value_snake_case: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
                 match <#type_token_stream as sqlx::Decode<sqlx::Postgres>>::decode(#value_snake_case) {
-                    Ok(ok_value) => #ok_value_match_token_stream,
+                    Ok(value_147c3532) => #ok_value_match_token_stream,
                     Err(error) => Err(error),
                 }
             }
