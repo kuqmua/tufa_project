@@ -4947,22 +4947,22 @@ pub fn generate_postgresql_json_object_type(
                                                         ));
                                                     }
                                                     {
-                                                        let current_value = #ident_create_upper_camel_case::new(acc_6a886d56);
-                                                        if !acc_ccd79a32.contains(&current_value) {
-                                                            acc_ccd79a32.push(current_value);
+                                                        let value_07c0c08c = #ident_create_upper_camel_case::new(acc_6a886d56);
+                                                        if !acc_ccd79a32.contains(&value_07c0c08c) {
+                                                            acc_ccd79a32.push(value_07c0c08c);
                                                         }
                                                     }
                                                     if let Some(value_f6686d5d) = option_additional {
                                                         if has_len_greater_than_one {
-                                                            let current_value = value_f6686d5d.0;
-                                                            if !acc_ccd79a32.contains(&current_value) {
-                                                                acc_ccd79a32.push(current_value);
+                                                            let value_60116463 = value_f6686d5d.0;
+                                                            if !acc_ccd79a32.contains(&value_60116463) {
+                                                                acc_ccd79a32.push(value_60116463);
                                                             }
                                                         }
                                                         if !has_len_greater_than_one {
-                                                            let current_value = value_f6686d5d.1;
-                                                            if !acc_ccd79a32.contains(&current_value) {
-                                                                acc_ccd79a32.push(current_value);
+                                                            let value_7a843059 = value_f6686d5d.1;
+                                                            if !acc_ccd79a32.contains(&value_7a843059) {
+                                                                acc_ccd79a32.push(value_7a843059);
                                                             }
                                                         }
                                                     }

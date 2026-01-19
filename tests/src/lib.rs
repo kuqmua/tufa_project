@@ -325,7 +325,7 @@ mod tests {
                 | toml::Value::Array(_) => panic!("cb693a3f-ff75-47ba-b747-94361925e2e6"),
             };
             let value_table_len = value_table.len();
-            let check_version = |current_value_table: &toml::value::Table| match current_value_table
+            let check_version = |value_df993c3d: &toml::value::Table| match value_df993c3d
                 .get("version")
                 .expect("d5b2b269-d832-4c94-887b-ec44a7e2045f")
             {
@@ -352,7 +352,7 @@ mod tests {
                 | toml::Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
             };
             let check_features =
-                |current_value_table: &toml::value::Table| match current_value_table
+                |value_121eb307: &toml::value::Table| match value_121eb307
                     .get("features")
                     .expect("473577d5-0482-4460-b211-60131d9b7c2a")
                 {

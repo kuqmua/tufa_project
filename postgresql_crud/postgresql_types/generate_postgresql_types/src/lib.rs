@@ -987,13 +987,13 @@ pub fn generate_postgresql_types(
             quote::quote! {
                 sqlx::postgres::types::PgRange {
                     start: match #match_content_token_stream.start {
-                        std::ops::Bound::Included(current_value) => std::ops::Bound::Included(#input_token_stream),
-                        std::ops::Bound::Excluded(current_value) => std::ops::Bound::Excluded(#input_token_stream),
+                        std::ops::Bound::Included(value_af65ccce) => std::ops::Bound::Included(#input_token_stream),
+                        std::ops::Bound::Excluded(value_af65ccce) => std::ops::Bound::Excluded(#input_token_stream),
                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                     },
                     end: match #match_content_token_stream.end {
-                        std::ops::Bound::Included(current_value) => std::ops::Bound::Included(#input_token_stream),
-                        std::ops::Bound::Excluded(current_value) => std::ops::Bound::Excluded(#input_token_stream),
+                        std::ops::Bound::Included(value_af65ccce) => std::ops::Bound::Included(#input_token_stream),
+                        std::ops::Bound::Excluded(value_af65ccce) => std::ops::Bound::Excluded(#input_token_stream),
                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                     },
                 }
@@ -3144,7 +3144,7 @@ pub fn generate_postgresql_types(
                                                 &value_snake_case,
                                                 &{
                                                     let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
-                                                    quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(current_value)}
+                                                    quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value_af65ccce)}
                                                 }
                                             )
                                         )
@@ -3908,8 +3908,8 @@ pub fn generate_postgresql_types(
             let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle);
             let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_encode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &quote::quote! {#self_snake_case.0});
             let impl_sqlx_decode_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle, &{
-                let scopes_ok_value_token_stream = quote::quote! {(value_147c3532)};
-                let ok_self_scopes_ok_value_token_stream = quote::quote! {Ok(Self #scopes_ok_value_token_stream)};
+                let scopes_value_token_stream = quote::quote! {(value_147c3532)};
+                let ok_self_scopes_value_token_stream = quote::quote! {Ok(Self #scopes_value_token_stream)};
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
@@ -3936,17 +3936,17 @@ pub fn generate_postgresql_types(
                             | PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                             | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
-                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_ok_value_token_stream,
+                            | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_token_stream,
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range | PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
-                                match Self::#try_new_snake_case #scopes_ok_value_token_stream {
+                                match Self::#try_new_snake_case #scopes_value_token_stream {
                                     Ok(value_93eb5329) => Ok(value_93eb5329),
                                     Err(#error_snake_case) => Err(Box::#new_snake_case(#error_snake_case)),
                                 }
                             },
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_scopes_ok_value_token_stream,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_scopes_value_token_stream,
                     },
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => ok_self_scopes_ok_value_token_stream,
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => ok_self_scopes_value_token_stream,
                 }
             });
             let impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream = {
@@ -5133,7 +5133,7 @@ pub fn generate_postgresql_types(
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_pg_range_conversion_token_stream(&value_dot_zero_dot_zero_token_stream, &quote::quote!{current_value})
+                                    generate_pg_range_conversion_token_stream(&value_dot_zero_dot_zero_token_stream, &quote::quote!{value_af65ccce})
                                 } else {
                                     value_dot_zero_dot_zero_token_stream
                                 }
