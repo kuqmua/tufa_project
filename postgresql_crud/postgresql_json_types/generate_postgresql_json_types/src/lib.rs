@@ -1969,9 +1969,13 @@ pub fn generate_postgresql_json_types(
                     &ident_update_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_update_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
-                &ident_update_upper_camel_case
-            );
+            let impl_ident_update_token_stream = {
+                quote::quote!{
+                    impl #ident_update_upper_camel_case {
+                        #pub_new_or_const_new_self_ident_origin_new_value_token_stream
+                    }
+                }
+            };
             let impl_error_occurence_lib_to_std_string_string_for_ident_update_token_stream = if let IsStandartNotNullUuid::True = &is_standart_not_null_uuid {
                 macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:?}")})
             } else {
