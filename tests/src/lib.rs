@@ -351,21 +351,20 @@ mod tests {
                 | toml::Value::Datetime(_)
                 | toml::Value::Array(_) => panic!("a3410a37-d6f8-4a5d-acb6-8449b02181ab"),
             };
-            let check_features =
-                |value_121eb307: &toml::value::Table| match value_121eb307
-                    .get("features")
-                    .expect("473577d5-0482-4460-b211-60131d9b7c2a")
-                {
-                    toml::Value::Array(_) => (),
-                    toml::Value::String(_)
-                    | toml::Value::Table(_)
-                    | toml::Value::Integer(_)
-                    | toml::Value::Float(_)
-                    | toml::Value::Boolean(_)
-                    | toml::Value::Datetime(_) => {
-                        panic!("38ba32e9-fe34-4628-8505-414b937c645f")
-                    }
-                };
+            let check_features = |value_121eb307: &toml::value::Table| match value_121eb307
+                .get("features")
+                .expect("473577d5-0482-4460-b211-60131d9b7c2a")
+            {
+                toml::Value::Array(_) => (),
+                toml::Value::String(_)
+                | toml::Value::Table(_)
+                | toml::Value::Integer(_)
+                | toml::Value::Float(_)
+                | toml::Value::Boolean(_)
+                | toml::Value::Datetime(_) => {
+                    panic!("38ba32e9-fe34-4628-8505-414b937c645f")
+                }
+            };
             if value_table_len == 1 {
                 check_version(value_table);
             } else if value_table_len == 2 {
