@@ -971,7 +971,7 @@ pub fn generate_postgresql_json_types(
             let ident_origin_impl_new_self_content_token_stream = {
                 let generate_value_map_type_new_token_stream = |type_token_stream: &dyn quote::ToTokens| quote::quote! {#value_snake_case.map(#type_token_stream::#new_snake_case)};
                 let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(|#element_snake_case|#type_token_stream::#new_snake_case(#element_snake_case)).collect()},
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#value_snake_case.into_iter().map(#type_token_stream::#new_snake_case).collect()},
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_map_type_new_token_stream(&type_token_stream),
                 };
                 match &postgresql_json_type_pattern {
