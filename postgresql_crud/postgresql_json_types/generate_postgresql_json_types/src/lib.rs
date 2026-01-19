@@ -1925,9 +1925,7 @@ pub fn generate_postgresql_json_types(
             let impl_std_convert_from_ident_origin_for_ident_read_inner_token_stream = {
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
-                let nullable_token_stream = quote::quote!{
-                    #value_dot_zero_token_stream.map(|value_08656169| value_08656169.into())
-                };
+                let nullable_token_stream = quote::quote!{#value_dot_zero_token_stream.map(Into::into)};
                 let into_inner_content_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => value_dot_zero_token_stream,
