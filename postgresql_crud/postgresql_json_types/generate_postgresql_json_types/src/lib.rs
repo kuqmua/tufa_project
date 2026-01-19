@@ -2641,28 +2641,31 @@ pub fn generate_postgresql_json_types(
                 |generate_acc_token_stream(
                     &{
                         let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                            &quote::quote! {#value_snake_case.0},
+                            &match &dimension1_not_null_or_nullable {
+                                NotNullOrNullable::NotNull => quote::quote! {value1.0},
+                                NotNullOrNullable::Nullable => quote::quote! {value2.0},
+                            },
                             &generate_not_null_or_nullable_token_stream(
                                 dimension2_not_null_or_nullable,
                                 &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
-                                &quote::quote!{value},
+                                &quote::quote!{value3},
                             ),
-                            &quote::quote!{value}
+                            &quote::quote!{value3}
                         );
                         let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                             dimension1_not_null_or_nullable,
                             &dimension2_token_stream,
-                            &quote::quote!{value},
-                            &quote::quote!{value}
+                            &quote::quote!{value1},
+                            &quote::quote!{value2}
                         );
                         let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                             &maybe_if_some_dimension2_token_stream,
-                            &quote::quote!{value},
-                            &quote::quote!{value}
+                            &quote::quote!{value0},
+                            &quote::quote!{value1}
                         );
                         quote::quote! {#dimension1_token_stream}
                     },
-                    &quote::quote!{value}
+                    &quote::quote!{value0}
                 );
                 let generate_dimension_index_number_two_token_stream = |
                     dimension1_not_null_or_nullable: &NotNullOrNullable,
@@ -2696,12 +2699,12 @@ pub fn generate_postgresql_json_types(
                         );
                         let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                             &maybe_if_some_dimension2_token_stream,
-                            &quote::quote!{value},
+                            &quote::quote!{value0},
                             &quote::quote!{value}
                         );
                         quote::quote! {#dimension1_token_stream}
                     },
-                    &quote::quote!{value}
+                    &quote::quote!{value0}
                 );
                 let generate_dimension_index_number_three_token_stream = |
                     dimension1_not_null_or_nullable: &NotNullOrNullable,
@@ -2745,12 +2748,12 @@ pub fn generate_postgresql_json_types(
                         );
                         let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                             &maybe_if_some_dimension2_token_stream,
-                            &quote::quote!{value},
+                            &quote::quote!{value0},
                             &quote::quote!{value}
                         );
                         quote::quote! {#dimension1_token_stream}
                     },
-                    &quote::quote!{value}
+                    &quote::quote!{value0}
                 );
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
