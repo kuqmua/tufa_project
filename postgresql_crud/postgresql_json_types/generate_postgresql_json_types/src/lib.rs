@@ -1182,14 +1182,6 @@ pub fn generate_postgresql_json_types(
                 #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
             }
         };
-        let generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = |current_ident: &dyn quote::ToTokens|{
-            let pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream = generate_pub_fn_new_value_ident_read_inner_content_token_stream(&self_ident_origin_new_value_token_stream);
-            quote::quote! {
-                impl #current_ident {
-                    #pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream
-                }
-            }
-        };
         let ident_origin_struct_content_token_stream = quote::quote!{(#ident_origin_upper_camel_case);};
         let ident_table_type_declaration_token_stream = {
             let ident_table_type_declaration_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
@@ -1207,9 +1199,13 @@ pub fn generate_postgresql_json_types(
                     &ident_table_type_declaration_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_table_type_declaration_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
-                &ident_table_type_declaration_upper_camel_case
-            );
+            let impl_ident_table_type_declaration_token_stream = {
+                quote::quote!{
+                    impl #ident_table_type_declaration_upper_camel_case {
+                        #pub_new_or_const_new_self_ident_origin_new_value_token_stream
+                    }
+                }
+            };
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_table_type_declaration_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             //todo maybe add to trait?
