@@ -2152,16 +2152,25 @@ pub fn postgresql_crud_common_query_part_error_named_checked_add_initialization_
     quote::quote! {postgresql_crud_common::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
 
-pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(
+pub fn generate_impl_crate_is_string_empty_for_ident_content_token_stream(
     ident: &dyn quote::ToTokens,
+    content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     quote::quote! {
         impl postgresql_crud_common::IsStringEmpty for #ident {
             fn is_string_empty(&self) -> bool {
-                self.0.to_string().is_empty()
+                #content_token_stream
             }
         }
     }
+}
+pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(
+    ident: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    generate_impl_crate_is_string_empty_for_ident_content_token_stream(
+        &ident,
+        &quote::quote! {self.0.to_string().is_empty()},
+    )
 }
 
 pub fn generate_match_try_new_in_deserialize_token_stream(

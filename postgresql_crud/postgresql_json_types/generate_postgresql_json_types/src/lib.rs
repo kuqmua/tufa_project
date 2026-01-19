@@ -638,7 +638,6 @@ pub fn generate_postgresql_json_types(
 
         let none_token_stream = quote::quote! {None};
 
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         let postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementWithMaxPageSizeCall;
@@ -1132,7 +1131,14 @@ pub fn generate_postgresql_json_types(
                     | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => proc_macro2::TokenStream::new(),
-                    PostgresqlJsonType::StdStringStringAsJsonbString | PostgresqlJsonType::UuidUuidAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                    PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_token_stream(
+                        &ident_origin_upper_camel_case,
+                        &quote::quote!{self.0.clone().is_empty()}
+                    ),
+                    PostgresqlJsonType::UuidUuidAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_token_stream(
+                        &ident_origin_upper_camel_case,
+                        &quote::quote!{self.0.to_string().is_empty()}
+                    ),
                 }
             } else {
                 proc_macro2::TokenStream::new()
@@ -1154,7 +1160,7 @@ pub fn generate_postgresql_json_types(
                             | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
-                            | PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {#core_default_default_default_token_stream},
+                            | PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {Default::default()},
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid::Uuid::new_v4()},
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
@@ -2878,9 +2884,9 @@ pub fn generate_postgresql_json_types(
                             let content_token_stream = {
                                 let content_token_stream = match &update_current_not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#element_snake_case.clone()},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone().into()},
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone()},
                                 };
-                                quote::quote! {&#current_ident_update_token_stream(#content_token_stream)}
+                                quote::quote! {#current_ident_update_token_stream(#content_token_stream)}
                             };
                             quote::quote! {
                                 <
