@@ -2897,10 +2897,7 @@ pub fn generate_postgresql_json_types(
                                 #value_zero_zero_token_stream.iter().map(|#element_snake_case|#content_token_stream).collect()
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match &#value_zero_zero_token_stream {
-                                    Some(value_92de91cc) => Some(#content_token_stream),
-                                    None => None
-                                }
+                                #value_zero_zero_token_stream.as_ref().map(|value_92de91cc| #content_token_stream)
                             },
                         }
                     };
