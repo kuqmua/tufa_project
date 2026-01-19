@@ -2623,70 +2623,146 @@ pub fn generate_postgresql_json_types(
                     postgresql_crud_macros_common::DimensionIndexNumber::Two => postgresql_json_type_pattern.down_by_3(),
                     postgresql_crud_macros_common::DimensionIndexNumber::Three => postgresql_json_type_pattern.down_by_4(),
                 };
+                let generate_dimension_index_number_zero_token_stream = |dimension1_not_null_or_nullable: &NotNullOrNullable|generate_acc_token_stream(
+                    &generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                        &generate_not_null_or_nullable_token_stream(
+                            dimension1_not_null_or_nullable,
+                            &generate_down_postgresql_json_type_pattern().expect("63f3476d-e0e0-471c-9faa-0a626c8ba75e"),
+                            &quote::quote!{value1},
+                        ),
+                        &quote::quote!{value0},
+                        &quote::quote!{value1}
+                    ),
+                    &quote::quote!{value0}
+                );
+                let generate_dimension_index_number_one_token_stream = |
+                    dimension1_not_null_or_nullable: &NotNullOrNullable,
+                    dimension2_not_null_or_nullable: &NotNullOrNullable
+                |generate_acc_token_stream(
+                    &{
+                        let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                            &quote::quote! {#value_snake_case.0},
+                            &generate_not_null_or_nullable_token_stream(
+                                dimension2_not_null_or_nullable,
+                                &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
+                                &quote::quote!{value},
+                            ),
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                            dimension1_not_null_or_nullable,
+                            &dimension2_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                            &maybe_if_some_dimension2_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        quote::quote! {#dimension1_token_stream}
+                    },
+                    &quote::quote!{value}
+                );
+                let generate_dimension_index_number_two_token_stream = |
+                    dimension1_not_null_or_nullable: &NotNullOrNullable,
+                    dimension2_not_null_or_nullable: &NotNullOrNullable,
+                    dimension3_not_null_or_nullable: &NotNullOrNullable
+                |generate_acc_token_stream(
+                    &{
+                        let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
+                            &quote::quote! {#value_snake_case.0},
+                            &generate_not_null_or_nullable_token_stream(
+                                dimension3_not_null_or_nullable,
+                                &generate_down_postgresql_json_type_pattern().expect("55896a34-0056-48f1-b79b-69391daa149a"),
+                                &quote::quote!{value},
+                            ),
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                            dimension2_not_null_or_nullable,
+                            &dimension3_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension2_token_stream = generate_for_maybe_if_some_token_stream(
+                            &postgresql_crud_macros_common::DimensionIndexNumber::One,
+                            dimension1_not_null_or_nullable,
+                            &maybe_if_some_dimension3_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                            &maybe_if_some_dimension2_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        quote::quote! {#dimension1_token_stream}
+                    },
+                    &quote::quote!{value}
+                );
+                let generate_dimension_index_number_three_token_stream = |
+                    dimension1_not_null_or_nullable: &NotNullOrNullable,
+                    dimension2_not_null_or_nullable: &NotNullOrNullable,
+                    dimension3_not_null_or_nullable: &NotNullOrNullable,
+                    dimension4_not_null_or_nullable: &NotNullOrNullable
+                |generate_acc_token_stream(
+                    &{
+                        let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
+                            &quote::quote! {#value_snake_case.0},
+                            &generate_not_null_or_nullable_token_stream(
+                                dimension4_not_null_or_nullable,
+                                &generate_down_postgresql_json_type_pattern().expect("9048d6b1-5312-4c91-b48f-7f2adb197135"),
+                                &quote::quote!{value},
+                            ),
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                            dimension3_not_null_or_nullable,
+                            &dimension4_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension3_token_stream = generate_for_maybe_if_some_token_stream(
+                            &postgresql_crud_macros_common::DimensionIndexNumber::Two,
+                            dimension2_not_null_or_nullable,
+                            &maybe_if_some_dimension4_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let maybe_if_some_dimension2_token_stream = generate_for_maybe_if_some_token_stream(
+                            &postgresql_crud_macros_common::DimensionIndexNumber::One,
+                            dimension1_not_null_or_nullable,
+                            &maybe_if_some_dimension3_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                            &maybe_if_some_dimension2_token_stream,
+                            &quote::quote!{value},
+                            &quote::quote!{value}
+                        );
+                        quote::quote! {#dimension1_token_stream}
+                    },
+                    &quote::quote!{value}
+                );
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("63f3476d-e0e0-471c-9faa-0a626c8ba75e");
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension1_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
-                        ),
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(&dimension1_not_null_or_nullable),
                         postgresql_crud_macros_common::DimensionIndexNumber::One | postgresql_crud_macros_common::DimensionIndexNumber::Two | postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("99c97e51-792f-40e7-bdfe-f7424803e368");
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension1_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
-                        ),
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e");
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &quote::quote! {#value_snake_case.0},
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension2_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value}
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &maybe_if_some_dimension2_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(&dimension1_not_null_or_nullable),
+                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable
                         ),
                         postgresql_crud_macros_common::DimensionIndexNumber::Two | postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
@@ -2695,84 +2771,15 @@ pub fn generate_postgresql_json_types(
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable,
                     } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("6b26e2ac-4462-451d-9111-01f659357a41");
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension1_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(&dimension1_not_null_or_nullable),
+                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable
                         ),
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("66e824f8-7635-4f3d-8fcc-cdd629189cfe");
-                                let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                    &quote::quote! {#value_snake_case.0},
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension2_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value}
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension1_not_null_or_nullable,
-                                    &dimension2_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &maybe_if_some_dimension2_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
-                        ),
-                        postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_acc_token_stream(
-                            &{
-                                let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("55896a34-0056-48f1-b79b-69391daa149a");
-                                let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                                    &quote::quote! {#value_snake_case.0},
-                                    &generate_not_null_or_nullable_token_stream(
-                                        dimension3_not_null_or_nullable,
-                                        &current_postgresql_json_type_pattern,
-                                        &quote::quote!{value},
-                                    ),
-                                    &quote::quote!{value}
-                                );
-                                let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                    dimension2_not_null_or_nullable,
-                                    &dimension3_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                let maybe_if_some_dimension2_token_stream = generate_for_maybe_if_some_token_stream(
-                                    &postgresql_crud_macros_common::DimensionIndexNumber::One,
-                                    dimension1_not_null_or_nullable,
-                                    &maybe_if_some_dimension3_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value},
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                    &maybe_if_some_dimension2_token_stream,
-                                    &quote::quote!{value},
-                                    &quote::quote!{value}
-                                );
-                                quote::quote! {#dimension1_token_stream}
-                            },
-                            &quote::quote!{value}
+                        postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_two_token_stream(
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable
                         ),
                         postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
@@ -2782,128 +2789,23 @@ pub fn generate_postgresql_json_types(
                         dimension3_not_null_or_nullable,
                         dimension4_not_null_or_nullable,
                     } => {
-                        let current_postgresql_json_type_pattern = generate_down_postgresql_json_type_pattern().expect("9048d6b1-5312-4c91-b48f-7f2adb197135");
                         match dimension_index_number_max {
-                            postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_acc_token_stream(
-                                &{
-                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                        &generate_not_null_or_nullable_token_stream(
-                                            dimension1_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern,
-                                            &quote::quote!{value},
-                                        ),
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    quote::quote! {#dimension1_token_stream}
-                                },
-                                &quote::quote!{value}
+                            postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(&dimension1_not_null_or_nullable),
+                            postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable
                             ),
-                            postgresql_crud_macros_common::DimensionIndexNumber::One => generate_acc_token_stream(
-                                &{
-                                    let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                                        &quote::quote! {#value_snake_case.0},
-                                        &generate_not_null_or_nullable_token_stream(
-                                            dimension2_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern,
-                                            &quote::quote!{value},
-                                        ),
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                        dimension1_not_null_or_nullable,
-                                        &dimension2_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                        &maybe_if_some_dimension2_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    quote::quote! {#dimension1_token_stream}
-                                },
-                                &quote::quote!{value}
+                            postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_two_token_stream(
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable
                             ),
-                            postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_acc_token_stream(
-                                &{
-                                    let dimension3_token_stream = generate_for_index_element_into_iter_enumerate_two_token_stream(
-                                        &quote::quote! {#value_snake_case.0},
-                                        &generate_not_null_or_nullable_token_stream(
-                                            dimension3_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern,
-                                            &quote::quote!{value},
-                                        ),
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension3_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                        dimension2_not_null_or_nullable,
-                                        &dimension3_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension2_token_stream = generate_for_maybe_if_some_token_stream(
-                                        &postgresql_crud_macros_common::DimensionIndexNumber::One,
-                                        dimension1_not_null_or_nullable,
-                                        &maybe_if_some_dimension3_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                        &maybe_if_some_dimension2_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    quote::quote! {#dimension1_token_stream}
-                                },
-                                &quote::quote!{value}
-                            ),
-                            postgresql_crud_macros_common::DimensionIndexNumber::Three => generate_acc_token_stream(
-                                &{
-                                    let dimension4_token_stream = generate_for_index_element_into_iter_enumerate_three_token_stream(
-                                        &quote::quote! {#value_snake_case.0},
-                                        &generate_not_null_or_nullable_token_stream(
-                                            dimension4_not_null_or_nullable,
-                                            &current_postgresql_json_type_pattern,
-                                            &quote::quote!{value},
-                                        ),
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                                        dimension3_not_null_or_nullable,
-                                        &dimension4_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension3_token_stream = generate_for_maybe_if_some_token_stream(
-                                        &postgresql_crud_macros_common::DimensionIndexNumber::Two,
-                                        dimension2_not_null_or_nullable,
-                                        &maybe_if_some_dimension4_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let maybe_if_some_dimension2_token_stream = generate_for_maybe_if_some_token_stream(
-                                        &postgresql_crud_macros_common::DimensionIndexNumber::One,
-                                        dimension1_not_null_or_nullable,
-                                        &maybe_if_some_dimension3_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                                        &maybe_if_some_dimension2_token_stream,
-                                        &quote::quote!{value},
-                                        &quote::quote!{value}
-                                    );
-                                    quote::quote! {#dimension1_token_stream}
-                                },
-                                &quote::quote!{value}
-                            ),
+                            postgresql_crud_macros_common::DimensionIndexNumber::Three => generate_dimension_index_number_three_token_stream(
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable
+                            )
                         }
                     }
                 }
