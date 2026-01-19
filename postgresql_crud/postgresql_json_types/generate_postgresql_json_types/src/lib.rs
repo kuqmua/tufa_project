@@ -3215,26 +3215,25 @@ pub fn generate_postgresql_json_types(
                     float_greater_than_one_less_token_stream,
                 ) = {
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                        #content_token_stream.and_then(|value_7aa498e8| {
-                            match #import_path::NotEmptyUniqueEnumVec::try_new(
-                                vec![
-                                    #import_path::SingleOrMultiple::Single(#ident_where_upper_camel_case::GreaterThan(
-                                        where_filters::PostgresqlJsonTypeWhereGreaterThan {
-                                            logical_operator: #import_path::LogicalOperator::Or,
-                                            value: #ident_table_type_declaration_upper_camel_case(
-                                                #ident_origin_upper_camel_case(value_7aa498e8)
-                                            ),
-                                        }
-                                    ))
-                                ]
-                            ) {
-                                Ok(value_6f3e23b5) => Some(value_6f3e23b5),
-                                Err(error) => match error {
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { .. } => None,
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("11287f54-f840-4076-a16b-1a59a74e6dee"),
-                                },
-                            }
-                        })
+                        let value_7aa498e8 = #content_token_stream?;
+                        match #import_path::NotEmptyUniqueEnumVec::try_new(
+                            vec![
+                                #import_path::SingleOrMultiple::Single(#ident_where_upper_camel_case::GreaterThan(
+                                    where_filters::PostgresqlJsonTypeWhereGreaterThan {
+                                        logical_operator: #import_path::LogicalOperator::Or,
+                                        value: #ident_table_type_declaration_upper_camel_case(
+                                            #ident_origin_upper_camel_case(value_7aa498e8)
+                                        ),
+                                    }
+                                ))
+                            ]
+                        ) {
+                            Ok(value_6f3e23b5) => Some(value_6f3e23b5),
+                            Err(error) => match error {
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { .. } => None,
+                                #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique { .. } => panic!("11287f54-f840-4076-a16b-1a59a74e6dee"),
+                            },
+                        }
                     };
                     let create_dot_zero_dot_zero_token_stream = quote::quote!{create.0.0};
                     (
