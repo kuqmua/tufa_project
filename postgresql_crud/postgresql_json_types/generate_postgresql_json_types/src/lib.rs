@@ -1239,9 +1239,13 @@ pub fn generate_postgresql_json_types(
                     &ident_create_upper_camel_case,
                     &ident_origin_struct_content_token_stream
                 );
-            let impl_ident_create_token_stream = generate_impl_pub_fn_new_value_ident_read_inner_self_ident_origin_new_value_token_stream(
-                &ident_create_upper_camel_case
-            );
+            let impl_ident_create_token_stream = {
+                quote::quote!{
+                    impl #ident_create_upper_camel_case {
+                        #pub_new_or_const_new_self_ident_origin_new_value_token_stream
+                    }
+                }
+            };
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)});
             quote::quote! {
