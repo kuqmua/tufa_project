@@ -2742,9 +2742,9 @@ pub fn generate_postgresql_json_types(
                                 &generate_not_null_or_nullable_token_stream(
                                     dimension4_not_null_or_nullable,
                                     &generate_down_postgresql_json_type_pattern().expect("9048d6b1-5312-4c91-b48f-7f2adb197135"),
-                                    &quote::quote!{value___999999999999999},
+                                    &quote::quote!{value7},
                                 ),
-                                &quote::quote!{value___999999999999999}
+                                &quote::quote!{value7}
                             );
                             let maybe_if_some_dimension4_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
                                 dimension3_not_null_or_nullable,
