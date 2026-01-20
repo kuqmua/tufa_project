@@ -2382,7 +2382,7 @@ pub fn generate_postgresql_json_types(
                     type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;
                     #query_bind_string_as_postgresql_text_create_for_query_token_stream
                     #query_bind_string_as_postgresql_text_update_for_query_token_stream
-                    fn get_inner<'lifetime>(#value_snake_case: &'lifetime <Self::PostgresqlJsonType as #import_path::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &'lifetime Self::#read_inner_upper_camel_case {
+                    fn get_inner(#value_snake_case: &<Self::PostgresqlJsonType as #import_path::PostgresqlJsonType>::#create_for_query_upper_camel_case) -> &Self::#read_inner_upper_camel_case {
                         &#value_snake_case.0.0
                     }
                     fn increment_checked_add_one(#increment_snake_case: &mut #std_primitive_u64_token_stream) -> Result<#std_primitive_u64_token_stream, #import_path::QueryPartErrorNamed> {
