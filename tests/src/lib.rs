@@ -134,7 +134,7 @@ mod tests {
                 element
                     .path()
                     .extension()
-                    .and_then(|current_element| current_element.to_str())
+                    .and_then(|element_bdd39cb5| element_bdd39cb5.to_str())
                     == Some("rs")
             })
         {
@@ -412,7 +412,7 @@ mod tests {
                 element
                     .path()
                     .extension()
-                    .and_then(|current_element| current_element.to_str())
+                    .and_then(|element_7ac9041a| element_7ac9041a.to_str())
                     == Some("rs")
             })
         {

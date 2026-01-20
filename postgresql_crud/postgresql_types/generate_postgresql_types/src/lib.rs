@@ -1740,11 +1740,11 @@ pub fn generate_postgresql_types(
                 };
                 let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                     let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case, vec_token_stream.len());
-                    let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
+                    let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_9dc7f312)| {
                         let field_index_token_stream = generate_field_index_token_stream(current_index);
                         let index_usize_token_stream = format!("{current_index}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
                         quote::quote! {
-                            let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#current_element>(&mut __seq)? else {
+                            let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#element_9dc7f312>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
                             };
                         }
@@ -1893,9 +1893,9 @@ pub fn generate_postgresql_types(
                 let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream, fn_visit_u64_four_token_stream) = {
                     let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                         let fields_token_stream = {
-                            parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|current_element| {
-                                let index_variant_token_stream = format!("{current_element}u64").parse::<proc_macro2::TokenStream>().expect("5aee0393-2f04-42ca-87d6-bb4209d41ee1");
-                                let field_index_token_stream = generate_field_index_token_stream(current_element);
+                            parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|element_7298ebde| {
+                                let index_variant_token_stream = format!("{element_7298ebde}u64").parse::<proc_macro2::TokenStream>().expect("5aee0393-2f04-42ca-87d6-bb4209d41ee1");
+                                let field_index_token_stream = generate_field_index_token_stream(element_7298ebde);
                                 quote::quote! {#index_variant_token_stream => Ok(__Field::#field_index_token_stream)}
                             })
                         };
@@ -1915,8 +1915,8 @@ pub fn generate_postgresql_types(
                 };
                 let (fn_visit_str_value_start_end_token_stream, fn_visit_str_value_hour_min_sec_micro_token_stream, fn_visit_str_value_hour_minute_second_microsecond_token_stream, fn_visit_str_value_date_time_token_stream, fn_visit_str_value_date_naive_time_token_stream, fn_visit_str_value_months_days_microseconds_token_stream) = {
                     let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
-                            let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&current_element);
+                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_29343926)| {
+                            let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_29343926);
                             let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                             quote::quote! {#element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)}
                         });
@@ -1946,8 +1946,8 @@ pub fn generate_postgresql_types(
                 };
                 let (fn_visit_bytes_start_end_token_stream, fn_visit_bytes_hour_min_sec_micro_token_stream, fn_visit_bytes_hour_minute_second_microsecond_token_stream, fn_visit_bytes_date_time_token_stream, fn_visit_bytes_date_naive_time_token_stream, fn_visit_bytes_months_days_microseconds_token_stream) = {
                     let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
-                            let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&current_element)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
+                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_1dbc37ab)| {
+                            let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
                             let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                             quote::quote! {#b_element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)}
                         });
@@ -2027,9 +2027,9 @@ pub fn generate_postgresql_types(
                         field_option_none_initialization_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_de75f565)| {
                                 let field_index_name_token_stream = generate_field_index_token_stream(current_index);
-                                quote::quote! {let mut #field_index_name_token_stream: Option<#current_element> = None;}
+                                quote::quote! {let mut #field_index_name_token_stream: Option<#element_de75f565> = None;}
                             });
                             quote::quote! {#(#fields_initialization_token_stream)*}
                         };
@@ -2059,9 +2059,9 @@ pub fn generate_postgresql_types(
                         while_some_next_key_field_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
-                                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&current_element.0);
-                                let field_type_token_stream = &current_element.1;
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_692238ce)| {
+                                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element_692238ce.0);
+                                let field_type_token_stream = &element_692238ce.1;
                                 let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                                 quote::quote! {
                                     __Field::#field_index_name_token_stream => {
@@ -2101,8 +2101,8 @@ pub fn generate_postgresql_types(
                     };
                     let (match_field_initialization_hour_min_sec_micro_token_stream, match_field_initialization_start_end_token_stream, match_field_initialization_hour_minute_second_microsecond_token_stream, match_field_initialization_date_time_token_stream, match_field_initialization_date_naive_time_token_stream, match_field_initialization_months_days_microseconds_token_stream) = {
                         let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, current_element)| {
-                                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&current_element);
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_f8a9e25b)| {
+                                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element_f8a9e25b);
                                 let field_index_name_token_stream = generate_field_index_token_stream(current_index);
                                 quote::quote! {
                                     let #field_index_name_token_stream = match #field_index_name_token_stream {
@@ -2187,7 +2187,7 @@ pub fn generate_postgresql_types(
                 };
                 let (const_fields_start_end_token_stream, const_fields_sqlx_types_chrono_naive_time_token_stream, const_fields_sqlx_types_time_time_token_stream, const_fields_sqlx_types_chrono_naive_date_time_token_stream, const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream) = {
                     let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                        let field_names_token_stream = vec_token_stream.iter().map(|current_element| generate_quotes::double_quotes_token_stream(&current_element));
+                        let field_names_token_stream = vec_token_stream.iter().map(|element_391d76e4| generate_quotes::double_quotes_token_stream(&element_391d76e4));
                         quote::quote! {
                             #[doc(hidden)]
                             const FIELDS: &[&str] = &[#(#field_names_token_stream),*];
@@ -4156,8 +4156,8 @@ pub fn generate_postgresql_types(
                     PostgresqlTypePattern::Standart => quote::quote! {;},
                     PostgresqlTypePattern::ArrayDimension1 { .. } => {
                         let mut arguments_token_stream = Vec::new();
-                        for current_element in 1..=array_dimensions_number {
-                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
+                        for element_9f432ae3 in 1..=array_dimensions_number {
+                            let dimension_number_pagination_token_stream = format!("dimension{element_9f432ae3}_pagination").parse::<proc_macro2::TokenStream>().expect("af86f2d1-b00d-49ab-9ced-97a488d9dc5f");
                             arguments_token_stream.push(quote::quote! {
                                 #dimension_number_pagination_token_stream: PaginationStartsWithOne
                             });
@@ -4176,8 +4176,8 @@ pub fn generate_postgresql_types(
                             postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                         };
                         let mut arguments_token_stream = Vec::new();
-                        for current_element in 1..=array_dimensions_number {
-                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98-89d6-4a58-90ea-39b04a708c1c");
+                        for element_a227c2ba in 1..=array_dimensions_number {
+                            let dimension_number_pagination_token_stream = format!("dimension{element_a227c2ba}_pagination").parse::<proc_macro2::TokenStream>().expect("e5250a98-89d6-4a58-90ea-39b04a708c1c");
                             arguments_token_stream.push(quote::quote! {
                                 #dimension_number_pagination_token_stream: #content_token_stream
                             });
@@ -4521,9 +4521,9 @@ pub fn generate_postgresql_types(
                 }
             }
             .iter()
-            .map(|current_element| {
-                let current_element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = current_element;
-                current_element_handle
+            .map(|element_dde282a0| {
+                let element_dde282a0_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = element_dde282a0;
+                element_dde282a0_handle
             })
             .collect(),
             &ident,
@@ -4859,8 +4859,8 @@ pub fn generate_postgresql_types(
                                 format!("{{column}}{acc}")
                             });
                             let arguments_token_stream = (1..=array_dimensions_number)
-                            .map(|current_element| {
-                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination")
+                            .map(|element_268f0f14| {
+                                let dimension_number_pagination_token_stream = format!("dimension{element_268f0f14}_pagination")
                                 .parse::<proc_macro2::TokenStream>()
                                 .expect("6f2305ee-85e9-4dce-9a14-9e299586668a");
                                 quote::quote! {
@@ -6208,10 +6208,10 @@ pub fn generate_postgresql_types(
                                     #element_snake_case
                                     .into_vec()
                                     .into_iter()
-                                    .map(|current_element| #import_path::PostgresqlTypeGreaterThanTest {
-                                        variant: current_element.variant,
-                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.create.0))),
-                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(current_element.greater_than.0))),
+                                    .map(|element_504739e6| #import_path::PostgresqlTypeGreaterThanTest {
+                                        variant: element_504739e6.variant,
+                                        create: #ident_create_upper_camel_case(#ident_origin_upper_camel_case(Some(element_504739e6.create.0))),
+                                        greater_than: #ident_table_type_declaration_upper_camel_case(#ident_origin_upper_camel_case(Some(element_504739e6.greater_than.0))),
                                     })
                                     .collect()
                                 ).expect("63ce5df3-2b2b-4b2d-be70-0041e6a1cad2")

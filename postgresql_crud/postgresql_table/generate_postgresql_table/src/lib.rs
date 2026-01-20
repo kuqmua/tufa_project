@@ -5436,9 +5436,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 );
                     let ident_create_defaults_for_column_read_only_ids_to_two_dimensional_vec_read_inner_token_stream =
                         generate_fields_named_without_primary_key_without_comma_token_stream(
-                            &|current_current_element: &macros_helpers::SynFieldWrapper| {
-                                let current_field_ident = &current_current_element.field_ident;
-                                let current_field_type = &current_current_element.field_type;
+                            &|element_0dfa76d6: &macros_helpers::SynFieldWrapper| {
+                                let current_field_ident = &element_0dfa76d6.field_ident;
+                                let current_field_type = &element_0dfa76d6.field_type;
                                 if field_ident == current_field_ident {
                                     quote::quote! {
                                         if let Some(value_a5f7e6cd) = &common_read_only_ids_returned_from_create_one.#current_field_ident {
@@ -6163,9 +6163,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |test_name: &str, equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields| {
                     generate_read_test_token_stream(test_name, &generate_option_vec_create_call_unwrap_or_vec_token_stream, &generate_ident_create_content_element_token_stream, &|element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &element.field_ident;
-                        generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                            let current_field_ident = &current_element.field_ident;
-                            let current_field_type = &current_element.field_type;
+                        generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_ac437d52: &macros_helpers::SynFieldWrapper| {
+                            let current_field_ident = &element_ac437d52.field_ident;
+                            let current_field_type = &element_ac437d52.field_type;
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             } else if current_field_ident == field_ident {
@@ -6206,8 +6206,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_token_stream = generate_read_test_token_stream(table_read_only_ids_merged_with_create_into_option_vec_where_equal_to_json_field_name, &generate_option_vec_create_call_unwrap_or_vec_token_stream, &generate_ident_create_content_element_token_stream, &|element: &macros_helpers::SynFieldWrapper| {
                 let field_ident = &element.field_ident;
                 let field_type = &element.field_type;
-                let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                    let current_field_ident = &current_element.field_ident;
+                let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_97d8a089: &macros_helpers::SynFieldWrapper| {
+                    let current_field_ident = &element_97d8a089.field_ident;
                     if current_field_ident == primary_key_field_ident {
                         some_primary_key_where_initialization_token_stream.clone()
                     } else if current_field_ident == field_ident {
@@ -6235,8 +6235,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     &|element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
-                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                        let current_field_ident = &current_element.field_ident;
+                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_483e5312: &macros_helpers::SynFieldWrapper| {
+                        let current_field_ident = &element_483e5312.field_ident;
                         if primary_key_field_ident == current_field_ident {
                             some_primary_key_where_initialization_token_stream.clone()
                         } else if current_field_ident == field_ident {
@@ -6263,8 +6263,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                        let current_field_ident = &current_element.field_ident;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_a8bfc0c0: &macros_helpers::SynFieldWrapper| {
+                        let current_field_ident = &element_a8bfc0c0.field_ident;
                         if current_field_ident == primary_key_field_ident {
                             some_primary_key_where_initialization_token_stream.clone()
                         } else if current_field_ident == field_ident {
@@ -6297,8 +6297,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         generate_read_test_token_stream(test_name, &generate_option_vec_create_call_unwrap_or_vec_ident_create_default_field_ident_clone_token_stream, &generate_ident_create_content_element_token_stream, &|element: &macros_helpers::SynFieldWrapper| {
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
-                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                            let current_field_ident = &current_element.field_ident;
+                        let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_a9b23eca: &macros_helpers::SynFieldWrapper| {
+                            let current_field_ident = &element_a9b23eca.field_ident;
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             } else if current_field_ident == field_ident {
@@ -6333,8 +6333,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
-                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper| {
-                        let current_field_ident = &current_element.field_ident;
+                    let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_94f00070: &macros_helpers::SynFieldWrapper| {
+                        let current_field_ident = &element_94f00070.field_ident;
                         if current_field_ident == primary_key_field_ident {
                             some_primary_key_where_initialization_token_stream.clone()
                         } else if current_field_ident == field_ident {
@@ -6362,8 +6362,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
                     let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(
-                        &generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper|{
-                            let current_field_ident = &current_element.field_ident;
+                        &generate_fields_named_with_comma_token_stream(&|element_c927ab80: &macros_helpers::SynFieldWrapper|{
+                            let current_field_ident = &element_c927ab80.field_ident;
                             if current_field_ident == primary_key_field_ident {
                                 some_primary_key_where_initialization_token_stream.clone()
                             }
@@ -6403,8 +6403,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
                         let assert_eq_token_stream = generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(
-                            &generate_fields_named_with_comma_token_stream(&|current_element: &macros_helpers::SynFieldWrapper|{
-                                let current_field_ident = &current_element.field_ident;
+                            &generate_fields_named_with_comma_token_stream(&|element_16b8a9cc: &macros_helpers::SynFieldWrapper|{
+                                let current_field_ident = &element_16b8a9cc.field_ident;
                                 if current_field_ident == primary_key_field_ident {
                                     some_primary_key_where_initialization_token_stream.clone()
                                 }
@@ -6499,9 +6499,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             //todo add test for trying to update empty vec
             let update_many_only_one_column_tests_token_stream =
                 generate_fields_named_without_primary_key_without_comma_token_stream(
-                    &|current_element: &macros_helpers::SynFieldWrapper| {
-                        let field_ident = &current_element.field_ident;
-                        let field_type = &current_element.field_type;
+                    &|element_94a9ca95: &macros_helpers::SynFieldWrapper| {
+                        let field_ident = &element_94a9ca95.field_ident;
+                        let field_type = &element_94a9ca95.field_type;
                         let is_fields_without_primary_key_len_greater_than_one =
                             fields_without_primary_key.len() > 1;
                         let maybe_previous_read_token_stream =
@@ -6735,9 +6735,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let update_one_tests_token_stream = {
             let update_one_only_one_column_tests_token_stream =
                 generate_fields_named_without_primary_key_without_comma_token_stream(
-                    &|current_element: &macros_helpers::SynFieldWrapper| {
-                        let field_ident = &current_element.field_ident;
-                        let field_type = &current_element.field_type;
+                    &|element_d82ff77f: &macros_helpers::SynFieldWrapper| {
+                        let field_ident = &element_d82ff77f.field_ident;
+                        let field_type = &element_d82ff77f.field_type;
                         let maybe_previous_read_token_stream = if fields_without_primary_key.len()
                             > 1
                         {
