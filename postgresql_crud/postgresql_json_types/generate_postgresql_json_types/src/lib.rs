@@ -2761,7 +2761,10 @@ pub fn generate_postgresql_json_types(
                                 dimension2_not_null_or_nullable,
                                 &maybe_if_some_dimension4_token_stream,
                                 &match &dimension2_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => quote::quote!{value2},
+                                    NotNullOrNullable::NotNull => match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => quote::quote!{value2},
+                                        NotNullOrNullable::Nullable => quote::quote!{value3}
+                                    },
                                     NotNullOrNullable::Nullable => quote::quote!{value3}
                                 },
                                 &match &dimension2_not_null_or_nullable {
@@ -2775,10 +2778,16 @@ pub fn generate_postgresql_json_types(
                                 &postgresql_crud_macros_common::DimensionIndexNumber::One,
                                 dimension1_not_null_or_nullable,
                                 &maybe_if_some_dimension3_token_stream,
+                                &match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => quote::quote!{value1},
+                                    NotNullOrNullable::Nullable => quote::quote!{value2}
+                                },
+                                &match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => quote::quote!{value2},
+                                    NotNullOrNullable::Nullable => quote::quote!{value3}
+                                },
                                 &quote::quote!{value1},
-                                &quote::quote!{value2},
-                                &quote::quote!{value_222222},
-                                &quote::quote!{value_333333}
+                                &quote::quote!{value2}
                             );
                             let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
                                 &maybe_if_some_dimension2_token_stream,
