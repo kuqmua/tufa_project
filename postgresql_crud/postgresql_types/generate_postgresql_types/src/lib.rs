@@ -5554,8 +5554,8 @@ pub fn generate_postgresql_types(
                                     let self_as_postgresql_type_create_token_stream = quote::quote!{#self_as_postgresql_type_token_stream::Create};
                                     if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                                         quote::quote! {
-                                            |#element_snake_case|#self_as_postgresql_type_create_token_stream::try_new(
-                                                #element_snake_case
+                                            |element_043a7d30|#self_as_postgresql_type_create_token_stream::try_new(
+                                                element_043a7d30
                                             ).expect("941bd15c-a751-45e7-8266-f17df4ee00aa")
                                         }
                                     } else {
@@ -5634,7 +5634,7 @@ pub fn generate_postgresql_types(
                                         generate_new_or_try_new_token_stream(&quote::quote! {
                                             #content_token_stream::#option_vec_create_snake_case().unwrap_or(Vec::new())
                                             .into_iter()
-                                            .map(|#element_snake_case|#element_snake_case.0.into())
+                                            .map(|element_ffb375dd|element_ffb375dd.0.into())
                                             .collect()
                                         }),
                                         generate_new_or_try_new_token_stream(&generate_vec_value_clone_zero_into_number_token_stream(2)),
@@ -5726,16 +5726,16 @@ pub fn generate_postgresql_types(
                                     };
                                     let has_len_greater_than_one = {
                                         let mut has_len_greater_than_one = false;
-                                        for #element_snake_case in &read_only_ids_to_two_dimensional_vec_read_inner {
-                                            if #element_snake_case.len() > 1 {
+                                        for element_89e74982 in &read_only_ids_to_two_dimensional_vec_read_inner {
+                                            if element_89e74982.len() > 1 {
                                                 has_len_greater_than_one = true;
                                                 break;
                                             }
                                         }
                                         has_len_greater_than_one
                                     };
-                                    for #element_snake_case in read_only_ids_to_two_dimensional_vec_read_inner {
-                                        acc_abf96c9f.push(vec![#element_snake_case]);
+                                    for element_cb836246 in read_only_ids_to_two_dimensional_vec_read_inner {
+                                        acc_abf96c9f.push(vec![element_cb836246]);
                                     }
                                     if let Some(value_e22f9ad2) = option_additional {
                                         if has_len_greater_than_one {
@@ -5952,7 +5952,7 @@ pub fn generate_postgresql_types(
                         quote::quote! {
                             match #import_path::NotEmptyUniqueEnumVec::try_new({
                                 let mut acc_74c71d5d = Vec::new();
-                                for (i, #element_snake_case) in #content_token_stream.into_iter().enumerate() {
+                                for (i, element_081d735b) in #content_token_stream.into_iter().enumerate() {
                                     let index = i.checked_add(1)?;
                                     acc_74c71d5d.push(
                                         #ident_where_upper_camel_case::DimensionOneEqual(
@@ -5965,7 +5965,7 @@ pub fn generate_postgresql_types(
                                                         ).expect("8d269b8f-41db-4fd9-b33a-e0c532593163")
                                                     ]
                                                 ).expect("fe1e037f-70ce-4744-b34b-0413754e6fb0"),
-                                                #value_snake_case: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(#element_snake_case),
+                                                #value_snake_case: #ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case(element_081d735b),
                                             }
                                         )
                                     );
@@ -6203,9 +6203,9 @@ pub fn generate_postgresql_types(
                         }
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                             <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlTypeTestCases>::postgresql_type_option_vec_where_greater_than_test().map(
-                                |#element_snake_case|
+                                |element_e4af7fd9|
                                 #import_path::NotEmptyUniqueEnumVec::try_new(
-                                    #element_snake_case
+                                    element_e4af7fd9
                                     .into_vec()
                                     .into_iter()
                                     .map(|element_504739e6| #import_path::PostgresqlTypeGreaterThanTest {
@@ -6280,9 +6280,9 @@ pub fn generate_postgresql_types(
                                 ReadOnlyIdsCreate::Create => quote::quote! {#table_type_declaration_snake_case.0.0},
                             };
                             quote::quote! {
-                                #content_token_stream.map(|#element_snake_case| #ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
+                                #content_token_stream.map(|element_886032ca| #ident_where_upper_camel_case::GreaterThan(where_filters::PostgresqlTypeWhereGreaterThan {
                                     logical_operator: greater_than_variant.logical_operator(),
-                                    value: #ident_standart_not_null_table_type_declaration_upper_camel_case(#element_snake_case),
+                                    value: #ident_standart_not_null_table_type_declaration_upper_camel_case(element_886032ca),
                                 }))
                             }
                         }

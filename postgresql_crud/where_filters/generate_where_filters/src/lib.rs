@@ -563,8 +563,8 @@ pub fn generate_where_filters(
                         is_query_bind_mutable_true,
                         quote::quote! {
                             #maybe_dimensions_query_bind_content_token_stream
-                            for #element_snake_case in #self_snake_case.#value_snake_case.into_vec() {
-                                if let Err(#error_snake_case) = #query_snake_case.try_bind(#element_snake_case) {
+                            for element_ea865d8c in #self_snake_case.#value_snake_case.into_vec() {
+                                if let Err(#error_snake_case) = #query_snake_case.try_bind(element_ea865d8c) {
                                     return Err(#error_snake_case.to_string());
                                 }
                             }
