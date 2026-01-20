@@ -131,8 +131,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_idents_excluding_code_occurence_token_stream = {
                         let acc_token_stream = fields.iter()
-                        .filter(|current_element| *current_element.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_snake_case_stringified)
-                        .map(|current_element| current_element.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
+                        .filter(|element_e26e2572| *element_e26e2572.ident.as_ref().expect("07504636-310e-43cf-aa3b-afd7443987f0") != *code_occurence_snake_case_stringified)
+                        .map(|element_e4070354| element_e4070354.ident.as_ref().expect("971ace15-e8cb-4780-8589-2da5e99e5587"))
                         .collect::<Vec<&syn::Ident>>();
                         if acc_token_stream.is_empty() {
                             proc_macro2::TokenStream::new()
@@ -143,31 +143,31 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     };
                     let fields_format_excluding_code_occurence_token_stream = generate_quotes::double_quotes_token_stream(
                         &fields.iter()
-                        .filter(|current_element| *current_element.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_snake_case_stringified)
+                        .filter(|element_6ba47e94| *element_6ba47e94.ident.as_ref().expect("3d70a4f4-046d-4f37-af70-d6c7b1c46b9d") != *code_occurence_snake_case_stringified)
                         .fold(
                             String::new(),
-                            |mut acc_924ab1b3, current_element| {
+                            |mut acc_924ab1b3, element_e405984a| {
                                 use std::fmt::Write as _;
-                                let current_element_ident = &current_element.ident.as_ref().expect("2e7cd5fe-7653-4c10-8977-526b061d6748");
-                                assert!(writeln!(acc_924ab1b3, "{current_element_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
+                                let current_ident = &element_e405984a.ident.as_ref().expect("2e7cd5fe-7653-4c10-8977-526b061d6748");
+                                assert!(writeln!(acc_924ab1b3, "{current_ident}: {{}}").is_ok(), "ab44c70f-092e-46a0-8daa-56fe44395228");
                                 acc_924ab1b3
                             }
                         )
                     );
                     let fields_format_values_excluding_code_occurence_token_stream = fields.iter()
-                    .filter(|current_element| *current_element.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_snake_case_stringified)
-                    .map(|current_element| {
-                        let current_element_ident = &current_element.ident.as_ref().expect("e97b25b9-49d3-4f89-a18a-4e77355c4c9c");
-                        match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
+                    .filter(|element_48337db8| *element_48337db8.ident.as_ref().expect("f6f6fb24-bdf2-4bb6-a2be-32462758dba9") != *code_occurence_snake_case_stringified)
+                    .map(|element_f00312fe| {
+                        let current_ident = &element_f00312fe.ident.as_ref().expect("e97b25b9-49d3-4f89-a18a-4e77355c4c9c");
+                        match macros_helpers::ErrorOccurenceFieldAttribute::try_from(element_f00312fe).expect("8ff56aeb-8636-43d6-b8c1-f8fb0486f817") {
                             macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
-                                    error_occurence_lib::ToStdStringString::to_std_string_string(#current_element_ident)
+                                    error_occurence_lib::ToStdStringString::to_std_string_string(#current_ident)
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_52e70d22, "\n {element}"}, &quote::quote! {panic!("c751d54a-b008-493f-a97d-2f8e381780d5");});
                                 quote::quote! {
-                                    #current_element_ident.to_string().lines().fold(
+                                    #current_ident.to_string().lines().fold(
                                         #std_string_string::new(),
                                         |mut acc_52e70d22, element| {
                                             #if_write_is_err_token_stream
@@ -179,7 +179,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_a9ba7521, "\n {element}"}, &quote::quote! {panic!("b35ed9f5-525b-4287-9d6e-0be1d72a0874");});
                                 quote::quote! {
-                                    #current_element_ident.iter().fold(
+                                    #current_ident.iter().fold(
                                         #std_string_string::new(),
                                         |mut acc_ac447c4b, #element_snake_case| {
                                             acc_ac447c4b.push_str(
@@ -201,7 +201,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_1bbd5ef3, "\n {element}"}, &quote::quote! {panic!("4dfdd18d-5fca-41ba-b556-36ceb1b18b60");});
                                 quote::quote! {
-                                    #current_element_ident.iter().fold(
+                                    #current_ident.iter().fold(
                                         #std_string_string::new(),
                                         |mut acc_c5adba93, #element_snake_case| {
                                             acc_c5adba93.push_str(&#element_snake_case.to_string().lines().fold(
@@ -219,7 +219,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_06473093, "\n {key}: {}", &error_occurence_lib::ToStdStringString::to_std_string_string(#value_snake_case)}, &quote::quote! {panic!("d030580a-6c03-4913-9088-b77316b9f285");});
                                 quote::quote! {
-                                    #current_element_ident.iter().fold(
+                                    #current_ident.iter().fold(
                                         #std_string_string::new(),
                                         |mut acc_06473093, (key, #value_snake_case)| {
                                             #if_write_is_err_token_stream
@@ -247,7 +247,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                     &quote::quote! {panic!("75f6432a-9854-48cc-9a0d-c1dbf6774433");},
                                 );
                                 quote::quote! {
-                                    #current_element_ident.iter().fold(
+                                    #current_ident.iter().fold(
                                         #std_string_string::new(),
                                         |mut acc_a47e1ba7, (key, #value_snake_case)| {
                                             #if_write_is_err_token_stream
@@ -315,49 +315,49 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     } else {
                         panic!("238b402b-0407-417a-bce7-21bf0d4fe4d6");
                     };
-                    let fields_idents_token_stream = fields.iter().map(|current_element| &current_element.ident);
+                    let fields_idents_token_stream = fields.iter().map(|element_cddf556e| &element_cddf556e.ident);
                     let fields_into_serialize_deserialize_version_excluding_code_occurence_token_stream = fields.iter()
-                    .filter(|current_element| *current_element.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_snake_case_stringified)
-                    .map(|current_element| {
-                        let current_element_ident = &current_element.ident.as_ref().expect("9a672ac2-5184-4427-9d88-70cb2a0bd199");
-                        let conversion_token_stream = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(current_element).expect("449c3781-1900-4ed4-b784-485db5a08508") {
+                    .filter(|element_6a54951c| *element_6a54951c.ident.as_ref().expect("0488fc4c-be15-431b-904b-8bf6a5b2e8e6") != *code_occurence_snake_case_stringified)
+                    .map(|element_d7e120a3| {
+                        let current_ident = &element_d7e120a3.ident.as_ref().expect("9a672ac2-5184-4427-9d88-70cb2a0bd199");
+                        let conversion_token_stream = match macros_helpers::ErrorOccurenceFieldAttribute::try_from(element_d7e120a3).expect("449c3781-1900-4ed4-b784-485db5a08508") {
                             macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#current_element_ident)
+                                    #current_ident: {
+                                        error_occurence_lib::ToStdStringString::to_std_string_string(&#current_ident)
                                     }
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize | macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
                                 quote::quote! {
-                                    #current_element_ident
+                                    #current_ident
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoErrorOccurence => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        #current_element_ident.into_serialize_deserialize_version()
+                                    #current_ident: {
+                                        #current_ident.into_serialize_deserialize_version()
                                     }
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        #current_element_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
+                                    #current_ident: {
+                                        #current_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
                                     }
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        #current_element_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
+                                    #current_ident: {
+                                        #current_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        #current_element_ident.into_iter().map(|(key, value)|
+                                    #current_ident: {
+                                        #current_ident.into_iter().map(|(key, value)|
                                             (key, error_occurence_lib::ToStdStringString::to_std_string_string(&value))
                                         ).collect()
                                     }
@@ -365,8 +365,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 quote::quote! {
-                                    #current_element_ident: {
-                                        #current_element_ident.into_iter().map(
+                                    #current_ident: {
+                                        #current_ident.into_iter().map(
                                             |(key, value)|(key, value.into_serialize_deserialize_version())
                                         ).collect()
                                     }

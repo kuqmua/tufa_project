@@ -461,7 +461,7 @@ pub fn generate_postgresql_json_types(
             assert!(
                 acc_d97120ed
                     .iter()
-                    .all(|element| seen.insert(element)),
+                    .all(|element_8ef63a77| seen.insert(element_8ef63a77)),
                 "c2d37017-229c-4259-bcee-c434852dca1b"
             );
             acc_d97120ed
@@ -549,7 +549,7 @@ pub fn generate_postgresql_json_types(
     .collect::<Vec<(usize, PostgresqlJsonTypeRecord)>>()
     .par_iter()
     // .into_iter() //just for console prints ordering
-    .map(|(index, element)| {
+    .map(|(index, element_1d376874)| {
         enum IsStandartNotNull {
             True,
             False,
@@ -580,9 +580,9 @@ pub fn generate_postgresql_json_types(
         //     Derive,
         //     Impl(SchemaObjectTokenStream<'schema_object_token_stream_tifetime>),
         // }
-        let postgresql_json_type = &element.postgresql_json_type;
-        let not_null_or_nullable = &element.not_null_or_nullable;
-        let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
+        let postgresql_json_type = &element_1d376874.postgresql_json_type;
+        let not_null_or_nullable = &element_1d376874.not_null_or_nullable;
+        let postgresql_json_type_pattern = &element_1d376874.postgresql_json_type_pattern;
         let rust_type_name = RustTypeName::from(postgresql_json_type);
         let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
         let is_standart_not_null = if let (PostgresqlJsonTypePattern::Standart, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&postgresql_json_type_pattern, &not_null_or_nullable) {
@@ -1310,8 +1310,8 @@ pub fn generate_postgresql_json_types(
                         |()| quote::quote! {;},
                         |array_dimension| {
                             let mut arguments_token_stream = Vec::new();
-                            for current_element in 1..=array_dimension.to_usize() {
-                                let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>()
+                            for element_419a74e5 in 1..=array_dimension.to_usize() {
+                                let dimension_number_pagination_token_stream = format!("dimension{element_419a74e5}_pagination").parse::<proc_macro2::TokenStream>()
                                 .expect("2ad1faf7-57a8-4cfb-8b71-0082b06436ea");
                                 arguments_token_stream.push(quote::quote! {
                                     #dimension_number_pagination_token_stream: #import_path::PaginationStartsWithZero
@@ -1330,8 +1330,8 @@ pub fn generate_postgresql_json_types(
                             postgresql_crud_macros_common::DefaultSomeOneOrDefaultSomeOneWithMaxPageSize::DefaultSomeOneWithMaxPageSize => &postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_with_max_page_size_call_token_stream,
                         };
                         let mut arguments_token_stream = Vec::new();
-                        for current_element in 1..=array_dimension.to_usize() {
-                            let dimension_number_pagination_token_stream = format!("dimension{current_element}_pagination").parse::<proc_macro2::TokenStream>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
+                        for element_d56aec99 in 1..=array_dimension.to_usize() {
+                            let dimension_number_pagination_token_stream = format!("dimension{element_d56aec99}_pagination").parse::<proc_macro2::TokenStream>().expect("26ca29fb-fd98-466a-a380-974a6c5d4166");
                             arguments_token_stream.push(quote::quote! {
                                 #dimension_number_pagination_token_stream: #content_token_stream
                             });
@@ -1730,9 +1730,9 @@ pub fn generate_postgresql_json_types(
                     }
                 }
                 .iter()
-                .map(|current_element| {
-                    let current_element_handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = current_element;
-                    current_element_handle
+                .map(|element_f992f593| {
+                    let handle: &dyn postgresql_crud_macros_common::PostgresqlFilter = element_f992f593;
+                    handle
                 })
                 .collect(),
                 &ident,
@@ -2200,19 +2200,19 @@ pub fn generate_postgresql_json_types(
                         }
                     };
                     let maybe_dimensions_start_end_initialization = ArrayDimension::try_from(postgresql_json_type_pattern).ok().into_iter().flat_map(|array_dimension| {
-                        (1..=array_dimension.to_usize()).map(|current_element| {
+                        (1..=array_dimension.to_usize()).map(|element_8d56d66d| {
                             let dimension_number_start_token_stream =
-                                generate_dimension_number_start_stringified(current_element)
+                                generate_dimension_number_start_stringified(element_8d56d66d)
                                     .parse::<proc_macro2::TokenStream>()
                                     .expect("77ec13b9-710a-460f-9239-ac9c3680244d");
                             let dimension_number_end_token_stream =
-                                generate_dimension_number_end_stringified(current_element)
+                                generate_dimension_number_end_stringified(element_8d56d66d)
                                     .parse::<proc_macro2::TokenStream>()
                                     .expect("24acbb5e-c0fe-4257-b299-8746887ce198");
                             let dimension_number_pagination_token_stream =
                                 format!(
                                     "{}_pagination",
-                                    generate_dimension_number_stringified(current_element)
+                                    generate_dimension_number_stringified(element_8d56d66d)
                                 )
                                 .parse::<proc_macro2::TokenStream>()
                                 .expect("745c99b3-4e24-46c2-a671-9c7b4dce76f4");
@@ -2486,8 +2486,8 @@ pub fn generate_postgresql_json_types(
                     let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(current_value_ident_not_null_or_nullable, current_value_ident_postgresql_json_type_pattern));
                     let vec_content_token_stream = {
                         let mut content_token_stream = Vec::new();
-                        for current_element in 0..=index_number_to_std_primitive_u8(&dimension_index_number_max) {
-                            let index_number_token_stream = format!("index_{current_element}").parse::<proc_macro2::TokenStream>().expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
+                        for element_db559599 in 0..=index_number_to_std_primitive_u8(&dimension_index_number_max) {
+                            let index_number_token_stream = format!("index_{element_db559599}").parse::<proc_macro2::TokenStream>().expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
                             content_token_stream.push(quote::quote! {
                                 postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
                                     i32::try_from(#index_number_token_stream).expect("5a1818e7-3865-4222-bf6b-31486bd721d2")

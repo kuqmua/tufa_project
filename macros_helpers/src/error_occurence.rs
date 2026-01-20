@@ -154,7 +154,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
-        let current_element_ident = element.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
+        let element_68eb9c75_ident = element.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
         let element_type_token_stream = {
             let element_type = &element.ty;
             quote::quote! {#element_type}
@@ -227,7 +227,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
             }
         };
-        quote::quote! {#current_element_ident: #element_type_with_serialize_deserialize_token_stream,}
+        quote::quote! {#element_68eb9c75_ident: #element_type_with_serialize_deserialize_token_stream,}
     });
     let code_occurence_snake_case_token_stream = naming::CodeOccurenceSnakeCase;
     quote::quote! {

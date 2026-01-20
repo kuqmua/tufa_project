@@ -12,12 +12,12 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
                 assert!(regex.is_match(inner_element), "faadba8a-ff38-40f9-af05-e4f95bba896a");
             }
         }
-        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_3d60efa0, current_element| {
-            acc_3d60efa0.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_3d60efa0, element_132cd6b1| {
+            acc_3d60efa0.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_132cd6b1));
             acc_3d60efa0
         });
-        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, current_element)| {
-            let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(current_element);
+        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, element_b9981760)| {
+            let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element_b9981760);
             if index == 0 {
                 acc_7a8bd950.push_str(&element_snake_case_stringified);
             } else {
@@ -103,26 +103,26 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_34997d76, current_element| {
-                acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_34997d76, element_98881b7d| {
+                acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc_ae77cbd3, current_element| {
-                if current_element == "self" {
+            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc_ae77cbd3, element_626f2b61| {
+                if element_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
-                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(current_element));
+                    acc_ae77cbd3.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_626f2b61));
                 }
                 acc_ae77cbd3
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
-                let mut value = element.iter().fold(String::new(), |mut acc_cbcae5e1, current_element| {
+                let mut value = element.iter().fold(String::new(), |mut acc_cbcae5e1, element_73b0c851| {
                     use std::fmt::Write as _;
                     let symbol = '_';
-                    if current_element == "self" {
+                    if element_73b0c851 == "self" {
                         assert!(write!(acc_cbcae5e1, "{{value}}{symbol}").is_ok(), "6a02a2ff-1cb0-488d-85c0-32ea2d1291ac");
                     } else {
-                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(current_element)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
+                        assert!(write!(acc_cbcae5e1, "{}{symbol}", naming_common::AsRefStrToSnakeCaseStringified::case(element_73b0c851)).is_ok(), "d915980a-3aa3-4220-abfd-d5800927eef0");
                     }
                     acc_cbcae5e1
                 });
