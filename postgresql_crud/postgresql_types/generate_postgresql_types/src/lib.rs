@@ -1646,7 +1646,7 @@ pub fn generate_postgresql_types(
                         };
                     }
                 };
-                let generate_field_index_token_stream = |current_index: usize| format!("__{}{current_index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().expect("a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
+                let generate_field_index_token_stream = |index_52391f7d: usize| format!("__{}{index_52391f7d}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().expect("a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
                 let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                     let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                         let fields_token_stream = {
@@ -1688,7 +1688,7 @@ pub fn generate_postgresql_types(
                 let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_token_stream)};
                 let array_std_primitive_u8_6_token_stream = quote::quote! {[u8; 6]};
                 let generate_vec_field_index_token_stream = |length: usize|{
-                    let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(current_index, _)| generate_field_index_token_stream(current_index));
+                    let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| generate_field_index_token_stream(index_a8d5119e));
                     quote::quote!{#(#fields_token_stream),*}
                 };
                 let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_token_stream, match_origin_try_new_for_deserialize_two_token_stream, match_origin_try_new_for_deserialize_four_token_stream) = {
@@ -1740,9 +1740,9 @@ pub fn generate_postgresql_types(
                 };
                 let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                     let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case, vec_token_stream.len());
-                    let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_9dc7f312)| {
-                        let field_index_token_stream = generate_field_index_token_stream(current_index);
-                        let index_usize_token_stream = format!("{current_index}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
+                    let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_70b4dabd, element_9dc7f312)| {
+                        let field_index_token_stream = generate_field_index_token_stream(index_70b4dabd);
+                        let index_usize_token_stream = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
                         quote::quote! {
                             let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#element_9dc7f312>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
@@ -1915,9 +1915,9 @@ pub fn generate_postgresql_types(
                 };
                 let (fn_visit_str_value_start_end_token_stream, fn_visit_str_value_hour_min_sec_micro_token_stream, fn_visit_str_value_hour_minute_second_microsecond_token_stream, fn_visit_str_value_date_time_token_stream, fn_visit_str_value_date_naive_time_token_stream, fn_visit_str_value_months_days_microseconds_token_stream) = {
                     let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_29343926)| {
+                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index_e1c5acfd, element_29343926)| {
                             let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_29343926);
-                            let field_index_name_token_stream = generate_field_index_token_stream(current_index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index_e1c5acfd);
                             quote::quote! {#element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)}
                         });
                         quote::quote! {
@@ -1946,9 +1946,9 @@ pub fn generate_postgresql_types(
                 };
                 let (fn_visit_bytes_start_end_token_stream, fn_visit_bytes_hour_min_sec_micro_token_stream, fn_visit_bytes_hour_minute_second_microsecond_token_stream, fn_visit_bytes_date_time_token_stream, fn_visit_bytes_date_naive_time_token_stream, fn_visit_bytes_months_days_microseconds_token_stream) = {
                     let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_1dbc37ab)| {
+                        let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index_545c3b1e, element_1dbc37ab)| {
                             let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element_1dbc37ab)).parse::<proc_macro2::TokenStream>().expect("c76c976b-9009-43d2-8d4b-1ec559b76008");
-                            let field_index_name_token_stream = generate_field_index_token_stream(current_index);
+                            let field_index_name_token_stream = generate_field_index_token_stream(index_545c3b1e);
                             quote::quote! {#b_element_double_quotes_token_stream => Ok(__Field::#field_index_name_token_stream)}
                         });
                         quote::quote! {
@@ -2027,8 +2027,8 @@ pub fn generate_postgresql_types(
                         field_option_none_initialization_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_de75f565)| {
-                                let field_index_name_token_stream = generate_field_index_token_stream(current_index);
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_d9ee264a, element_de75f565)| {
+                                let field_index_name_token_stream = generate_field_index_token_stream(index_d9ee264a);
                                 quote::quote! {let mut #field_index_name_token_stream: Option<#element_de75f565> = None;}
                             });
                             quote::quote! {#(#fields_initialization_token_stream)*}
@@ -2059,10 +2059,10 @@ pub fn generate_postgresql_types(
                         while_some_next_key_field_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_692238ce)| {
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_2b1736c7, element_692238ce)| {
                                 let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element_692238ce.0);
                                 let field_type_token_stream = &element_692238ce.1;
-                                let field_index_name_token_stream = generate_field_index_token_stream(current_index);
+                                let field_index_name_token_stream = generate_field_index_token_stream(index_2b1736c7);
                                 quote::quote! {
                                     __Field::#field_index_name_token_stream => {
                                         if Option::is_some(&#field_index_name_token_stream) {
@@ -2101,9 +2101,9 @@ pub fn generate_postgresql_types(
                     };
                     let (match_field_initialization_hour_min_sec_micro_token_stream, match_field_initialization_start_end_token_stream, match_field_initialization_hour_minute_second_microsecond_token_stream, match_field_initialization_date_time_token_stream, match_field_initialization_date_naive_time_token_stream, match_field_initialization_months_days_microseconds_token_stream) = {
                         let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(current_index, element_f8a9e25b)| {
+                            let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_e1adef1a, element_f8a9e25b)| {
                                 let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element_f8a9e25b);
-                                let field_index_name_token_stream = generate_field_index_token_stream(current_index);
+                                let field_index_name_token_stream = generate_field_index_token_stream(index_e1adef1a);
                                 quote::quote! {
                                     let #field_index_name_token_stream = match #field_index_name_token_stream {
                                         Some(value_eeeb431b) => value_eeeb431b,
