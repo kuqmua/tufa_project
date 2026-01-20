@@ -177,17 +177,17 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString | macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => {
-                                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_a9ba7521, "\n {element}"}, &quote::quote! {panic!("b35ed9f5-525b-4287-9d6e-0be1d72a0874");});
+                                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_a9ba7521, "\n {element_6e4f53ad}"}, &quote::quote! {panic!("b35ed9f5-525b-4287-9d6e-0be1d72a0874");});
                                 quote::quote! {
                                     #current_ident.iter().fold(
                                         #std_string_string::new(),
-                                        |mut acc_ac447c4b, #element_snake_case| {
+                                        |mut acc_ac447c4b, element_36630fcf| {
                                             acc_ac447c4b.push_str(
-                                                &error_occurence_lib::ToStdStringString::to_std_string_string(#element_snake_case)
+                                                &error_occurence_lib::ToStdStringString::to_std_string_string(element_36630fcf)
                                                 .lines()
                                                 .fold(
                                                     #std_string_string::new(),
-                                                    |mut acc_a9ba7521, #element_snake_case| {
+                                                    |mut acc_a9ba7521, element_6e4f53ad| {
                                                         #if_write_is_err_token_stream
                                                         acc_a9ba7521
                                                     }
@@ -199,14 +199,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-                                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_1bbd5ef3, "\n {element}"}, &quote::quote! {panic!("4dfdd18d-5fca-41ba-b556-36ceb1b18b60");});
+                                let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_1bbd5ef3, "\n {element_3f2fe01d}"}, &quote::quote! {panic!("4dfdd18d-5fca-41ba-b556-36ceb1b18b60");});
                                 quote::quote! {
                                     #current_ident.iter().fold(
                                         #std_string_string::new(),
-                                        |mut acc_c5adba93, #element_snake_case| {
-                                            acc_c5adba93.push_str(&#element_snake_case.to_string().lines().fold(
+                                        |mut acc_c5adba93, element_37c46c8a| {
+                                            acc_c5adba93.push_str(&element_37c46c8a.to_string().lines().fold(
                                                 #std_string_string::new(),
-                                                |mut acc_1bbd5ef3, #element_snake_case| {
+                                                |mut acc_1bbd5ef3, element_3f2fe01d| {
                                                     #if_write_is_err_token_stream
                                                     acc_1bbd5ef3
                                                 },
@@ -231,13 +231,13 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             macros_helpers::ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
                                 let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
                                     &{
-                                        let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_addfc699, "\n  {element}"}, &quote::quote! {panic!("d0492fbf-2da0-4b02-bec3-9d011bf08999");});
+                                        let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(&quote::quote! {acc_addfc699, "\n  {element_8b8f577e}"}, &quote::quote! {panic!("d0492fbf-2da0-4b02-bec3-9d011bf08999");});
                                         quote::quote! {
                                             acc_a47e1ba7,
                                             "\n {key}: {}",
                                             #value_snake_case.to_string().lines().fold(
                                                 #std_string_string::new(),
-                                                |mut acc_addfc699, #element_snake_case| {
+                                                |mut acc_addfc699, element_8b8f577e| {
                                                     #if_write_is_err_token_stream
                                                     acc_addfc699
                                                 }

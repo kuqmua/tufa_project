@@ -970,8 +970,8 @@ pub fn generate_postgresql_json_object_type(
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                                     PostgresqlJsonObjectTypePattern::Standart => quote::quote! {{#impl_std_convert_from_standart_not_null_without_id_content_token_stream}},
                                     PostgresqlJsonObjectTypePattern::Array => quote::quote!{(
-                                        #value_snake_case.0.into_iter().map(|#element_snake_case|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
-                                            #element_snake_case
+                                        #value_snake_case.0.into_iter().map(|element_be691330|#ident_with_id_standart_not_null_create_for_query_upper_camel_case::from(
+                                            element_be691330
                                         )).collect()
                                     )},
                                 },
@@ -1108,14 +1108,14 @@ pub fn generate_postgresql_json_object_type(
                     &quote::quote!{
                         #acc_token_stream,
                         "{}||",
-                        match #element_snake_case {
+                        match element_0127bf54 {
                             #(#content_token_stream),*
                         }
                     },
                     &return_err_query_part_error_named_write_into_buffer_token_stream
                 );
                 quote::quote!{
-                    for #element_snake_case in #in_token_stream #self_field_vec_token_stream {
+                    for element_0127bf54 in #in_token_stream #self_field_vec_token_stream {
                         #if_write_is_err_token_stream
                     }
                 }
@@ -2162,7 +2162,7 @@ pub fn generate_postgresql_json_object_type(
                                     ));
                                     let parameter_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                                         IsStandartWithId::False => &self_snake_case,
-                                        IsStandartWithId::True => &element_snake_case,
+                                        IsStandartWithId::True => &quote::quote!{element_34d57236},
                                     };
                                     quote::quote! {
                                         #field_ident: match #parameter_token_stream.#field_ident {
@@ -2190,7 +2190,7 @@ pub fn generate_postgresql_json_object_type(
                                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         let content_token_stream = generate_impl_into_inner_for_ident_read_or_ident_with_id_standart_not_null_read_token_stream(&IsStandartWithId::True);
-                                        quote::quote! {self.0.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
+                                        quote::quote! {self.0.into_iter().map(|element_34d57236|#content_token_stream).collect()}
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                         self.0.map(#ident_array_not_null_read_upper_camel_case::into_inner)
@@ -2716,10 +2716,13 @@ pub fn generate_postgresql_json_object_type(
                                                 Update,
                                                 Delete
                                             }
-                                            let generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream = |update_or_delete: &UpdateOrDelete|{
+                                            let generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream = |
+                                                update_or_delete: &UpdateOrDelete,
+                                                element_token_stream: &dyn quote::ToTokens,
+                                            |{
                                                 let content_token_stream: &dyn quote::ToTokens = match &update_or_delete {
-                                                    UpdateOrDelete::Update => &quote::quote!{&#element_snake_case.#id_snake_case},
-                                                    UpdateOrDelete::Delete => &element_snake_case
+                                                    UpdateOrDelete::Update => &quote::quote!{&#element_token_stream.#id_snake_case},
+                                                    UpdateOrDelete::Delete => &element_token_stream
                                                 };
                                                 quote::quote!{
                                                     <#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream as error_occurence_lib::ToStdStringString>::to_std_string_string(
@@ -2728,36 +2731,42 @@ pub fn generate_postgresql_json_object_type(
                                                 }
                                             };
                                             (
-                                                generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(&UpdateOrDelete::Update),
-                                                generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(&UpdateOrDelete::Delete)
+                                                generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(
+                                                    &UpdateOrDelete::Update,
+                                                    &quote::quote!{element_dff7634c}
+                                                ),
+                                                generate_uuid_as_postgresql_json_type_update_to_std_string_string_token_stream(
+                                                    &UpdateOrDelete::Delete,
+                                                    &quote::quote!{element_2b0181e6}
+                                                )
                                             )
                                         };
                                         quote::quote!{{
                                             let mut acc_2bf4e098 = Vec::new();
-                                            for #element_snake_case in update.to_vec() {
-                                                if acc_2bf4e098.contains(&&#element_snake_case.#id_snake_case) {
+                                            for element_dff7634c in update.to_vec() {
+                                                if acc_2bf4e098.contains(&&element_dff7634c.#id_snake_case) {
                                                     return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
                                                         duplicate: #uuid_as_postgresql_json_type_update_to_std_string_string_element_id_token_stream,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }
-                                                acc_2bf4e098.push(&#element_snake_case.#id_snake_case);
+                                                acc_2bf4e098.push(&element_dff7634c.#id_snake_case);
                                             }
-                                            for #element_snake_case in &delete {
-                                                if acc_2bf4e098.contains(&#element_snake_case) {
+                                            for element_2b0181e6 in &delete {
+                                                if acc_2bf4e098.contains(&element_2b0181e6) {
                                                     return Err(#ident_update_try_new_error_named_upper_camel_case::#ids_are_not_unique_uppper_camel_case {
                                                         duplicate: #uuid_as_postgresql_json_type_update_to_std_string_string_element_token_stream,
                                                         code_occurence: error_occurence_lib::code_occurence!()
                                                     });
                                                 }
-                                                acc_2bf4e098.push(#element_snake_case);
+                                                acc_2bf4e098.push(element_2b0181e6);
                                             }
                                         }}
                                     };
                                     let check_not_unique_id_token_stream = {
                                         let check_not_unique_id_in_update_array_token_stream = quote::quote! {
                                             let update_acc = #update_snake_case.to_vec().iter()
-                                            .map(|#element_snake_case|&#element_snake_case.#id_snake_case)
+                                            .map(|element_b6af219f|&element_b6af219f.#id_snake_case)
                                             .collect::<Vec<&#uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_update_token_stream>>();
                                         };
                                         let check_not_unique_id_in_delete_aray_token_stream = {
@@ -2765,19 +2774,19 @@ pub fn generate_postgresql_json_object_type(
                                             quote::quote! {
                                                 let delete_acc = {
                                                     let mut delete_acc = Vec::new();
-                                                    for #element_snake_case in &delete {
-                                                        if delete_acc.contains(&#element_snake_case) {
+                                                    for element_2ecc509c in &delete {
+                                                        if delete_acc.contains(&element_2ecc509c) {
                                                             return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_delete_array_upper_camel_case {
                                                                 #error_snake_case: format!(
                                                                     #not_unique_id_in_json_delete_array_double_quotes_token_stream,
                                                                     #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(
-                                                                        &#element_snake_case.clone().into()
+                                                                        &element_2ecc509c.clone().into()
                                                                     )
                                                                 ),
                                                                 code_occurence: error_occurence_lib::code_occurence!()
                                                             });
                                                         }
-                                                        delete_acc.push(#element_snake_case);
+                                                        delete_acc.push(element_2ecc509c);
                                                     }
                                                     delete_acc
                                                 };
@@ -2786,14 +2795,13 @@ pub fn generate_postgresql_json_object_type(
                                         let check_not_unique_id_in_update_and_delete_arrays_token_stream = {
                                             let not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{custom_serde_error_deserializing_ident_update_stringified}: not unique {id_snake_case} in json update and delete arrays: {{}}"));
                                             quote::quote! {
-                                                for #element_snake_case in update_acc {
-                                                    if delete_acc.contains(&#element_snake_case) {
+                                                for element_fefe9816 in update_acc {
+                                                    if delete_acc.contains(&element_fefe9816) {
                                                         return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
                                                             #error_snake_case: format!(
                                                                 #not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream,
                                                                 #uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_object_vec_element_id_token_stream::get_inner(
-                                                                    //// &#element_snake_case
-                                                                    &element.clone().into()
+                                                                    &element_fefe9816.clone().into()
                                                                 )
                                                             ),
                                                             code_occurence: error_occurence_lib::code_occurence!()
@@ -3216,8 +3224,8 @@ pub fn generate_postgresql_json_object_type(
                                     });
                                     quote::quote!{
                                         let mut acc_8e628eaf = #std_string_string_token_stream::default();
-                                        for #element_snake_case in self.0.to_vec() {
-                                            match &#element_snake_case {
+                                        for element_0963b7df in self.0.to_vec() {
+                                            match &element_0963b7df {
                                                 #(#match_variants_token_stream),*
                                             }
                                         }
@@ -3259,8 +3267,8 @@ pub fn generate_postgresql_json_object_type(
                                         Ok(match &self.0 {
                                             Some(value_9570957e) => {
                                                 let mut acc_f7537df2 = #std_string_string_token_stream::default();
-                                                for #element_snake_case in value_9570957e.0.to_vec() {
-                                                    match &#element_snake_case {
+                                                for element_97687be3 in value_9570957e.0.to_vec() {
+                                                    match &element_97687be3 {
                                                         #(#match_content_token_stream),*
                                                     }
                                                 }
