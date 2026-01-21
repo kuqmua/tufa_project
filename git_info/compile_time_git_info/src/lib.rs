@@ -17,7 +17,10 @@ pub fn compile_time_project_git_info(
         .to_owned();
     // Validate SHA-1 (40 hex chars)
     assert!(
-        hash.len() == 40 && hash.chars().all(|element_e7daeee7| element_e7daeee7.is_ascii_hexdigit()),
+        hash.len() == 40
+            && hash
+                .chars()
+                .all(|element_e7daeee7| element_e7daeee7.is_ascii_hexdigit()),
         "093516ae-a89f-42df-8b01-9b2897111705"
     );
     let commit_id_token_stream = format!("\"{hash}\"")

@@ -104,7 +104,9 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 };
             }
         });
-        let fields_token_stream = fields_named.iter().map(|element_dd7dea0c| &element_dd7dea0c.ident);
+        let fields_token_stream = fields_named
+            .iter()
+            .map(|element_dd7dea0c| &element_dd7dea0c.ident);
         quote::quote! {
             impl #ident {
                 pub fn try_from_env() -> Result<Self, #ident_try_from_env_error_named_upper_camel_case> {

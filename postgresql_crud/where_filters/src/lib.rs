@@ -54,16 +54,16 @@ impl<T: PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc_72940a4c = Vec::new();
-            for element in &value {
-                if acc_72940a4c.contains(&element) {
+            for element_7721a8da in &value {
+                if acc_72940a4c.contains(&element_7721a8da) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: element.clone(),
+                            value: element_7721a8da.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         },
                     );
                 }
-                acc_72940a4c.push(element);
+                acc_72940a4c.push(element_7721a8da);
             }
         }
         Ok(Self(value))
@@ -113,8 +113,8 @@ impl<T: PartialEq + Clone + serde::Serialize> PostgresqlJsonTypeNotEmptyUniqueVe
     where
         T: 'query_lifetime,
     {
-        for element in self.0 {
-            if let Err(error) = query.try_bind(sqlx::types::Json(element)) {
+        for element_cc499cbc in self.0 {
+            if let Err(error) = query.try_bind(sqlx::types::Json(element_cc499cbc)) {
                 return Err(error.to_string());
             }
         }
@@ -686,16 +686,16 @@ impl<T: PartialEq + Clone> PostgresqlTypeNotEmptyUniqueVec<T> {
         }
         {
             let mut acc_6be6ccee = Vec::new();
-            for element in &value {
-                if acc_6be6ccee.contains(&element) {
+            for element_b3d83e60 in &value {
+                if acc_6be6ccee.contains(&element_b3d83e60) {
                     return Err(
                         postgresql_crud_common::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                            value: element.clone(),
+                            value: element_b3d83e60.clone(),
                             code_occurence: error_occurence_lib::code_occurence!(),
                         },
                     );
                 }
-                acc_6be6ccee.push(element);
+                acc_6be6ccee.push(element_b3d83e60);
             }
         }
         Ok(Self(value))
@@ -945,8 +945,8 @@ impl<
         mut query: sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
     ) -> Result<sqlx::query::Query<'lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>, String>
     {
-        for element in self.0 {
-            if let Err(error) = query.try_bind(element) {
+        for element_a05046df in self.0 {
+            if let Err(error) = query.try_bind(element_a05046df) {
                 return Err(error.to_string());
             }
         }

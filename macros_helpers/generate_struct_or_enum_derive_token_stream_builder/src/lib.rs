@@ -91,7 +91,9 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
         (
             generate_derive_trait_name_bool_token_stream(&make_pub_snake_case_token_stream),
             element_vec.iter().map(|element_03225620| {
-                generate_derive_trait_name_bool_token_stream(&element_03225620.derive_trait_name_snake_case)
+                generate_derive_trait_name_bool_token_stream(
+                    &element_03225620.derive_trait_name_snake_case,
+                )
             }),
         )
     };

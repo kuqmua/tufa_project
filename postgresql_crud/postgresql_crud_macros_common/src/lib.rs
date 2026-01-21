@@ -2223,12 +2223,13 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
         .map(|element_00a99fdb| element_00a99fdb.0)
         .collect::<Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
-        let field_enum_variants_token_stream = (0..len).map(|i| {
-            format!("__{}{i}", naming::FieldSnakeCase)
-            .parse::<proc_macro2::TokenStream>()
-            .expect("c46314b0-baee-41c8-b9c6-54b888310ca8")
-        })
-        .collect::<Vec<proc_macro2::TokenStream>>();
+        let field_enum_variants_token_stream = (0..len)
+            .map(|i| {
+                format!("__{}{i}", naming::FieldSnakeCase)
+                    .parse::<proc_macro2::TokenStream>()
+                    .expect("c46314b0-baee-41c8-b9c6-54b888310ca8")
+            })
+            .collect::<Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#field_enum_variants_token_stream),*}
     };
     let visit_u64_value_enum_variants_token_stream = {
