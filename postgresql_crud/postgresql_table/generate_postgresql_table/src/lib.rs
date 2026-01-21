@@ -4265,6 +4265,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let generate_match_update_query_part_primary_key_operation_token_stream = |content_token_stream: &dyn quote::ToTokens|generate_match_update_query_part_primary_key_token_stream(
+                        &operation,
+                        &content_token_stream,
+                    );
                     let match_update_query_part_primary_key_token_stream =
                         generate_match_update_query_part_primary_key_token_stream(
                             &operation,
@@ -4329,10 +4333,15 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             },
                         );
                     let if_write_is_err_token_stream = macros_helpers::generate_if_write_is_err_token_stream(
-                        &quote::quote! {
-                            acc_a95eb175,
-                            "{},",
-                            #match_update_query_part_primary_key_token_stream
+                        &{
+                            let match_update_query_part_primary_key_operation_token_stream = generate_match_update_query_part_primary_key_operation_token_stream(
+                                &quote::quote!{element_9b2b56f8}
+                            );
+                            quote::quote! {
+                                acc_a95eb175,
+                                "{},",
+                                #match_update_query_part_primary_key_operation_token_stream
+                            }
                         },
                         &generate_write_into_buffer_query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream(
                             &operation
@@ -4349,7 +4358,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             };
                             let primary_keys = {
                                 let mut acc_a95eb175 = #string_token_stream::default();
-                                for #element_snake_case in &#update_for_query_vec_snake_case {
+                                for element_9b2b56f8 in &#update_for_query_vec_snake_case {
                                     #if_write_is_err_token_stream
                                 }
                                 let _: Option<char> = acc_a95eb175.pop();

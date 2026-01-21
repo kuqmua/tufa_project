@@ -2246,12 +2246,12 @@ pub fn generate_postgresql_json_types(
                         quote::quote! {#match_token_stream.map(|value_a4ef0e83| value_a4ef0e83.0 #current_content_token_stream)}
                     };
                     let generate_into_iter_map_element_collect_token_stream = |current_content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {.into_iter().map(|#element_snake_case|#current_content_token_stream).collect()}
+                        quote::quote! {.into_iter().map(|element_cd7de881|#current_content_token_stream).collect()}
                     };
                     let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                         generate_into_iter_map_element_collect_token_stream(&match &current_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#element_snake_case.0},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(&quote::quote! {#element_snake_case.0}, &proc_macro2::TokenStream::new()),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {element_cd7de881.0},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(&quote::quote! {element_cd7de881.0}, &proc_macro2::TokenStream::new()),
                         })
                     };
                     let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |
@@ -2259,7 +2259,7 @@ pub fn generate_postgresql_json_types(
                         current_content_token_stream: &dyn quote::ToTokens
                     | {
                         match &current_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(&quote::quote! {#element_snake_case.0 #current_content_token_stream}),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(&quote::quote! {element_cd7de881.0 #current_content_token_stream}),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 let match_element_zero_token_stream = generate_match_element_zero_token_stream(&quote::quote! {element_6b309a1b.0}, &current_content_token_stream);
                                 quote::quote! {.into_iter().map(|element_6b309a1b|#match_element_zero_token_stream).collect()}
@@ -3432,7 +3432,7 @@ pub fn generate_postgresql_json_types(
                             let current_ident_update_token_stream = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&current_ident_token_stream);
                             let content_token_stream = {
                                 let content_token_stream = match &update_current_not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#element_snake_case.clone()},
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {element_cd7de881.clone()},
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {value_92de91cc.clone()},
                                 };
                                 quote::quote! {#current_ident_update_token_stream(#content_token_stream)}
@@ -3447,7 +3447,7 @@ pub fn generate_postgresql_json_types(
                         };
                         match &current_not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                #value_zero_zero_token_stream.iter().map(|#element_snake_case|#content_token_stream).collect()
+                                #value_zero_zero_token_stream.iter().map(|element_cd7de881|#content_token_stream).collect()
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 #value_zero_zero_token_stream.as_ref().map(|value_92de91cc| #content_token_stream)

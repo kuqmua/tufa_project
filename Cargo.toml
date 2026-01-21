@@ -950,7 +950,7 @@ unnecessary_unwrap = { level = "deny", priority = 0 }
 unnecessary_wraps = { level = "deny", priority = 0 }
 unneeded_field_pattern = { level = "deny", priority = 0 }
 unneeded_wildcard_pattern = { level = "deny", priority = 0 }
-unnested_or_patterns = { level = "deny", priority = 0 }
+unnested_or_patterns = { level = "allow", priority = 0 }
 unreachable = { level = "deny", priority = 0 }
 unreadable_literal = { level = "deny", priority = 0 }
 unsafe_derive_deserialize = { level = "deny", priority = 0 }
