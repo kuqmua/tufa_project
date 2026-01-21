@@ -5,7 +5,7 @@ pub fn get_macro_attribute<'attributes_litime>(
     let option_attribute = attributes.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
-            stringified_path.retain(|value| !value.is_whitespace());
+            stringified_path.retain(|value_3b43b8ea| !value_3b43b8ea.is_whitespace());
             stringified_path
         }
     });
@@ -19,7 +19,7 @@ pub fn get_macro_attribute_meta_list_token_stream<'attributes_lifetime>(
     let option_attribute = attributes.iter().find(|attr| {
         *attribute_path == {
             let mut stringified_path = quote::ToTokens::to_token_stream(&attr.path()).to_string();
-            stringified_path.retain(|value| !value.is_whitespace());
+            stringified_path.retain(|value_e5eda357| !value_e5eda357.is_whitespace());
             stringified_path
         }
     });

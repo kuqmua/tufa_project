@@ -452,7 +452,7 @@ mod tests {
             if !path.is_file()
                 || !path
                     .extension()
-                    .and_then(|value| value.to_str())
+                    .and_then(|value_56829539| value_56829539.to_str())
                     .is_some_and(|value_c980b45f| {
                         matches!(
                             value_c980b45f,
@@ -515,9 +515,9 @@ mod tests {
             for element_3c618c8f in ["dependencies", "dev-dependencies", "build-dependencies"] {
                 if let Some(deps) = parsed
                     .get(element_3c618c8f)
-                    .and_then(|value| value.as_table())
+                    .and_then(|value_5e0a4d6a| value_5e0a4d6a.as_table())
                 {
-                    for (name, value) in deps {
+                    for (name, value_07583f81) in deps {
                         let panic_with_message = || {
                             panic!(
                                 "{}: dependency `{}` in [{}] must use `.workspace = true` \
@@ -527,10 +527,10 @@ mod tests {
                                 element_3c618c8f
                             )
                         };
-                        match value {
-                            toml::Value::Table(table) => {
-                                if !(table.contains_key("path")
-                                    || (table.get("workspace")
+                        match value_07583f81 {
+                            toml::Value::Table(value_bba39a72) => {
+                                if !(value_bba39a72.contains_key("path")
+                                    || (value_bba39a72.get("workspace")
                                         == Some(&toml::Value::Boolean(true))))
                                 {
                                     panic_with_message();

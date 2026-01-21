@@ -510,7 +510,9 @@ where
     ) -> Result<String, QueryPartErrorNamed> {
         self.0.as_ref().map_or_else(
             || Ok(format!("{column} = 'null'")),
-            |value| value.query_part(increment, column, is_need_to_add_logical_operator),
+            |value_b4a9fcfb| {
+                value_b4a9fcfb.query_part(increment, column, is_need_to_add_logical_operator)
+            },
         )
     }
     fn query_bind(
@@ -1605,9 +1607,9 @@ pub fn increment_checked_add_one_returning_increment(
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         },
-        |value| {
-            *increment = value;
-            Ok(value)
+        |value_d25735be| {
+            *increment = value_d25735be;
+            Ok(value_d25735be)
         },
     )
 }

@@ -44,9 +44,9 @@ pub fn check_commit(
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             },
-            |value| match value.to_str() {
-                Ok(str_value) => {
-                    if str_value == git_info::PROJECT_GIT_INFO.commit {
+            |value_9c98ee60| match value_9c98ee60.to_str() {
+                Ok(value_16408fd2) => {
+                    if value_16408fd2 == git_info::PROJECT_GIT_INFO.commit {
                         Ok(())
                     } else {
                         Err(CheckCommitErrorNamed::CommitNotEqual {

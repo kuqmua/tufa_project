@@ -3140,10 +3140,10 @@ pub fn generate_postgresql_types(
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                         postgresql_type_range_try_from_postgresql_type.as_ref().map_or_else(
                                             |()| quote::quote! {#value_snake_case},
-                                            |value| generate_pg_range_conversion_token_stream(
+                                            |value_6ed98462| generate_pg_range_conversion_token_stream(
                                                 &value_snake_case,
                                                 &{
-                                                    let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value), not_null_or_nullable, postgresql_type_pattern));
+                                                    let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(&generate_ident_stringified(&PostgresqlType::from(value_6ed98462), not_null_or_nullable, postgresql_type_pattern));
                                                     quote::quote! {#range_postgresql_type_ident_origin::#new_snake_case(value_af65ccce)}
                                                 }
                                             )

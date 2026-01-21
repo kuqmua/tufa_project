@@ -126,7 +126,7 @@ pub fn generate_where_filters(
         let maybe_derive_serde_deserialize_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
-                &maybe_additional_traits_token_stream.as_ref().map_or_else(|| quote::quote! {<#t_token_stream>}, |value| quote::quote! {<#t_token_stream: #value>})
+                &maybe_additional_traits_token_stream.as_ref().map_or_else(|| quote::quote! {<#t_token_stream>}, |value_d05f3d4f| quote::quote! {<#t_token_stream: #value_d05f3d4f>})
             }
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
         };
@@ -144,7 +144,7 @@ pub fn generate_where_filters(
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
                     maybe_additional_traits_token_stream.as_ref().map_or_else(
                         || quote::quote! {<T: #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>},
-                        |value| quote::quote! {<T: #value + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>}
+                        |value_29913af7| quote::quote! {<T: #value_29913af7 + #postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream>}
                     )
                 }
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),

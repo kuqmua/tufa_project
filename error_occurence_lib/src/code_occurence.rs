@@ -67,9 +67,14 @@ impl std::fmt::Display for CodeOccurence {
             &match SOURCE_PLACE_TYPE.get_or_init(app_state::SourcePlaceType::from_env_or_default) {
                 app_state::SourcePlaceType::Source => self.macro_occurence.as_ref().map_or_else(
                     || format!("{}:{}:{}", self.file, self.line, self.column),
-                    |value| format!(
+                    |value_efd00048| format!(
                         "{}:{}:{} ({}:{}:{})",
-                        self.file, self.line, self.column, value.file, value.line, value.column
+                        self.file,
+                        self.line,
+                        self.column,
+                        value_efd00048.file,
+                        value_efd00048.line,
+                        value_efd00048.column
                     )
                 ),
                 app_state::SourcePlaceType::Github => self.macro_occurence.as_ref().map_or_else(
@@ -80,7 +85,7 @@ impl std::fmt::Display for CodeOccurence {
                         self.file,
                         self.line
                     ),
-                    |value| format!(
+                    |value_2ad91ca0| format!(
                         "{}/blob/{}/{}#L{} ({}/blob/{}/{}#L{})",
                         naming::GITHUB_URL,
                         self.commit,
@@ -88,8 +93,8 @@ impl std::fmt::Display for CodeOccurence {
                         self.line,
                         naming::GITHUB_URL,
                         self.commit,
-                        value.file,
-                        value.line
+                        value_2ad91ca0.file,
+                        value_2ad91ca0.line
                     )
                 ),
             },

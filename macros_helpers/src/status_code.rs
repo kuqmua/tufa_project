@@ -519,7 +519,7 @@ impl StatusCode {
 //                 }
 //             }
 //         }
-//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
+//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value_7c48284a| Ok(value_7c48284a))
 //     }
 // }
 // impl TryFrom<&&syn::Variant> for StatusCode {
@@ -550,7 +550,7 @@ impl StatusCode {
 //                 }
 //             }
 //         }
-//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value| Ok(value))
+//         option_self.map_or_else(|| Err(String::from("status_code attribute not found")), |value_eb6dbec3| Ok(value_eb6dbec3))
 //     }
 // }
 impl TryFrom<&String> for StatusCode {
