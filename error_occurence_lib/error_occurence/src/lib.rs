@@ -26,7 +26,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         .generics
         .params
         .iter()
-        .map(|element| match &element {
+        .map(|element_a6a747c1| match &element_a6a747c1 {
             syn::GenericParam::Type(value) => &value.ident,
             syn::GenericParam::Lifetime(_) | syn::GenericParam::Const(_) => {
                 panic!("3ce82d11-36be-49ab-b521-21486f3fe22a")
@@ -93,7 +93,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         } else {
             let value = generic_parameters
                 .iter()
-                .map(|element| quote::quote! {#element: error_occurence_lib::ToStdStringString});
+                .map(|element_4ee89bd7| quote::quote! {#element_4ee89bd7: error_occurence_lib::ToStdStringString});
             quote::quote! {<#(#value),*>}
         };
     let generate_enum_ident_with_serialize_deserialize_token_stream =
