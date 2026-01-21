@@ -2,6 +2,7 @@
 
 * cargo test --features test-utils -- --nocapture
 * RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
+* RUSTFLAGS="-Awarnings" RUST_LOG=sqlx=debug cargo test --features test-utils -- --nocapture
 * cargo clippy --all-targets --all-features
 
 ### MOVE IT todo tomorrow and merge with notes
