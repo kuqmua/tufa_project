@@ -1436,8 +1436,8 @@ where
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_57b31116 = String::default();
-        for (index, element_14ef20c2) in self.0.iter().enumerate() {
-            match element_14ef20c2.query_part(
+        for (index, value_953208ce) in self.0.iter().enumerate() {
+            match value_953208ce.query_part(
                 increment,
                 column,
                 if index == 0 {

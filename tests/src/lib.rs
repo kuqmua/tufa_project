@@ -305,20 +305,18 @@ mod tests {
     }
     #[test]
     fn check_workspace_dependencies_having_exact_version() {
-        let workspace = toml_value_from_from_cargo_toml_workspace();
-        let dependencies = workspace
+        for (_, value_5c36cb98) in match toml_value_from_from_cargo_toml_workspace()
             .get("dependencies")
-            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1");
-        let table_value = match dependencies {
-            toml::Value::Table(value) => value,
+            .expect("2376f58e-394d-4759-96c1-e5379fdbb0b1")
+        {
+            toml::Value::Table(value_270f9bd5) => value_270f9bd5,
             toml::Value::String(_)
             | toml::Value::Integer(_)
             | toml::Value::Float(_)
             | toml::Value::Boolean(_)
             | toml::Value::Datetime(_)
             | toml::Value::Array(_) => panic!("e117fa5a-cc55-4ca8-a885-3d0c275592ea"),
-        };
-        for (_, value_5c36cb98) in table_value {
+        } {
             let value_table = match value_5c36cb98 {
                 toml::Value::Table(value_31495eb6) => value_31495eb6,
                 toml::Value::String(_)
@@ -468,15 +466,15 @@ mod tests {
             let Ok(content) = std::fs::read_to_string(path) else {
                 continue; //skip binary non-utf8 files
             };
-            for (line_index, line) in content.lines().enumerate() {
-                for element_c0fa9fc2 in line.chars() {
+            for (key_0fa16fc1, value_3d676d2e) in content.lines().enumerate() {
+                for element_c0fa9fc2 in value_3d676d2e.chars() {
                     if !(matches!(element_c0fa9fc2, '\n' | '\r' | '\t')
                         || element_c0fa9fc2.is_ascii())
                     {
                         errors.push(format!(
                             "{}:{} non-english symbol `{}` (U+{:04X})",
                             path.display(),
-                            line_index + 1,
+                            key_0fa16fc1 + 1,
                             element_c0fa9fc2,
                             u32::from(element_c0fa9fc2)
                         ));
@@ -517,13 +515,13 @@ mod tests {
                     .get(element_3c618c8f)
                     .and_then(|value_5e0a4d6a| value_5e0a4d6a.as_table())
                 {
-                    for (name, value_07583f81) in deps {
+                    for (key_794900d4, value_07583f81) in deps {
                         let panic_with_message = || {
                             panic!(
                                 "{}: dependency `{}` in [{}] must use `.workspace = true` \
                                  (only `path = ...` is allowed as exception)",
                                 path.display(),
-                                name,
+                                key_794900d4,
                                 element_3c618c8f
                             )
                         };
