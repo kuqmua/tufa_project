@@ -3319,7 +3319,7 @@ pub fn generate_postgresql_json_object_type(
                                         );
                                         quote::quote! {
                                             match #field_type_as_postgresql_json_type_token_stream::#select_only_created_ids_query_part_snake_case(
-                                                &#element_snake_case.#field_ident,
+                                                &element_b1359d90.#field_ident,
                                                 #field_ident_double_quotes_token_stream,
                                                 "elem",
                                                 #increment_snake_case
@@ -3355,11 +3355,11 @@ pub fn generate_postgresql_json_object_type(
                                             "(select jsonb_agg({}) from jsonb_array_elements({}) as elem where elem->>'id' in ({}))",
                                             {
                                                 let mut acc_57cd0744 = #std_string_string_token_stream::new();
-                                                for #element_snake_case in self.#update_snake_case.to_vec() {
+                                                for element_d7561f40 in self.#update_snake_case.to_vec() {
                                                     //todo maybe wrong for multiple updates by id?
                                                     let mut acc_892857b1 = #std_string_string_token_stream::new();
                                                     match #import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_as_postgresql_json_type_token_stream ::select_only_updated_ids_query_part(
-                                                        &#element_snake_case.id,
+                                                        &element_d7561f40.id,
                                                         "id",
                                                         "elem",
                                                         #increment_snake_case
@@ -3372,8 +3372,8 @@ pub fn generate_postgresql_json_object_type(
                                                             return Err(#error_snake_case);
                                                         }
                                                     }
-                                                    for #element_snake_case in #element_snake_case.fields.0.to_vec() {
-                                                        match &#element_snake_case {
+                                                    for element_738b2a83 in element_d7561f40.fields.0.to_vec() {
+                                                        match &element_738b2a83 {
                                                             #(#match_variants_token_stream),*
                                                         }
                                                     }
@@ -3381,7 +3381,7 @@ pub fn generate_postgresql_json_object_type(
                                                     let _: Option<char> = acc_892857b1.pop();
                                                     #if_write_is_err_curly_braces_1_token_stream
                                                 }
-                                                for #element_snake_case in &self.create {
+                                                for element_b1359d90 in &self.create {
                                                     #(#select_only_created_ids_query_part_content_token_stream)*
                                                 }
                                                 let _: Option<char> = acc_57cd0744.pop();
@@ -3401,7 +3401,7 @@ pub fn generate_postgresql_json_object_type(
                                                         },
                                                     }
                                                 }
-                                                for #element_snake_case in &self.#create_snake_case {
+                                                for _ in &self.#create_snake_case {
                                                     match #import_path::increment_checked_add_one_returning_increment(#increment_snake_case) {
                                                         Ok(value_b52c3fe1) => {
                                                             #if_write_is_err_1_token_stream
