@@ -75,10 +75,10 @@ pub fn generate_postgresql_type_where_token_stream(
     let query_snake_case = naming::QuerySnakeCase;
     let is_need_to_add_logical_operator_snake_case = naming::IsNeedToAddLogicalOperatorSnakeCase;
     let postgresql_type_tokens_where_token_stream = {
-        let variants_token_stream = variants.iter().map(|element| {
-            let element_upper_camel_case = element.upper_camel_case();
-            let prefix_where_self_upper_camel_case = element.prefix_where_self_upper_camel_case();
-            let option_type_token_stream: Option<proc_macro2::TokenStream> = element.maybe_generic();
+        let variants_token_stream = variants.iter().map(|element_a9dc0e35| {
+            let element_upper_camel_case = element_a9dc0e35.upper_camel_case();
+            let prefix_where_self_upper_camel_case = element_a9dc0e35.prefix_where_self_upper_camel_case();
+            let option_type_token_stream: Option<proc_macro2::TokenStream> = element_a9dc0e35.maybe_generic();
             let type_token_stream = option_type_token_stream.map_or_else(proc_macro2::TokenStream::new, |value| quote::quote! {<#value>});
             quote::quote! {#element_upper_camel_case(where_filters::#prefix_where_self_upper_camel_case #type_token_stream)}
         });
@@ -98,8 +98,8 @@ pub fn generate_postgresql_type_where_token_stream(
             &ColumnParameterUnderscore::False,
             &IsNeedToAddLogicalOperatorUnderscore::False,
             &{
-                let variants_token_stream = variants.iter().map(|element| {
-                let element_upper_camel_case = element.upper_camel_case();
+                let variants_token_stream = variants.iter().map(|element_8bf490d9| {
+                let element_upper_camel_case = element_8bf490d9.upper_camel_case();
                 quote::quote! {
                     Self::#element_upper_camel_case(#value_snake_case) => postgresql_crud_common::PostgresqlTypeWhereFilter::query_part(
                         #value_snake_case,
@@ -117,8 +117,8 @@ pub fn generate_postgresql_type_where_token_stream(
             },
             is_query_bind_mutable,
             &{
-                let variants_token_stream = variants.iter().map(|element| {
-                let element_upper_camel_case = element.upper_camel_case();
+                let variants_token_stream = variants.iter().map(|element_93e5c1bc| {
+                let element_upper_camel_case = element_93e5c1bc.upper_camel_case();
                 quote::quote! {
                     Self::#element_upper_camel_case(#value_snake_case) => postgresql_crud_common::PostgresqlTypeWhereFilter::query_bind(
                         #value_snake_case,
@@ -142,8 +142,8 @@ pub fn generate_postgresql_type_where_token_stream(
             &quote::quote! {format!("{self:#?}")},
         );
     let impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_token_stream = generate_impl_postgresql_crud_common_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
-        let variants_token_stream = variants.iter().map(|element| {
-            let element_upper_camel_case = element.upper_camel_case();
+        let variants_token_stream = variants.iter().map(|element_b9724130| {
+            let element_upper_camel_case = element_b9724130.upper_camel_case();
             let default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudCommonDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
             quote::quote! {
                 Self::#element_upper_camel_case(#default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
@@ -2220,13 +2220,13 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     }
     let vec_ident = vec_ident_type
         .iter()
-        .map(|element| element.0)
+        .map(|element_00a99fdb| element_00a99fdb.0)
         .collect::<Vec<&syn::Ident>>();
     let field_enum_variants_token_stream = {
         let field_enum_variants_token_stream = {
             let mut vec = Vec::new();
-            for element in 0..len {
-                let value = format!("__{}{element}", naming::FieldSnakeCase);
+            for element_6edcd23d in 0..len {
+                let value = format!("__{}{element_6edcd23d}", naming::FieldSnakeCase);
                 vec.push(
                     value
                         .parse::<proc_macro2::TokenStream>()
@@ -2338,10 +2338,10 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
         quote::quote! {#(#visit_map_match_variants_token_stream)*}
     };
     let visit_map_missing_fields_check_token_stream = {
-        let content_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+        let content_token_stream = vec_ident.iter().enumerate().map(|(index, element_a1d37c97)| {
             let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
             let field_index_handle_token_stream = generate_underscore_underscore_field_index_handle_token_stream(index);
-            let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+            let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_a1d37c97);
             quote::quote! {
                 let #field_index_handle_token_stream = match #field_index_token_stream {
                     Some(value_4f8faf03) => value_4f8faf03,
@@ -2356,7 +2356,7 @@ pub fn generate_impl_serde_deserialize_for_struct_token_stream(
     let fields_array_elements_token_stream = {
         let fields_array_elements_token_stream = vec_ident
             .iter()
-            .map(|element| generate_quotes::double_quotes_token_stream(&element));
+            .map(|element_43a33e0b| generate_quotes::double_quotes_token_stream(&element_43a33e0b));
         quote::quote! {#(#fields_array_elements_token_stream),*}
     };
     let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);

@@ -1121,7 +1121,7 @@ pub fn generate_where_filters(
             };
         let filter_array_token_stream =
             postgresql_crud_macros_common::PostgresqlTypeFilter::into_array()
-                .map(|element| generate_filters_token_stream(&element));
+                .map(|element_7cfb1929| generate_filters_token_stream(&element_7cfb1929));
         let generated = quote::quote! {#(#filter_array_token_stream)*};
         macros_helpers::maybe_write_token_stream_into_file(
             generate_where_filters_config
@@ -1797,7 +1797,7 @@ pub fn generate_where_filters(
             };
         let filter_array_token_stream =
             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array()
-                .map(|element| generate_filters_token_stream(&element));
+                .map(|element_6a4ac539| generate_filters_token_stream(&element_6a4ac539));
         let generated = quote::quote! {#(#filter_array_token_stream)*};
         macros_helpers::maybe_write_token_stream_into_file(
             generate_where_filters_config.postgresql_json_types_content_write_into_generate_where_filters_postgresql_json_types,

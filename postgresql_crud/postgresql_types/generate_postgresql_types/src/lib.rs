@@ -6409,8 +6409,8 @@ pub fn generate_postgresql_types(
         &{
             let content_token_stream = columns_token_stream
                 .into_iter()
-                .map(|element| {
-                    element
+                .map(|element_2e3fc869| {
+                    element_2e3fc869
                         .parse::<proc_macro2::TokenStream>()
                         .expect("79ee6381-c845-4762-a6f6-1c6b38806535")
                 })
@@ -6426,8 +6426,8 @@ pub fn generate_postgresql_types(
     let generated = {
         let content_token_stream = postgresql_type_array
             .into_iter()
-            .map(|element| {
-                element
+            .map(|element_f9569807| {
+                element_f9569807
                     .parse::<proc_macro2::TokenStream>()
                     .expect("e0c9257d-e554-4147-8174-b431c364c1ac")
             })

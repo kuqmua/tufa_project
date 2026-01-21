@@ -24,9 +24,9 @@ fn main() {
     let substring_value = "path = ";
     let paths_vec: Vec<String> = contents
         .lines()
-        .filter_map(|element| {
-            element.find("path = ").map(|index| {
-                element
+        .filter_map(|element_0731ade5| {
+            element_0731ade5.find("path = ").map(|index| {
+                element_0731ade5
                     .get(
                         index
                             .checked_add(substring_value.len())

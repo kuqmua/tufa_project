@@ -987,10 +987,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         true,
                     ),
                 )
-                .chain(fields_without_primary_key.iter().map(|element| {
+                .chain(fields_without_primary_key.iter().map(|element_e48e222c| {
                     generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(
-                        &element.field_type,
-                        &element.field_ident,
+                        &element_e48e222c.field_type,
+                        &element_e48e222c.field_ident,
                         false,
                     )
                 })).collect::<Vec<proc_macro2::TokenStream>>()
@@ -1511,7 +1511,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &ident_where_many_upper_camel_case,
                 &fields
                     .iter()
-                    .map(|element| (&element.field_ident, &element.field_type))
+                    .map(|element_3e09c5fb| (&element_3e09c5fb.field_ident, &element_3e09c5fb.field_type))
                     .collect::<Vec<(&syn::Ident, &syn::Type)>>(),
                 fields_len,
                 &|_: &syn::Ident, syn_type: &syn::Type| {
@@ -1521,8 +1521,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 },
             );
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(&ident_where_many_upper_camel_case, &{
-            let fields_token_stream = generate_fields_named_without_comma_token_stream(&|element: &macros_helpers::SynFieldWrapper| {
-                let field_ident = &element.field_ident;
+            let fields_token_stream = generate_fields_named_without_comma_token_stream(&|element_0fd667f6: &macros_helpers::SynFieldWrapper| {
+                let field_ident = &element_0fd667f6.field_ident;
                 quote::quote! {
                     #field_ident: Some(
                         #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -1767,7 +1767,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &proc_macro2::TokenStream::new(),
                 &ident_select_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
-                &quote::quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|element|format!("cannot serialize into json: {element:?}")))},
+                &quote::quote! {write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|element_2636212f|format!("cannot serialize into json: {element_2636212f:?}")))},
             );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream =
             macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
@@ -1777,8 +1777,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &quote::quote! {format!("{self}")},
             );
         let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
-            let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element: &macros_helpers::SynFieldWrapper| {
-                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+            let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element_5282570d: &macros_helpers::SynFieldWrapper| {
+                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_5282570d.field_ident);
                 quote::quote! {
                     Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 }
@@ -1867,11 +1867,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
                 let assignment_variants_without_primary_key_token_stream = fields_without_primary_key
                     .iter()
-                    .map(|element| {
-                        let field_ident = &element.field_ident;
-                        let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                        let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                        let element_syn_field_ty_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&element.field_type);
+                    .map(|element_3ce946f9| {
+                        let field_ident = &element_3ce946f9.field_ident;
+                        let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_3ce946f9.field_ident);
+                        let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_3ce946f9.field_ident);
+                        let element_syn_field_ty_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&element_3ce946f9.field_type);
                         quote::quote! {
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
                                 #element_syn_field_ty_as_postgresql_type_read_token_stream,
@@ -1892,7 +1892,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     .collect::<Vec<proc_macro2::TokenStream>>();
                 let fields_initiation_token_stream = &fields
                     .iter()
-                    .map(|element| &element.field_ident)
+                    .map(|element_2bfe6afc| &element_2bfe6afc.field_ident)
                     .collect::<Vec<&syn::Ident>>();
                 quote::quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
@@ -2187,7 +2187,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &ident_update_upper_camel_case,
                 &fields
                     .iter()
-                    .map(|element| (&element.field_ident, &element.field_type))
+                    .map(|element_2bfe6afc| (&element_2bfe6afc.field_ident, &element_2bfe6afc.field_type))
                     .collect::<Vec<(&syn::Ident, &syn::Type)>>(),
                 fields_len,
                 &|syn_ident: &syn::Ident, syn_type: &syn::Type| {
@@ -2827,9 +2827,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 let from_handle_token_stream = generate_from_handle_token_stream(
                     &ident_operation_error_named_upper_camel_case,
                     &{
-                        let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
-                    let variant_ident = &element.ident;
-                    let syn::Fields::Named(fields_named) = &element.fields else {
+                        let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element_d80f0707| {
+                    let variant_ident = &element_d80f0707.ident;
+                    let syn::Fields::Named(fields_named) = &element_d80f0707.fields else {
                         panic!("10764d2b-48db-47c4-bc8c-12e13d6b9621");
                     };
                     let fields_mapped_into_token_stream = {
@@ -3254,9 +3254,9 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(operation);
         let operation_error_named_with_serialize_deserialize_snake_case = &operation.operation_error_named_with_serialize_deserialize_snake_case();
         let try_operation_logic_error_named_with_serialize_deserialize_token_stream = {
-            let try_operation_logic_response_variants_to_try_operation_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element| {
-                let variant_ident = &element.ident;
-                let fields_idents_token_stream = if let syn::Fields::Named(fields_named) = &element.fields {
+            let try_operation_logic_response_variants_to_try_operation_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element_f83d5272| {
+                let variant_ident = &element_f83d5272.ident;
+                let fields_idents_token_stream = if let syn::Fields::Named(fields_named) = &element_f83d5272.fields {
                     let fields_idents = fields_named.named.iter().map(|field| &field.ident);
                     quote::quote! {#(#fields_idents),*}
                 } else {
@@ -5176,7 +5176,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
         let primary_key_field_type_read_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream =
             generate_primary_key_field_type_as_postgresql_type_primary_key_method_call_token_stream(
                 &read_into_table_type_declaration_snake_case,
-                &element_snake_case,
+                &quote::quote!{element_adcc8db3},
             );
         let (
             primary_key_field_type_read_only_ids_into_read_element_fdc88812_primary_key_field_ident_token_stream,
@@ -7024,7 +7024,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Some(
                                         generate_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
-                                            read_only_ids_from_try_delete_many.into_iter().map(|element| #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
+                                            read_only_ids_from_try_delete_many.into_iter().map(|element_adcc8db3| #primary_key_field_type_as_postgresql_type_where_token_stream::Equal(
                                                 postgresql_crud::PostgresqlTypeWhereEqual {
                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                     #value_snake_case: #primary_key_field_type_read_into_table_type_declaration_element_primary_key_field_ident_clone_token_stream,
@@ -7372,7 +7372,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             ).await.expect("c7952247-dc94-441b-9aef-368b8fdc593c");
                         }
                         let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
-                        let table_names_cloned = table_names.iter().map(|element| (*element).to_owned()).collect::<Vec<String>>();
+                        let table_names_cloned = table_names.iter().map(|element_26b304d1| (*element_26b304d1).to_owned()).collect::<Vec<String>>();
                         let (started_tx, started_rx) = tokio::sync::oneshot::channel();
                         let #underscore_unused_token_stream = tokio::spawn(async move {
                             let tcp_listener = tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.expect("663ae29e-bc00-4ea1-a7e9-4dddceb5b53a");

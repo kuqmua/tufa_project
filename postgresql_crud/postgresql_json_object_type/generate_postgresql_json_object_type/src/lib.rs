@@ -94,23 +94,23 @@ pub fn generate_postgresql_json_object_type(
         }
     }
     // .into_iter()
-    // .filter(|element| {
+    // .filter(|element_2f2d1e6c| {
     //     use postgresql_crud_macros_common::NotNullOrNullable;
-    //     let not_null_or_nullable_filter = match &element.not_null_or_nullable {
+    //     let not_null_or_nullable_filter = match &element_2f2d1e6c.not_null_or_nullable {
     //         NotNullOrNullable::NotNull => true,
     //         NotNullOrNullable::Nullable => true,
     //     };
-    //     let postgresql_json_object_type_pattern_filter = match &element.postgresql_json_object_type_pattern {
-    //         PostgresqlJsonObjectTypePattern::Standart => match &element.not_null_or_nullable {
+    //     let postgresql_json_object_type_pattern_filter = match &element_2f2d1e6c.postgresql_json_object_type_pattern {
+    //         PostgresqlJsonObjectTypePattern::Standart => match &element_2f2d1e6c.not_null_or_nullable {
     //             NotNullOrNullable::NotNull => true,
     //             NotNullOrNullable::Nullable => true,
     //         },
-    //         PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
+    //         PostgresqlJsonObjectTypePattern::Array => match &element_2f2d1e6c.not_null_or_nullable {
     //             NotNullOrNullable::NotNull => true,
     //             NotNullOrNullable::Nullable => true,
     //         },
     //     };
-    //     let trait_gen_filter = match &element.trait_gen {
+    //     let trait_gen_filter = match &element_2f2d1e6c.trait_gen {
     //         TraitGen::PostgresqlJsonType => true,
     //         TraitGen::PostgresqlTypeAndPostgresqlJsonType => true,
     //     };
@@ -6542,15 +6542,15 @@ pub fn generate_postgresql_json_object_type(
                                                     let whole = #import_path::SingleOrMultiple::Single(
                                                         #ident_where_upper_camel_case::#field_ident_upper_camel_case(#import_path::PostgresqlTypeWhere::try_new(
                                                             and,
-                                                            value_a2900ac9.into_vec().into_iter().flat_map(|element| match element {
+                                                            value_a2900ac9.into_vec().into_iter().flat_map(|element_9efefcdc| match element_9efefcdc {
                                                                 #import_path::SingleOrMultiple::Single(single) => {
                                                                     std::iter::once(single).collect()
                                                                 }
                                                                 #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                             })
-                                                            .fold(Vec::new(), |mut acc_be2a6606, element| {
-                                                                if !acc_be2a6606.contains(&element) {
-                                                                    acc_be2a6606.push(element);
+                                                            .fold(Vec::new(), |mut acc_be2a6606, element_7ae146ee| {
+                                                                if !acc_be2a6606.contains(&element_7ae146ee) {
+                                                                    acc_be2a6606.push(element_7ae146ee);
                                                                 }
                                                                 acc_be2a6606
                                                             })
@@ -6634,28 +6634,28 @@ pub fn generate_postgresql_json_object_type(
                                                         }
                                                     }
                                                     match #import_path::NotEmptyUniqueEnumVec::try_new(
-                                                        value_f190793e.into_vec().into_iter().flat_map(|element| match element {
+                                                        value_f190793e.into_vec().into_iter().flat_map(|element_6df4f0be| match element_6df4f0be {
                                                             #import_path::SingleOrMultiple::Single(single) => {
                                                                 std::iter::once(single).collect()
                                                             }
                                                             #import_path::SingleOrMultiple::Multiple(multiple) => multiple.into_vec(),
                                                         })
-                                                        .fold(Vec::new(), |mut acc_01265629, element| {
-                                                            if !acc_01265629.contains(&element) {
-                                                                acc_01265629.push(element);
+                                                        .fold(Vec::new(), |mut acc_01265629, element_9a7c960d| {
+                                                            if !acc_01265629.contains(&element_9a7c960d) {
+                                                                acc_01265629.push(element_9a7c960d);
                                                             }
                                                             acc_01265629
                                                         })
                                                     ) {
                                                         Ok(value_a4000d70) => {
-                                                            let whole = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
+                                                            let value_d6218307 = #ident_where_upper_camel_case::#element_field_ident_upper_camel_case(
                                                                 #import_path::PostgresqlTypeWhere::new(
                                                                     and,
                                                                     value_a4000d70
                                                                 )
                                                             );
-                                                            if !all_fields_acc.contains(&whole) {
-                                                                all_fields_acc.push(whole);
+                                                            if !all_fields_acc.contains(&value_d6218307) {
+                                                                all_fields_acc.push(value_d6218307);
                                                             }
                                                         },
                                                         Err(error) => match error {

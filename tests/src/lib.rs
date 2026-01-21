@@ -128,10 +128,10 @@ mod tests {
         let mut all_errors = Vec::new();
         for entry in project_directory()
             .into_iter()
-            .filter_entry(|element| element.file_name() != "target")
+            .filter_entry(|element_7e9cb4cf| element_7e9cb4cf.file_name() != "target")
             .filter_map(Result::ok)
-            .filter(|element| {
-                element
+            .filter(|element_2b9891bd| {
+                element_2b9891bd
                     .path()
                     .extension()
                     .and_then(|element_bdd39cb5| element_bdd39cb5.to_str())
@@ -153,7 +153,7 @@ mod tests {
                 visitor
                     .errors
                     .into_iter()
-                    .map(|element| format!("{:?}: {}", entry.path(), element)),
+                    .map(|element_2b9891bd| format!("{:?}: {}", entry.path(), element_2b9891bd)),
             );
         }
         let mut seen = std::collections::HashSet::new();
@@ -199,7 +199,7 @@ mod tests {
             regex::Regex::new(r"(?m)^\s*([a-z0-9][a-z0-9_-]+)\s+(allow|warn|deny|forbid)\b")
                 .expect("60d99c87-273a-48ac-8daa-4f0a853d16bd")
                 .captures_iter(&stdout)
-                .map(|element| element[1].to_string().replace('-', "_").to_lowercase())
+                .map(|element_70833f93| element_70833f93[1].to_string().replace('-', "_").to_lowercase())
                 .collect::<Vec<String>>()
         };
         compare_lints_vecs(
@@ -406,10 +406,10 @@ mod tests {
         let mut seen = std::collections::HashSet::new();
         for entry in project_directory()
             .into_iter()
-            .filter_entry(|element| element.file_name() != "target")
+            .filter_entry(|element_e4adf4c5| element_e4adf4c5.file_name() != "target")
             .filter_map(Result::ok)
-            .filter(|element| {
-                element
+            .filter(|element_714b3d9c| {
+                element_714b3d9c
                     .path()
                     .extension()
                     .and_then(|element_7ac9041a| element_7ac9041a.to_str())
@@ -419,8 +419,8 @@ mod tests {
             let Ok(content) = std::fs::read_to_string(entry.path()) else {
                 continue;
             };
-            for element in regex.find_iter(&content) {
-                let uuid = uuid::Uuid::parse_str(element.as_str())
+            for element_714b3d9c in regex.find_iter(&content) {
+                let uuid = uuid::Uuid::parse_str(element_714b3d9c.as_str())
                     .expect("c9711efd-eb37-4b10-b689-831fa916cb82");
                 assert!(
                     uuid.get_version_num() == 4,
@@ -438,8 +438,8 @@ mod tests {
         ];
         for entry in project_directory()
             .into_iter()
-            .filter_entry(|element| {
-                let name = element.file_name().to_string_lossy();
+            .filter_entry(|element_6870bc3d| {
+                let name = element_6870bc3d.file_name().to_string_lossy();
                 name != "target" && name != ".git"
             })
             .filter_map(Result::ok)
@@ -493,7 +493,7 @@ mod tests {
         for entry in project_directory()
             .into_iter()
             .filter_map(Result::ok)
-            .filter(|element| element.file_name() == "Cargo.toml")
+            .filter(|element_6870bc3d| element_6870bc3d.file_name() == "Cargo.toml")
         {
             let path = entry.path();
             if exceptions.contains(&path.display().to_string().as_str()) {

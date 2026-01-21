@@ -107,7 +107,9 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
         panic!("79b0f231-02b9-4770-8052-5f6cc3debf97");
     };
     let std_string_string = token_patterns::StdStringString;
-    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter().filter(|element| *element.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string()).map(|element| {
+    let fields_idents_idents_with_serialize_deserialize_excluding_code_occurence_token_stream = fields.iter()
+    .filter(|element_5782b638| *element_5782b638.ident.as_ref().expect("3078fd99-5fac-4d57-83ec-93f808b7444b") != *naming::CodeOccurenceSnakeCase.to_string())
+    .map(|element_c25b655e| {
         fn get_type_path_third_segment_second_argument_check_if_hashmap<'value_lifetime>(
             value: &'value_lifetime syn::Field,
             std_snake_case: &naming::StdSnakeCase,
@@ -154,13 +156,13 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             assert!(quote::quote! {#std_string_string}.to_string() == first_argument_stringified, "bbdda4ab-809d-45c7-92f4-245f23318458");
             args.iter().nth(1).expect("f4e88416-5417-405a-9c0d-6035f815bbdd")
         }
-        let element_68eb9c75_ident = element.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
+        let element_c25b655e_ident = element_c25b655e.ident.as_ref().expect("438aa90e-d1f3-4b89-a61a-e2d9f6a7e653");
         let element_type_token_stream = {
-            let element_type = &element.ty;
+            let element_type = &element_c25b655e.ty;
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
+        let element_type_with_serialize_deserialize_token_stream = match ErrorOccurenceFieldAttribute::try_from(element_c25b655e).expect("2db209a8-2f57-4474-a9c6-9743aaaed57d") {
             ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string
@@ -169,10 +171,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
             ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize | ErrorOccurenceFieldAttribute::EoVecToStdStringStringSerializeDeserialize => element_type_token_stream,
             ErrorOccurenceFieldAttribute::EoErrorOccurence => format!(
                 "{}{}",
-                {
-                    let element_type = &element.ty;
-                    quote::quote! {#element_type}
-                },
+                element_type_token_stream,
                 naming::WithSerializeDeserializeUpperCamelCase
             ).parse::<proc_macro2::TokenStream>().expect("201dc0a4-4563-4e51-a228-ba085b767775"),
             ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
@@ -181,7 +180,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
             }
             ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
-                let segments = if let syn::Type::Path(path_value) = &element.ty {
+                let segments = if let syn::Type::Path(path_value) = &element_c25b655e.ty {
                     &path_value.path.segments
                 } else {
                     panic!("8d93bf20-5034-4dcb-9dcc-0d7056278dae");
@@ -206,17 +205,17 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringString => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element_c25b655e, &std_snake_case, std_string_string);
                 quote::quote! {
                     std::collections::HashMap<#std_string_string, #std_string_string>
                 }
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueToStdStringStringSerializeDeserialize => {
-                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
+                let _: &syn::GenericArgument = get_type_path_third_segment_second_argument_check_if_hashmap(element_c25b655e, &std_snake_case, std_string_string);
                 element_type_token_stream
             }
             ErrorOccurenceFieldAttribute::EoHashMapKeyStdStringStringValueErrorOccurence => {
-                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element, &std_snake_case, std_string_string);
+                let second_argument = get_type_path_third_segment_second_argument_check_if_hashmap(element_c25b655e, &std_snake_case, std_string_string);
                 let element_hashmap_value_type_with_serialize_deserialize_token_stream = format!(
                     "{}{}",
                     quote::quote! {#second_argument},
@@ -227,7 +226,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(
                 }
             }
         };
-        quote::quote! {#element_68eb9c75_ident: #element_type_with_serialize_deserialize_token_stream,}
+        quote::quote! {#element_c25b655e_ident: #element_type_with_serialize_deserialize_token_stream,}
     });
     let code_occurence_snake_case_token_stream = naming::CodeOccurenceSnakeCase;
     quote::quote! {

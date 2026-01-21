@@ -4075,7 +4075,7 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                             PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
                             PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{
-                                match #import_path::NotEmptyUniqueEnumVec::try_new(create.0.0.into_iter().map(|element| {
+                                match #import_path::NotEmptyUniqueEnumVec::try_new(create.0.0.into_iter().map(|element_590fca71| {
                                     #import_path::SingleOrMultiple::Single(
                                         #ident_where_upper_camel_case::ContainsElementRegularExpression(
                                             where_filters::PostgresqlJsonTypeWhereContainsElementRegularExpression {
@@ -4085,7 +4085,7 @@ pub fn generate_postgresql_json_types(
                                                 value: where_filters::RegexRegex(
                                                     regex::Regex::new(&format!(
                                                         "^{}$",
-                                                        regex::escape(&element.0)
+                                                        regex::escape(&element_590fca71.0)
                                                     ))
                                                     .expect("7d01653a-e82f-4615-bbef-a8c899491f34"),
                                                 ),
@@ -4177,7 +4177,7 @@ pub fn generate_postgresql_json_types(
         &{
             let fields_content_token_stream = fields_token_stream
                 .into_iter()
-                .map(|element| element.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
+                .map(|element_7ec253fa| element_7ec253fa.parse::<proc_macro2::TokenStream>().expect("1d8cd8e4-5f51-4aed-a626-79d759d86ebf"))
                 .collect::<Vec<proc_macro2::TokenStream>>();
             quote::quote! {
                 pub struct PostgresqlTableColumnsUsingPostgresqlJsonTypes {
@@ -4190,8 +4190,8 @@ pub fn generate_postgresql_json_types(
     let generated = {
         let content_token_stream = postgresql_json_type_array
             .into_iter()
-            .map(|element| {
-                element
+            .map(|element_af9caefa| {
+                element_af9caefa
                     .parse::<proc_macro2::TokenStream>()
                     .expect("84e21b40-b5a4-4f4c-86d3-8f6ecfbe1f6e")
             })

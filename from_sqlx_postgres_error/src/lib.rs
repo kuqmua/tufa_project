@@ -8,7 +8,7 @@
 //         format!("{proc_macro_name_upper_camel_case} {ident}");
 
 //     // let sqlx_postgres_error_named_syn_variants = macros_helpers::enum_variants::sqlx_postgres_error_named_syn_variants(&proc_macro_name_upper_camel_case_ident_stringified);
-//     // sqlx_postgres_error_named_syn_variants.iter().map(|element|{
+//     // sqlx_postgres_error_named_syn_variants.iter().map(|element_ea7f6dd1|{
 //     //     let field_ident = field.ident;
 //     //     let field_ty =
 //     //     quote::quote! {}

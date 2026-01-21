@@ -15,12 +15,12 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
     let element_vec = serde_json::from_str::<Vec<String>>(&input_token_stream.to_string())
         .expect("c5d09740-51b2-4c11-9b66-931622d1a053")
         .into_iter()
-        .map(|element| {
+        .map(|element_4f4a2c74| {
             let snake_case = {
-                let mut result = String::with_capacity(element.len());
+                let mut result = String::with_capacity(element_4f4a2c74.len());
                 let mut prev_is_underscore = false;
                 let mut prev_is_lowercase = false;
-                for char_element in element.chars() {
+                for char_element in element_4f4a2c74.chars() {
                     if char_element.is_alphabetic() {
                         if char_element.is_uppercase() {
                             if prev_is_lowercase && !prev_is_underscore {
@@ -59,7 +59,7 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
                     let value = naming::parameter::DeriveSelfIfSnakeCase::from_display(&snake_case);
                     quote::quote! {#value}
                 },
-                trait_type: element
+                trait_type: element_4f4a2c74
                     .parse::<proc_macro2::TokenStream>()
                     .expect("8672240f-97b3-40f5-bf14-dc4b13af528f"),
             }
@@ -77,8 +77,8 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
         }
         (
             generate_pun_enum_token_stream(&make_pub_upper_camel_case_token_stream),
-            element_vec.iter().map(|element| {
-                generate_pun_enum_token_stream(&element.derive_trait_name_upper_camel_case)
+            element_vec.iter().map(|element_4f4a2c74| {
+                generate_pun_enum_token_stream(&element_4f4a2c74.derive_trait_name_upper_camel_case)
             }),
         )
     };
@@ -90,8 +90,8 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
         }
         (
             generate_derive_trait_name_bool_token_stream(&make_pub_snake_case_token_stream),
-            element_vec.iter().map(|element| {
-                generate_derive_trait_name_bool_token_stream(&element.derive_trait_name_snake_case)
+            element_vec.iter().map(|element_03225620| {
+                generate_derive_trait_name_bool_token_stream(&element_03225620.derive_trait_name_snake_case)
             }),
         )
     };
@@ -120,10 +120,10 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
                 &make_pub_if_snake_case_token_stream,
                 &make_pub_upper_camel_case_token_stream
             ),
-            element_vec.iter().map(|element|{
-                let derive_trait_name_upper_camel_case = &element.derive_trait_name_upper_camel_case;
-                let derive_trait_name_snake_case = &element.derive_trait_name_snake_case;
-                let derive_trait_name_if_snake_case = &element.derive_trait_name_if_snake_case;
+            element_vec.iter().map(|element_09fab389|{
+                let derive_trait_name_upper_camel_case = &element_09fab389.derive_trait_name_upper_camel_case;
+                let derive_trait_name_snake_case = &element_09fab389.derive_trait_name_snake_case;
+                let derive_trait_name_if_snake_case = &element_09fab389.derive_trait_name_if_snake_case;
                 quote::quote!{
                     pub const fn #derive_trait_name_snake_case(mut self) -> Self {
                         self.#derive_trait_name_snake_case = true;
@@ -139,9 +139,9 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
             })
         )
     };
-    let if_self_derive_acc_push_vec_token_stream = element_vec.iter().map(|element| {
-        let derive_trait_name_snake_case = &element.derive_trait_name_snake_case;
-        let trait_type = &element.trait_type;
+    let if_self_derive_acc_push_vec_token_stream = element_vec.iter().map(|element_09bcde51| {
+        let derive_trait_name_snake_case = &element_09bcde51.derive_trait_name_snake_case;
+        let trait_type = &element_09bcde51.trait_type;
         quote::quote! {
             if self.#derive_trait_name_snake_case {
                 acc_2a71375c.push(quote::quote!{#trait_type});

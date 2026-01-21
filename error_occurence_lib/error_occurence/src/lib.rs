@@ -122,9 +122,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         SuportedEnumVariant::Named => {
             //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_std_fmt_display_handle_content_token_stream = {
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
-                    let fields = if let syn::Fields::Named(fields) = &element.fields {
+                let variants_token_stream = data_enum.variants.iter().map(|element_f497ea11| {
+                    let element_ident = &element_f497ea11.ident;
+                    let fields = if let syn::Fields::Named(fields) = &element_f497ea11.fields {
                         &fields.named
                     } else {
                         panic!("f64e0d21-349c-48db-83ef-b06064333b3d");
@@ -308,9 +308,9 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
             };
             let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream, &ident, &maybe_generic_parameters_token_stream, &impl_std_fmt_display_handle_content_token_stream);
             let impl_ident_into_serialize_deserialize_version_token_stream = {
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
-                    let fields = if let syn::Fields::Named(fields) = &element.fields {
+                let variants_token_stream = data_enum.variants.iter().map(|element_7d5a4c39| {
+                    let element_ident = &element_7d5a4c39.ident;
+                    let fields = if let syn::Fields::Named(fields) = &element_7d5a4c39.fields {
                         &fields.named
                     } else {
                         panic!("238b402b-0407-417a-bce7-21bf0d4fe4d6");
@@ -343,14 +343,14 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecToStdStringString => {
                                 quote::quote! {
                                     #current_ident: {
-                                        #current_ident.into_iter().map(|element|error_occurence_lib::ToStdStringString::to_std_string_string(&element)).collect()
+                                        #current_ident.into_iter().map(|element_3c145d8e|error_occurence_lib::ToStdStringString::to_std_string_string(&element_3c145d8e)).collect()
                                     }
                                 }
                             }
                             macros_helpers::ErrorOccurenceFieldAttribute::EoVecErrorOccurence => {
                                 quote::quote! {
                                     #current_ident: {
-                                        #current_ident.into_iter().map(|element|element.into_serialize_deserialize_version()).collect()
+                                        #current_ident.into_iter().map(|element_607695c6|element_607695c6.into_serialize_deserialize_version()).collect()
                                     }
                                 }
                             }
@@ -409,17 +409,11 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         }
         SuportedEnumVariant::Unnamed => {
             let generate_display_formatter_unnamed_token_stream = || {
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
-                    quote::quote! {
-                        Self::#element_ident(value) => value
-                    }
+                let variants_token_stream = data_enum.variants.iter().map(|element_f99bd80d| {
+                    let element_ident = &element_f99bd80d.ident;
+                    quote::quote! {Self::#element_ident(value) => value}
                 });
-                quote::quote! {
-                    match self {
-                        #(#variants_token_stream),*
-                    }
-                }
+                quote::quote! {match self { #(#variants_token_stream),* }}
             };
             let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&maybe_generic_parameters_error_occurence_lib_to_std_string_string_annotations_token_stream, &ident, &maybe_generic_parameters_token_stream, &{
                 let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
@@ -432,8 +426,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 }
             });
             let impl_ident_into_serialize_deserialize_version_token_stream = {
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
+                let variants_token_stream = data_enum.variants.iter().map(|element_0e2b2f9c| {
+                    let element_ident = &element_0e2b2f9c.ident;
                     quote::quote! {
                         Self::#element_ident(value) => #ident_with_serialize_deserialize_upper_camel_case::#element_ident(
                             value.#into_serialize_deserialize_version_snake_case_token_stream(),
@@ -445,15 +439,15 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 )
             };
             let enum_ident_with_serialize_deserialize_token_stream = {
-                let variants_token_stream = data_enum.variants.iter().map(|element| {
-                    let element_ident = &element.ident;
-                    let fields = if let syn::Fields::Unnamed(fields) = &element.fields {
+                let variants_token_stream = data_enum.variants.iter().map(|element_0f06fa87| {
+                    let element_ident = &element_0f06fa87.ident;
+                    let fields = if let syn::Fields::Unnamed(fields) = &element_0f06fa87.fields {
                         &fields.unnamed
                     } else {
                         panic!("5749e920-0ec8-480a-a16b-3b48e6ddb29f");
                     };
                     let inner_type_with_serialize_deserialize_token_stream = {
-                        let value = format!(
+                        format!(
                             "{}{}",
                             {
                                 assert!(fields.len() == 1, "d7a6b955-3795-4e0c-a990-b06734e9d923");
@@ -465,8 +459,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                                 quote::quote! {#field_type}.to_string()
                             },
                             naming::WithSerializeDeserializeUpperCamelCase
-                        );
-                        value.parse::<proc_macro2::TokenStream>().expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")
+                        ).parse::<proc_macro2::TokenStream>().expect("9ff40f7e-b7b0-4226-8663-d2de6d5e05ed")
                     };
                     quote::quote! {#element_ident(#inner_type_with_serialize_deserialize_token_stream)}
                 });

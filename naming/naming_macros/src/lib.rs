@@ -5,18 +5,20 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("90e5793b-d813-44aa-a124-c738772030c2").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string())
+    .expect("90e5793b-d813-44aa-a124-c738772030c2")
+    .into_iter().map(|element_020a8657| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
-            for inner_element in &element {
+            for inner_element in &element_020a8657 {
                 assert!(regex.is_match(inner_element), "faadba8a-ff38-40f9-af05-e4f95bba896a");
             }
         }
-        let phrase_part_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_3d60efa0, element_132cd6b1| {
+        let phrase_part_upper_camel_case_stringified = element_020a8657.iter().fold(String::new(), |mut acc_3d60efa0, element_132cd6b1| {
             acc_3d60efa0.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_132cd6b1));
             acc_3d60efa0
         });
-        let phrase_part_snake_case_stringified = element.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, element_b9981760)| {
+        let phrase_part_snake_case_stringified = element_020a8657.iter().enumerate().fold(String::new(), |mut acc_7a8bd950, (index, element_b9981760)| {
             let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element_b9981760);
             if index == 0 {
                 acc_7a8bd950.push_str(&element_snake_case_stringified);
@@ -82,17 +84,17 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
     input_token_stream: proc_macro::TokenStream,
 ) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element| {
+    let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element_a5ccbaa7| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
-            for inner_element in &element {
+            for inner_element in &element_a5ccbaa7 {
                 assert!(regex.is_match(inner_element), "4a12d90f-6428-4494-8305-40c149a1509a");
             }
         }
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for inner_element in &element {
+            for inner_element in &element_a5ccbaa7 {
                 if inner_element == self_match_name {
                     is_self_exists_and_only_one = true;
                     break;
@@ -103,11 +105,11 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
         let (elements_concat_value_upper_camel_case_double_quotes_token_stream, elements_concat_value_snake_case_double_quotes_token_stream, struct_upper_camel_case_upper_camel_case_token_stream, struct_snake_case_token_upper_camel_case_stream, trait_upper_camel_case_upper_camel_case_token_stream, trait_snake_case_token_upper_camel_case_stream) = {
             let upper_camel_case_upper_camel_case_stringified = "UpperCamelCase";
             let snake_case_upper_camel_case_stringified = "SnakeCase";
-            let elements_concat_upper_camel_case_stringified = element.iter().fold(String::new(), |mut acc_34997d76, element_98881b7d| {
+            let elements_concat_upper_camel_case_stringified = element_a5ccbaa7.iter().fold(String::new(), |mut acc_34997d76, element_98881b7d| {
                 acc_34997d76.push_str(&naming_common::AsRefStrToUpperCamelCaseStringified::case(element_98881b7d));
                 acc_34997d76
             });
-            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.iter().fold(String::new(), |mut acc_ae77cbd3, element_626f2b61| {
+            let elements_concat_value_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_a5ccbaa7.iter().fold(String::new(), |mut acc_ae77cbd3, element_626f2b61| {
                 if element_626f2b61 == "self" {
                     acc_ae77cbd3.push_str("{value}");
                 } else {
@@ -116,7 +118,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                 acc_ae77cbd3
             }));
             let elements_concat_value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&{
-                let mut value = element.iter().fold(String::new(), |mut acc_cbcae5e1, element_73b0c851| {
+                let mut value = element_a5ccbaa7.iter().fold(String::new(), |mut acc_cbcae5e1, element_73b0c851| {
                     use std::fmt::Write as _;
                     let symbol = '_';
                     if element_73b0c851 == "self" {
