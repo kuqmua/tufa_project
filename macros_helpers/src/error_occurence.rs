@@ -42,9 +42,9 @@ impl TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
     type Error = String;
     fn try_from(syn_field: &syn::Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;
-        for attr in &syn_field.attrs {
-            if attr.path().segments.len() == 1 {
-                let first_segment_ident = match &attr.path().segments.first() {
+        for element_adfb232c in &syn_field.attrs {
+            if element_adfb232c.path().segments.len() == 1 {
+                let first_segment_ident = match &element_adfb232c.path().segments.first() {
                     Some(value) => &value.ident,
                     None => {
                         return Err("no first value in punctuated".to_owned());

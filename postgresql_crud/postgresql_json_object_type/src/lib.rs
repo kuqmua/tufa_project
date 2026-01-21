@@ -20,14 +20,14 @@ pub struct UniqueVec<T>(Vec<T>);
 impl<T: PartialEq + Clone> UniqueVec<T> {
     pub fn try_new(value: Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
         let mut acc_4855bea7 = Vec::new();
-        for element in &value {
-            if acc_4855bea7.contains(&element) {
+        for element_4dddc7c0 in &value {
+            if acc_4855bea7.contains(&element_4dddc7c0) {
                 return Err(UniqueVecTryNewErrorNamed::NotUnique {
-                    value: element.clone(),
+                    value: element_4dddc7c0.clone(),
                     code_occurence: error_occurence_lib::code_occurence!(),
                 });
             }
-            acc_4855bea7.push(element);
+            acc_4855bea7.push(element_4dddc7c0);
         }
         Ok(Self(value))
     }

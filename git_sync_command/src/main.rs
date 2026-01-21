@@ -43,8 +43,8 @@ fn main() {
         .args(["reset", "--hard"])
         .output()
         .expect("4fde85e0-22b3-46ab-b3c1-137558da2091");
-    for path_element in paths_vec {
-        let path = format!("{canonicalize_pathbuf_as_string}/{path_element}");
+    for element_f232fe33 in paths_vec {
+        let path = format!("{canonicalize_pathbuf_as_string}/{element_f232fe33}");
         println!("start {path}");
         let _unused0 = std::process::Command::new("git")
             .args(["checkout", "."])

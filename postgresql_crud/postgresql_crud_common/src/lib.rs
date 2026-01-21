@@ -790,9 +790,9 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_cc6d18f7 = String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
-        for element in &self.value.0 {
+        for element_a38b9c67 in &self.value.0 {
             match PostgresqlTypeWhereFilter::query_part(
-                element,
+                element_a38b9c67,
                 increment,
                 column,
                 is_need_to_add_logical_operator_inner_handle,
@@ -826,8 +826,8 @@ impl<'query_lifetime, T: PostgresqlTypeWhereFilter<'query_lifetime>>
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     > {
-        for element in self.value.0 {
-            match PostgresqlTypeWhereFilter::query_bind(element, query) {
+        for element_4e314a75 in self.value.0 {
+            match PostgresqlTypeWhereFilter::query_bind(element_4e314a75, query) {
                 Ok(value) => {
                     query = value;
                 }
@@ -1297,14 +1297,14 @@ impl<T: PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
         }
         {
             let mut acc_11fac69e = Vec::new();
-            for element in &value {
-                if acc_11fac69e.contains(&element) {
+            for element_db9bd5a0 in &value {
+                if acc_11fac69e.contains(&element_db9bd5a0) {
                     return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
-                        value: element.clone(),
+                        value: element_db9bd5a0.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
-                acc_11fac69e.push(element);
+                acc_11fac69e.push(element_db9bd5a0);
             }
         }
         Ok(Self(value))
@@ -1434,8 +1434,8 @@ where
         is_need_to_add_logical_operator: bool,
     ) -> Result<String, QueryPartErrorNamed> {
         let mut acc_57b31116 = String::default();
-        for (index, element) in self.0.iter().enumerate() {
-            match element.query_part(
+        for (index, element_14ef20c2) in self.0.iter().enumerate() {
+            match element_14ef20c2.query_part(
                 increment,
                 column,
                 if index == 0 {
@@ -1461,8 +1461,8 @@ where
         sqlx::query::Query<'query_lifetime, sqlx::Postgres, sqlx::postgres::PgArguments>,
         String,
     > {
-        for element in self.0 {
-            match element.query_bind(query) {
+        for element_7f5ffb83 in self.0 {
+            match element_7f5ffb83.query_bind(query) {
                 Ok(value) => {
                     query = value;
                 }

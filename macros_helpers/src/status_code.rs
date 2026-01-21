@@ -495,9 +495,9 @@ impl StatusCode {
 //     type Error = String;
 //     fn try_from(value: &syn::Variant) -> Result<Self, Self::Error> {
 //         let mut option_self: Option<Self> = None;
-//         for element in &value.attrs {
-//             if element.path().segments.len() == 1 {
-//                 match element.path().segments.first() {
+//         for element_6b899be4 in &value.attrs {
+//             if element_6b899be4.path().segments.len() == 1 {
+//                 match element_6b899be4.path().segments.first() {
 //                     Some(segment) => {
 //                         println!("1{}", &segment.ident.to_string());
 //                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
@@ -513,7 +513,7 @@ impl StatusCode {
 //                     }
 //                     None => {
 //                         return Err(String::from(
-//                             "element.path().segments.first() is None",
+//                             "element_6b899be4.path().segments.first() is None",
 //                         ));
 //                     }
 //                 }
@@ -526,9 +526,9 @@ impl StatusCode {
 //     type Error = String;
 //     fn try_from(value: &&syn::Variant) -> Result<Self, Self::Error> {
 //         let mut option_self: Option<Self> = None;
-//         for element in &value.attrs {
-//             if element.path().segments.len() == 1 {
-//                 match element.path().segments.first() {
+//         for element_6b899be4 in &value.attrs {
+//             if element_6b899be4.path().segments.len() == 1 {
+//                 match element_6b899be4.path().segments.first() {
 //                     Some(segment) => {
 //                         println!("2{}", &segment.ident.to_string());
 //                         if let Ok(value) = Self::try_from(&segment.ident.to_string()) {
@@ -544,7 +544,7 @@ impl StatusCode {
 //                     }
 //                     None => {
 //                         return Err(String::from(
-//                             "element.path().segments.first() is None",
+//                             "element_6b899be4.path().segments.first() is None",
 //                         ));
 //                     }
 //                 }

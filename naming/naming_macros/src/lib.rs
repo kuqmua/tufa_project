@@ -10,8 +10,8 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(
     .into_iter().map(|element_020a8657| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("20948d87-2c38-4896-96b6-239d9c9a0a38");
-            for inner_element in &element_020a8657 {
-                assert!(regex.is_match(inner_element), "faadba8a-ff38-40f9-af05-e4f95bba896a");
+            for element_d68254e8 in &element_020a8657 {
+                assert!(regex.is_match(element_d68254e8), "faadba8a-ff38-40f9-af05-e4f95bba896a");
             }
         }
         let phrase_part_upper_camel_case_stringified = element_020a8657.iter().fold(String::new(), |mut acc_3d60efa0, element_132cd6b1| {
@@ -87,15 +87,15 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
     let implementations_token_stream = serde_json::from_str::<Vec<Vec<String>>>(&input_token_stream.to_string()).expect("9d6a20af-a7b3-4fce-b11f-92b57a8fdb57").into_iter().map(|element_a5ccbaa7| {
         {
             let regex = regex::Regex::new(REGEX_VALUE).expect("cba1b5fb-6833-416b-96d9-b64b7a308008");
-            for inner_element in &element_a5ccbaa7 {
-                assert!(regex.is_match(inner_element), "4a12d90f-6428-4494-8305-40c149a1509a");
+            for element_6d4f29dd in &element_a5ccbaa7 {
+                assert!(regex.is_match(element_6d4f29dd), "4a12d90f-6428-4494-8305-40c149a1509a");
             }
         }
         let self_match_name = "self";
         {
             let mut is_self_exists_and_only_one = false;
-            for inner_element in &element_a5ccbaa7 {
-                if inner_element == self_match_name {
+            for element_3eac2cfb in &element_a5ccbaa7 {
+                if element_3eac2cfb == self_match_name {
                     is_self_exists_and_only_one = true;
                     break;
                 }

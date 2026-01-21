@@ -20,18 +20,18 @@ pub fn generate_struct_or_enum_derive_token_stream_builder(
                 let mut result = String::with_capacity(element_4f4a2c74.len());
                 let mut prev_is_underscore = false;
                 let mut prev_is_lowercase = false;
-                for char_element in element_4f4a2c74.chars() {
-                    if char_element.is_alphabetic() {
-                        if char_element.is_uppercase() {
+                for element_e5df7ee3 in element_4f4a2c74.chars() {
+                    if element_e5df7ee3.is_alphabetic() {
+                        if element_e5df7ee3.is_uppercase() {
                             if prev_is_lowercase && !prev_is_underscore {
                                 result.push('_');
                             }
-                            for lower in char_element.to_lowercase() {
-                                result.push(lower);
+                            for element_8aa0e3a1 in element_e5df7ee3.to_lowercase() {
+                                result.push(element_8aa0e3a1);
                             }
                             prev_is_lowercase = false;
                         } else {
-                            result.push(char_element);
+                            result.push(element_e5df7ee3);
                             prev_is_lowercase = true;
                         }
                         prev_is_underscore = false;
