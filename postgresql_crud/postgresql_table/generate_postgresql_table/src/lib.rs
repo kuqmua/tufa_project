@@ -5179,7 +5179,11 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 &element_snake_case,
             );
         let (
-            primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_ids_into_read_element_fdc88812_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_ids_into_read_element_43ab7fb5_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_ids_into_read_element_bf356906_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_ids_into_read_element_80a93892_primary_key_field_ident_token_stream,
+            primary_key_field_type_read_only_ids_into_read_element_adf2b4c4_primary_key_field_ident_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream,
             primary_key_field_type_read_only_is_into_read_read_only_ids_current_element_primary_key_field_ident_token_stream,
             primary_key_field_type_read_only_ids_into_read_read_only_ids_returned_from_create_one_primary_key_field_ident_token_stream,
@@ -5190,7 +5194,19 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 };
             (
                 generate_read_only_ids_into_read_token_stream(
-                    &quote::quote! {#element_snake_case.#primary_key_field_ident},
+                    &quote::quote! {element_fdc88812.#primary_key_field_ident},
+                ),
+                generate_read_only_ids_into_read_token_stream(
+                    &quote::quote! {element_43ab7fb5.#primary_key_field_ident},
+                ),
+                generate_read_only_ids_into_read_token_stream(
+                    &quote::quote! {element_bf356906.#primary_key_field_ident},
+                ),
+                generate_read_only_ids_into_read_token_stream(
+                    &quote::quote! {element_80a93892.#primary_key_field_ident},
+                ),
+                generate_read_only_ids_into_read_token_stream(
+                    &quote::quote! {element_adf2b4c4.#primary_key_field_ident},
                 ),
                 generate_read_only_ids_into_read_token_stream(
                     &quote::quote! {read_only_ids_from_try_create_one.#primary_key_field_ident},
@@ -5328,17 +5344,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     },
                 )
             };
+        let generate_ident_create_content_element_id_token_stream = |field_ident: &syn::Ident, element_token_stream: &dyn quote::ToTokens| {
+            generate_ident_create_content_token_stream(field_ident, &element_token_stream)
+        };
         let generate_ident_create_content_element_token_stream = |field_ident: &syn::Ident| {
             generate_ident_create_content_token_stream(field_ident, &element_snake_case)
         };
-        let generate_ident_create_content_element_create_token_stream =
-            |field_ident: &syn::Ident| {
-                generate_ident_create_content_token_stream(
-                    field_ident,
-                    &quote::quote! {#element_snake_case.#create_snake_case},
-                )
-            };
-
         let generate_table_test_name_field_ident_token_stream =
             |test_name: &str, field_ident: &syn::Ident| {
                 format!("table_{test_name}_{field_ident}")
@@ -5534,12 +5545,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Some(
                                         generate_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
-                                            read_only_ids_current_elements.iter().map(|#element_snake_case| #primary_key_field_type_where_token_stream::Equal(
+                                            read_only_ids_current_elements.iter().map(|element_43ab7fb5| #primary_key_field_type_where_token_stream::Equal(
                                                 postgresql_crud::PostgresqlTypeWhereEqual {
                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                     #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                         <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                            #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                                            #primary_key_field_type_read_only_ids_into_read_element_43ab7fb5_primary_key_field_ident_token_stream
                                                         )
                                                     )
                                                 }
@@ -5572,7 +5583,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
                         let ident_create_content_token_stream =
-                            generate_ident_create_content_element_token_stream(field_ident);
+                            generate_ident_create_content_element_id_token_stream(field_ident, &quote::quote!{element_03a4f4ee});
                         quote::quote! {
                             for chunk in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new())
                                 .chunks(10)
@@ -5584,7 +5595,7 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 acc_9189f86e.push(futures::FutureExt::boxed(async move {
                                     let ident_vec_create = {
                                         let mut acc_92d248f7 = Vec::new();
-                                        for #element_snake_case in chunk {
+                                        for element_03a4f4ee in chunk {
                                             acc_92d248f7.push(#ident_create_upper_camel_case {
                                                 #ident_create_content_token_stream
                                             });
@@ -5627,12 +5638,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                                         postgresql_crud::LogicalOperator::Or,
                                                         {
                                                             let mut acc_1381c719 = Vec::new();
-                                                            for #element_snake_case in &read_only_ids_from_try_create_many {
+                                                            for element_bf356906 in &read_only_ids_from_try_create_many {
                                                                 acc_1381c719.push(#primary_key_field_type_as_postgresql_type_where_token_stream::Equal(postgresql_crud::PostgresqlTypeWhereEqual {
                                                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                                                     //todo must use trait type instead
                                                                     #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(<#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                        #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                                                        #primary_key_field_type_read_only_ids_into_read_element_bf356906_primary_key_field_ident_token_stream
                                                                     )),
                                                                 }));
                                                             }
@@ -5673,8 +5684,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         itertools::Itertools::sorted(
                                             read_only_ids_from_try_create_many
                                             .into_iter()
-                                            .map(|element| {
-                                                #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                            .map(|element_80a93892| {
+                                                #primary_key_field_type_read_only_ids_into_read_element_80a93892_primary_key_field_ident_token_stream
                                             })
                                         ).collect::<Vec<#primary_key_field_type_as_postgresql_type_read_token_stream>>(),
                                         "f58f5572-4286-4a74-8006-0507339910d4"
@@ -5722,10 +5733,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                         let field_ident = &element.field_ident;
                         let field_type = &element.field_type;
                         let ident_create_content_token_stream =
-                            generate_ident_create_content_element_token_stream(field_ident);
+                            generate_ident_create_content_element_id_token_stream(field_ident, &quote::quote!{element_7632d698});
                         let value_initialization_token_stream = generate_import_path_value_initialization_token_stream(&primary_key_field_type_read_only_ids_into_read_read_only_ids_from_try_create_one_primary_key_field_ident_token_stream);
                         quote::quote! {
-                            for #element_snake_case in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
+                            for element_7632d698 in <#field_type as postgresql_crud::PostgresqlTypeTestCases>::#option_vec_create_snake_case().unwrap_or(Vec::new()) {
                                 let table_create_one_cloned = table_create_one.clone();
                                 let url_cloned = url.clone();
                                 let select_default_all_with_max_page_size_cloned = #select_default_all_with_max_page_size_clone_token_stream;
@@ -5888,13 +5899,13 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                     Some(
                                         generate_postgresql_type_where_try_new_primary_key(
                                             postgresql_crud::LogicalOperator::Or,
-                                            read_only_ids_from_try_create_many.iter().map(|#element_snake_case| {
+                                            read_only_ids_from_try_create_many.iter().map(|element_adf2b4c4| {
                                                 #primary_key_field_type_where_token_stream::Equal(
                                                     postgresql_crud::PostgresqlTypeWhereEqual {
                                                         logical_operator: postgresql_crud::LogicalOperator::Or,
                                                         #value_snake_case: #primary_key_field_type_table_type_declaration_token_stream::new(
                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::into_inner(
-                                                                #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                                                #primary_key_field_type_read_only_ids_into_read_element_adf2b4c4_primary_key_field_ident_token_stream
                                                             )
                                                         ),
                                                     },
@@ -5932,8 +5943,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             itertools::Itertools::sorted(
                                 read_only_ids_from_try_create_many
                                 .into_iter()
-                                .map(|#element_snake_case| {
-                                    #primary_key_field_type_read_only_ids_into_read_element_primary_key_field_ident_token_stream
+                                .map(|element_fdc88812| {
+                                    #primary_key_field_type_read_only_ids_into_read_element_fdc88812_primary_key_field_ident_token_stream
                                 }).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>()
                                 .into_iter()
                             ).collect::<Vec<<#primary_key_field_type as postgresql_crud::PostgresqlType>::Read>>(),
@@ -6031,7 +6042,8 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                 };
             let generate_read_test_token_stream =
-                |test_name: &str,
+                |
+                    test_name: &str,
                  generate_method_call_token_stream: &dyn Fn(
                     &syn::Ident,
                     &syn::Type,
@@ -6165,42 +6177,47 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                 read_only_ids_merged_with_create_into_vec_where_equal_using_fields_token_stream,
             ) = {
                 let generate_test_read_many_by_equal_one_column_value_token_stream = |test_name: &str, equal_or_equal_using_fields: &postgresql_crud_macros_common::EqualOrEqualUsingFields| {
-                    generate_read_test_token_stream(test_name, &generate_option_vec_create_call_unwrap_or_vec_token_stream, &generate_ident_create_content_element_token_stream, &|element: &macros_helpers::SynFieldWrapper| {
-                        let field_ident = &element.field_ident;
-                        generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_ac437d52: &macros_helpers::SynFieldWrapper| {
-                            let current_field_ident = &element_ac437d52.field_ident;
-                            let current_field_type = &element_ac437d52.field_type;
-                            if current_field_ident == primary_key_field_ident {
-                                some_primary_key_where_initialization_token_stream.clone()
-                            } else if current_field_ident == field_ident {
-                                let method_content_token_stream = {
-                                    let method_token_stream: &dyn quote::ToTokens = match &equal_or_equal_using_fields {
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => &read_only_ids_merged_with_create_into_where_equal_snake_case,
-                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case
+                    generate_read_test_token_stream(
+                        test_name,
+                        &generate_option_vec_create_call_unwrap_or_vec_token_stream,
+                        &generate_ident_create_content_element_token_stream,
+                        &|element: &macros_helpers::SynFieldWrapper| {
+                            let field_ident = &element.field_ident;
+                            generate_read_only_ids_merged_with_create_into_where_assert_eq_token_stream(&generate_fields_named_with_comma_token_stream(&|element_ac437d52: &macros_helpers::SynFieldWrapper| {
+                                let current_field_ident = &element_ac437d52.field_ident;
+                                let current_field_type = &element_ac437d52.field_type;
+                                if current_field_ident == primary_key_field_ident {
+                                    some_primary_key_where_initialization_token_stream.clone()
+                                } else if current_field_ident == field_ident {
+                                    let method_content_token_stream = {
+                                        let method_token_stream: &dyn quote::ToTokens = match &equal_or_equal_using_fields {
+                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => &read_only_ids_merged_with_create_into_where_equal_snake_case,
+                                            postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => &read_only_ids_merged_with_create_into_vec_where_equal_using_fields_snake_case
+                                        };
+                                        quote::quote!{
+                                            <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
+                                                read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
+                                                ident_create.#current_field_ident.clone()
+                                            )
+                                        }
                                     };
-                                    quote::quote!{
-                                        <#current_field_type as postgresql_crud::PostgresqlTypeTestCases>::#method_token_stream(
-                                            read_only_ids_returned_from_create_one.#current_field_ident.clone().expect("11c3740b-7c3c-4dd5-b468-71bfa2f10892"),
-                                            ident_create.#current_field_ident.clone()
-                                        )
+                                    match &equal_or_equal_using_fields {
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => generate_some_postgresql_type_where_try_new_and_token_stream(&quote::quote!{
+                                            vec![#method_content_token_stream]
+                                        }),
+                                        postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{
+                                            Some(#import_path::PostgresqlTypeWhere::new(
+                                                #import_path::LogicalOperator::And,
+                                                #method_content_token_stream
+                                            ))
+                                        }
                                     }
-                                };
-                                match &equal_or_equal_using_fields {
-                                    postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal => generate_some_postgresql_type_where_try_new_and_token_stream(&quote::quote!{
-                                        vec![#method_content_token_stream]
-                                    }),
-                                    postgresql_crud_macros_common::EqualOrEqualUsingFields::EqualUsingFields => quote::quote!{
-                                        Some(#import_path::PostgresqlTypeWhere::new(
-                                            #import_path::LogicalOperator::And,
-                                            #method_content_token_stream
-                                        ))
-                                    }
+                                } else {
+                                    none_token_stream.clone()
                                 }
-                            } else {
-                                none_token_stream.clone()
-                            }
-                        }))
-                    })
+                            }))
+                        }
+                    )
                 };
                 (
                     generate_test_read_many_by_equal_one_column_value_token_stream(table_read_only_ids_merged_with_create_into_where_equal_name, &postgresql_crud_macros_common::EqualOrEqualUsingFields::Equal),
@@ -6263,7 +6280,12 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
             let read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_token_stream = generate_read_test_token_stream(
                 table_read_only_ids_merged_with_table_type_declaration_into_postgresql_type_option_where_greater_than_name,
                 &generate_postgresql_type_option_vec_where_greater_than_test_unwrap_or_else_vec_call_token_stream,
-                &generate_ident_create_content_element_create_token_stream,
+                &|field_ident: &syn::Ident| {
+                    generate_ident_create_content_token_stream(
+                        field_ident,
+                        &quote::quote! {#element_snake_case.#create_snake_case},
+                    )
+                },
                 &|element: &macros_helpers::SynFieldWrapper| {
                     let field_ident = &element.field_ident;
                     let field_type = &element.field_type;
