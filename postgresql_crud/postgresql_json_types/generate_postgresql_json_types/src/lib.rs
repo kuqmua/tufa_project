@@ -2879,16 +2879,15 @@ pub fn generate_postgresql_json_types(
                         // }
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                let dimension1_not_null_or_nullable_token_stream = generate_for_dot_zero_into_iter_enumerate_token_stream(
+                                generate_for_dot_zero_into_iter_enumerate_token_stream(
                                     0,
                                     0,
                                     &create_dot_zero_token_stream,
                                     &content_token_stream,
-                                );
-                                dimension1_not_null_or_nullable_token_stream
+                                )
                             },
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                let dimension1_not_null_or_nullable_token_stream = generate_for_dot_zero_into_iter_enumerate_token_stream(
+                                generate_for_dot_zero_into_iter_enumerate_token_stream(
                                     0,
                                     0,
                                     &create_dot_zero_token_stream,
@@ -2896,9 +2895,11 @@ pub fn generate_postgresql_json_types(
                                       1,
                                       &content_token_stream,
                                     )
-                                );
+                                )
                             },
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                
+                            },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                         }
                     })
