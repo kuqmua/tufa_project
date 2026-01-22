@@ -5616,26 +5616,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                         &table_create_many_cloned.clone()
                                     ).await.expect("5eecedc4-bb02-454a-acd9-0af758f30b2e");
                                     assert_eq!(
-                                        {
-                                            let mut acc_1debe8fb = Vec::new();
-                                            assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "39572295-b6a4-49d7-a65a-16f8bcf44ede");
-                                            for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()) {
-                                                acc_1debe8fb.push(#ident_read_upper_camel_case {
-                                                    #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                                        &read_only_ids.#primary_key_field_ident
-                                                    ),
-                                                    #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
-                                                });
-                                            }
-                                            acc_1debe8fb.sort_by(|first, second| {
-                                                if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                                    first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case)
-                                                } else {
-                                                    panic!("4428083a-53be-4184-a5b7-94ae2de21d40");
-                                                }
-                                            });
-                                            acc_1debe8fb
-                                        },
+                                        generate_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                                            read_only_ids_from_try_create_many.clone(),
+                                            ident_vec_create.clone()
+                                        ),
                                         generate_try_read_many_order_by_primary_key_with_big_pagination(
                                             &url_cloned,
                                             generate_ident_where_many_pripery_key_others_none(
@@ -5876,32 +5860,10 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                             &current_table
                         ).await.expect("d775179f-f7b1-41d3-9c83-4ca8bd1abeec");
                         assert_eq!(
-                            {
-                                let mut acc_8a827f58 = Vec::new();
-                                assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "52c9d1ea-1593-4b32-97d1-0ed4a529a74a");
-                                for (read_only_ids, create) in read_only_ids_from_try_create_many.clone()
-                                    .into_iter()
-                                    .zip(ident_vec_create.into_iter()) {
-                                    acc_8a827f58.push(#ident_read_upper_camel_case {
-                                        #primary_key_field_ident: <
-                                            #primary_key_field_type
-                                            as
-                                            postgresql_crud::PostgresqlTypeTestCases
-                                        >::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
-                                            &read_only_ids.#primary_key_field_ident
-                                        ),
-                                        #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
-                                    });
-                                }
-                                acc_8a827f58.sort_by(|first, second| {
-                                    if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
-                                        first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case)
-                                    } else {
-                                        panic!("0faa6fb3-a7c0-44ca-9b51-13f6ca2fc543");
-                                    }
-                                });
-                                acc_8a827f58
-                            },
+                            generate_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                                read_only_ids_from_try_create_many.clone(),
+                                ident_vec_create.clone()
+                            ),
                             generate_try_read_many_order_by_primary_key_with_big_pagination(
                                 &url_cloned,
                                 generate_ident_where_many_pripery_key_others_none(
@@ -7292,6 +7254,29 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                     }
                     fn no_rows_returned_by_a_query_that_expected_to_return_at_least_one_row() -> &'static str {
                         "no rows returned by a query that expected to return at least one row"
+                    }
+                    fn generate_vec_ident_read_from_vec_ident_read_only_ids_with_vec_ident_create(
+                        read_only_ids_from_try_create_many: Vec<#ident_read_only_ids_upper_camel_case>,
+                        ident_vec_create: Vec<#ident_create_upper_camel_case>
+                    ) -> Vec<#ident_read_upper_camel_case> {
+                        let mut acc_1debe8fb = Vec::new();
+                        assert_eq!(read_only_ids_from_try_create_many.len(), ident_vec_create.len(), "88fb286c-a440-441f-9e36-83454d0c9f75");
+                        for (read_only_ids, create) in read_only_ids_from_try_create_many.clone().into_iter().zip(ident_vec_create.into_iter()) {
+                            acc_1debe8fb.push(#ident_read_upper_camel_case {
+                                #primary_key_field_ident: <#primary_key_field_type as postgresql_crud::PostgresqlTypeTestCases>::read_only_ids_to_option_value_read_default_but_option_is_always_some_and_vec_always_contains_one_element(
+                                    &read_only_ids.#primary_key_field_ident
+                                ),
+                                #field_ident_read_only_ids_merged_with_create_into_option_value_read_read_only_ids_and_create_token_stream
+                            });
+                        }
+                        acc_1debe8fb.sort_by(|first, second| {
+                            if let (Some(first_handle), Some(second_handle)) = (&first.#primary_key_field_ident, &second.#primary_key_field_ident) {
+                                first_handle.#value_snake_case.cmp(&second_handle.#value_snake_case)
+                            } else {
+                                panic!("d760ffa3-e9df-4628-92cd-d52c1ae1f91a");
+                            }
+                        });
+                        acc_1debe8fb
                     }
                     #generate_read_only_ids_current_elements_token_stream
                     tracing_subscriber::fmt::init();
