@@ -99,7 +99,6 @@ pub fn generate_where_filters(
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let self_snake_case = naming::SelfSnakeCase;
-    let element_snake_case = naming::ElementSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let error_snake_case = naming::ErrorSnakeCase;
     let dimensions_snake_case = naming::DimensionsSnakeCase;

@@ -4276,11 +4276,6 @@ pub fn generate_postgresql_table(input: proc_macro::TokenStream) -> proc_macro::
                                 &content_token_stream,
                             )
                         };
-                    let match_update_query_part_primary_key_token_stream =
-                        generate_match_update_query_part_primary_key_token_stream(
-                            &operation,
-                            &element_snake_case,
-                        );
                     let fields_named_without_primary_key_update_assignment_token_stream =
                         generate_fields_named_without_primary_key_without_comma_token_stream(
                             &|element: &macros_helpers::SynFieldWrapper| {

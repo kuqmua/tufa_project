@@ -75,7 +75,6 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         all_equal.expect("b9da972a-f38b-4217-939c-54ffd56f0301")
     };
     let value_snake_case = naming::ValueSnakeCase;
-    let element_snake_case = naming::ElementSnakeCase;
     let std_string_string = token_patterns::StdStringString;
     let code_occurence_snake_case = naming::CodeOccurenceSnakeCase;
     let code_occurence_snake_case_stringified = code_occurence_snake_case.to_string();

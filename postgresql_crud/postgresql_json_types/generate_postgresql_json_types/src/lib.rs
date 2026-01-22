@@ -308,31 +308,31 @@ pub fn generate_postgresql_json_types(
             .expect("1123f78f-9c84-4001-b619-b534dd55a835");
     let (fields_token_stream, postgresql_json_type_array) = {
         {
-            let generate_standart = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
+            let generate_standart = |acc_29796d99: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for element_2f39e657 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                    acc.push(PostgresqlJsonTypeRecord {
+                    acc_29796d99.push(PostgresqlJsonTypeRecord {
                         postgresql_json_type: postgresql_json_type.clone(),
                         not_null_or_nullable: element_2f39e657,
                         postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
                     });
                 }
             };
-            let generate_array_dimension1 = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
-                for element_6440cc9c in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
+            let generate_array_dimension1 = |acc_5b22a398: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
+                for element_29854486 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                     for element_6440cc9c in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                        acc.push(PostgresqlJsonTypeRecord {
+                        acc_5b22a398.push(PostgresqlJsonTypeRecord {
                             postgresql_json_type: postgresql_json_type.clone(),
-                            not_null_or_nullable: element_6440cc9c,
+                            not_null_or_nullable: element_29854486,
                             postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: element_6440cc9c },
                         });
                     }
                 }
             };
-            let generate_array_dimension2 = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
+            let generate_array_dimension2 = |acc_e59f7158: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for element_a6ba4c3e in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                     for element_4b5a815d in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                         for element_2e4896dd in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                            acc.push(PostgresqlJsonTypeRecord {
+                            acc_e59f7158.push(PostgresqlJsonTypeRecord {
                                 postgresql_json_type: postgresql_json_type.clone(),
                                 not_null_or_nullable: element_a6ba4c3e,
                                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -344,12 +344,12 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let generate_array_dimension3 = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
+            let generate_array_dimension3 = |acc_77498dc3: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for element_8f03b1c2 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                     for element_a27b642f in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                         for element_dc57e9b7 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                             for element_4361fee5 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                acc.push(PostgresqlJsonTypeRecord {
+                                acc_77498dc3.push(PostgresqlJsonTypeRecord {
                                     postgresql_json_type: postgresql_json_type.clone(),
                                     not_null_or_nullable: element_8f03b1c2,
                                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
@@ -363,13 +363,13 @@ pub fn generate_postgresql_json_types(
                     }
                 }
             };
-            let generate_array_dimension4 = |acc: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
+            let generate_array_dimension4 = |acc_7c8a3329: &mut Vec<PostgresqlJsonTypeRecord>, postgresql_json_type: PostgresqlJsonType|{
                 for element_daf10957 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                     for element_fc5a53dd in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                         for element_69b59c5c in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                             for element_d7efbd09 in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
                                 for element_c16cb65b in postgresql_crud_macros_common::NotNullOrNullable::into_array() {
-                                    acc.push(PostgresqlJsonTypeRecord {
+                                    acc_7c8a3329.push(PostgresqlJsonTypeRecord {
                                         postgresql_json_type: postgresql_json_type.clone(),
                                         not_null_or_nullable: element_daf10957,
                                         postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
@@ -599,7 +599,6 @@ pub fn generate_postgresql_json_types(
             IsStandartNotNullUuid::False
         };
         let value_snake_case = naming::ValueSnakeCase;
-        let element_snake_case = naming::ElementSnakeCase;
         let as_upper_camel_case = naming::AsUpperCamelCase;
         let new_snake_case = naming::NewSnakeCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;

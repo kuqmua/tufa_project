@@ -1013,7 +1013,6 @@ pub fn generate_postgresql_types(
         let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
-        let element_snake_case = naming::ElementSnakeCase;
         let self_snake_case = naming::SelfSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
         let start_upper_camel_case = naming::StartUpperCamelCase;

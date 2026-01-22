@@ -217,7 +217,6 @@ pub fn generate_postgresql_json_object_type(
             let delete_snake_case = naming::DeleteSnakeCase;
             let value_upper_camel_case = naming::ValueUpperCamelCase;
             let value_snake_case = naming::ValueSnakeCase;
-            let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
             let increment_snake_case = naming::IncrementSnakeCase;
