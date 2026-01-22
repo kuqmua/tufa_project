@@ -300,6 +300,7 @@ mod tests {
                 String::from("same_length_and_capacity"),
                 String::from("duration_suboptimal_units"),
                 String::from("manual_take"),
+                String::from("manual_checked_ops"),
             ],
         );
     }

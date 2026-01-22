@@ -323,6 +323,7 @@ inline_always_mismatching_target_features = { level = "deny", priority = 0 }
 improper_gpu_kernel_arg = { level = "deny", priority = 0 }
 missing_gpu_kernel_export_name = { level = "deny", priority = 0 }
 ambiguous_panic_imports = { level = "deny", priority = 0 }
+ambiguous_glob_imported_traits = { level = "deny", priority = 0 }
 
 [workspace.lints.clippy]
 absolute_paths = { level = "allow", priority = 0 } # im against this lint
@@ -1125,4 +1126,3 @@ decimal_bitwise_operands = { level = "deny", priority = 0 }
 manual_ilog2 = { level = "deny", priority = 0 }
 ptr_offset_by_literal = { level = "deny", priority = 0 }
 needless_type_cast = { level = "deny", priority = 0 }
-manual_checked_ops = { level = "deny", priority = 0 }
