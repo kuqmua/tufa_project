@@ -875,7 +875,7 @@ string_lit_chars_any = { level = "deny", priority = 0 }
 string_slice = { level = "deny", priority = 0 }
 strlen_on_c_strings = { level = "deny", priority = 0 }
 struct_excessive_bools = { level = "deny", priority = 0 }
-struct_field_names = { level = "deny", priority = 0 }
+struct_field_names = { level = "allow", priority = 0 } #just makes no sense. very annoying if u generating similar fields
 suboptimal_flops = { level = "deny", priority = 0 }
 suspicious_arithmetic_impl = { level = "deny", priority = 0 }
 suspicious_assignment_formatting = { level = "deny", priority = 0 }
