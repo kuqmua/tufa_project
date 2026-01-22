@@ -2519,37 +2519,6 @@ pub fn generate_postgresql_json_types(
                 //
                 let generate_index_increment_token_stream = |index_c1128a3e|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
                 let generate_value_increment_token_stream = |index_0abe6039|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
-                enum NotNullOrNullableTokenStream {
-                    NotNull(proc_macro2::TokenStream),
-                    Nullable {
-                        some_token_stream: proc_macro2::TokenStream,
-                        content_token_stream: proc_macro2::TokenStream,
-                    }
-                }
-                let generate_maybe_if_some_token_stream_alt = |
-                    not_null_or_nullable_token_stream: NotNullOrNullableTokenStream,
-                    index_a08f4550: u64,
-                | {
-                    let value_index_token_stream = generate_value_increment_token_stream(index_a08f4550);
-                    let value_index_incremented_token_stream = generate_value_increment_token_stream(index_a08f4550.checked_add(1).expect("41a4b7fd-dacf-4cb9-842f-19c2ac90df38"));
-                    match not_null_or_nullable_token_stream {
-                        NotNullOrNullableTokenStream::NotNull(token_stream_bbcbf9bb) => quote::quote! {#value_index_token_stream #token_stream_bbcbf9bb},
-                        NotNullOrNullableTokenStream::Nullable {
-                            some_token_stream,
-                            content_token_stream,
-                        } => quote::quote! {
-                            if let Some(#value_index_incremented_token_stream) = #value_index_token_stream #some_token_stream {
-                                #content_token_stream
-                            }
-                        },
-                    }
-                };
-
-
-
-
-
-
                 let generate_for_dot_zero_into_iter_enumerate_token_stream = |
                     index: u64,
                     value_index: u64,
@@ -2935,36 +2904,36 @@ pub fn generate_postgresql_json_types(
                 //         0,
                 //     )
                 // );
-                // let generate_dimension_index_number_one_token_stream = |
-                //     dimension1_not_null_or_nullable: &NotNullOrNullable,
-                //     dimension2_not_null_or_nullable: &NotNullOrNullable
-                // |generate_acc_token_stream(
-                //     &{
-                //         let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                //             &match &dimension1_not_null_or_nullable {
-                //                 NotNullOrNullable::NotNull => quote::quote! {value1.0},
-                //                 NotNullOrNullable::Nullable => quote::quote! {value2.0},
-                //             },
-                //             &generate_not_null_or_nullable_token_stream(
-                //                 dimension2_not_null_or_nullable,
-                //                 &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
-                //                 &quote::quote!{value3},
-                //             ),
-                //             &quote::quote!{value3}
-                //         );
-                //         let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                //             dimension1_not_null_or_nullable,
-                //             &dimension2_token_stream,
-                //             &quote::quote!{value1},
-                //             &quote::quote!{value2}
-                //         );
-                //         let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                //             &maybe_if_some_dimension2_token_stream,
-                //             0
-                //         );
-                //         quote::quote! {#dimension1_token_stream}
-                //     },
-                // );
+                let generate_dimension_index_number_one_token_stream = |
+                    dimension1_not_null_or_nullable: &NotNullOrNullable,
+                    dimension2_not_null_or_nullable: &NotNullOrNullable
+                |generate_acc_token_stream(
+                    &{
+                        let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                            &match &dimension1_not_null_or_nullable {
+                                NotNullOrNullable::NotNull => quote::quote! {value1.0},
+                                NotNullOrNullable::Nullable => quote::quote! {value2.0},
+                            },
+                            &generate_not_null_or_nullable_token_stream(
+                                dimension2_not_null_or_nullable,
+                                &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
+                                &quote::quote!{value3},
+                            ),
+                            &quote::quote!{value3}
+                        );
+                        let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                            dimension1_not_null_or_nullable,
+                            &dimension2_token_stream,
+                            &quote::quote!{value1},
+                            &quote::quote!{value2}
+                        );
+                        let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                            &maybe_if_some_dimension2_token_stream,
+                            0
+                        );
+                        quote::quote! {#dimension1_token_stream}
+                    },
+                );
                 // let generate_dimension_index_number_two_token_stream = |
                 //     dimension1_not_null_or_nullable: &NotNullOrNullable,
                 //     dimension2_not_null_or_nullable: &NotNullOrNullable,
