@@ -2898,7 +2898,15 @@ pub fn generate_postgresql_json_types(
                                 )
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                  0,
+                                  &create_dot_zero_token_stream,
+                                  &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                    0,
+                                    1,
+                                    &content_token_stream
+                                  )
+                                )
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                         }
