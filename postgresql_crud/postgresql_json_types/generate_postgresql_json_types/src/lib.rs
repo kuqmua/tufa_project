@@ -2812,7 +2812,7 @@ pub fn generate_postgresql_json_types(
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value1},
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value1},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value1},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value1},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
                             }
                         );
                         // let dimension1_not_null_or_nullable_token_stream = match &dimension1_not_null_or_nullable {
@@ -2908,7 +2908,20 @@ pub fn generate_postgresql_json_types(
                                   )
                                 )
                             },
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                  0,
+                                  &create_dot_zero_token_stream,
+                                  &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                    0,
+                                    1,
+                                    &generate_if_let_some_equals_value_index_dot_zero_token_stream(
+                                      2,
+                                      &content_token_stream,
+                                    )
+                                  )
+                                )
+                            },
                         }
                     })
                 };
