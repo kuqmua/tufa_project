@@ -2541,7 +2541,7 @@ pub fn generate_postgresql_json_types(
                 |{
                     let index_number_token_stream = generate_index_number_token_stream(index_0082bcdf);
                     let value_number_token_stream = generate_value_number_token_stream(index_e81c6d28);
-                    let value_number_in_token_stream = generate_value_number_token_stream(index_e81c6d28);
+                    let value_number_in_token_stream = generate_value_number_token_stream(index_b7b230b2);
                     quote::quote!{
                         for (#index_number_token_stream, #value_number_token_stream) in #value_number_in_token_stream.0.into_iter().enumerate() {
                             #content_token_stream
@@ -2549,11 +2549,11 @@ pub fn generate_postgresql_json_types(
                     }
                 };
                 let generate_if_let_some_equals_dot_zero_token_stream = |
-                    value_index: u64,
+                    index_1926db05: u64,
                     equal_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens,
                 |{
-                    let value_number_token_stream = generate_value_number_token_stream(value_index);
+                    let value_number_token_stream = generate_value_number_token_stream(index_1926db05);
                     quote::quote!{
                         if let Some(#value_number_token_stream) = #equal_token_stream.0 {
                             #content_token_stream
@@ -2782,8 +2782,8 @@ pub fn generate_postgresql_json_types(
                             &match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value0},
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value0},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value0},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value0},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value1},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value1},
                             }
                         );
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
@@ -2796,37 +2796,36 @@ pub fn generate_postgresql_json_types(
                                 )
                             },
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                // generate_for_dot_zero_into_iter_enumerate_token_stream(
-                                //     0,
-                                //     0,
-                                //     &create_dot_zero_token_stream,
-                                //     &content_token_stream,
-                                // )
-                                panic!("todo##");
+                                generate_for_dot_zero_into_iter_token_stream(
+                                    0,
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &content_token_stream,
+                                )
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                // generate_if_let_some_equals_dot_zero_without_increment_token_stream(
-                                //   0,
-                                //   &create_dot_zero_token_stream,
-                                //   &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                //     0,
-                                //     0,
-                                //     &content_token_stream
-                                //   )
-                                // )
-                                panic!("todo##");
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        0,
+                                        1,
+                                        0,
+                                        &content_token_stream
+                                    )
+                                )
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                // generate_if_let_some_equals_dot_zero_without_increment_token_stream(
-                                //   0,
-                                //   &create_dot_zero_token_stream,
-                                //   &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                //     0,
-                                //     0,
-                                //     &content_token_stream
-                                //   )
-                                // )
-                                panic!("todo##");
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        0,
+                                        1,
+                                        0,
+                                        &content_token_stream
+                                    )
+                                )
                             },
                         }
                     })
