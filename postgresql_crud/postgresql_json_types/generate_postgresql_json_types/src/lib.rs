@@ -2856,8 +2856,8 @@ pub fn generate_postgresql_json_types(
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value2},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value3},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value3},
                             }
                         );
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
@@ -2938,9 +2938,65 @@ pub fn generate_postgresql_json_types(
                                     )
                                 )
                             },
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        0,
+                                        1,
+                                        0,
+                                        &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                            1,
+                                            2,
+                                            1,
+                                            &content_token_stream
+                                        )
+                                    )
+                                )
+                            },
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        0,
+                                        1,
+                                        0,
+                                        &generate_if_let_some_equals_value_index_dot_zero_token_stream(
+                                            2,
+                                            1,
+                                            &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                                1,
+                                                3,
+                                                2,
+                                                &content_token_stream
+                                            )
+                                        )
+                                    )
+                                )
+                            },
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                                generate_if_let_some_equals_dot_zero_token_stream(
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        0,
+                                        1,
+                                        0,
+                                        &generate_if_let_some_equals_value_index_dot_zero_token_stream(
+                                            2,
+                                            1,
+                                            &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                                1,
+                                                3,
+                                                2,
+                                                &content_token_stream
+                                            )
+                                        )
+                                    )
+                                )
+                            },
                         }
                     })
                 };
