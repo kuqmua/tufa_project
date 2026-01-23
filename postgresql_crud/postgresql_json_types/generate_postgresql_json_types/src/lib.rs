@@ -2517,18 +2517,18 @@ pub fn generate_postgresql_json_types(
                 //
                 //
                 //
-                let generate_index_increment_token_stream = |index_c1128a3e|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
-                let generate_value_increment_token_stream = |index_0abe6039|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
-                let generate_for_dot_zero_into_iter_enumerate_token_stream = |
+                let generate_index_number_token_stream = |index_c1128a3e: u64|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
+                let generate_value_number_token_stream = |index_0abe6039: u64|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
+                let generate_for_dot_zero_into_iter_token_stream = |
                     index_c6371d8c: u64,
                     index_ac435e3a: u64,
                     enumerate_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens,
                 |{
-                    let index_increment_token_stream = generate_index_increment_token_stream(index_c6371d8c);
-                    let value_increment_checked_add_token_stream = generate_value_increment_token_stream(index_ac435e3a.checked_add(1).expect("565378ff-e076-4594-8a0b-a9dab327fe8c"));
+                    let index_number_token_stream = generate_index_number_token_stream(index_c6371d8c);
+                    let value_number_token_stream = generate_value_number_token_stream(index_ac435e3a);
                     quote::quote!{
-                        for (#index_increment_token_stream, #value_increment_checked_add_token_stream) in #enumerate_token_stream.0.into_iter().enumerate() {
+                        for (#index_number_token_stream, #value_number_token_stream) in #enumerate_token_stream.0.into_iter().enumerate() {
                             #content_token_stream
                         }
                     }
@@ -2536,56 +2536,39 @@ pub fn generate_postgresql_json_types(
                 let generate_for_value_index_dot_zero_into_iter_enumerate_token_stream = |
                     index_0082bcdf: u64,
                     index_e81c6d28: u64,
+                    index_b7b230b2: u64,
                     content_token_stream: &dyn quote::ToTokens,
                 |{
-                    let index_increment_token_stream = generate_index_increment_token_stream(index_0082bcdf);
-                    let value_increment_checked_add_token_stream = generate_value_increment_token_stream(index_e81c6d28.checked_add(1).expect("8ded0128-4027-4755-a1ba-49f7bff874f2"));
-                    let value_increment_token_stream = generate_value_increment_token_stream(index_e81c6d28);
+                    let index_number_token_stream = generate_index_number_token_stream(index_0082bcdf);
+                    let value_number_token_stream = generate_value_number_token_stream(index_e81c6d28);
+                    let value_number_in_token_stream = generate_value_number_token_stream(index_e81c6d28);
                     quote::quote!{
-                        for (#index_increment_token_stream, #value_increment_checked_add_token_stream) in #value_increment_token_stream.0.into_iter().enumerate() {
+                        for (#index_number_token_stream, #value_number_token_stream) in #value_number_in_token_stream.0.into_iter().enumerate() {
                             #content_token_stream
                         }
                     }
                 };
-                //
-                let generate_if_let_some_equals_dot_zero_e77463af_token_stream = |
+                let generate_if_let_some_equals_dot_zero_token_stream = |
                     value_index: u64,
                     equal_token_stream: &dyn quote::ToTokens,
                     content_token_stream: &dyn quote::ToTokens,
                 |{
-                    let value_increment_checked_add_token_stream = generate_value_increment_token_stream(value_index);
+                    let value_number_token_stream = generate_value_number_token_stream(value_index);
                     quote::quote!{
-                        if let Some(#value_increment_checked_add_token_stream) = #equal_token_stream.0 {
+                        if let Some(#value_number_token_stream) = #equal_token_stream.0 {
                             #content_token_stream
                         }
                     }
                 };
-                let generate_if_let_some_equals_dot_zero_with_increment_token_stream = |
-                    value_index: u64,
-                    equal_token_stream: &dyn quote::ToTokens,
-                    content_token_stream: &dyn quote::ToTokens,
-                |generate_if_let_some_equals_dot_zero_e77463af_token_stream(
-                    value_index.checked_add(1).expect("69c567fb-35e9-4269-8c57-0a67c038530e"),
-                    equal_token_stream,
-                    content_token_stream
-                );
-                let generate_if_let_some_equals_dot_zero_without_increment_token_stream = |
-                    value_index: u64,
-                    equal_token_stream: &dyn quote::ToTokens,
-                    content_token_stream: &dyn quote::ToTokens,
-                |generate_if_let_some_equals_dot_zero_e77463af_token_stream(
-                    value_index,
-                    equal_token_stream,
-                    content_token_stream
-                );
                 let generate_if_let_some_equals_value_index_dot_zero_token_stream = |
                     index_c4552aef: u64,
+                    index_9f1fbc9f: u64,
                     content_token_stream: &dyn quote::ToTokens,
                 |{
-                    let value_increment_checked_add_token_stream = generate_value_increment_token_stream(index_c4552aef.checked_add(1).expect("e691b835-bf9d-4dcc-800f-ad33a276b26a"));
-                    let value_increment_token_stream = generate_value_increment_token_stream(index_c4552aef);
+                    let value_number_token_stream_44fc946f = generate_value_number_token_stream(index_c4552aef);
+                    let value_number_token_stream_24f01af7 = generate_value_number_token_stream(index_9f1fbc9f);
                     quote::quote!{
-                        if let Some(#value_increment_checked_add_token_stream) = #value_increment_token_stream.0 {
+                        if let Some(#value_number_token_stream_44fc946f) = #value_number_token_stream_24f01af7.0 {
                             #content_token_stream
                         }
                     }
@@ -2616,7 +2599,7 @@ pub fn generate_postgresql_json_types(
                     },
                 };
                 let generate_acc_token_stream = |content_token_stream_11dd247a: &dyn quote::ToTokens| {
-                    let value_zero_token_stream = generate_value_increment_token_stream(0);
+                    let value_zero_token_stream = generate_value_number_token_stream(0);
                     let content_token_stream_96de95ec = match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote! {#content_token_stream_11dd247a},
                         NotNullOrNullable::Nullable => quote::quote! {
@@ -2755,12 +2738,12 @@ pub fn generate_postgresql_json_types(
                     &match not_null_or_nullable {
                         NotNullOrNullable::NotNull => quote::quote!{#create_dot_zero_dot_zero_token_stream},
                         NotNullOrNullable::Nullable => {
-                            let value_index_token_stream = generate_value_increment_token_stream(index_88b9ffc8);
+                            let value_index_token_stream = generate_value_number_token_stream(index_88b9ffc8);
                             quote::quote! {#value_index_token_stream.0}
                         },
                     },
                     &content_token_stream,
-                    &generate_value_increment_token_stream(index_88b9ffc8.checked_add(1).expect("53943ead-83bb-4f61-9461-6688f78e3817"))
+                    &generate_value_number_token_stream(index_88b9ffc8.checked_add(1).expect("53943ead-83bb-4f61-9461-6688f78e3817"))
                 );
                 let generate_for_maybe_if_some_token_stream = |
                     dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber,
@@ -2797,15 +2780,15 @@ pub fn generate_postgresql_json_types(
                             dimension1_not_null_or_nullable,
                             &generate_down_postgresql_json_type_pattern().expect("63f3476d-e0e0-471c-9faa-0a626c8ba75e"),
                             &match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value1},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value1},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value1},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value1},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value0},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value0},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value0},
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value0},
                             }
                         );
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                generate_for_dot_zero_into_iter_enumerate_token_stream(
+                                generate_for_dot_zero_into_iter_token_stream(
                                     0,
                                     0,
                                     &create_dot_zero_token_stream,
@@ -2813,34 +2796,37 @@ pub fn generate_postgresql_json_types(
                                 )
                             },
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                generate_for_dot_zero_into_iter_enumerate_token_stream(
-                                    0,
-                                    0,
-                                    &create_dot_zero_token_stream,
-                                    &content_token_stream,
-                                )
+                                // generate_for_dot_zero_into_iter_enumerate_token_stream(
+                                //     0,
+                                //     0,
+                                //     &create_dot_zero_token_stream,
+                                //     &content_token_stream,
+                                // )
+                                panic!("todo##");
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
-                                generate_if_let_some_equals_dot_zero_without_increment_token_stream(
-                                  0,
-                                  &create_dot_zero_token_stream,
-                                  &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                    0,
-                                    0,
-                                    &content_token_stream
-                                  )
-                                )
+                                // generate_if_let_some_equals_dot_zero_without_increment_token_stream(
+                                //   0,
+                                //   &create_dot_zero_token_stream,
+                                //   &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                //     0,
+                                //     0,
+                                //     &content_token_stream
+                                //   )
+                                // )
+                                panic!("todo##");
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
-                                generate_if_let_some_equals_dot_zero_without_increment_token_stream(
-                                  0,
-                                  &create_dot_zero_token_stream,
-                                  &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                    0,
-                                    0,
-                                    &content_token_stream
-                                  )
-                                )
+                                // generate_if_let_some_equals_dot_zero_without_increment_token_stream(
+                                //   0,
+                                //   &create_dot_zero_token_stream,
+                                //   &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                //     0,
+                                //     0,
+                                //     &content_token_stream
+                                //   )
+                                // )
+                                panic!("todo##");
                             },
                         }
                     })
@@ -2858,83 +2844,84 @@ pub fn generate_postgresql_json_types(
                 let generate_dimension_index_number_one_token_stream = |
                     dimension1_not_null_or_nullable: &NotNullOrNullable,
                     dimension2_not_null_or_nullable: &NotNullOrNullable
-                | {
-                    generate_acc_token_stream_alt(&{
-                        let content_token_stream = generate_not_null_or_nullable_token_stream(
-                            dimension2_not_null_or_nullable,
-                            &generate_down_postgresql_json_type_pattern().expect("eb25ae1e-85af-4b9f-b2d7-17aee46dbcab"),
-                            &match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value2},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value2},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value2},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value2},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
-                            }
-                        );
-                        match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                generate_for_dot_zero_into_iter_enumerate_token_stream(
-                                    0,
-                                    0,
-                                    &create_dot_zero_token_stream,
-                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                        1,
-                                        1,
-                                        &content_token_stream,
-                                    )
-                                )
-                            },
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
-                                generate_for_dot_zero_into_iter_enumerate_token_stream(
-                                    0,
-                                    0,
-                                    &create_dot_zero_token_stream,
-                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                        1,
-                                        1,
-                                        &content_token_stream,
-                                    )
-                                )
-                            },
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
-                        }
-                    })
-                };
-                // generate_acc_token_stream(
-                //     &{
-                //         let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
-                //             &match &dimension1_not_null_or_nullable {
-                //                 NotNullOrNullable::NotNull => quote::quote! {value1.0},
-                //                 NotNullOrNullable::Nullable => quote::quote! {value2.0},
+                |
+                // {
+                //     generate_acc_token_stream_alt(&{
+                //         let content_token_stream = generate_not_null_or_nullable_token_stream(
+                //             dimension2_not_null_or_nullable,
+                //             &generate_down_postgresql_json_type_pattern().expect("eb25ae1e-85af-4b9f-b2d7-17aee46dbcab"),
+                //             &match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value2},
+                //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value2},
+                //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value2},
+                //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
+                //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{value2},
+                //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{value2},
+                //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{value2},
+                //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{value2},
+                //             }
+                //         );
+                //         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                //             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                //                 generate_for_dot_zero_into_iter_enumerate_token_stream(
+                //                     0,
+                //                     0,
+                //                     &create_dot_zero_token_stream,
+                //                     &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                //                         1,
+                //                         1,
+                //                         &content_token_stream,
+                //                     )
+                //                 )
                 //             },
-                //             &generate_not_null_or_nullable_token_stream(
-                //                 dimension2_not_null_or_nullable,
-                //                 &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
-                //                 &quote::quote!{value3},
-                //             ),
-                //             &quote::quote!{value3}
-                //         );
-                //         let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
-                //             dimension1_not_null_or_nullable,
-                //             &dimension2_token_stream,
-                //             &quote::quote!{value1},
-                //             &quote::quote!{value2}
-                //         );
-                //         let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
-                //             &maybe_if_some_dimension2_token_stream,
-                //             0
-                //         );
-                //         quote::quote! {#dimension1_token_stream}
-                //     },
-                // );
+                //             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                //                 generate_for_dot_zero_into_iter_enumerate_token_stream(
+                //                     0,
+                //                     0,
+                //                     &create_dot_zero_token_stream,
+                //                     &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                //                         1,
+                //                         1,
+                //                         &content_token_stream,
+                //                     )
+                //                 )
+                //             },
+                //             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
+                //             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
+                //             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => panic!("todo@@@"),
+                //             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => panic!("todo@@@"),
+                //             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
+                //             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
+                //         }
+                //     })
+                // };
+                generate_acc_token_stream(
+                    &{
+                        let dimension2_token_stream = generate_for_index_element_into_iter_enumerate_one_token_stream(
+                            &match &dimension1_not_null_or_nullable {
+                                NotNullOrNullable::NotNull => quote::quote! {value1.0},
+                                NotNullOrNullable::Nullable => quote::quote! {value2.0},
+                            },
+                            &generate_not_null_or_nullable_token_stream(
+                                dimension2_not_null_or_nullable,
+                                &generate_down_postgresql_json_type_pattern().expect("23f9b122-9788-4673-b996-5d437b363f7e"),
+                                &quote::quote!{value3},
+                            ),
+                            &quote::quote!{value3}
+                        );
+                        let maybe_if_some_dimension2_token_stream = generate_maybe_if_some_value_dot_zero_token_stream(
+                            dimension1_not_null_or_nullable,
+                            &dimension2_token_stream,
+                            &quote::quote!{value1},
+                            &quote::quote!{value2}
+                        );
+                        let dimension1_token_stream = generate_for_index_element_into_iter_enumerate_zero_starting_value_token_stream(
+                            &maybe_if_some_dimension2_token_stream,
+                            0
+                        );
+                        quote::quote! {#dimension1_token_stream}
+                    },
+                );
                 let generate_dimension_index_number_two_token_stream = |
                     dimension1_not_null_or_nullable: &NotNullOrNullable,
                     dimension2_not_null_or_nullable: &NotNullOrNullable,
