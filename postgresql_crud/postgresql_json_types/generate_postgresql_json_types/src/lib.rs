@@ -2887,7 +2887,18 @@ pub fn generate_postgresql_json_types(
                                     )
                                 )
                             },
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => panic!("todo@@@"),
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                                generate_for_dot_zero_into_iter_enumerate_token_stream(
+                                    0,
+                                    0,
+                                    &create_dot_zero_token_stream,
+                                    &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        1,
+                                        1,
+                                        &content_token_stream,
+                                    )
+                                )
+                            },
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => panic!("todo@@@"),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => panic!("todo@@@"),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => panic!("todo@@@"),
