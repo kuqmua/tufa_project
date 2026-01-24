@@ -1161,8 +1161,8 @@ pub fn generate_postgresql_json_types(
                             | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
                             | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
-                            | PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {Default::default()},
+                            | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => quote::quote! {Default::default()},
+                            PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote! {String::default()},
                             PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {uuid::Uuid::new_v4()},
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#postgresql_crud_common_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
