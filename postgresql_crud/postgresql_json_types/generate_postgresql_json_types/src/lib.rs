@@ -2467,6 +2467,10 @@ pub fn generate_postgresql_json_types(
             proc_macro2::TokenStream::new()
         };
         let impl_postgresql_json_type_test_cases_for_ident_token_stream = {
+            enum F32OrF64 {
+                F32,
+                F64
+            }
             let generate_read_or_read_inner_into_update_with_new_or_try_new_unwraped_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate| {
                 let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                 quote::quote! {<#self_upper_camel_case::#postgresql_json_type_upper_camel_case
@@ -3442,23 +3446,37 @@ pub fn generate_postgresql_json_types(
                 }
             };
             let generate_dot_checked_sub_one_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{#content_token_stream.checked_sub(1)};
-            let generate_minus_one_is_finite_then_some_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{{
-                let value = #content_token_stream - 1.0;
-                //The correct way to compare floating point numbers is to define an allowed error margin
-                if (#content_token_stream - value).abs() < 0.1 {
-                    None
-                }
-                else {
-                    value.is_finite().then_some(value)
-                }
-            }};
+            let generate_minus_one_is_finite_then_some_token_stream = |
+                f32_or_f64: F32OrF64,
+                content_token_stream: &dyn quote::ToTokens
+            |{
+                let minus_token_stream = match &f32_or_f64 {
+                    F32OrF64::F32 => quote::quote!{1.0f32},
+                    F32OrF64::F64 => quote::quote!{1.0f64}
+                };
+                let more_token_stream = match &f32_or_f64 {
+                    F32OrF64::F32 => quote::quote!{0.1f32},
+                    F32OrF64::F64 => quote::quote!{0.1f64}
+                };
+                quote::quote!{{
+                    let value = #content_token_stream - #minus_token_stream;
+                    //The correct way to compare floating point numbers is to define an allowed error margin
+                    if (#content_token_stream - value).abs() < #more_token_stream {
+                        None
+                    }
+                    else {
+                        value.is_finite().then_some(value)
+                    }
+                }}
+            };
             //todo additonal logic for Option<value> and element of array? optional element of array?
             let read_only_ids_merged_with_create_into_postgresql_json_type_option_vec_where_greater_than_token_stream = if let PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
             {
                 let (
                     int_greater_than_one_less_token_stream,
-                    float_greater_than_one_less_token_stream,
+                    float_32_greater_than_one_less_token_stream,
+                    float_64_greater_than_one_less_token_stream,
                 ) = {
                     let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                         let value_7aa498e8 = #content_token_stream?;
@@ -3487,6 +3505,11 @@ pub fn generate_postgresql_json_types(
                             &create_dot_zero_dot_zero_token_stream
                         )),
                         generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                            F32OrF64::F32,
+                            &create_dot_zero_dot_zero_token_stream
+                        )),
+                        generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                            F32OrF64::F64,
                             &create_dot_zero_dot_zero_token_stream
                         )),
                     )
@@ -3500,8 +3523,8 @@ pub fn generate_postgresql_json_types(
                     PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
                     PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
                     PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_token_stream,
-                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
-                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_greater_than_one_less_token_stream,
+                    PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => float_32_greater_than_one_less_token_stream,
+                    PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_64_greater_than_one_less_token_stream,
                     PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                     PostgresqlJsonType::StdStringStringAsJsonbString |
                     PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
@@ -3681,21 +3704,23 @@ pub fn generate_postgresql_json_types(
                     ) = (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                         let (
                             int_greater_than_one_less_token_stream,
-                            float_greater_than_one_less_token_stream,
+                            float_32_greater_than_one_less_token_stream,
+                            float_64_greater_than_one_less_token_stream,
                         ) = {
                             let generate_greater_than_one_less_token_stream = |content_token_stream: &dyn quote::ToTokens|quote::quote!{
                                 match #import_path::NotEmptyUniqueEnumVec::try_new({
                                     let mut acc_f95ec4f2 = vec![];
                                     for element_ba78af60 in create.0.0 {
-                                        match #content_token_stream {
-                                            Some(value) => {
+                                        let value_027d0d3a = #content_token_stream;
+                                        match value_027d0d3a {
+                                            Some(value_0cd93c25) => {
                                                 acc_f95ec4f2.push(
                                                     #import_path::SingleOrMultiple::Single(
                                                         #ident_where_upper_camel_case::ContainsElementGreaterThan(
                                                             where_filters::PostgresqlJsonTypeWhereContainsElementGreaterThan {
                                                                 logical_operator: #import_path::LogicalOperator::Or,
                                                                 value: #ident_standart_not_null_table_type_declaration_upper_camel_case(
-                                                                    #ident_standart_not_null_origin_upper_camel_case(value)
+                                                                    #ident_standart_not_null_origin_upper_camel_case(value_0cd93c25)
                                                                 )
                                                             }
                                                         )
@@ -3722,6 +3747,11 @@ pub fn generate_postgresql_json_types(
                                     &element_dot_zero_token_stream
                                 )),
                                 generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                                    F32OrF64::F32,
+                                    &element_dot_zero_token_stream
+                                )),
+                                generate_greater_than_one_less_token_stream(&generate_minus_one_is_finite_then_some_token_stream(
+                                    F32OrF64::F64,
                                     &element_dot_zero_token_stream
                                 )),
                             )
@@ -3735,8 +3765,8 @@ pub fn generate_postgresql_json_types(
                             PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber |
                             PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber |
                             PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => int_greater_than_one_less_token_stream,
-                            PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber |
-                            PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_greater_than_one_less_token_stream,
+                            PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => float_32_greater_than_one_less_token_stream,
+                            PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => float_64_greater_than_one_less_token_stream,
                             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean |
                             PostgresqlJsonType::StdStringStringAsJsonbString |
                             PostgresqlJsonType::UuidUuidAsJsonbString => none_token_stream.clone(),
