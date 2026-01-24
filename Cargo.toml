@@ -915,7 +915,7 @@ trivial_regex = { level = "deny", priority = 0 }
 trivially_copy_pass_by_ref = { level = "deny", priority = 0 }
 try_err = { level = "deny", priority = 0 }
 tuple_array_conversions = { level = "deny", priority = 0 }
-type_complexity = { level = "deny", priority = 0 }
+type_complexity = { level = "allow", priority = 0 } #annoying for code generation
 type_id_on_box = { level = "deny", priority = 0 }
 type_repetition_in_bounds = { level = "deny", priority = 0 }
 undocumented_unsafe_blocks = { level = "deny", priority = 0 }
