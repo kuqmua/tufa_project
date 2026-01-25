@@ -1645,7 +1645,8 @@ pub fn generate_postgresql_types(
                         };
                     }
                 };
-                let generate_field_index_token_stream = |index_52391f7d: usize| format!("__{}{index_52391f7d}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().expect("a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
+                let generate_field_index_token_stream = |index_52391f7d: usize| format!("__field{index_52391f7d}").parse::<proc_macro2::TokenStream>().expect("a4e1a63f-821b-4d35-823a-0a99efa9d1dc");
+                let generate_field_index_value_token_stream = |index_7ef2fc7d: usize| format!("__field{index_7ef2fc7d}_value").parse::<proc_macro2::TokenStream>().expect("fa97be6c-6985-44f3-aec9-04adaf71dc8f");
                 let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                     let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                         let fields_token_stream = {
@@ -1674,25 +1675,26 @@ pub fn generate_postgresql_types(
                     (generate_fn_expecting_token_stream(&struct_ident_double_quotes_token_stream), generate_fn_expecting_token_stream(&tuple_struct_ident_double_quotes_token_stream), generate_fn_expecting_token_stream(&quote::quote! {"field identifier"}))
                 };
                 let field_0_token_stream = generate_field_index_token_stream(parameter_number_one.get_index());
+                let field_0_value_token_stream = generate_field_index_value_token_stream(parameter_number_one.get_index());
                 let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#content_token_stream)}
                 };
                 let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
-                let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_token_stream) {
+                let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_value_token_stream) {
                     Ok(value_3c0b34fb) => value_3c0b34fb,
                     Err(error) => {
                         return Err(serde::de::Error::custom(error));
                     }
                 }};
-                let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_token_stream)};
+                let sqlx_types_mac_address_mac_address_field_type_new_field_0_value_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_value_token_stream)};
                 let array_std_primitive_u8_6_token_stream = quote::quote! {[u8; 6]};
-                let generate_vec_field_index_token_stream = |length: usize|{
-                    let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| generate_field_index_token_stream(index_a8d5119e));
+                let generate_vec_field_index_values_token_stream = |length: usize|{
+                    let fields_token_stream = (1..=length).collect::<Vec<_>>().into_iter().enumerate().map(|(index_a8d5119e, _)| generate_field_index_value_token_stream(index_a8d5119e));
                     quote::quote!{#(#fields_token_stream),*}
                 };
                 let (sqlx_types_chrono_naive_time_origin_try_new_for_deserialize, match_origin_try_new_for_deserialize_one_token_stream, match_origin_try_new_for_deserialize_two_token_stream, match_origin_try_new_for_deserialize_four_token_stream) = {
                     let generate_match_origin_try_new_for_deserialize_token_stream = |length: usize| {
-                        let fields_token_stream = generate_vec_field_index_token_stream(length);
+                        let fields_token_stream = generate_vec_field_index_values_token_stream(length);
                         quote::quote! {
                             match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#fields_token_stream) {
                                 Ok(value_e81dd4a5) => Ok(value_e81dd4a5),
@@ -1709,7 +1711,7 @@ pub fn generate_postgresql_types(
                 };
                 let (origin_new_for_deserialize_two_token_stream, origin_new_for_deserialize_three_token_stream) = {
                     let generate_origin_new_for_deserialize_token_stream = |length: usize| {
-                        let fields_token_stream = generate_vec_field_index_token_stream(length);
+                        let fields_token_stream = generate_vec_field_index_values_token_stream(length);
                         quote::quote! {
                             Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#fields_token_stream))
                         }
@@ -1724,15 +1726,15 @@ pub fn generate_postgresql_types(
                             where
                                 __E: serde::Deserializer<'de>,
                             {
-                                let #field_0_token_stream = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
+                                let #field_0_value_token_stream = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
                                 #serde_private_ok_token_stream
                             }
                         }
                     };
                     (
-                        generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_token_stream)})),
+                        generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_value_token_stream)})),
                         generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream)),
-                        generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream)),
+                        generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_value_token_stream)),
                         generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &match_origin_try_new_for_deserialize_one_token_stream),
                         generate_fn_visit_newtype_struct_token_stream(&inner_type_standart_not_null_token_stream, &match_origin_try_new_for_deserialize_one_token_stream),
                     )
@@ -1740,10 +1742,10 @@ pub fn generate_postgresql_types(
                 let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                     let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case, vec_token_stream.len());
                     let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_70b4dabd, element_9dc7f312)| {
-                        let field_index_token_stream = generate_field_index_token_stream(index_70b4dabd);
+                        let field_index_value_token_stream = generate_field_index_value_token_stream(index_70b4dabd);
                         let index_usize_token_stream = format!("{index_70b4dabd}usize").parse::<proc_macro2::TokenStream>().expect("ce15e6bf-cf71-42c3-9f6d-94d0f7ec6ede");
                         quote::quote! {
-                            let Some(#field_index_token_stream) = serde::de::SeqAccess::next_element::<#element_9dc7f312>(&mut __seq)? else {
+                            let Some(#field_index_value_token_stream) = serde::de::SeqAccess::next_element::<#element_9dc7f312>(&mut __seq)? else {
                                 return Err(serde::de::Error::invalid_length(#index_usize_token_stream, &#error_message_token_stream));
                             };
                         }
@@ -1781,7 +1783,7 @@ pub fn generate_postgresql_types(
                     (
                         generate_fn_visit_seq_token_stream(&{
                             let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
-                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_token_stream)});
+                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_value_token_stream)});
                             quote::quote! {
                                 #fields_initialization_token_stream
                                 #serde_private_ok_postgresql_type_token_stream
@@ -1804,7 +1806,7 @@ pub fn generate_postgresql_types(
                         }),
                         generate_fn_visit_seq_token_stream(&{
                             let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&array_std_primitive_u8_6_token_stream]);
-                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream);
+                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_value_token_stream);
                             quote::quote! {
                                 #fields_initialization_token_stream
                                 #serde_private_ok_postgresql_type_token_stream
@@ -2102,9 +2104,10 @@ pub fn generate_postgresql_types(
                         let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index_e1adef1a, element_f8a9e25b)| {
                                 let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element_f8a9e25b);
-                                let field_index_name_token_stream = generate_field_index_token_stream(index_e1adef1a);
+                                let field_index_token_stream = generate_field_index_token_stream(index_e1adef1a);
+                                let field_index_value_token_stream = generate_field_index_value_token_stream(index_e1adef1a);
                                 quote::quote! {
-                                    let #field_index_name_token_stream = match #field_index_name_token_stream {
+                                    let #field_index_value_token_stream = match #field_index_token_stream {
                                         Some(value_eeeb431b) => value_eeeb431b,
                                         None => serde::__private228::de::missing_field(#field_name_double_quotes_token_stream)?,
                                     };
@@ -5571,7 +5574,7 @@ pub fn generate_postgresql_types(
                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").expect("793db0ef-c8ea-4683-9782-34e304730d02"),
                         sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(192, 168, 0, 0), 24).expect("c44934f2-335e-44b7-bb4d-0a91374b4a85")),
                         sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(10, 0, 0, 0), 8).expect("39e588d9-b32b-4611-a2f3-3ce500b93db0")),
-                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(127, 0, 0, 1), 32).expect("43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
+                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::LOCALHOST, 32).expect("43fb25bd-03cd-44fe-bde8-dc92d8bafc71")),
                         sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case(std::net::Ipv6Addr::LOCALHOST, 128).expect("b443be46-1805-4fda-b24b-71dba8d8b9d4")),
                         sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case("2001:db8::".parse().expect("d4e6df27-fdb6-4e66-898c-abcfc41c5e49"), 32).expect("a7486c5e-6577-4b80-a3ec-097002698431")),
                     ]},
@@ -5873,7 +5876,7 @@ pub fn generate_postgresql_types(
                                     acc_68eba82f.push(vec![
                                         read_only_ids_to_two_dimensional_vec_read_inner
                                         .into_iter()
-                                        .flat_map(std::iter::IntoIterator::into_iter)
+                                        .flat_map(IntoIterator::into_iter)
                                         .collect()
                                     ]);
                                     if let Some(value_a0f0f172) = option_additional {
