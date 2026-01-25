@@ -2573,6 +2573,10 @@ pub fn generate_postgresql_types(
             },
             PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
         };
+        let zero_zero_zero_zero_function_token_stream = quote::quote!{zero_zero_zero_zer};
+        let ten_ten_ten_ten_function_token_stream = quote::quote!{ten_ten_ten_ten};
+        let twenty_twenty_twenty_twenty_function_token_stream = quote::quote!{twenty_twenty_twenty_twenty};
+        let max_function_token_stream = quote::quote!{max};
         let ident_token_stream = {
             let ident_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -2940,13 +2944,13 @@ pub fn generate_postgresql_types(
                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => None,
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some({
                         let functions_token_stream = [
-                            (&quote::quote!{zero_zero_zero_zero}, &quote::quote!{0,0,0,0}),
-                            (&quote::quote!{ten_ten_ten_ten}, &quote::quote!{10,10,10,10}),
-                            (&quote::quote!{twenty_twenty_twenty_twenty}, &quote::quote!{20,20,20,20}),
-                            (&quote::quote!{max}, &quote::quote!{23,59,59,999_999}),
+                            (&zero_zero_zero_zero_function_token_stream, &quote::quote!{0,0,0,0}),
+                            (&ten_ten_ten_ten_function_token_stream, &quote::quote!{10,10,10,10}),
+                            (&twenty_twenty_twenty_twenty_function_token_stream, &quote::quote!{20,20,20,20}),
+                            (&max_function_token_stream, &quote::quote!{23,59,59,999_999}),
                         ].iter().map(|(name_token_stream, parameters_token_stream)| quote::quote! {
                             fn #name_token_stream() -> #ident_inner_type_token_stream {
-                                #ident_inner_type_token_stream::from_hms_micro_opt(0,0,0,0).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
+                                #ident_inner_type_token_stream::from_hms_micro_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
                             }
                         }).collect::<Vec<proc_macro2::TokenStream>>();
                         quote::quote!{#(#functions_token_stream)*}
@@ -5450,14 +5454,15 @@ pub fn generate_postgresql_types(
                 };
                 let empty_vec_token_stream = quote::quote! {Vec::new()};
                 let (sqlx_types_chrono_naive_time_min_token_stream, sqlx_types_chrono_naive_time_ten_token_stream, sqlx_types_chrono_naive_time_twenty_token_stream, sqlx_types_chrono_naive_time_max_token_stream) = {
-                    let generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream = |parameters_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {sqlx::types::chrono::NaiveTime::from_hms_micro_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")}
+                    let generate_current_ident_standart_not_null_function = |content_token_stream: &dyn quote::ToTokens|{
+                        let sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream = generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
+                        quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::#content_token_stream()}
                     };
                     (
-                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote! {0,0,0,0}),
-                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote! {10,10,10,10}),
-                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote! {20,20,20,20}),
-                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote! {23,59,59,999_999}),
+                        generate_current_ident_standart_not_null_function(&zero_zero_zero_zero_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&ten_ten_ten_ten_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&twenty_twenty_twenty_twenty_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&max_function_token_stream),
                     )
                 };
                 let (
