@@ -2578,20 +2578,51 @@ pub fn generate_postgresql_types(
             let maybe_impl_ident_token_stream = if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
                 let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable
             {
-                //here
-                let generate_inner_type_token_stream = |name_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|quote::quote!{
-                    fn #name_token_stream() -> #ident_inner_type_token_stream {
-                        #content_token_stream
+                enum IsConst {
+                    True,
+                    False
+                }
+                let generate_inner_type_token_stream = |
+                    is_const: IsConst,
+                    name_token_stream: &dyn quote::ToTokens,
+                    content_token_stream: &dyn quote::ToTokens
+                |{
+                    let maybe_const_token_stream = match is_const {
+                        IsConst::True => quote::quote!{const},
+                        IsConst::False => proc_macro2::TokenStream::new(),
+                    };
+                    quote::quote!{
+                        #maybe_const_token_stream fn #name_token_stream() -> #ident_inner_type_token_stream {
+                            #content_token_stream
+                        }
                     }
                 };
                 let maybe_min_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("000ddcc2-7057-4310-bbee-81c5fe6323c3")
-                        }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(quote::quote!{
-                            sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("f065e2b1-0e7b-4bc8-8fa6-49843c90ff7c")
-                        }),
+                    let generate_inner_type_token_stream_67fc7980 = |
+                        is_const: IsConst,
+                        content_token_stream_1ca2df79: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{min_inner_type},
+                        &content_token_stream_1ca2df79
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_67fc7980(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("000ddcc2-7057-4310-bbee-81c5fe6323c3")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(
+                            generate_inner_type_token_stream_67fc7980(
+                                IsConst::False,
+                                &quote::quote!{
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("f065e2b1-0e7b-4bc8-8fa6-49843c90ff7c")
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2617,20 +2648,34 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{min_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 let maybe_slightly_more_than_min_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("9545a47c-6795-43a3-b8be-d92ab1cd6e40")
-                        }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(quote::quote!{
-                            sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("03f9561a-aee1-4bf9-8b36-3ba9440af108")
-                        }),
+                    let generate_inner_type_token_stream_6d89728a = |
+                        is_const: IsConst,
+                        content_token_stream_dcc22544: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{slightly_more_than_min_inner_type},
+                        &content_token_stream_dcc22544
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_6d89728a(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("9545a47c-6795-43a3-b8be-d92ab1cd6e40")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(
+                            generate_inner_type_token_stream_6d89728a(
+                                IsConst::False,
+                                &quote::quote!{
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("03f9561a-aee1-4bf9-8b36-3ba9440af108")
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2656,23 +2701,42 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{slightly_more_than_min_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 let maybe_middle_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("0dafc3fc-83a1-40fe-965b-e3fba46a18c9")
-                        }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(quote::quote!{
-                            sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("d2ec329f-15ac-45b1-bbdc-51c08a23ad93")
-                        }),
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("a2f306ea-bf67-4743-9274-fbdcab3b8e22")
-                        }),
+                    let generate_inner_type_token_stream_23368199 = |
+                        is_const: IsConst,
+                        content_token_stream_645cff79: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{middle_inner_type},
+                        &content_token_stream_645cff79
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_23368199(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).expect("0dafc3fc-83a1-40fe-965b-e3fba46a18c9")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(
+                            generate_inner_type_token_stream_23368199(
+                                IsConst::False,
+                                &quote::quote!{
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 0).expect("d2ec329f-15ac-45b1-bbdc-51c08a23ad93")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some(
+                            generate_inner_type_token_stream_23368199(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).expect("a2f306ea-bf67-4743-9274-fbdcab3b8e22")
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2697,20 +2761,34 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{middle_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 let maybe_slightly_more_than_middle_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("235276a7-7f04-4f8f-b4f2-084694243bf0")
-                        }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(quote::quote!{
-                            sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("6a3dbcaa-5004-4cc4-a53c-8b65cdfa064c")
-                        }),
+                    let generate_inner_type_token_stream_3a61c0b0 = |
+                        is_const: IsConst,
+                        content_token_stream_e09b85a8: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{slightly_more_than_middle_inner_type},
+                        &content_token_stream_e09b85a8
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_3a61c0b0(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 1).expect("235276a7-7f04-4f8f-b4f2-084694243bf0")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => Some(
+                            generate_inner_type_token_stream_3a61c0b0(
+                                IsConst::False,
+                                &quote::quote!{
+                                    sqlx::types::time::Time::from_hms_micro(0, 0, 0, 1).expect("6a3dbcaa-5004-4cc4-a53c-8b65cdfa064c")
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2736,20 +2814,34 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{slightly_more_than_middle_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 let maybe_max_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("b217e3bf-f8d6-425d-85f9-f9610cc3ce3f")
-                        }),
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveDate::MAX
-                        }),
+                    let generate_inner_type_token_stream_32acb388 = |
+                        is_const: IsConst,
+                        content_token_stream_385694da: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{max_inner_type},
+                        &content_token_stream_385694da
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_32acb388(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_999).expect("b217e3bf-f8d6-425d-85f9-f9610cc3ce3f")
+                                }
+                            )
+                        ),
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some(
+                            generate_inner_type_token_stream_32acb388(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveDate::MAX
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2775,17 +2867,26 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{max_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 let maybe_slightly_less_than_max_inner_type_token_stream = {
-                    let content_token_stream = match &postgresql_type {
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(quote::quote!{
-                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("5d6cf475-56c8-4abf-a754-43f24caaafa5")
-                        }),
+                    let generate_inner_type_token_stream_ddf0f630 = |
+                        is_const: IsConst,
+                        content_token_stream_5ca08aea: &dyn quote::ToTokens
+                    |generate_inner_type_token_stream(
+                        is_const,
+                        &quote::quote!{slightly_less_than_max_inner_type},
+                        &content_token_stream_5ca08aea
+                    );
+                    match &postgresql_type {
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some(
+                            generate_inner_type_token_stream_ddf0f630(
+                                IsConst::True,
+                                &quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(23, 59, 59, 999_998).expect("5d6cf475-56c8-4abf-a754-43f24caaafa5")
+                                }
+                            )
+                        ),
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -2812,11 +2913,7 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
-                    };
-                    content_token_stream.is_some().then(|| generate_inner_type_token_stream(
-                        &quote::quote!{slightly_less_than_max_inner_type},
-                        &content_token_stream
-                    ))
+                    }
                 };
                 if maybe_min_inner_type_token_stream.is_some() ||
                     maybe_slightly_more_than_min_inner_type_token_stream.is_some() ||
@@ -5776,7 +5873,7 @@ pub fn generate_postgresql_types(
                                     acc_68eba82f.push(vec![
                                         read_only_ids_to_two_dimensional_vec_read_inner
                                         .into_iter()
-                                        .flat_map(|element_78f3b0ee| element_78f3b0ee.into_iter())
+                                        .flat_map(std::iter::IntoIterator::into_iter)
                                         .collect()
                                     ]);
                                     if let Some(value_a0f0f172) = option_additional {
