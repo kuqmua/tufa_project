@@ -2925,12 +2925,54 @@ pub fn generate_postgresql_types(
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
                     }
                 };
+                let maybe_read_inner_initializations_token_stream = match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsInt2 => None,
+                    PostgresqlType::StdPrimitiveI32AsInt4 => None,
+                    PostgresqlType::StdPrimitiveI64AsInt8 => None,
+                    PostgresqlType::StdPrimitiveF32AsFloat4 => None,
+                    PostgresqlType::StdPrimitiveF64AsFloat8 => None,
+                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => None,
+                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => None,
+                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => None,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => None,
+                    PostgresqlType::StdPrimitiveBoolAsBool => None,
+                    PostgresqlType::StdStringStringAsText => None,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => None,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some({
+                        let functions_token_stream = [
+                            (&quote::quote!{zero_zero_zero_zero}, &quote::quote!{0,0,0,0}),
+                            (&quote::quote!{ten_ten_ten_ten}, &quote::quote!{10,10,10,10}),
+                            (&quote::quote!{twenty_twenty_twenty_twenty}, &quote::quote!{20,20,20,20}),
+                            (&quote::quote!{max}, &quote::quote!{23,59,59,999_999}),
+                        ].iter().map(|(name_token_stream, parameters_token_stream)| quote::quote! {
+                            fn #name_token_stream() -> #ident_inner_type_token_stream {
+                                #ident_inner_type_token_stream::from_hms_micro_opt(0,0,0,0).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
+                            }
+                        }).collect::<Vec<proc_macro2::TokenStream>>();
+                        quote::quote!{#(#functions_token_stream)*}
+                    }),
+                    PostgresqlType::SqlxTypesTimeTimeAsTime => None,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => None,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => None,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => None,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => None,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => None,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => None,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => None,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => None,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => None,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => None,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => None,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => None,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => None,
+                };
                 if maybe_min_inner_type_token_stream.is_some() ||
                     maybe_slightly_more_than_min_inner_type_token_stream.is_some() ||
                     maybe_middle_inner_type_token_stream.is_some() ||
                     maybe_slightly_more_than_middle_inner_type_token_stream.is_some() ||
                     maybe_max_inner_type_token_stream.is_some() ||
-                    maybe_slightly_less_than_max_inner_type_token_stream.is_some()
+                    maybe_slightly_less_than_max_inner_type_token_stream.is_some() ||
+                    maybe_read_inner_initializations_token_stream.is_some()
                 {
                     quote::quote!{
                         impl #ident {
@@ -2940,6 +2982,7 @@ pub fn generate_postgresql_types(
                             #maybe_slightly_more_than_middle_inner_type_token_stream
                             #maybe_max_inner_type_token_stream
                             #maybe_slightly_less_than_max_inner_type_token_stream
+                            #maybe_read_inner_initializations_token_stream
                         }
                     }
                 }
