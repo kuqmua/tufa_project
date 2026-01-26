@@ -3734,9 +3734,7 @@ pub fn generate_postgresql_types(
                                         };
                                         match &postgresql_type_impl_try_new_for_deserialize {
                                             PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText | PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
-                                                quote::quote! {
-                                                    #value_ident_inner_type_token_stream
-                                                }
+                                                quote::quote! {value_356f2a0b: #ident_inner_type_token_stream}//here
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                 quote::quote! {
@@ -3826,7 +3824,7 @@ pub fn generate_postgresql_types(
                                                     }
                                                 };
                                                 generate_self_match_try_new_token_stream(
-                                                    &value_snake_case,
+                                                    &quote::quote!{value_356f2a0b},
                                                     &quote::quote! {
                                                         #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#variant_token_stream => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#variant_token_stream),
                                                     },
@@ -3888,7 +3886,7 @@ pub fn generate_postgresql_types(
                                                 }
                                             }
                                             PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => generate_self_match_try_new_token_stream(
-                                                &value_snake_case,
+                                                &quote::quote!{value_356f2a0b},
                                                 &quote::quote! {
                                                     #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
                                                         #value_snake_case,
