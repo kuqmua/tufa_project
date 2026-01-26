@@ -1617,7 +1617,7 @@ pub fn generate_postgresql_types(
                             #ident_standart_not_null_double_quotes_token_stream,
                             FIELDS,
                             __Visitor {
-                                marker: _serde::__private228::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
+                                marker: _serde::__private228::PhantomData::<Self>,
                                 lifetime: _serde::__private228::PhantomData,
                             }
                         )
@@ -2974,26 +2974,32 @@ pub fn generate_postgresql_types(
                                     #ident_inner_type_token_stream::#content_token_stream_a29ab1c6
                                 }
                             };
-                            let mut acc_da86d4b4 = vec![
+                            std::iter::once(
                                 generate_function_token_stream(
                                     &max_function_token_stream,
-                                    &quote::quote!{MAX}
+                                    &quote::quote! { MAX }
                                 )
-                            ];
-                            for (name_token_stream, parameters_token_stream) in [
-                                (&min_supported_date_function_token_stream, &quote::quote!{-4713, 12, 31}),
-                                (&early_common_era_date_function_token_stream, &quote::quote!{-2000, 1, 1}),
-                                (&early_medieval_date_function_token_stream, &quote::quote!{-1000, 1, 1}),
-                                (&common_era_start_date_function_token_stream, &quote::quote!{0, 1, 1}),
-                                (&late_medieval_date_function_token_stream, &quote::quote!{1000, 1, 1}),
-                                (&modern_era_start_date_function_token_stream, &quote::quote!{2000, 1, 1}),
-                            ] {
-                                acc_da86d4b4.push(generate_function_token_stream(
-                                    &name_token_stream,
-                                    &quote::quote!{from_ymd_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")}
-                                ));
-                            }
-                            acc_da86d4b4
+                            )
+                            .chain(
+                                [
+                                    (&min_supported_date_function_token_stream, &quote::quote! { -4713, 12, 31 }),
+                                    (&early_common_era_date_function_token_stream, &quote::quote! { -2000, 1, 1 }),
+                                    (&early_medieval_date_function_token_stream, &quote::quote! { -1000, 1, 1 }),
+                                    (&common_era_start_date_function_token_stream, &quote::quote! { 0, 1, 1 }),
+                                    (&late_medieval_date_function_token_stream, &quote::quote! { 1000, 1, 1 }),
+                                    (&modern_era_start_date_function_token_stream, &quote::quote! { 2000, 1, 1 }),
+                                ]
+                                .into_iter()
+                                .map(|(name_token_stream, parameters_token_stream)| {
+                                    generate_function_token_stream(
+                                        name_token_stream,
+                                        &quote::quote! {
+                                            from_ymd_opt(#parameters_token_stream)
+                                                .expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
+                                        }
+                                    )
+                                })
+                            ).collect::<Vec<proc_macro2::TokenStream>>()
                         };
                         quote::quote!{#(#content_token_stream_80e0683c)*}
                     }),
@@ -6322,12 +6328,12 @@ pub fn generate_postgresql_types(
                                     &quote::quote!{2.0 - 1.0}
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => wrap_into_not_empty_unique_enum_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::min_inner_type()},
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::slightly_more_than_min_inner_type()},
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::middle_inner_type()},
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::slightly_more_than_middle_inner_type()},
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::max_inner_type()},
-                                    &quote::quote!{#sqlx_types_chrono_naive_time_as_time_standart_not_null_token_stream::slightly_less_than_max_inner_type()},
+                                    &quote::quote!{Self::min_inner_type()},
+                                    &quote::quote!{Self::slightly_more_than_min_inner_type()},
+                                    &quote::quote!{Self::middle_inner_type()},
+                                    &quote::quote!{Self::slightly_more_than_middle_inner_type()},
+                                    &quote::quote!{Self::max_inner_type()},
+                                    &quote::quote!{Self::slightly_less_than_max_inner_type()},
                                 )),
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_not_empty_unique_enum_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
                                     &quote::quote!{#sqlx_types_time_time_as_time_standart_not_null_token_stream::min_inner_type()},
@@ -6340,9 +6346,9 @@ pub fn generate_postgresql_types(
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => wrap_into_not_empty_unique_enum_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 30)?},//todo not sure about this values. maybe reuse
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31)?},
-                                    &quote::quote!{#sqlx_types_chrono_naive_date_as_date_standart_not_null_token_stream::middle_inner_type()},
+                                    &quote::quote!{Self::middle_inner_type()},
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 2)?},
-                                    &quote::quote!{#sqlx_types_chrono_naive_date_as_date_standart_not_null_token_stream::max_inner_type()},
+                                    &quote::quote!{Self::max_inner_type()},
                                     &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(262_142, 12, 30)?},
                                 )),
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => wrap_into_not_empty_unique_enum_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
