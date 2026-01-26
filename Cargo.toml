@@ -96,7 +96,6 @@ bytes = {version = "=1.11.0"}
 walkdir = {version = "=2.5.0"}
 itertools = {version = "=0.14.0"}
 
-#todo check proc macro generated token on lints
 [workspace.lints.rust]
 unsafe_code = { level = "deny", priority = 0 }
 absolute_paths_not_starting_with_crate = { level = "deny", priority = 0 }

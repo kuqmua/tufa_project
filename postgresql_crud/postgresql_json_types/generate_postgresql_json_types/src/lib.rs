@@ -2498,67 +2498,47 @@ pub fn generate_postgresql_json_types(
                 let dimension_index_number_max = postgresql_crud_macros_common::DimensionIndexNumber::from(dimension);
                 let generate_dimension_index_number_token_stream = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
                     assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
-                    let content_token_stream = {
+                    let content_token_stream_c85923bd = {
                         let generate_index_number_token_stream = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
                         let generate_value_number_token_stream = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
                         let generate_for_in_token_stream = |
                             index_token_stream: &dyn quote::ToTokens,
                             value_token_stream: &dyn quote::ToTokens,
                             enumerate_token_stream: &dyn quote::ToTokens,
-                            content_token_stream: &dyn quote::ToTokens,
+                            content_token_stream_aaf03124: &dyn quote::ToTokens,
                         |quote::quote!{
                             for (#index_token_stream, #value_token_stream) in #enumerate_token_stream.0.into_iter().enumerate() {
-                                #content_token_stream
+                                #content_token_stream_aaf03124
                             }
                         };
-                        let generate_for_dot_zero_into_iter_token_stream = |
-                            index_c6371d8c: usize,
-                            index_ac435e3a: usize,
-                            enumerate_token_stream: &dyn quote::ToTokens,
-                            content_token_stream: &dyn quote::ToTokens,
-                        |generate_for_in_token_stream(
-                            &generate_index_number_token_stream(index_c6371d8c),
-                            &generate_value_number_token_stream(index_ac435e3a),
-                            &enumerate_token_stream,
-                            &content_token_stream
-                        );
                         let generate_for_value_index_dot_zero_into_iter_enumerate_token_stream = |
                             index_0082bcdf: usize,
                             index_e81c6d28: usize,
                             index_b7b230b2: usize,
-                            content_token_stream: &dyn quote::ToTokens,
+                            content_token_stream_d575a40c: &dyn quote::ToTokens,
                         |generate_for_in_token_stream(
                             &generate_index_number_token_stream(index_0082bcdf),
                             &generate_value_number_token_stream(index_e81c6d28),
                             &generate_value_number_token_stream(index_b7b230b2),
-                            &content_token_stream
+                            &content_token_stream_d575a40c
                         );
                         let generate_if_let_some_token_stream = |
                             some_token_stream: &dyn quote::ToTokens,
                             equal_token_stream: &dyn quote::ToTokens,
-                            content_token_stream: &dyn quote::ToTokens,
+                            content_token_stream_9292e3cf: &dyn quote::ToTokens,
                         |quote::quote!{
                             if let Some(#some_token_stream) = #equal_token_stream.0 {
-                                #content_token_stream
+                                #content_token_stream_9292e3cf
                             }
                         };
-                        let generate_if_let_some_equals_dot_zero_token_stream = |
-                            index_1926db05: usize,
-                            equal_token_stream: &dyn quote::ToTokens,
-                            content_token_stream: &dyn quote::ToTokens,
-                        |generate_if_let_some_token_stream(
-                            &generate_value_number_token_stream(index_1926db05),
-                            &equal_token_stream,
-                            &content_token_stream
-                        );
                         let generate_if_let_some_equals_value_index_dot_zero_token_stream = |
                             index_c4552aef: usize,
                             index_9f1fbc9f: usize,
-                            content_token_stream: &dyn quote::ToTokens,
+                            content_token_stream_832b20d5: &dyn quote::ToTokens,
                         |generate_if_let_some_token_stream(
                             &generate_value_number_token_stream(index_c4552aef),
                             &generate_value_number_token_stream(index_9f1fbc9f),
-                            &content_token_stream
+                            &content_token_stream_832b20d5
                         );
                         let generate_index = |start_index: usize, not_null_or_nullable_vec_41b82a0c: &[&NotNullOrNullable]| -> usize {
                             start_index.checked_add(
@@ -2568,8 +2548,8 @@ pub fn generate_postgresql_json_types(
                                 .count()
                             ).expect("de4c4116-b645-4a8f-b097-1d7772aecc19")
                         };
-                        let mut content_token_stream = {
-                            let content_token_stream = {
+                        let mut content_token_stream_4c106eea = {
+                            let content_token_stream_f1ffd3b2 = {
                                 let value_index_token_stream = generate_value_number_token_stream(
                                     generate_index(
                                         not_null_or_nullable_vec.len().saturating_sub(1),
@@ -2601,7 +2581,7 @@ pub fn generate_postgresql_json_types(
                                     }
                                 ));
                                 let vec_content_token_stream = {
-                                    let content_token_stream = (
+                                    let content_token_stream_0dc5a500 = (
                                         0i32..=match dimension_index_number_max {
                                             postgresql_crud_macros_common::DimensionIndexNumber::Zero => 0i32,
                                             postgresql_crud_macros_common::DimensionIndexNumber::One => 1i32,
@@ -2620,7 +2600,7 @@ pub fn generate_postgresql_json_types(
                                             ).expect("ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
                                         }
                                     }).collect::<Vec<proc_macro2::TokenStream>>();
-                                    quote::quote! {#(#content_token_stream),*}
+                                    quote::quote! {#(#content_token_stream_0dc5a500),*}
                                 };
                                 quote::quote! {
                                     #current_where_ident_where_upper_camel_case::#dimension_number_starting_with_one_equal_token_stream(
@@ -2635,9 +2615,9 @@ pub fn generate_postgresql_json_types(
                                 }
                             };
                             match not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream);},
+                                NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream_f1ffd3b2);},
                                 NotNullOrNullable::Nullable => quote::quote! {
-                                    match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                                    match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream_f1ffd3b2]) {
                                         Ok(value_9328b66f) => {
                                             acc_049ff0b3.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
                                         },
@@ -2661,7 +2641,7 @@ pub fn generate_postgresql_json_types(
                             .collect::<Vec<&NotNullOrNullable>>();
                             let not_null_or_nullable_vec_e7e7f6f8_len = not_null_or_nullable_vec_e7e7f6f8.len();
                             let not_null_or_nullable_vec_e7e7f6f8_len_saturating_sub_one = not_null_or_nullable_vec_e7e7f6f8_len.saturating_sub(1);
-                            content_token_stream = {
+                            content_token_stream_4c106eea = {
                                 let index_74ae6d77 = generate_index(
                                     not_null_or_nullable_vec_e7e7f6f8_len_saturating_sub_one,
                                     &std::iter::once(not_null_or_nullable)
@@ -2678,7 +2658,7 @@ pub fn generate_postgresql_json_types(
                                         not_null_or_nullable_vec_e7e7f6f8_len,
                                         index_74ae6d77_increment_by_1,
                                         index_74ae6d77,
-                                        &content_token_stream,
+                                        &content_token_stream_4c106eea,
                                     ),
                                     NotNullOrNullable::Nullable => generate_if_let_some_equals_value_index_dot_zero_token_stream(
                                         index_74ae6d77_increment_by_1,
@@ -2687,7 +2667,7 @@ pub fn generate_postgresql_json_types(
                                             not_null_or_nullable_vec_e7e7f6f8_len,
                                             index_74ae6d77.checked_add(2).expect("00da046c-1486-4de1-990b-258b2cd90e2c"),
                                             index_74ae6d77_increment_by_1,
-                                            &content_token_stream,
+                                            &content_token_stream_4c106eea,
                                         )
                                     )
                                 }
@@ -2695,20 +2675,20 @@ pub fn generate_postgresql_json_types(
                         }
                         let create_dot_zero_token_stream = quote::quote!{create.0};
                         match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => generate_for_dot_zero_into_iter_token_stream(
-                                0,
-                                0,
+                            NotNullOrNullable::NotNull => generate_for_in_token_stream(
+                                &generate_index_number_token_stream(0),
+                                &generate_value_number_token_stream(0),
                                 &create_dot_zero_token_stream,
-                                &content_token_stream
+                                &content_token_stream_4c106eea
                             ),
-                            NotNullOrNullable::Nullable => generate_if_let_some_equals_dot_zero_token_stream(
-                                0,
+                            NotNullOrNullable::Nullable => generate_if_let_some_token_stream(
+                                &generate_value_number_token_stream(0),
                                 &create_dot_zero_token_stream,
                                 &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
                                     0,
                                     1,
                                     0,
-                                    &content_token_stream
+                                    &content_token_stream_4c106eea
                                 )
                             )
                         }
@@ -2716,7 +2696,7 @@ pub fn generate_postgresql_json_types(
                     quote::quote! {
                         Some(#import_path::NotEmptyUniqueEnumVec::try_new({
                             let mut acc_049ff0b3 = Vec::new();
-                            #content_token_stream
+                            #content_token_stream_c85923bd
                             acc_049ff0b3
                         }).expect("e99ecd08-0aec-4a25-931d-163319bb8179"))
                     }
