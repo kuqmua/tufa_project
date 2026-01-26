@@ -3715,7 +3715,7 @@ pub fn generate_postgresql_types(
                                         }
                                     };
                                     quote::quote! {
-                                        fn new_for_deserialize(#parameters_token_stream) -> Self {
+                                        const fn new_for_deserialize(#parameters_token_stream) -> Self {
                                             #content_token_stream
                                         }
                                     }
