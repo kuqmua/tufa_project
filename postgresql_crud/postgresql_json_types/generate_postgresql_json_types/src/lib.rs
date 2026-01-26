@@ -2496,71 +2496,223 @@ pub fn generate_postgresql_json_types(
             let generate_array_dimension_equal_token_stream = |dimension: &postgresql_crud_macros_common::Dimension| {
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 let dimension_index_number_max = postgresql_crud_macros_common::DimensionIndexNumber::from(dimension);
-                let index_number_to_std_primitive_u8 = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber| -> u8 {
-                    match dimension_index_number {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => 0,
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => 1,
-                        postgresql_crud_macros_common::DimensionIndexNumber::Two => 2,
-                        postgresql_crud_macros_common::DimensionIndexNumber::Three => 3,
-                    }
-                };
-                let generate_index_number_token_stream = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
-                let generate_value_number_token_stream = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
-                let generate_for_dot_zero_into_iter_token_stream = |
-                    index_c6371d8c: usize,
-                    index_ac435e3a: usize,
-                    enumerate_token_stream: &dyn quote::ToTokens,
-                    content_token_stream: &dyn quote::ToTokens,
-                |{
-                    let index_number_token_stream = generate_index_number_token_stream(index_c6371d8c);
-                    let value_number_token_stream = generate_value_number_token_stream(index_ac435e3a);
-                    quote::quote!{
-                        for (#index_number_token_stream, #value_number_token_stream) in #enumerate_token_stream.0.into_iter().enumerate() {
-                            #content_token_stream
+                let generate_dimension_index_number_token_stream = |not_null_or_nullable_vec: &[&NotNullOrNullable]|{
+                    assert!(!not_null_or_nullable_vec.is_empty(), "c1a5939d-3235-4bcd-88fc-bfdf2101dffd");
+                    let content_token_stream = {
+                        let generate_index_number_token_stream = |index_c1128a3e: usize|format!("index_{index_c1128a3e}").parse::<proc_macro2::TokenStream>().expect("afbe7252-745f-40ad-9bf4-1bb20377b5a5");
+                        let generate_value_number_token_stream = |index_0abe6039: usize|format!("value{index_0abe6039}").parse::<proc_macro2::TokenStream>().expect("568d8eb6-df23-4f57-afdd-ef392e3b7f72");
+                        let generate_for_in_token_stream = |
+                            index_token_stream: &dyn quote::ToTokens,
+                            value_token_stream: &dyn quote::ToTokens,
+                            enumerate_token_stream: &dyn quote::ToTokens,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |quote::quote!{
+                            for (#index_token_stream, #value_token_stream) in #enumerate_token_stream.0.into_iter().enumerate() {
+                                #content_token_stream
+                            }
+                        };
+                        let generate_for_dot_zero_into_iter_token_stream = |
+                            index_c6371d8c: usize,
+                            index_ac435e3a: usize,
+                            enumerate_token_stream: &dyn quote::ToTokens,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |generate_for_in_token_stream(
+                            &generate_index_number_token_stream(index_c6371d8c),
+                            &generate_value_number_token_stream(index_ac435e3a),
+                            &enumerate_token_stream,
+                            &content_token_stream
+                        );
+                        let generate_for_value_index_dot_zero_into_iter_enumerate_token_stream = |
+                            index_0082bcdf: usize,
+                            index_e81c6d28: usize,
+                            index_b7b230b2: usize,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |generate_for_in_token_stream(
+                            &generate_index_number_token_stream(index_0082bcdf),
+                            &generate_value_number_token_stream(index_e81c6d28),
+                            &generate_value_number_token_stream(index_b7b230b2),
+                            &content_token_stream
+                        );
+                        let generate_if_let_some_token_stream = |
+                            some_token_stream: &dyn quote::ToTokens,
+                            equal_token_stream: &dyn quote::ToTokens,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |quote::quote!{
+                            if let Some(#some_token_stream) = #equal_token_stream.0 {
+                                #content_token_stream
+                            }
+                        };
+                        let generate_if_let_some_equals_dot_zero_token_stream = |
+                            index_1926db05: usize,
+                            equal_token_stream: &dyn quote::ToTokens,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |generate_if_let_some_token_stream(
+                            &generate_value_number_token_stream(index_1926db05),
+                            &equal_token_stream,
+                            &content_token_stream
+                        );
+                        let generate_if_let_some_equals_value_index_dot_zero_token_stream = |
+                            index_c4552aef: usize,
+                            index_9f1fbc9f: usize,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |generate_if_let_some_token_stream(
+                            &generate_value_number_token_stream(index_c4552aef),
+                            &generate_value_number_token_stream(index_9f1fbc9f),
+                            &content_token_stream
+                        );
+                        let generate_index = |start_index: usize, not_null_or_nullable_vec_41b82a0c: &[&NotNullOrNullable]| -> usize {
+                            start_index.checked_add(
+                                not_null_or_nullable_vec_41b82a0c
+                                .iter()
+                                .filter(|element_bf28b242| matches!(element_bf28b242, NotNullOrNullable::Nullable))
+                                .count()
+                            ).expect("de4c4116-b645-4a8f-b097-1d7772aecc19")
+                        };
+                        let mut content_token_stream = {
+                            let content_token_stream = {
+                                let value_index_token_stream = generate_value_number_token_stream(
+                                    generate_index(
+                                        not_null_or_nullable_vec.len().saturating_sub(1),
+                                        &std::iter::once(not_null_or_nullable)
+                                        .chain(
+                                            not_null_or_nullable_vec
+                                                .iter()
+                                                .take(not_null_or_nullable_vec.len().saturating_sub(1))
+                                                .copied(),
+                                        ).collect::<Vec<&NotNullOrNullable>>()
+                                    )
+                                );
+                                let to_number_starting_with_one_word_str = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber| match dimension_index_number {
+                                    postgresql_crud_macros_common::DimensionIndexNumber::Zero => "One",
+                                    postgresql_crud_macros_common::DimensionIndexNumber::One => "Two",
+                                    postgresql_crud_macros_common::DimensionIndexNumber::Two => "Three",
+                                    postgresql_crud_macros_common::DimensionIndexNumber::Three => "Four",
+                                };
+                                let dimension_number_starting_with_one_equal_token_stream = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
+                                let postgresql_json_type_where_dimension_number_starting_with_one_equal_token_stream = format!("PostgresqlJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("15d769b0-0767-473c-a2c5-3d0f6e221ced");
+                                let current_where_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&generate_ident_token_stream(&NotNullOrNullable::NotNull, postgresql_json_type_pattern));
+                                let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                    not_null_or_nullable_vec.last().expect("1221f6ec-8865-4456-bd18-ebeff15439f6"),
+                                    &match dimension_index_number_max {
+                                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => postgresql_json_type_pattern.down_by_1().expect("1a47af86-470b-41dd-aee1-01dfccef56a1"),
+                                        postgresql_crud_macros_common::DimensionIndexNumber::One => postgresql_json_type_pattern.down_by_2().expect("d8260225-71af-4ea5-a354-075432088e96"),
+                                        postgresql_crud_macros_common::DimensionIndexNumber::Two => postgresql_json_type_pattern.down_by_3().expect("473ac422-6c8c-417f-a115-8a7c0743ca08"),
+                                        postgresql_crud_macros_common::DimensionIndexNumber::Three => postgresql_json_type_pattern.down_by_4().expect("6a143218-a98e-4893-ad2b-ed028a20ef39"),
+                                    }
+                                ));
+                                let vec_content_token_stream = {
+                                    let content_token_stream = (
+                                        0i32..=match dimension_index_number_max {
+                                            postgresql_crud_macros_common::DimensionIndexNumber::Zero => 0i32,
+                                            postgresql_crud_macros_common::DimensionIndexNumber::One => 1i32,
+                                            postgresql_crud_macros_common::DimensionIndexNumber::Two => 2i32,
+                                            postgresql_crud_macros_common::DimensionIndexNumber::Three => 3i32,
+                                        }
+                                    )
+                                    .map(|element_db559599| {
+                                        let index_number_token_stream = format!("index_{element_db559599}")
+                                            .parse::<proc_macro2::TokenStream>()
+                                            .expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
+                                        quote::quote! {
+                                            postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
+                                                i32::try_from(#index_number_token_stream)
+                                                    .expect("5a1818e7-3865-4222-bf6b-31486bd721d2")
+                                            ).expect("ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
+                                        }
+                                    }).collect::<Vec<proc_macro2::TokenStream>>();
+                                    quote::quote! {#(#content_token_stream),*}
+                                };
+                                quote::quote! {
+                                    #current_where_ident_where_upper_camel_case::#dimension_number_starting_with_one_equal_token_stream(
+                                        where_filters::#postgresql_json_type_where_dimension_number_starting_with_one_equal_token_stream {
+                                            logical_operator: #import_path::LogicalOperator::And,
+                                            dimensions: where_filters::BoundedStdVecVec::try_from(
+                                                vec![#vec_content_token_stream]
+                                            ).expect("82cc0a3c-3e8d-47c4-b317-2795362a9b37"),
+                                            #value_snake_case: #current_value_ident_table_type_declaration_upper_camel_case::new(#value_index_token_stream.into()),
+                                        }
+                                    )
+                                }
+                            };
+                            match not_null_or_nullable {
+                                NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream);},
+                                NotNullOrNullable::Nullable => quote::quote! {
+                                    match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
+                                        Ok(value_9328b66f) => {
+                                            acc_049ff0b3.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
+                                        },
+                                        Err(error) => match error {
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
+                                            #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a-4dc6-4699-8656-33870b2c629f")
+                                        }
+                                    }
+                                },
+                            }
+                        };
+                        for (index_ef936914, _) in not_null_or_nullable_vec.iter().take(not_null_or_nullable_vec.len().saturating_sub(1)).enumerate() {
+                            let not_null_or_nullable_vec_e7e7f6f8 = not_null_or_nullable_vec
+                            .iter()
+                            .take(
+                                not_null_or_nullable_vec
+                                    .len()
+                                    .saturating_sub(index_ef936914.checked_add(1).expect("75d5ed28-131b-4387-a064-8c77841894fd")),
+                            )
+                            .copied()
+                            .collect::<Vec<&NotNullOrNullable>>();
+                            let not_null_or_nullable_vec_e7e7f6f8_len = not_null_or_nullable_vec_e7e7f6f8.len();
+                            let not_null_or_nullable_vec_e7e7f6f8_len_saturating_sub_one = not_null_or_nullable_vec_e7e7f6f8_len.saturating_sub(1);
+                            content_token_stream = {
+                                let index_74ae6d77 = generate_index(
+                                    not_null_or_nullable_vec_e7e7f6f8_len_saturating_sub_one,
+                                    &std::iter::once(not_null_or_nullable)
+                                    .chain(
+                                        not_null_or_nullable_vec_e7e7f6f8
+                                            .iter()
+                                            .take(not_null_or_nullable_vec_e7e7f6f8_len_saturating_sub_one)
+                                            .copied(),
+                                    ).collect::<Vec<&NotNullOrNullable>>()
+                                );
+                                let index_74ae6d77_increment_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72-bf43-4c6c-8ab6-b496953e88ec");
+                                match &not_null_or_nullable_vec_e7e7f6f8.last().expect("88548240-8588-4ee8-b166-5dacfd997088") {
+                                    NotNullOrNullable::NotNull => generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                        not_null_or_nullable_vec_e7e7f6f8_len,
+                                        index_74ae6d77_increment_by_1,
+                                        index_74ae6d77,
+                                        &content_token_stream,
+                                    ),
+                                    NotNullOrNullable::Nullable => generate_if_let_some_equals_value_index_dot_zero_token_stream(
+                                        index_74ae6d77_increment_by_1,
+                                        index_74ae6d77,
+                                        &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                            not_null_or_nullable_vec_e7e7f6f8_len,
+                                            index_74ae6d77.checked_add(2).expect("00da046c-1486-4de1-990b-258b2cd90e2c"),
+                                            index_74ae6d77_increment_by_1,
+                                            &content_token_stream,
+                                        )
+                                    )
+                                }
+                            };
                         }
-                    }
-                };
-                let generate_for_value_index_dot_zero_into_iter_enumerate_token_stream = |
-                    index_0082bcdf: usize,
-                    index_e81c6d28: usize,
-                    index_b7b230b2: usize,
-                    content_token_stream: &dyn quote::ToTokens,
-                |{
-                    let index_number_token_stream = generate_index_number_token_stream(index_0082bcdf);
-                    let value_number_token_stream = generate_value_number_token_stream(index_e81c6d28);
-                    let value_number_in_token_stream = generate_value_number_token_stream(index_b7b230b2);
-                    quote::quote!{
-                        for (#index_number_token_stream, #value_number_token_stream) in #value_number_in_token_stream.0.into_iter().enumerate() {
-                            #content_token_stream
+                        let create_dot_zero_token_stream = quote::quote!{create.0};
+                        match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => generate_for_dot_zero_into_iter_token_stream(
+                                0,
+                                0,
+                                &create_dot_zero_token_stream,
+                                &content_token_stream
+                            ),
+                            NotNullOrNullable::Nullable => generate_if_let_some_equals_dot_zero_token_stream(
+                                0,
+                                &create_dot_zero_token_stream,
+                                &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
+                                    0,
+                                    1,
+                                    0,
+                                    &content_token_stream
+                                )
+                            )
                         }
-                    }
-                };
-                let generate_if_let_some_equals_dot_zero_token_stream = |
-                    index_1926db05: usize,
-                    equal_token_stream: &dyn quote::ToTokens,
-                    content_token_stream: &dyn quote::ToTokens,
-                |{
-                    let value_number_token_stream = generate_value_number_token_stream(index_1926db05);
-                    quote::quote!{
-                        if let Some(#value_number_token_stream) = #equal_token_stream.0 {
-                            #content_token_stream
-                        }
-                    }
-                };
-                let generate_if_let_some_equals_value_index_dot_zero_token_stream = |
-                    index_c4552aef: usize,
-                    index_9f1fbc9f: usize,
-                    content_token_stream: &dyn quote::ToTokens,
-                |{
-                    let value_number_token_stream_44fc946f = generate_value_number_token_stream(index_c4552aef);
-                    let value_number_token_stream_24f01af7 = generate_value_number_token_stream(index_9f1fbc9f);
-                    quote::quote!{
-                        if let Some(#value_number_token_stream_44fc946f) = #value_number_token_stream_24f01af7.0 {
-                            #content_token_stream
-                        }
-                    }
-                };
-                let generate_acc_token_stream_alt = |content_token_stream: &dyn quote::ToTokens| {
+                    };
                     quote::quote! {
                         Some(#import_path::NotEmptyUniqueEnumVec::try_new({
                             let mut acc_049ff0b3 = Vec::new();
@@ -2569,266 +2721,22 @@ pub fn generate_postgresql_json_types(
                         }).expect("e99ecd08-0aec-4a25-931d-163319bb8179"))
                     }
                 };
-                let generate_dimension_equal_initialization_token_stream = |
-                    current_value_ident_not_null_or_nullable: &NotNullOrNullable,
-                    current_value_ident_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                    value_token_stream: &dyn quote::ToTokens
-                | {
-                    let to_number_starting_with_one_word_str = |dimension_index_number: &postgresql_crud_macros_common::DimensionIndexNumber| match dimension_index_number {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => "One",
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => "Two",
-                        postgresql_crud_macros_common::DimensionIndexNumber::Two => "Three",
-                        postgresql_crud_macros_common::DimensionIndexNumber::Three => "Four",
-                    };
-                    let dimension_number_starting_with_one_equal_token_stream = format!("Dimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("52fa34ac-5cd1-4ae9-8a1d-832e73a505d7");
-                    let postgresql_json_type_where_dimension_number_starting_with_one_equal_token_stream = format!("PostgresqlJsonTypeWhereDimension{}Equal", to_number_starting_with_one_word_str(&dimension_index_number_max)).parse::<proc_macro2::TokenStream>().expect("15d769b0-0767-473c-a2c5-3d0f6e221ced");
-                    let current_where_ident_where_upper_camel_case = naming::parameter::SelfWhereUpperCamelCase::from_tokens(&generate_ident_token_stream(&NotNullOrNullable::NotNull, postgresql_json_type_pattern));
-                    let current_value_ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&generate_ident_token_stream(current_value_ident_not_null_or_nullable, current_value_ident_postgresql_json_type_pattern));
-                    let vec_content_token_stream = {
-                        let mut content_token_stream = Vec::new();
-                        for element_db559599 in 0..=index_number_to_std_primitive_u8(&dimension_index_number_max) {
-                            let index_number_token_stream = format!("index_{element_db559599}").parse::<proc_macro2::TokenStream>().expect("f0ce7e73-6d15-4de8-8f15-ce00334ed410");
-                            content_token_stream.push(quote::quote! {
-                                postgresql_crud_common::UnsignedPartOfStdPrimitiveI32::try_from(
-                                    i32::try_from(#index_number_token_stream).expect("5a1818e7-3865-4222-bf6b-31486bd721d2")
-                                ).expect("ad1ab73f-fd3b-4162-adb0-bb09a19d31a0")
-                            });
-                        }
-                        quote::quote! {#(#content_token_stream),*}
-                    };
-                    quote::quote! {
-                        #current_where_ident_where_upper_camel_case::#dimension_number_starting_with_one_equal_token_stream(
-                            where_filters::#postgresql_json_type_where_dimension_number_starting_with_one_equal_token_stream {
-                                logical_operator: #import_path::LogicalOperator::And,
-                                dimensions: where_filters::BoundedStdVecVec::try_from(
-                                    vec![#vec_content_token_stream]
-                                ).expect("82cc0a3c-3e8d-47c4-b317-2795362a9b37"),
-                                #value_snake_case: #current_value_ident_table_type_declaration_upper_camel_case::new(#value_token_stream.into()),
-                            }
-                        )
-                    }
-                };
-                let generate_not_null_or_nullable_token_stream = |
-                    current_not_null_or_nullable: &NotNullOrNullable,
-                    current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                    index_79f3ee43: usize
-                | {
-                    let content_token_stream = generate_dimension_equal_initialization_token_stream(
-                        current_not_null_or_nullable,
-                        current_postgresql_json_type_pattern,
-                        &generate_value_number_token_stream(index_79f3ee43)
-                    );
-                    match not_null_or_nullable {
-                        NotNullOrNullable::NotNull => quote::quote! {acc_049ff0b3.push(#content_token_stream);},
-                        NotNullOrNullable::Nullable => quote::quote! {
-                            match #import_path::NotEmptyUniqueEnumVec::try_new(vec![#content_token_stream]) {
-                                Ok(value_9328b66f) => {
-                                    acc_049ff0b3.push(#import_path::NullableJsonObjectPostgresqlTypeWhereFilter(Some(value_9328b66f)));
-                                },
-                                Err(error) => match error {
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::IsEmpty {..} => (),
-                                    #import_path::NotEmptyUniqueVecTryNewErrorNamed::NotUnique {..} => panic!("2f5f648a-4dc6-4699-8656-33870b2c629f")
-                                }
-                            }
-                        },
-                    }
-                };
-                let generate_down_postgresql_json_type_pattern = || match dimension_index_number_max {
-                    postgresql_crud_macros_common::DimensionIndexNumber::Zero => postgresql_json_type_pattern.down_by_1(),
-                    postgresql_crud_macros_common::DimensionIndexNumber::One => postgresql_json_type_pattern.down_by_2(),
-                    postgresql_crud_macros_common::DimensionIndexNumber::Two => postgresql_json_type_pattern.down_by_3(),
-                    postgresql_crud_macros_common::DimensionIndexNumber::Three => postgresql_json_type_pattern.down_by_4(),
-                };
-                let create_dot_zero_token_stream = quote::quote!{create.0};
-                let generate_for_or_let_some_start_token_stream = |
-                    not_null_token_stream: &dyn quote::ToTokens,
-                    nullable_token_stream: &dyn quote::ToTokens,
-                |match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => generate_for_dot_zero_into_iter_token_stream(
-                        0,
-                        0,
-                        &create_dot_zero_token_stream,
-                        &not_null_token_stream
-                    ),
-                    NotNullOrNullable::Nullable => generate_if_let_some_equals_dot_zero_token_stream(
-                        0,
-                        &create_dot_zero_token_stream,
-                        &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                            0,
-                            1,
-                            0,
-                            &nullable_token_stream
-                        )
-                    )
-                };
-                let generate_dimension_token_stream = |
-                    not_null_or_nullable_22185774: &NotNullOrNullable,
-                    index_af02f36c: usize,
-                    index_74ae6d77: usize,
-                    content_token_stream: &dyn quote::ToTokens,
-                |{
-                    let index_74ae6d77_increment_by_1 = index_74ae6d77.checked_add(1).expect("96e90e72-bf43-4c6c-8ab6-b496953e88ec");
-                    match &not_null_or_nullable_22185774 {
-                        NotNullOrNullable::NotNull => generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                            index_af02f36c,
-                            index_74ae6d77_increment_by_1,
-                            index_74ae6d77,
-                            &content_token_stream,
-                        ),
-                        NotNullOrNullable::Nullable => generate_if_let_some_equals_value_index_dot_zero_token_stream(
-                            index_74ae6d77_increment_by_1,
-                            index_74ae6d77,
-                            &generate_for_value_index_dot_zero_into_iter_enumerate_token_stream(
-                                index_af02f36c,
-                                index_74ae6d77.checked_add(2).expect("00da046c-1486-4de1-990b-258b2cd90e2c"),
-                                index_74ae6d77_increment_by_1,
-                                &content_token_stream,
-                            )
-                        )
-                    }
-                };
-                let generate_index = |start_index: usize, not_null_or_nullable_vec: &[&NotNullOrNullable]| -> usize {
-                    start_index.checked_add(
-                        not_null_or_nullable_vec
-                        .iter()
-                        .filter(|element_bf28b242| matches!(element_bf28b242, NotNullOrNullable::Nullable))
-                        .count()
-                    ).expect("de4c4116-b645-4a8f-b097-1d7772aecc19")
-                };
-                let generate_dimension1_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    content_token_stream: &dyn quote::ToTokens,
-                |generate_dimension_token_stream(
-                    dimension1_not_null_or_nullable,
-                    1,
-                    generate_index(0, &[not_null_or_nullable]),
-                    &content_token_stream,
-                );
-                let generate_dimension2_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    dimension2_not_null_or_nullable: &NotNullOrNullable,
-                    content_token_stream: &dyn quote::ToTokens,
-                |generate_dimension_token_stream(
-                    dimension2_not_null_or_nullable,
-                    2,
-                    generate_index(1, &[dimension1_not_null_or_nullable, not_null_or_nullable]),
-                    &content_token_stream
-                );
-                let generate_dimension3_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    dimension2_not_null_or_nullable: &NotNullOrNullable,
-                    dimension3_not_null_or_nullable: &NotNullOrNullable,
-                    content_token_stream: &dyn quote::ToTokens,
-                |generate_dimension_token_stream(
-                    dimension3_not_null_or_nullable,
-                    3,
-                    generate_index(2, &[dimension2_not_null_or_nullable, dimension1_not_null_or_nullable, not_null_or_nullable]),
-                    &content_token_stream
-                );
-                let generate_dimension_index_number_zero_token_stream = |dimension1_not_null_or_nullable: &NotNullOrNullable|generate_acc_token_stream_alt(&{
-                    let content_token_stream = generate_not_null_or_nullable_token_stream(
-                        dimension1_not_null_or_nullable,
-                        &generate_down_postgresql_json_type_pattern().expect("63f3476d-e0e0-471c-9faa-0a626c8ba75e"),
-                        generate_index(0, &[not_null_or_nullable]),
-                    );
-                    generate_for_or_let_some_start_token_stream(
-                        &content_token_stream,
-                        &content_token_stream
-                    )
-                });
-                let generate_dimension_index_number_one_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    dimension2_not_null_or_nullable: &NotNullOrNullable
-                |generate_acc_token_stream_alt(&{
-                    let content_token_stream = generate_not_null_or_nullable_token_stream(
-                        dimension2_not_null_or_nullable,
-                        &generate_down_postgresql_json_type_pattern().expect("eb25ae1e-85af-4b9f-b2d7-17aee46dbcab"),
-                        generate_index(1, &[dimension1_not_null_or_nullable, not_null_or_nullable]),
-                    );
-                    let dimension1_token_stream = generate_dimension1_token_stream(
-                        dimension1_not_null_or_nullable,
-                        &content_token_stream,
-                    );
-                    generate_for_or_let_some_start_token_stream(
-                        &dimension1_token_stream,
-                        &dimension1_token_stream,
-                    )
-                });
-                let generate_dimension_index_number_two_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    dimension2_not_null_or_nullable: &NotNullOrNullable,
-                    dimension3_not_null_or_nullable: &NotNullOrNullable
-                |generate_acc_token_stream_alt(&{
-                    let content_token_stream = generate_not_null_or_nullable_token_stream(
-                        dimension3_not_null_or_nullable,
-                        &generate_down_postgresql_json_type_pattern().expect("0bda2b38-d770-403f-96ed-106258006fb4"),
-                        generate_index(2, &[dimension2_not_null_or_nullable, dimension1_not_null_or_nullable, not_null_or_nullable])
-                    );
-                    let dimension2_token_stream = generate_dimension2_token_stream(
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        &content_token_stream
-                    );
-                    let dimension1_token_stream = generate_dimension1_token_stream(
-                        dimension1_not_null_or_nullable,
-                        &dimension2_token_stream
-                    );
-                    generate_for_or_let_some_start_token_stream(
-                        &dimension1_token_stream,
-                        &dimension1_token_stream
-                    )
-                });
-                let generate_dimension_index_number_three_token_stream = |
-                    dimension1_not_null_or_nullable: &NotNullOrNullable,
-                    dimension2_not_null_or_nullable: &NotNullOrNullable,
-                    dimension3_not_null_or_nullable: &NotNullOrNullable,
-                    dimension4_not_null_or_nullable: &NotNullOrNullable
-                |generate_acc_token_stream_alt(&{
-                    let content_token_stream = generate_not_null_or_nullable_token_stream(
-                        dimension4_not_null_or_nullable,
-                        &generate_down_postgresql_json_type_pattern().expect("9650593c-6097-49c2-a846-c17028846890"),
-                        generate_index(
-                            3,
-                            &[
-                                dimension3_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension1_not_null_or_nullable,
-                                not_null_or_nullable
-                            ]
-                        )
-                    );
-                    let dimension3_token_stream = generate_dimension3_token_stream(
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        &content_token_stream
-                    );
-                    let dimension2_token_stream = generate_dimension2_token_stream(
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        &dimension3_token_stream
-                    );
-                    let dimension1_token_stream = generate_dimension1_token_stream(
-                        dimension1_not_null_or_nullable,
-                        &dimension2_token_stream
-                    );
-                    generate_for_or_let_some_start_token_stream(
-                        &dimension1_token_stream,
-                        &dimension1_token_stream
-                    )
-                });
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => none_token_stream.clone(),
                     PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(dimension1_not_null_or_nullable),
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_token_stream(&[
+                            dimension1_not_null_or_nullable,
+                        ]),
                         postgresql_crud_macros_common::DimensionIndexNumber::One | postgresql_crud_macros_common::DimensionIndexNumber::Two | postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension2 { dimension1_not_null_or_nullable, dimension2_not_null_or_nullable } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(dimension1_not_null_or_nullable),
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_token_stream(&[
+                            dimension1_not_null_or_nullable,
+                        ]),
+                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_token_stream(&[
                             dimension1_not_null_or_nullable,
                             dimension2_not_null_or_nullable
-                        ),
+                        ]),
                         postgresql_crud_macros_common::DimensionIndexNumber::Two | postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension3 {
@@ -2836,16 +2744,18 @@ pub fn generate_postgresql_json_types(
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable,
                     } => match dimension_index_number_max {
-                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(dimension1_not_null_or_nullable),
-                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
+                        postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_token_stream(&[
                             dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable
-                        ),
-                        postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_two_token_stream(
+                        ]),
+                        postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_token_stream(&[
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        ]),
+                        postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_token_stream(&[
                             dimension1_not_null_or_nullable,
                             dimension2_not_null_or_nullable,
                             dimension3_not_null_or_nullable
-                        ),
+                        ]),
                         postgresql_crud_macros_common::DimensionIndexNumber::Three => none_token_stream.clone(),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension4 {
@@ -2855,22 +2765,24 @@ pub fn generate_postgresql_json_types(
                         dimension4_not_null_or_nullable,
                     } => {
                         match dimension_index_number_max {
-                            postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_zero_token_stream(dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_one_token_stream(
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable
-                            ),
-                            postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_two_token_stream(
+                            postgresql_crud_macros_common::DimensionIndexNumber::Zero => generate_dimension_index_number_token_stream(&[
+                                dimension1_not_null_or_nullable
+                            ]),
+                            postgresql_crud_macros_common::DimensionIndexNumber::One => generate_dimension_index_number_token_stream(&[
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable
-                            ),
-                            postgresql_crud_macros_common::DimensionIndexNumber::Three => generate_dimension_index_number_three_token_stream(
+                            ]),
+                            postgresql_crud_macros_common::DimensionIndexNumber::Two => generate_dimension_index_number_token_stream(&[
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                            ]),
+                            postgresql_crud_macros_common::DimensionIndexNumber::Three => generate_dimension_index_number_token_stream(&[
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                                 dimension3_not_null_or_nullable,
                                 dimension4_not_null_or_nullable
-                            )
+                            ])
                         }
                     }
                 }
