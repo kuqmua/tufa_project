@@ -1681,7 +1681,6 @@ pub fn generate_postgresql_types(
                     };
                     (generate_fn_expecting_token_stream(&struct_ident_double_quotes_token_stream), generate_fn_expecting_token_stream(&tuple_struct_ident_double_quotes_token_stream), generate_fn_expecting_token_stream(&quote::quote! {"field identifier"}))
                 };
-                let field_0_token_stream = generate_field_index_token_stream(parameter_number_one.get_index());
                 let field_0_value_token_stream = generate_field_index_value_token_stream(parameter_number_one.get_index());
                 let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#content_token_stream)}
@@ -2573,10 +2572,18 @@ pub fn generate_postgresql_types(
             },
             PostgresqlTypePattern::ArrayDimension1 { .. } => macros_helpers::DeriveCopy::False,
         };
-        let zero_zero_zero_zero_function_token_stream = quote::quote!{zero_zero_zero_zer};
+        let zero_zero_zero_zero_function_token_stream = quote::quote!{zero_zero_zero_zero};
         let ten_ten_ten_ten_function_token_stream = quote::quote!{ten_ten_ten_ten};
         let twenty_twenty_twenty_twenty_function_token_stream = quote::quote!{twenty_twenty_twenty_twenty};
         let max_function_token_stream = quote::quote!{max};
+
+        let min_supported_date_function_token_stream = quote::quote!{min_supported_date};
+        let early_common_era_date_function_token_stream = quote::quote!{early_common_era_date};
+        let early_medieval_date_function_token_stream = quote::quote!{early_medieval_date};
+        let common_era_start_date_function_token_stream = quote::quote!{common_era_start_date};
+        let late_medieval_date_function_token_stream = quote::quote!{late_medieval_date};
+        let modern_era_start_date_function_token_stream = quote::quote!{modern_era_start_date};
+
         let ident_token_stream = {
             let ident_token_stream = macros_helpers::StructOrEnumDeriveTokenStreamBuilder::new()
                 .make_pub()
@@ -2943,7 +2950,7 @@ pub fn generate_postgresql_types(
                     PostgresqlType::StdStringStringAsText => None,
                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => None,
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Some({
-                        let functions_token_stream = [
+                        let content_token_stream_80e0683c = [
                             (&zero_zero_zero_zero_function_token_stream, &quote::quote!{0,0,0,0}),
                             (&ten_ten_ten_ten_function_token_stream, &quote::quote!{10,10,10,10}),
                             (&twenty_twenty_twenty_twenty_function_token_stream, &quote::quote!{20,20,20,20}),
@@ -2953,11 +2960,43 @@ pub fn generate_postgresql_types(
                                 #ident_inner_type_token_stream::from_hms_micro_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
                             }
                         }).collect::<Vec<proc_macro2::TokenStream>>();
-                        quote::quote!{#(#functions_token_stream)*}
+                        quote::quote!{#(#content_token_stream_80e0683c)*}
                     }),
                     PostgresqlType::SqlxTypesTimeTimeAsTime => None,
                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => None,
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => None,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Some({
+                        let content_token_stream_80e0683c = {
+                            let generate_function_token_stream = |
+                                name_token_stream: &proc_macro2::TokenStream,
+                                content_token_stream_a29ab1c6: &proc_macro2::TokenStream
+                            |quote::quote!{
+                                fn #name_token_stream() -> #ident_inner_type_token_stream {
+                                    #ident_inner_type_token_stream::#content_token_stream_a29ab1c6
+                                }
+                            };
+                            let mut acc_da86d4b4 = vec![
+                                generate_function_token_stream(
+                                    &max_function_token_stream,
+                                    &quote::quote!{MAX}
+                                )
+                            ];
+                            for (name_token_stream, parameters_token_stream) in [
+                                (&min_supported_date_function_token_stream, &quote::quote!{-4713, 12, 31}),
+                                (&early_common_era_date_function_token_stream, &quote::quote!{-2000, 1, 1}),
+                                (&early_medieval_date_function_token_stream, &quote::quote!{-1000, 1, 1}),
+                                (&common_era_start_date_function_token_stream, &quote::quote!{0, 1, 1}),
+                                (&late_medieval_date_function_token_stream, &quote::quote!{1000, 1, 1}),
+                                (&modern_era_start_date_function_token_stream, &quote::quote!{2000, 1, 1}),
+                            ] {
+                                acc_da86d4b4.push(generate_function_token_stream(
+                                    &name_token_stream,
+                                    &quote::quote!{from_ymd_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")}
+                                ));
+                            }
+                            acc_da86d4b4
+                        };
+                        quote::quote!{#(#content_token_stream_80e0683c)*}
+                    }),
                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => None,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => None,
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => None,
@@ -5474,20 +5513,18 @@ pub fn generate_postgresql_types(
                     sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
                     sqlx_types_chrono_naive_date_max_token_stream,
                 ) = {
-                    let generate_sqlx_types_chrono_naive_date_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {sqlx::types::chrono::NaiveDate::#content_token_stream}
-                    };
-                    let generate_from_ymd_opt_unwrap_token_stream = |parameters_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {from_ymd_opt(#parameters_token_stream).expect("f0b76e36-fe9c-4d97-9893-69aaf8a307f7")}
+                    let generate_current_ident_standart_not_null_function = |content_token_stream: &dyn quote::ToTokens|{
+                        let sqlx_types_chrono_naive_date_as_date_standart_not_null_token_stream = generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
+                        quote::quote!{#sqlx_types_chrono_naive_date_as_date_standart_not_null_token_stream::#content_token_stream()}
                     };
                     (
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {-4713, 12, 31})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {-2000, 1, 1})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {-1000, 1, 1})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {0, 1, 1})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {1000, 1, 1})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote! {2000, 1, 1})),
-                        generate_sqlx_types_chrono_naive_date_token_stream(&quote::quote! {MAX}),
+                        generate_current_ident_standart_not_null_function(&min_supported_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&early_common_era_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&early_medieval_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&common_era_start_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&late_medieval_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&modern_era_start_date_function_token_stream),
+                        generate_current_ident_standart_not_null_function(&max_function_token_stream),
                     )
                 };
                 let sqlx_types_chrono_naive_date_time_min_token_stream = generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote! {
