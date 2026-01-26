@@ -2956,7 +2956,7 @@ pub fn generate_postgresql_types(
                             (&twenty_twenty_twenty_twenty_function_token_stream, &quote::quote!{20,20,20,20}),
                             (&max_function_token_stream, &quote::quote!{23,59,59,999_999}),
                         ].iter().map(|(name_token_stream, parameters_token_stream)| quote::quote! {
-                            fn #name_token_stream() -> #ident_inner_type_token_stream {
+                            const fn #name_token_stream() -> #ident_inner_type_token_stream {
                                 #ident_inner_type_token_stream::from_hms_micro_opt(#parameters_token_stream).expect("d25ee0e9-4a6b-4b20-b8e3-3f703e121088")
                             }
                         }).collect::<Vec<proc_macro2::TokenStream>>();
@@ -2970,7 +2970,7 @@ pub fn generate_postgresql_types(
                                 name_token_stream: &proc_macro2::TokenStream,
                                 content_token_stream_a29ab1c6: &proc_macro2::TokenStream
                             |quote::quote!{
-                                fn #name_token_stream() -> #ident_inner_type_token_stream {
+                                const fn #name_token_stream() -> #ident_inner_type_token_stream {
                                     #ident_inner_type_token_stream::#content_token_stream_a29ab1c6
                                 }
                             };
@@ -3973,7 +3973,6 @@ pub fn generate_postgresql_types(
                 }
             };
             let maybe_impl_is_string_empty_for_ident_origin_token_stream = if let IsStandartNotNull::True = &is_standart_not_null {
-                let impl_is_string_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case);
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2
@@ -3999,7 +3998,16 @@ pub fn generate_postgresql_types(
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange
                         | PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                        PostgresqlType::StdStringStringAsText | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient | PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_token_stream(
+                            &ident_origin_upper_camel_case,
+                            &quote::quote! {self.0.clone().is_empty()},
+                        ),
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_content_token_stream(
+                            &ident_origin_upper_camel_case,
+                            &quote::quote! {self.0.to_string().is_empty()},
+                        ),
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                 }

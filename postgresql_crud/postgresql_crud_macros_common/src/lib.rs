@@ -2164,14 +2164,6 @@ pub fn generate_impl_crate_is_string_empty_for_ident_content_token_stream(
         }
     }
 }
-pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(
-    ident: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_impl_crate_is_string_empty_for_ident_content_token_stream(
-        &ident,
-        &quote::quote! {self.0.to_string().is_empty()},
-    )
-}
 
 pub fn generate_match_try_new_in_deserialize_token_stream(
     ident: &dyn quote::ToTokens,
