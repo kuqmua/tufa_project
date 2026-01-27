@@ -1570,7 +1570,7 @@ pub fn generate_postgresql_types(
                                     DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                     DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
                                 };
-                                quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).expect("4fd12604-816e-411a-8f51-6074e8ecd9d9")}
+                                quote::quote! {&#current_ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).map_err(_serde::ser::Error::custom)?}
                             })
                         };
                         let date_naive_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateNaiveOrTime::Date);
@@ -6422,10 +6422,10 @@ pub fn generate_postgresql_types(
                                     &quote::quote!{Self::slightly_less_than_max_inner_type()},
                                 )),
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => wrap_into_not_empty_unique_enum_vec_token_stream(&generate_greater_than_test_try_new_try_new_vec_token_stream(
-                                    &quote::quote!{#sqlx_types_time_time_as_time_standart_not_null_token_stream::min_inner_type()},
-                                    &quote::quote!{#sqlx_types_time_time_as_time_standart_not_null_token_stream::slightly_more_than_min_inner_type()},
-                                    &quote::quote!{#sqlx_types_time_time_as_time_standart_not_null_token_stream::middle_inner_type()},
-                                    &quote::quote!{#sqlx_types_time_time_as_time_standart_not_null_token_stream::slightly_more_than_middle_inner_type()},
+                                    &quote::quote!{Self::min_inner_type()},
+                                    &quote::quote!{Self::slightly_more_than_min_inner_type()},
+                                    &quote::quote!{Self::middle_inner_type()},
+                                    &quote::quote!{Self::slightly_more_than_middle_inner_type()},
                                     &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_999).expect("f3d895bb-64a0-47c5-819d-f31b9b5f4ba3")},
                                     &quote::quote!{sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_998).expect("1e71f8c6-49a0-47cd-80e4-a4f92666af78")},
                                 )),
