@@ -107,7 +107,7 @@ let_underscore_drop = { level = "deny", priority = 0 }
 macro_use_extern_crate = { level = "deny", priority = 0 }
 meta_variable_misuse = { level = "deny", priority = 0 }
 missing_abi = { level = "deny", priority = 0 }
-missing_copy_implementations = { level = "deny", priority = 0 }
+missing_copy_implementations = { level = "allow", priority = 0 } #GeneratePostgresqlJsonObjectType cannot simply know impl or not for Select for fields
 missing_debug_implementations = { level = "deny", priority = 0 }
 missing_docs = { level = "allow", priority = 0 } #too lazy to write docs now and i think this is not necessary now
 non_ascii_idents = { level = "deny", priority = 0 }
