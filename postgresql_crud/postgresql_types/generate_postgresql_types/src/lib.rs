@@ -3729,8 +3729,8 @@ pub fn generate_postgresql_types(
                                                 quote::quote! {std::ops::Bound<#content_token_stream>}
                                             };
                                             quote::quote! {
-                                                #start_snake_case: #type_token_stream,
-                                                #end_snake_case: #type_token_stream
+                                                start_9a8ef454: #type_token_stream,
+                                                end_a14eb2b9: #type_token_stream
                                             }
                                         };
                                         match &postgresql_type_impl_try_new_for_deserialize {
@@ -3769,7 +3769,7 @@ pub fn generate_postgresql_types(
                                             }
                                         };
                                         let try_new_convert_pg_range_int_content_token_stream = generate_self_match_try_new_token_stream(
-                                            &quote::quote! {sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }},
+                                            &quote::quote! {sqlx::postgres::types::PgRange { #start_snake_case: start_9a8ef454, #end_snake_case: end_a14eb2b9 }},
                                             &quote::quote! {
                                                 #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_greater_than_included_end_upper_camel_case {
                                                     #start_snake_case,
@@ -4074,7 +4074,7 @@ pub fn generate_postgresql_types(
                                 | PostgresqlType::SqlxTypesChronoNaiveTimeAsTime
                                 | PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr
                                 | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => &quote::quote! {#field_type_handle::default()},
-                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &quote::quote! {#ident_inner_type_token_stream::default()},
                                 PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#inner_type_standart_not_null_token_stream(#core_default_default_default_token_stream)},
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => &generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream(&quote::quote! {0,0,0,0}),
