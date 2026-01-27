@@ -2549,9 +2549,9 @@ pub fn generate_postgresql_json_object_type(
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
                 let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
                 let generate_jsonb_set_target_token_stream = {
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{jsonb_set_target_snake_case}}}->'{{value}}'"));
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{jsonb_set_target_snake_case}}}->'{{value_12d082b5}}'"));
                     quote::quote! {
-                        let #generate_jsonb_set_target_snake_case = |value: &str|{
+                        let #generate_jsonb_set_target_snake_case = |value_12d082b5: &str|{
                             format!(#format_handle_token_stream)
                         };
                     }
@@ -3514,11 +3514,11 @@ pub fn generate_postgresql_json_object_type(
                                         &element_2a5d6ff3.field_type
                                     );
                                     quote::quote!{
-                                        #field_type_as_json_type_update_for_query_token_stream::from(#value_snake_case.#value_snake_case)
+                                        #field_type_as_json_type_update_for_query_token_stream::from(value_121f1c54.#value_snake_case)
                                     }
                                 });
                                 quote::quote! {
-                                    #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_snake_case) => #self_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_initialization_token_stream)
+                                    #ident_standart_not_null_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value_121f1c54) => #self_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#value_initialization_token_stream)
                                 }
                             });
                             quote::quote!{
@@ -3722,7 +3722,7 @@ pub fn generate_postgresql_json_object_type(
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                                 match #value_snake_case.#select_query_part_snake_case(
                                     &if is_postgresql_type {
-                                        column_name_and_maybe_field_getter.to_string()
+                                        column_name_and_maybe_field_getter.to_owned()
                                     } else {
                                         format!("{column_name_and_maybe_field_getter}->'{field_ident}'")
                                     },
