@@ -192,19 +192,20 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                         }.to_string()))
                     }
                     pub fn from_type_last_segment(value: &syn::Type) -> Self {
-                        match value {
-                            syn::Type::Path(type_path) => {
-                                let path_before_stringified = type_path.path.segments.iter().take(type_path.path.segments.len() - 1).fold(String::new(), |mut acc_f0a77378, elem| {
-                                    use std::fmt::Write as _;
-                                    if write!(acc_f0a77378, "{}::", elem.ident).is_err() {
-                                        panic!("67c90ce9-beea-4a81-99a2-874b8f04aa0a");
-                                    }
-                                    acc_f0a77378
-                                });
-                                let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
-                                Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
-                            },
-                            _ => panic!("518933f8-c5b4-4452-908d-0fff899e7a25")
+                        if let syn::Type::Path(type_path) = value {
+                            let path_before_stringified = type_path.path.segments.iter().take(
+                                type_path.path.segments.len().checked_sub(1).expect("e1f5a332-80ab-4a8a-8cbe-882e658185b7")
+                            )
+                            .fold(String::new(), |mut acc_f0a77378, element_2b05e58f| {
+                                use std::fmt::Write as _;
+                                assert!(write!(acc_f0a77378, "{}::", element_2b05e58f.ident).is_ok(), "67c90ce9-beea-4a81-99a2-874b8f04aa0a");
+                                acc_f0a77378
+                            });
+                            let last = type_path.path.segments.iter().last().expect("19f6e1a6-2e06-4043-8732-03f3807d58c4");
+                            Self(format!("{path_before_stringified}{}", Self::format(&#casing_token_stream(&last.ident.to_string()))))
+                        }
+                        else {
+                            panic!("518933f8-c5b4-4452-908d-0fff899e7a25");
                         }
                     }
                 }
@@ -218,7 +219,7 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(
                         let value_stringified = self.to_string();
                         let value_token_stream = value_stringified.parse::<proc_macro2::TokenStream>()
                             .expect("71c8d26b-18c4-4bbe-a07e-3114a15932d2");
-                        value_token_stream.to_tokens(tokens)
+                        value_token_stream.to_tokens(tokens);
                     }
                 }
                 pub trait #trait_ident_token_stream: std::fmt::Display + quote::ToTokens {}
